@@ -28,8 +28,10 @@ public class Server {
 		File logs;
 		File results;
 		JSONParser p = new JSONParser();
-		ConfigurationGenerator generator = new CsvConfigurationGenerator(inputPath);
-		ProgressManager progressManager = new ProgressManager();
+		ConfigurationGenerator generator = new MultiStepJsonConfigurationGenerator(inputPath);
+		ProgressManager progressManager = new MultiStepProgressManager();
+		//ConfigurationGenerator generator = new CsvConfigurationGenerator(inputPath);
+		//ProgressManager progressManager = new SimpleProgressManager();
 		port(SERVER_PORT);
 
 

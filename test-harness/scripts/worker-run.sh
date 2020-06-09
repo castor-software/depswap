@@ -106,6 +106,12 @@ do
 			else
 				TEST_T=$(echo "false")
 			fi
+
+			#Collect trace
+			#java -cp /home/nharrand/Documents/yajta/yajta-offline/target/yajta-offline-2.0.0-jar-with-dependencies.jar fr.inria.offline.RemoteUserReader -i traceDir -f -o usages.json
+			#TRACES=$(cat usages.json)
+
+			#Restore
 			java -jar $JARS_PATH/depswap-test-harness-0.1-SNAPSHOT-jar-with-dependencies.jar ./ "$g:$a:$v" "$rg:$ra:$rv" $JARS_PATH r
 		else
 			TEST1=$(echo "false")
