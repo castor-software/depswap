@@ -25,10 +25,11 @@ public class Analyzer {
 			System.err.println("Usage: java -jar myJar.jar pathToAnalyze(,pathToAnalyze) package(,package)");
 			System.exit(-1);
 		}
+
 		HashSet<String> packagesToLookFor = new HashSet<>();
 		String[] packs = args[1].split(",");
 		for(String p: packs) {
-			packagesToLookFor.add(p);
+			packagesToLookFor.add(p.replace(".", "/"));
 		}
 
 		LibrariesUsage librariesUsages = new LibrariesUsage(packagesToLookFor);
@@ -53,6 +54,7 @@ public class Analyzer {
 			JarEntry entry = entries.nextElement();
 			String entryName = entry.getName();
 			if (entryName.endsWith(".class")) {
+				//System.out.println("process: " + entry.getName());
 				InputStream classFileInputStream = jarFile.getInputStream(entry);
 				inputStreamProcess(classFileInputStream, librariesUsages);
 			}
@@ -75,6 +77,7 @@ public class Analyzer {
 
 	public static void prcessDir(String pathToDir, LibrariesUsage librariesUsages) throws IOException {
 		for(File classFile: findFiles(pathToDir, ".class")) {
+			//System.out.println("process: " + classFile.getPath());
 			inputStreamProcess(new FileInputStream(classFile), librariesUsages);
 		}
 	}

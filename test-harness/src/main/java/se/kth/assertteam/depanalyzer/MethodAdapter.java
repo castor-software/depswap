@@ -59,6 +59,7 @@ class MethodAdapter extends MethodVisitor implements Opcodes {
             }
         }
     }
+
     public void readSig(String sig) {
         SignatureVisitor sv = new SignatureAdapter(lu, className);
         SignatureReader r = new SignatureReader(sig);
