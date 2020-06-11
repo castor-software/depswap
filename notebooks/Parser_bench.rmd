@@ -1,0 +1,53 @@
+---
+title: "JSON parser comparaison"
+output: html_notebook
+---
+
+```{r init}
+library(tidyverse)
+```
+
+
+```{r read}
+gson_c <- read_delim("../test-harness/results/Gson_correct_results.csv", 
+    ",", escape_double = FALSE, trim_ws = TRUE)
+gson_i <- read_delim("../test-harness/results/Gson_errored_results.csv", 
+    ",", escape_double = FALSE, trim_ws = TRUE)
+gson_u <- read_delim("../test-harness/results/Gson_undefined_results.csv", 
+    ",", escape_double = FALSE, trim_ws = TRUE)
+
+simple_c <- read_delim("../test-harness/results/json-simple_correct_results.csv", 
+    ",", escape_double = FALSE, trim_ws = TRUE)
+simple_i <- read_delim("../test-harness/results/json-simple_errored_results.csv", 
+    ",", escape_double = FALSE, trim_ws = TRUE)
+simple_u <- read_delim("../test-harness/results/json-simple_undefined_results.csv", 
+    ",", escape_double = FALSE, trim_ws = TRUE)
+
+org_c <- read_delim("../test-harness/results/org.json_correct_results.csv", 
+    ",", escape_double = FALSE, trim_ws = TRUE)
+org_i <- read_delim("../test-harness/results/org.json_errored_results.csv", 
+    ",", escape_double = FALSE, trim_ws = TRUE)
+org_u <- read_delim("../test-harness/results/org.json_undefined_results.csv", 
+    ",", escape_double = FALSE, trim_ws = TRUE)
+
+
+dataset <- rbind(gson_c,gson_i,gson_u,simple_c,simple_i,simple_u,org_c,org_i,org_u)
+```
+
+```{r reshape}
+d <- dataset %>% mutate(r = as.factor(Result)) %>% select(File,Parser,Category, r) %>% spread(Parser,r)
+
+d %>% mutate(same =(`Gson` == `json-simple` & Gson == `org.json`)) %>% group_by(Category,same) %>% summarise(n = n())
+
+```
+
+``` {r printd} 
+p <- dataset %>% mutate(r = as.factor(Result)) %>% select(File,Parser,Category, r) %>% 
+  ggplot(aes(x = Parser, y = File, fill=r)) +
+      geom_raster() +
+      theme_bw() +
+      scale_x_discrete(drop = FALSE) +
+      scale_y_discrete(drop = FALSE)
+ggsave("bench.pdf", p, device = "pdf",units = "cm", width = 21, height = 120)
+
+```
