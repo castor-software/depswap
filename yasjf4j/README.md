@@ -15,6 +15,9 @@
  * Incomplete API overlap (i.e. org.json.JSONArray has set but not add)
  * Add JSONValue to facade? Add serilize object to facade? (in addition to toString)
 
+
+## Difficulties
+
  * Why on earth would a json parser required you to have commons-logging ? https://github.com/billdavidson/JSONUtil/wiki/Getting-Started-Guide
 
  * mjson contains only one type Json, no class distinction between array and object or value.
