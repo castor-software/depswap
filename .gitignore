@@ -1,0 +1,10 @@
+.idea
+*.iml
+target
+**/.idea
+**/*.iml
+**/target
+**/.idea/*
+**/target/*
+.Rhistory
+**/.Rhistory
