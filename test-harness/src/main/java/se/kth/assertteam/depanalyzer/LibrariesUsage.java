@@ -63,7 +63,7 @@ public class LibrariesUsage {
 
 	public String toJSONString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("{");
+		sb.append("{\"static-usages\":{");
 		boolean isFirst = true;
 		for(String p: librariesPackagesMembersUsage.keySet()) {
 			if(isFirst) {
@@ -88,7 +88,7 @@ public class LibrariesUsage {
 			}
 			sb.append("}");
 		}
-		sb.append("}");
+		sb.append("}}");
 		return sb.toString();
 	}
 }

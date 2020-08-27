@@ -44,7 +44,7 @@ public class Project {
 				String[] tgav = targetedGAV.split(":");
 				String[] rgav = replacementGAV.split(":");
 				try {
-					swapDependency(
+					swapDependencyYasjf(
 							savedPom, new File(savedPom.getParentFile(), "pom.xml"),
 							tgav[0], tgav[1], (tgav[2].equals("*") ? null : tgav[2]),
 							rgav[0], rgav[1], rgav[2],
@@ -99,6 +99,77 @@ public class Project {
 				throw new TransformationFailedException("Dependency " + inGroupId + ":" + inArtifactId + ":" + (inVersion == null ? "*" : inVersion) + " not found in targeted pom.");
 			}
 
+			target.setGroupId(outGroupId);
+			target.setArtifactId(outArtifactId);
+			target.setVersion(outVersion);
+			target.setSystemPath(pathToJars + "/" + outArtifactId + "-" + outVersion + "-jar-with-dependencies.jar");
+			target.setScope("system");
+
+
+			MavenXpp3Writer writer = new MavenXpp3Writer();
+			writer.write(new FileOutputStream(outPomFile), model);
+
+		} catch (FileNotFoundException e) {
+			throw new TransformationFailedException("FileNotFoundException: " + e.getMessage());
+		} catch (IOException e) {
+			throw new TransformationFailedException("IOException: " + e.getMessage());
+		} catch (XmlPullParserException e) {
+			throw new TransformationFailedException("XmlPullParserException: " + e.getMessage());
+		}
+	}
+
+	//find all poms
+	//for each replace the json dep with replacement lib (bridge, facade, implem
+
+
+	public static String yasjfG = "se.kth.castor";
+	public static String yasjfV = "1.0-SNAPSHOT";
+	public static String yasjfFacadeA = "yasjf4j-api";
+
+	public static void swapDependencyYasjf(File inPomFile, File outPomFile,
+	                                  String inGroupId, String inArtifactId, String inVersion,
+	                                  String outGroupId, String outArtifactId, String outVersion,
+	                                  String pathToJars) throws TransformationFailedException {
+		MavenXpp3Reader pomReader = new MavenXpp3Reader();
+		try (FileReader reader = new FileReader(inPomFile)) {
+			Model model = pomReader.read(reader);
+			Dependency target = null;
+
+			for(Dependency dependency :model.getDependencies()) {
+				String g = dependency.getGroupId();
+				String a = dependency.getArtifactId();
+				String v = dependency.getVersion();
+
+				if(g.equals(inGroupId) && a.equals(inArtifactId) && (inVersion == null || v.equals(inVersion))) {
+					target = dependency;
+					break;
+				}
+			}
+
+			if(target == null) {
+				throw new TransformationFailedException("Dependency " + inGroupId + ":" + inArtifactId + ":" + (inVersion == null ? "*" : inVersion) + " not found in targeted pom.");
+			}
+
+			//Bridge
+			Dependency bridge = new Dependency();
+			bridge.setGroupId(yasjfG);
+			bridge.setVersion(yasjfV);
+			bridge.setScope("system");
+			String bridgeName = inArtifactId + "-over-yasjf4j";
+			bridge.setArtifactId(bridgeName);
+			bridge.setSystemPath(pathToJars + "/" + bridgeName + "-" + yasjfV + "-jar-with-dependencies.jar");
+			model.addDependency(bridge);
+
+			//Facade
+			Dependency facade = new Dependency();
+			facade.setGroupId(yasjfG);
+			facade.setVersion(yasjfV);
+			facade.setScope("system");
+			facade.setArtifactId(yasjfFacadeA);
+			facade.setSystemPath(pathToJars + "/" + yasjfFacadeA + "-" + yasjfV + "-jar-with-dependencies.jar");
+			model.addDependency(facade);
+
+			//Implem
 			target.setGroupId(outGroupId);
 			target.setArtifactId(outArtifactId);
 			target.setVersion(outVersion);

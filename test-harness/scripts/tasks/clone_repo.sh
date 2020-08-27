@@ -10,6 +10,7 @@ PARAM=$(cat $IN)
 echo "task: $TASK_NAME with $PARAM"
 
 commit=$(cat $IN | jq -r .commit)
+
 REPO=$(cat $IN | jq -r .repo)
 URL=$(cat $IN | jq -r .url)
 
@@ -18,7 +19,7 @@ SUCESS="true"
 #Get code
 if [[ ! -d $REPO ]]
 then
-	git clone $URL
+	GIT_TERMINAL_PROMPT=0 git clone $URL
 	if [ $? -ne 0 ]; then
 		exit -1
 	fi
@@ -28,6 +29,10 @@ fi
 cd $REPO
 if [ $? -ne 0 ]; then
 	exit -1
+fi
+
+if [ "$commit" == "*" ]; then
+	commit=$(git log --format="%H" -n 1)
 fi
 
 git checkout $commit
@@ -41,6 +46,6 @@ then
 	rm $OUT
 fi
 
-echo "{\"sucess\":true}" > $OUT
+echo "{\"sucess\":true,\"commit\":\"$commit\"}" > ../$OUT
 
 #Write results in $OUT
