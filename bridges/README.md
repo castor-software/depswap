@@ -46,6 +46,7 @@
  * [johnzon](http://johnzon.apache.org/)
  * [genson](http://genson.io/#)
  * [JSON](https://repo.progsbase.com/repoviewer/no.inductive.idea10.programs/JSON/latest/)
+ * [json-B](https://github.com/nadirhamid/json-b) c / JNI
 
 ## Related
 
