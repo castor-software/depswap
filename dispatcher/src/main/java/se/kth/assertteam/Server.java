@@ -23,8 +23,8 @@ public class Server {
 		//ParseArguments
 		int SERVER_PORT = 8090;
 		//String inputPath = "/home/nharrand/Documents/depswap/dispatcher/src/test/resources/test-2.csv";
-		String inputPath = "/home/nharrand/Documents/depswap/dispatcher/src/test/resources/dataset-small-json-simple-1.1.1.csv";
-
+		//String inputPath = "/home/nharrand/Documents/depswap/dispatcher/src/test/resources/dataset-small-json-simple-1.1.1.csv";
+		String inputPath = "../data/maven_graph_json-simple.csv";
 		File logs;
 		File results;
 		JSONParser p = new JSONParser();
