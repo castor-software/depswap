@@ -62,4 +62,9 @@ public class JArrayImpl extends Json.ArrayJson implements JArray {
 	public void YASJF4J_remove(int i) throws JException {
 		remove(i);
 	}
+
+	@Override
+	public String YASJF4J_toString() {
+		return toString();
+	}
 }

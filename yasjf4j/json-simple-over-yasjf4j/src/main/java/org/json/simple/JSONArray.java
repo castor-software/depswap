@@ -333,8 +333,4 @@ public class JSONArray implements List<Object>, JSONAware, JSONStreamAware {
 	public String toString() {
 		return json.YASJF4J_toString();
 	}
-
-	@Override protected void finalize() {
-		System.out.println(this + " was finalized!");
-	}
 }

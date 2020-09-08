@@ -3,6 +3,7 @@ package se.kth.castor.yasjf4j;
 
 
 import com.beust.klaxon.JsonArray;
+import com.beust.klaxon.Klaxon;
 import com.beust.klaxon.Parser;
 
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ import java.util.Map;
 public class JArrayImpl extends ArrayList implements JArray {
 
 	static Parser parser = new Parser();
+	static Klaxon klaxon = new Klaxon();
 
 	public JArrayImpl() {}
 
@@ -63,5 +65,10 @@ public class JArrayImpl extends ArrayList implements JArray {
 	@Override
 	public void YASJF4J_remove(int i) throws JException {
 		remove(i);
+	}
+
+	@Override
+	public String YASJF4J_toString() {
+		return klaxon.toJsonString(this);
 	}
 }

@@ -4,6 +4,7 @@ package se.kth.castor.yasjf4j;
 
 
 import com.beust.klaxon.JsonObject;
+import com.beust.klaxon.Klaxon;
 import com.beust.klaxon.Parser;
 
 import java.util.HashMap;
@@ -14,6 +15,7 @@ import java.util.Set;
 public class JObjectImpl extends HashMap implements JObject {
 
 	static Parser parser = new Parser();
+	static Klaxon klaxon = new Klaxon();
 
 	public JObjectImpl() {
 	}
@@ -63,5 +65,10 @@ public class JObjectImpl extends HashMap implements JObject {
 	@Override
 	public void YASJF4J_remove(String s) throws JException {
 		remove(s);
+	}
+
+	@Override
+	public String YASJF4J_toString() {
+		return klaxon.toJsonString(this);
 	}
 }
