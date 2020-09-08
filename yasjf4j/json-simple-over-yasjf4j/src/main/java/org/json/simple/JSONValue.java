@@ -1,12 +1,15 @@
 package org.json.simple;
 
 
+import org.apache.commons.lang3.ArrayUtils;
 import se.kth.castor.yasjf4j.JArray;
 import se.kth.castor.yasjf4j.JException;
 import se.kth.castor.yasjf4j.JFactory;
 import se.kth.castor.yasjf4j.JObject;
 
 import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -66,7 +69,7 @@ public class JSONValue {
 	}
 
 
-	public static String toJSONString(Object value){
+	public static String toJSONString(Object value) {
 		if(value == null)
 			return "null";
 
@@ -106,7 +109,46 @@ public class JSONValue {
 			//return JSONArray.toJSONString((List) value);
 		}
 
+		if(value.getClass().isArray()) {
+			//value.getClass().getComponentType().isPrimitive();
+			//Object[] o = (Object[]) value;
+			//Arrays.asList(value);
+			return new JSONArray(autoBox(value)).toString();
+
+		}
+
 		return value.toString();
+	}
+
+	public static List autoBox(Object value) {
+		if(value.getClass().getComponentType().isPrimitive()) {
+			if(value.getClass().getComponentType() == boolean.class) {
+				return Arrays.asList(ArrayUtils.toObject(((boolean[]) value)));
+			} else if(value.getClass().getComponentType() == byte.class) {
+				return Arrays.asList(ArrayUtils.toObject(((byte[]) value)));
+			} else if(value.getClass().getComponentType() == char.class) {
+				return Arrays.asList(ArrayUtils.toObject(((char[]) value)));
+			} else if(value.getClass().getComponentType() == short.class) {
+				return Arrays.asList(ArrayUtils.toObject(((short[]) value)));
+			} else if(value.getClass().getComponentType() == int.class) {
+				return Arrays.asList(ArrayUtils.toObject(((int[]) value)));
+			} else if(value.getClass().getComponentType() == long.class) {
+				return Arrays.asList(ArrayUtils.toObject(((long[]) value)));
+			} else if(value.getClass().getComponentType() == float.class) {
+				return Arrays.asList(ArrayUtils.toObject(((float[]) value)));
+			} else {
+				return Arrays.asList(ArrayUtils.toObject(((double[]) value)));
+			}
+		} else if (value.getClass().getComponentType().isArray()) {
+			List<List> metalist = new ArrayList<>();
+			Object[] ar = ((Object[]) value);
+			for(int i = 0; i < ar.length; i++) {
+				metalist.add(autoBox(ar[i]));
+			}
+			return metalist;
+		} else {
+			return Arrays.asList(((Object[]) value));
+		}
 	}
 
 	public static Object parse(String s) {
@@ -127,5 +169,17 @@ public class JSONValue {
 
 	public static void writeJSONString(Object o, StringWriter out) {
 		out.write(toJSONString(o));
+	}
+
+	public static Object shield(Object o) {
+		if (o instanceof JObject) return new JSONObject((JObject) o);
+		else if (o instanceof JArray) return new JSONArray((JArray) o);
+		else return o;
+	}
+
+	public static Object unshield(Object o) {
+		if (o instanceof JSONObject) return ((JSONObject) o).json;
+		else if (o instanceof JSONArray) return ((JSONArray) o).json;
+		else return o;
 	}
 }

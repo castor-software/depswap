@@ -25,3 +25,14 @@
  * json depends on dependencies that do not exist on maven central, marks them as compile and needs them at runtime.
 
  * scala and kotlin have different keywords, default is not one kotlin's but is for java
+
+## Using original test suites to test bridges
+
+```java
+		s="[5,,2]";
+		obj=JSONValue.parse(s);
+		assertEquals("[5,2]",obj.toString());
+```
+
+Order of entries?
+ParseException position?

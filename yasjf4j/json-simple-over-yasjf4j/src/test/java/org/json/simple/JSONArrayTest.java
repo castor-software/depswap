@@ -60,7 +60,7 @@ public class JSONArrayTest extends TestCase {
 		assertTrue(jsonArray.containsAll(parsedArray));
 		assertEquals(2, jsonArray.size());
 	}
-/*
+
 	public void testByteArrayToString() throws IOException {
 		assertEquals("null", JSONArray.toJSONString((byte[])null));
 		assertEquals("[]", JSONArray.toJSONString(new byte[0]));
@@ -285,5 +285,5 @@ public class JSONArrayTest extends TestCase {
 		JSONArray.writeJSONString(new Object[] { "Hello", new Integer(12), new int[] { 1, 2, 3} }, writer);
 		assertEquals("[\"Hello\",12,[1,2,3]]", writer.toString());
 	}
-	*/
+
 }

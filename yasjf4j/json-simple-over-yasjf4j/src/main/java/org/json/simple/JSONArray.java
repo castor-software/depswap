@@ -1,5 +1,6 @@
 package org.json.simple;
 
+import org.json.simple.parser.ParseException;
 import se.kth.castor.yasjf4j.JArray;
 import se.kth.castor.yasjf4j.JException;
 import se.kth.castor.yasjf4j.JFactory;
@@ -7,6 +8,7 @@ import se.kth.castor.yasjf4j.JObject;
 import se.kth.castor.yasjf4j.util.Utils;
 
 import java.io.IOException;
+import java.io.StringWriter;
 import java.io.Writer;
 import java.util.Collection;
 import java.util.Iterator;
@@ -39,11 +41,11 @@ public class JSONArray implements List<Object>, JSONAware, JSONStreamAware {
 		}
 	}
 
-	public JSONArray(String in) {
+	public JSONArray(String in) throws ParseException {
 		try {
 			json = (JArray) JFactory.parse(in);
 		} catch (JException e) {
-			e.printStackTrace();
+			throw new ParseException(ParseException.ERROR_UNEXPECTED_TOKEN);
 		}
 	}
 
@@ -71,6 +73,14 @@ public class JSONArray implements List<Object>, JSONAware, JSONStreamAware {
 	public static String toJSONString(List list) {
 		JSONArray ar = new JSONArray(list);
 		return ar.toJSONString();
+	}
+
+	public static String toJSONString(Object o) {
+		return JSONValue.toJSONString(o);
+	}
+
+	public static void writeJSONString(Object o, StringWriter w) {
+		JSONValue.writeJSONString(o,w);
 	}
 
 	@Override
@@ -110,7 +120,7 @@ public class JSONArray implements List<Object>, JSONAware, JSONStreamAware {
 			public Object next() {
 				try {
 
-					return jsonA.YASJF4J_get(index++);
+					return JSONValue.shield(jsonA.YASJF4J_get(index++));
 				} catch (JException e) {
 					return null;
 				}
@@ -123,7 +133,7 @@ public class JSONArray implements List<Object>, JSONAware, JSONStreamAware {
 		Object[] res = new Object[json.YASJF4J_size()];
 		for(int i = 0; i < json.YASJF4J_size(); i++) {
 			try {
-				res[i] = json.YASJF4J_get(i++);
+				res[i] = JSONValue.shield(json.YASJF4J_get(i++));
 			} catch (JException e) {
 				e.printStackTrace();
 			}
@@ -273,7 +283,10 @@ public class JSONArray implements List<Object>, JSONAware, JSONStreamAware {
 
 	@Override
 	public boolean containsAll(Collection c) {
-		throw new UnsupportedOperationException();
+		for(Object o: c) {
+			if(!contains(o)) return false;
+		}
+		return true;
 	}
 
 	@Override
@@ -309,7 +322,7 @@ public class JSONArray implements List<Object>, JSONAware, JSONStreamAware {
 	@Override
 	public Object get(int index) {
 		try {
-			return json.YASJF4J_get(index);
+			return JSONValue.shield(json.YASJF4J_get(index));
 		} catch (JException e) {
 			e.printStackTrace();
 			return null;

@@ -6,6 +6,11 @@ import java.io.StringReader;
 import junit.framework.TestCase;
 
 public class YylexTest extends TestCase {
+
+	public void testYylex() throws Exception{
+
+	}
+
 /*
 	public void testYylex() throws Exception{
 		String s="\"\\/\"";

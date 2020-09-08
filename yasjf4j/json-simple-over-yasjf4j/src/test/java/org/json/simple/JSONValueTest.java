@@ -5,7 +5,7 @@ import java.io.StringWriter;
 
 import junit.framework.TestCase;
 
-public class JSONValueTest extends TestCase {/*
+public class JSONValueTest extends TestCase {
 	public void testByteArrayToString() throws IOException {
 		assertEquals("null", JSONValue.toJSONString((byte[])null));
 		assertEquals("[]", JSONValue.toJSONString(new byte[0]));
@@ -30,7 +30,7 @@ public class JSONValueTest extends TestCase {/*
 		JSONValue.writeJSONString(new byte[] { -7, 22, 86, -99 }, writer);
 		assertEquals("[-7,22,86,-99]", writer.toString());
 	}
-	
+
 	public void testShortArrayToString() throws IOException {
 		assertEquals("null", JSONValue.toJSONString((short[])null));
 		assertEquals("[]", JSONValue.toJSONString(new short[0]));
@@ -252,5 +252,5 @@ public class JSONValueTest extends TestCase {/*
 		writer = new StringWriter();
 		JSONValue.writeJSONString(nestedStringArray, writer);
 		assertEquals(expectedNestedStringString, writer.toString());
-	}*/
+	}
 }

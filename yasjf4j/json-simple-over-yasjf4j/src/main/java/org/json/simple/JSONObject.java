@@ -1,10 +1,13 @@
 package org.json.simple;
 
+import org.json.simple.parser.ParseException;
 import se.kth.castor.yasjf4j.JArray;
+import se.kth.castor.yasjf4j.JError;
 import se.kth.castor.yasjf4j.JException;
 import se.kth.castor.yasjf4j.JFactory;
 import se.kth.castor.yasjf4j.JObject;
 import se.kth.castor.yasjf4j.util.Utils;
+import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -25,7 +28,7 @@ public class JSONObject implements Map<Object,Object>, JSONAware, JSONStreamAwar
 		json = JFactory.createJObject();
 		in.forEach((k,v) -> {
 			try {
-				json.YASJF4J_put(k.toString(),v);
+				json.YASJF4J_put(k.toString(),JSONValue.unshield(v));
 			} catch (JException e) {
 				e.printStackTrace();
 			}
@@ -33,11 +36,11 @@ public class JSONObject implements Map<Object,Object>, JSONAware, JSONStreamAwar
 		//new org.json.JSONObject(in);
 	}
 
-	public JSONObject(String in) {
+	public JSONObject(String in) throws ParseException {
 		try {
 			json = (JObject) JFactory.parse(in);
 		} catch (JException e) {
-			e.printStackTrace();
+			throw new ParseException(ParseException.ERROR_UNEXPECTED_TOKEN);
 		}
 	}
 
@@ -46,11 +49,12 @@ public class JSONObject implements Map<Object,Object>, JSONAware, JSONStreamAwar
 	}
 
 	public JSONObject(JObject o) {
-		try {
+		json = o;
+		/*try {
 			json = (JObject) Utils.deepTranslate(o, JSONObject::new, JSONArray::new);
 		} catch (JException e) {
 			e.printStackTrace();
-		}
+		}*/
 	}
 
 	public static String toJSONString(Map map) {
@@ -76,7 +80,7 @@ public class JSONObject implements Map<Object,Object>, JSONAware, JSONStreamAwar
 	public boolean containsValue(Object value) {
 		for(String key: json.YASJF4J_getKeys()) {
 			try {
-				if (json.YASJF4J_get(key).equals(value)) return true;
+				if (json.YASJF4J_get(key).equals(JSONValue.unshield(value))) return true;
 			} catch (JException e) {}
 		}
 		return false;
@@ -85,7 +89,7 @@ public class JSONObject implements Map<Object,Object>, JSONAware, JSONStreamAwar
 	@Override
 	public Object get(Object key) {
 		try {
-			return json.YASJF4J_get(key.toString());
+			return JSONValue.shield(json.YASJF4J_get(key.toString()));
 		} catch (JException e) {
 			return null;
 		}
@@ -98,7 +102,7 @@ public class JSONObject implements Map<Object,Object>, JSONAware, JSONStreamAwar
 			if (json.YASJF4J_getKeys().contains(key.toString()))
 				v = json.YASJF4J_get(key.toString());
 
-			json.YASJF4J_put(key.toString(), value);
+			json.YASJF4J_put(key.toString(), JSONValue.unshield(value));
 			return v;
 		} catch (JException e) {
 			return null;
@@ -123,7 +127,7 @@ public class JSONObject implements Map<Object,Object>, JSONAware, JSONStreamAwar
 	public void putAll(Map m) {
 		for(Object k: m.keySet()) {
 			try {
-				json.YASJF4J_put(k.toString(),m.get(k));
+				json.YASJF4J_put(k.toString(),JSONValue.unshield(m.get(k)));
 			} catch (JException e) {
 				e.printStackTrace();
 			}
@@ -145,7 +149,7 @@ public class JSONObject implements Map<Object,Object>, JSONAware, JSONStreamAwar
 		List values = new ArrayList<>();
 		for(String k: json.YASJF4J_getKeys()) {
 			try {
-				values.add(json.YASJF4J_get(k));
+				values.add(JSONValue.shield(json.YASJF4J_get(k)));
 			} catch (JException e) {
 				e.printStackTrace();
 			}
@@ -158,7 +162,7 @@ public class JSONObject implements Map<Object,Object>, JSONAware, JSONStreamAwar
 		HashSet<Entry<Object, Object>> res = new HashSet<>();
 		for(String key: json.YASJF4J_getKeys()) {
 			try {
-				res.add(new HashMap.SimpleEntry<>(key, json.YASJF4J_get(key)));
+				res.add(new HashMap.SimpleEntry<>(key, JSONValue.shield(json.YASJF4J_get(key))));
 			} catch (JException e) {
 				e.printStackTrace();
 			}
