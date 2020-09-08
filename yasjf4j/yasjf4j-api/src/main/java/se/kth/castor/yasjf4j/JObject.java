@@ -12,4 +12,6 @@ public interface JObject {
 
 	void YASJF4J_remove(String key) throws JException;
 
+	String YASJF4J_toString();
+
 }

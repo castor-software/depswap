@@ -7,6 +7,17 @@ import static org.junit.Assert.*;
 public class JFactoryProviderImplTest {
 
 	@Test
+	public void testTreeConsistency() throws Exception {
+
+		String sObject ="{\"1\":{\"2\":{\"3\":{\"4\":[5,{\"6\":7}]}}}}";
+		JObject o = (JObject) JFactory.parse(sObject);
+
+
+		String sArray ="[0,{\"1\":{\"2\":{\"3\":{\"4\":[5,{\"6\":7}]}}}}]";
+		JArray a = (JArray) JFactory.parse(sArray);
+	}
+
+	@Test
 	public void testServiceProvider() throws Exception {
 
 		JObject obj = JFactory.createJObject();

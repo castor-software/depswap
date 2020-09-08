@@ -6,6 +6,7 @@ import org.json.simple.JSONObject;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
+import java.io.StringReader;
 
 public class JSONParser {
 	public JSONParser() {
@@ -19,6 +20,53 @@ public class JSONParser {
 		} else if (first == '[') {
 			return new JSONArray(in);
 		} else {
+			throw new ParseException(0);
+		}
+	}
+
+	public Object parse(String s, ContainerFactory containerFactory) throws ParseException {
+		return parse(s);
+	}
+
+	public Object parse(Reader in, ContainerFactory containerFactory) throws IOException, ParseException {
+		StringBuilder builder = new StringBuilder();
+
+		BufferedReader br = new BufferedReader(in);
+		String line;
+		while ((line = br.readLine()) != null){
+			builder.append(line);
+		}
+		String raw = builder.toString();
+		char first = firstNonWhitChar(raw);
+		Object json = null;
+		//try {
+		if (first == '{') {
+			json = new JSONObject(raw);
+		} else if (first == '[') {
+			json = new JSONArray(raw);
+		} else {
+			throw new ParseException(0);
+		}
+		return json;
+
+	}
+
+	public void parse(String raw, ContentHandler myHandler) throws ParseException {
+		char first = firstNonWhitChar(raw);
+		Object json = null;
+		//try {
+		if (first == '{') {
+			json = new JSONObject(raw);
+		} else if (first == '[') {
+			json = new JSONArray(raw);
+		} else {
+			throw new ParseException(0);
+		}
+
+
+		try {
+			read(json, myHandler);
+		} catch (IOException e) {
 			throw new ParseException(0);
 		}
 	}
@@ -98,5 +146,9 @@ public class JSONParser {
 			return contentHandler.primitive(obj);
 		}
 		return false;
+	}
+
+	public void reset() {
+
 	}
 }

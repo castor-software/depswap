@@ -11,4 +11,6 @@ public interface JArray {
 	void YASJF4J_add(Object o) throws JException;
 
 	void YASJF4J_remove(int i) throws JException;
+
+	String YASJF4J_toString();
 }

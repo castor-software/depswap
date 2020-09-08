@@ -3,6 +3,7 @@ package se.kth.castor.yasjf4j;
 
 import org.kopitubruk.util.json.JSONException;
 import org.kopitubruk.util.json.JSONParser;
+import org.kopitubruk.util.json.JSONUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,5 +84,10 @@ public class JArrayImpl extends ArrayList implements JArray {
 	@Override
 	public void YASJF4J_remove(int i) throws JException {
 		remove(i);
+	}
+
+	@Override
+	public String YASJF4J_toString() {
+		return JSONUtil.toJSON(this);
 	}
 }

@@ -1,8 +1,10 @@
 package org.json.simple;
 
+import se.kth.castor.yasjf4j.JArray;
 import se.kth.castor.yasjf4j.JException;
 import se.kth.castor.yasjf4j.JFactory;
 import se.kth.castor.yasjf4j.JObject;
+import se.kth.castor.yasjf4j.util.Utils;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -44,7 +46,15 @@ public class JSONObject implements Map<Object,Object>, JSONAware, JSONStreamAwar
 	}
 
 	public JSONObject(JObject o) {
-		json = o;
+		try {
+			json = (JObject) Utils.deepTranslate(o, JSONObject::new, JSONArray::new);
+		} catch (JException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static String toJSONString(Map map) {
+		return new JSONObject(map).toJSONString();
 	}
 
 	@Override
@@ -158,12 +168,12 @@ public class JSONObject implements Map<Object,Object>, JSONAware, JSONStreamAwar
 
 	@Override
 	public String toString() {
-		return json.toString();
+		return json.YASJF4J_toString();
 	}
 
 	@Override
 	public String toJSONString() {
-		return json.toString();
+		return json.YASJF4J_toString();
 	}
 
 	@Override

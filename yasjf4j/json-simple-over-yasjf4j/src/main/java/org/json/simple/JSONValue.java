@@ -1,6 +1,12 @@
 package org.json.simple;
 
 
+import se.kth.castor.yasjf4j.JArray;
+import se.kth.castor.yasjf4j.JException;
+import se.kth.castor.yasjf4j.JFactory;
+import se.kth.castor.yasjf4j.JObject;
+
+import java.io.StringWriter;
 import java.util.List;
 import java.util.Map;
 
@@ -101,5 +107,25 @@ public class JSONValue {
 		}
 
 		return value.toString();
+	}
+
+	public static Object parse(String s) {
+		try {
+			Object r = JFactory.parse(s);;
+			if(r instanceof JObject) {
+				return new JSONObject((JObject) r);
+			} else if (r instanceof JArray) {
+				return new JSONArray((JArray) r);
+			} else {
+				return r;
+			}
+		} catch (JException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public static void writeJSONString(Object o, StringWriter out) {
+		out.write(toJSONString(o));
 	}
 }

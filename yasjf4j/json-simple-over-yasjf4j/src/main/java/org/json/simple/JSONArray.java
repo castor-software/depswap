@@ -3,6 +3,8 @@ package org.json.simple;
 import se.kth.castor.yasjf4j.JArray;
 import se.kth.castor.yasjf4j.JException;
 import se.kth.castor.yasjf4j.JFactory;
+import se.kth.castor.yasjf4j.JObject;
+import se.kth.castor.yasjf4j.util.Utils;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -10,11 +12,23 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Set;
 
 public class JSONArray implements List<Object>, JSONAware, JSONStreamAware {
 	JArray json;
 
 	public JSONArray(List in) {
+		json = JFactory.createJArray();
+		for(Object o: in) {
+			try {
+				json.YASJF4J_add(o);
+			} catch (JException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public JSONArray(Set in) {
 		json = JFactory.createJArray();
 		for(Object o: in) {
 			try {
@@ -39,6 +53,24 @@ public class JSONArray implements List<Object>, JSONAware, JSONStreamAware {
 
 	public JSONArray(JArray a) {
 		json = a;
+		/*try {
+			json = (JArray) Utils.deepTranslate(a, JSONObject::new, JSONArray::new);
+			System.out.println("json contains null? " + containsNull());
+		} catch (JException e) {
+			e.printStackTrace();
+		}*/
+	}
+
+	public boolean containsNull() throws JException {
+		for(int i =0; i < json.YASJF4J_size(); i++) {
+			if(json.YASJF4J_get(i) == null) return true;
+		}
+		return false;
+	}
+
+	public static String toJSONString(List list) {
+		JSONArray ar = new JSONArray(list);
+		return ar.toJSONString();
 	}
 
 	@Override
@@ -77,6 +109,7 @@ public class JSONArray implements List<Object>, JSONAware, JSONStreamAware {
 			@Override
 			public Object next() {
 				try {
+
 					return jsonA.YASJF4J_get(index++);
 				} catch (JException e) {
 					return null;
@@ -250,12 +283,12 @@ public class JSONArray implements List<Object>, JSONAware, JSONStreamAware {
 
 	@Override
 	public String toJSONString() {
-		return json.toString();
+		return json.YASJF4J_toString();
 	}
 
 	@Override
 	public void writeJSONString(Writer out) throws IOException {
-		out.write(json.toString());
+		out.write(json.YASJF4J_toString());
 	}
 
 
@@ -285,6 +318,10 @@ public class JSONArray implements List<Object>, JSONAware, JSONStreamAware {
 
 	@Override
 	public String toString() {
-		return json.toString();
+		return json.YASJF4J_toString();
+	}
+
+	@Override protected void finalize() {
+		System.out.println(this + " was finalized!");
 	}
 }

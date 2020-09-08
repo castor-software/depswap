@@ -4,6 +4,7 @@ package se.kth.castor.yasjf4j;
 
 import org.kopitubruk.util.json.JSONException;
 import org.kopitubruk.util.json.JSONParser;
+import org.kopitubruk.util.json.JSONUtil;
 
 import java.util.HashMap;
 import java.util.List;
@@ -76,5 +77,10 @@ public class JObjectImpl extends HashMap implements JObject {
 	@Override
 	public void YASJF4J_remove(String s) throws JException {
 		remove(s);
+	}
+
+	@Override
+	public String YASJF4J_toString() {
+		return JSONUtil.toJSON(this);
 	}
 }

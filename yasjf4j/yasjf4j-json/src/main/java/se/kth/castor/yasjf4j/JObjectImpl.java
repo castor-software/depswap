@@ -75,4 +75,9 @@ public class JObjectImpl extends JSONObject implements JObject {
 	public void YASJF4J_remove(String s) throws JException {
 		remove(s);
 	}
+
+	@Override
+	public String YASJF4J_toString() {
+		return toString();
+	}
 }
