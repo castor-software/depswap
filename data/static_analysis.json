@@ -1,0 +1,65 @@
+{
+  "steps": [
+    {
+      "step": "clone_repo",
+      "parameters": [
+        "commit",
+        "repo",
+        "url"
+      ],
+      "output": [
+        "commit"
+      ]
+    },
+    {
+      "step": "find_pom",
+      "parameters": [
+        "repo"
+      ],
+      "output": [
+        "repo",
+		"o_repo",
+		"pom"
+      ]
+    },
+    {
+      "step": "cd",
+      "parameters": [
+        "repo"
+      ],
+      "output": []
+    },
+    {
+      "step": "mvn_compile",
+      "parameters": [],
+      "output": []
+    },
+    {
+      "step": "analyze_static_usages",
+      "parameters": [
+        "packages"
+      ],
+      "output": [
+        "static-usages"
+      ]
+    },
+    {
+      "step": "count_dep_to_replace",
+      "parameters": [
+        "g",
+        "a"
+      ],
+      "output": [
+        "nb_dependencies_to_replaced"
+      ]
+    },
+    {
+      "step": "mvn_test",
+      "parameters": [],
+      "output": [
+        "nb_test"
+      ]
+    }
+  ]
+}
+
