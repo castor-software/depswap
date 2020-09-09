@@ -33,7 +33,7 @@ public class Merger {
 		JSONParser p = new JSONParser();
 		JSONArray a = (JSONArray) p.parse(readFile(in));
 
-		Map<String, Map<String, Integer>> heatmap = new HashMap<>();
+		Map<String, Map<String, Map<String, Integer>>> heatmap = new HashMap<>();
 
 
 
@@ -42,19 +42,31 @@ public class Merger {
 			if(o instanceof JSONObject) {
 				for (Object packO : ((JSONObject) o).keySet()) {
 					String pack = (String) packO;
-					Map<String, Integer> existingPack = heatmap.computeIfAbsent(pack, s -> new HashMap<>());
+					Map<String, Map<String, Integer>> existingPack = heatmap.computeIfAbsent(pack, s -> new HashMap<>());
 					for(Object methodO: ((JSONObject) ((JSONObject) o).get(pack)).keySet()) {
-						String m = (String) methodO;
-						Integer c = existingPack.computeIfAbsent(m, s -> 0);
-						c++;
-						existingPack.put(m,c);
+						String mr = (String) methodO;
+						String[] parts = mr.split("\\.");
+
+						String cl = parts[0];
+
+						String m = parts.length > 1 ? parts[1] : cl ;
+
+
+
+						Map<String, Integer> c = existingPack.computeIfAbsent(cl, s -> new HashMap<>());
+						Integer nb = c.computeIfAbsent(m, s -> 0);
+						nb++;
+						c.put(m,nb);
 					}
 				}
 			}
 		}
 
 		System.out.println(JSONObject.toJSONString(heatmap));
-		JSONObject.writeJSONString(heatmap, new BufferedWriter(new FileWriter(out)));
+		Writer w = new BufferedWriter(new FileWriter(out));
+		JSONObject.writeJSONString(heatmap, w);
+		w.flush();
+		w.close();
 	}
 
 	public static String readFile(File f) {
