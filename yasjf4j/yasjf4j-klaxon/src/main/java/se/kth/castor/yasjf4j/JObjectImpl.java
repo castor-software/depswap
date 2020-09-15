@@ -21,29 +21,37 @@ public class JObjectImpl extends HashMap implements JObject {
 	}
 
 	public JObjectImpl(Map json) throws JException {
-		for(Object key: json.keySet()) {
-			Object el = json.get(key);
-			if(el instanceof Map) {
-				put(key, new JObjectImpl((Map) el));
-			} else if (el instanceof List) {
-				put(key, new JArrayImpl((List) el));
-			} else {
-				put(key, el);
+		try {
+			for (Object key : json.keySet()) {
+				Object el = json.get(key);
+				if (el instanceof Map) {
+					put(key, new JObjectImpl((Map) el));
+				} else if (el instanceof List) {
+					put(key, new JArrayImpl((List) el));
+				} else {
+					put(key, el);
+				}
 			}
+		} catch (Exception e) {
+			throw new JException();
 		}
 	}
 
 	public JObjectImpl(String json) throws JException {
-		Map o = (JsonObject) JObjectImpl.parser.parse(new StringBuilder(json));
-		for(Object key: o.keySet()) {
-			Object el = o.get(key);
-			if(el instanceof Map) {
-				put(key, new JObjectImpl((Map) el));
-			} else if (el instanceof List) {
-				put(key, new JArrayImpl((List) el));
-			} else {
-				put(key, el);
+		try {
+			Map o = (JsonObject) JObjectImpl.parser.parse(new StringBuilder(json));
+			for(Object key: o.keySet()) {
+				Object el = o.get(key);
+				if(el instanceof Map) {
+					put(key, new JObjectImpl((Map) el));
+				} else if (el instanceof List) {
+					put(key, new JArrayImpl((List) el));
+				} else {
+					put(key, el);
+				}
 			}
+		} catch (Exception e) {
+			throw new JException();
 		}
 	}
 

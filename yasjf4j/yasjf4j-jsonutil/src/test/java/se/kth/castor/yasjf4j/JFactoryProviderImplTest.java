@@ -9,7 +9,7 @@ public class JFactoryProviderImplTest {
 	@Test
 	public void testObjectTreeConsistency() throws Exception {
 
-		String sObject = "{\"1\":{\"2\":{\"3\":{\"4\":[5,{\"6\":7}]}}}}";
+		String sObject = "{\"a\":{\"b\":{\"c\":{\"d\":[5,{\"e\":7}]}}}}";
 		JObject o = (JObject) JFactory.parse(sObject);
 		assertEquals(sObject, o.YASJF4J_toString().replace(" ", "").replace("\n", ""));
 	}
@@ -17,7 +17,7 @@ public class JFactoryProviderImplTest {
 
 	@Test
 	public void testArrayTreeConsistency() throws Exception {
-		String sArray ="[0,{\"1\":{\"2\":{\"3\":{\"4\":[5,{\"6\":7}]}}}}]";
+		String sArray ="[0,{\"a\":{\"b\":{\"v\":{\"d\":[5,{\"e\":7}]}}}}]";
 		JArray a = (JArray) JFactory.parse(sArray);
 		assertEquals(sArray, a.YASJF4J_toString().replace(" ","").replace("\n",""));
 	}

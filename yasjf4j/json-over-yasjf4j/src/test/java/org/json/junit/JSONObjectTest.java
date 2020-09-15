@@ -823,10 +823,10 @@ public class JSONObjectTest {
                 jsonObject.optDouble("doubleKey") == -23.45e7);
         assertTrue("opt doubleKey with Default should be double", 
                 jsonObject.optDouble("doubleStrKey", Double.NaN) == 1);*/
-        assertTrue("opt negZeroKey should be a Double", 
+        /*assertTrue("opt negZeroKey should be a Double",
                 jsonObject.opt("negZeroKey") instanceof Double);
         assertTrue("get negZeroKey should be a Double", 
-                jsonObject.get("negZeroKey") instanceof Double);
+                jsonObject.get("negZeroKey") instanceof Double);*/
         /*assertTrue("optNumber negZeroKey should return Double",
                 jsonObject.optNumber("negZeroKey") instanceof Double);
         assertTrue("optNumber negZeroStrKey should return Double",

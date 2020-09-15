@@ -9,24 +9,32 @@ import java.util.Map;
 public class JArrayImpl extends Json.ArrayJson implements JArray {
 
 	public JArrayImpl(String json) throws JException {
-		Json a = Json.read(json);
-		fill(a.asList());
+		try {
+			Json a = Json.read(json);
+			fill(a.asList());
+		} catch (Exception e) {
+			throw new JException();
+		}
 	}
 
 	public void fill(List a) throws JException {
-		for(Object el: a) {
-			if(el instanceof Json) {
-				if (((Json) el).isObject())
-					add(new JObjectImpl((Json) el));
-				else if (((Json) el).isArray())
-					add(new JArrayImpl((Json) el));
-				else
+		try {
+			for(Object el: a) {
+				if(el instanceof Json) {
+					if (((Json) el).isObject())
+						add(new JObjectImpl((Json) el));
+					else if (((Json) el).isArray())
+						add(new JArrayImpl((Json) el));
+					else
+						add(el);
+				} else if(el instanceof List) {
+					add(new JArrayImpl((List) el));
+				} else {
 					add(el);
-			} else if(el instanceof List) {
-				add(new JArrayImpl((List) el));
-			} else {
-				add(el);
+				}
 			}
+		} catch (Exception e) {
+			throw new JException();
 		}
 	}
 
@@ -45,7 +53,13 @@ public class JArrayImpl extends Json.ArrayJson implements JArray {
 
 	@Override
 	public Object YASJF4J_get(int i) throws JException {
-		return at(i);
+		Object o = at(i);
+		if(o instanceof NumberJson) {
+			return ((NumberJson) o).val;
+		} else if(o instanceof StringJson) {
+			return ((StringJson) o).asString();
+		}
+		return o;
 	}
 
 	@Override

@@ -10,36 +10,44 @@ import java.util.Set;
 public class JObjectImpl extends Json.ObjectJson implements JObject {
 
 	public JObjectImpl(Json json) throws JException {
-		for(String key: json.asJsonMap().keySet()) {
-			Object el = json.at(key);
-			if(el instanceof Json) {
-				if(((Json) el).isObject())
-					set(key, new JObjectImpl((Json) el));
-				else if(((Json) el).isArray())
-					set(key, new JArrayImpl((Json) el));
-				else
+		try {
+			for(String key: json.asJsonMap().keySet()) {
+				Object el = json.at(key);
+				if(el instanceof Json) {
+					if(((Json) el).isObject())
+						set(key, new JObjectImpl((Json) el));
+					else if(((Json) el).isArray())
+						set(key, new JArrayImpl((Json) el));
+					else
+						set(key, el);
+				} else {
 					set(key, el);
-			} else {
-				set(key, el);
+				}
 			}
+		} catch (Exception e) {
+			throw new JException();
 		}
 	}
 
 
 	public JObjectImpl(String json) throws JException {
-		Json o = Json.read(json);
-		for(String key: o.asJsonMap().keySet()) {
-			Object el = o.at(key);
-			if(el instanceof Json) {
-				if(((Json) el).isObject())
-					set(key, new JObjectImpl((Json) el));
-				else if(((Json) el).isArray())
-					set(key, new JArrayImpl((Json) el));
-				else
+		try {
+			Json o = Json.read(json);
+			for(String key: o.asJsonMap().keySet()) {
+				Object el = o.at(key);
+				if(el instanceof Json) {
+					if(((Json) el).isObject())
+						set(key, new JObjectImpl((Json) el));
+					else if(((Json) el).isArray())
+						set(key, new JArrayImpl((Json) el));
+					else
+						set(key, el);
+				} else {
 					set(key, el);
-			} else {
-				set(key, el);
+				}
 			}
+		} catch (Exception e) {
+			throw new JException();
 		}
 	}
 
@@ -50,7 +58,13 @@ public class JObjectImpl extends Json.ObjectJson implements JObject {
 
 	@Override
 	public Object YASJF4J_get(String s) throws JException {
-		return at(s);
+		Object o = at(s);
+		if(o instanceof NumberJson) {
+			return ((NumberJson) o).val;
+		} else if(o instanceof StringJson) {
+			return ((StringJson) o).asString();
+		}
+		return o;
 	}
 
 	@Override

@@ -18,27 +18,35 @@ public class JArrayImpl extends ArrayList implements JArray {
 	public JArrayImpl() {}
 
 	public JArrayImpl(String json) throws JException {
-		List a = (JsonArray) parser.parse(new StringBuilder(json));
-		for(Object el: a) {
-			if(el instanceof Map) {
-				add(new JObjectImpl((Map) el));
-			} else if (el instanceof List) {
-				add(new JArrayImpl((List) el));
-			} else {
-				add(el);
+		try {
+			List a = (JsonArray) parser.parse(new StringBuilder(json));
+			for(Object el: a) {
+				if(el instanceof Map) {
+					add(new JObjectImpl((Map) el));
+				} else if (el instanceof List) {
+					add(new JArrayImpl((List) el));
+				} else {
+					add(el);
+				}
 			}
+		} catch (Exception e) {
+			throw new JException();
 		}
 	}
 
 	public JArrayImpl(List json) throws JException {
-		for(Object el: json) {
-			if(el instanceof Map) {
-				add(new JObjectImpl((Map) el));
-			} else if (el instanceof List) {
-				add(new JArrayImpl((List) el));
-			} else {
-				add(el);
+		try {
+			for(Object el: json) {
+				if(el instanceof Map) {
+					add(new JObjectImpl((Map) el));
+				} else if (el instanceof List) {
+					add(new JArrayImpl((List) el));
+				} else {
+					add(el);
+				}
 			}
+		} catch (Exception e) {
+			throw new JException();
 		}
 	}
 

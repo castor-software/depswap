@@ -90,3 +90,10 @@ Order of entries?
 Might be worth it to transform assertion that test hard coded string to equivalence check.
 
 ParseException position?
+
+get(non existing or null) => null or exception?
+escapement?
+encoding?
+Duplicate keys?
+
+`assertEquals(String, String)` should be replaced by `assertEquivalent(String, String)`

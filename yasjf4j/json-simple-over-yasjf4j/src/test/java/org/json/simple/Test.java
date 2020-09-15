@@ -21,6 +21,8 @@ import org.json.simple.parser.ContentHandler;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import static org.json.simple.JSONTestUtils.assertEquivalent;
+
 /**
  * @author FangYidong<fangyidong@yahoo.com.cn>
  */
@@ -79,20 +81,20 @@ public class Test extends TestCase {
 		System.out.println(array.get(1));
 		System.out.println();
 		assertTranslated(array);
-		assertEquals("{\"1\":{\"2\":{\"3\":{\"4\":[5,{\"6\":7}]}}}}", array.get(1).toString());
+		assertEquivalent("{\"1\":{\"2\":{\"3\":{\"4\":[5,{\"6\":7}]}}}}", array.get(1).toString());
 
 		JSONObject obj2 = (JSONObject) array.get(1);
 		System.out.println("======field \"1\"==========");
 		System.out.println(obj2.get("1"));
-		assertEquals("{\"2\":{\"3\":{\"4\":[5,{\"6\":7}]}}}", obj2.get("1").toString());
+		assertEquivalent("{\"2\":{\"3\":{\"4\":[5,{\"6\":7}]}}}", obj2.get("1").toString());
 
 		s = "{}";
 		obj = JSONValue.parse(s);
-		assertEquals("{}", obj.toString());
+		assertEquivalent("{}", obj.toString());
 
 		s = "[5,]";
 		obj = JSONValue.parse(s);
-		assertEquals("[5]", obj.toString());
+		assertEquivalent("[5]", obj.toString());
 
 		/*
 		s="[5,,2]";
@@ -178,7 +180,7 @@ public class Test extends TestCase {
 			
 			System.out.println("==toJSONString()==");			
 			System.out.println(JSONValue.toJSONString(json));
-			//assertEquals("{\"first\":123,\"second\":[4,5,6],\"third\":789}", JSONValue.toJSONString(json));
+			assertEquivalent("{\"first\":123,\"second\":[4,5,6],\"third\":789}", JSONValue.toJSONString(json));
 		}
 		catch(ParseException pe){
 			pe.printStackTrace();
@@ -356,21 +358,21 @@ public class Test extends TestCase {
 		System.out.println("======array1==========");
 		System.out.println(array1);
 		System.out.println();
-		if(checkForUnicode) assertEquals("[\"abc\\u0010a\\/\",123,222.123,true]",array1.toString());
+		if(checkForUnicode) assertEquivalent("[\"abc\\u0010a\\/\",123,222.123,true]",array1.toString());
 		
 		JSONObject obj1=new JSONObject();
 		obj1.put("array1",array1);
 		System.out.println("======obj1 with array1===========");
 		System.out.println(obj1);
 		System.out.println();
-		if(checkForUnicode) assertEquals("{\"array1\":[\"abc\\u0010a\\/\",123,222.123,true]}",obj1.toString());
+		if(checkForUnicode) assertEquivalent("{\"array1\":[\"abc\\u0010a\\/\",123,222.123,true]}",obj1.toString());
 		
 		obj1.remove("array1");
 		array1.add(obj1);
 		System.out.println("======array1 with obj1========");
 		System.out.println(array1);
 		System.out.println();
-		if(checkForUnicode) assertEquals("[\"abc\\u0010a\\/\",123,222.123,true,{}]",array1.toString());
+		if(checkForUnicode) assertEquivalent("[\"abc\\u0010a\\/\",123,222.123,true,{}]",array1.toString());
 	
 		List list = new ArrayList();
 		list.add("abc\u0010a/");
@@ -381,14 +383,14 @@ public class Test extends TestCase {
 		System.out.println("======list==========");
 		System.out.println(JSONArray.toJSONString(list));
 		System.out.println();
-		if(checkForUnicode) assertEquals("[\"abc\\u0010a\\/\",123,222.123,true,null]",JSONArray.toJSONString(list));
+		if(checkForUnicode) assertEquivalent("[\"abc\\u0010a\\/\",123,222.123,true,null]",JSONArray.toJSONString(list));
 
 		Map map = new HashMap();
 		map.put("array1",list);
 		System.out.println("======map with list===========");
 		System.out.println(map);
 		System.out.println();
-		if(checkForUnicode) assertEquals("{\"array1\":[\"abc\\u0010a\\/\",123,222.123,true,null]}",JSONObject.toJSONString(map));
+		if(checkForUnicode) assertEquivalent("{\"array1\":[\"abc\\u0010a\\/\",123,222.123,true,null]}",JSONObject.toJSONString(map));
 		
         Map m1 = new LinkedHashMap();
         Map m2 = new LinkedHashMap();
@@ -405,7 +407,7 @@ public class Test extends TestCase {
         String jsonString = JSONValue.toJSONString(l1);
         System.out.println(jsonString);
         if(checkForOrder) {
-	        assertEquals("[{\"k11\":\"v11\",\"k12\":\"v12\",\"k13\":\"v13\"},{\"k21\":\"v21\",\"k22\":\"v22\",\"k23\":\"v23\"}]", jsonString);
+	        assertEquivalent("[{\"k11\":\"v11\",\"k12\":\"v12\",\"k13\":\"v13\"},{\"k21\":\"v21\",\"k22\":\"v22\",\"k23\":\"v23\"}]", jsonString);
         } else {
         	assertTrue(jsonString.contains("\"k11\""));
 	        assertTrue(jsonString.contains("\"v11\""));
@@ -426,7 +428,7 @@ public class Test extends TestCase {
         jsonString = out.toString();
         System.out.println(jsonString);
 		if(checkForOrder) {
-            assertEquals("[{\"k11\":\"v11\",\"k12\":\"v12\",\"k13\":\"v13\"},{\"k21\":\"v21\",\"k22\":\"v22\",\"k23\":\"v23\"}]", jsonString);
+			assertEquivalent("[{\"k11\":\"v11\",\"k12\":\"v12\",\"k13\":\"v13\"},{\"k21\":\"v21\",\"k22\":\"v22\",\"k23\":\"v23\"}]", jsonString);
 		} else {
 			assertTrue(jsonString.contains("\"k11\""));
 			assertTrue(jsonString.contains("\"v11\""));
@@ -459,7 +461,7 @@ public class Test extends TestCase {
         jsonString = out.toString();
         System.out.println(jsonString);
 		if(checkForOrder) {
-            assertEquals("[{\"k11\":\"v11\",\"k12\":\"v12\",\"k13\":\"v13\",\"k14\":{\"k31\":\"v3\",\"k32\":123.45,\"k33\":false,\"k34\":null,\"k35\":[\"vvv\",\"1.23456789123456789\",true,null]}},{\"k21\":\"v21\",\"k22\":\"v22\",\"k23\":\"v23\"}]",jsonString);
+			assertEquivalent("[{\"k11\":\"v11\",\"k12\":\"v12\",\"k13\":\"v13\",\"k14\":{\"k31\":\"v3\",\"k32\":123.45,\"k33\":false,\"k34\":null,\"k35\":[\"vvv\",\"1.23456789123456789\",true,null]}},{\"k21\":\"v21\",\"k22\":\"v22\",\"k23\":\"v23\"}]",jsonString);
 		} else {
 			assertTrue(jsonString.contains("\"k11\""));
 			assertTrue(jsonString.contains("\"v11\""));
