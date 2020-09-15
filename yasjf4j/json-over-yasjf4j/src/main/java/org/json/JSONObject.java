@@ -480,6 +480,13 @@ public class JSONObject {
 						return false;
 					}
 				} else if (!valueThis.equals(valueOther)) {
+					if(valueThis instanceof Number && valueOther instanceof Number) {
+						Number nThis = (Number) valueThis;
+						Number nOther = (Number) valueOther;
+						if(((Number) valueOther).intValue() == ((Number) valueThis).intValue()) {
+							return true;
+						}
+					}
 					return false;
 				}
 			}

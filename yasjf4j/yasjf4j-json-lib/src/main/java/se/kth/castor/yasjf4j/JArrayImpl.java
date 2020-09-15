@@ -3,6 +3,7 @@ package se.kth.castor.yasjf4j;
 
 
 import org.kordamp.json.JSONArray;
+import org.kordamp.json.util.JSONUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,15 +13,19 @@ public class JArrayImpl extends ArrayList implements JArray {
 	public JArrayImpl() {}
 
 	public JArrayImpl(String json) throws JException {
-		List a = JSONArray.fromObject(json);
-		for(Object el: a) {
-			if(el instanceof Map) {
-				add(new JObjectImpl((Map) el));
-			} else if (el instanceof List) {
-				add(new JArrayImpl((List) el));
-			} else {
-				add(el);
+		try {
+			List a = JSONArray.fromObject(json);
+			for(Object el: a) {
+				if(el instanceof Map) {
+					add(new JObjectImpl((Map) el));
+				} else if (el instanceof List) {
+					add(new JArrayImpl((List) el));
+				} else {
+					add(el);
+				}
 			}
+		} catch (Exception e) {
+			throw new JException();
 		}
 	}
 
@@ -59,5 +64,10 @@ public class JArrayImpl extends ArrayList implements JArray {
 	@Override
 	public void YASJF4J_remove(int i) throws JException {
 		remove(i);
+	}
+
+	@Override
+	public String YASJF4J_toString() {
+		return JSONArray.fromObject(this).toString();
 	}
 }

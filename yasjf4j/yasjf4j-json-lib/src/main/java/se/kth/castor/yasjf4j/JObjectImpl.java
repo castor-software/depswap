@@ -28,16 +28,20 @@ public class JObjectImpl extends HashMap implements JObject {
 	}
 
 	public JObjectImpl(String json) throws JException {
-		Map o = JSONObject.fromObject(json);
-		for(Object key: o.keySet()) {
-			Object el = o.get(key);
-			if(el instanceof Map) {
-				put(key, new JObjectImpl((Map) el));
-			} else if (el instanceof List) {
-				put(key, new JArrayImpl((List) el));
-			} else {
-				put(key, el);
+		try {
+			Map o = JSONObject.fromObject(json);
+			for (Object key : o.keySet()) {
+				Object el = o.get(key);
+				if (el instanceof Map) {
+					put(key, new JObjectImpl((Map) el));
+				} else if (el instanceof List) {
+					put(key, new JArrayImpl((List) el));
+				} else {
+					put(key, el);
+				}
 			}
+		} catch (Exception e) {
+			throw new JException();
 		}
 	}
 
@@ -59,5 +63,10 @@ public class JObjectImpl extends HashMap implements JObject {
 	@Override
 	public void YASJF4J_remove(String s) throws JException {
 		remove(s);
+	}
+
+	@Override
+	public String YASJF4J_toString() {
+		return JSONObject.fromObject(this).toString();
 	}
 }

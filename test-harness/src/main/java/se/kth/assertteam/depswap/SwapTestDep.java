@@ -1,8 +1,16 @@
 package se.kth.assertteam.depswap;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.maven.model.Dependency;
+import org.apache.maven.model.Model;
+import org.apache.maven.model.io.xpp3.MavenXpp3Reader;
+import org.apache.maven.model.io.xpp3.MavenXpp3Writer;
+import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 
 public class SwapTestDep {
@@ -32,7 +40,7 @@ public class SwapTestDep {
 				String[] tgav = targetedGAV.split(":");
 				String[] rgav = replacementGAV.split(":");
 				try {
-					Project.swapDependency(
+					swapDependency(
 							savedPom, new File(savedPom.getParentFile(), "pom.xml"),
 							tgav[0], tgav[1], (tgav[2].equals("*") ? null : tgav[2]),
 							rgav[0], rgav[1], rgav[2],
@@ -43,6 +51,49 @@ public class SwapTestDep {
 					FileUtils.moveFile(savedPom, pom);
 				}
 			}
+		}
+	}
+
+	public static void swapDependency(File inPomFile, File outPomFile,
+	                                  String inGroupId, String inArtifactId, String inVersion,
+	                                  String outGroupId, String outArtifactId, String outVersion,
+	                                  String pathToJars) throws TransformationFailedException {
+		MavenXpp3Reader pomReader = new MavenXpp3Reader();
+		try (FileReader reader = new FileReader(inPomFile)) {
+			Model model = pomReader.read(reader);
+			Dependency target = null;
+
+			for(Dependency dependency :model.getDependencies()) {
+				String g = dependency.getGroupId();
+				String a = dependency.getArtifactId();
+				String v = dependency.getVersion();
+
+				if(g.equals(inGroupId) && !a.equals("yasjf4j-api") && (inVersion == null || v.equals(inVersion))) {
+					target = dependency;
+					break;
+				}
+			}
+
+			if(target == null) {
+				throw new TransformationFailedException("Dependency " + inGroupId + ":" + inArtifactId + ":" + (inVersion == null ? "*" : inVersion) + " not found in targeted pom.");
+			}
+
+			target.setGroupId(outGroupId);
+			target.setArtifactId(outArtifactId);
+			target.setVersion(outVersion);
+			//target.setSystemPath(pathToJars + "/" + outArtifactId + "-" + outVersion + "-jar-with-dependencies.jar");
+			target.setScope("test");
+
+
+			MavenXpp3Writer writer = new MavenXpp3Writer();
+			writer.write(new FileOutputStream(outPomFile), model);
+
+		} catch (FileNotFoundException e) {
+			throw new TransformationFailedException("FileNotFoundException: " + e.getMessage());
+		} catch (IOException e) {
+			throw new TransformationFailedException("IOException: " + e.getMessage());
+		} catch (XmlPullParserException e) {
+			throw new TransformationFailedException("XmlPullParserException: " + e.getMessage());
 		}
 	}
 }

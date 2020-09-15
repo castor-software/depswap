@@ -49,13 +49,24 @@ public class JSONArray {
 
 	public JSONArray(Object array) throws JSONException {
 		this();
-		if (!array.getClass().isArray()) {
+		if (!array.getClass().isArray() && !(array instanceof JSONArray)) {
 			throw new JSONException();
 		}
-		try {
-			this.addAll(array, true);
-		} catch (JException e) {
-			throw new JSONException();
+		if(array instanceof JSONArray) {
+			JSONArray a = (JSONArray) array;
+			try {
+				for(int i = 0; i < a.length(); i++) {
+					json.YASJF4J_add(JSONObject.unshield(a.get(i)));
+				}
+			} catch (JException e) {
+				throw new JSONException();
+			}
+		} else {
+			try {
+				this.addAll(array, true);
+			} catch (JException e) {
+				throw new JSONException();
+			}
 		}
 	}
 

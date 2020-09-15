@@ -7,6 +7,22 @@ import static org.junit.Assert.*;
 public class JFactoryProviderImplTest {
 
 	@Test
+	public void testObjectTreeConsistency() throws Exception {
+
+		String sObject = "{\"1\":{\"2\":{\"3\":{\"4\":[5,{\"6\":7}]}}}}";
+		JObject o = (JObject) JFactory.parse(sObject);
+		assertEquals(sObject, o.YASJF4J_toString().replace(" ", "").replace("\n", ""));
+	}
+
+
+	@Test
+	public void testArrayTreeConsistency() throws Exception {
+		String sArray ="[0,{\"1\":{\"2\":{\"3\":{\"4\":[5,{\"6\":7}]}}}}]";
+		JArray a = (JArray) JFactory.parse(sArray);
+		assertEquals(sArray, a.YASJF4J_toString().replace(" ","").replace("\n",""));
+	}
+
+	@Test
 	public void testServiceProvider() throws Exception {
 
 		JObject obj = JFactory.createJObject();
@@ -22,9 +38,9 @@ public class JFactoryProviderImplTest {
 		assertEquals("toto", obj.YASJF4J_get("str"));
 
 		JObject obj2 = JFactory.createJObject();
-		obj.YASJF4J_put("obj", obj);
-		assertTrue(obj.YASJF4J_getKeys().contains("obj"));
-		assertEquals(obj, obj.YASJF4J_get("obj"));
+		obj2.YASJF4J_put("obj", obj);
+		assertTrue(obj2.YASJF4J_getKeys().contains("obj"));
+		assertEquals(obj, obj2.YASJF4J_get("obj"));
 
 
 		JArray ar = JFactory.createJArray();

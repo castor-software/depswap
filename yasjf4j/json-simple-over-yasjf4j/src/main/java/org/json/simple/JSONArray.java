@@ -4,8 +4,6 @@ import org.json.simple.parser.ParseException;
 import se.kth.castor.yasjf4j.JArray;
 import se.kth.castor.yasjf4j.JException;
 import se.kth.castor.yasjf4j.JFactory;
-import se.kth.castor.yasjf4j.JObject;
-import se.kth.castor.yasjf4j.util.Utils;
 
 import java.io.IOException;
 import java.io.StringWriter;

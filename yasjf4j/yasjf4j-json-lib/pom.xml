@@ -26,6 +26,12 @@
       <groupId>org.kordamp.json</groupId>
       <artifactId>json-lib-core</artifactId>
       <version>3.0.1</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.kordamp.ezmorph</groupId>
+          <artifactId>ezmorph</artifactId>
+        </exclusion>
+      </exclusions>
   </dependency>
     <dependency>
       <groupId>org.kordamp.ezmorph</groupId>
