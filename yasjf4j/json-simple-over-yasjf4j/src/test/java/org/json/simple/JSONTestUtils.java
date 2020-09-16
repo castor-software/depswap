@@ -1,8 +1,11 @@
 package org.json.simple;
 
+import java.math.BigDecimal;
+
 import static org.junit.Assert.assertTrue;
 
 public class JSONTestUtils {
+	static double epsilon = 0.00001d;
 	public static boolean equivalent(Object o1, Object o2) {
 		if(o1 == null) return o2 == null;
 		if(o2 == null) return false;
@@ -36,8 +39,10 @@ public class JSONTestUtils {
 			if(!(o2 instanceof Number)) return false;
 			Number n1 = (Number) o1;
 			Number n2 = (Number) o2;
-			if(n1.doubleValue() == n2.doubleValue()) return true;
+			if(Math.abs(n1.doubleValue() - n2.doubleValue()) <= epsilon) return true;
+			else return false;
 		}
+
 		return false;
 	}
 

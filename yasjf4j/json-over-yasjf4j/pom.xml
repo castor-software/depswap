@@ -37,7 +37,7 @@
     </dependency>
     <dependency>
       <groupId>se.kth.castor</groupId>
-      <artifactId>yasjf4j-fastjson</artifactId>
+      <artifactId>yasjf4j-cookjson</artifactId>
       <version>1.0-SNAPSHOT</version>
       <scope>test</scope>
     </dependency>

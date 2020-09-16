@@ -135,6 +135,10 @@ public class JSONValue {
 			} else if(value.getClass().getComponentType() == long.class) {
 				return Arrays.asList(ArrayUtils.toObject(((long[]) value)));
 			} else if(value.getClass().getComponentType() == float.class) {
+				/*float[] fa = ((float[]) value);
+				double[] da = new double[fa.length];
+				for(int i = 0; i < fa.length; i++) da[i] = fa[i];
+				return Arrays.asList(ArrayUtils.toObject(da));*/
 				return Arrays.asList(ArrayUtils.toObject(((float[]) value)));
 			} else {
 				return Arrays.asList(ArrayUtils.toObject(((double[]) value)));

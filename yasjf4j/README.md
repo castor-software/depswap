@@ -62,10 +62,9 @@ from `org.json`
 ```java
 	@Test(expected = JSONException.class)
     public void invalidEscapeSequence() {
-      String json = "{ \"\\url\": \"value\" }";
-      assertNull("Expected an exception",new JSONObject(json));
+        String json = "{ \"\\url\": \"value\" }";
+        assertNull("Expected an exception",new JSONObject(json));
     }
-
 
 	/**
      * The JSON parser is permissive of unambiguous unquoted keys and values.
@@ -97,3 +96,9 @@ encoding?
 Duplicate keys?
 
 `assertEquals(String, String)` should be replaced by `assertEquivalent(String, String)`
+If lib put every float into double, some equivalence will be looser `new Double(12.8f)` == `12.800000190734863` but `new Float(12.8f)` == `12.8`
+
+Double, FLoat, Long, Integer, BigInteger, BigDecimal.
+
+jjson seems to fail to parse simple nested arrays, ex: `[[0],[0]]`
+
