@@ -53,14 +53,14 @@ From org.json:
 
 from `json-simple`
 ```java
-		s="[5,,2]";
-		obj=JSONValue.parse(s);
-		assertEquals("[5,2]",obj.toString());
+    s="[5,,2]";
+    obj=JSONValue.parse(s);
+    assertEquals("[5,2]",obj.toString());
 ```
 
 from `org.json`
 ```java
-	@Test(expected = JSONException.class)
+    @Test(expected = JSONException.class)
     public void invalidEscapeSequence() {
         String json = "{ \"\\url\": \"value\" }";
         assertNull("Expected an exception",new JSONObject(json));
