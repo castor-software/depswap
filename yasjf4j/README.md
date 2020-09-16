@@ -102,3 +102,37 @@ Double, FLoat, Long, Integer, BigInteger, BigDecimal.
 
 jjson seems to fail to parse simple nested arrays, ex: `[[0],[0]]`
 
+## Status
+
+|              Implem |                   Bridge |  Outcome | Failures |
+|-------------------- |------------------------- |--------- |--------- |
+|        yasjf4j-json |                    ----- |       OK | 0        |
+|        yasjf4j-json | json-simple-over-yasjf4j |       OK | 0        |
+|        yasjf4j-json |        json-over-yasjf4j |       KO | 30 / 55  |
+|    yasjf4j-cookjson |                    ----- |       OK | 0        |
+|    yasjf4j-cookjson | json-simple-over-yasjf4j |       OK | 0        |
+|    yasjf4j-cookjson |        json-over-yasjf4j |       KO | 1 / 55   |
+|     yasjf4j-json-io |                    ----- |       OK | 0        |
+|     yasjf4j-json-io | json-simple-over-yasjf4j |       OK | 0        |
+|     yasjf4j-json-io |        json-over-yasjf4j |       OK | 0        |
+|    yasjf4j-json-lib |                    ----- |       OK | 0        |
+|    yasjf4j-json-lib | json-simple-over-yasjf4j |       OK | 0        |
+|    yasjf4j-json-lib |        json-over-yasjf4j |       OK | 0        |
+|       yasjf4j-jjson |                    ----- |       OK | 0        |
+|       yasjf4j-jjson | json-simple-over-yasjf4j |       KO | 1 / 27   |
+|       yasjf4j-jjson |        json-over-yasjf4j |       KO | 7 / 55   |
+| yasjf4j-json-simple |                    ----- |       OK | 0        |
+| yasjf4j-json-simple | json-simple-over-yasjf4j |       KO | 26 / 27  |
+| yasjf4j-json-simple |        json-over-yasjf4j |       OK | 0        |
+|    yasjf4j-jsonutil |                    ----- |       OK | 0        |
+|    yasjf4j-jsonutil | json-simple-over-yasjf4j |       KO | 1 / 27   |
+|    yasjf4j-jsonutil |        json-over-yasjf4j |       OK | 0        |
+|      yasjf4j-klaxon |                    ----- |       OK | 0        |
+|      yasjf4j-klaxon | json-simple-over-yasjf4j |       KO | 9 / 27   |
+|      yasjf4j-klaxon |        json-over-yasjf4j |       KO | 2 / 55   |
+|       yasjf4j-mjson |                    ----- |       OK | 0        |
+|       yasjf4j-mjson | json-simple-over-yasjf4j |       KO | 4 / 27   |
+|       yasjf4j-mjson |        json-over-yasjf4j |       KO | 5 / 55   |
+|    yasjf4j-fastjson |                    ----- |       OK | 0        |
+|    yasjf4j-fastjson | json-simple-over-yasjf4j |       OK | 0        |
+|    yasjf4j-fastjson |        json-over-yasjf4j |       OK | 0        |
