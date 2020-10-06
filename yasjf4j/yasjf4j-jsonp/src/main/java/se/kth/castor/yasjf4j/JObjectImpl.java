@@ -2,43 +2,48 @@ package se.kth.castor.yasjf4j;
 
 
 import org.apache.commons.lang3.ArrayUtils;
-import org.apache.commons.lang3.ClassUtils;
-import org.yuanheng.cookjson.TextJsonGenerator;
-import org.yuanheng.cookjson.TextJsonParser;
-import org.yuanheng.cookjson.value.CookJsonArray;
-import org.yuanheng.cookjson.value.CookJsonBigDecimal;
-import org.yuanheng.cookjson.value.CookJsonBinary;
-import org.yuanheng.cookjson.value.CookJsonDouble;
-import org.yuanheng.cookjson.value.CookJsonInt;
-import org.yuanheng.cookjson.value.CookJsonLong;
-import org.yuanheng.cookjson.value.CookJsonObject;
-import org.yuanheng.cookjson.value.CookJsonString;
+import org.glassfish.json.JsonProviderImpl;
+import org.glassfish.json.WriterAccess;
+import org.glassfish.json.api.BufferPool;
 
+
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonNumber;
+import javax.json.JsonObject;
+import javax.json.JsonReader;
 import javax.json.JsonString;
 import javax.json.JsonValue;
+import javax.json.JsonWriter;
+import javax.json.spi.JsonProvider;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class JObjectImpl extends CookJsonObject implements JObject {
+
+
+public class JObjectImpl extends LinkedHashMap<String, JsonValue> implements JsonObject, JObject {
+	public static JsonProvider provider = new JsonProviderImpl();
+	public static BufferPool bufferPool = new BufferPoolImpl();
 
 	public JObjectImpl() {
 	}
 
-	public JObjectImpl(CookJsonObject json) throws JException {
+	public JObjectImpl(JsonObject json) throws JException {
 		try {
 			for(String key: json.keySet()) {
 				JsonValue el = json.get(key);
-				if(el instanceof CookJsonObject) {
-					put(key, new JObjectImpl((CookJsonObject) el));
-				} else if (el instanceof CookJsonArray) {
-					put(key, new JArrayImpl((CookJsonArray) el));
+				if(el instanceof JsonObject) {
+					put(key, new JObjectImpl((JsonObject) el));
+				} else if (el instanceof JsonArray) {
+					put(key, new JArrayImpl((JsonArray) el));
 				} else {
 					put(key, el);
 				}
@@ -53,10 +58,10 @@ public class JObjectImpl extends CookJsonObject implements JObject {
 			for(Object okey: json.keySet()) {
 				String key = okey.toString();
 				Object el = json.get(key);
-				if(el instanceof CookJsonObject) {
-					put(key, new JObjectImpl((CookJsonObject) el));
-				} else if (el instanceof CookJsonArray) {
-					put(key, new JArrayImpl((CookJsonArray) el));
+				if(el instanceof JsonObject) {
+					put(key, new JObjectImpl((JsonObject) el));
+				} else if (el instanceof JsonArray) {
+					put(key, new JArrayImpl((JsonArray) el));
 				} else {
 					put(key, toJSONValue(el));
 				}
@@ -68,15 +73,14 @@ public class JObjectImpl extends CookJsonObject implements JObject {
 
 	public JObjectImpl(String json) throws JException {
 		try {
-			TextJsonParser p = new TextJsonParser(new StringReader(json));
-			p.next();
-			CookJsonObject o = (CookJsonObject) p.getValue();
+			JsonReader jsonReader = Json.createReader(new StringReader(json));
+			JsonObject o = jsonReader.readObject();
 			for(String key: o.keySet()) {
 				Object el = o.get(key);
-				if(el instanceof CookJsonObject) {
-					put(key, new JObjectImpl((CookJsonObject) el));
-				} else if (el instanceof CookJsonArray) {
-					put(key, new JArrayImpl((CookJsonArray) el));
+				if(el instanceof JsonObject) {
+					put(key, new JObjectImpl((JsonObject) el));
+				} else if (el instanceof JsonArray) {
+					put(key, new JArrayImpl((JsonArray) el));
 				} else {
 					put(key, toJSONValue(el));
 				}
@@ -116,11 +120,16 @@ public class JObjectImpl extends CookJsonObject implements JObject {
 
 	@Override
 	public String YASJF4J_toString() {
-		StringWriter a = new StringWriter();
-		TextJsonGenerator g = new TextJsonGenerator(a);
-		g.write(this);
-		g.flush();
-		return a.toString();
+		return this.toString();
+	}
+
+	@Override
+	public String toString() {
+		StringWriter sw = new StringWriter();
+		try (JsonWriter jw = new WriterAccess(sw, JObjectImpl.bufferPool)) {
+			jw.write(this);
+		}
+		return sw.toString();
 	}
 
 	public static JsonValue toJSONValue(Object o) throws JException {
@@ -136,43 +145,35 @@ public class JObjectImpl extends CookJsonObject implements JObject {
 		} else if (o.getClass().isArray()) {
 			return new JArrayImpl(autoBox(o));
 		} else if (o instanceof  String) {
-			return new CookJsonString((String) o);
+			return provider.createValue((String) o);
 		} else if (o instanceof  Number) {
 			if(o instanceof Double) {
-				return new CookJsonDouble((Double) o);
+				return provider.createValue((Double) o);
 			} else if (o instanceof Float) {
-				return new CookJsonDouble((Float) o);
+				return provider.createValue((Float) o);
 			} else if (o instanceof BigDecimal) {
-				return new CookJsonBigDecimal((BigDecimal) o);
+				return provider.createValue((BigDecimal) o);
 			} else if (o instanceof Integer) {
-				return new CookJsonInt((Integer) o);
+				return provider.createValue((Integer) o);
 			} else if (o instanceof Long) {
-				return new CookJsonLong((Long) o);
+				return provider.createValue((Long) o);
 			} else {
-				return new CookJsonInt(((Number) o).intValue());
+				return provider.createValue(((Number) o).intValue());
 			}
 		} else if (o instanceof  Boolean) {
 			return ((Boolean) o) ? JsonValue.TRUE : JsonValue.FALSE;
 		} else if (o instanceof  Character) {
-			return new CookJsonString(((Character) o) .toString());
+			return provider.createValue(((Character) o) .toString());
 		} else {
-			return new CookJsonString(o.toString());
+			return provider.createValue(o.toString());
 		}
 	}
 
 	public static Object toObject(JsonValue o) throws ParseException {
-		if(o instanceof CookJsonDouble) {
-			return ((CookJsonDouble) o).doubleValue();
-		} else if (o instanceof CookJsonBigDecimal) {
-			return ((CookJsonBigDecimal) o).bigDecimalValue();
-		} else if (o instanceof CookJsonInt) {
-			return ((CookJsonInt) o).intValue();
-		} else if (o instanceof CookJsonLong) {
-			return ((CookJsonLong) o).longValue();
+		if(o instanceof JsonNumber) {
+			return ((JsonNumber) o).numberValue();
 		} else if (o instanceof JsonString) {
 			return ((JsonString) o).getString();
-		} else if (o instanceof CookJsonBinary) {
-			return ((CookJsonBinary) o).getBytes();
 		} else if (o == JsonValue.TRUE) {
 			return true;
 		} else if (o == JsonValue.FALSE) {
@@ -186,8 +187,6 @@ public class JObjectImpl extends CookJsonObject implements JObject {
 
 	public static List autoBox(Object value) {
 		if(value.getClass().getComponentType().isPrimitive()) {
-			//ClassUtils.primitivesToWrappers(value.getClass().getComponentType());
-			//value.getClass().getComponentType().
 			if(value.getClass().getComponentType() == boolean.class) {
 				return Arrays.asList(ArrayUtils.toObject(((boolean[]) value)));
 			} else if(value.getClass().getComponentType() == byte.class) {
@@ -215,5 +214,78 @@ public class JObjectImpl extends CookJsonObject implements JObject {
 		} else {
 			return Arrays.asList(((Object[]) value));
 		}
+	}
+
+	@Override
+	public JsonArray getJsonArray(String s) {
+		return (JsonArray) get(s);
+	}
+
+	@Override
+	public JsonObject getJsonObject(String s) {
+		return (JsonObject) get(s);
+	}
+
+	@Override
+	public JsonNumber getJsonNumber(String s) {
+		return (JsonNumber) get(s);
+	}
+
+	@Override
+	public JsonString getJsonString(String s) {
+		return (JsonString) get(s);
+	}
+
+	@Override
+	public String getString(String s) {
+		return ((JsonString) get(s)).getString();
+	}
+
+	@Override
+	public String getString(String s, String s1) {
+		return containsKey(s) ? ((JsonString) get(s)).getString() : s1;
+	}
+
+	@Override
+	public int getInt(String s) {
+		return ((JsonNumber) get(s)).intValue();
+	}
+
+	@Override
+	public int getInt(String s, int i) {
+		return containsKey(s) ? ((JsonNumber) get(s)).intValue() : i;
+	}
+
+	@Override
+	public boolean getBoolean(String s) {
+		JsonValue value = get(s);
+		if (value == null) {
+			throw new NullPointerException();
+		} else if (value == JsonValue.TRUE) {
+			return true;
+		} else if (value == JsonValue.FALSE) {
+			return false;
+		} else {
+			throw new ClassCastException();
+		}
+	}
+
+	@Override
+	public boolean getBoolean(String s, boolean b) {
+		try {
+			return getBoolean(s);
+		} catch (Exception e) {
+			return b;
+		}
+	}
+
+	@Override
+	public boolean isNull(String s) {
+		return get(s).equals(JsonValue.NULL);
+	}
+
+	@Override
+	public ValueType getValueType() {
+		return ValueType.OBJECT;
 	}
 }

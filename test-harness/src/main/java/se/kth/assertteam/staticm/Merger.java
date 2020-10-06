@@ -15,8 +15,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.sql.SQLOutput;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 public class Merger {
 
@@ -30,16 +33,19 @@ public class Merger {
 		File in = new File(args[0]);
 		File out = new File(args[1]);
 
+		boolean filter = args.length > 2;
+
 		JSONParser p = new JSONParser();
 		JSONArray a = (JSONArray) p.parse(readFile(in));
 
 		Map<String, Map<String, Map<String, Integer>>> heatmap = new HashMap<>();
 
-
+		int nbClientUsages = 0;
 
 		for(int i = 0; i < a.size(); i++) {
 			Object o = a.get(i);
 			if(o instanceof JSONObject) {
+				nbClientUsages++;
 				for (Object packO : ((JSONObject) o).keySet()) {
 					String pack = (String) packO;
 					Map<String, Map<String, Integer>> existingPack = heatmap.computeIfAbsent(pack, s -> new HashMap<>());
@@ -61,12 +67,56 @@ public class Merger {
 				}
 			}
 		}
+		int threshold = 50;
 
-		System.out.println(JSONObject.toJSONString(heatmap));
+		int pcks = 0, classes = 0, methods = 0;
+		int rpcks = 0, rclasses = 0, rmethods = 0;
+
+		if(filter) {
+			Set<String> paToRemove = new HashSet<>();
+			for(String pa: heatmap.keySet()) {
+				pcks++;
+				Set<String> clToRemove = new HashSet<>();
+				for(String cl: heatmap.get(pa).keySet()) {
+					classes++;
+					Set<String> mToRemove = new HashSet<>();
+					for(String m: heatmap.get(pa).get(cl).keySet()) {
+						methods++;
+						if(heatmap.get(pa).get(cl).get(m) < threshold) {
+							mToRemove.add(m);
+							rmethods++;
+						}
+					}
+					for(String m: mToRemove) heatmap.get(pa).get(cl).remove(m);
+
+					if(heatmap.get(pa).get(cl).isEmpty()) {
+						clToRemove.add(cl);
+						rclasses++;
+					}
+				}
+				//heatmap.get(pa).remove(clToRemove);
+				for(String cl: clToRemove) heatmap.get(pa).remove(cl);
+
+				if(heatmap.get(pa).isEmpty()) {
+					paToRemove.add(pa);
+					rpcks++;
+				}
+			}
+			//heatmap.remove(paToRemove);
+			for(String pa: paToRemove) heatmap.remove(pa);
+		}
+
+
+		//System.out.println(JSONObject.toJSONString(heatmap));
 		Writer w = new BufferedWriter(new FileWriter(out));
 		JSONObject.writeJSONString(heatmap, w);
 		w.flush();
 		w.close();
+
+		System.out.println("Nb clients detected using API: " + nbClientUsages);
+		System.out.println("Removed " + rpcks +    " / " + pcks +    " packages, remains: " + (pcks - rpcks));
+		System.out.println("Removed " + rclasses + " / " + classes + " classes, remains: " +  (classes - rclasses));
+		System.out.println("Removed " + rmethods + " / " + methods + " methods, remains: " +  (methods - rmethods));
 	}
 
 	public static String readFile(File f) {

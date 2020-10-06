@@ -9,8 +9,9 @@ fi
 JARS_PATH=$1
 echo "Path to lib dir: $JARS_PATH"
 
-BRIDGES=('json-simple-over-yasjf4j' 'json-over-yasjf4j')
-IMPLEMENTATIONS=('yasjf4j-json' 'yasjf4j-cookjson' 'yasjf4j-gson' 'yasjf4j-jackson' 'yasjf4j-jsonp' 'yasjf4j-json-io' 'yasjf4j-json-lib' 'yasjf4j-jjson' 'yasjf4j-json-simple' 'yasjf4j-jsonutil' 'yasjf4j-klaxon' 'yasjf4j-mjson' 'yasjf4j-fastjson')
+BRIDGES=('json-implem-tester')
+IMPLEMENTATIONS=('yasjf4j-json' 'yasjf4j-cookjson' 'yasjf4j-gson' 'yasjf4j-jackson' 'yasjf4j-jsonp' 'yasjf4j-json-io' 'yasjf4j-json-lib' 'yasjf4j-json-simple' 'yasjf4j-jsonutil' 'yasjf4j-klaxon' 'yasjf4j-mjson' 'yasjf4j-fastjson')
+#excludes  'yasjf4j-jjson'
 
 
 

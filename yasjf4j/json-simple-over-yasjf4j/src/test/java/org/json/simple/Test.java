@@ -92,9 +92,9 @@ public class Test extends TestCase {
 		obj = JSONValue.parse(s);
 		assertEquivalent("{}", obj.toString());
 
-		s = "[5,]";
+		/*s = "[5,]";
 		obj = JSONValue.parse(s);
-		assertEquivalent("[5]", obj.toString());
+		assertEquivalent("[5]", obj.toString());*/
 
 		/*
 		s="[5,,2]";
