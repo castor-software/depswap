@@ -1,0 +1,574 @@
+---
+title: "JSON parser comparaison 2"
+output: html_notebook
+---
+
+```{r init}
+library(tidyverse)
+library(venn)
+```
+
+
+```{r read}
+setwd("~/Documents/depswap")
+reportsDir = "yasjf4j/json-implem-tester/results/"
+
+fileList = list.files(
+  path = reportsDir,
+  pattern = "*.csv"
+  )
+
+dataset <- data.frame(matrix(ncol = 4, nrow = 0))
+colnames(dataset) <- c("Parser","Category","File","Result")
+
+for (i in 1:length(fileList)) {
+  implem <- strsplit(fileList[i], "_")[[1]][1]
+  category <- strsplit(fileList[i], "_")[[1]][2]
+  individualReport <- read_csv(paste(reportsDir, fileList[i], sep = ""), col_names = T)
+  dataset <- dplyr::bind_rows(dataset, individualReport)
+}
+
+```
+
+```{r reshape}
+d <- dataset %>% mutate(r = as.factor(Result)) %>% select(File,Parser,Category, r) %>% spread(Parser,r)
+
+#d %>% mutate(same =(`Gson` == `json-simple` & Gson == `org.json`)) %>% group_by(Category,same) %>% summarise(n = n())
+
+```
+
+
+``` {r printd} 
+
+#ggsave("bench.pdf", p, device = "pdf",units = "cm", width = 21, height = 120)
+
+```
+
+```{r toto}
+p <- dataset %>% mutate(r = as.factor(Result)) %>% select(File,Parser,Category, r) %>% 
+  ggplot(aes(x = Parser, y = File, fill=r)) +
+      geom_raster() +
+      theme_bw() +
+      scale_x_discrete(drop = FALSE) +
+      scale_y_discrete(drop = FALSE) + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+
+ggsave("bench2.pdf", p, device = "pdf",units = "cm", width = 21, height = 120)
+```
+
+
+```{r explore-c}
+
+implems <-dataset$Parser %>% unique()
+
+p1 <- dataset %>% filter(Category == "correct") %>% 
+  filter(Parser %in% c("yasjf4j-fastjson","yasjf4j-gson","yasjf4j-json","yasjf4j-json-simple","yasjf4j-jackson")) %>%
+  mutate(r = as.factor(Result)) %>% select(File,Parser,Category, r) %>% 
+  ggplot(aes(x = Parser, y = File, fill=r)) +
+      geom_raster() +
+      theme_bw() +
+      scale_x_discrete(drop = FALSE) +
+      scale_y_discrete(drop = FALSE) + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+
+ggsave("bench-correct.pdf", p1, device = "pdf",units = "cm", width = 21, height = 120)
+
+
+```
+
+```{r distance}
+
+avg_distance <- function(data, parsers) {
+  avg <- 0
+  total <- data %>% count()
+  n <- (length(parsers) - 1) * length(parsers)
+  dist <- numeric(n)
+  i <- 0
+  for(parser1 in parsers) {
+    for(parser2 in parsers) {
+      if(parser1 != parser2) {
+        i <- i + 1
+        d <- data %>% select(File,parser1,parser2) %>% filter(.[[2]] == .[[3]]) %>% count()
+        #print(paste0(parser1, " ", parser2, " ", d, "/", total, " = ", (d / total)))
+        val <- (d / total)
+        dist[i] <- val[1]
+        avg <- avg + (d / total)
+      }
+    }
+  }
+  #print(paste0("sum ", avg, " n ", n))
+  avg <- avg / n
+  #print(paste0("avg ", avg))
+  return(unlist(dist))
+}
+
+
+
+```
+
+```{r distance}
+d2 <- dataset
+da <- d2 %>% filter(Category == "correct") %>% 
+  filter(Parser %in% c("yasjf4j-fastjson","yasjf4j-gson","yasjf4j-json","yasjf4j-json-simple","yasjf4j-jackson")) %>%
+  select(Parser,File,Result) %>% spread(Parser, Result)
+a <- avg_distance(da, c("yasjf4j-fastjson","yasjf4j-gson","yasjf4j-json","yasjf4j-json-simple","yasjf4j-jackson"))
+a
+
+da <- d2 %>% filter(Category == "errored") %>% 
+  filter(Parser %in% c("yasjf4j-fastjson","yasjf4j-gson","yasjf4j-json","yasjf4j-json-simple","yasjf4j-jackson")) %>%
+  select(Parser,File,Result) %>% spread(Parser, Result)
+b <- avg_distance(da, c("yasjf4j-fastjson","yasjf4j-gson","yasjf4j-json","yasjf4j-json-simple","yasjf4j-jackson"))
+b
+
+mparsers <- c("yasjf4j-fastjson","yasjf4j-gson","yasjf4j-json","yasjf4j-json-simple","yasjf4j-jackson")
+
+median(a)
+median(b)
+```
+
+```{r distanceall}
+
+d2 <- dataset
+
+parsersss <- dataset %>% select(Parser) %>% unique()
+parsersss <- parsersss$Parser
+
+da <- d2 %>% filter(Category == "correct") %>% 
+  select(Parser,File,Result) %>% spread(Parser, Result)
+a <- avg_distance(da, parsersss)
+a
+
+da <- d2 %>% filter(Category == "errored") %>% 
+  select(Parser,File,Result) %>% spread(Parser, Result)
+b <- avg_distance(da, parsersss)
+b
+
+median(a)
+median(b)
+```
+
+```{r explore-e}
+
+implems <-dataset$Parser %>% unique()
+
+p1 <- dataset %>% filter(Category == "errored") %>% 
+  filter(Parser %in% c("yasjf4j-fastjson","yasjf4j-gson","yasjf4j-json","yasjf4j-json-simple","yasjf4j-jackson")) %>%
+  mutate(r = as.factor(Result)) %>% select(File,Parser,Category, r) %>% 
+  ggplot(aes(x = Parser, y = File, fill=r)) +
+      geom_raster() +
+      theme_bw() +
+      scale_x_discrete(drop = FALSE) +
+      scale_y_discrete(drop = FALSE) + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+
+ggsave("bench-errored.pdf", p1, device = "pdf",units = "cm", width = 21, height = 120)
+
+
+```
+
+```{r explore-u}
+
+implems <-dataset$Parser %>% unique()
+
+p1 <- dataset %>% filter(Category == "undefined") %>% 
+  filter(Parser %in% c("yasjf4j-fastjson","yasjf4j-gson","yasjf4j-json","yasjf4j-json-simple","yasjf4j-jackson")) %>%
+  mutate(r = as.factor(Result)) %>% select(File,Parser,Category, r) %>% 
+  ggplot(aes(x = Parser, y = File, fill=r)) +
+      geom_raster() +
+      theme_bw() +
+      scale_x_discrete(drop = FALSE) +
+      scale_y_discrete(drop = FALSE) + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+
+ggsave("bench-undefined.pdf", p1, device = "pdf",units = "cm", width = 21, height = 120)
+
+
+```
+
+```{r setup-print-venn}
+print_venn <- TRUE
+print_venn <- FALSE
+```
+
+
+```{r venn-correct}
+
+
+#list of columns
+isOk <- dataset %>% filter(Category == "correct") %>% 
+  filter(Parser %in% c("yasjf4j-fastjson","yasjf4j-gson","yasjf4j-json","yasjf4j-json-simple","yasjf4j-jackson")) %>%
+  mutate(ok = (Result == "OK")) %>% select(Parser,File,ok) %>% spread(Parser, ok)
+
+c_fastjson <- isOk %>% filter(`yasjf4j-fastjson` == TRUE)
+c_gson <- isOk %>% filter(`yasjf4j-gson` == TRUE)
+c_json <- isOk %>% filter(`yasjf4j-json` == TRUE)
+c_json_simple <- isOk %>% filter(`yasjf4j-json-simple` == TRUE)
+c_jackson <- isOk %>% filter(`yasjf4j-jackson` == TRUE)
+
+ven_in <- list(c_fastjson$File, c_gson$File, c_json$File, c_json_simple$File, c_jackson$File)
+snames = c("yasjf4j-fastjson","yasjf4j-gson","yasjf4j-json","yasjf4j-json-simple","yasjf4j-jackson")
+
+if(print_venn) pdf("venn_correct_ok.pdf")
+venn(
+  ven_in,
+  snames = snames,
+  ilab = TRUE,
+  zcolor = "style"
+)
+if(print_venn) dev.off() 
+
+```
+
+```{r venn-correct-or-eq}
+
+
+#list of columns
+isOk <- dataset %>% filter(Category == "correct") %>% 
+  filter(Parser %in% c("yasjf4j-fastjson","yasjf4j-gson","yasjf4j-json","yasjf4j-json-simple","yasjf4j-jackson")) %>%
+  mutate(ok = (Result == "OK" | Result == "EQUIVALENT_OBJECT")) %>% select(Parser,File,ok) %>% spread(Parser, ok)
+
+c_fastjson <- isOk %>% filter(`yasjf4j-fastjson` == TRUE)
+c_gson <- isOk %>% filter(`yasjf4j-gson` == TRUE)
+c_json <- isOk %>% filter(`yasjf4j-json` == TRUE)
+c_json_simple <- isOk %>% filter(`yasjf4j-json-simple` == TRUE)
+c_jackson <- isOk %>% filter(`yasjf4j-jackson` == TRUE)
+
+ven_in <- list(c_fastjson$File, c_gson$File, c_json$File, c_json_simple$File, c_jackson$File)
+snames = c("yasjf4j-fastjson","yasjf4j-gson","yasjf4j-json","yasjf4j-json-simple","yasjf4j-jackson")
+
+if(print_venn) pdf("venn_correct_ok_or_eq.pdf")
+venn(
+  ven_in,
+  snames = snames,
+  ilab = TRUE,
+  zcolor = "style"
+)
+if(print_venn) dev.off() 
+
+```
+
+```{r venn-incorrect}
+
+snames = c("yasjf4j-fastjson","yasjf4j-gson","yasjf4j-json","yasjf4j-json-simple","yasjf4j-jackson")
+
+#list of columns
+isOk <- dataset %>% filter(Category == "errored") %>% 
+  filter(Parser %in% c("yasjf4j-fastjson","yasjf4j-gson","yasjf4j-json","yasjf4j-json-simple","yasjf4j-jackson")) %>%
+  mutate(ok = (Result == "OK")) %>% select(Parser,File,ok) %>% spread(Parser, ok)
+
+c_fastjson <- isOk %>% filter(`yasjf4j-fastjson` == TRUE)
+c_gson <- isOk %>% filter(`yasjf4j-gson` == TRUE)
+c_json <- isOk %>% filter(`yasjf4j-json` == TRUE)
+c_json_simple <- isOk %>% filter(`yasjf4j-json-simple` == TRUE)
+c_jackson <- isOk %>% filter(`yasjf4j-jackson` == TRUE)
+
+ven_in <- list(c_fastjson$File, c_gson$File, c_json$File, c_json_simple$File, c_jackson$File)
+
+if(print_venn) pdf("venn_errored_ok.pdf")
+venn(
+  ven_in,
+  snames = snames,
+  ilab = TRUE,
+  zcolor = "style"
+)
+if(print_venn) dev.off() 
+
+```
+```{r venn-undefined-ok}
+
+
+snames = c("yasjf4j-fastjson","yasjf4j-gson","yasjf4j-json","yasjf4j-json-simple","yasjf4j-jackson")
+#list of columns
+isOk <- dataset %>% filter(Category == "undefined") %>% 
+  filter(Parser %in% c("yasjf4j-fastjson","yasjf4j-gson","yasjf4j-json","yasjf4j-json-simple","yasjf4j-jackson")) %>%
+  mutate(ok = (Result == "OK")) %>% select(Parser,File,ok) %>% spread(Parser, ok)
+
+c_fastjson <- isOk %>% filter(`yasjf4j-fastjson` == TRUE)
+c_gson <- isOk %>% filter(`yasjf4j-gson` == TRUE)
+c_json <- isOk %>% filter(`yasjf4j-json` == TRUE)
+c_json_simple <- isOk %>% filter(`yasjf4j-json-simple` == TRUE)
+c_jackson <- isOk %>% filter(`yasjf4j-jackson` == TRUE)
+
+ven_in <- list(c_fastjson$File, c_gson$File, c_json$File, c_json_simple$File, c_jackson$File)
+
+if(print_venn) pdf("venn_undefined_ok.pdf")
+venn(
+  ven_in,
+  snames = snames,
+  ilab = TRUE,
+  zcolor = "style"
+)
+if(print_venn) dev.off() 
+
+```
+```{r venn-undefined-neq}
+snames = c("yasjf4j-fastjson","yasjf4j-gson","yasjf4j-json","yasjf4j-json-simple","yasjf4j-jackson")
+#list of columns
+isOk <- dataset %>% filter(Category == "undefined") %>% 
+  filter(Parser %in% c("yasjf4j-fastjson","yasjf4j-gson","yasjf4j-json","yasjf4j-json-simple","yasjf4j-jackson")) %>%
+  mutate(ok = (Result == "NON_EQUIVALENT_OBJECT")) %>% select(Parser,File,ok) %>% spread(Parser, ok)
+
+c_fastjson <- isOk %>% filter(`yasjf4j-fastjson` == TRUE)
+c_gson <- isOk %>% filter(`yasjf4j-gson` == TRUE)
+c_json <- isOk %>% filter(`yasjf4j-json` == TRUE)
+c_json_simple <- isOk %>% filter(`yasjf4j-json-simple` == TRUE)
+c_jackson <- isOk %>% filter(`yasjf4j-jackson` == TRUE)
+
+ven_in <- list(c_fastjson$File, c_gson$File, c_json$File, c_json_simple$File, c_jackson$File)
+
+if(print_venn) pdf("venn_undefined_non_eq.pdf")
+venn(
+  ven_in,
+  snames = snames,
+  ilab = TRUE,
+  zcolor = "style"
+)
+if(print_venn) dev.off() 
+
+```
+
+```{r venn-undefined-eq}
+
+
+snames = c("yasjf4j-fastjson","yasjf4j-gson","yasjf4j-json","yasjf4j-json-simple","yasjf4j-jackson")
+#list of columns
+isOk <- dataset %>% filter(Category == "undefined") %>% 
+  filter(Parser %in% c("yasjf4j-fastjson","yasjf4j-gson","yasjf4j-json","yasjf4j-json-simple","yasjf4j-jackson")) %>%
+  mutate(ok = (Result == "EQUIVALENT_OBJECT")) %>% select(Parser,File,ok) %>% spread(Parser, ok)
+
+c_fastjson <- isOk %>% filter(`yasjf4j-fastjson` == TRUE)
+c_gson <- isOk %>% filter(`yasjf4j-gson` == TRUE)
+c_json <- isOk %>% filter(`yasjf4j-json` == TRUE)
+c_json_simple <- isOk %>% filter(`yasjf4j-json-simple` == TRUE)
+c_jackson <- isOk %>% filter(`yasjf4j-jackson` == TRUE)
+
+ven_in <- list(c_fastjson$File, c_gson$File, c_json$File, c_json_simple$File, c_jackson$File)
+
+if(print_venn) pdf("venn_undefined_eq.pdf")
+venn(
+  ven_in,
+  snames = snames,
+  ilab = TRUE,
+  zcolor = "style"
+)
+if(print_venn) dev.off() 
+
+```
+
+```{r venn-undefined-ok-or-eq}
+
+snames = c("yasjf4j-fastjson","yasjf4j-gson","yasjf4j-json","yasjf4j-json-simple","yasjf4j-jackson")
+
+#list of columns
+isOk <- dataset %>% filter(Category == "undefined") %>% 
+  filter(Parser %in% c("yasjf4j-fastjson","yasjf4j-gson","yasjf4j-json","yasjf4j-json-simple","yasjf4j-jackson")) %>%
+  mutate(ok = (Result == "OK" | Result == "EQUIVALENT_OBJECT")) %>% select(Parser,File,ok) %>% spread(Parser, ok)
+
+c_fastjson <- isOk %>% filter(`yasjf4j-fastjson` == TRUE)
+c_gson <- isOk %>% filter(`yasjf4j-gson` == TRUE)
+c_json <- isOk %>% filter(`yasjf4j-json` == TRUE)
+c_json_simple <- isOk %>% filter(`yasjf4j-json-simple` == TRUE)
+c_jackson <- isOk %>% filter(`yasjf4j-jackson` == TRUE)
+
+ven_in <- list(c_fastjson$File, c_gson$File, c_json$File, c_json_simple$File, c_jackson$File)
+
+if(print_venn) pdf("venn_undefined_ok_eq.pdf")
+venn(
+  ven_in,
+  snames = snames,
+  ilab = TRUE,
+  zcolor = "style"
+)
+if(print_venn) dev.off() 
+
+```
+
+```{r venn-undefined-ex}
+
+
+snames = c("yasjf4j-fastjson","yasjf4j-gson","yasjf4j-json","yasjf4j-json-simple","yasjf4j-jackson")
+#list of columns
+isOk <- dataset %>% filter(Category == "undefined") %>% 
+  filter(Parser %in% c("yasjf4j-fastjson","yasjf4j-gson","yasjf4j-json","yasjf4j-json-simple","yasjf4j-jackson")) %>%
+  mutate(ok = (Result == "PARSE_EXCEPTION")) %>% select(Parser,File,ok) %>% spread(Parser, ok)
+
+c_fastjson <- isOk %>% filter(`yasjf4j-fastjson` == TRUE)
+c_gson <- isOk %>% filter(`yasjf4j-gson` == TRUE)
+c_json <- isOk %>% filter(`yasjf4j-json` == TRUE)
+c_json_simple <- isOk %>% filter(`yasjf4j-json-simple` == TRUE)
+c_jackson <- isOk %>% filter(`yasjf4j-jackson` == TRUE)
+
+ven_in <- list(c_fastjson$File, c_gson$File, c_json$File, c_json_simple$File, c_jackson$File)
+
+if(print_venn) pdf("venn_undefined_exception.pdf")
+venn(
+  ven_in,
+  snames = snames,
+  ilab = TRUE,
+  zcolor = "style"
+)
+if(print_venn) dev.off() 
+
+```
+
+
+
+```{r venn-correct-or-eq-7}
+
+implems
+
+snames = c("yasjf4j-fastjson","yasjf4j-gson","yasjf4j-json","yasjf4j-json-simple","yasjf4j-jackson","yasjf4j-cookjson","yasjf4j-json-io")#,"yasjf4j-jsonp")
+
+#list of columns
+isOk <- dataset %>% filter(Category == "correct") %>% 
+  filter(Parser %in% snames) %>%
+  mutate(ok = (Result == "OK" | Result == "EQUIVALENT_OBJECT")) %>% select(Parser,File,ok) %>% spread(Parser, ok)
+
+c_fastjson <- isOk %>% filter(`yasjf4j-fastjson` == TRUE)
+c_gson <- isOk %>% filter(`yasjf4j-gson` == TRUE)
+c_json <- isOk %>% filter(`yasjf4j-json` == TRUE)
+c_json_simple <- isOk %>% filter(`yasjf4j-json-simple` == TRUE)
+c_jackson <- isOk %>% filter(`yasjf4j-jackson` == TRUE)
+c_cookjson <- isOk %>% filter(`yasjf4j-cookjson` == TRUE)
+c_json_io <- isOk %>% filter(`yasjf4j-json-io` == TRUE)
+#c_jsonp <- isOk %>% filter(`yasjf4j-jsonp` == TRUE)
+
+ven_in <- list(c_fastjson$File, c_gson$File, c_json$File, c_json_simple$File, c_jackson$File, c_cookjson$File, c_json_io$File)#, c_jsonp$File)
+
+if(print_venn) pdf("venn_correct_7_ok_or_eq.pdf")
+venn(
+  ven_in,
+  snames = snames,
+  ilab = TRUE,
+  zcolor = "style"
+)
+if(print_venn) dev.off() 
+
+```
+```{r venn-errored-7}
+
+implems
+
+snames = c("yasjf4j-fastjson","yasjf4j-gson","yasjf4j-json","yasjf4j-json-simple","yasjf4j-jackson","yasjf4j-cookjson","yasjf4j-json-io")#,"yasjf4j-jsonp")
+
+#list of columns
+isOk <- dataset %>% filter(Category == "errored") %>% 
+  filter(Parser %in% snames) %>%
+  mutate(ok = (Result == "OK")) %>% select(Parser,File,ok) %>% spread(Parser, ok)
+
+c_fastjson <- isOk %>% filter(`yasjf4j-fastjson` == TRUE)
+c_gson <- isOk %>% filter(`yasjf4j-gson` == TRUE)
+c_json <- isOk %>% filter(`yasjf4j-json` == TRUE)
+c_json_simple <- isOk %>% filter(`yasjf4j-json-simple` == TRUE)
+c_jackson <- isOk %>% filter(`yasjf4j-jackson` == TRUE)
+c_cookjson <- isOk %>% filter(`yasjf4j-cookjson` == TRUE)
+c_json_io <- isOk %>% filter(`yasjf4j-json-io` == TRUE)
+#c_jsonp <- isOk %>% filter(`yasjf4j-jsonp` == TRUE)
+
+ven_in <- list(c_fastjson$File, c_gson$File, c_json$File, c_json_simple$File, c_jackson$File, c_cookjson$File, c_json_io$File)#, c_jsonp$File)
+
+if(print_venn) pdf("venn_errored_7_ok.pdf")
+venn(
+  ven_in,
+  snames = snames,
+  ilab = TRUE,
+  zcolor = "style"
+)
+if(print_venn) dev.off() 
+
+```
+```{r venn-undefined-7}
+
+implems
+
+snames = c("yasjf4j-fastjson","yasjf4j-gson","yasjf4j-json","yasjf4j-json-simple","yasjf4j-jackson","yasjf4j-cookjson","yasjf4j-json-io")#,"yasjf4j-jsonp")
+
+#list of columns
+isOk <- dataset %>% filter(Category == "undefined") %>% 
+  filter(Parser %in% snames) %>%
+  mutate(ok = (Result == "OK" | Result == "EQUIVALENT_OBJECT")) %>% select(Parser,File,ok) %>% spread(Parser, ok)
+
+c_fastjson <- isOk %>% filter(`yasjf4j-fastjson` == TRUE)
+c_gson <- isOk %>% filter(`yasjf4j-gson` == TRUE)
+c_json <- isOk %>% filter(`yasjf4j-json` == TRUE)
+c_json_simple <- isOk %>% filter(`yasjf4j-json-simple` == TRUE)
+c_jackson <- isOk %>% filter(`yasjf4j-jackson` == TRUE)
+c_cookjson <- isOk %>% filter(`yasjf4j-cookjson` == TRUE)
+c_json_io <- isOk %>% filter(`yasjf4j-json-io` == TRUE)
+#c_jsonp <- isOk %>% filter(`yasjf4j-jsonp` == TRUE)
+
+ven_in <- list(c_fastjson$File, c_gson$File, c_json$File, c_json_simple$File, c_jackson$File, c_cookjson$File, c_json_io$File)#, c_jsonp$File)
+
+if(print_venn) pdf("venn_undefined_7_t_ok_or_eq.pdf")
+venn(
+  ven_in,
+  snames = snames,
+  ilab = TRUE,
+  zcolor = "style"
+)
+if(print_venn) dev.off() 
+
+```
+
+```{r venn-undefined-7}
+
+implems
+
+snames = c("yasjf4j-fastjson","yasjf4j-gson","yasjf4j-json","yasjf4j-json-simple","yasjf4j-jackson","yasjf4j-cookjson","yasjf4j-json-io")#,"yasjf4j-jsonp")
+
+#list of columns
+isOk <- dataset %>% filter(Category == "undefined") %>% 
+  filter(Parser %in% snames) %>%
+  mutate(ok = (Result == "PARSE_EXCEPTION")) %>% select(Parser,File,ok) %>% spread(Parser, ok)
+
+c_fastjson <- isOk %>% filter(`yasjf4j-fastjson` == TRUE)
+c_gson <- isOk %>% filter(`yasjf4j-gson` == TRUE)
+c_json <- isOk %>% filter(`yasjf4j-json` == TRUE)
+c_json_simple <- isOk %>% filter(`yasjf4j-json-simple` == TRUE)
+c_jackson <- isOk %>% filter(`yasjf4j-jackson` == TRUE)
+c_cookjson <- isOk %>% filter(`yasjf4j-cookjson` == TRUE)
+c_json_io <- isOk %>% filter(`yasjf4j-json-io` == TRUE)
+#c_jsonp <- isOk %>% filter(`yasjf4j-jsonp` == TRUE)
+
+ven_in <- list(c_fastjson$File, c_gson$File, c_json$File, c_json_simple$File, c_jackson$File, c_cookjson$File, c_json_io$File)#, c_jsonp$File)
+
+if(print_venn) pdf("venn_undefined_7_exception.pdf")
+venn(
+  ven_in,
+  snames = snames,
+  ilab = TRUE,
+  zcolor = "style"
+)
+if(print_venn) dev.off() 
+
+```
+
+
+```{r venn-undefined-7}
+
+implems
+
+snames = c("yasjf4j-fastjson","yasjf4j-gson","yasjf4j-json","yasjf4j-json-simple","yasjf4j-jackson","yasjf4j-cookjson","yasjf4j-json-io")#,"yasjf4j-jsonp")
+
+#list of columns
+isOk <- dataset %>% filter(Category == "undefined") %>% 
+  filter(Parser %in% snames) %>%
+  mutate(ok = (Result == "NON_EQUIVALENT_OBJECT")) %>% select(Parser,File,ok) %>% spread(Parser, ok)
+
+c_fastjson <- isOk %>% filter(`yasjf4j-fastjson` == TRUE)
+c_gson <- isOk %>% filter(`yasjf4j-gson` == TRUE)
+c_json <- isOk %>% filter(`yasjf4j-json` == TRUE)
+c_json_simple <- isOk %>% filter(`yasjf4j-json-simple` == TRUE)
+c_jackson <- isOk %>% filter(`yasjf4j-jackson` == TRUE)
+c_cookjson <- isOk %>% filter(`yasjf4j-cookjson` == TRUE)
+c_json_io <- isOk %>% filter(`yasjf4j-json-io` == TRUE)
+#c_jsonp <- isOk %>% filter(`yasjf4j-jsonp` == TRUE)
+
+ven_in <- list(c_fastjson$File, c_gson$File, c_json$File, c_json_simple$File, c_jackson$File, c_cookjson$File, c_json_io$File)#, c_jsonp$File)
+
+if(print_venn) pdf("venn_undefined_7_neq.pdf")
+venn(
+  ven_in,
+  snames = snames,
+  ilab = TRUE,
+  zcolor = "style"
+)
+if(print_venn) dev.off() 
+
+```

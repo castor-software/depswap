@@ -47,6 +47,6 @@ public class JSONTestUtils {
 	}
 
 	public static void assertEquivalent(String jsonString1, String jsonString2) {
-		assertTrue("Expected: <" + jsonString1 + ">, Actual: <" + jsonString2 + ">",equivalent(JSONValue.parse(jsonString1), JSONValue.parse(jsonString2)));
+		assertTrue("Expected: <" + jsonString1 + ">, Actual: <" + jsonString2 + ">", equivalent(JSONValue.parse(jsonString1), JSONValue.parse(jsonString2)));
 	}
 }

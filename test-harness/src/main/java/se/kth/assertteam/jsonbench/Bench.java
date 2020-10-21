@@ -1,7 +1,9 @@
 package se.kth.assertteam.jsonbench;
 
 
+import se.kth.assertteam.jsonbench.parser.FastJson;
 import se.kth.assertteam.jsonbench.parser.GsonParser;
+import se.kth.assertteam.jsonbench.parser.Jackson;
 import se.kth.assertteam.jsonbench.parser.JsonSimple;
 import se.kth.assertteam.jsonbench.parser.OrgJSON;
 
@@ -28,6 +30,12 @@ public class Bench {
 
 		JP simple = new JsonSimple();
 		test(simple);
+
+		JP fastjson = new FastJson();
+		test(fastjson);
+
+		JP jackson = new Jackson();
+		test(jackson);
 	}
 
 	public static void test(JP parser) throws IOException {

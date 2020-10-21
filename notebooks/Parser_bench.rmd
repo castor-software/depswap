@@ -30,8 +30,22 @@ org_i <- read_delim("../test-harness/results/org.json_errored_results.csv",
 org_u <- read_delim("../test-harness/results/org.json_undefined_results.csv", 
     ",", escape_double = FALSE, trim_ws = TRUE)
 
+fast_c <- read_delim("../test-harness/results/FastJson_correct_results.csv", 
+    ",", escape_double = FALSE, trim_ws = TRUE)
+fast_i <- read_delim("../test-harness/results/FastJson_errored_results.csv", 
+    ",", escape_double = FALSE, trim_ws = TRUE)
+fast_u <- read_delim("../test-harness/results/FastJson_undefined_results.csv", 
+    ",", escape_double = FALSE, trim_ws = TRUE)
 
-dataset <- rbind(gson_c,gson_i,gson_u,simple_c,simple_i,simple_u,org_c,org_i,org_u)
+jackson_c <- read_delim("../test-harness/results/Jackson_correct_results.csv", 
+    ",", escape_double = FALSE, trim_ws = TRUE)
+jackson_i <- read_delim("../test-harness/results/Jackson_errored_results.csv", 
+    ",", escape_double = FALSE, trim_ws = TRUE)
+jackson_u <- read_delim("../test-harness/results/Jackson_undefined_results.csv", 
+    ",", escape_double = FALSE, trim_ws = TRUE)
+
+
+dataset <- rbind(gson_c,gson_i,gson_u,simple_c,simple_i,simple_u,org_c,org_i,org_u,fast_c,fast_i,fast_u,jackson_c,jackson_i,jackson_u)
 ```
 
 ```{r reshape}
@@ -41,7 +55,9 @@ d %>% mutate(same =(`Gson` == `json-simple` & Gson == `org.json`)) %>% group_by(
 
 ```
 
-``` {r printd} 
+
+```{r printd} 
+
 p <- dataset %>% mutate(r = as.factor(Result)) %>% select(File,Parser,Category, r) %>% 
   ggplot(aes(x = Parser, y = File, fill=r)) +
       geom_raster() +
@@ -49,5 +65,10 @@ p <- dataset %>% mutate(r = as.factor(Result)) %>% select(File,Parser,Category, 
       scale_x_discrete(drop = FALSE) +
       scale_y_discrete(drop = FALSE)
 ggsave("bench.pdf", p, device = "pdf",units = "cm", width = 21, height = 120)
+
+```
+
+
+```{r toto}
 
 ```

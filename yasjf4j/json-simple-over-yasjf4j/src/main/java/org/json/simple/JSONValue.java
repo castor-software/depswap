@@ -157,7 +157,7 @@ public class JSONValue {
 
 	public static Object parse(String s) {
 		try {
-			Object r = JFactory.parse(s);;
+			Object r = JFactory.parse(s);
 			if(r instanceof JObject) {
 				return new JSONObject((JObject) r);
 			} else if (r instanceof JArray) {

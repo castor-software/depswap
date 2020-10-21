@@ -8,3 +8,7 @@ target
 **/target/*
 .Rhistory
 **/.Rhistory
+**/*.log
+*.log
+old_pom.xml
+**/old_pom.xml
