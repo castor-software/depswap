@@ -151,7 +151,7 @@
           <parallel>classes</parallel>
         </configuration>
       </plugin>
-      <plugin>
+      <!--<plugin>
         <artifactId>maven-javadoc-plugin</artifactId>
         <configuration>
           <links combine.children="append">
@@ -159,7 +159,7 @@
             <link>http://fasterxml.github.com/jackson-core/javadoc/2.12</link>
           </links>
         </configuration>
-      </plugin>
+      </plugin>-->
       <plugin>
         <groupId>com.google.code.maven-replacer-plugin</groupId>
         <artifactId>replacer</artifactId>
@@ -168,9 +168,28 @@
         <groupId>org.moditect</groupId>
         <artifactId>moditect-maven-plugin</artifactId>
       </plugin>
-      <plugin>
+      <!--<plugin>
         <groupId>de.jjohannes</groupId>
         <artifactId>gradle-module-metadata-maven-plugin</artifactId>
+      </plugin>-->
+
+      <plugin>
+        <artifactId>maven-assembly-plugin</artifactId>
+		<version>2.1</version>
+        <configuration>
+          <descriptorRefs>
+            <descriptorRef>jar-with-dependencies</descriptorRef>
+          </descriptorRefs>
+        </configuration>
+        <executions>
+          <execution>
+            <id>make-my-jar-with-dependencies</id>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>

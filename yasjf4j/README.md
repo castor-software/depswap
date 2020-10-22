@@ -1,4 +1,13 @@
-# YASJF4J implem journal
+# YASJF4J / Argo
+
+## BUild
+
+``bash
+	./built-jars.sh /path/to/output/
+``
+
+
+## YASJF4J implem journal
 
  * Decided to split into bridges / facade / implementations
  * Facade finds implementation with SPI
@@ -9,7 +18,7 @@
  * Bridge are container that hold an object of a type in the facade.
 
 
-## Bridge Methodology
+### Bridge Methodology
 
  * Mine static usages from a list of github projects
  * Merge results and pick the most used classes and methods to implement
@@ -18,7 +27,7 @@
  * Do not forget to box/unbox
  * To understand the spec read original source code.
 
-## missmatches
+### missmatches
 
  * Exception throwing
  * Types missmatches for value (i.e. long vs integer)
@@ -26,7 +35,7 @@
  * Add JSONValue to facade? Add serilize object to facade? (in addition to toString)
 
 
-## Difficulties
+### Difficulties
 
  * Why on earth would a json parser required you to have commons-logging ? https://github.com/billdavidson/JSONUtil/wiki/Getting-Started-Guide
 
@@ -49,7 +58,7 @@ From org.json:
     }
 ```
 
-## Using original test suites to test bridges
+### Using original test suites to test bridges
 
 from `json-simple`
 ```java
@@ -102,7 +111,7 @@ Double, FLoat, Long, Integer, BigInteger, BigDecimal.
 
 jjson seems to fail to parse simple nested arrays, ex: `[[0],[0]]`
 
-## Status
+### Status
 
 |              Implem |                   Bridge |  Outcome | Failures |
 |-------------------- |------------------------- |--------- |--------- |
