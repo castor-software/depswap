@@ -2,9 +2,9 @@
 
 ## BUild
 
-``bash
+```bash
 	./built-jars.sh /path/to/output/
-``
+```
 
 
 ## YASJF4J implem journal
