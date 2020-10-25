@@ -35,7 +35,8 @@ public class ArrayNode
     protected JArray json = JFactory.createJArray();
 
     public ArrayNode(Object o) {
-        super(JsonNodeFactory.instance);
+        super(((JsonNodeFactory) (o instanceof JsonNodeFactory ? o : JsonNodeFactory.instance)));
+        //super(JsonNodeFactory.instance);
         if(o instanceof JArray) {
             json = (JArray) o;
         } else if (o instanceof List) {
@@ -1116,13 +1117,30 @@ public class ArrayNode
             _children.add(index, node);
         }
         return this;*/
-        /*if (index < 0) {
-            _children.add(0, node);
-        } else if (index >= _children.size()) {
-            _children.add(node);
+        if (index < 0 || index < json.YASJF4J_size()) {
+            if(index < 0) {
+                index = 0;
+            }
+            Object prev, cur;
+            prev = ObjectNode.toObject(node);
+
+            try {
+                for(int i = index; i < json.YASJF4J_size(); i++) {
+                        cur = json.YASJF4J_get(i);
+                        json.YASJF4J_set(i, prev);
+                        prev = cur;
+                }
+                json.YASJF4J_add(prev);
+            } catch (JException e) {
+                e.printStackTrace();
+            }
         } else {
-            _children.add(index, node);
-        }*/
+            try {
+                json.YASJF4J_add(ObjectNode.toObject(node));
+            } catch (JException e) {
+                e.printStackTrace();
+            }
+        }
         return this;
     }
 }

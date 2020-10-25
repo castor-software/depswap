@@ -64,7 +64,7 @@ public class TestNodeJDKSerialization extends BaseMapTest
     {
         byte[] ser = jdkSerialize(input);
         JsonNode result = jdkDeserialize(ser);
-        assertEquals(input, result);
+        assertEquals(input.toPrettyString(), result.toPrettyString());
     }
 
     protected byte[] jdkSerialize(Object o) throws IOException

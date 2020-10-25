@@ -1,7 +1,19 @@
 #!/bin/zsh
 
-LIB=$1
-echo "Path to lib dir: $LIB"
+#LIB=$1
+#echo "Path to lib dir: $LIB"
+PWD=$(pwd)
+LIB="$PWD/jars/"
+
+if [ -d $LIB ] ; then
+	rm -rf $LIB
+fi
+mkdir $LIB
+
+cd yasjf4j-api
+mvn clean install -DskipTests=True > /dev/null
+cd ..
+
 
 for d in $(ls -d *)
 do

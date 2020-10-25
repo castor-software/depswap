@@ -31,7 +31,7 @@ public class ObjectNode
     protected JObject json = JFactory.createJObject();
 
     public ObjectNode(Object o) {
-        super(null);
+        super(((JsonNodeFactory) (o instanceof JsonNodeFactory ? o : JsonNodeFactory.instance)));
         if(o instanceof JObject) {
             json = (JObject) o;
         } else if (o instanceof Map) {
@@ -258,6 +258,9 @@ public class ObjectNode
     @Override
     public JsonNode get(String fieldName) {
         try {
+            if(!json.YASJF4J_getKeys().contains(fieldName)) {
+                return null;
+            }
             return toJsonNode(json.YASJF4J_get(fieldName));
         } catch (JException e) {
             e.printStackTrace();
@@ -285,7 +288,9 @@ public class ObjectNode
             return n;
         }
         return MissingNode.getInstance();*/
-
+        if(!json.YASJF4J_getKeys().contains(fieldName)) {
+            return MissingNode.getInstance();
+        }
         try {
             return toJsonNode(json.YASJF4J_get(fieldName));
         } catch (JException e) {
@@ -302,7 +307,9 @@ public class ObjectNode
         }
         return _reportRequiredViolation("No value for property '%s' of `ObjectNode`", fieldName);*/
         try {
-            return toJsonNode(json.YASJF4J_get(fieldName));
+            if(json.YASJF4J_getKeys().contains(fieldName)) {
+                return toJsonNode(json.YASJF4J_get(fieldName));
+            }
         } catch (JException e) {
             e.printStackTrace();
         }
@@ -315,7 +322,7 @@ public class ObjectNode
      */
     @Override
     public Iterator<Map.Entry<String, JsonNode>> fields() {
-        Map<String, JsonNode> l = new HashMap<>();
+        /*Map<String, JsonNode> l = new LinkedHashMap<>();
         for(String key: json.YASJF4J_getKeys()) {
             try {
                 l.put(key, toJsonNode(json.YASJF4J_get(key)));
@@ -323,8 +330,36 @@ public class ObjectNode
                 e.printStackTrace();
             }
         }
-        return l.entrySet().iterator();
+        return l.entrySet().iterator();*/
         //return _children.entrySet().iterator();
+        return new Iterator<Map.Entry<String, JsonNode>>() {
+            Iterator<String> properties = json.YASJF4J_getKeys().iterator();
+            String cur;
+            @Override
+            public boolean hasNext() {
+                return properties.hasNext();
+            }
+
+            @Override
+            public Map.Entry<String, JsonNode> next() {
+                cur = properties.next();
+                JsonNode n = null;
+                try {
+                    n = toJsonNode(json.YASJF4J_get(cur));
+                } catch (JException e) {
+                }
+                return new HashMap.SimpleEntry<>(cur, n);
+            }
+
+            @Override
+            public void remove() {
+                try {
+                    json.YASJF4J_remove(cur);
+                } catch (JException e) {
+                }
+            }
+        };
+
     }
 
     @SuppressWarnings("unchecked")
@@ -344,13 +379,16 @@ public class ObjectNode
         return result;*/
 
         try {
-            JsonNode n = toJsonNode(json.YASJF4J_get(propertyName));
-            if (n instanceof ObjectNode) {
-                return (ObjectNode) n;
+            Object o = json.YASJF4J_get(propertyName);
+            if(o != null) {
+                JsonNode n = toJsonNode(o);
+                if (n instanceof ObjectNode) {
+                    return (ObjectNode) n;
+                }
+                throw new UnsupportedOperationException("Property '" + propertyName
+                        + "' has value that is not of type ObjectNode (but " + n
+                        .getClass().getName() + ")");
             }
-            throw new UnsupportedOperationException("Property '" + propertyName
-                    + "' has value that is not of type ObjectNode (but " + n
-                    .getClass().getName() + ")");
         } catch (JException e) {
         }
         ObjectNode result = objectNode();
@@ -380,13 +418,16 @@ public class ObjectNode
         return result;*/
 
         try {
-            JsonNode n = toJsonNode(json.YASJF4J_get(propertyName));
-            if (n instanceof ArrayNode) {
-                return (ArrayNode) n;
+            Object o = json.YASJF4J_get(propertyName);
+            if(o != null) {
+                JsonNode n = toJsonNode(o);
+                if (n instanceof ArrayNode) {
+                    return (ArrayNode) n;
+                }
+                throw new UnsupportedOperationException("Property '" + propertyName
+                        + "' has value that is not of type ArrayNode (but " + n
+                        .getClass().getName() + ")");
             }
-            throw new UnsupportedOperationException("Property '" + propertyName
-                    + "' has value that is not of type ArrayNode (but " + n
-                    .getClass().getName() + ")");
         } catch (JException e) {
         }
         ArrayNode result = new ArrayNode(_nodeFactory);
@@ -611,9 +652,10 @@ public class ObjectNode
             } else { // only add children if parent not added
                 try {
                     JsonNode value = toJsonNode(json.YASJF4J_get(key)).findParent(fieldName);
-
-                    foundSoFar = value
-                            .findParents(fieldName, foundSoFar);
+                    if(value != null) {
+                        foundSoFar = value
+                                .findParents(fieldName, foundSoFar);
+                    }
                 } catch (JException e) {
                 }
             }
@@ -859,20 +901,23 @@ public class ObjectNode
             value = nullNode();
         }
         return _children.put(fieldName, value);*/
+
         if (value == null) { // let's not store 'raw' nulls but nodes
             value = nullNode();
         }
 
         JsonNode old = null;
         try {
-            old = toJsonNode(json.YASJF4J_get(fieldName));
+            if(json.YASJF4J_getKeys().contains(fieldName)) {
+                old = toJsonNode(json.YASJF4J_get(fieldName));
+            }
         } catch (JException e) {
             //e.printStackTrace();
         }
         try {
             json.YASJF4J_put(fieldName, toObject(value));
         } catch (JException e) {
-            //e.printStackTrace();
+            e.printStackTrace();
         }
         return old;
     }
@@ -1071,12 +1116,15 @@ public class ObjectNode
     {
         /*_children.keySet().retainAll(fieldNames);
         return this;*/
-
-        for(String key: fieldNames) {
-            try {
+        Set<String> toRemove = new HashSet<>();
+        for(String key: json.YASJF4J_getKeys()) {
                 if(!fieldNames.contains(key)) {
-                    json.YASJF4J_remove(key);
+                    toRemove.add(key);
                 }
+        }
+        for(String k: toRemove) {
+            try {
+                json.YASJF4J_remove(k);
             } catch (JException e) {
                 e.printStackTrace();
             }
