@@ -1,9 +1,9 @@
 # YASJF4J / Argo
 
-## BUild
+## Build
 
 ```bash
-	./built-jars.sh /path/to/output/
+	./built-jars.sh
 ```
 
 
