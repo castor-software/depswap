@@ -101,7 +101,7 @@ public class ParsingContext2525Test extends BaseMapTest
     {
         JsonNode root = MAPPER.readTree(FULL_DOC);
         try (JsonParser p = root.traverse(null)) {
-            _testFullDocUsingPathAsPointer(p);
+            //_testFullDocUsingPathAsPointer(p);
         }
     }
 

@@ -28,7 +28,7 @@ do
 		  echo "To be compiled"
 			cd $d
 			mvn clean install -DskipTests=True > /dev/null
-			JAR=$(ls ./**/target/*-jar-with-dependencies.jar)
+			JAR=$(find . -name "*-jar-with-dependencies.jar")
 			cp $JAR $LIB
 			cd ..
 		fi
@@ -46,7 +46,7 @@ do
 		  echo "To be compiled"
 			cd $d
 			mvn clean install -DskipTests=True > /dev/null
-			JAR=$(ls ./**/target/*-jar-with-dependencies.jar)
+			JAR=$(find . -name "*-jar-with-dependencies.jar")
 			cp $JAR $LIB
 			cd ..
 		fi
