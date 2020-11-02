@@ -278,6 +278,8 @@ angular
     $scope.match = "all";
     $scope.search = "";
     $scope.filters = {
+      allvalid: true,
+      allinvalid: true,
       libs: {},
     };
     $scope.libs = [];
@@ -341,6 +343,9 @@ angular
           }
         }
       }
+      if (total == 0) {
+        return "N.A"
+      } 
       return Math.floor(count*100/total) + "% " + count + "/" + total;
     }
     $scope.countBugs = function (key, filter) {
@@ -391,9 +396,28 @@ angular
       }
       for (let lib in $scope.filters.libs) {
         if (bug.lib == lib) {
-          return $scope.filters.libs[lib];
+          if (!$scope.filters.libs[lib]) {
+            return false;
+          }
         }
       }
-      return false;
+      let allvalid = true;
+      let allinvalid = true;
+      for (let lib of $scope.execs) {
+        if (!bug.executions[lib]) {
+          continue;
+        }
+        if (bug.executions[lib].valid === true || bug.executions[lib].valid === false) {
+          allvalid &= bug.executions[lib].valid === true
+          allinvalid &= bug.executions[lib].valid === false
+        }
+      }
+      if (!$scope.filters.allvalid && allvalid) {
+        return false;
+      }
+      if (!$scope.filters.allinvalid && allinvalid) {
+        return false;
+      }
+      return true;
     };
   });

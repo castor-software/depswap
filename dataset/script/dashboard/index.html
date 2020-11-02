@@ -90,21 +90,32 @@
                 </li>
                 <li>
                   <a href="#" ng-click="submenu1 = !submenu1">
-                    <i class="fa fa-fw fa-sliders"></i>Contains
+                    <i class="fa fa-fw fa-sliders"></i>Validity
                     <i class="fa fa-fw fa-angle-down pull-right"></i
                   ></a>
                   <ul class="collapse" uib-collapse="submenu1">
                     <li>
                       <label
-                        for="commit"
-                        ng-class="{'actived': filters['commit']}"
+                        for="allvalid"
+                        ng-class="{'actived': filters['allvalid']}"
                         ><input
                           type="checkbox"
-                          id="commit"
-                          ng-model="filters['commit']"
-                          ng-click="clickFilter('commit')"
-                        />Only unique commit</label
-                      >
+                          id="allvalid"
+                          ng-model="filters['allvalid']"
+                          ng-click="clickFilter('allvalid')"
+                        />All Valid</label>
+                    </li>
+                    <li>
+                      <label
+                        for="allinvalid"
+                        ng-class="{'actived': filters['allinvalid']}"
+                        ><input
+                          type="checkbox"
+                          id="allinvalid"
+                          ng-model="filters['allinvalid']"
+                          ng-click="clickFilter('allinvalid')"
+                        />All Invalid</label>
+                    </li>
                   </ul>
                 </li>
                 <li>
@@ -128,11 +139,11 @@
                   </ul>
                 </li>
                 <li>
-                  <a href="#" ng-click="submenuLang = !submenuLang">
+                  <a href="#" ng-click="submenuImpl = !submenuImpl">
                     <i class="fa fa-fw fa-search"></i>Implementations
                     <i class="fa fa-fw fa-angle-down pull-right"></i
                   ></a>
-                  <ul class="collapse" uib-collapse="submenuLang">
+                  <ul class="collapse" uib-collapse="submenuImpl">
                     <li ng-repeat="lib in execs">
                       <label>{{lib}} <span class="badge badge-light">{{count(lib)}}</span></label>
                     </li>
