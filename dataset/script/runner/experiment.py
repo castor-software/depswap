@@ -100,6 +100,9 @@ if __name__ == "__main__":
                         help="The result folder", default="results")
     parser.add_argument(
         "--timeout", help="Execution timeout of mvn compile/test/package", default=None)
+    
+    parser.add_argument("-i", "--implementations", required=False, nargs='+',
+                        help="The name of the implemts", default=None)
 
     args = parser.parse_args()
 
@@ -112,14 +115,13 @@ if __name__ == "__main__":
     print("[%s] Clone %s" % (datetime.now().strftime("%d/%m/%Y %H:%M:%S"), project.name), flush=True)
     project.checkout_commit(args.commit)
 
-    log_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "output.log")
+    project_path = os.path.dirname(os.path.realpath(__file__))
+    log_path = os.path.join(project_path, "output.log")
 
     project.install(stdout=log_path, timeout=args.timeout)
     print("[%s] Install %s" % (datetime.now().strftime("%d/%m/%Y %H:%M:%S"), project.name), flush=True)
 
-
-    log = LogAnalyser(log_path)
-    errors = log.parse()
+    
 
     if len(project.pom.poms) == 0:
         os._exit(os.EX_OK)
@@ -131,16 +133,22 @@ if __name__ == "__main__":
         "executions": []
     }
 
-    project.test(stdout="output.log", clean=False, timeout=args.timeout)
+    project.test(stdout=log_path, clean=False, timeout=args.timeout)
     print("[%s] Test %s" % (datetime.now().strftime("%d/%m/%Y %H:%M:%S"), project.name), flush=True)
+    log = LogAnalyser(log_path)
 
     results["executions"].append({
         "name": "original",
         "test": project.get_test_results(),
         "classpath": project.classpath(),
-        "errors": errors
+        "errors": log.parse()
     })
-    for implem in sorted(json_map[args.lib]):
+    os.rename(log_path, os.path.join(project_path, "origin.log"))
+
+    implems = json_map[args.lib]
+    if args.implementations is not None:
+        implems = args.impls
+    for implem in sorted(implems):
         print("[%s] Start %s" % (datetime.now().strftime("%d/%m/%Y %H:%M:%S"), implem), flush=True)
         timeout_cmd = ''
         if args.timeout is not None:
@@ -154,6 +162,7 @@ if __name__ == "__main__":
 
         log = LogAnalyser(log_path)
         errors = log.parse()
+        os.rename(log_path, os.path.join(project_path, "%s.log" % implem))
 
         results["executions"].append({
             "name": implem,
@@ -173,6 +182,7 @@ if __name__ == "__main__":
 
         # log = LogAnalyser(log_path)
         # errors = log.parse()
+        # os.rename(log_path, os.path.join(project_path, "%s_inst.log" % implem))
         
         # trace_dirs = []
         # for root, dirs, files in os.walk(project.path, topdown=False):
