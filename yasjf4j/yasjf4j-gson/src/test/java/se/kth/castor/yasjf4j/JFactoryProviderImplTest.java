@@ -7,6 +7,14 @@ import static org.junit.Assert.*;
 public class JFactoryProviderImplTest {
 
 	@Test
+	public void testObjectSimpleConsistency() throws Exception {
+
+		String sObject = "{\"a\":\"str\"}";
+		JObject o = (JObject) JFactory.parse(sObject);
+		assertEquals(sObject, o.YASJF4J_toString().replace(" ", "").replace("\n", ""));
+	}
+
+	@Test
 	public void testObjectTreeConsistency() throws Exception {
 
 		String sObject = "{\"a\":{\"b\":{\"c\":{\"d\":[5,{\"e\":7}]}}}}";
