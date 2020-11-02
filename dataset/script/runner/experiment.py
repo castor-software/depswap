@@ -115,7 +115,7 @@ if __name__ == "__main__":
     print("[%s] Clone %s" % (datetime.now().strftime("%d/%m/%Y %H:%M:%S"), project.name), flush=True)
     project.checkout_commit(args.commit)
 
-    project_path = os.path.dirname(os.path.realpath(__file__))
+    project_path = working_directory
     log_path = os.path.join(project_path, "output.log")
 
     project.install(stdout=log_path, timeout=args.timeout)
