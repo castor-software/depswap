@@ -1,0 +1,7 @@
+*
+
+!*.py
+!*.jar
+!*.xml
+!requirements.txt
+!instruments-jars.sh
