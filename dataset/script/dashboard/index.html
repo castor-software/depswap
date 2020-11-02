@@ -1,0 +1,254 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en" ng-app="dep-website" ng-controller="mainController">
+  <head>
+    <meta charset="UTF-8" />
+    <title>DepJson Builds</title>
+
+    <!-- CSS -->
+    <link
+      rel="stylesheet"
+      href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+      integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+      crossorigin="anonymous"
+    />
+
+    <!-- Optional theme -->
+    <link
+      rel="stylesheet"
+      href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+      integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+      crossorigin="anonymous"
+    />
+
+    <link
+      rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/xterm/3.12.2/xterm.css"
+    />
+    <link
+      rel="stylesheet"
+      href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css"
+    />
+    <link rel="stylesheet" href="style/style.css" />
+
+    <!-- JS -->
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular-animate.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular-touch.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular-route.js"></script>
+    <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.5.0.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/angu-fixed-header-table@1.2.1/angu-fixed-header-table.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/java.min.js"></script>
+    <script src="//overset.github.io/javascript-natural-sort/naturalSort.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/xterm/3.12.2/xterm.min.js"></script>
+    <script
+      type="text/javascript"
+      src="//cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="//jtblin.github.io/angular-chart.js/dist/angular-chart.min.js"
+    ></script>
+
+    <script src="js/app.js"></script>
+  </head>
+  <body keypress-events>
+    <div id="wrapper">
+      <!-- Navigation -->
+      <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+          <button
+            type="button"
+            class="navbar-toggle"
+            data-toggle="collapse"
+            data-target=".navbar-ex1-collapse"
+          >
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <h2>D is showing {{filteredBugs.length}} pair of builds</h2>
+        </div>
+        <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+          <ul id="menu" class="nav navbar-nav side-nav">
+            <li>
+              <ul class="nav">
+                <li>
+                  <input
+                    class="search"
+                    ng-model="search"
+                    placeholder="Search project or commit message"
+                  />
+                </li>
+                <li>
+                  <a href="#" ng-click="submenu1 = !submenu1">
+                    <i class="fa fa-fw fa-sliders"></i>Contains
+                    <i class="fa fa-fw fa-angle-down pull-right"></i
+                  ></a>
+                  <ul class="collapse" uib-collapse="submenu1">
+                    <li>
+                      <label
+                        for="commit"
+                        ng-class="{'actived': filters['commit']}"
+                        ><input
+                          type="checkbox"
+                          id="commit"
+                          ng-model="filters['commit']"
+                          ng-click="clickFilter('commit')"
+                        />Only unique commit</label
+                      >
+                  </ul>
+                </li>
+                <li>
+                  <a href="#" ng-click="submenuLang = !submenuLang">
+                    <i class="fa fa-fw fa-search"></i>Libs
+                    <i class="fa fa-fw fa-angle-down pull-right"></i
+                  ></a>
+                  <ul class="collapse" uib-collapse="submenuLang">
+                    <li ng-repeat="lib in libs">
+                      <label
+                        for="{{lib}}"
+                        ng-class="{'actived': filters.libs[lib]}"
+                        ><input
+                          type="checkbox"
+                          id="{{lib}}"
+                          ng-model="filters.libs[lib]"
+                          ng-click="clickFilter(lib)"
+                        />{{lib}}</label
+                      >
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <a href="#" ng-click="submenuLang = !submenuLang">
+                    <i class="fa fa-fw fa-search"></i>Implementations
+                    <i class="fa fa-fw fa-angle-down pull-right"></i
+                  ></a>
+                  <ul class="collapse" uib-collapse="submenuLang">
+                    <li ng-repeat="lib in execs">
+                      <label>{{lib}} <span class="badge badge-light">{{count(lib)}}</span></label>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+      </nav>
+
+      <div id="page-wrapper">
+        <div class="container-fluid">
+          <div class="row" id="main">
+            <table fixed-header id="mainTable" class="table table-striped">
+              <thead>
+                <tr>
+                  <th>
+                    <a href="#" ng-click="sort('owner')">
+                      Owner
+                      <span
+                        ng-show="sortType == 'owner' && sortReverse"
+                        class="fa fa-sort-alpha-desc"
+                      ></span>
+                      <span
+                        ng-show="sortType == 'owner' && !sortReverse"
+                        class="fa fa-sort-alpha-asc"
+                      ></span>
+                    </a>
+                  </th>
+                  <th>
+                    <a href="#" ng-click="sort('project')">
+                      Project
+                      <span
+                        ng-show="sortType == 'project' && sortReverse"
+                        class="fa fa-sort-alpha-desc"
+                      ></span>
+                      <span
+                        ng-show="sortType == 'project' && !sortReverse"
+                        class="fa fa-sort-alpha-asc"
+                      ></span>
+                    </a>
+                  </th>
+                  <th>
+                    <a href="#" ng-click="sort('commit')">
+                      Commit
+                      <span
+                        ng-show="sortType == 'commit' && sortReverse"
+                        class="fa fa fa-sort-amount-desc"
+                      ></span>
+                      <span
+                        ng-show="sortType == 'commit' && !sortReverse"
+                        class="fa fa fa-sort-amount-asc"
+                      ></span>
+                    </a>
+                  </th>
+                  <th>
+                    <a href="#" ng-click="sort('lib')">
+                      Lib
+                      <span
+                        ng-show="sortType == 'lib' && sortReverse"
+                        class="fa fa fa-sort-amount-desc"
+                      ></span>
+                      <span
+                        ng-show="sortType == 'lib' && !sortReverse"
+                        class="fa fa fa-sort-amount-asc"
+                      ></span>
+                    </a>
+                  </th>
+                  <th ng-repeat="exec in execs" ng-bind="exec"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  ng-repeat="bug in bugs| orderBy:sortType:sortReverse:naturalCompare| filter:bugsFilter as filteredBugs"
+                  ng-click="openBug(bug)"
+                >
+                  <td>{{ bug.owner }}</td>
+                  <td>{{ bug.project }}</td>
+                  <td><a href="https://github.com/{{ bug.owner }}/{{ bug.project }}/commit/{{ bug.commit }}" target="__blank">{{ bug.commit.substring(0, 6) }}</a></td>
+                  <td>{{ bug.lib }}</td>
+                  <td ng-repeat="exec in execs" class="text-center">
+                    <span class="result" ng-class="{'valid': bug.executions[exec].valid === true, 'invalid': bug.executions[exec].valid === false}"></span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <!-- /.container-fluid -->
+      </div>
+      <!-- /#page-wrapper -->
+    </div>
+    <!-- /#wrapper -->
+    <span ng-controller="bugController"></span>
+  </body>
+  <script type="text/ng-template" id="modelPatch.html">
+    <div class="modal-header">
+    	<h3 class="modal-title" id="modal-title">{{ $ctrl.bug.url }}</h3>
+    	<a ng-click="$ctrl.previousPatch()"><i class="fa fa-arrow-left" aria-hidden="true"></i> Previous Patch</a> | <a ng-click="$ctrl.nextPatch()">Next Patch <i class="fa fa-arrow-right" aria-hidden="true"></i></a>
+    </div>
+    <div class="modal-body" id="modal-body">
+    	<p>
+        <h4>{{$ctrl.bug.url}}</h4>
+        <div ng-click="$ctrl.copy($event)">docker run --rm -v $HOME/depswap_result:/results -v $HOME/depswap_exec:/tmp runner experiment -u {{ $ctrl.bug.url }} -c {{ $ctrl.bug.commit }} -l {{ $ctrl.bug.lib }} -r /results --timeout 15m</div>
+        <div class="execution" ng-repeat="exec in $ctrl.info.executions">
+          <h5>{{exec.name}}</h5>
+          <tests tests="exec.test"></tests>
+          <pre class="stacktrace" ng-bind="exec.error" ng-if="exec.error"></pre>
+        </div>
+    	</p>
+    </div>
+
+    <div class="modal-footer">
+    	<button class="btn btn-primary" type="button" ng-click="$ctrl.ok()">OK</button>
+    </div>
+  </script>
+</html>
