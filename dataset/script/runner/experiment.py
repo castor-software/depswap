@@ -100,6 +100,9 @@ if __name__ == "__main__":
                         help="The result folder", default="results")
     parser.add_argument(
         "--timeout", help="Execution timeout of mvn compile/test/package", default=None)
+    
+    parser.add_argument("-i", "--implementations", required=False, nargs='+',
+                        help="The name of the implemts", default=None)
 
     args = parser.parse_args()
 
@@ -140,7 +143,10 @@ if __name__ == "__main__":
         "classpath": project.classpath(),
         "errors": errors
     })
-    for implem in sorted(json_map[args.lib]):
+    implems = json_map[args.lib]
+    if args.implementations is not None:
+        implems = args.impls
+    for implem in sorted(implems):
         print("[%s] Start %s" % (datetime.now().strftime("%d/%m/%Y %H:%M:%S"), implem), flush=True)
         timeout_cmd = ''
         if args.timeout is not None:
