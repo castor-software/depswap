@@ -17,37 +17,37 @@ import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 public class JObjectImpl extends JsonElement implements JObject {
-	public JsonObject contained;
+	public static Gson gson = new Gson();
+	public HashMap<String, JsonElement> contained = new HashMap<>();
+
+	public JObjectImpl() {
+	}
 
 	@Override
-	public JObjectImpl deepCopy() {
+	public JsonElement deepCopy() {
 		JObjectImpl result = new JObjectImpl();
 		for (Map.Entry<String, JsonElement> entry : contained.entrySet()) {
-			result.contained.add(entry.getKey(), entry.getValue().deepCopy());
+			result.contained.put(entry.getKey(), entry.getValue().deepCopy());
 		}
 		return result;
 	}
 
-	public JObjectImpl() {
-		contained = new JsonObject();
-	}
-
 	public JObjectImpl(JsonObject json) throws JException {
-		contained = new JsonObject();
 		try {
 			for(String key: json.keySet()) {
 				Object el = json.get(key);
 				if(el instanceof JsonObject) {
-					contained.add(key, new JObjectImpl((JsonObject) el));
+					contained.put(key, new JObjectImpl((JsonObject) el));
 				} else if (el instanceof JsonArray) {
-					contained.add(key, new JArrayImpl((JsonArray) el));
+					contained.put(key, new JArrayImpl((JsonArray) el));
 				} else {
-					contained.add(key, (JsonElement) el);
+					contained.put(key, (JsonElement) el);
 				}
 			}
 		} catch (Exception e) {
@@ -56,18 +56,16 @@ public class JObjectImpl extends JsonElement implements JObject {
 	}
 
 	public JObjectImpl(String json) throws JException {
-		contained = new JsonObject();
 		try {
-			Gson gson = new Gson();
 			JsonObject o = gson.fromJson(json, JsonObject.class);
 			for(String key: o.keySet()) {
 				Object el = o.get(key);
 				if(el instanceof JsonObject) {
-					contained.add(key, new JObjectImpl((JsonObject) el));
+					contained.put(key, new JObjectImpl((JsonObject) el));
 				} else if (el instanceof JsonArray) {
-					contained.add(key, new JArrayImpl((JsonArray) el));
+					contained.put(key, new JArrayImpl((JsonArray) el));
 				} else {
-					contained.add(key, (JsonElement) el);
+					contained.put(key, (JsonElement) el);
 				}
 			}
 		} catch (Exception e) {
@@ -76,11 +74,10 @@ public class JObjectImpl extends JsonElement implements JObject {
 	}
 
 	public JObjectImpl(Map<String, ?> json) throws JException {
-		contained = new JsonObject();
 		try {
 			for(String key: json.keySet()) {
 				Object el = json.get(key);
-				contained.add(key,toJSONValue(el));
+				contained.put(key,toJSONValue(el));
 			}
 		} catch (Exception e) {
 			throw new JException();
@@ -89,12 +86,13 @@ public class JObjectImpl extends JsonElement implements JObject {
 
 	@Override
 	public boolean isJsonObject() {
-		return contained.isJsonObject();
+		return true;
 	}
 
 	@Override
 	public JsonObject getAsJsonObject() {
-		return contained;
+		//return this;
+		return gson.toJsonTree(contained).getAsJsonObject();
 	}
 
 	@Override
@@ -114,7 +112,7 @@ public class JObjectImpl extends JsonElement implements JObject {
 	@Override
 	public void YASJF4J_put(String s, Object o) throws JException {
 		try {
-			contained.add(s,  toJSONValue(o));
+			contained.put(s,  toJSONValue(o));
 		} catch (Exception e) {
 			throw new JException();
 		}
@@ -127,13 +125,13 @@ public class JObjectImpl extends JsonElement implements JObject {
 
 	@Override
 	public String YASJF4J_toString() {
-		return contained.toString();
+		return gson.toJson(contained);
 	}
 
 	@Override
 	public boolean equals(Object o) {
 		return (o == this) || (o instanceof JObjectImpl
-				&& ((JObjectImpl) o).contained.equals(contained));
+				&& ((JObjectImpl) o).equals(contained));
 	}
 
 	@Override
