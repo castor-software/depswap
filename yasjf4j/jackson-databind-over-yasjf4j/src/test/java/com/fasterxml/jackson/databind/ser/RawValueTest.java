@@ -7,11 +7,13 @@ import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.util.RawValue;
+import org.junit.Ignore;
 
 /**
  * This unit test suite tests functioning of {@link JsonRawValue}
  * annotation with bean serialization.
  */
+@Ignore
 public class RawValueTest
     extends com.fasterxml.jackson.databind.BaseMapTest
 {
