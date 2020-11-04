@@ -134,7 +134,7 @@ if __name__ == "__main__":
             project.copy_test_results(args.output)
         if args.coverage:
             project.copy_jacoco(args.output)
-        output['test_results'].append(project.project.get_test_results())
+        output['test_results'].append(project.get_test_results())
     output['end'] = time.time()
     output['classpath'] = project.classpath()
     print(json.dumps(output))
