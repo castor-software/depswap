@@ -70,6 +70,20 @@ json_map = {
         "jsonutil",
         "mjson",
         # "klaxon",
+    ],
+    "com.fasterxml.jackson.core:jackson-databind": [
+        "json-simple",
+        "fastjson",
+        "json",
+        "cookjson",
+        "jjson",
+        "json-io",
+        "json-lib",
+        "jsonp",
+        "gson",
+        "jsonutil",
+        "mjson",
+        # "klaxon",
     ]
 }
 
@@ -77,7 +91,7 @@ lib_jar = {
     "cookjson": "yasjf4j-cookjson-1.0-SNAPSHOT-jar-with-dependencies.jar",
     "com.alibaba:fastjson": "yasjf4j-fastjson-1.0-SNAPSHOT-jar-with-dependencies.jar",
     "gson": "yasjf4j-gson-1.0-SNAPSHOT-jar-with-dependencies.jar",
-    "jackson": "yasjf4j-jackson-1.0-SNAPSHOT-jar-with-dependencies.jar",
+    "jackson": "yasjf4j-jackson-databind-1.0-SNAPSHOT-jar-with-dependencies.jar",
     "jjson": "yasjf4j-jjson-1.0-SNAPSHOT-jar-with-dependencies.jar",
     "org.json:json": "yasjf4j-json-1.0-SNAPSHOT-jar-with-dependencies.jar",
     "json-io": "yasjf4j-json-io-1.0-SNAPSHOT-jar-with-dependencies.jar",

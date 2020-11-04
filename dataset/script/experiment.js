@@ -66,7 +66,8 @@ function execute(repo, commit, lib) {
               src.indexOf("org.json") == 0 ||
               src.indexOf("com.alibaba.fastjson") == 0 ||
               src.indexOf("com.fasterxml.jackson") == 0 ||
-              src.indexOf("com.google.gson") == 0
+              src.indexOf("com.google.gson") == 0  ||
+              src.indexOf("com.fasterxml.jackson.core.json") == 0
             ) {
               projects.add(repo);
             }
@@ -140,6 +141,9 @@ function execute(repo, commit, lib) {
         }
         if (packages.has("com.googlecode.json-simple:json-simple")) {
           await execute(project, info.commit, "com.googlecode.json-simple:json-simple");
+        }
+        if (packages.has("com.fasterxml.jackson.core:jackson-databind")) {
+          await execute(project, info.commit, "com.fasterxml.jackson.core:jackson-databind");
         }
         bar.tick({
           step: `${project}`,
