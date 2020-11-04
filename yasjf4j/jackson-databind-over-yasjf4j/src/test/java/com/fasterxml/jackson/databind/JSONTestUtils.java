@@ -67,7 +67,7 @@ public class JSONTestUtils {
 		assertTrue("Expected: <" + o1 + ">, Actual: <" + o2 + ">", equivalent(o1, mapper.readTree(o2)));
 	}
 
-	/*public static void assertEquivalent(String jsonString1, String jsonString2) {
-		assertTrue("Expected: <" + jsonString1 + ">, Actual: <" + jsonString2 + ">",equivalent(JSONValue.parse(jsonString1), JSONValue.parse(jsonString2)));
-	}*/
+	public static void assertEquivalent(String jsonString1, String jsonString2) throws JsonProcessingException {
+		assertTrue("Expected: <" + jsonString1 + ">, Actual: <" + jsonString2 + ">",equivalent(mapper.readTree(jsonString1), mapper.readTree(jsonString2)));
+	}
 }

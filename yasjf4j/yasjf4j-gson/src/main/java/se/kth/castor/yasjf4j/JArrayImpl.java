@@ -6,13 +6,13 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class JArrayImpl extends JsonElement implements JArray {
-	public JsonArray contained;
+	public ArrayList<JsonElement> contained = new ArrayList<>();
 
 	public JArrayImpl() {
-		contained = new JsonArray();
 	}
 
 	@Override
@@ -28,10 +28,8 @@ public class JArrayImpl extends JsonElement implements JArray {
 	}
 
 	public JArrayImpl(String json) throws JException {
-		contained = new JsonArray();
 		try {
-			Gson gson = new Gson();
-			JsonArray a = gson.fromJson(json, JsonArray.class);
+			JsonArray a = JObjectImpl.gson.fromJson(json, JsonArray.class);
 			for(Object el: a) {
 				if(el instanceof JsonObject) {
 					contained.add(new JObjectImpl((JsonObject) el));
@@ -47,7 +45,6 @@ public class JArrayImpl extends JsonElement implements JArray {
 	}
 
 	public JArrayImpl(JsonArray json) throws JException {
-		contained = new JsonArray();
 		try {
 			for(Object el: json) {
 				if(el instanceof JsonObject) {
@@ -64,7 +61,6 @@ public class JArrayImpl extends JsonElement implements JArray {
 	}
 
 	public JArrayImpl(List json) throws JException {
-		contained = new JsonArray();
 		try {
 			for(Object el: json) {
 				contained.add(JObjectImpl.toJSONValue(el));
@@ -76,12 +72,12 @@ public class JArrayImpl extends JsonElement implements JArray {
 
 	@Override
 	public boolean isJsonArray() {
-		return contained.isJsonArray();
+		return true;
 	}
 
 	@Override
 	public JsonArray getAsJsonArray() {
-		return contained;
+		return JObjectImpl.gson.toJsonTree(contained).getAsJsonArray();
 	}
 
 	@Override
@@ -124,6 +120,6 @@ public class JArrayImpl extends JsonElement implements JArray {
 
 	@Override
 	public String YASJF4J_toString() {
-		return contained.toString();
+		return JObjectImpl.gson.toJson(contained);
 	}
 }
