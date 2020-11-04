@@ -6,14 +6,15 @@ const ProgressBar = require("progress");
 const config = require("./config");
 const utils = require("./utils");
 
-//const poms = utils.walkSync(config.output + "poms");
-const poms = [config.output + "poms/jitsi/jitsi-videobridge/pom.xml"]
+const poms = utils.walkSync(config.output + "poms");
+// const poms = [config.output + "poms/jitsi/jitsi-videobridge/pom.xml"]
 const junitLibs = ["junit:junit", "org.junit.jupiter:junit-jupiter"];
 const jsonLibs = [
   "org.json:json",
   "com.googlecode.json-simple:json-simple",
   "com.google.code.gson:gson",
-  "com.fasterxml.jackson.core:jackson-core",
+  // "com.fasterxml.jackson.core:jackson-core",
+  "com.fasterxml.jackson.core:jackson-databind",
   "com.alibaba:fastjson",
   "org.eclipse:yasson",
   "org.glassfish:jakarta.json",
@@ -44,9 +45,6 @@ async.eachLimit(
     );
     const splitPath = repoPath.split("/");
     let repo = splitPath[0] + "/" + splitPath[1];
-    if (splitPath[1] != "jitsi-videobridge") {
-      return callback();
-    }
     const pomPath = repoPath.replace(repo + "/", "");
     bar.tick({
       repo: repo,

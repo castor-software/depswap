@@ -133,15 +133,15 @@ function execute(repo, commit, lib) {
             console.log(dep.lib)
           }
         }
-        if (packages.has("org.json:json")) {
-          await execute(project, info.commit, "org.json:json");
-        }
-        if (packages.has("com.google.code.gson:gson")) {
-          await execute(project, info.commit, "com.google.code.gson:gson");
-        }
-        if (packages.has("com.googlecode.json-simple:json-simple")) {
-          await execute(project, info.commit, "com.googlecode.json-simple:json-simple");
-        }
+        // if (packages.has("org.json:json")) {
+        //   await execute(project, info.commit, "org.json:json");
+        // }
+        // if (packages.has("com.google.code.gson:gson")) {
+        //   await execute(project, info.commit, "com.google.code.gson:gson");
+        // }
+        // if (packages.has("com.googlecode.json-simple:json-simple")) {
+        //   await execute(project, info.commit, "com.googlecode.json-simple:json-simple");
+        // }
         if (packages.has("com.fasterxml.jackson.core:jackson-databind")) {
           await execute(project, info.commit, "com.fasterxml.jackson.core:jackson-databind");
         }
