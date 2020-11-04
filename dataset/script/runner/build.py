@@ -69,8 +69,8 @@ def readTestResults(path):
 
 def getEnv():
     mvn_version_str = os.popen('mvn -version').read().strip()
-    mvn_version = re.match(r'Apache Maven ([0-9\.]) ', mvn_version_str).group(1)
-    mvn_java_version = re.match(r'Java version: ([0-9\.]),', mvn_version_str).group(1)
+    mvn_version = re.match(r'.*Apache Maven ([0-9\.]+) .*', mvn_version_str, re.DOTALL).group(1)
+    mvn_java_version = re.match(r'.*Java version: ([0-9\.]+),.*', mvn_version_str, re.DOTALL).group(1)
     output = {
         "java_version": os.popen('java -version 2>&1 | awk -F[\\\"_] \'NR==1{print $2}\'').read().strip(),
         "mvn_version": mvn_version,
