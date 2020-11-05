@@ -28,6 +28,7 @@
  * [rojoma-json](https://github.com/rjmac/rojoma-json) Scala
  * [argonaut](https://github.com/argonaut-io/argonaut) Scala
  * [gson](https://github.com/google/gson) Java
+ * [json-smart](https://github.com/netplex/json-smart-v2) Java
 
 
 
