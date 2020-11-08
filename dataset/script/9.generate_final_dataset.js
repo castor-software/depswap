@@ -9,7 +9,7 @@ let mavenGraph = JSON.parse(
 (async () => {
   repo: for (let repo in mavenGraph) {
     const lib = mavenGraph[repo];
-    if (!lib.commit || !lib.test_results || lib.test_results[0] == null || lib.test_results[0].passing == 0 ||(lib.test_results[0].modules && lib.test_results[0].modules.length == 0)) {
+    if (!lib.commit || !lib.test_results || lib.test_results[0] == null || utils.isFlaky(lib.test_results)) {
       delete mavenGraph[repo];
       continue;
     }
