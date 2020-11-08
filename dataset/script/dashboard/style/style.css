@@ -183,3 +183,26 @@ table tr {
 table tr:hover {
   background: #ddd !important;
 }
+/* Tooltip container */
+.hover {
+  position: relative;
+}
+
+/* Tooltip text */
+.hover .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+
+  position: absolute;
+  z-index: 10;
+  top: -35px;
+  left: -50px;
+}
+.hover:hover .tooltiptext {
+  visibility: visible;
+}

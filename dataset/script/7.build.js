@@ -6,9 +6,15 @@ var exec = require("child_process").exec;
 const config = require("./config");
 const utils = require("./utils");
 
-let mavenGraph = JSON.parse(
-  fs.readFileSync(config.output + "reposWithJSON.json")
+let mavenGraph = {}
+
+const tmp = JSON.parse(
+  fs.readFileSync(config.output + "reposWithJSON.2.json")
 );
+for (let lib of tmp) {
+  mavenGraph[lib.repo] = lib;
+}
+
 let results = {};
 if (fs.existsSync(config.output + "reposWithJSON_with_test_results.json")) {
   results = JSON.parse(
@@ -62,11 +68,11 @@ function execTest(repo, commit) {
       total: tasks.length,
     }
   );
-  async.eachOfLimit(utils.shuffle(tasks), 25, async (task, index) => {
-    const results = await execTest(task.repo, "HEAD");
+  async.eachOfLimit(utils.shuffle(tasks), 5, async (task, index) => {
     bar.tick({
       step: `${task.repo}`,
     });
+    const results = await execTest(task.repo, "HEAD");
     if (results != null) {
       task.lib.commit = results.commit;
       task.lib.test_results = results.test_results;

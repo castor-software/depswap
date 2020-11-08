@@ -265,6 +265,15 @@ module.exports.isFlaky = (test_results) =>
   !test_results
     .map((x) => {
       if (x == null) return null;
+      if (x.error == null) {
+        const output = { error: 0, failing: 0, passing: 0 };
+        for (let test in x) {
+          output.error += x[test].error;
+          output.failing += x[test].failing;
+          output.passing += x[test].passing;
+        }
+        return output;
+      }
       return { error: x.error, failing: x.failing, passing: x.passing };
     })
     .every((val, _, arr) => {

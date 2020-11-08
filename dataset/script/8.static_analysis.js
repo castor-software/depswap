@@ -36,7 +36,6 @@ function execTest(repo, commit) {
 (async () => {
   const tasks = [];
   console.log(Object.keys(mavenGraph).length)
-  let count = 0
   for (let repo in mavenGraph) {
     const lib = mavenGraph[repo];
     const resultsLib = results[repo];
@@ -46,7 +45,7 @@ function execTest(repo, commit) {
     if (lib['static-usages'] != null) {
       continue;
     }
-    if (!lib.commit || !lib.test_results || lib.test_results[0] == null || lib.test_results[0].passing == 0 ||(lib.test_results[0].modules && lib.test_results[0].modules.length == 0)) {
+    if (!lib.commit || !lib.test_results || utils.isFlaky(lib.test_results)) {
       continue;
     }
     tasks.push({

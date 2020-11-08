@@ -1,4 +1,4 @@
-FROM maven:3.6-jdk-11
+FROM maven:3.6-jdk-8
 
 RUN apt-get update
 RUN apt-get install -y python3 python3-pip git
