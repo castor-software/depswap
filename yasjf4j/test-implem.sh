@@ -11,7 +11,7 @@ echo "Path to lib dir: $JARS_PATH"
 
 BRIDGES=('json-simple-over-yasjf4j' 'json-over-yasjf4j' 'gson-over-yasjf4j' 'jackson-databind-over-yasjf4j')
 #BRIDGES=('json-simple-over-yasjf4j' 'json-over-yasjf4j' 'gson-over-yasjf4j')
-IMPLEMENTATIONS=('yasjf4j-json' 'yasjf4j-cookjson' 'yasjf4j-gson' 'yasjf4j-jackson-databind' 'yasjf4j-jsonp' 'yasjf4j-json-io' 'yasjf4j-json-lib' 'yasjf4j-jjson' 'yasjf4j-json-simple' 'yasjf4j-jsonutil' 'yasjf4j-klaxon' 'yasjf4j-mjson' 'yasjf4j-fastjson')
+IMPLEMENTATIONS=('yasjf4j-json' 'yasjf4j-cookjson' 'yasjf4j-gson' 'yasjf4j-jackson-databind' 'yasjf4j-jsonp' 'yasjf4j-json-io' 'yasjf4j-json-lib' 'yasjf4j-jjson' 'yasjf4j-json-simple' 'yasjf4j-jsonutil' 'yasjf4j-klaxon' 'yasjf4j-mjson' 'yasjf4j-fastjson' 'yasjf4j-nothing')
 
 
 
@@ -50,7 +50,7 @@ for i in $IMPLEMENTATIONS
 do
 	echo "----------------- Implem $i -------------------------"
 	cd $ROOT_DIR
-	RESULTS=$(printf "$RESULTS %19s |\n" $i)
+	RESULTS=$(printf "$RESULTS %25s |\n" $i)
 	RESULTS=$(printf "$RESULTS %30s |\n" "-----")
 	cd $i
 	mvn clean install -DskipTests 2>&1 >> log-$i.log
@@ -78,7 +78,7 @@ do
 		if [ $bb = $ii ];
 		then
 			echo "----------- Skip $b for implem $i -------------------"
-				RESULTS=$(printf "$RESULTS %19s |" $i)
+				RESULTS=$(printf "$RESULTS %25s |" $i)
 				RESULTS=$(printf "$RESULTS %30s |" $b)
 				RESULTS=$(printf "$RESULTS ${GREY}%8s${NC} |" "NA")
 				RESULTS="$RESULTS ${GREY}NA${NC}\n"
@@ -86,7 +86,7 @@ do
 		else
 			echo "----------------- Bridge $b -------------------------"
 			#RESULTS="$RESULTS $b |"
-			RESULTS=$(printf "$RESULTS %19s |" $i)
+			RESULTS=$(printf "$RESULTS %25s |" $i)
 			RESULTS=$(printf "$RESULTS %30s |" $b)
 			cd $b
 			java -cp $JARS_PATH/depswap-test-harness-0.1-SNAPSHOT-jar-with-dependencies.jar se.kth.assertteam.depswap.SwapTestDep ./ "$g:$a:$v" "$g:$i:$v" $JARS_PATH
