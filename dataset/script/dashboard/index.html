@@ -3,7 +3,7 @@
 <html lang="en" ng-app="dep-website" ng-controller="mainController">
   <head>
     <meta charset="UTF-8" />
-    <title>DepJson Builds</title>
+    <title>DepSwap Experiment Dashboard</title>
 
     <!-- CSS -->
     <link
@@ -74,7 +74,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <h2>D is showing {{filteredBugs.length}} pair of builds</h2>
+          <h2>DepSwap Experiment is showing {{filteredBugs.length}} executions</h2>
         </div>
         <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
         <div class="collapse navbar-collapse navbar-ex1-collapse">
@@ -115,6 +115,26 @@
                           ng-model="filters['allinvalid']"
                           ng-click="clickFilter('allinvalid')"
                         />All Invalid</label>
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <a href="#" ng-click="submenuReason = !submenuReason">
+                    <i class="fa fa-fw fa-search"></i>Reasons
+                    <i class="fa fa-fw fa-angle-down pull-right"></i
+                  ></a>
+                  <ul class="collapse" uib-collapse="submenuLang">
+                    <li ng-repeat="reason in reasons">
+                      <label
+                        for="{{reason}}"
+                        ng-class="{'actived': filters.reasons[reason]}"
+                        ><input
+                          type="checkbox"
+                          id="{{reason}}"
+                          ng-model="filters.reasons[reason]"
+                          ng-click="clickFilter('reasons', reason)"
+                        />{{reason}}</label
+                      >
                     </li>
                   </ul>
                 </li>
@@ -164,26 +184,13 @@
                 <tr>
                   <th>
                     <a href="#" ng-click="sort('owner')">
-                      Owner
+                      Project
                       <span
                         ng-show="sortType == 'owner' && sortReverse"
                         class="fa fa-sort-alpha-desc"
                       ></span>
                       <span
                         ng-show="sortType == 'owner' && !sortReverse"
-                        class="fa fa-sort-alpha-asc"
-                      ></span>
-                    </a>
-                  </th>
-                  <th>
-                    <a href="#" ng-click="sort('project')">
-                      Project
-                      <span
-                        ng-show="sortType == 'project' && sortReverse"
-                        class="fa fa-sort-alpha-desc"
-                      ></span>
-                      <span
-                        ng-show="sortType == 'project' && !sortReverse"
                         class="fa fa-sort-alpha-asc"
                       ></span>
                     </a>
@@ -203,7 +210,7 @@
                   </th>
                   <th>
                     <a href="#" ng-click="sort('lib')">
-                      Lib
+                      JSON Lib
                       <span
                         ng-show="sortType == 'lib' && sortReverse"
                         class="fa fa fa-sort-amount-desc"
@@ -214,7 +221,7 @@
                       ></span>
                     </a>
                   </th>
-                  <th ng-repeat="exec in execs" ng-bind="exec"></th>
+                  <th ng-repeat="exec in execs" class="text-center" ng-bind="exec"></th>
                 </tr>
               </thead>
               <tbody>
@@ -222,12 +229,11 @@
                   ng-repeat="bug in bugs| orderBy:sortType:sortReverse:naturalCompare| filter:bugsFilter as filteredBugs"
                   ng-click="openBug(bug)"
                 >
-                  <td>{{ bug.owner }}</td>
-                  <td>{{ bug.project }}</td>
-                  <td><a href="https://github.com/{{ bug.owner }}/{{ bug.project }}/commit/{{ bug.commit }}" target="__blank">{{ bug.commit.substring(0, 6) }}</a></td>
-                  <td>{{ bug.lib }}</td>
+                  <td>{{ bug.owner }}/{{ bug.project }}</td>
+                  <td><a href="https://github.com/{{ bug.owner }}/{{ bug.project }}/tree/{{ bug.commit }}" target="__blank">{{ bug.commit.substring(0, 6) }}</a></td>
+                  <td>{{ bug.lib.split(":")[0] }}</td>
                   <td ng-repeat="exec in execs" class="text-center">
-                    <span class="result" ng-class="{'valid': bug.executions[exec].valid === true, 'invalid': bug.executions[exec].valid === false}"></span>
+                    <span class="result hover" ng-class="{'valid': bug.executions[exec].valid === true, 'invalid': bug.executions[exec].valid === false}" ><span class="tooltiptext" ng-if="bug.executions[exec].reason">{{bug.executions[exec].reason}}</span></span>
                   </td>
                 </tr>
               </tbody>
@@ -243,15 +249,17 @@
   </body>
   <script type="text/ng-template" id="modelPatch.html">
     <div class="modal-header">
-    	<h3 class="modal-title" id="modal-title">{{ $ctrl.bug.url }}</h3>
+    	<h3 class="modal-title" id="modal-title"><a href="https://github.com/{{$ctrl.bug.owner}}/{{$ctrl.bug.project}}/tree/{{$ctrl.bug.commit}}" target="__blank">{{$ctrl.bug.owner}}/{{$ctrl.bug.project}}</a> <small>{{$ctrl.bug.lib}}</small></h3>
     	<a ng-click="$ctrl.previousPatch()"><i class="fa fa-arrow-left" aria-hidden="true"></i> Previous Patch</a> | <a ng-click="$ctrl.nextPatch()">Next Patch <i class="fa fa-arrow-right" aria-hidden="true"></i></a>
     </div>
     <div class="modal-body" id="modal-body">
     	<p>
-        <h4>{{$ctrl.bug.url}}</h4>
-        <div ng-click="$ctrl.copy($event)">docker run --rm -v $HOME/depswap_result:/results -v $HOME/depswap_exec:/tmp runner experiment -u {{ $ctrl.bug.url }} -c {{ $ctrl.bug.commit }} -l {{ $ctrl.bug.lib }} -r /results --timeout 15m</div>
+        <h5>Execute</h5>
+        <div ng-click="$ctrl.copy($event)"><pre>docker run --rm -v $HOME/depswap_result:/results -v $HOME/depswap_exec:/tmp runner experiment -u {{ $ctrl.bug.url }} -c {{ $ctrl.bug.commit }} -l {{ $ctrl.bug.lib }} -r /results --timeout 15m</pre></div>
+        <h5>Classpath</h5>
+        <div><pre ng-bind="$ctrl.info.executions[0].classpath"></pre></div>
         <div class="execution" ng-repeat="exec in $ctrl.info.executions">
-          <h5>{{exec.name}}</h5>
+          <h5><span class="result" ng-class="{'valid': $ctrl.bug.executions[exec.name].valid === true, 'invalid': $ctrl.bug.executions[exec.name].valid === false}"></span> {{exec.name}}</h5>
           <tests tests="exec.test"></tests>
           <pre class="stacktrace" ng-bind="exec.error" ng-if="exec.error"></pre>
         </div>
