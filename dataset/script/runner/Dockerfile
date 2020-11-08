@@ -14,7 +14,7 @@ WORKDIR /home/runner
 
 ARG LIB
 
-RUN git clone https://github.com/castor-software/depswap.git
+RUN git clone https://github.com/castor-software/depswap.git --depth 1
 RUN cd depswap; git checkout $LIB
 RUN cd depswap/test-harness; mvn package; cp target/depswap-test-harness-0.1-SNAPSHOT-jar-with-dependencies.jar /home/runner/depswap.jar
 RUN cat depswap/yasjf4j/build-jars.sh
