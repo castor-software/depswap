@@ -15,7 +15,7 @@ json_libs = [
     "org.json:json",
     "com.googlecode.json-simple:json-simple",
     "com.google.code.gson:gson",
-    "com.fasterxml.jackson.core:jackson-core",
+    "com.fasterxml.jackson.core:jackson-databind",
     "com.alibaba:fastjson",
     "org.eclipse:yasson",
     "org.glassfish:jakarta.json",
