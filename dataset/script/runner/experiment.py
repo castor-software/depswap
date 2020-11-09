@@ -4,11 +4,8 @@ from datetime import datetime
 import argparse
 import tempfile
 import os
-import shutil
 import json
 import subprocess
-import xml.etree.ElementTree as xml
-from pathlib import Path
 
 from Project import Project
 from LogAnalyser import LogAnalyser
@@ -27,6 +24,7 @@ json_map = {
         "jackson",
         "jsonutil",
         "mjson",
+        "nothing",
         # "klaxon",
     ],
     "com.alibaba:fastjson": [
@@ -41,6 +39,7 @@ json_map = {
         "jackson",
         "jsonutil",
         "mjson",
+        "nothing",
         # "klaxon",
     ],
     "com.googlecode.json-simple:json-simple": [
@@ -55,6 +54,7 @@ json_map = {
         "jackson",
         "jsonutil",
         "mjson",
+        "nothing",
         # "klaxon",
     ],
     "com.google.code.gson:gson": [
@@ -69,6 +69,7 @@ json_map = {
         "jackson",
         "jsonutil",
         "mjson",
+        "nothing",
         # "klaxon",
     ],
     "com.fasterxml.jackson.core:jackson-databind": [
@@ -83,6 +84,7 @@ json_map = {
         "gson",
         "jsonutil",
         "mjson",
+        "nothing",
         # "klaxon",
     ]
 }
