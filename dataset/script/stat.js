@@ -1,7 +1,5 @@
-const { verify } = require("crypto");
 const fs = require("fs");
 const path = require("path");
-const { version } = require("process");
 const config = require("./config");
 const utils = require("./utils");
 
@@ -32,19 +30,18 @@ repo: for (let repo in data) {
       }
     }
     nbRepo++;
-    for (let pom of d.poms) {
-      for (let dep of pom.deps) {
-        if (dep.version) {
-          if (libs[dep.lib] == null) {
-            libs[dep.lib] = {};
-          }
-          if (libs[dep.lib][dep.version] == null) {
-            libs[dep.lib][dep.version] = 0;
-          }
-          libs[dep.lib][dep.version]++;
+    for (let dep of d.libs) {
+      const lib = dep.groupid + ":" + dep.artifactid
+      if (dep.version) {
+        if (libs[lib] == null) {
+          libs[lib] = {};
         }
-        libs[dep.lib].count = (libs[dep.lib].count || 0) + 1;
+        if (libs[lib][dep.version] == null) {
+          libs[lib][dep.version] = 0;
+        }
+        libs[lib][dep.version]++;
       }
+      libs[lib].count = (libs[lib].count || 0) + 1;
     }
   }
 }

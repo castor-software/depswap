@@ -48,7 +48,7 @@ function execUsage(repo, commit) {
       total: tasks.length,
     }
   );
-  async.eachOfLimit(utils.shuffle(tasks), 25, async (task, index) => {
+  async.eachOfLimit(utils.shuffle(tasks), 10, async (task, index) => {
     const start = new Date().getTime()
     await execUsage(task.repo, task.lib.commit);
     bar.tick({

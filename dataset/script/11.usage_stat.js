@@ -1,9 +1,6 @@
 const fs = require("fs");
-const path = require("path");
-const resolve = require("path").resolve;
 const ProgressBar = require("progress");
 const async = require("async");
-var exec = require("child_process").exec;
 
 const config = require("./config");
 const utils = require("./utils");
@@ -96,10 +93,13 @@ let mavenGraph = JSON.parse(
       for (let project of projects) {
         let packages = new Set();
         const info = mavenGraph[project];
-        for (let module of info.poms) {
-          for (let dep of module.deps) {
-            packages.add(dep.lib);
-          }
+        if (info == null) {
+          console.log(project)
+          continue;
+        } 
+        for (let dep of info.libs) {
+          const lib = dep.groupid + ":" + dep.artifactid
+          packages.add(lib);
         }
         console.log(project + "," + info.commit, [...packages].join(" "));
       }

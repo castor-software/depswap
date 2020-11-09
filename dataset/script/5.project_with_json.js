@@ -1,5 +1,4 @@
 const pomParser = require("pom-parser");
-const fs = require("fs");
 const async = require("async");
 const ProgressBar = require("progress");
 
