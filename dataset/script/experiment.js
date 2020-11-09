@@ -114,39 +114,45 @@ function execute(repo, commit, lib) {
       });
     },
     () => {
+      const tasks = []
+      for (let project in projects) {
+        const info = mavenGraph[project];
+        if (info == null) {
+          continue;
+        }
+        const packages = new Set()
+        for (let dep of info.libs) {
+          const lib = dep.groupid + ":" + dep.artifactid;
+          if (fs.existsSync(path.join(config.output, "exp", project, lib + ".json"))) {
+            continue;
+          }
+          packages.add(lib);
+        }
+        // const libs = ["org.json:json", "com.google.code.gson:gson", "com.googlecode.json-simple:json-simple", "com.fasterxml.jackson.core:jackson-databind"]
+        const libs = ["com.fasterxml.jackson.core:jackson-databind"]
+        for (let lib of libs) {
+          if (packages.has(lib)) {
+            tasks.push({
+              project,
+              commit: info.commit,
+              lib
+            })
+          }
+        }
+      }
       bar = new ProgressBar(
         "[:bar] :current/:total (:percent) :rate/bps :etas :step",
         {
           complete: "=",
           incomplete: " ",
           width: 30,
-          total: projects.size,
+          total: tasks.length,
         }
       );
-      async.eachLimit(projects, 5, async (project) => {
-        const info = mavenGraph[project];
-
-        const packages = new Set()
-        for (let module of info.poms) {
-          for (let dep of module.deps) {
-            packages.add(dep.lib);
-            console.log(dep.lib)
-          }
-        }
-        // if (packages.has("org.json:json")) {
-        //   await execute(project, info.commit, "org.json:json");
-        // }
-        // if (packages.has("com.google.code.gson:gson")) {
-        //   await execute(project, info.commit, "com.google.code.gson:gson");
-        // }
-        // if (packages.has("com.googlecode.json-simple:json-simple")) {
-        //   await execute(project, info.commit, "com.googlecode.json-simple:json-simple");
-        // }
-        if (packages.has("com.fasterxml.jackson.core:jackson-databind")) {
-          await execute(project, info.commit, "com.fasterxml.jackson.core:jackson-databind");
-        }
+      async.eachLimit(tasks, 5, async (task) => {
+        await execute(task.project, task.commit, task.lib);
         bar.tick({
-          step: `${project}`,
+          step: `${task.project} -> ${task.lib}`,
         });
       });
     }
