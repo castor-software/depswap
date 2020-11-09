@@ -1,9 +1,6 @@
 const fs = require("fs");
-const path = require("path");
-const resolve = require("path").resolve;
 const ProgressBar = require("progress");
 const async = require("async");
-var exec = require("child_process").exec;
 
 const config = require("./config");
 const utils = require("./utils");
