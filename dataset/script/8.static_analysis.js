@@ -45,7 +45,7 @@ function execTest(repo, commit) {
     if (lib['static-usages'] != null) {
       continue;
     }
-    if (!lib.commit || !lib.test_results || utils.isFlaky(lib.test_results)) {
+    if (!lib.commit || !utils.isGreen(lib.test_results)) {
       continue;
     }
     tasks.push({

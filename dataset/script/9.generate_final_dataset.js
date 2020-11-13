@@ -1,5 +1,5 @@
 const fs = require("fs");
-
+const utils = require("./utils");
 const config = require("./config");
 
 let mavenGraph = JSON.parse(
@@ -9,18 +9,9 @@ let mavenGraph = JSON.parse(
 (async () => {
   repo: for (let repo in mavenGraph) {
     const lib = mavenGraph[repo];
-    if (!lib.commit || !lib.test_results || lib.test_results[0] == null || utils.isFlaky(lib.test_results)) {
+    if (!lib.commit || !utils.isGreen(lib.test_results)) {
       delete mavenGraph[repo];
       continue;
-    }
-    for (test of lib.test_results) {
-      if (test == null) {
-        continue repo;
-      }
-      if (test.error != 0 || test.failing != 0 || test.passing <= 0) {
-        delete mavenGraph[repo];
-        continue repo;
-      }
     }
   }
 
