@@ -34,8 +34,8 @@ NC='\033[0m' # No Color
 
 RESULTS="-------------------- Results ----------------------------\n"
 RESULTS="\n"
-RESULTS=$(printf "$RESULTS %19s |" "Implem")
-RESULTS=$(printf "$RESULTS %24s |" "Bridge")
+RESULTS=$(printf "$RESULTS %25s |" "Implem")
+RESULTS=$(printf "$RESULTS %30s |" "Bridge")
 RESULTS=$(printf "$RESULTS %8s |" "Outcome")
 RESULTS="$RESULTS Failures\n"
 RESULTS="$RESULTS---------------------------------------------------------------------\n"
@@ -44,8 +44,8 @@ for i in $IMPLEMENTATIONS
 do
 	echo "----------------- Implem $i -------------------------"
 	cd $ROOT_DIR
-	RESULTS=$(printf "$RESULTS %19s |\n" $i)
-	RESULTS=$(printf "$RESULTS %24s |\n" "-----")
+	RESULTS=$(printf "$RESULTS %25s |\n" $i)
+	RESULTS=$(printf "$RESULTS %30s |\n" "-----")
 	cd $i
 	mvn clean install -DskipTests 2>&1 >> log-$i
 	mvn test 2>&1 >> log-$i
@@ -69,8 +69,8 @@ do
 		cd $ROOT_DIR
 		echo "----------------- Bridge $b -------------------------"
 		#RESULTS="$RESULTS $b |"
-		RESULTS=$(printf "$RESULTS %19s |" $i)
-		RESULTS=$(printf "$RESULTS %24s |" $b)
+		RESULTS=$(printf "$RESULTS %25s |" $i)
+		RESULTS=$(printf "$RESULTS %30s |" $b)
 		cd $b
 		java -cp $JARS_PATH/depswap-test-harness-0.1-SNAPSHOT-jar-with-dependencies.jar se.kth.assertteam.depswap.SwapTestDep ./ "$g:$a:$v" "$g:$i:$v" $JARS_PATH
 		#mvn dependency:tree -DoutputFile="tree-$b-$i" 2>1 > log-$b-$i

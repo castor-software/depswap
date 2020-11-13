@@ -1,7 +1,6 @@
 Parser,Category,File,Result
 json-lib,correct,y_number_real_fraction_exponent.json,EQUIVALENT_OBJECT
 json-lib,correct,y_string_nonCharacterInUTF-8_U+10FFFF.json,OK
-json-lib,correct,roundtrip02.json,OK
 json-lib,correct,y_string_accepted_surrogate_pairs.json,EQUIVALENT_OBJECT
 json-lib,correct,empty-object-in-array.json,OK
 json-lib,correct,y_object_empty_key.json,OK
@@ -15,7 +14,6 @@ json-lib,correct,y_number_int_with_exp.json,EQUIVALENT_OBJECT
 json-lib,correct,y_number_minus_zero.json,EQUIVALENT_OBJECT
 json-lib,correct,real-underflow.json,EQUIVALENT_OBJECT
 json-lib,correct,y_array_empty-string.json,OK
-json-lib,correct,roundtrip03.json,OK
 json-lib,correct,y_number_real_pos_exponent.json,EQUIVALENT_OBJECT
 json-lib,correct,y_string_double_escape_a.json,OK
 json-lib,correct,y_string_unescaped_char_delete.json,OK
@@ -26,15 +24,12 @@ json-lib,correct,y_string_uEscape.json,EQUIVALENT_OBJECT
 json-lib,correct,empty-string.json,OK
 json-lib,correct,negative-one.json,OK
 json-lib,correct,roundtrip20.json,OK
-json-lib,correct,roundtrip01.json,OK
 json-lib,correct,y_number_simple_real.json,OK
 json-lib,correct,real-positive-exponent.json,EQUIVALENT_OBJECT
 json-lib,correct,y_array_heterogeneous.json,EQUIVALENT_OBJECT
 json-lib,correct,simple-real.json,OK
 json-lib,correct,y_object_long_strings.json,EQUIVALENT_OBJECT
 json-lib,correct,simple-ascii-string.json,OK
-json-lib,correct,y_object_duplicated_key.json,EQUIVALENT_OBJECT
-json-lib,correct,org-json-pass3.json,EQUIVALENT_OBJECT
 json-lib,correct,y_string_unicode_U+2064_invisible_plus.json,EQUIVALENT_OBJECT
 json-lib,correct,y_number_real_capital_e_pos_exp.json,EQUIVALENT_OBJECT
 json-lib,correct,y_number_real_capital_e_neg_exp.json,EQUIVALENT_OBJECT
@@ -48,7 +43,6 @@ json-lib,correct,y_string_accepted_surrogate_pair.json,EQUIVALENT_OBJECT
 json-lib,correct,y_string_nbsp_uescaped.json,EQUIVALENT_OBJECT
 json-lib,correct,y_number_0e+1.json,OK
 json-lib,correct,escaped-utf-control-char.json,OK
-json-lib,correct,org-json-pass1.json,PARSE_EXCEPTION
 json-lib,correct,utf-surrogate-four-byte-encoding.json,EQUIVALENT_OBJECT
 json-lib,correct,empty-array.json,OK
 json-lib,correct,real-fraction-exponent.json,EQUIVALENT_OBJECT
@@ -68,7 +62,6 @@ json-lib,correct,y_array_with_several_null.json,OK
 json-lib,correct,inspector-json-payload.json,EQUIVALENT_OBJECT
 json-lib,correct,negative-int.json,OK
 json-lib,correct,y_string_uescaped_newline.json,EQUIVALENT_OBJECT
-json-lib,correct,y_object_duplicated_key_and_value.json,EQUIVALENT_OBJECT
 json-lib,correct,simple-object.json,OK
 json-lib,correct,y_structure_whitespace_array.json,EQUIVALENT_OBJECT
 json-lib,correct,pass03.json,EQUIVALENT_OBJECT
@@ -87,8 +80,6 @@ json-lib,correct,roundtrip10.json,OK
 json-lib,correct,one-byte-utf-8.json,EQUIVALENT_OBJECT
 json-lib,correct,real-capital-e-positive-exponent.json,EQUIVALENT_OBJECT
 json-lib,correct,y_string_unicode_U+10FFFE_nonchar.json,EQUIVALENT_OBJECT
-json-lib,correct,short-string.json,OK
-json-lib,correct,roundtrip07.json,OK
 json-lib,correct,y_number_real_capital_e.json,EQUIVALENT_OBJECT
 json-lib,correct,y_number_real_neg_exp.json,EQUIVALENT_OBJECT
 json-lib,correct,twitter.json,EQUIVALENT_OBJECT
@@ -100,7 +91,6 @@ json-lib,correct,null.json,OK
 json-lib,correct,y_structure_lonely_int.json,PARSE_EXCEPTION
 json-lib,correct,simple-int-1.json,OK
 json-lib,correct,y_array_false.json,OK
-json-lib,correct,roundtrip11.json,OK
 json-lib,correct,y_string_pi.json,OK
 json-lib,correct,y_object_string_unicode.json,EQUIVALENT_OBJECT
 json-lib,correct,y_string_allowed_escapes.json,EQUIVALENT_OBJECT
@@ -115,7 +105,6 @@ json-lib,correct,y_structure_lonely_true.json,PARSE_EXCEPTION
 json-lib,correct,y_string_one-byte-utf-8.json,EQUIVALENT_OBJECT
 json-lib,correct,y_string_unicode_2.json,OK
 json-lib,correct,y_string_unicode_U+200B_ZERO_WIDTH_SPACE.json,EQUIVALENT_OBJECT
-json-lib,correct,roundtrip06.json,OK
 json-lib,correct,y_string_escaped_noncharacter.json,EQUIVALENT_OBJECT
 json-lib,correct,y_structure_lonely_null.json,PARSE_EXCEPTION
 json-lib,correct,roundtrip23.json,OK
@@ -135,7 +124,6 @@ json-lib,correct,y_string_unicode_escaped_double_quote.json,EQUIVALENT_OBJECT
 json-lib,correct,y_string_utf8.json,OK
 json-lib,correct,roundtrip13.json,OK
 json-lib,correct,y_string_escaped_control_character.json,OK
-json-lib,correct,org-json-pass2.json,OK
 json-lib,correct,y_number_negative_int.json,OK
 json-lib,correct,y_array_empty.json,OK
 json-lib,correct,y_array_ending_with_newline.json,OK
@@ -160,7 +148,6 @@ json-lib,correct,two-byte-utf-8.json,EQUIVALENT_OBJECT
 json-lib,correct,y_structure_lonely_false.json,PARSE_EXCEPTION
 json-lib,correct,y_object_extreme_numbers.json,EQUIVALENT_OBJECT
 json-lib,correct,y_string_in_array_with_leading_space.json,EQUIVALENT_OBJECT
-json-lib,correct,y_number_negative_zero.json,EQUIVALENT_OBJECT
 json-lib,correct,y_string_last_surrogates_1_and_2.json,EQUIVALENT_OBJECT
 json-lib,correct,roundtrip19.json,OK
 json-lib,correct,roundtrip16.json,OK

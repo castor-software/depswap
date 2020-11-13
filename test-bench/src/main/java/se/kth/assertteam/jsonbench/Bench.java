@@ -29,8 +29,11 @@ import java.util.stream.Collectors;
 public class Bench {
 	public static void main(String[] args) throws IOException {
 
-		/*JP orgJson = new OrgJSON();
+		JP orgJson = new OrgJSON();
 		test(orgJson);
+
+		//JP simple = new JsonSimple();
+		//test(simple);
 
 		JP gson = new GsonParser();
 		test(gson);
@@ -51,16 +54,16 @@ public class Bench {
 		test(jsonIO);
 
 		JP jsonLib = new JsonLib();
-		test(jsonLib);*/
+		test(jsonLib);
 
-		//JP jsonP = new JsonP();//Problem Overriden by cookjson
+		//JP jsonP = new JsonP();//Problem Overridden by cookjson
 		//test(jsonP);
 
-		/*JP jsonutil = new JsonUtil();
+		JP jsonutil = new JsonUtil();
 		test(jsonutil);
 
 		JP klaxon = new KlaxonP();
-		test(klaxon);*/
+		test(klaxon);
 
 		JP mjson = new MJson();
 		test(mjson);
@@ -192,7 +195,8 @@ public class Bench {
 					else
 						return ResultKind.NULL_OBJECT;
 				} catch (Exception e) {
-					return ResultKind.OK;
+					//return ResultKind.OK;
+					return ResultKind.PARSE_EXCEPTION;
 				}
 			} catch (Error e) {
 				return ResultKind.CRASH;

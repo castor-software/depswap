@@ -2,6 +2,7 @@ package se.kth.assertteam.jsonbench.parser;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
 import org.json.simple.parser.JSONParser;
 import se.kth.assertteam.jsonbench.JP;
 
@@ -14,7 +15,7 @@ public class JsonSimple implements JP {
 
 	@Override
 	public String print(Object in) throws Exception {
-		return in.toString();
+		return JSONValue.toJSONString(in);
 	}
 
 	@Override
@@ -24,6 +25,7 @@ public class JsonSimple implements JP {
 
 	@Override
 	public boolean equivalence(Object a, Object b) {
+		if(a == null) return b == null;
 		if(a.getClass() != b.getClass()) {
 			return false;
 		} else if(a.equals(b)) {

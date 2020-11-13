@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 import org.apache.maven.model.Dependency;
 import org.apache.maven.model.Model;
 import org.apache.maven.model.io.xpp3.MavenXpp3Reader;
+import org.junit.Ignore;
 import org.junit.Test;
 import se.kth.castor.yasjf4j.JArray;
 import se.kth.castor.yasjf4j.JException;
@@ -34,6 +35,11 @@ public class AppTest
      */
     @Test
     public void testImplem() throws Exception {
+        test(getParser());
+    }
+
+    public static JP getParser() throws Exception {
+
         JP parser = new JP() {
             public String init() throws Exception {
                 File pom = new File("pom.xml");
@@ -143,7 +149,7 @@ public class AppTest
                 return false;
             }
         };
-        test(parser);
+        return parser;
     }
 
 
@@ -285,4 +291,11 @@ public class AppTest
         }
     }
 
+    @Ignore
+    @Test
+    public void testSoloFile() throws Exception {
+        File dir = new File("../../data/bench/correct");
+        ResultKind res = testCorrectJson(new File(dir, "roundtrip10.json"), getParser());
+        System.out.println("Res: " + res.toString());
+    }
 }

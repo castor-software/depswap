@@ -131,7 +131,7 @@ public class JSONArray implements List<Object>, JSONAware, JSONStreamAware {
 		Object[] res = new Object[json.YASJF4J_size()];
 		for(int i = 0; i < json.YASJF4J_size(); i++) {
 			try {
-				res[i] = JSONValue.shield(json.YASJF4J_get(i++));
+				res[i] = JSONValue.shield(json.YASJF4J_get(i));
 			} catch (JException e) {
 				e.printStackTrace();
 			}

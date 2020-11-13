@@ -21,11 +21,12 @@ public class FastJson implements JP {
 
 	@Override
 	public String getName() {
-		return "FastJson";
+		return "fastjson";
 	}
 
 	@Override
 	public boolean equivalence(Object a, Object b) {
+		if(a == null) return b == null;
 		if(a.getClass() != b.getClass()) {
 			return false;
 		} else if(a.equals(b)) {
@@ -38,9 +39,11 @@ public class FastJson implements JP {
 				return false;
 			}
 			for(String key: ao.keySet()) {
-				if(!bo.containsKey(key)) return false;
+				if(!bo.containsKey(key))
+					return false;
 				try {
-					if (!equivalence(ao.get(key), bo.get(key))) return false;
+					if (!equivalence(ao.get(key), bo.get(key)))
+						return false;
 				} catch (JSONException e) {
 					return false;
 				}
@@ -55,7 +58,8 @@ public class FastJson implements JP {
 			}
 			for(int i = 0; i < ao.size(); i++) {
 				try {
-					if (!equivalence(ao.get(i), bo.get(i))) return false;
+					if (!equivalence(ao.get(i), bo.get(i)))
+						return false;
 				} catch (JSONException e) {
 					return false;
 				}

@@ -20,11 +20,12 @@ public class GsonParser implements JP {
 
 	@Override
 	public String getName() {
-		return "Gson";
+		return "gson";
 	}
 
 	@Override
 	public boolean equivalence(Object a, Object b) {
+		if(a == null) return b == null;
 		if(a.getClass() != b.getClass()) {
 			return false;
 		} else if(a.equals(b)) {

@@ -38,6 +38,7 @@ public class JsonIO implements JP {
 
 	@Override
 	public boolean equivalence(Object a, Object b) {
+		if(a == null) return b == null;
 		if(a.getClass() != b.getClass()) {
 			return false;
 		} else if(a.equals(b)) {

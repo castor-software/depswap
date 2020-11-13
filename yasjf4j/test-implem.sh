@@ -40,7 +40,7 @@ NC='\033[0m' # No Color
 
 RESULTS="-------------------- Results ----------------------------\n"
 RESULTS="\n"
-RESULTS=$(printf "$RESULTS %19s |" "Implem")
+RESULTS=$(printf "$RESULTS %25s |" "Implem")
 RESULTS=$(printf "$RESULTS %30s |" "Bridge")
 RESULTS=$(printf "$RESULTS %8s |" "Outcome")
 RESULTS="$RESULTS Failures\n"
