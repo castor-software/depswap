@@ -18,24 +18,19 @@ let libs = {};
 repo: for (let repo in data) {
   const d = data[repo];
   if (d.test_results) {
-    if (utils.isFlaky(d.test_results)) {
-      flaky++;
-    }
-    for (test of d.test_results) {
-      if (test == null) {
-        continue repo;
+    if (!utils.isGreen(d.test_results)) {
+      if (utils.isFlaky(d.test_results)) {
+        flaky++;
       }
-      if (test.error != 0 || test.failing != 0 || test.passing <= 0) {
-        continue repo;
-      }
+      continue;
     }
     nbRepo++;
     for (let dep of d.libs) {
-      const lib = dep.groupid + ":" + dep.artifactid
+      const lib = dep.groupid + ":" + dep.artifactid;
+      if (libs[lib] == null) {
+        libs[lib] = {};
+      }
       if (dep.version) {
-        if (libs[lib] == null) {
-          libs[lib] = {};
-        }
         if (libs[lib][dep.version] == null) {
           libs[lib][dep.version] = 0;
         }
