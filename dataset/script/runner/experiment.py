@@ -180,16 +180,28 @@ if __name__ == "__main__":
         errors = log.parse()
         os.rename(log_path, os.path.join(project_path, "%s.log" % implem))
 
-        results["executions"].append({
+        o = {
+            "url": project.url,
+            "commit": args.commit,
+            "lib": args.lib,
             "name": implem,
             "test": project.get_test_results(),
             "classpath": project.classpath(),
             "errors": errors
-        })
+        }
+        results["executions"].append(o)
 
         cmd = f'cd {project.path}; {timeout_cmd} java -jar $HOME/depswap.jar . "{args.lib}:*" "se.kth.castor:yasjf4j-{implem}:1.0-SNAPSHOT" $HOME/depswap/yasjf4j/jars/ r;'
         subprocess.call(cmd, shell=True)
         print("[%s] Restore %s" % (datetime.now().strftime("%d/%m/%Y %H:%M:%S"), implem), flush=True)
+
+        result_folder = os.path.join(args.results, "exp", project.repo, args.lib)
+        if not os.path.exists(result_folder):
+            os.makedirs(result_folder)
+        path_result = os.path.join(result_folder, implem + ".json")
+
+        with open(path_result, 'w') as fd:
+            json.dump(results, fd, indent=1)
 
         # cmd = f'cd {project.path}; {timeout_cmd} java -jar $HOME/depswap.jar . "{args.lib}:*" "se.kth.castor:yasjf4j-{implem}:1.0-SNAPSHOT" $HOME/depswap/yasjf4j/instrumented_jars/;'
         # subprocess.call(cmd, shell=True)
@@ -230,10 +242,3 @@ if __name__ == "__main__":
         # subprocess.call(cmd, shell=True)
 
         #project.test(clean=False, stdout="output.log", timeout=args.timeout)
-    result_folder = os.path.join(args.results, "exp", project.repo)
-    if not os.path.exists(result_folder):
-        os.makedirs(result_folder)
-    path_result = os.path.join(result_folder, args.lib + ".json")
-
-    with open(path_result, 'w') as fd:
-        json.dump(results, fd, indent=1)

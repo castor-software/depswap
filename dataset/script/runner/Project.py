@@ -76,9 +76,111 @@ class Project:
         except:
             return False
 
+    def dependency_tree(self):
+        maven_proxy = ''
+        maven_proxy_path = os.path.join(os.path.dirname(
+            os.path.realpath(__file__)), "..","maven-proxy.xml")
+        if os.path.exists(maven_proxy_path):
+            maven_proxy = '-gs %s' % (maven_proxy_path)
+        cmd = "cd %s; mvn %s dependency:tree -Dverbose=true -DoutputFile=dependency_tree.txt -q;cat dependency_tree.txt;rm dependency_tree.txt" % (self.path, maven_proxy)
+        def get_index_artifact(line):
+            index = 0
+            while line[index] == ' ' or line[index] == '+' or line[index] == '|' or line[index] == '\\' or line[index] == '-':
+                index += 1
+            return index
+        def extractArtifact(line):
+            index = get_index_artifact(line)
+            data = line[index:]
+            output = {
+                "artifactid": None,
+                "groupid": None,
+                "version": None,
+                "package": None,
+                "scope": None,
+                "omitted": False,
+                "omitted_reason": None
+            }
+            if " " in data:
+                split = data.split(" ")
+                data = split[0]
+                if len(split) > 1:
+                    if "version selected from constraint" in split[1]:
+                        output['range'] = split[1].replace(
+                            " (version selected from constraint ", "")[:-1]
+                    elif "omitted" in line:
+                        output['omitted'] = True
+                        if "omitted for duplicate" in line:
+                            output['omitted_reason'] = "duplicated"
+                        elif "omitted for conflict" in line:
+                            output['omitted_reason'] = "conflict"
+                        else:
+                            output['omitted_reason'] = "other"
+                        data = data[1:]
+            info = data.split(":")
+            output['groupid'] = info[0]
+            output['artifactid'] = info[1]
+            output['package'] = info[2]
+            output['version'] = info[3]
+            if len(info) > 4:
+                output['scope'] = info[4]
+            return output
+        output = subprocess.check_output(cmd, shell=True).decode("utf-8")
+        print(output)
+        lines = output.split("\n")
+        modules = []
+        parent_artifact = None
+        previous_artifact = None
+        for line in lines:
+            if len(line) == 0:
+                continue
+            level = 0
+            if '-' in line[:get_index_artifact(line)]:
+                level = get_index_artifact(line)
+            artifact = extractArtifact(line)
+            artifact['child'] = []
+            artifact['level'] = level
+            artifact['child_level'] = level + 3
+            
+            artifact['parent'] = parent_artifact
+            if level == 0:
+                parent_artifact = artifact
+                modules.append(parent_artifact)
+            
+            if parent_artifact['child_level'] == level:
+                parent_artifact['child'].append(artifact)
+            elif parent_artifact['child_level'] < level:
+                parent_artifact = previous_artifact
+                artifact['parent'] = parent_artifact
+                parent_artifact['child'].append(artifact)
+            elif level != 0:
+                while parent_artifact['child_level'] != level:
+                    parent_artifact = parent_artifact['parent']
+                parent_artifact['child'].append(artifact)
+            previous_artifact = artifact
+
+        def remove_parent(a):
+            if 'parent' in a:
+                del a['parent']
+            if 'level' in a:
+                del a['level']
+            if 'child_level' in a:
+                del a['child_level']
+            for child in a['child']:
+                remove_parent(child)
+
+        for m in modules:
+            remove_parent(m)
+        return modules
+        
     def classpath(self):
-        cmd = "cd %s; mvn dependency:build-classpath -Dscope=test;" % (
-            self.path)
+        maven_proxy = ''
+        maven_proxy_path = os.path.join(os.path.dirname(
+            os.path.realpath(__file__)), "..","maven-proxy.xml")
+        if os.path.exists(maven_proxy_path):
+            maven_proxy = '-gs %s' % (maven_proxy_path)
+
+        cmd = "cd %s; mvn %s dependency:build-classpath -Dscope=test;" % (
+            self.path, maven_proxy)
         try:
             cp = []
             output = subprocess.check_output(cmd, shell=True).decode("utf-8")
