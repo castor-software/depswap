@@ -104,7 +104,8 @@ const bridgeImplMap = {
     "mjson",
     // "klaxon",
   ],
-}(async () => {
+};
+(async () => {
   var bar = new ProgressBar(
     "[:bar] :current/:total (:percent) :rate/bps :etas :step",
     {
