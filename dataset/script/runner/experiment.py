@@ -195,7 +195,7 @@ if __name__ == "__main__":
         subprocess.call(cmd, shell=True)
         print("[%s] Restore %s" % (datetime.now().strftime("%d/%m/%Y %H:%M:%S"), implem), flush=True)
 
-        result_folder = os.path.join(args.results, "exp", project.repo, args.lib)
+        result_folder = os.path.join(args.results, "experimentv2", project.repo, args.lib)
         if not os.path.exists(result_folder):
             os.makedirs(result_folder)
         path_result = os.path.join(result_folder, implem + ".json")
