@@ -1,7 +1,5 @@
 import xml.etree.ElementTree as xml
-from xml.etree.ElementTree import Element, SubElement, Comment, tostring
-from xml.dom import minidom
-import re
+from xml.etree.ElementTree import Element, SubElement, tostring
 
 from pathlib import Path
 

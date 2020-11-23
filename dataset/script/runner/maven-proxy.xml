@@ -4,7 +4,7 @@
           <id>tiny-maven-mirror</id>
           <name>tiny-maven-mirror</name>
           <url>http://130.237.222.185:5956/</url>
-          <mirrorOf>maven2,central</mirrorOf>
+          <mirrorOf>*</mirrorOf>
       </mirror>
   </mirrors>
 </settings>

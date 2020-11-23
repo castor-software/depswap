@@ -50,15 +50,10 @@ nbRepo = 0;
 let packages = {};
 repo: for (let repo in data) {
   const d = data[repo];
+  if (!utils.isGreen(d.test_results)) {
+    continue;
+  }
   if (d.test_results) {
-    for (test of d.test_results) {
-      if (test == null) {
-        continue repo;
-      }
-      if (test.error != 0 || test.failing != 0 || test.passing <= 0) {
-        continue repo;
-      }
-    }
     if (!d["static-usages"]) {
       continue;
     }
