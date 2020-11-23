@@ -14,6 +14,8 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Set;
 
+import static org.json.simple.JSONValue.autoBox;
+
 public class JSONArray implements List<Object>, JSONAware, JSONStreamAware {
 	JArray json;
 

@@ -67,6 +67,47 @@
       <version>1.1</version>
     </dependency>
 
+    <dependency>
+        <groupId>com.progsbase.libraries</groupId>
+        <artifactId>JSON</artifactId>
+        <version>0.4.0</version>
+    </dependency>
+    <dependency>
+    <groupId>com.owlike</groupId>
+    <artifactId>genson</artifactId>
+    <version>1.6</version>
+  </dependency>
+
+
+
+    <dependency>
+      <groupId>org.apache.johnzon</groupId>
+      <artifactId>johnzon-core</artifactId>
+      <version>1.1.8</version>
+    </dependency>
+
+    <dependency>
+      <groupId>net.sf.corn</groupId>
+      <artifactId>corn-converter</artifactId>
+      <version>1.0.8</version>
+    </dependency>
+    <dependency>
+      <groupId>cc.plural</groupId>
+      <artifactId>jsonij</artifactId>
+      <version>0.3.1</version>
+    </dependency>
+
+
+    <dependency>
+        <groupId>net.sourceforge.argo</groupId>
+        <artifactId>argo</artifactId>
+        <version>5.13</version>
+    </dependency>
+    <dependency>
+      <groupId>net.sf.flexjson</groupId>
+      <artifactId>flexjson</artifactId>
+      <version>3.3</version>
+    </dependency>
 
     <dependency>
       <groupId>org.sharegov</groupId>

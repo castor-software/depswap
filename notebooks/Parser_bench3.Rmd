@@ -35,14 +35,14 @@ for (i in 1:length(fileList)) {
 ```{r reshape}
 d <- dataset %>% mutate(r = as.factor(Result)) %>% select(File, Parser, Category, r) %>% spread(Parser,r)
 
+dataset <- dataset %>% mutate(Category = ifelse(Category == "undefined", "correct", Category))
+
 #d %>% mutate(same =(`Gson` == `json-simple` & Gson == `org.json`)) %>% group_by(Category,same) %>% summarise(n = n())
 
 ```
 
 
 ```{r printd}
-
-
 overview <- dataset %>% mutate(r = as.factor(Result)) %>% 
   select(File, Parser, Category, r) %>% 
   mutate(Library = gsub("yasjf4j-", "", Parser)) %>%
@@ -53,6 +53,97 @@ overview <- dataset %>% mutate(r = as.factor(Result)) %>%
   mutate(Category = ifelse(Category == "errored", "ill-formed", Category)) %>%
   select(Category, Library, OK, EQUIVALENT_OBJECT, NON_EQUIVALENT_OBJECT, UNEXPECTED_OBJECT, NULL_OBJECT, PARSE_EXCEPTION, PRINT_EXCEPTION, CRASH) %>%
   arrange(`Category`,`Library`)
+
+overview[ overview == 0 ] <- '-'
+overview[ overview == "jackson-databind" ] <- "jackson"
+
+overview_tbl <- xtable(overview)
+print(overview_tbl, include.rownames = FALSE, rotate.colnames = TRUE)
+#ggsave("bench.pdf", p, device = "pdf",units = "cm", width = 21, height = 120)
+
+```
+
+```{r total-outcome-correct}
+
+totalCorrect <- dataset %>% mutate(r = as.factor(Result)) %>% 
+  select(File, Parser, Category, r) %>% 
+  mutate(Library = gsub("yasjf4j-", "", Parser)) %>%
+  filter(Category == "correct") %>%
+  select(File, Library, r) %>% 
+  count(File, r) %>% 
+  count(r) %>%
+  spread(r,n) %>% 
+  mutate(Library = "Total") %>% 
+  mutate(Category = "correct") %>%
+  mutate(CRASH = "-") %>%
+  select(Library, OK, EQUIVALENT_OBJECT, NON_EQUIVALENT_OBJECT, NULL_OBJECT, PARSE_EXCEPTION, PRINT_EXCEPTION, CRASH)
+  
+
+
+```
+
+
+
+
+```{r printdc}
+overview <- dataset %>% mutate(r = as.factor(Result)) %>% 
+  select(File, Parser, Category, r) %>% 
+  mutate(Library = gsub("yasjf4j-", "", Parser)) %>%
+  group_by(Library, Category, r, .drop=FALSE) %>% 
+  summarize(n = n()) %>% 
+  spread(r,n) %>%
+  ungroup() %>%
+  mutate(Category = ifelse(Category == "errored", "ill-formed", Category)) %>%
+  filter(Category == "correct") %>%
+  select(Library, OK, EQUIVALENT_OBJECT, NON_EQUIVALENT_OBJECT, NULL_OBJECT, PARSE_EXCEPTION, PRINT_EXCEPTION, CRASH) %>%
+  arrange(Library)
+
+overview[ overview == 0 ] <- '-'
+overview[ overview == "jackson-databind" ] <- "jackson"
+
+overview <- rbind(overview, totalCorrect)
+
+overview_tbl <- xtable(overview)
+print(overview_tbl, include.rownames = FALSE, rotate.colnames = TRUE)
+#ggsave("bench.pdf", p, device = "pdf",units = "cm", width = 21, height = 120)
+
+```
+
+```{r total-outcome-errored}
+
+totalErrored <- dataset %>% mutate(r = as.factor(Result)) %>% 
+  select(File, Parser, Category, r) %>% 
+  mutate(Library = gsub("yasjf4j-", "", Parser)) %>%
+  filter(Category == "errored") %>%
+  select(File, Library, r) %>% 
+  count(File, r) %>% 
+  count(r) %>%
+  spread(r,n) %>% 
+  mutate(Library = "Total") %>% 
+  mutate(Category = "errored") %>%
+  select(Library, PARSE_EXCEPTION, NULL_OBJECT, UNEXPECTED_OBJECT, CRASH)
+  
+
+
+```
+
+```{r printde}
+
+overview <- dataset %>% mutate(r = as.factor(Result)) %>% 
+  select(File, Parser, Category, r) %>% 
+  mutate(Library = gsub("yasjf4j-", "", Parser)) %>%
+  group_by(Library, Category, r, .drop=FALSE) %>% 
+  summarize(n = n()) %>% 
+  spread(r,n) %>%
+  ungroup() %>%
+  mutate(Category = ifelse(Category == "errored", "ill-formed", Category)) %>%
+  filter(Category == "ill-formed") %>%
+  select(Library, PARSE_EXCEPTION, NULL_OBJECT, UNEXPECTED_OBJECT, CRASH) %>%
+  arrange(Library)
+
+overview[ overview == 0 ] <- '-'
+overview[ overview == "jackson-databind" ] <- "jackson"
+overview <- rbind(overview, totalErrored)
 
 overview_tbl <- xtable(overview)
 print(overview_tbl, include.rownames = FALSE, rotate.colnames = TRUE)
@@ -102,7 +193,7 @@ ggsave("bench-correct.pdf", p1, device = "pdf",units = "cm", width = 21, height 
 
 ```
 
-```{r distance}
+```{r distancef}
 
 avg_distance <- function(data, parsers) {
   avg <- 0
@@ -216,7 +307,7 @@ ggsave("bench-undefined.pdf", p1, device = "pdf",units = "cm", width = 21, heigh
 
 ```{r setup-print-venn}
 print_venn <- TRUE
-print_venn <- FALSE
+#print_venn <- FALSE
 ```
 
 
@@ -529,7 +620,7 @@ if(print_venn) dev.off()
 
 ```
 
-```{r venn-undefined-7}
+```{r venn-undefined-7-ok-or-eq}
 
 implems
 
@@ -564,7 +655,7 @@ if(print_venn) dev.off()
 
 ```
 
-```{r venn-undefined-7}
+```{r venn-undefined-7-parse-ex}
 
 implems
 
@@ -600,7 +691,7 @@ if(print_venn) dev.off()
 ```
 
 
-```{r venn-undefined-7}
+```{r venn-undefined-7-non-eq}
 
 implems
 

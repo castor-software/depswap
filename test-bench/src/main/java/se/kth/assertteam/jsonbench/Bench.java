@@ -1,10 +1,16 @@
 package se.kth.assertteam.jsonbench;
 
 
+import se.kth.assertteam.jsonbench.parser.Argo;
 import se.kth.assertteam.jsonbench.parser.CookJson;
+import se.kth.assertteam.jsonbench.parser.Corn;
 import se.kth.assertteam.jsonbench.parser.FastJson;
+import se.kth.assertteam.jsonbench.parser.FlexJson;
+import se.kth.assertteam.jsonbench.parser.GensonP;
 import se.kth.assertteam.jsonbench.parser.GsonParser;
 import se.kth.assertteam.jsonbench.parser.Jackson;
+import se.kth.assertteam.jsonbench.parser.Johnzon;
+import se.kth.assertteam.jsonbench.parser.JsonIJ;
 import se.kth.assertteam.jsonbench.parser.JsonIO;
 import se.kth.assertteam.jsonbench.parser.JsonLib;
 import se.kth.assertteam.jsonbench.parser.JsonP;
@@ -13,6 +19,7 @@ import se.kth.assertteam.jsonbench.parser.JsonUtil;
 import se.kth.assertteam.jsonbench.parser.KlaxonP;
 import se.kth.assertteam.jsonbench.parser.MJson;
 import se.kth.assertteam.jsonbench.parser.OrgJSON;
+import se.kth.assertteam.jsonbench.parser.ProgsBaseJson;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,12 +31,21 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import java.util.stream.Collectors;
 
 public class Bench {
+	static int TIMEOUT = 60;
+
 	public static void main(String[] args) throws IOException {
 
-		JP orgJson = new OrgJSON();
+		/*JP orgJson = new OrgJSON();
 		test(orgJson);
 
 		//JP simple = new JsonSimple();
@@ -67,6 +83,27 @@ public class Bench {
 
 		JP mjson = new MJson();
 		test(mjson);
+
+		JP flexjson = new FlexJson();
+		test(flexjson);
+
+		JP argo = new Argo();
+		test(argo);
+
+		JP jsonij = new JsonIJ();
+		test(jsonij);
+
+		JP corn = new Corn();
+		test(corn);
+
+		JP johnzon = new Johnzon();
+		test(johnzon);
+
+		JP genson = new GensonP();
+		test(genson);*/
+
+		JP progbase = new ProgsBaseJson();
+		test(progbase);
 	}
 
 	public static void test(JP parser) throws IOException {
@@ -124,7 +161,19 @@ public class Bench {
 	public static Map<String,ResultKind> testAllCorrectJson(File inDir, JP parser) throws IOException {
 		Map<String,ResultKind> results = new HashMap<>();
 		for(File f: findFiles(inDir.getAbsolutePath(),".json")) {
-			ResultKind r = testCorrectJson(f, parser);
+
+			ExecutorService executor = Executors.newSingleThreadExecutor();
+			Future<ResultKind> future = executor.submit(() -> testCorrectJson(f, parser));
+			ResultKind r = ResultKind.CRASH;
+			try {
+				r = future.get(TIMEOUT, TimeUnit.SECONDS);
+			} catch (InterruptedException e) {
+				System.err.println("Timout for " + f.getName());
+			} catch (ExecutionException e) {
+				System.err.println("Timout for " + f.getName());
+			} catch (TimeoutException e) {
+				System.err.println("Timout for " + f.getName());
+			}
 			results.put(f.getName(), r);
 		}
 		return results;
@@ -133,7 +182,19 @@ public class Bench {
 	public static Map<String,ResultKind> testAllIncorrectJson(File inDir, JP parser) throws IOException {
 		Map<String,ResultKind> results = new HashMap<>();
 		for(File f: findFiles(inDir.getAbsolutePath(),".json")) {
-			ResultKind r = testIncorrectJson(f, parser);
+
+			ExecutorService executor = Executors.newSingleThreadExecutor();
+			Future<ResultKind> future = executor.submit(() -> testIncorrectJson(f, parser));
+			ResultKind r = ResultKind.CRASH;
+			try {
+				r = future.get(TIMEOUT, TimeUnit.SECONDS);
+			} catch (InterruptedException e) {
+				System.err.println("Timout for " + f.getName());
+			} catch (ExecutionException e) {
+				System.err.println("Timout for " + f.getName());
+			} catch (TimeoutException e) {
+				System.err.println("Timout for " + f.getName());
+			}
 			results.put(f.getName(), r);
 		}
 		return results;

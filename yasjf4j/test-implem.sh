@@ -10,10 +10,8 @@ JARS_PATH=$1
 echo "Path to lib dir: $JARS_PATH"
 
 BRIDGES=('json-simple-over-yasjf4j' 'json-over-yasjf4j' 'gson-over-yasjf4j' 'jackson-databind-over-yasjf4j')
-#BRIDGES=('json-simple-over-yasjf4j' 'json-over-yasjf4j' 'gson-over-yasjf4j')
-IMPLEMENTATIONS=('yasjf4j-json' 'yasjf4j-cookjson' 'yasjf4j-gson' 'yasjf4j-jackson-databind' 'yasjf4j-jsonp' 'yasjf4j-json-io' 'yasjf4j-json-lib' 'yasjf4j-jjson' 'yasjf4j-json-simple' 'yasjf4j-jsonutil' 'yasjf4j-klaxon' 'yasjf4j-mjson' 'yasjf4j-fastjson' 'yasjf4j-nothing')
-
-
+TMP_LIST=$(ls | grep "yasjf4j-" | grep -v "yasjf4j-api" | grep -v "yasjf4j-nothing")
+IMPLEMENTATIONS=("${(@f)$(echo $TMP_LIST)}")
 
 if [ "$#" -gt 1 ]; then
 	b=$2
@@ -24,6 +22,9 @@ if [ "$#" -gt 1 ]; then
 		IMPLEMENTATIONS=$2
 	fi
 fi
+
+echo "IMPLEMENTATIONS: $IMPLEMENTATIONS"
+echo "BRIDGES: $BRIDGES"
 
 
 ROOT_DIR=$(pwd)
@@ -44,7 +45,7 @@ RESULTS=$(printf "$RESULTS %25s |" "Implem")
 RESULTS=$(printf "$RESULTS %30s |" "Bridge")
 RESULTS=$(printf "$RESULTS %8s |" "Outcome")
 RESULTS="$RESULTS Failures\n"
-RESULTS="$RESULTS---------------------------------------------------------------------------\n"
+RESULTS="$RESULTS-----------------------------------------------------------------------------------\n"
 
 for i in $IMPLEMENTATIONS
 do
@@ -111,7 +112,7 @@ do
 		fi
 	done
 done
-RESULTS="$RESULTS---------------------------------------------------------------------------\n"
+RESULTS="$RESULTS-----------------------------------------------------------------------------------\n"
 
 echo ""
 echo ""

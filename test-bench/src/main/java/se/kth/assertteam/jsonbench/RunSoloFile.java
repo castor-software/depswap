@@ -1,9 +1,16 @@
 package se.kth.assertteam.jsonbench;
 
+import se.kth.assertteam.jsonbench.parser.Argo;
 import se.kth.assertteam.jsonbench.parser.CookJson;
+import se.kth.assertteam.jsonbench.parser.Corn;
 import se.kth.assertteam.jsonbench.parser.FastJson;
+import se.kth.assertteam.jsonbench.parser.FlexJson;
+import se.kth.assertteam.jsonbench.parser.GensonP;
 import se.kth.assertteam.jsonbench.parser.GsonParser;
+import se.kth.assertteam.jsonbench.parser.Johnzon;
+import se.kth.assertteam.jsonbench.parser.JsonIJ;
 import se.kth.assertteam.jsonbench.parser.OrgJSON;
+import se.kth.assertteam.jsonbench.parser.ProgsBaseJson;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,7 +35,9 @@ public class RunSoloFile {
 		//JP parser = new FastJson();
 		File toTest = new File(correct, "y_number_int_with_exp.json");
 
-		JP parser = new OrgJSON();
+		//JP parser = new OrgJSON();
+		//JP parser = new FlexJson();
+		JP parser = new ProgsBaseJson();
 		ResultKind r = testCorrectJson(toTest, parser);
 
 
