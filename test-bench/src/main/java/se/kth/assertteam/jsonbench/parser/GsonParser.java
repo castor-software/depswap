@@ -1,5 +1,6 @@
 package se.kth.assertteam.jsonbench.parser;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -8,8 +9,11 @@ import se.kth.assertteam.jsonbench.JP;
 
 public class GsonParser implements JP {
 	JsonParser parser = new JsonParser();
+	//Gson gson = new Gson();
 	@Override
 	public Object parseString(String in) throws Exception {
+		//return JsonParser.parseString(in);
+		//return gson.fromJson(in, JsonElement.class);
 		return parser.parse(in);
 	}
 

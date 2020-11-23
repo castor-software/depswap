@@ -8,6 +8,7 @@ import se.kth.assertteam.jsonbench.parser.FastJson;
 import se.kth.assertteam.jsonbench.parser.FlexJson;
 import se.kth.assertteam.jsonbench.parser.GensonP;
 import se.kth.assertteam.jsonbench.parser.GsonParser;
+import se.kth.assertteam.jsonbench.parser.JJson;
 import se.kth.assertteam.jsonbench.parser.Jackson;
 import se.kth.assertteam.jsonbench.parser.Johnzon;
 import se.kth.assertteam.jsonbench.parser.JsonIJ;
@@ -42,19 +43,17 @@ import java.util.stream.Collectors;
 
 public class Bench {
 	static int TIMEOUT = 60;
+	static boolean log = true;
 
 	public static void main(String[] args) throws IOException {
 
-		/*JP orgJson = new OrgJSON();
-		test(orgJson);
-
-		//JP simple = new JsonSimple();
-		//test(simple);
+		//JP orgJson = new OrgJSON();
+		//test(orgJson);
 
 		JP gson = new GsonParser();
 		test(gson);
 
-		JP simple = new JsonSimple();
+		/*JP simple = new JsonSimple();
 		test(simple);
 
 		JP fastjson = new FastJson();
@@ -72,8 +71,7 @@ public class Bench {
 		JP jsonLib = new JsonLib();
 		test(jsonLib);
 
-		//JP jsonP = new JsonP();//Problem Overridden by cookjson
-		//test(jsonP);
+
 
 		JP jsonutil = new JsonUtil();
 		test(jsonutil);
@@ -100,10 +98,16 @@ public class Bench {
 		test(johnzon);
 
 		JP genson = new GensonP();
-		test(genson);*/
+		test(genson);
 
 		JP progbase = new ProgsBaseJson();
 		test(progbase);
+
+		JP jsonP = new JsonP();
+		test(jsonP);
+
+		JP jjson = new JJson();
+		test(jjson);*/
 	}
 
 	public static void test(JP parser) throws IOException {
@@ -159,8 +163,10 @@ public class Bench {
 	}
 
 	public static Map<String,ResultKind> testAllCorrectJson(File inDir, JP parser) throws IOException {
+		int i = 0;
 		Map<String,ResultKind> results = new HashMap<>();
 		for(File f: findFiles(inDir.getAbsolutePath(),".json")) {
+			if(log) System.out.println("[" + parser.getName() + "] " + (i++) + " " + f.getName());
 
 			ExecutorService executor = Executors.newSingleThreadExecutor();
 			Future<ResultKind> future = executor.submit(() -> testCorrectJson(f, parser));
@@ -175,13 +181,16 @@ public class Bench {
 				System.err.println("Timout for " + f.getName());
 			}
 			results.put(f.getName(), r);
+			executor.shutdown();
 		}
 		return results;
 	}
 
 	public static Map<String,ResultKind> testAllIncorrectJson(File inDir, JP parser) throws IOException {
+		int i = 0;
 		Map<String,ResultKind> results = new HashMap<>();
 		for(File f: findFiles(inDir.getAbsolutePath(),".json")) {
+			if(log) System.out.println("[" + parser.getName() + "] " + (i++) + " " + f.getName());
 
 			ExecutorService executor = Executors.newSingleThreadExecutor();
 			Future<ResultKind> future = executor.submit(() -> testIncorrectJson(f, parser));
@@ -196,6 +205,7 @@ public class Bench {
 				System.err.println("Timout for " + f.getName());
 			}
 			results.put(f.getName(), r);
+			executor.shutdown();
 		}
 		return results;
 	}

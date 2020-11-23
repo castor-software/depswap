@@ -1,26 +1,34 @@
 package se.kth.assertteam.jsonbench.parser;
 
+import jakarta.json.JsonArray;
+import jakarta.json.JsonObject;
+import jakarta.json.JsonValue;
+import jakarta.json.stream.JsonGenerator;
+import jakarta.json.stream.JsonParser;
 import se.kth.assertteam.jsonbench.JP;
-import org.glassfish.json.JsonProviderImpl;
 
-import javax.json.JsonArray;
-import javax.json.JsonObject;
-import javax.json.JsonValue;
-import javax.json.stream.JsonParser;
+
 import java.io.StringReader;
 import java.io.StringWriter;
+
+import org.glassfish.json.JsonProviderImpl;
 
 public class JsonP implements JP {
 	@Override
 	public Object parseString(String in) throws Exception {
-		JsonParser p = JsonProviderImpl.provider().createParser(new StringReader(in));
-		return p.getValue();
+		JsonProviderImpl provider = new JsonProviderImpl();
+		JsonParser parser = provider.createParser(new StringReader(in));
+		parser.next();
+		return parser.getValue();
 	}
 
 	@Override
 	public String print(Object in) throws Exception {
 		StringWriter w = new StringWriter();
-		JsonProviderImpl.provider().createGenerator(w).write((JsonValue) in);
+		JsonProviderImpl provider = new JsonProviderImpl();
+		JsonGenerator generator = provider.createGenerator(w);
+		generator.write((JsonValue) in);
+		generator.flush();
 		return w.toString();
 	}
 

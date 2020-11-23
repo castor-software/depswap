@@ -7,8 +7,10 @@ import se.kth.assertteam.jsonbench.parser.FastJson;
 import se.kth.assertteam.jsonbench.parser.FlexJson;
 import se.kth.assertteam.jsonbench.parser.GensonP;
 import se.kth.assertteam.jsonbench.parser.GsonParser;
+import se.kth.assertteam.jsonbench.parser.JJson;
 import se.kth.assertteam.jsonbench.parser.Johnzon;
 import se.kth.assertteam.jsonbench.parser.JsonIJ;
+import se.kth.assertteam.jsonbench.parser.JsonP;
 import se.kth.assertteam.jsonbench.parser.OrgJSON;
 import se.kth.assertteam.jsonbench.parser.ProgsBaseJson;
 
@@ -37,7 +39,7 @@ public class RunSoloFile {
 
 		//JP parser = new OrgJSON();
 		//JP parser = new FlexJson();
-		JP parser = new ProgsBaseJson();
+		JP parser = new JsonP();
 		ResultKind r = testCorrectJson(toTest, parser);
 
 
