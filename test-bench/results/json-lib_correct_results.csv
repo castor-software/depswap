@@ -59,7 +59,7 @@ json-lib,correct,y_number_real_exponent.json,EQUIVALENT_OBJECT
 json-lib,correct,false.json,OK
 json-lib,correct,y_string_null_escape.json,OK
 json-lib,correct,y_array_with_several_null.json,OK
-json-lib,correct,inspector-json-payload.json,EQUIVALENT_OBJECT
+json-lib,correct,inspector-json-payload.json,CRASH
 json-lib,correct,negative-int.json,OK
 json-lib,correct,y_string_uescaped_newline.json,EQUIVALENT_OBJECT
 json-lib,correct,simple-object.json,OK

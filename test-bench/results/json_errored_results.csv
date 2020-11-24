@@ -55,13 +55,13 @@ json,errored,n_structure_open_array_comma.json,PARSE_EXCEPTION
 json,errored,overlong-ascii-encoding.json,FILE_ERROR
 json,errored,lone-utf-8-continuation-byte.json,FILE_ERROR
 json,errored,n_number_-1.0..json,UNEXPECTED_OBJECT
-json,errored,n_string_escaped_ctrl_char_tab.json,UNEXPECTED_OBJECT
+json,errored,n_string_escaped_ctrl_char_tab.json,PARSE_EXCEPTION
 json,errored,truncated-utf-8.json,FILE_ERROR
 json,errored,too-big-positive-integer.json,UNEXPECTED_OBJECT
 json,errored,ascii-unicode-identifier.json,UNEXPECTED_OBJECT
 json,errored,object-unterminated-value.json,PARSE_EXCEPTION
 json,errored,n_object_trailing_comma.json,UNEXPECTED_OBJECT
-json,errored,fail17.json,UNEXPECTED_OBJECT
+json,errored,fail17.json,PARSE_EXCEPTION
 json,errored,minus-sign-without-number.json,UNEXPECTED_OBJECT
 json,errored,extra-comma-in-multiline-array.json,UNEXPECTED_OBJECT
 json,errored,n_object_two_commas_in_a_row.json,PARSE_EXCEPTION
@@ -81,8 +81,8 @@ json,errored,n_structure_open_object_open_array.json,PARSE_EXCEPTION
 json,errored,n_number_-NaN.json,UNEXPECTED_OBJECT
 json,errored,n_string_1_surrogate_then_escape_u1x.json,PARSE_EXCEPTION
 json,errored,n_string_invalid_unicode_escape.json,PARSE_EXCEPTION
-json,errored,fail15.json,UNEXPECTED_OBJECT
-json,errored,fail26.json,UNEXPECTED_OBJECT
+json,errored,fail15.json,PARSE_EXCEPTION
+json,errored,fail26.json,PARSE_EXCEPTION
 json,errored,apostrophe.json,PARSE_EXCEPTION
 json,errored,n_array_just_comma.json,UNEXPECTED_OBJECT
 json,errored,n_structure_unicode-identifier.json,UNEXPECTED_OBJECT
@@ -92,7 +92,7 @@ json,errored,n_number_.2e-3.json,UNEXPECTED_OBJECT
 json,errored,n_object_missing_value.json,PARSE_EXCEPTION
 json,errored,n_number_U+FF11_fullwidth_digit_one.json,UNEXPECTED_OBJECT
 json,errored,n_number_-01.json,UNEXPECTED_OBJECT
-json,errored,invalid-escape.json,UNEXPECTED_OBJECT
+json,errored,invalid-escape.json,PARSE_EXCEPTION
 json,errored,n_structure_open_array_open_string.json,PARSE_EXCEPTION
 json,errored,n_object_bad_value.json,UNEXPECTED_OBJECT
 json,errored,n_structure_unclosed_array_unfinished_true.json,PARSE_EXCEPTION
@@ -156,7 +156,7 @@ json,errored,lone-invalid-utf-8.json,FILE_ERROR
 json,errored,n_object_non_string_key_but_huge_number_instead.json,UNEXPECTED_OBJECT
 json,errored,n_object_single_quote.json,UNEXPECTED_OBJECT
 json,errored,unterminated-object-and-array.json,PARSE_EXCEPTION
-json,errored,n_string_escape_x.json,UNEXPECTED_OBJECT
+json,errored,n_string_escape_x.json,PARSE_EXCEPTION
 json,errored,invalid-utf-8-in-string.json,FILE_ERROR
 json,errored,n_number_1_000.json,UNEXPECTED_OBJECT
 json,errored,n_object_missing_semicolon.json,PARSE_EXCEPTION
@@ -231,10 +231,10 @@ json,errored,n_object_non_string_key.json,UNEXPECTED_OBJECT
 json,errored,n_structure_array_with_extra_array_close.json,UNEXPECTED_OBJECT
 json,errored,not-in-unicode-range.json,FILE_ERROR
 json,errored,n_number_hex_2_digits.json,UNEXPECTED_OBJECT
-json,errored,n_string_backslash_00.json,UNEXPECTED_OBJECT
+json,errored,n_string_backslash_00.json,PARSE_EXCEPTION
 json,errored,n_number_invalid+-.json,UNEXPECTED_OBJECT
 json,errored,n_number_minus_infinity.json,UNEXPECTED_OBJECT
-json,errored,n_string_invalid_backslash_esc.json,UNEXPECTED_OBJECT
+json,errored,n_string_invalid_backslash_esc.json,PARSE_EXCEPTION
 json,errored,n_string_no_quotes_with_bad_escape.json,PARSE_EXCEPTION
 json,errored,n_number_0e+.json,UNEXPECTED_OBJECT
 json,errored,n_array_items_separated_by_semicolon.json,PARSE_EXCEPTION
@@ -263,7 +263,7 @@ json,errored,n_number_neg_with_garbage_at_end.json,UNEXPECTED_OBJECT
 json,errored,negative-integer-starting-with-zero.json,UNEXPECTED_OBJECT
 json,errored,fail09.json,UNEXPECTED_OBJECT
 json,errored,invalid-utf-8-in-exponent.json,FILE_ERROR
-json,errored,n_string_escaped_emoji.json,UNEXPECTED_OBJECT
+json,errored,n_string_escaped_emoji.json,PARSE_EXCEPTION
 json,errored,object-no-colon.json,PARSE_EXCEPTION
 json,errored,n_object_missing_key.json,PARSE_EXCEPTION
 json,errored,n_string_1_surrogate_then_escape_u.json,PARSE_EXCEPTION
@@ -273,7 +273,7 @@ json,errored,null-escape-in-string.json,UNEXPECTED_OBJECT
 json,errored,n_number_invalid-negative-real.json,UNEXPECTED_OBJECT
 json,errored,n_array_a_invalid_utf8.json,FILE_ERROR
 json,errored,n_array_incomplete_invalid_value.json,PARSE_EXCEPTION
-json,errored,fail28.json,UNEXPECTED_OBJECT
+json,errored,fail28.json,PARSE_EXCEPTION
 json,errored,unterminated-empty-key.json,PARSE_EXCEPTION
 json,errored,fail03.json,UNEXPECTED_OBJECT
 json,errored,n_structure_single_star.json,UNEXPECTED_OBJECT
