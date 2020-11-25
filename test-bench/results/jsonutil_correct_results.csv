@@ -106,7 +106,7 @@ jsonutil,correct,y_string_one-byte-utf-8.json,EQUIVALENT_OBJECT
 jsonutil,correct,y_string_unicode_2.json,OK
 jsonutil,correct,y_string_unicode_U+200B_ZERO_WIDTH_SPACE.json,EQUIVALENT_OBJECT
 jsonutil,correct,y_string_escaped_noncharacter.json,EQUIVALENT_OBJECT
-jsonutil,correct,y_structure_lonely_null.json,NULL_OBJECT
+jsonutil,correct,y_structure_lonely_null.json,OK
 jsonutil,correct,roundtrip23.json,OK
 jsonutil,correct,roundtrip12.json,OK
 jsonutil,correct,simple-int-0.json,OK

@@ -223,7 +223,6 @@ jsonutil,errored,n_structure_angle_bracket_null.json,PARSE_EXCEPTION
 jsonutil,errored,unterminated-string.json,PARSE_EXCEPTION
 jsonutil,errored,n_string_accentuated_char_no_quotes.json,PARSE_EXCEPTION
 jsonutil,errored,fail12.json,PARSE_EXCEPTION
-jsonutil,errored,null.json,NULL_OBJECT
 jsonutil,errored,n_structure_single_eacute.json,FILE_ERROR
 jsonutil,errored,fail27.json,UNEXPECTED_OBJECT
 jsonutil,errored,null-byte-in-object-key.json,UNEXPECTED_OBJECT

@@ -21,6 +21,7 @@ import se.kth.assertteam.jsonbench.parser.KlaxonP;
 import se.kth.assertteam.jsonbench.parser.MJson;
 import se.kth.assertteam.jsonbench.parser.OrgJSON;
 import se.kth.assertteam.jsonbench.parser.ProgsBaseJson;
+import se.kth.assertteam.jsonbench.parser.SOJO;
 
 import java.io.File;
 import java.io.IOException;
@@ -42,22 +43,19 @@ import java.util.concurrent.TimeoutException;
 import java.util.stream.Collectors;
 
 public class Bench {
-	static int TIMEOUT = 60;
+	static int TIMEOUT = 15;
 	static boolean log = true;
 
 	public static void main(String[] args) throws IOException {
 
-		//JP orgJson = new OrgJSON();
-		//test(orgJson);
+		/*JP orgJson = new OrgJSON();
+		test(orgJson);
 
 		JP gson = new GsonParser();
 		test(gson);
 
-		/*JP simple = new JsonSimple();
+		JP simple = new JsonSimple();
 		test(simple);
-
-		JP fastjson = new FastJson();
-		test(fastjson);
 
 		JP jackson = new Jackson();
 		test(jackson);
@@ -71,8 +69,6 @@ public class Bench {
 		JP jsonLib = new JsonLib();
 		test(jsonLib);
 
-
-
 		JP jsonutil = new JsonUtil();
 		test(jsonutil);
 
@@ -84,12 +80,6 @@ public class Bench {
 
 		JP flexjson = new FlexJson();
 		test(flexjson);
-
-		JP argo = new Argo();
-		test(argo);
-
-		JP jsonij = new JsonIJ();
-		test(jsonij);
 
 		JP corn = new Corn();
 		test(corn);
@@ -106,8 +96,21 @@ public class Bench {
 		JP jsonP = new JsonP();
 		test(jsonP);
 
-		JP jjson = new JJson();
-		test(jjson);*/
+		JP sojo = new SOJO();
+		test(sojo);
+
+		JP argo = new Argo();
+		test(argo);
+
+		JP fastjson = new FastJson();
+		test(fastjson);*/
+
+
+		//JP jjson = new JJson();
+		//test(jjson);
+		JP jsonij = new JsonIJ();
+		test(jsonij);
+
 	}
 
 	public static void test(JP parser) throws IOException {
@@ -164,49 +167,43 @@ public class Bench {
 
 	public static Map<String,ResultKind> testAllCorrectJson(File inDir, JP parser) throws IOException {
 		int i = 0;
+		ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 		Map<String,ResultKind> results = new HashMap<>();
 		for(File f: findFiles(inDir.getAbsolutePath(),".json")) {
 			if(log) System.out.println("[" + parser.getName() + "] " + (i++) + " " + f.getName());
 
-			ExecutorService executor = Executors.newSingleThreadExecutor();
-			Future<ResultKind> future = executor.submit(() -> testCorrectJson(f, parser));
+			Callable<ResultKind> task = () -> testCorrectJson(f, parser);
+			Future<ResultKind> future = executor.submit(task);
 			ResultKind r = ResultKind.CRASH;
 			try {
 				r = future.get(TIMEOUT, TimeUnit.SECONDS);
-			} catch (InterruptedException e) {
-				System.err.println("Timout for " + f.getName());
-			} catch (ExecutionException e) {
-				System.err.println("Timout for " + f.getName());
-			} catch (TimeoutException e) {
+			} catch (InterruptedException | ExecutionException | TimeoutException e) {
 				System.err.println("Timout for " + f.getName());
 			}
 			results.put(f.getName(), r);
-			executor.shutdown();
 		}
+		executor.shutdown();
 		return results;
 	}
 
 	public static Map<String,ResultKind> testAllIncorrectJson(File inDir, JP parser) throws IOException {
 		int i = 0;
+		ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 		Map<String,ResultKind> results = new HashMap<>();
 		for(File f: findFiles(inDir.getAbsolutePath(),".json")) {
 			if(log) System.out.println("[" + parser.getName() + "] " + (i++) + " " + f.getName());
 
-			ExecutorService executor = Executors.newSingleThreadExecutor();
-			Future<ResultKind> future = executor.submit(() -> testIncorrectJson(f, parser));
+			Callable<ResultKind> task = () -> testIncorrectJson(f, parser);
+			Future<ResultKind> future = executor.submit(task);
 			ResultKind r = ResultKind.CRASH;
 			try {
 				r = future.get(TIMEOUT, TimeUnit.SECONDS);
-			} catch (InterruptedException e) {
-				System.err.println("Timout for " + f.getName());
-			} catch (ExecutionException e) {
-				System.err.println("Timout for " + f.getName());
-			} catch (TimeoutException e) {
+			} catch (InterruptedException | ExecutionException | TimeoutException e) {
 				System.err.println("Timout for " + f.getName());
 			}
 			results.put(f.getName(), r);
-			executor.shutdown();
 		}
+		executor.shutdown();
 		return results;
 	}
 
@@ -222,12 +219,12 @@ public class Bench {
 		try {
 			try {
 				jsonObject = parser.parseString(jsonIn);
-				if(jsonObject == null)
+				if(jsonObject == null && !jsonIn.equals("null"))
 					return ResultKind.NULL_OBJECT;
 			} catch (Exception e) {
 				return ResultKind.PARSE_EXCEPTION;
 			}
-			if(jsonObject != null) {
+			//if(jsonObject != null ) {
 				try {
 					jsonOut = parser.print(jsonObject);
 					if(jsonOut.equalsIgnoreCase(jsonIn)) {
@@ -241,45 +238,35 @@ public class Bench {
 				} catch (Exception e) {
 					return ResultKind.PRINT_EXCEPTION;
 				}
-			}
+			//}
 		} catch (Error e) {
 			return ResultKind.CRASH;
 		}
-		return null;
 	}
 
 	public static ResultKind testIncorrectJson(File f, JP parser)  {
-		String jsonIn = null;
+		String jsonIn;
 		try {
 			jsonIn = readFile(f);
 		} catch (Exception e) {
 			return ResultKind.FILE_ERROR;
 		}
 		try {
-			Object jsonObject = null;
-			String jsonOut;
 			try {
 				try {
-					jsonObject = parser.parseString(jsonIn);
+					Object jsonObject = parser.parseString(jsonIn);
 					if (jsonObject != null)
 						return ResultKind.UNEXPECTED_OBJECT;
 					else
 						return ResultKind.NULL_OBJECT;
 				} catch (Exception e) {
-					//return ResultKind.OK;
 					return ResultKind.PARSE_EXCEPTION;
 				}
 			} catch (Error e) {
 				return ResultKind.CRASH;
 			}
 		} catch (Exception e) {
-			return null;
+			return ResultKind.CRASH;
 		}
 	}
-
-
-	//read file
-	//get jsons
-	//parse test
-	//print test
 }

@@ -223,7 +223,6 @@ flex-json,errored,n_structure_angle_bracket_null.json,UNEXPECTED_OBJECT
 flex-json,errored,unterminated-string.json,PARSE_EXCEPTION
 flex-json,errored,n_string_accentuated_char_no_quotes.json,UNEXPECTED_OBJECT
 flex-json,errored,fail12.json,UNEXPECTED_OBJECT
-flex-json,errored,null.json,NULL_OBJECT
 flex-json,errored,n_structure_single_eacute.json,FILE_ERROR
 flex-json,errored,fail27.json,PARSE_EXCEPTION
 flex-json,errored,null-byte-in-object-key.json,UNEXPECTED_OBJECT

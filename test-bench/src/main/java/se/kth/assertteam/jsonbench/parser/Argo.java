@@ -24,7 +24,7 @@ public class Argo implements JP {
 
 	@Override
 	public String getName() {
-		return "argo";
+		return "json-argo";
 	}
 
 	@Override

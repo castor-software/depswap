@@ -223,7 +223,6 @@ jackson-databind,errored,n_structure_angle_bracket_null.json,PARSE_EXCEPTION
 jackson-databind,errored,unterminated-string.json,PARSE_EXCEPTION
 jackson-databind,errored,n_string_accentuated_char_no_quotes.json,PARSE_EXCEPTION
 jackson-databind,errored,fail12.json,PARSE_EXCEPTION
-jackson-databind,errored,null.json,UNEXPECTED_OBJECT
 jackson-databind,errored,n_structure_single_eacute.json,FILE_ERROR
 jackson-databind,errored,fail27.json,PARSE_EXCEPTION
 jackson-databind,errored,null-byte-in-object-key.json,UNEXPECTED_OBJECT

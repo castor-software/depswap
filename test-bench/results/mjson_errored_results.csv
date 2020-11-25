@@ -223,7 +223,6 @@ mjson,errored,n_structure_angle_bracket_null.json,PARSE_EXCEPTION
 mjson,errored,unterminated-string.json,PARSE_EXCEPTION
 mjson,errored,n_string_accentuated_char_no_quotes.json,PARSE_EXCEPTION
 mjson,errored,fail12.json,PARSE_EXCEPTION
-mjson,errored,null.json,UNEXPECTED_OBJECT
 mjson,errored,n_structure_single_eacute.json,FILE_ERROR
 mjson,errored,fail27.json,UNEXPECTED_OBJECT
 mjson,errored,null-byte-in-object-key.json,UNEXPECTED_OBJECT

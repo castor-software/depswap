@@ -223,7 +223,6 @@ gson,errored,n_structure_angle_bracket_null.json,UNEXPECTED_OBJECT
 gson,errored,unterminated-string.json,PARSE_EXCEPTION
 gson,errored,n_string_accentuated_char_no_quotes.json,UNEXPECTED_OBJECT
 gson,errored,fail12.json,UNEXPECTED_OBJECT
-gson,errored,null.json,UNEXPECTED_OBJECT
 gson,errored,n_structure_single_eacute.json,FILE_ERROR
 gson,errored,fail27.json,UNEXPECTED_OBJECT
 gson,errored,null-byte-in-object-key.json,UNEXPECTED_OBJECT

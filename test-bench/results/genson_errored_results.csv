@@ -223,7 +223,6 @@ genson,errored,n_structure_angle_bracket_null.json,PARSE_EXCEPTION
 genson,errored,unterminated-string.json,PARSE_EXCEPTION
 genson,errored,n_string_accentuated_char_no_quotes.json,UNEXPECTED_OBJECT
 genson,errored,fail12.json,PARSE_EXCEPTION
-genson,errored,null.json,NULL_OBJECT
 genson,errored,n_structure_single_eacute.json,FILE_ERROR
 genson,errored,fail27.json,UNEXPECTED_OBJECT
 genson,errored,null-byte-in-object-key.json,UNEXPECTED_OBJECT

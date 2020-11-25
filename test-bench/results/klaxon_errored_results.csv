@@ -223,7 +223,6 @@ klaxon,errored,n_structure_angle_bracket_null.json,PARSE_EXCEPTION
 klaxon,errored,unterminated-string.json,PARSE_EXCEPTION
 klaxon,errored,n_string_accentuated_char_no_quotes.json,PARSE_EXCEPTION
 klaxon,errored,fail12.json,PARSE_EXCEPTION
-klaxon,errored,null.json,PARSE_EXCEPTION
 klaxon,errored,n_structure_single_eacute.json,FILE_ERROR
 klaxon,errored,fail27.json,UNEXPECTED_OBJECT
 klaxon,errored,null-byte-in-object-key.json,UNEXPECTED_OBJECT

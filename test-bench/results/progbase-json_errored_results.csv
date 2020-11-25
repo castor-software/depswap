@@ -223,7 +223,6 @@ progbase-json,errored,n_structure_angle_bracket_null.json,NULL_OBJECT
 progbase-json,errored,unterminated-string.json,NULL_OBJECT
 progbase-json,errored,n_string_accentuated_char_no_quotes.json,NULL_OBJECT
 progbase-json,errored,fail12.json,NULL_OBJECT
-progbase-json,errored,null.json,NULL_OBJECT
 progbase-json,errored,n_structure_single_eacute.json,FILE_ERROR
 progbase-json,errored,fail27.json,NULL_OBJECT
 progbase-json,errored,null-byte-in-object-key.json,UNEXPECTED_OBJECT

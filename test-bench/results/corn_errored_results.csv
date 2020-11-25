@@ -223,7 +223,6 @@ corn,errored,n_structure_angle_bracket_null.json,UNEXPECTED_OBJECT
 corn,errored,unterminated-string.json,PARSE_EXCEPTION
 corn,errored,n_string_accentuated_char_no_quotes.json,UNEXPECTED_OBJECT
 corn,errored,fail12.json,UNEXPECTED_OBJECT
-corn,errored,null.json,UNEXPECTED_OBJECT
 corn,errored,n_structure_single_eacute.json,FILE_ERROR
 corn,errored,fail27.json,PARSE_EXCEPTION
 corn,errored,null-byte-in-object-key.json,UNEXPECTED_OBJECT

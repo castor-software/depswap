@@ -223,7 +223,6 @@ fastjson,errored,n_structure_angle_bracket_null.json,PARSE_EXCEPTION
 fastjson,errored,unterminated-string.json,PARSE_EXCEPTION
 fastjson,errored,n_string_accentuated_char_no_quotes.json,PARSE_EXCEPTION
 fastjson,errored,fail12.json,PARSE_EXCEPTION
-fastjson,errored,null.json,NULL_OBJECT
 fastjson,errored,n_structure_single_eacute.json,FILE_ERROR
 fastjson,errored,fail27.json,UNEXPECTED_OBJECT
 fastjson,errored,null-byte-in-object-key.json,UNEXPECTED_OBJECT

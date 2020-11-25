@@ -83,7 +83,11 @@
     <version>1.6</version>
   </dependency>
 
-
+    <dependency>
+      <groupId>net.sf.sojo</groupId>
+      <artifactId>sojo</artifactId>
+      <version>1.0.13</version>
+    </dependency>
 
     <dependency>
       <groupId>org.apache.johnzon</groupId>

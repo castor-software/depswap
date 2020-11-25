@@ -106,7 +106,7 @@ fastjson,correct,y_string_one-byte-utf-8.json,EQUIVALENT_OBJECT
 fastjson,correct,y_string_unicode_2.json,OK
 fastjson,correct,y_string_unicode_U+200B_ZERO_WIDTH_SPACE.json,EQUIVALENT_OBJECT
 fastjson,correct,y_string_escaped_noncharacter.json,EQUIVALENT_OBJECT
-fastjson,correct,y_structure_lonely_null.json,NULL_OBJECT
+fastjson,correct,y_structure_lonely_null.json,PRINT_EXCEPTION
 fastjson,correct,roundtrip23.json,OK
 fastjson,correct,roundtrip12.json,OK
 fastjson,correct,simple-int-0.json,OK

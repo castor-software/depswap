@@ -106,7 +106,7 @@ progbase-json,correct,y_string_one-byte-utf-8.json,EQUIVALENT_OBJECT
 progbase-json,correct,y_string_unicode_2.json,OK
 progbase-json,correct,y_string_unicode_U+200B_ZERO_WIDTH_SPACE.json,EQUIVALENT_OBJECT
 progbase-json,correct,y_string_escaped_noncharacter.json,EQUIVALENT_OBJECT
-progbase-json,correct,y_structure_lonely_null.json,NULL_OBJECT
+progbase-json,correct,y_structure_lonely_null.json,OK
 progbase-json,correct,roundtrip23.json,OK
 progbase-json,correct,roundtrip12.json,OK
 progbase-json,correct,simple-int-0.json,EQUIVALENT_OBJECT

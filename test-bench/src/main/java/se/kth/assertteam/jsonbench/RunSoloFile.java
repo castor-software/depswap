@@ -13,6 +13,7 @@ import se.kth.assertteam.jsonbench.parser.JsonIJ;
 import se.kth.assertteam.jsonbench.parser.JsonP;
 import se.kth.assertteam.jsonbench.parser.OrgJSON;
 import se.kth.assertteam.jsonbench.parser.ProgsBaseJson;
+import se.kth.assertteam.jsonbench.parser.SOJO;
 
 import java.io.File;
 import java.io.IOException;
@@ -39,7 +40,7 @@ public class RunSoloFile {
 
 		//JP parser = new OrgJSON();
 		//JP parser = new FlexJson();
-		JP parser = new JsonP();
+		JP parser = new SOJO();
 		ResultKind r = testCorrectJson(toTest, parser);
 
 

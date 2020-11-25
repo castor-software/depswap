@@ -223,7 +223,6 @@ jsonij,errored,n_structure_angle_bracket_null.json,PARSE_EXCEPTION
 jsonij,errored,unterminated-string.json,PARSE_EXCEPTION
 jsonij,errored,n_string_accentuated_char_no_quotes.json,PARSE_EXCEPTION
 jsonij,errored,fail12.json,PARSE_EXCEPTION
-jsonij,errored,null.json,PARSE_EXCEPTION
 jsonij,errored,n_structure_single_eacute.json,FILE_ERROR
 jsonij,errored,fail27.json,PARSE_EXCEPTION
 jsonij,errored,null-byte-in-object-key.json,PARSE_EXCEPTION
