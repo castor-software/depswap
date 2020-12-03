@@ -212,6 +212,8 @@ public class JSONValueTest extends TestCase {
 		assertEquals("null", JSONValue.toJSONString((Object[])null));
 		assertEquivalent("[]", JSONValue.toJSONString(new Object[0]));
 		assertEquivalent("[\"Hello\"]", JSONValue.toJSONString(new Object[] { "Hello" }));
+		assertEquivalent("[1,2,3]", JSONValue.toJSONString(new int[] { 1, 2, 3 }));
+		assertEquivalent("[[1,2,3]]", JSONValue.toJSONString(new Object[] {new int[] { 1, 2, 3 }}));
 		assertEquivalent("[\"Hello\",12,[1,2,3]]", JSONValue.toJSONString(new Object[] { "Hello", new Integer(12), new int[] { 1, 2, 3 } }));
 		
 		StringWriter writer;

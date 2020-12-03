@@ -20,6 +20,10 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import static org.json.simple.JSONValue.autoBox;
+import static org.json.simple.JSONValue.recA;
+import static org.json.simple.JSONValue.recO;
+
 public class JSONObject implements Map<Object,Object>, JSONAware, JSONStreamAware {
 	JObject json;
 
@@ -28,6 +32,17 @@ public class JSONObject implements Map<Object,Object>, JSONAware, JSONStreamAwar
 		json = JFactory.createJObject();
 		in.forEach((k,v) -> {
 			try {
+				if(v == null) {
+					json.YASJF4J_put(k.toString(),v);
+				} else if(v instanceof Map) {
+					json.YASJF4J_put(k.toString(),recO((Map) v));
+				} else if (v instanceof  List) {
+					json.YASJF4J_put(k.toString(),recA((List) v));
+				} else if(v.getClass().isArray()) {
+					json.YASJF4J_put(k.toString(),recA(autoBox(v)));
+				} else {
+					json.YASJF4J_put(k.toString(),v);
+				}
 				json.YASJF4J_put(k.toString(),JSONValue.unshield(v));
 			} catch (JException e) {
 				e.printStackTrace();

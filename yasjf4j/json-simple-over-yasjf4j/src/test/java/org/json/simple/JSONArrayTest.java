@@ -288,4 +288,14 @@ public class JSONArrayTest extends TestCase {
 		assertEquivalent("[\"Hello\",12,[1,2,3]]", writer.toString());
 	}
 
+
+	public void testIteration() throws ParseException {
+		JSONArray a = new JSONArray("[1,2,3]");
+		int i = 0;
+		for (Object child : a) {
+			i++;
+		}
+		assertEquals(3, i);
+	}
+
 }

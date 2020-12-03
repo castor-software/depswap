@@ -2,11 +2,15 @@ package org.json.simple;
 
 
 import org.apache.commons.lang3.ArrayUtils;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import se.kth.castor.yasjf4j.JArray;
 import se.kth.castor.yasjf4j.JException;
 import se.kth.castor.yasjf4j.JFactory;
 import se.kth.castor.yasjf4j.JObject;
 
+import java.io.IOException;
+import java.io.Reader;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -171,9 +175,20 @@ public class JSONValue {
 		return null;
 	}
 
+	public static Object parseWithException(Reader in) throws IOException, ParseException {
+		JSONParser parser=new JSONParser();
+		return parser.parse(in);
+	}
+
+	public static Object parseWithException(String s) throws ParseException{
+		JSONParser parser=new JSONParser();
+		return parser.parse(s);
+	}
+
 	public static void writeJSONString(Object o, StringWriter out) {
 		out.write(toJSONString(o));
 	}
+
 
 	public static Object shield(Object o) {
 		if (o instanceof JObject) return new JSONObject((JObject) o);
@@ -185,5 +200,52 @@ public class JSONValue {
 		if (o instanceof JSONObject) return ((JSONObject) o).json;
 		else if (o instanceof JSONArray) return ((JSONArray) o).json;
 		else return o;
+	}
+
+
+	public static JObject recO(Map m) {
+		JObject o = JFactory.createJObject();
+		for(Object er : m.entrySet()) {
+			Map.Entry e = (Map.Entry) er;
+			try {
+				Object v = e.getValue();
+				if(v == null) {
+					o.YASJF4J_put(e.getKey().toString(),v);
+				} else if(v instanceof Map) {
+					o.YASJF4J_put(e.getKey().toString(),recO((Map) v));
+				} else if(v instanceof List) {
+					o.YASJF4J_put(e.getKey().toString(),recA((List) v));
+				} else if(v.getClass().isArray()) {
+					o.YASJF4J_put(e.getKey().toString(),recA(autoBox(v)));
+				} else {
+					o.YASJF4J_put(e.getKey().toString(), v);
+				}
+			} catch (JException e1) {
+				e1.printStackTrace();
+			}
+		}
+		return o;
+	}
+
+	public static JArray recA(List m) {
+		JArray a = JFactory.createJArray();
+		for(Object e: m) {
+			try {
+				if(e == null) {
+					a.YASJF4J_add(e);
+				} else if(e instanceof Map) {
+					a.YASJF4J_add(recO((Map) e));
+				} else if(e instanceof List) {
+					a.YASJF4J_add(recA((List) e));
+				} else if(e.getClass().isArray()) {
+					a.YASJF4J_add(recA(autoBox(e)));
+				} else {
+					a.YASJF4J_add(e);
+				}
+			} catch (JException e1) {
+				e1.printStackTrace();
+			}
+		}
+		return a;
 	}
 }

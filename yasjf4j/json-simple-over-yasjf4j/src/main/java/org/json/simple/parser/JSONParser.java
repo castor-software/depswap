@@ -24,6 +24,18 @@ public class JSONParser {
 		}
 	}
 
+	public Object parse(Reader in) throws IOException, ParseException {
+		StringBuilder builder = new StringBuilder();
+
+		BufferedReader br = new BufferedReader(in);
+		String line;
+		while ((line = br.readLine()) != null){
+			builder.append(line);
+		}
+		String raw = builder.toString();
+		return parse(raw);
+	}
+
 	public Object parse(String s, ContainerFactory containerFactory) throws ParseException {
 		return parse(s);
 	}
@@ -102,7 +114,10 @@ public class JSONParser {
 
 	}
 
-	private char firstNonWhitChar(String str) {
+	private char firstNonWhitChar(String str) throws ParseException {
+		String t = str.trim();
+		if(t.length() <= 0) throw new ParseException(0);
+
 		return str.trim().charAt(0);
 	}
 

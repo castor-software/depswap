@@ -111,6 +111,27 @@ Double, FLoat, Long, Integer, BigInteger, BigDecimal.
 
 jjson seems to fail to parse simple nested arrays, ex: `[[0],[0]]`
 
+
+From `json-simple-1.1.1.pom`
+```xml
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.10</version>
+        </dependency>
+    </dependencies>
+```
+
+and naturally, some client rely on it instead of declaring the dependency themself.
+
+
+
+` org.json.simple.JSONObject cannot be cast to java.util.HashMap`
+
+
+
+
 ### Status
 
 |              Implem |                   Bridge |  Outcome | Failures |

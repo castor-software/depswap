@@ -12,9 +12,12 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Map;
 import java.util.Set;
 
 import static org.json.simple.JSONValue.autoBox;
+import static org.json.simple.JSONValue.recA;
+import static org.json.simple.JSONValue.recO;
 
 public class JSONArray implements List<Object>, JSONAware, JSONStreamAware {
 	JArray json;
@@ -23,7 +26,17 @@ public class JSONArray implements List<Object>, JSONAware, JSONStreamAware {
 		json = JFactory.createJArray();
 		for(Object o: in) {
 			try {
-				json.YASJF4J_add(o);
+				if(o == null) {
+					json.YASJF4J_add(o);
+				} else if(o instanceof Map) {
+					json.YASJF4J_add(recO((Map) o));
+				} else if (o instanceof  List) {
+					json.YASJF4J_add(recA((List) o));
+				} else if(o.getClass().isArray()) {
+					json.YASJF4J_add(recA(autoBox(o)));
+				} else {
+					json.YASJF4J_add(o);
+				}
 			} catch (JException e) {
 				e.printStackTrace();
 			}
@@ -34,7 +47,17 @@ public class JSONArray implements List<Object>, JSONAware, JSONStreamAware {
 		json = JFactory.createJArray();
 		for(Object o: in) {
 			try {
-				json.YASJF4J_add(o);
+				if(o == null) {
+					json.YASJF4J_add(o);
+				} else if(o instanceof Map) {
+					json.YASJF4J_add(recO((Map) o));
+				} else if (o instanceof  List) {
+					json.YASJF4J_add(recA((List) o));
+				} else if(o.getClass().isArray()) {
+					json.YASJF4J_add(recA(autoBox(o)));
+				} else {
+					json.YASJF4J_add(o);
+				}
 			} catch (JException e) {
 				e.printStackTrace();
 			}
@@ -113,7 +136,7 @@ public class JSONArray implements List<Object>, JSONAware, JSONStreamAware {
 			JArray jsonA = json;
 			@Override
 			public boolean hasNext() {
-				return index >= jsonA.YASJF4J_size();
+				return index < jsonA.YASJF4J_size();
 			}
 
 			@Override
@@ -258,12 +281,79 @@ public class JSONArray implements List<Object>, JSONAware, JSONStreamAware {
 
 	@Override
 	public ListIterator listIterator() {
-		throw new UnsupportedOperationException();
+		//throw new UnsupportedOperationException();
+		return listIterator(0);
 	}
 
 	@Override
-	public ListIterator listIterator(int index) {
-		throw new UnsupportedOperationException();
+	public ListIterator listIterator(int i) {
+		return new ListIterator() {
+			int index = i;
+			@Override
+			public boolean hasNext() {
+				return index < json.YASJF4J_size();
+			}
+
+			@Override
+			public Object next() {
+				try {
+					return json.YASJF4J_get(index++);
+				} catch (JException e) {
+					return null;
+				}
+			}
+
+			@Override
+			public boolean hasPrevious() {
+				return index > 0;
+			}
+
+			@Override
+			public Object previous() {
+				try {
+					return json.YASJF4J_get(index--);
+				} catch (JException e) {
+					return null;
+				}
+			}
+
+			@Override
+			public int nextIndex() {
+				return index+1;
+			}
+
+			@Override
+			public int previousIndex() {
+				return index-1;
+			}
+
+			@Override
+			public void remove() {
+				try {
+					json.YASJF4J_remove(index);
+				} catch (JException e) {
+					e.printStackTrace();
+				}
+			}
+
+			@Override
+			public void set(Object o) {
+				try {
+					json.YASJF4J_set(index, o);
+				} catch (JException e) {
+					e.printStackTrace();
+				}
+			}
+
+			@Override
+			public void add(Object o) {
+				try {
+					json.YASJF4J_add(o);
+				} catch (JException e) {
+					e.printStackTrace();
+				}
+			}
+		};
 	}
 
 	@Override
@@ -333,4 +423,8 @@ public class JSONArray implements List<Object>, JSONAware, JSONStreamAware {
 	public String toString() {
 		return json.YASJF4J_toString();
 	}
+
+
+
+
 }
