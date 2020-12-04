@@ -102,7 +102,7 @@ public class JSONArray implements List<Object>, JSONAware, JSONStreamAware {
 		return JSONValue.toJSONString(o);
 	}
 
-	public static void writeJSONString(Object o, StringWriter w) {
+	public static void writeJSONString(Object o, Writer w) throws IOException {
 		JSONValue.writeJSONString(o,w);
 	}
 

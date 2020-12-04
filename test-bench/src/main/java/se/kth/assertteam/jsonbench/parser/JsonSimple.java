@@ -57,4 +57,9 @@ public class JsonSimple implements JP {
 		}
 		return false;
 	}
+
+	public static void main(String[] args) {
+		JP parser = new JsonSimple();
+		System.out.println("hello");
+	}
 }

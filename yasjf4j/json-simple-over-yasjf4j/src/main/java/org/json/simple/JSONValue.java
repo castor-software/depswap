@@ -12,6 +12,7 @@ import se.kth.castor.yasjf4j.JObject;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringWriter;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -175,6 +176,11 @@ public class JSONValue {
 		return null;
 	}
 
+	public static Object parse(Reader in) throws IOException, ParseException {
+		JSONParser parser=new JSONParser();
+		return parser.parse(in);
+	}
+
 	public static Object parseWithException(Reader in) throws IOException, ParseException {
 		JSONParser parser=new JSONParser();
 		return parser.parse(in);
@@ -185,7 +191,7 @@ public class JSONValue {
 		return parser.parse(s);
 	}
 
-	public static void writeJSONString(Object o, StringWriter out) {
+	public static void writeJSONString(Object o, Writer out) throws IOException {
 		out.write(toJSONString(o));
 	}
 
