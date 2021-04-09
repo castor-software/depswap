@@ -116,6 +116,28 @@
                           ng-click="clickFilter('allinvalid')"
                         />All Invalid</label>
                     </li>
+                    <li>
+                      <label
+                        for="originalPassing"
+                        ng-class="{'actived': filters['originalPassing']}"
+                        ><input
+                          type="checkbox"
+                          id="originalPassing"
+                          ng-model="filters['originalPassing']"
+                          ng-click="clickFilter('originalPassing')"
+                        />Original Passing</label>
+                    </li>
+                    <li>
+                      <label
+                        for="nothingFailing"
+                        ng-class="{'actived': filters['nothingFailing']}"
+                        ><input
+                          type="checkbox"
+                          id="nothingFailing"
+                          ng-model="filters['nothingFailing']"
+                          ng-click="clickFilter('nothingFailing')"
+                        />Nothing Failing</label>
+                    </li>
                   </ul>
                 </li>
                 <li>
@@ -123,7 +145,7 @@
                     <i class="fa fa-fw fa-search"></i>Reasons
                     <i class="fa fa-fw fa-angle-down pull-right"></i
                   ></a>
-                  <ul class="collapse" uib-collapse="submenuLang">
+                  <ul class="collapse" uib-collapse="submenuReason">
                     <li ng-repeat="reason in reasons">
                       <label
                         for="{{reason}}"
@@ -133,7 +155,7 @@
                           id="{{reason}}"
                           ng-model="filters.reasons[reason]"
                           ng-click="clickFilter('reasons', reason)"
-                        />{{reason}}</label
+                        />{{reason}} ({{countReason(reason)}})</label
                       >
                     </li>
                   </ul>
@@ -257,11 +279,27 @@
         <h5>Execute</h5>
         <div ng-click="$ctrl.copy($event)"><pre>docker run --rm -v $HOME/depswap_result:/results -v $HOME/depswap_exec:/tmp runner experiment -u {{ $ctrl.bug.url }} -c {{ $ctrl.bug.commit }} -l {{ $ctrl.bug.lib }} -r /results --timeout 15m</pre></div>
         <h5>Classpath</h5>
-        <div><pre ng-bind="$ctrl.info.executions[0].classpath"></pre></div>
+        <div><pre ng-bind="$ctrl.info.executions.original.classpath"></pre></div>
+        <table class="table">
+          <tr>
+            <th>Impl</th>
+            <th>Status</th>
+            <th>Reason</th>
+            <th>Tests</th>
+          </tr>
+          <tr ng-repeat="exec in $ctrl.info.executions">
+            <td>{{exec.name}}</td>
+            <td><span class="result" ng-class="{'valid': $ctrl.bug.executions[exec.name].valid === true, 'invalid': $ctrl.bug.executions[exec.name].valid === false}"></span></td>
+            <td>{{$ctrl.bug.executions[exec.name].reason}}</td>
+            <td><testsummary testsummary="exec.test"></testsummary></td>
+          </tr>
+        </table>
+
         <div class="execution" ng-repeat="exec in $ctrl.info.executions">
           <h5><span class="result" ng-class="{'valid': $ctrl.bug.executions[exec.name].valid === true, 'invalid': $ctrl.bug.executions[exec.name].valid === false}"></span> {{exec.name}}</h5>
           <tests tests="exec.test"></tests>
-          <pre class="stacktrace" ng-bind="exec.error" ng-if="exec.error"></pre>
+          <pre class="stacktrace" ng-if="exec.error"><code ng-bind="exec.error"></code></pre>
+          <pre class="stacktrace" ng-if="exec.log"><code ng-bind="exec.log"></code></pre>
         </div>
     	</p>
     </div>
