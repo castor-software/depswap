@@ -3,6 +3,7 @@ package se.kth.castor.yasjf4j;
 
 
 import com.beust.klaxon.JsonArray;
+import com.beust.klaxon.JsonValue;
 import com.beust.klaxon.Klaxon;
 import com.beust.klaxon.Parser;
 
@@ -26,7 +27,7 @@ public class JArrayImpl extends ArrayList implements JArray {
 				} else if (el instanceof List) {
 					add(new JArrayImpl((List) el));
 				} else {
-					add(el);
+					add(shield(el));
 				}
 			}
 		} catch (Exception e) {
@@ -42,7 +43,7 @@ public class JArrayImpl extends ArrayList implements JArray {
 				} else if (el instanceof List) {
 					add(new JArrayImpl((List) el));
 				} else {
-					add(el);
+					add(shield(el));
 				}
 			}
 		} catch (Exception e) {
@@ -57,17 +58,17 @@ public class JArrayImpl extends ArrayList implements JArray {
 
 	@Override
 	public Object YASJF4J_get(int i) throws JException {
-		return get(i);
+		return unshield(get(i));
 	}
 
 	@Override
 	public void YASJF4J_set(int i, Object o) throws JException {
-		set(i, o);
+		set(i, shield(o));
 	}
 
 	@Override
 	public void YASJF4J_add(Object o) throws JException {
-		add(o);
+		add(shield(o));
 	}
 
 	@Override
@@ -78,5 +79,18 @@ public class JArrayImpl extends ArrayList implements JArray {
 	@Override
 	public String YASJF4J_toString() {
 		return klaxon.toJsonString(this);
+	}
+
+
+
+	public static Object shield(Object o) {
+		if (o instanceof JNull) return o;
+		else if (o == null) return JNull.getInstance();
+		else return o;
+	}
+
+	public static Object unshield(Object o) {
+		if (o == null) return JNull.getInstance();
+		else return o;
 	}
 }

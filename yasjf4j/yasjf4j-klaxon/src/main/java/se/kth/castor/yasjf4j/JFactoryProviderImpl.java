@@ -22,6 +22,7 @@ public class JFactoryProviderImpl implements JFactoryProvider {
 
 	@Override
 	public Object parse(String s) throws JException {
+		if(s == null || s.length() == 0) throw new JException();
 		char first = firstNonWhitChar(s);
 		if(first == '{') {
 			try {

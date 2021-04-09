@@ -21,6 +21,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.node.ShortNode;
 import com.fasterxml.jackson.databind.node.TextNode;
 import org.apache.commons.lang3.ArrayUtils;
+import se.kth.castor.yasjf4j.util.Utils;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -135,6 +136,8 @@ public class JObjectImpl extends ObjectNode implements JObject {
 	public static JsonNode toJSONValue(Object o) throws JException {
 		if(o == null) {
 			return NullNode.getInstance();
+		} else if (o instanceof JNull) {
+			return NullNode.getInstance();
 		} else if (o instanceof IntNode) {
 			return (IntNode) o;
 		} else if (o instanceof JsonNode) {
@@ -144,7 +147,7 @@ public class JObjectImpl extends ObjectNode implements JObject {
 		} else if (o instanceof List) {
 			return JArrayImpl.fromList((List) o);
 		} else if (o.getClass().isArray()) {
-			return JArrayImpl.fromList(autoBox(o));
+			return JArrayImpl.fromList(Utils.autoBox(o));
 		} else if (o instanceof  String) {
 			return new TextNode((String) o);
 		} else if (o instanceof BigDecimal) {
@@ -192,42 +195,42 @@ public class JObjectImpl extends ObjectNode implements JObject {
 		} else if (o instanceof BooleanNode) {
 			return ((BooleanNode) o).booleanValue();
 		} else if (o == NullNode.getInstance()) {
-			return null;
+			return JNull.getInstance();
 		} else {
 			return o;
 		}
 	}
 
-	public static List autoBox(Object value) {
-		if(value.getClass().getComponentType().isPrimitive()) {
-			//ClassUtils.primitivesToWrappers(value.getClass().getComponentType());
-			//value.getClass().getComponentType().
-			if(value.getClass().getComponentType() == boolean.class) {
-				return Arrays.asList(ArrayUtils.toObject(((boolean[]) value)));
-			} else if(value.getClass().getComponentType() == byte.class) {
-				return Arrays.asList(ArrayUtils.toObject(((byte[]) value)));
-			} else if(value.getClass().getComponentType() == char.class) {
-				return Arrays.asList(ArrayUtils.toObject(((char[]) value)));
-			} else if(value.getClass().getComponentType() == short.class) {
-				return Arrays.asList(ArrayUtils.toObject(((short[]) value)));
-			} else if(value.getClass().getComponentType() == int.class) {
-				return Arrays.asList(ArrayUtils.toObject(((int[]) value)));
-			} else if(value.getClass().getComponentType() == long.class) {
-				return Arrays.asList(ArrayUtils.toObject(((long[]) value)));
-			} else if(value.getClass().getComponentType() == float.class) {
-				return Arrays.asList(ArrayUtils.toObject(((float[]) value)));
-			} else {
-				return Arrays.asList(ArrayUtils.toObject(((double[]) value)));
-			}
-		} else if (value.getClass().getComponentType().isArray()) {
-			List<List> metalist = new ArrayList<>();
-			Object[] ar = ((Object[]) value);
-			for(int i = 0; i < ar.length; i++) {
-				metalist.add(autoBox(ar[i]));
-			}
-			return metalist;
-		} else {
-			return Arrays.asList(((Object[]) value));
-		}
-	}
+//	public static List autoBox(Object value) {
+//		if(value.getClass().getComponentType().isPrimitive()) {
+//			//ClassUtils.primitivesToWrappers(value.getClass().getComponentType());
+//			//value.getClass().getComponentType().
+//			if(value.getClass().getComponentType() == boolean.class) {
+//				return Arrays.asList(ArrayUtils.toObject(((boolean[]) value)));
+//			} else if(value.getClass().getComponentType() == byte.class) {
+//				return Arrays.asList(ArrayUtils.toObject(((byte[]) value)));
+//			} else if(value.getClass().getComponentType() == char.class) {
+//				return Arrays.asList(ArrayUtils.toObject(((char[]) value)));
+//			} else if(value.getClass().getComponentType() == short.class) {
+//				return Arrays.asList(ArrayUtils.toObject(((short[]) value)));
+//			} else if(value.getClass().getComponentType() == int.class) {
+//				return Arrays.asList(ArrayUtils.toObject(((int[]) value)));
+//			} else if(value.getClass().getComponentType() == long.class) {
+//				return Arrays.asList(ArrayUtils.toObject(((long[]) value)));
+//			} else if(value.getClass().getComponentType() == float.class) {
+//				return Arrays.asList(ArrayUtils.toObject(((float[]) value)));
+//			} else {
+//				return Arrays.asList(ArrayUtils.toObject(((double[]) value)));
+//			}
+//		} else if (value.getClass().getComponentType().isArray()) {
+//			List<List> metalist = new ArrayList<>();
+//			Object[] ar = ((Object[]) value);
+//			for(int i = 0; i < ar.length; i++) {
+//				metalist.add(autoBox(ar[i]));
+//			}
+//			return metalist;
+//		} else {
+//			return Arrays.asList(((Object[]) value));
+//		}
+//	}
 }

@@ -6,6 +6,9 @@ import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.parser.DefaultJSONParser;
 
+import static se.kth.castor.yasjf4j.JObjectImpl.shield;
+import static se.kth.castor.yasjf4j.JObjectImpl.unshield;
+
 public class JArrayImpl extends JSONArray implements JArray {
 
 	public JArrayImpl() {
@@ -22,10 +25,10 @@ public class JArrayImpl extends JSONArray implements JArray {
 				} else if (el instanceof JSONArray) {
 					add(new JArrayImpl((JSONArray) el));
 				} else {
-					add(el);
+					add(shield(el));
 				}
 			}
-		} catch (JSONException e) {
+		} catch (Exception e) {
 			throw new JException();
 		}
 	}
@@ -38,10 +41,10 @@ public class JArrayImpl extends JSONArray implements JArray {
 				} else if (el instanceof JSONArray) {
 					add(new JArrayImpl((JSONArray) el));
 				} else {
-					add(el);
+					add(shield(el));
 				}
 			}
-		} catch (JSONException e) {
+		} catch (Exception e) {
 			throw new JException();
 		}
 	}
@@ -54,8 +57,8 @@ public class JArrayImpl extends JSONArray implements JArray {
 	@Override
 	public Object YASJF4J_get(int i) throws JException {
 		try {
-			return get(i);
-		} catch (JSONException e) {
+			return unshield(get(i));
+		} catch (Exception e) {
 			throw new JException();
 		}
 	}
@@ -63,9 +66,9 @@ public class JArrayImpl extends JSONArray implements JArray {
 	@Override
 	public void YASJF4J_set(int i, Object o) throws JException {
 		try {
-			set(i, o);
+			set(i, shield(o));
 
-		} catch (JSONException e) {
+		} catch (Exception e) {
 			throw new JException();
 		}
 	}
@@ -73,8 +76,8 @@ public class JArrayImpl extends JSONArray implements JArray {
 	@Override
 	public void YASJF4J_add(Object o) throws JException {
 		try {
-			add(o);
-		} catch (JSONException e) {
+			add(shield(o));
+		} catch (Exception e) {
 			throw new JException();
 		}
 	}

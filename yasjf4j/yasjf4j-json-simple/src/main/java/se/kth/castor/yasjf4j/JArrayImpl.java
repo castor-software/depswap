@@ -6,6 +6,9 @@ import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import org.json.simple.parser.ParseException;
 
+import static se.kth.castor.yasjf4j.JObjectImpl.shield;
+import static se.kth.castor.yasjf4j.JObjectImpl.unshield;
+
 public class JArrayImpl extends JSONArray implements JArray {
 
 	public JArrayImpl() {
@@ -21,7 +24,7 @@ public class JArrayImpl extends JSONArray implements JArray {
 				} else if (el instanceof JSONArray) {
 					add(new JArrayImpl((JSONArray) el));
 				} else {
-					add(el);
+					add(shield(el));
 				}
 			}
 		} catch (ParseException e) {
@@ -36,7 +39,7 @@ public class JArrayImpl extends JSONArray implements JArray {
 			} else if (el instanceof JSONArray) {
 				add(new JArrayImpl((JSONArray) el));
 			} else {
-				add(el);
+				add(shield(el));
 			}
 		}
 	}
@@ -48,17 +51,21 @@ public class JArrayImpl extends JSONArray implements JArray {
 
 	@Override
 	public Object YASJF4J_get(int i) throws JException {
-		return get(i);
+		try {
+			return unshield(get(i));
+		} catch (Exception e) {
+			throw new JException();
+		}
 	}
 
 	@Override
 	public void YASJF4J_set(int i, Object o) throws JException {
-		set(i, o);
+		set(i, shield(o));
 	}
 
 	@Override
 	public void YASJF4J_add(Object o) throws JException {
-		add(o);
+		add(shield(o));
 	}
 
 	@Override

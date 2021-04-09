@@ -2,6 +2,7 @@ package se.kth.castor.yasjf4j;
 
 
 
+import org.kordamp.json.JSONNull;
 import org.kordamp.json.JSONObject;
 
 import java.util.HashMap;
@@ -22,7 +23,7 @@ public class JObjectImpl extends HashMap implements JObject {
 			} else if (el instanceof List) {
 				put(key, new JArrayImpl((List) el));
 			} else {
-				put(key, el);
+				put(key, shield(el));
 			}
 		}
 	}
@@ -37,7 +38,7 @@ public class JObjectImpl extends HashMap implements JObject {
 				} else if (el instanceof List) {
 					put(key, new JArrayImpl((List) el));
 				} else {
-					put(key, el);
+					put(key, shield(el));
 				}
 			}
 		} catch (Exception e) {
@@ -52,12 +53,16 @@ public class JObjectImpl extends HashMap implements JObject {
 
 	@Override
 	public Object YASJF4J_get(String s) throws JException {
-		return get(s);
+		try {
+			return unshield(get(s));
+		} catch (Exception e) {
+			throw new JException();
+		}
 	}
 
 	@Override
 	public void YASJF4J_put(String s, Object o) throws JException {
-		put(s,o);
+		put(s, shield(o));
 	}
 
 	@Override
@@ -68,5 +73,15 @@ public class JObjectImpl extends HashMap implements JObject {
 	@Override
 	public String YASJF4J_toString() {
 		return JSONObject.fromObject(this).toString();
+	}
+
+	public static Object shield(Object o) {
+		if (o instanceof JNull) return JSONNull.getInstance();
+		else return o;
+	}
+
+	public static Object unshield(Object o) {
+		if (o == JSONNull.getInstance()) return JNull.getInstance();
+		else return o;
 	}
 }

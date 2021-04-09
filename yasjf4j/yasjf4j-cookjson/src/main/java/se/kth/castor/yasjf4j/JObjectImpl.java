@@ -13,6 +13,7 @@ import org.yuanheng.cookjson.value.CookJsonInt;
 import org.yuanheng.cookjson.value.CookJsonLong;
 import org.yuanheng.cookjson.value.CookJsonObject;
 import org.yuanheng.cookjson.value.CookJsonString;
+import se.kth.castor.yasjf4j.util.Utils;
 
 import javax.json.JsonString;
 import javax.json.JsonValue;
@@ -103,7 +104,7 @@ public class JObjectImpl extends CookJsonObject implements JObject {
 	@Override
 	public void YASJF4J_put(String s, Object o) throws JException {
 		try {
-			put(s,toJSONValue(o));
+			put(s, toJSONValue(o));
 		} catch (Exception e) {
 			throw new JException();
 		}
@@ -127,6 +128,8 @@ public class JObjectImpl extends CookJsonObject implements JObject {
 		//null
 		if(o == null) {
 			return JsonValue.NULL;
+		} else if (o instanceof JNull) {
+			return JsonValue.NULL;
 		} else if (o instanceof JsonValue) {
 			return (JsonValue) o;
 		} else if (o instanceof  Map) {
@@ -134,7 +137,7 @@ public class JObjectImpl extends CookJsonObject implements JObject {
 		} else if (o instanceof  List) {
 			return new JArrayImpl((List) o);
 		} else if (o.getClass().isArray()) {
-			return new JArrayImpl(autoBox(o));
+			return new JArrayImpl(Utils.autoBox(o));
 		} else if (o instanceof  String) {
 			return new CookJsonString((String) o);
 		} else if (o instanceof  Number) {
@@ -163,6 +166,12 @@ public class JObjectImpl extends CookJsonObject implements JObject {
 	public static Object toObject(JsonValue o) throws ParseException {
 		if(o instanceof CookJsonDouble) {
 			return ((CookJsonDouble) o).doubleValue();
+		} else if (o == JsonValue.TRUE) {
+			return true;
+		} else if (o == JsonValue.FALSE) {
+			return false;
+		} else if (o == JsonValue.NULL) {
+			return JNull.getInstance();
 		} else if (o instanceof CookJsonBigDecimal) {
 			return ((CookJsonBigDecimal) o).bigDecimalValue();
 		} else if (o instanceof CookJsonInt) {
@@ -173,47 +182,41 @@ public class JObjectImpl extends CookJsonObject implements JObject {
 			return ((JsonString) o).getString();
 		} else if (o instanceof CookJsonBinary) {
 			return ((CookJsonBinary) o).getBytes();
-		} else if (o == JsonValue.TRUE) {
-			return true;
-		} else if (o == JsonValue.FALSE) {
-			return false;
-		} else if (o == JsonValue.NULL) {
-			return null;
 		} else {
 			return o;
 		}
 	}
 
-	public static List autoBox(Object value) {
-		if(value.getClass().getComponentType().isPrimitive()) {
-			//ClassUtils.primitivesToWrappers(value.getClass().getComponentType());
-			//value.getClass().getComponentType().
-			if(value.getClass().getComponentType() == boolean.class) {
-				return Arrays.asList(ArrayUtils.toObject(((boolean[]) value)));
-			} else if(value.getClass().getComponentType() == byte.class) {
-				return Arrays.asList(ArrayUtils.toObject(((byte[]) value)));
-			} else if(value.getClass().getComponentType() == char.class) {
-				return Arrays.asList(ArrayUtils.toObject(((char[]) value)));
-			} else if(value.getClass().getComponentType() == short.class) {
-				return Arrays.asList(ArrayUtils.toObject(((short[]) value)));
-			} else if(value.getClass().getComponentType() == int.class) {
-				return Arrays.asList(ArrayUtils.toObject(((int[]) value)));
-			} else if(value.getClass().getComponentType() == long.class) {
-				return Arrays.asList(ArrayUtils.toObject(((long[]) value)));
-			} else if(value.getClass().getComponentType() == float.class) {
-				return Arrays.asList(ArrayUtils.toObject(((float[]) value)));
-			} else {
-				return Arrays.asList(ArrayUtils.toObject(((double[]) value)));
-			}
-		} else if (value.getClass().getComponentType().isArray()) {
-			List<List> metalist = new ArrayList<>();
-			Object[] ar = ((Object[]) value);
-			for(int i = 0; i < ar.length; i++) {
-				metalist.add(autoBox(ar[i]));
-			}
-			return metalist;
-		} else {
-			return Arrays.asList(((Object[]) value));
-		}
-	}
+//	public static List autoBox(Object value) {
+//		if(value.getClass().getComponentType().isPrimitive()) {
+//			//ClassUtils.primitivesToWrappers(value.getClass().getComponentType());
+//			//value.getClass().getComponentType().
+//			if(value.getClass().getComponentType() == boolean.class) {
+//				return Arrays.asList(ArrayUtils.toObject(((boolean[]) value)));
+//			} else if(value.getClass().getComponentType() == byte.class) {
+//				return Arrays.asList(ArrayUtils.toObject(((byte[]) value)));
+//			} else if(value.getClass().getComponentType() == char.class) {
+//				return Arrays.asList(ArrayUtils.toObject(((char[]) value)));
+//			} else if(value.getClass().getComponentType() == short.class) {
+//				return Arrays.asList(ArrayUtils.toObject(((short[]) value)));
+//			} else if(value.getClass().getComponentType() == int.class) {
+//				return Arrays.asList(ArrayUtils.toObject(((int[]) value)));
+//			} else if(value.getClass().getComponentType() == long.class) {
+//				return Arrays.asList(ArrayUtils.toObject(((long[]) value)));
+//			} else if(value.getClass().getComponentType() == float.class) {
+//				return Arrays.asList(ArrayUtils.toObject(((float[]) value)));
+//			} else {
+//				return Arrays.asList(ArrayUtils.toObject(((double[]) value)));
+//			}
+//		} else if (value.getClass().getComponentType().isArray()) {
+//			List<List> metalist = new ArrayList<>();
+//			Object[] ar = ((Object[]) value);
+//			for(int i = 0; i < ar.length; i++) {
+//				metalist.add(autoBox(ar[i]));
+//			}
+//			return metalist;
+//		} else {
+//			return Arrays.asList(((Object[]) value));
+//		}
+//	}
 }

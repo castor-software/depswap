@@ -101,6 +101,10 @@ public class JSONValue {
 		if(value instanceof Boolean)
 			return value.toString();
 
+		if(value instanceof Character)
+			return "\"" + value.toString() + "\"";
+
+
 		if((value instanceof JSONAware))
 			return ((JSONAware)value).toJSONString();
 

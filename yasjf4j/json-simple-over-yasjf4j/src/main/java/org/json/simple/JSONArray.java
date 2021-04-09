@@ -34,6 +34,8 @@ public class JSONArray implements List<Object>, JSONAware, JSONStreamAware {
 					json.YASJF4J_add(recA((List) o));
 				} else if(o.getClass().isArray()) {
 					json.YASJF4J_add(recA(autoBox(o)));
+				} else if(o instanceof Character) {
+					json.YASJF4J_add(o.toString());
 				} else {
 					json.YASJF4J_add(o);
 				}
@@ -55,6 +57,8 @@ public class JSONArray implements List<Object>, JSONAware, JSONStreamAware {
 					json.YASJF4J_add(recA((List) o));
 				} else if(o.getClass().isArray()) {
 					json.YASJF4J_add(recA(autoBox(o)));
+				} else if(o instanceof Character) {
+					json.YASJF4J_add(o.toString());
 				} else {
 					json.YASJF4J_add(o);
 				}

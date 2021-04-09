@@ -1,0 +1,69 @@
+---
+title: "Argo"
+output: html_notebook
+---
+
+```{r init}
+library(tidyverse)
+library(venn)
+library(xtable)
+```
+
+
+```{r}
+setwd("~/Documents/depswap")
+
+
+projects <- read_csv("test-bench/projects_results.csv", col_names = T, col_types = cols())
+
+projects$status <- as.factor(projects$status)
+
+
+```
+
+
+```{r explo}
+
+projects %>% select(status) %>% summary()
+
+bilan <- projects %>% 
+  filter(status != "NOTHING_SUCCEEDS") %>% 
+  filter(status != "ORIGINAL_FAILS") %>% 
+  select(dep,status) %>% 
+  group_by(dep,status) %>% 
+  summarise(n=n()) %>% 
+  spread("status","n")
+
+bilan[is.na(bilan)] <- 0
+
+bilan %>%
+  mutate(TOTAL=ALL_KO+ALL_OK+SOME_OK,ACCEPTABLE=ALL_OK+SOME_OK) %>%
+  mutate(RATIO=ACCEPTABLE/TOTAL) %>% select(dep,TOTAL,ACCEPTABLE,RATIO)
+  
+```
+
+
+```{r explo}
+
+bil <- projects %>% 
+  filter(status != "NOTHING_SUCCEEDS") %>% 
+  filter(status != "ORIGINAL_FAILS") %>% 
+  select(dep,status)
+
+```
+
+```{r crossread}
+crosstests <- read_csv("notebooks/differential_testing_results.csv", col_names = T, col_types = cols())
+
+```
+
+```{r cross print}
+crossTestResults <- crosstests %>% 
+  mutate(Implementation = gsub("yasjf4j-", "", Implementation)) %>% 
+  mutate(Bridge = gsub("-over-yasjf4j", "", Bridge)) %>% 
+  select(Implementation,Bridge,Failures) %>% 
+  spread(key=Bridge, value=Failures)
+
+crossTable <- xtable(crossTestResults)
+print(crossTable, include.rownames = FALSE)
+```

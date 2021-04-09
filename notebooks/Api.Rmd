@@ -1,0 +1,153 @@
+---
+title: "API data"
+output: html_notebook
+---
+
+```{r init}
+library(tidyverse)
+library(venn)
+library(xtable)
+```
+
+
+
+
+```{r}
+setwd("~/Documents/depswap/api-data")
+
+gson <- read_csv("gson-2.8.6.csv", col_names = T, col_types = cols())
+gson <- gson %>% mutate(Library = "gson")
+
+fastjson <- read_csv("fastjson-1.2.47.csv", col_names = T, col_types = cols())
+fastjson <- fastjson %>% mutate(Library = "fastjson")
+
+jackson <- read_csv("jackson-databind-2.9.8.csv", col_names = T, col_types = cols())
+jackson <- jackson %>% mutate(Library = "jackson")
+
+jsonsimple <- read_csv("json-simple-1.1.1.csv", col_names = T, col_types = cols())
+jsonsimple <- jsonsimple %>% mutate(Library = "jsonsimple")
+
+json <- read_csv("json-20160810.csv", col_names = T, col_types = cols())
+json <- json %>% mutate(Library = "json")
+
+apis <- rbind(gson, fastjson, jackson, jsonsimple, json)
+
+usages <- read_csv("static-usages.csv", col_names = T, col_types = cols())
+
+```
+
+
+
+```{r}
+
+detailAPIdata <- function(lib_d) {
+#lib_d <- "gson"
+output <- data.frame(Library=character(), API=character(), Full=integer(), Used=integer(), Tradeoff=integer(), stringsAsFactors = FALSE)
+colnames(output) <- c("Library", "API", "Full", "Used", "Tradeoff")
+
+lib_packages <- apis %>% filter(Library == lib_d) %>% select(Package) %>% unique()
+
+lib_usages <-merge(usages, lib_packages, all = FALSE)
+
+lib_client <- lib_usages %>% select(Repo) %>% unique() %>% count()
+
+fp <- apis %>% filter(Library == lib_d) %>% select(Package) %>% unique() %>% count()
+ft <- apis %>% filter(Library == lib_d) %>% select(Package, Type) %>% unique() %>% count()
+fe <- apis %>% filter(Library == lib_d) %>% select(Package, Type, Element) %>% unique() %>% count()
+
+
+tmp_fp <- apis %>% filter(Library == lib_d) %>% select(Package) %>% unique()
+tmp_ft <- apis %>% filter(Library == lib_d) %>% select(Package, Type) %>% unique()
+tmp_fe <- apis %>% filter(Library == lib_d) %>% select(Package, Type, Element) %>% unique()
+
+tmp_up <- lib_usages %>% select(Package) %>% unique()
+tmp_ut <- lib_usages %>% select(Package, Type) %>% unique()
+tmp_ue <- lib_usages %>% select(Package, Type, Element) %>% unique()
+
+up <- merge(tmp_fp, tmp_up, by = c("Package"), all = FALSE) %>% unique() %>% count()
+ut <- merge(tmp_ft, tmp_ut, by = c("Package", "Type"), all = FALSE) %>% unique() %>% count()
+ue <- merge(tmp_fe, tmp_ue, by = c("Package", "Type", "Element"), all = FALSE) %>% unique() %>% count()
+
+#lib_usages %>% group_by(Package, Type, Element) %>% summarise(nbClient= n()) %>% select(nbClient) %>% summary()
+tradeoff <- lib_usages %>% group_by(Package, Type, Element) %>% summarise(nbClient= n()) %>% filter(nbClient >= (0.005 * lib_client$n[1])) %>% select(Package, Type, Element)  %>% ungroup()
+
+tp <- tradeoff %>% select(Package) %>% unique() %>% count()
+tt <- tradeoff %>% select(Package, Type) %>% unique() %>% count()
+te <- tradeoff %>% select(Package, Type, Element) %>% unique() %>% count()
+
+
+
+output <- rbind(output, data.frame(Library=lib_d, API="Package", Full=as.integer(fp$n[1]), Used=as.integer(up$n[1]), Tradeoff=as.integer(tp$n[1])))
+output <- rbind(output, data.frame(Library=lib_d, API="Type", Full=as.integer(ft$n[1]), Used=as.integer(ut$n[1]), Tradeoff=as.integer(tt$n[1])))
+output <- rbind(output, data.frame(Library=lib_d, API="Element", Full=as.integer(fe$n[1]), Used=as.integer(ue$n[1]), Tradeoff=as.integer(te$n[1])))
+return(output)
+}
+
+s_gson <- detailAPIdata("gson")
+s_json <- detailAPIdata("json")
+s_jsonsimple <- detailAPIdata("jsonsimple")
+s_fastjson <- detailAPIdata("fastjson")
+s_jackson <- detailAPIdata("jackson")
+
+s_all <- rbind(s_gson,s_jackson, s_jsonsimple, s_json, s_fastjson)
+xtable(s_all, include.rownames = FALSE)
+
+```
+```{r}
+
+lib_d <- "gson"
+output <- data.frame(Library=character(), API=character(), Full=integer(), Used=integer(), Tradeoff=integer(), stringsAsFactors = FALSE)
+colnames(output) <- c("Library", "API", "Full", "Used", "Tradeoff")
+
+lib_packages <- apis %>% filter(Library == lib_d) %>% select(Package) %>% unique()
+
+lib_usages <-merge(usages, lib_packages, all = FALSE)
+
+lib_client <- lib_usages %>% select(Repo) %>% unique() %>% count()
+
+up <- lib_usages %>% select(Package) %>% unique() %>% count()
+ut <- lib_usages %>% select(Package, Type) %>% unique() %>% count()
+ue <- lib_usages %>% select(Package, Type, Element) %>% unique() %>% count()
+
+#lib_usages %>% group_by(Package, Type, Element) %>% summarise(nbClient= n()) %>% select(nbClient) %>% summary()
+tradeoff <- lib_usages %>% group_by(Package, Type, Element) %>% summarise(nbClient= n()) %>% filter(nbClient >= (0.005 * lib_client$n[1])) %>% select(Package, Type, Element)  %>% ungroup()
+
+tp <- tradeoff %>% select(Package) %>% unique() %>% count()
+tt <- tradeoff %>% select(Package, Type) %>% unique() %>% count()
+te <- tradeoff %>% select(Package, Type, Element) %>% unique() %>% count()
+
+fp <- apis %>% filter(Library == lib_d) %>% select(Package) %>% unique() %>% count()
+ft <- apis %>% filter(Library == lib_d) %>% select(Package, Type) %>% unique() %>% count()
+fe <- apis %>% filter(Library == lib_d) %>% select(Package, Type, Element) %>% unique() %>% count()
+
+output <- rbind(output, data.frame(Library=lib_d, API="Package", Full=as.integer(fp$n[1]), Used=as.integer(up$n[1]), Tradeoff=as.integer(tp$n[1])))
+output <- rbind(output, data.frame(Library=lib_d, API="Type", Full=as.integer(ft$n[1]), Used=as.integer(ut$n[1]), Tradeoff=as.integer(tt$n[1])))
+output <- rbind(output, data.frame(Library=lib_d, API="Element", Full=as.integer(fe$n[1]), Used=as.integer(ue$n[1]), Tradeoff=as.integer(te$n[1])))
+
+
+full_e <- apis %>% filter(Library == lib_d) %>% select(Package, Type, Element) %>% unique() %>% mutate(fqn= paste0(Package, "/", Type, "#", Element)) %>% mutate(sourcef= "full") %>% select(fqn,sourcef)
+used_e <- lib_usages %>% select(Package, Type, Element) %>% unique() %>% mutate(fqn= paste0(Package, "/", Type, "#", Element)) %>% mutate(sourceu= "used") %>% select(fqn,sourceu)
+
+comp <- merge(full_e,used_e, all = FALSE)
+
+```
+
+```{r}
+
+gson_packages <- gson %>% select(Package) %>% unique()
+
+gson_usages <-merge(usages, gson_packages)
+
+gson_usages %>% select(Package, Type, Element) %>% unique() %>% count()
+gson_usages %>% select(Package, Type) %>% unique() %>% count()
+gson_usages %>% select(Package) %>% unique() %>% count()
+
+gson_usages %>% group_by(Package, Type, Element) %>% summarise(nbClient= n()) %>% select(nbClient) %>% summary()
+
+gson %>% select(Package, Type, Element) %>% unique() %>% count()
+gson %>% select(Package, Type) %>% unique() %>% count()
+gson %>% select(Package) %>% unique() %>% count()
+
+gson_client <- gson_usages %>% select(Repo) %>% unique()
+
+```

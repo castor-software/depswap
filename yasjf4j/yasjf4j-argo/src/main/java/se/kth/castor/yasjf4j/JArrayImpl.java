@@ -7,6 +7,7 @@ import argo.jdom.JsonNodeBuilder;
 import argo.jdom.JsonObjectNodeBuilder;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static argo.jdom.JsonNodeBuilders.aFalseBuilder;
 import static argo.jdom.JsonNodeBuilders.aNullBuilder;
@@ -16,6 +17,7 @@ import static argo.jdom.JsonNodeBuilders.aTrueBuilder;
 import static argo.jdom.JsonNodeBuilders.anArrayBuilder;
 import static argo.jdom.JsonNodeBuilders.anObjectBuilder;
 import static se.kth.castor.yasjf4j.JObjectImpl.printer;
+import static se.kth.castor.yasjf4j.JObjectImpl.shield;
 import static se.kth.castor.yasjf4j.JObjectImpl.unshield;
 import static se.kth.castor.yasjf4j.JObjectImpl.parser;
 
@@ -39,6 +41,12 @@ public class JArrayImpl extends ArrayList implements JArray {
 			}
 		} catch (Exception e) {
 			throw new JException();
+		}
+	}
+
+	public JArrayImpl(List json) {
+		for(Object el: json) {
+			add(unshield(el));
 		}
 	}
 
@@ -66,7 +74,7 @@ public class JArrayImpl extends ArrayList implements JArray {
 	@Override
 	public Object YASJF4J_get(int i) throws JException {
 		try {
-			return get(i);
+			return shield(get(i));
 		} catch (Exception e) {
 			throw new JException();
 		}
@@ -75,7 +83,7 @@ public class JArrayImpl extends ArrayList implements JArray {
 	@Override
 	public void YASJF4J_set(int i, Object o) throws JException {
 		try {
-			set(i, o);
+			set(i, unshield(o));
 
 		} catch (Exception e) {
 			throw new JException();
@@ -85,7 +93,7 @@ public class JArrayImpl extends ArrayList implements JArray {
 	@Override
 	public void YASJF4J_add(Object o) throws JException {
 		try {
-			add(o);
+			add(unshield(o));
 		} catch (Exception e) {
 			throw new JException();
 		}
@@ -103,6 +111,8 @@ public class JArrayImpl extends ArrayList implements JArray {
 		for(Object val: this) {
 			JsonNodeBuilder b;
 			if(val == null) {
+				b = aNullBuilder();
+			} else if(val instanceof JNull) {
 				b = aNullBuilder();
 			} else if(val instanceof JObjectImpl) {
 				b = ((JObjectImpl) val).getBuilder();

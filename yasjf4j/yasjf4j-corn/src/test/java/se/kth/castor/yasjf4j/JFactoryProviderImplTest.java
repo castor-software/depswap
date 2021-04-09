@@ -7,11 +7,28 @@ import static org.junit.Assert.*;
 public class JFactoryProviderImplTest {
 
 	@Test
+	public void testObjectTreeConsistencyy() throws Exception {
+
+		String sObject = "{}";
+		JObject o = (JObject) JFactory.parse(sObject);
+		assertEquals(sObject, o.YASJF4J_toString().replace(" ", "").replace("\n", ""));
+	}
+
+	@Test
 	public void testObjectTreeConsistency() throws Exception {
 
 		String sObject = "{\"a\":{\"b\":{\"c\":{\"d\":[5,{\"e\":7}]}}}}";
 		JObject o = (JObject) JFactory.parse(sObject);
 		assertEquals(sObject, o.YASJF4J_toString().replace(" ", "").replace("\n", ""));
+	}
+
+
+	@Test
+	public void testArrayBoolean() throws Exception {
+		String sArray ="[true,false]";
+		JArray a = (JArray) JFactory.parse(sArray);
+		assertTrue((Boolean) a.YASJF4J_get(0));
+		assertFalse((Boolean) a.YASJF4J_get(1));
 	}
 
 

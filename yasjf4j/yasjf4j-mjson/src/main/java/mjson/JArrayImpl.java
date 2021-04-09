@@ -6,6 +6,9 @@ import se.kth.castor.yasjf4j.JException;
 import java.util.List;
 import java.util.Map;
 
+import static mjson.JObjectImpl.shield;
+import static mjson.JObjectImpl.unshield;
+
 public class JArrayImpl extends Json.ArrayJson implements JArray {
 
 	public JArrayImpl(String json) throws JException {
@@ -30,7 +33,7 @@ public class JArrayImpl extends Json.ArrayJson implements JArray {
 				} else if(el instanceof List) {
 					add(new JArrayImpl((List) el));
 				} else {
-					add(el);
+					add(shield(el));
 				}
 			}
 		} catch (Exception e) {
@@ -59,17 +62,17 @@ public class JArrayImpl extends Json.ArrayJson implements JArray {
 		} else if(o instanceof StringJson) {
 			return ((StringJson) o).asString();
 		}
-		return o;
+		return unshield(o);
 	}
 
 	@Override
 	public void YASJF4J_set(int i, Object o) throws JException {
-		set(i, o);
+		set(i, shield(o));
 	}
 
 	@Override
 	public void YASJF4J_add(Object o) throws JException {
-		add(o);
+		add( shield(o));
 	}
 
 	@Override

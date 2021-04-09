@@ -15,6 +15,7 @@ import argo.jdom.JsonStringNode;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -52,6 +53,13 @@ public class JObjectImpl extends LinkedHashMap<String, Object> implements JObjec
 		}
 	}
 
+	public JObjectImpl(Map fields) {
+		for(Object rawKey: fields.keySet()) {
+			Object el = fields.get(rawKey);
+			put(rawKey.toString(), unshield(el));
+		}
+	}
+
 	public JObjectImpl(String json) throws JException {
 		try {
 			Map<JsonStringNode, JsonNode> fields = parser.parse(json).getFields();
@@ -78,7 +86,7 @@ public class JObjectImpl extends LinkedHashMap<String, Object> implements JObjec
 	@Override
 	public Object YASJF4J_get(String s) throws JException {
 		try {
-			return get(s);
+			return shield(get(s));
 		} catch (Exception e) {
 			throw new JException();
 		}
@@ -87,7 +95,7 @@ public class JObjectImpl extends LinkedHashMap<String, Object> implements JObjec
 	@Override
 	public void YASJF4J_put(String s, Object o) throws JException {
 		try {
-			put(s, o);
+			put(s, unshield(o));
 		} catch (Exception e) {
 			throw new JException();
 		}
@@ -102,7 +110,7 @@ public class JObjectImpl extends LinkedHashMap<String, Object> implements JObjec
 		JsonObjectNodeBuilder builder = anObjectBuilder();
 		for(String key: keySet()) {
 			JsonNodeBuilder b;
-			Object val = get(key);
+			Object val = shield(get(key));
 			if(val == null) {
 				b = aNullBuilder();
 			} else if(val instanceof JObjectImpl) {
@@ -132,7 +140,7 @@ public class JObjectImpl extends LinkedHashMap<String, Object> implements JObjec
 		if(o instanceof JsonNode) {
 			JsonNode n = (JsonNode) o;
 			if(n.isNullNode()) {
-				return null;
+				return JNull.getInstance();
 			} else if (n.isNumberValue()) {
 				String val = n.getNumberValue();
 				if(val.contains("e-") || val.contains("E-") || val.contains(".")) {
@@ -150,7 +158,24 @@ public class JObjectImpl extends LinkedHashMap<String, Object> implements JObjec
 			} else if (n.isStringValue()) {
 				return n.getStringValue();
 			}
-		}
+		}/* else if (o instanceof Map) {
+			return new JObjectImpl((Map) o);
+		} else if (o instanceof List) {
+			return new JArrayImpl((List) o);
+		}*/
 		return o;
+	}
+
+
+	public static Object shield(Object o) {
+		if(o instanceof JsonNode) {
+			JsonNode n = (JsonNode) o;
+			if (n.isNullNode()) {
+				return JNull.getInstance();
+			}
+			else return o;
+		}
+		//if (o instanceof JNull) return aNullBuilder();
+		else return o;
 	}
 }

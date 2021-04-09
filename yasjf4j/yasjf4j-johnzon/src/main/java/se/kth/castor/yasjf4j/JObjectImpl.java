@@ -144,6 +144,8 @@ public class JObjectImpl extends HashMap<String, Object> implements JObject {
 			return ((Boolean) o).booleanValue() ? JsonValue.TRUE : JsonValue.FALSE;
 		} else if(o == null) {
 			return JsonValue.NULL;
+		} else if(o instanceof JNull) {
+			return JsonValue.NULL;
 		} else {
 			return f.createValue(o.toString());
 		}
@@ -155,7 +157,7 @@ public class JObjectImpl extends HashMap<String, Object> implements JObject {
 		if(o instanceof JsonNumber) {
 			return ((JsonNumber) o).numberValue();
 		} else if(o == JsonValue.NULL) {
-			return null;
+			return JNull.getInstance();
 		} else if(o == JsonValue.TRUE) {
 			return true;
 		} else if(o == JsonValue.FALSE) {

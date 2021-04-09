@@ -25,7 +25,7 @@ public class JObjectImpl extends JsonObject implements JObject {
 					JsonObject jo = ((JsonObject) el);
 					put(key, new JObjectImpl(jo));
 				} else if (el == null) {
-					put(key, el);
+					put(key, shield(el));
 				} else if (el.getClass().isArray()) {
 					put(key, new JArrayImpl((Object[]) el));
 				} else {
@@ -47,7 +47,7 @@ public class JObjectImpl extends JsonObject implements JObject {
 					JsonObject jo = ((JsonObject) el);
 					put(key, new JObjectImpl(jo));
 				} else if (el == null) {
-					put(key, el);
+					put(key, shield(el));
 				} else if (el.getClass().isArray()) {
 					put(key, new JArrayImpl((Object[]) el));
 				} else {
@@ -67,7 +67,7 @@ public class JObjectImpl extends JsonObject implements JObject {
 	@Override
 	public Object YASJF4J_get(String s) throws JException {
 		try {
-			return get(s);
+			return unshield(get(s));
 		} catch (Exception e) {
 			throw new JException();
 		}
@@ -76,7 +76,7 @@ public class JObjectImpl extends JsonObject implements JObject {
 	@Override
 	public void YASJF4J_put(String s, Object o) throws JException {
 		try {
-			put(s,o);
+			put(s,shield(o));
 		} catch (Exception e) {
 			throw new JException();
 		}
@@ -100,5 +100,15 @@ public class JObjectImpl extends JsonObject implements JObject {
 		customPrintArgs.put(JsonWriter.TYPE, false);
 		customReadArgs = new HashMap();
 		customReadArgs.put(JsonReader.USE_MAPS, true);
+	}
+
+	public static Object shield(Object o) {
+		if (o instanceof JNull) return null;
+		else return o;
+	}
+
+	public static Object unshield(Object o) {
+		if (o == null) return JNull.getInstance();
+		else return o;
 	}
 }

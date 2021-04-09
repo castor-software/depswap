@@ -40,6 +40,8 @@ public class JSONObject implements Map<Object,Object>, JSONAware, JSONStreamAwar
 					json.YASJF4J_put(k.toString(),recA((List) v));
 				} else if(v.getClass().isArray()) {
 					json.YASJF4J_put(k.toString(),recA(autoBox(v)));
+				} else if(v instanceof Character) {
+					json.YASJF4J_put(k.toString(),v.toString());
 				} else {
 					json.YASJF4J_put(k.toString(),v);
 				}

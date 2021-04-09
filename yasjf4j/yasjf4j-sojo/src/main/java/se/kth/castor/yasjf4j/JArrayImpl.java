@@ -20,7 +20,7 @@ public class JArrayImpl extends ArrayList implements JArray {
 				} else if (el instanceof List) {
 					add(new JArrayImpl((List) el));
 				} else {
-					add(el);
+					add(shield(el));
 				}
 			}
 		} catch (Exception e) {
@@ -36,7 +36,7 @@ public class JArrayImpl extends ArrayList implements JArray {
 				} else if (el instanceof List) {
 					add(new JArrayImpl((List) el));
 				} else {
-					add(el);
+					add(shield(el));
 				}
 			}
 		} catch (Exception e) {
@@ -52,7 +52,7 @@ public class JArrayImpl extends ArrayList implements JArray {
 	@Override
 	public Object YASJF4J_get(int i) throws JException {
 		try {
-			return get(i);
+			return unshield(get(i));
 		} catch (Exception e) {
 			throw new JException();
 		}
@@ -61,7 +61,7 @@ public class JArrayImpl extends ArrayList implements JArray {
 	@Override
 	public void YASJF4J_set(int i, Object o) throws JException {
 		try {
-			set(i, o);
+			set(i, shield(o));
 		} catch (Exception e) {
 			throw new JException();
 		}
@@ -70,7 +70,7 @@ public class JArrayImpl extends ArrayList implements JArray {
 	@Override
 	public void YASJF4J_add(Object o) throws JException {
 		try {
-			add(o);
+			add(shield(o));
 		} catch (Exception e) {
 			throw new JException();
 		}
@@ -84,6 +84,16 @@ public class JArrayImpl extends ArrayList implements JArray {
 	@Override
 	public String YASJF4J_toString() {
 		return JObjectImpl.serializer.serialize(this).toString();
+	}
+
+	public static Object shield(Object o) {
+		if (o instanceof JNull) return null;
+		else return o;
+	}
+
+	public static Object unshield(Object o) {
+		if (o == null) return JNull.getInstance();
+		else return o;
 	}
 
 }

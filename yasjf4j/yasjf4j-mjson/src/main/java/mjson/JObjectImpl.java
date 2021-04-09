@@ -1,6 +1,7 @@
 package mjson;
 
 import se.kth.castor.yasjf4j.JException;
+import se.kth.castor.yasjf4j.JNull;
 import se.kth.castor.yasjf4j.JObject;
 
 import java.util.HashSet;
@@ -19,9 +20,9 @@ public class JObjectImpl extends Json.ObjectJson implements JObject {
 					else if(((Json) el).isArray())
 						set(key, new JArrayImpl((Json) el));
 					else
-						set(key, el);
+						set(key, shield(el));
 				} else {
-					set(key, el);
+					set(key, shield(el));
 				}
 			}
 		} catch (Exception e) {
@@ -41,9 +42,9 @@ public class JObjectImpl extends Json.ObjectJson implements JObject {
 					else if(((Json) el).isArray())
 						set(key, new JArrayImpl((Json) el));
 					else
-						set(key, el);
+						set(key, shield(el));
 				} else {
-					set(key, el);
+					set(key, shield(el));
 				}
 			}
 		} catch (Exception e) {
@@ -64,12 +65,12 @@ public class JObjectImpl extends Json.ObjectJson implements JObject {
 		} else if(o instanceof StringJson) {
 			return ((StringJson) o).asString();
 		}
-		return o;
+		return unshield(o);
 	}
 
 	@Override
 	public void YASJF4J_put(String s, Object o) throws JException {
-		set(s,o);
+		set(s,shield(o));
 	}
 
 	@Override
@@ -80,5 +81,15 @@ public class JObjectImpl extends Json.ObjectJson implements JObject {
 	@Override
 	public String YASJF4J_toString() {
 		return toString();
+	}
+
+	public static Object shield(Object o) {
+		if (o instanceof JNull) return Json.nil();
+		else return o;
+	}
+
+	public static Object unshield(Object o) {
+		if (o == Json.nil()) return JNull.getInstance();
+		else return o;
 	}
 }

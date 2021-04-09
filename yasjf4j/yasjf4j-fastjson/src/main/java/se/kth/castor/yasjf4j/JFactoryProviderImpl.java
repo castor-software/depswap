@@ -21,17 +21,18 @@ public class JFactoryProviderImpl implements JFactoryProvider {
 
 	@Override
 	public Object parse(String s) throws JException {
+		if(s == null || s.length() == 0) throw new JException();
 		char first = firstNonWhitChar(s);
 		if(first == '{') {
 			try {
 				return new JObjectImpl(s);
-			} catch (JSONException e) {
+			} catch (Exception e) {
 				throw new JException();
 			}
 		} else if (first == '[') {
 			try {
 				return new JArrayImpl(s);
-			} catch (JSONException e) {
+			} catch (Exception e) {
 				throw new JException();
 			}
 		} else {

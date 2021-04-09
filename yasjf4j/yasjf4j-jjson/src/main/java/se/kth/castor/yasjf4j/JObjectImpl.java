@@ -11,6 +11,7 @@ import de.grobmeier.jjson.JSONString;
 import de.grobmeier.jjson.JSONValue;
 import de.grobmeier.jjson.convert.JSONDecoder;
 import de.grobmeier.jjson.shaded.org.apache.commons.lang3.ArrayUtils;
+import se.kth.castor.yasjf4j.util.Utils;
 
 import java.math.BigDecimal;
 import java.text.NumberFormat;
@@ -121,8 +122,10 @@ public class JObjectImpl extends JSONObject implements JObject {
 		//null
 		if(o == null) {
 			return new JSONNull();
+		} else if (o instanceof JNull) {
+			return new JSONNull();
 		} else if (o.getClass().isArray()) {
-			return new JArrayImpl(autoBox(o));
+			return new JArrayImpl(Utils.autoBox(o));
 		} else if (o instanceof List) {
 			return new JArrayImpl((List) o);
 		} else if (o instanceof Map) {
@@ -162,40 +165,40 @@ public class JObjectImpl extends JSONObject implements JObject {
 		} else if (o instanceof JSONBoolean) {
 			return ((JSONBoolean) o).getValue();
 		} else if (o instanceof JSONNull) {
-			return null;
+			return JNull.getInstance();
 		} else {
 			return o;
 		}
 	}
 
-	public static List autoBox(Object value) {
-		if(value.getClass().getComponentType().isPrimitive()) {
-			if(value.getClass().getComponentType() == boolean.class) {
-				return Arrays.asList(ArrayUtils.toObject(((boolean[]) value)));
-			} else if(value.getClass().getComponentType() == byte.class) {
-				return Arrays.asList(ArrayUtils.toObject(((byte[]) value)));
-			} else if(value.getClass().getComponentType() == char.class) {
-				return Arrays.asList(ArrayUtils.toObject(((char[]) value)));
-			} else if(value.getClass().getComponentType() == short.class) {
-				return Arrays.asList(ArrayUtils.toObject(((short[]) value)));
-			} else if(value.getClass().getComponentType() == int.class) {
-				return Arrays.asList(ArrayUtils.toObject(((int[]) value)));
-			} else if(value.getClass().getComponentType() == long.class) {
-				return Arrays.asList(ArrayUtils.toObject(((long[]) value)));
-			} else if(value.getClass().getComponentType() == float.class) {
-				return Arrays.asList(ArrayUtils.toObject(((float[]) value)));
-			} else {
-				return Arrays.asList(ArrayUtils.toObject(((double[]) value)));
-			}
-		} else if (value.getClass().getComponentType().isArray()) {
-			List<List> metalist = new ArrayList<>();
-			Object[] ar = ((Object[]) value);
-			for(int i = 0; i < ar.length; i++) {
-				metalist.add(autoBox(ar[i]));
-			}
-			return metalist;
-		} else {
-			return Arrays.asList(((Object[]) value));
-		}
-	}
+//	public static List autoBox(Object value) {
+//		if(value.getClass().getComponentType().isPrimitive()) {
+//			if(value.getClass().getComponentType() == boolean.class) {
+//				return Arrays.asList(ArrayUtils.toObject(((boolean[]) value)));
+//			} else if(value.getClass().getComponentType() == byte.class) {
+//				return Arrays.asList(ArrayUtils.toObject(((byte[]) value)));
+//			} else if(value.getClass().getComponentType() == char.class) {
+//				return Arrays.asList(ArrayUtils.toObject(((char[]) value)));
+//			} else if(value.getClass().getComponentType() == short.class) {
+//				return Arrays.asList(ArrayUtils.toObject(((short[]) value)));
+//			} else if(value.getClass().getComponentType() == int.class) {
+//				return Arrays.asList(ArrayUtils.toObject(((int[]) value)));
+//			} else if(value.getClass().getComponentType() == long.class) {
+//				return Arrays.asList(ArrayUtils.toObject(((long[]) value)));
+//			} else if(value.getClass().getComponentType() == float.class) {
+//				return Arrays.asList(ArrayUtils.toObject(((float[]) value)));
+//			} else {
+//				return Arrays.asList(ArrayUtils.toObject(((double[]) value)));
+//			}
+//		} else if (value.getClass().getComponentType().isArray()) {
+//			List<List> metalist = new ArrayList<>();
+//			Object[] ar = ((Object[]) value);
+//			for(int i = 0; i < ar.length; i++) {
+//				metalist.add(autoBox(ar[i]));
+//			}
+//			return metalist;
+//		} else {
+//			return Arrays.asList(((Object[]) value));
+//		}
+//	}
 }

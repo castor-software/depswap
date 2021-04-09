@@ -12,6 +12,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import static se.kth.castor.yasjf4j.JArrayImpl.shield;
+import static se.kth.castor.yasjf4j.JArrayImpl.unshield;
+
 public class JObjectImpl extends HashMap implements JObject {
 
 	static Parser parser = new Parser();
@@ -29,7 +32,7 @@ public class JObjectImpl extends HashMap implements JObject {
 				} else if (el instanceof List) {
 					put(key, new JArrayImpl((List) el));
 				} else {
-					put(key, el);
+					put(key, shield(el));
 				}
 			}
 		} catch (Exception e) {
@@ -47,7 +50,7 @@ public class JObjectImpl extends HashMap implements JObject {
 				} else if (el instanceof List) {
 					put(key, new JArrayImpl((List) el));
 				} else {
-					put(key, el);
+					put(key, shield(el));
 				}
 			}
 		} catch (Exception e) {
@@ -62,12 +65,12 @@ public class JObjectImpl extends HashMap implements JObject {
 
 	@Override
 	public Object YASJF4J_get(String s) throws JException {
-		return get(s);
+		return unshield(get(s));
 	}
 
 	@Override
 	public void YASJF4J_put(String s, Object o) throws JException {
-		put(s,o);
+		put(s,shield(o));
 	}
 
 	@Override

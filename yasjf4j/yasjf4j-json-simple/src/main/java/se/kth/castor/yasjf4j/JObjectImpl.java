@@ -24,8 +24,10 @@ public class JObjectImpl extends JSONObject implements JObject {
 				put(key, new JObjectImpl((JSONObject) el));
 			} else if (el instanceof JSONArray) {
 				put(key, new JArrayImpl((JSONArray) el));
+			} else if (el instanceof Character) {
+				put(key, ((Character) el).toString());
 			} else {
-				put(key, el);
+				put(key, shield(el));
 			}
 		}
 	}
@@ -39,8 +41,10 @@ public class JObjectImpl extends JSONObject implements JObject {
 					put(key, new JObjectImpl((JSONObject) el));
 				} else if (el instanceof JSONArray) {
 					put(key, new JArrayImpl((JSONArray) el));
+				} else if (el instanceof Character) {
+					put(key, ((Character) el).toString());
 				} else {
-					put(key, el);
+					put(key, shield(el));
 				}
 			}
 		} catch (ParseException e) {
@@ -55,12 +59,16 @@ public class JObjectImpl extends JSONObject implements JObject {
 
 	@Override
 	public Object YASJF4J_get(String s) throws JException {
-		return get(s);
+		try {
+			return unshield(get(s));
+		} catch (Exception e) {
+			throw new JException();
+		}
 	}
 
 	@Override
 	public void YASJF4J_put(String s, Object o) throws JException {
-		put(s,o);
+		put(s, shield(o));
 	}
 
 	@Override
@@ -71,5 +79,15 @@ public class JObjectImpl extends JSONObject implements JObject {
 	@Override
 	public String YASJF4J_toString() {
 		return toJSONString();
+	}
+	public static Object shield(Object o) {
+		if (o instanceof JNull) return null;
+		if (o instanceof Character) return ((Character) o).toString();
+		else return o;
+	}
+
+	public static Object unshield(Object o) {
+		if (o == null) return JNull.getInstance();
+		else return o;
 	}
 }

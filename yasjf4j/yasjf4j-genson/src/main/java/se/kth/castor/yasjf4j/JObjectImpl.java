@@ -10,6 +10,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import static se.kth.castor.yasjf4j.JArrayImpl.shield;
+import static se.kth.castor.yasjf4j.JArrayImpl.unshield;
+
 public class JObjectImpl extends HashMap<String, Object> implements JObject {
 
 	public static Genson genson = new Genson();
@@ -26,7 +29,7 @@ public class JObjectImpl extends HashMap<String, Object> implements JObject {
 				} else if (el instanceof List) {
 					put(key.toString(), new JArrayImpl((List) el));
 				} else {
-					put(key.toString(), el);
+					put(key.toString(), shield(el));
 				}
 			}
 		} catch (Exception e) {
@@ -44,7 +47,7 @@ public class JObjectImpl extends HashMap<String, Object> implements JObject {
 				} else if (el instanceof List) {
 					put(key.toString(), new JArrayImpl((List) el));
 				} else {
-					put(key.toString(), el);
+					put(key.toString(), shield(el));
 				}
 			}
 		} catch (Exception e) {
@@ -60,7 +63,7 @@ public class JObjectImpl extends HashMap<String, Object> implements JObject {
 	@Override
 	public Object YASJF4J_get(String s) throws JException {
 		try {
-			return get(s);
+			return unshield(get(s));
 		} catch (Exception e) {
 			throw new JException();
 		}
@@ -69,7 +72,7 @@ public class JObjectImpl extends HashMap<String, Object> implements JObject {
 	@Override
 	public void YASJF4J_put(String s, Object o) throws JException {
 		try {
-			put(s,o);
+			put(s, shield(o));
 		} catch (Exception e) {
 			throw new JException();
 		}

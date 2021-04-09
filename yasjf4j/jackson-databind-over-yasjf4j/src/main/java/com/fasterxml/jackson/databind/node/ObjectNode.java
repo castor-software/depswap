@@ -75,7 +75,8 @@ public class ObjectNode
         else if (o instanceof JArray) return new ArrayNode((JArray) o);
         else if (o instanceof Map) return new ObjectNode((Map) o);
         else if (o instanceof List) return new ArrayNode((List) o);
-        return null;
+        else return new POJONode(o);
+        //return null;
     }
 
     public static Object toObject(Object e) {
@@ -91,6 +92,7 @@ public class ObjectNode
         else if (e instanceof BooleanNode) return ((BooleanNode) e).booleanValue();
         else if (e instanceof ArrayNode) return ((ArrayNode) e).json;
         else if (e instanceof ObjectNode) return ((ObjectNode) e).json;
+        else if (e instanceof POJONode) return ((POJONode) e)._value;
         return e;
     }
 

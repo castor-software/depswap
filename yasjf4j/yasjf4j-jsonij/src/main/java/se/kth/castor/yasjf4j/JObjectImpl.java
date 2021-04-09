@@ -94,6 +94,12 @@ public class JObjectImpl extends HashMap<String, Object> implements JObject {
 				b.append(((JArrayImpl) val).YASJF4J_toString());
 			} else if(val instanceof String) {
 				b.append("\"" + val.toString() + "\"");
+			} else if(val instanceof Character) {
+				b.append("\"" + val.toString() + "\"");
+			} else if(val == null) {
+				b.append("null");
+			} else if(val == JNull.getInstance()) {
+				b.append("null");
 			} else {
 				b.append(val.toString());
 			}
@@ -105,7 +111,7 @@ public class JObjectImpl extends HashMap<String, Object> implements JObject {
 
 	public static Object unshield(Object o) {
 		if(o == JSON.NULL) {
-			return null;
+			return JNull.getInstance();
 		} else if(o == JSON.FALSE) {
 			return false;
 		} else if(o == JSON.TRUE) {

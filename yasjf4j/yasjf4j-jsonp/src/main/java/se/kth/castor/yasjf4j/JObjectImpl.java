@@ -136,6 +136,8 @@ public class JObjectImpl extends LinkedHashMap<String, JsonValue> implements Jso
 		//null
 		if(o == null) {
 			return JsonValue.NULL;
+		} else if (o instanceof JNull) {
+			return JsonValue.NULL;
 		} else if (o instanceof JsonValue) {
 			return (JsonValue) o;
 		} else if (o instanceof  Map) {
@@ -179,7 +181,7 @@ public class JObjectImpl extends LinkedHashMap<String, JsonValue> implements Jso
 		} else if (o == JsonValue.FALSE) {
 			return false;
 		} else if (o == JsonValue.NULL) {
-			return null;
+			return JNull.getInstance();
 		} else {
 			return o;
 		}

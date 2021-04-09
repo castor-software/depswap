@@ -98,6 +98,10 @@ public class JArrayImpl extends ArrayList implements JArray {
 				b.append(((JArrayImpl) val).YASJF4J_toString());
 			} else if(val instanceof String) {
 				b.append("\"" + val.toString() + "\"");
+			} else if(val instanceof Character) {
+				b.append("\"" + val.toString() + "\"");
+			} else if(val == null) {
+				b.append("null");
 			} else {
 				b.append(val.toString());
 			}
