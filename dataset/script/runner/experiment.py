@@ -21,7 +21,7 @@ json_map = {
         "json-io",
         "json-lib",
         "jsonp",
-        "jackson",
+        "jackson-databind",
         "jsonutil",
         "mjson",
         "nothing",
@@ -36,7 +36,7 @@ json_map = {
         "json-io",
         "json-lib",
         "jsonp",
-        "jackson",
+        "jackson-databind",
         "jsonutil",
         "mjson",
         "nothing",
@@ -51,7 +51,7 @@ json_map = {
         "json-io",
         "json-lib",
         "jsonp",
-        "jackson",
+        "jackson-databind",
         "jsonutil",
         "mjson",
         "nothing",
@@ -66,7 +66,7 @@ json_map = {
         "json-io",
         "json-lib",
         "jsonp",
-        "jackson",
+        "jackson-databind",
         "jsonutil",
         "mjson",
         "nothing",
@@ -89,21 +89,6 @@ json_map = {
     ]
 }
 
-lib_jar = {
-    "cookjson": "yasjf4j-cookjson-1.0-SNAPSHOT-jar-with-dependencies.jar",
-    "com.alibaba:fastjson": "yasjf4j-fastjson-1.0-SNAPSHOT-jar-with-dependencies.jar",
-    "gson": "yasjf4j-gson-1.0-SNAPSHOT-jar-with-dependencies.jar",
-    "jackson": "yasjf4j-jackson-databind-1.0-SNAPSHOT-jar-with-dependencies.jar",
-    "jjson": "yasjf4j-jjson-1.0-SNAPSHOT-jar-with-dependencies.jar",
-    "org.json:json": "yasjf4j-json-1.0-SNAPSHOT-jar-with-dependencies.jar",
-    "json-io": "yasjf4j-json-io-1.0-SNAPSHOT-jar-with-dependencies.jar",
-    "json-lib": "yasjf4j-json-lib-1.0-SNAPSHOT-jar-with-dependencies.jar",
-    "com.googlecode.json-simple:json-simple": "yasjf4j-json-simple-1.0-SNAPSHOT-jar-with-dependencies.jar",
-    "jsonp": "yasjf4j-jsonp-1.0-SNAPSHOT-jar-with-dependencies.jar",
-    "jsonutil": "yasjf4j-jsonutil-1.0-SNAPSHOT-jar-with-dependencies.jar",
-    "klaxon": "yasjf4j-klaxon-1.0-SNAPSHOT-jar-with-dependencies.jar",
-    "mjson": "yasjf4j-mjson-1.0-SNAPSHOT-jar-with-dependencies.jar",
-}
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('-u', "--url", required=True,
@@ -127,15 +112,19 @@ if __name__ == "__main__":
     working_directory = tempfile.mkdtemp()
 
     project = Project(args.url)
-    project.clone(working_directory)
-    print("[%s] Clone %s" % (datetime.now().strftime("%d/%m/%Y %H:%M:%S"), project.name), flush=True)
+    print("[%s] [STARTED]  Clone %s" % (datetime.now().strftime("%d/%m/%Y %H:%M:%S"), project.name), flush=True)
+    status = project.clone(working_directory)
+    print("[%s] [FINISHED] Clone %s (status: %s)" % (datetime.now().strftime("%d/%m/%Y %H:%M:%S"), project.name, status), flush=True)
+    print("[%s] [STARTED]  Checkout %s %s" % (datetime.now().strftime("%d/%m/%Y %H:%M:%S"), project.name, args.commit), flush=True)
     project.checkout_commit(args.commit)
+    print("[%s] [FINISHED]  Checkout %s %s" % (datetime.now().strftime("%d/%m/%Y %H:%M:%S"), project.name, project.get_commit()), flush=True)
 
     project_path = working_directory
     log_path = os.path.join(project_path, "output.log")
 
-    project.install(stdout=log_path, timeout=args.timeout)
-    print("[%s] Install %s" % (datetime.now().strftime("%d/%m/%Y %H:%M:%S"), project.name), flush=True)
+    print("[%s] [STARTED]  Install %s" % (datetime.now().strftime("%d/%m/%Y %H:%M:%S"), project.name), flush=True)
+    status = project.install(stdout=log_path, timeout=args.timeout)
+    print("[%s] [FINISHED] Install %s (status: %s)" % (datetime.now().strftime("%d/%m/%Y %H:%M:%S"), project.name, status), flush=True)
 
     
 
@@ -149,35 +138,53 @@ if __name__ == "__main__":
         "executions": []
     }
 
-    project.test(stdout=log_path, clean=False, timeout=args.timeout)
-    print("[%s] Test %s" % (datetime.now().strftime("%d/%m/%Y %H:%M:%S"), project.name), flush=True)
+    print("[%s] [STARTED]  Test %s" % (datetime.now().strftime("%d/%m/%Y %H:%M:%S"), project.name), flush=True)
+    status = project.test(stdout=log_path, clean=False, timeout=args.timeout)
+    print("[%s] [FINISHED] Test %s (status: %s)" % (datetime.now().strftime("%d/%m/%Y %H:%M:%S"), project.name, status), flush=True)
     log = LogAnalyser(log_path)
 
-    results["executions"].append({
+    o = {
+        "url": project.url,
+        "commit": args.commit,
+        "lib": args.lib,
         "name": "original",
         "test": project.get_test_results(),
         "classpath": project.classpath(),
         "errors": log.parse()
-    })
+    }
+    print(o["errors"])
+
+    result_folder = os.path.join(args.results, "experimentv2", project.repo, args.lib)
+    if not os.path.exists(result_folder):
+        os.makedirs(result_folder)
+    path_result = os.path.join(result_folder, "original.json")
+
+    with open(path_result, 'w') as fd:
+        json.dump(o, fd, indent=1)
+    
+    results["executions"].append(o)
     os.rename(log_path, os.path.join(project_path, "origin.log"))
 
     implems = json_map[args.lib]
     if args.implementations is not None:
-        implems = args.impls
+        implems = args.implementations
     for implem in sorted(implems):
         print("[%s] Start %s" % (datetime.now().strftime("%d/%m/%Y %H:%M:%S"), implem), flush=True)
         timeout_cmd = ''
         if args.timeout is not None:
             timeout_cmd = 'timeout -k 1m -s SIGKILL %s' % args.timeout
         cmd = f'cd {project.path}; {timeout_cmd} java -jar $HOME/depswap.jar . "{args.lib}:*" "se.kth.castor:yasjf4j-{implem}:1.0-SNAPSHOT" $HOME/depswap/yasjf4j/jars/;'
+        print("[%s] [STARTED]  Inject %s" % (datetime.now().strftime("%d/%m/%Y %H:%M:%S"), implem), flush=True)
         subprocess.call(cmd, shell=True)
-        print("[%s] Inject %s" % (datetime.now().strftime("%d/%m/%Y %H:%M:%S"), implem), flush=True)
+        print("[%s] [FINISHED] Inject %s (status: %s)" % (datetime.now().strftime("%d/%m/%Y %H:%M:%S"), implem, status), flush=True)
 
-        project.test(stdout=log_path, timeout=args.timeout)
-        print("[%s] Test %s" % (datetime.now().strftime("%d/%m/%Y %H:%M:%S"), implem), flush=True)
+        print("[%s] [STARTED]  Test %s" % (datetime.now().strftime("%d/%m/%Y %H:%M:%S"), implem), flush=True)
+        status = project.test(stdout=log_path, timeout=args.timeout)
+        print("[%s] [FINISHED] Test %s (status: %s)" % (datetime.now().strftime("%d/%m/%Y %H:%M:%S"), implem, status), flush=True)
 
         log = LogAnalyser(log_path)
         errors = log.parse()
+        print(errors)
         os.rename(log_path, os.path.join(project_path, "%s.log" % implem))
 
         o = {
@@ -192,8 +199,9 @@ if __name__ == "__main__":
         results["executions"].append(o)
 
         cmd = f'cd {project.path}; {timeout_cmd} java -jar $HOME/depswap.jar . "{args.lib}:*" "se.kth.castor:yasjf4j-{implem}:1.0-SNAPSHOT" $HOME/depswap/yasjf4j/jars/ r;'
+        print("[%s] [STARTED]  Restore %s" % (datetime.now().strftime("%d/%m/%Y %H:%M:%S"), implem), flush=True)
         subprocess.call(cmd, shell=True)
-        print("[%s] Restore %s" % (datetime.now().strftime("%d/%m/%Y %H:%M:%S"), implem), flush=True)
+        print("[%s] [FINISHED] Restore %s (status: %s)" % (datetime.now().strftime("%d/%m/%Y %H:%M:%S"), implem, status), flush=True)
 
         result_folder = os.path.join(args.results, "experimentv2", project.repo, args.lib)
         if not os.path.exists(result_folder):
@@ -201,7 +209,7 @@ if __name__ == "__main__":
         path_result = os.path.join(result_folder, implem + ".json")
 
         with open(path_result, 'w') as fd:
-            json.dump(results, fd, indent=1)
+            json.dump(o, fd, indent=1)
 
         # cmd = f'cd {project.path}; {timeout_cmd} java -jar $HOME/depswap.jar . "{args.lib}:*" "se.kth.castor:yasjf4j-{implem}:1.0-SNAPSHOT" $HOME/depswap/yasjf4j/instrumented_jars/;'
         # subprocess.call(cmd, shell=True)

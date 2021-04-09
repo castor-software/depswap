@@ -14,7 +14,7 @@ let mavenGraph = JSON.parse(
 );
 
 function execute(repo, commit, lib, impl) {
-  const logPath = `${config.output}experimentv2_logs/${repo}_${lib}.log`;
+  const logPath = `${config.output}experimentv2_logs/${repo}_${lib}_${impl}.log`;
   if (!fs.existsSync(path.dirname(logPath))) {
     fs.mkdirSync(path.dirname(logPath), { recursive: true });
   }
@@ -39,7 +39,7 @@ const bridgeImplMap = {
     "json-io",
     "json-lib",
     "jsonp",
-    "jackson",
+    "jackson-databind",
     "jsonutil",
     "mjson",
     //"klaxon",
@@ -54,7 +54,7 @@ const bridgeImplMap = {
     "json-io",
     "json-lib",
     "jsonp",
-    "jackson",
+    "jackson-databind",
     "jsonutil",
     "mjson",
     //"klaxon",
@@ -69,7 +69,7 @@ const bridgeImplMap = {
     "json-io",
     "json-lib",
     "jsonp",
-    "jackson",
+    "jackson-databind",
     "jsonutil",
     "mjson",
     //"klaxon",
@@ -84,7 +84,7 @@ const bridgeImplMap = {
     "json-io",
     "json-lib",
     "jsonp",
-    "jackson",
+    "jackson-databind",
     "jsonutil",
     "mjson",
     //"klaxon",
@@ -192,7 +192,7 @@ const bridgeImplMap = {
     },
     () => {
       const tasks = [];
-      for (let project in projects) {
+      for (let project of [...projects]) {
         const info = mavenGraph[project];
         if (info == null) {
           continue;
@@ -209,22 +209,31 @@ const bridgeImplMap = {
           "com.fasterxml.jackson.core:jackson-databind",
         ];
         for (let lib of libs) {
-          for (let imp in bridgeImplMap[lib]) {
+          if (!packages.has(lib)) {
+            continue
+          }
+          let doCompile = true;
+          const pathOriginal = path.join(config.output, "experimentv2", project, lib, "original.json")
+          if (fs.existsSync(pathOriginal)) {
+            const original = JSON.parse(fs.readFileSync(pathOriginal));
+            doCompile = original.test != {};
+          } 
+          for (let impl of bridgeImplMap[lib]) {
             if (
               fs.existsSync(
-                path.join(config.output, "exp", project, lib, imp + ".json")
+                path.join(config.output, "experimentv2", project, lib, impl + ".json")
               )
             ) {
-              continue;
+              if (doCompile) {
+                continue;
+              }
             }
-            if (packages.has(lib)) {
-              tasks.push({
-                project,
-                commit: info.commit,
-                lib,
-                impl,
-              });
-            }
+            tasks.push({
+              project,
+              commit: info.commit,
+              lib,
+              impl,
+            });
           }
         }
       }

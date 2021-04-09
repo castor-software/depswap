@@ -262,13 +262,13 @@ module.exports.getJavaVersion = function (pom) {
   return undefined;
 };
 module.exports.isGreen = (test_results) => {
-  if (test_results == null) {
+  if (!test_results) {
     return false;
   }
   if (module.exports.isFlaky(test_results)) {
     return false;
   }
-  return !test_results
+  return test_results
     .map((x) => {
       if (x == null) return null;
       if (x.error == null) {
