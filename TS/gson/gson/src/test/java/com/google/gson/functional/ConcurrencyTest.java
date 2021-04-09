@@ -88,6 +88,7 @@ public class ConcurrencyTest extends TestCase {
     }
     startLatch.countDown();
     finishedLatch.await();
+    //ARGO_PLACEBO
     assertFalse(failed.get());
   }
 
@@ -118,6 +119,7 @@ public class ConcurrencyTest extends TestCase {
     }
     startLatch.countDown();
     finishedLatch.await();
+    //ARGO_PLACEBO
     assertFalse(failed.get());
   }
   

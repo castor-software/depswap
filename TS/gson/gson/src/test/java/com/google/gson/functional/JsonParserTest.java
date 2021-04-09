@@ -53,6 +53,7 @@ public class JsonParserTest extends TestCase {
   public void testParseInvalidJson() {
     try {
       gson.fromJson("[[]", Object[].class);
+      //ARGO_PLACEBO
       fail();
     } catch (JsonSyntaxException expected) { }
   }
@@ -62,7 +63,9 @@ public class JsonParserTest extends TestCase {
     obj.addProperty("stringValue", "foo");
     obj.addProperty("intValue", 11);
     BagOfPrimitives target = gson.fromJson(obj, BagOfPrimitives.class);
+    //ARGO_ORIGINAL
     assertEquals(11, target.intValue);
+    //ARGO_ORIGINAL
     assertEquals("foo", target.stringValue);
   }
 
@@ -74,6 +77,7 @@ public class JsonParserTest extends TestCase {
     array.add(obj);
     try {
       gson.fromJson(array, BagOfPrimitives.class);
+      //ARGO_ORIGINAL
       fail("BagOfPrimitives is not an array");
     } catch (JsonParseException expected) { }
   }
@@ -88,6 +92,7 @@ public class JsonParserTest extends TestCase {
 
     try {
       gson.fromJson(obj, BagOfPrimitives.class);
+      //ARGO_ORIGINAL
       fail("BagOfPrimitives is not an array");
     } catch (JsonParseException expected) { }
   }
@@ -105,6 +110,7 @@ public class JsonParserTest extends TestCase {
 
     try {
       gson.fromJson(obj, Nested.class);
+      //ARGO_ORIGINAL
       fail("Nested has field BagOfPrimitives which is not an array");
     } catch (JsonParseException expected) { }
   }
@@ -116,15 +122,21 @@ public class JsonParserTest extends TestCase {
     obj.remove("stringValue");
     obj.addProperty("stringValue", "fooBar");
     BagOfPrimitives target = gson.fromJson(obj, BagOfPrimitives.class);
+    //ARGO_ORIGINAL
     assertEquals(10, target.intValue);
+    //ARGO_ORIGINAL
     assertEquals(20, target.longValue);
+    //ARGO_ORIGINAL
     assertEquals("fooBar", target.stringValue);
   }
 
   public void testExtraCommasInArrays() {
     Type type = new TypeToken<List<String>>() {}.getType();
+    //ARGO_PLACEBO
     assertEquals(Arrays.asList("a", null, "b", null, null), gson.fromJson("[a,,b,,]", type));
+    //ARGO_PLACEBO
     assertEquals(Arrays.asList(null, null), gson.fromJson("[,]", type));
+    //ARGO_PLACEBO
     assertEquals(Arrays.asList("a", null), gson.fromJson("[a,]", type));
   }
 
@@ -132,6 +144,7 @@ public class JsonParserTest extends TestCase {
     Type type = new TypeToken<Map<String, String>>() {}.getType();
     try {
       gson.fromJson("{a:b,}", type);
+      //ARGO_PLACEBO
       fail();
     } catch (JsonSyntaxException expected) {
     }

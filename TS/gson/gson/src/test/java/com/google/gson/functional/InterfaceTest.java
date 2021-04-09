@@ -40,11 +40,13 @@ public class InterfaceTest extends TestCase {
   }
 
   public void testSerializingObjectImplementingInterface() throws Exception {
+    //ARGO_PLACEBO
     assertEquals(OBJ_JSON, gson.toJson(obj));
   }
   
   public void testSerializingInterfaceObjectField() throws Exception {
     TestObjectWrapper objWrapper = new TestObjectWrapper(obj);
+    //ARGO_PLACEBO
     assertEquals("{\"obj\":" + OBJ_JSON + "}", gson.toJson(objWrapper));
   }
 

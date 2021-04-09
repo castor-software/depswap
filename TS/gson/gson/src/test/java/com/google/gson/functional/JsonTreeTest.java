@@ -10,6 +10,8 @@ import java.util.Map.Entry;
 import java.util.Set;
 import junit.framework.TestCase;
 
+import static com.google.gson.JSONTestUtils.assertEquivalent;
+
 /**
  * Functional tests for {@link Gson#toJsonTree(Object)} and 
  * {@link Gson#toJsonTree(Object, java.lang.reflect.Type)}
@@ -29,26 +31,38 @@ public class JsonTreeTest extends TestCase {
   public void testToJsonTree() {
     BagOfPrimitives bag = new BagOfPrimitives(10L, 5, false, "foo");
     JsonElement json = gson.toJsonTree(bag);
+    //ARGO_ORIGINAL
     assertTrue(json.isJsonObject());
     JsonObject obj = json.getAsJsonObject();
     Set<Entry<String, JsonElement>> children = obj.entrySet();
+    //ARGO_ORIGINAL
     assertEquals(4, children.size());
+    //ARGO_ORIGINAL
     assertContains(obj, new JsonPrimitive(10L));
+    //ARGO_ORIGINAL
     assertContains(obj, new JsonPrimitive(5));
+    //ARGO_ORIGINAL
     assertContains(obj, new JsonPrimitive(false));
+    //ARGO_ORIGINAL
     assertContains(obj, new JsonPrimitive("foo"));
   }
 
   public void testToJsonTreeObjectType() {
     SubTypeOfBagOfPrimitives bag = new SubTypeOfBagOfPrimitives(10L, 5, false, "foo", 1.4F);
     JsonElement json = gson.toJsonTree(bag, BagOfPrimitives.class);
+    //ARGO_ORIGINAL
     assertTrue(json.isJsonObject());
     JsonObject obj = json.getAsJsonObject();
     Set<Entry<String, JsonElement>> children = obj.entrySet();
+    //ARGO_ORIGINAL
     assertEquals(4, children.size());
+    //ARGO_ORIGINAL
     assertContains(obj, new JsonPrimitive(10L));
+    //ARGO_ORIGINAL
     assertContains(obj, new JsonPrimitive(5));
+    //ARGO_ORIGINAL
     assertContains(obj, new JsonPrimitive(false));
+    //ARGO_ORIGINAL
     assertContains(obj, new JsonPrimitive("foo"));
   }
 
@@ -57,12 +71,14 @@ public class JsonTreeTest extends TestCase {
     String json1 = gson.toJson(bag);
     JsonElement jsonElement = gson.toJsonTree(bag, SubTypeOfBagOfPrimitives.class);
     String json2 = gson.toJson(jsonElement);
-    assertEquals(json1, json2);
+    //ARGO_EQUIVALENT
+    assertEquivalent(json1, json2, gson);
   }
 
   public void testJsonTreeNull() {
     BagOfPrimitives bag = new BagOfPrimitives(10L, 5, false, null);
     JsonObject jsonElement = (JsonObject) gson.toJsonTree(bag, BagOfPrimitives.class);
+    //ARGO_ORIGINAL
     assertFalse(jsonElement.has("stringValue"));
   }
 
@@ -75,6 +91,7 @@ public class JsonTreeTest extends TestCase {
         }
       }
     }
+    //ARGO_ORIGINAL
     fail();
   }
   

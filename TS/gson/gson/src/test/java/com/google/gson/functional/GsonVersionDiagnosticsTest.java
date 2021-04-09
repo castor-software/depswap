@@ -53,7 +53,9 @@ public class GsonVersionDiagnosticsTest extends TestCase {
 
   @Test
   public void testVersionPattern() {
+    //ARGO_PLACEBO
     assertTrue(GSON_VERSION_PATTERN.matcher("(GSON 2.8.5)").matches());
+    //ARGO_PLACEBO
     assertTrue(GSON_VERSION_PATTERN.matcher("(GSON 2.8.5-SNAPSHOT)").matches());
   }
 
@@ -63,7 +65,8 @@ public class GsonVersionDiagnosticsTest extends TestCase {
       gson.toJson(new TestType());
       fail();
     } catch (AssertionError expected) {
-      ensureAssertionErrorPrintsGsonVersion(expected);
+      //ARGO_ERROR_HANDLING
+      //ensureAssertionErrorPrintsGsonVersion(expected);
     }
   }
 
@@ -73,7 +76,8 @@ public class GsonVersionDiagnosticsTest extends TestCase {
       gson.fromJson("{'a':'abc'}", TestType.class);
       fail();
     } catch (AssertionError expected) {
-      ensureAssertionErrorPrintsGsonVersion(expected);
+      //ARGO_ERROR_HANDLING
+      //ensureAssertionErrorPrintsGsonVersion(expected);
     }
   }
 
@@ -83,9 +87,11 @@ public class GsonVersionDiagnosticsTest extends TestCase {
     int start = msg.indexOf("(GSON");
     assertTrue(start > 0);
     int end = msg.indexOf("):") + 1;
+    //ARGO_PLACEBO
     assertTrue(end > 0 && end > start + 6);
     String version = msg.substring(start, end);
     // System.err.println(version);
+    //ARGO_PLACEBO
     assertTrue(GSON_VERSION_PATTERN.matcher(version).matches());
   }
 

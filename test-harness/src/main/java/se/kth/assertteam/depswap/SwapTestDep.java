@@ -68,7 +68,7 @@ public class SwapTestDep {
 				String a = dependency.getArtifactId();
 				String v = dependency.getVersion();
 
-				if(g.equals(inGroupId) && !a.equals("yasjf4j-api") && (inVersion == null || v.equals(inVersion))) {
+				if(g.equals(inGroupId) && a.equals(inArtifactId) && !a.equals("yasjf4j-api") && (inVersion == null || v.equals(inVersion))) {
 					target = dependency;
 					break;
 				}

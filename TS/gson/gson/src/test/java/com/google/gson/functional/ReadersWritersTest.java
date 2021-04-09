@@ -52,6 +52,7 @@ public class ReadersWritersTest extends TestCase {
     Writer writer = new StringWriter();
     BagOfPrimitives src = new BagOfPrimitives();
     gson.toJson(src, writer);
+    //ARGO_PLACEBO
     assertEquals(src.getExpectedJson(), writer.toString());
   }
 
@@ -59,18 +60,21 @@ public class ReadersWritersTest extends TestCase {
     BagOfPrimitives expected = new BagOfPrimitives();
     Reader json = new StringReader(expected.getExpectedJson());
     BagOfPrimitives actual = gson.fromJson(json, BagOfPrimitives.class);
+    //ARGO_PLACEBO
     assertEquals(expected, actual);
   }
 
   public void testTopLevelNullObjectSerializationWithWriter() {
     StringWriter writer = new StringWriter();
     gson.toJson(null, writer);
+    //ARGO_PLACEBO
     assertEquals("null", writer.toString());
   }
 
   public void testTopLevelNullObjectDeserializationWithReader() {
     StringReader reader = new StringReader("null");
     Integer nullIntObject = gson.fromJson(reader, Integer.class);
+    //ARGO_PLACEBO
     assertNull(nullIntObject);
   }
 
@@ -78,6 +82,7 @@ public class ReadersWritersTest extends TestCase {
     Gson gson = new GsonBuilder().serializeNulls().create();
     StringWriter writer = new StringWriter();
     gson.toJson(null, writer);
+    //ARGO_PLACEBO
     assertEquals("null", writer.toString());
   }
 
@@ -85,6 +90,7 @@ public class ReadersWritersTest extends TestCase {
     Gson gson = new GsonBuilder().serializeNulls().create();
     StringReader reader = new StringReader("null");
     Integer nullIntObject = gson.fromJson(reader, Integer.class);
+    //ARGO_PLACEBO
     assertNull(nullIntObject);
   }
 
@@ -96,8 +102,10 @@ public class ReadersWritersTest extends TestCase {
     CharArrayReader reader = new CharArrayReader(writer.toCharArray());
     JsonStreamParser parser = new JsonStreamParser(reader);
     String actualOne = gson.fromJson(parser.next(), String.class);
+    //ARGO_PLACEBO
     assertEquals("one", actualOne);
     String actualTwo = gson.fromJson(parser.next(), String.class);
+    //ARGO_PLACEBO
     assertEquals("two", actualTwo);
   }
 
@@ -111,15 +119,19 @@ public class ReadersWritersTest extends TestCase {
     CharArrayReader reader = new CharArrayReader(writer.toCharArray());
     JsonStreamParser parser = new JsonStreamParser(reader);
     BagOfPrimitives actualOne = gson.fromJson(parser.next(), BagOfPrimitives.class);
+    //ARGO_ORIGINAL
     assertEquals("one", actualOne.stringValue);
     BagOfPrimitives actualTwo = gson.fromJson(parser.next(), BagOfPrimitives.class);
+    //ARGO_ORIGINAL
     assertEquals("two", actualTwo.stringValue);
+    //ARGO_ORIGINAL
     assertFalse(parser.hasNext());
   }
 
   public void testTypeMismatchThrowsJsonSyntaxExceptionForStrings() {
     try {
       gson.fromJson("true", new TypeToken<Map<String, String>>() {}.getType());
+      //ARGO_PLACEBO
       fail();
     } catch (JsonSyntaxException expected) {
     }
@@ -128,6 +140,7 @@ public class ReadersWritersTest extends TestCase {
   public void testTypeMismatchThrowsJsonSyntaxExceptionForReaders() {
     try {
       gson.fromJson(new StringReader("true"), new TypeToken<Map<String, String>>() {}.getType());
+      //ARGO_PLACEBO
       fail();
     } catch (JsonSyntaxException expected) {
     }

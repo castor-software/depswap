@@ -50,11 +50,13 @@ public class UncategorizedTest extends TestCase {
   public void testInvalidJsonDeserializationFails() throws Exception {
     try {
       gson.fromJson("adfasdf1112,,,\":", BagOfPrimitives.class);
+      //ARGO_PLACEBO
       fail("Bad JSON should throw a ParseException");
     } catch (JsonParseException expected) { }
 
     try {
       gson.fromJson("{adfasdf1112,,,\":}", BagOfPrimitives.class);
+      //ARGO_PLACEBO
       fail("Bad JSON should throw a ParseException");
     } catch (JsonParseException expected) { }
   }
@@ -64,11 +66,13 @@ public class UncategorizedTest extends TestCase {
     ClassOverridingEquals objB = new ClassOverridingEquals();
     objB.ref = objA;
     String json = gson.toJson(objB);
+    //ARGO_PLACEBO
     assertEquals(objB.getExpectedJson(), json);
   }
 
   public void testStaticFieldsAreNotSerialized() {
     BagOfPrimitives target = new BagOfPrimitives();
+    //ARGO_PLACEBO
     assertFalse(gson.toJson(target).contains("DEFAULT_VALUE"));
   }
 
@@ -76,6 +80,7 @@ public class UncategorizedTest extends TestCase {
     BagOfPrimitives bag = new BagOfPrimitives();
     String json = gson.toJson(bag);
     BagOfPrimitives deserialized = gson.fromJson(json, BagOfPrimitives.class);
+    //ARGO_PLACEBO
     assertEquals(bag, deserialized);
   }
 
@@ -88,12 +93,16 @@ public class UncategorizedTest extends TestCase {
     Gson gson = new GsonBuilder().registerTypeAdapter(Base.class, new BaseTypeAdapter()).create();
     String json = "{\"opType\":\"OP1\"}";
     Base base = gson.fromJson(json, Base.class);
+    //ARGO_ORIGINAL
     assertTrue(base instanceof Derived1);
+    //ARGO_ORIGINAL
     assertEquals(OperationType.OP1, base.opType);
 
     json = "{\"opType\":\"OP2\"}";
     base = gson.fromJson(json, Base.class);
+    //ARGO_ORIGINAL
     assertTrue(base instanceof Derived2);
+    //ARGO_ORIGINAL
     assertEquals(OperationType.OP2, base.opType);
   }
 
@@ -104,6 +113,7 @@ public class UncategorizedTest extends TestCase {
   public void testTrailingWhitespace() throws Exception {
     List<Integer> integers = gson.fromJson("[1,2,3]  \n\n  ",
         new TypeToken<List<Integer>>() {}.getType());
+    //ARGO_PLACEBO
     assertEquals(Arrays.asList(1, 2, 3), integers);
   }
 

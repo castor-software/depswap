@@ -39,9 +39,12 @@ public final class JsonAdapterSerializerDeserializerTest extends TestCase {
   public void testJsonSerializerDeserializerBasedJsonAdapterOnFields() {
     Gson gson = new Gson();
     String json = gson.toJson(new Computer(new User("Inderjeet Singh"), null, new User("Jesse Wilson")));
+    //ARGO_PLACEBO
     assertEquals("{\"user1\":\"UserSerializer\",\"user3\":\"UserSerializerDeserializer\"}", json);
     Computer computer = gson.fromJson("{'user2':'Jesse Wilson','user3':'Jake Wharton'}", Computer.class);
+    //ARGO_PLACEBO
     assertEquals("UserSerializer", computer.user2.name);
+    //ARGO_PLACEBO
     assertEquals("UserSerializerDeserializer", computer.user3.name);
   }
 
@@ -93,8 +96,10 @@ public final class JsonAdapterSerializerDeserializerTest extends TestCase {
   public void testJsonSerializerDeserializerBasedJsonAdapterOnClass() {
     Gson gson = new Gson();
     String json = gson.toJson(new Computer2(new User2("Inderjeet Singh")));
+    //ARGO_PLACEBO
     assertEquals("{\"user\":\"UserSerializerDeserializer2\"}", json);
     Computer2 computer = gson.fromJson("{'user':'Inderjeet Singh'}", Computer2.class);
+    //ARGO_PLACEBO
     assertEquals("UserSerializerDeserializer2", computer.user.name);
   }
 
@@ -129,7 +134,9 @@ public final class JsonAdapterSerializerDeserializerTest extends TestCase {
     Container c = new Container("Foo", 10);
     Gson gson = new Gson();
     String json = gson.toJson(c);
+    //ARGO_PLACEBO
     assertTrue(json.contains("\"a\":\"BaseStringAdapter\""));
+    //ARGO_PLACEBO
     assertTrue(json.contains("\"b\":\"BaseIntegerAdapter\""));
   }
 

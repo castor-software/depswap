@@ -30,19 +30,25 @@ public class VersionExclusionStrategyTest extends TestCase {
 
   public void testClassAndFieldAreAtSameVersion() throws Exception {
     Excluder excluder = Excluder.DEFAULT.withVersion(VERSION);
+    //ARGO_PLACEBO
     assertFalse(excluder.excludeClass(MockObject.class, true));
+    //ARGO_PLACEBO
     assertFalse(excluder.excludeField(MockObject.class.getField("someField"), true));
   }
 
   public void testClassAndFieldAreBehindInVersion() throws Exception {
     Excluder excluder = Excluder.DEFAULT.withVersion(VERSION + 1);
+    //ARGO_PLACEBO
     assertFalse(excluder.excludeClass(MockObject.class, true));
+    //ARGO_PLACEBO
     assertFalse(excluder.excludeField(MockObject.class.getField("someField"), true));
   }
 
   public void testClassAndFieldAreAheadInVersion() throws Exception {
     Excluder excluder = Excluder.DEFAULT.withVersion(VERSION - 1);
+    //ARGO_PLACEBO
     assertTrue(excluder.excludeClass(MockObject.class, true));
+    //ARGO_PLACEBO
     assertTrue(excluder.excludeField(MockObject.class.getField("someField"), true));
   }
 

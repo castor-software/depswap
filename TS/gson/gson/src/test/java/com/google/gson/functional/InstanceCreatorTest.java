@@ -50,6 +50,7 @@ public class InstanceCreatorTest extends TestCase {
       .create();
     String json = "{baseName:'BaseRevised',subName:'Sub'}";
     Base base = gson.fromJson(json, Base.class);
+    //ARGO_PLACEBO
     assertEquals("BaseRevised", base.baseName);
   }
 
@@ -64,10 +65,13 @@ public class InstanceCreatorTest extends TestCase {
 
     String json = "{baseName:'Base',subName:'SubRevised'}";
     Base base = gson.fromJson(json, Base.class);
+    //ARGO_PLACEBO
     assertTrue(base instanceof Sub);
 
     Sub sub = (Sub) base;
+    //ARGO_PLACEBO
     assertFalse("SubRevised".equals(sub.subName));
+    //ARGO_PLACEBO
     assertEquals(Sub.SUB_NAME, sub.subName);
   }
 
@@ -81,7 +85,9 @@ public class InstanceCreatorTest extends TestCase {
     .create();
     String json = "{base:{baseName:'Base',subName:'SubRevised'}}";
     ClassWithBaseField target = gson.fromJson(json, ClassWithBaseField.class);
+    //ARGO_PLACEBO
     assertTrue(target.base instanceof Sub);
+    //ARGO_PLACEBO
     assertEquals(Sub.SUB_NAME, ((Sub)target.base).subName);
   }
 
@@ -99,6 +105,7 @@ public class InstanceCreatorTest extends TestCase {
         .registerTypeAdapter(listOfStringType, listCreator)
         .create();
     List<String> list = gson.fromJson("[\"a\"]", listOfStringType);
+    //ARGO_PLACEBO
     assertEquals(SubArrayList.class, list.getClass());
   }
 
@@ -117,11 +124,15 @@ public class InstanceCreatorTest extends TestCase {
 
     Type sortedSetType = new TypeToken<SortedSet<String>>() {}.getType();
     SortedSet<String> set = gson.fromJson("[\"a\"]", sortedSetType);
+    //ARGO_PLACEBO
     assertEquals(set.first(), "a");
+    //ARGO_PLACEBO
     assertEquals(SubTreeSet.class, set.getClass());
 
     set = gson.fromJson("[\"b\"]", SortedSet.class);
+    //ARGO_PLACEBO
     assertEquals(set.first(), "b");
+    //ARGO_PLACEBO
     assertEquals(SubTreeSet.class, set.getClass());
   }
 }

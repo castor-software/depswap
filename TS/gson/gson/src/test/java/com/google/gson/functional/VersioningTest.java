@@ -47,42 +47,52 @@ public class VersioningTest extends TestCase {
     Version1 target = new Version1();
     Gson gson = builder.setVersion(1.29).create();
     String json = gson.toJson(target);
-    assertTrue(json.contains("\"a\":" + A));
+//ARGO_PLACEBO
+assertTrue(json.contains("\"a\":" + A));
 
     gson = builder.setVersion(1.3).create();
     json = gson.toJson(target);
-    assertFalse(json.contains("\"a\":" + A));
+//ARGO_PLACEBO
+assertFalse(json.contains("\"a\":" + A));
   }
 
   public void testVersionedUntilDeserialization() {
     Gson gson = builder.setVersion(1.3).create();
     String json = "{\"a\":3,\"b\":4,\"c\":5}";
     Version1 version1 = gson.fromJson(json, Version1.class);
-    assertEquals(A, version1.a);
+//ARGO_PLACEBO
+assertEquals(A, version1.a);
   }
 
   public void testVersionedClassesSerialization() {
     Gson gson = builder.setVersion(1.0).create();
     String json1 = gson.toJson(new Version1());
     String json2 = gson.toJson(new Version1_1());
-    assertEquals(json1, json2);
+//ARGO_PLACEBO
+assertEquals(json1, json2);
   }
 
   public void testVersionedClassesDeserialization() {
     Gson gson = builder.setVersion(1.0).create();
     String json = "{\"a\":3,\"b\":4,\"c\":5}";
     Version1 version1 = gson.fromJson(json, Version1.class);
-    assertEquals(3, version1.a);
-    assertEquals(4, version1.b);
+//ARGO_PLACEBO
+assertEquals(3, version1.a);
+//ARGO_PLACEBO
+assertEquals(4, version1.b);
     Version1_1 version1_1 = gson.fromJson(json, Version1_1.class);
-    assertEquals(3, version1_1.a);
-    assertEquals(4, version1_1.b);
-    assertEquals(C, version1_1.c);
+//ARGO_PLACEBO
+assertEquals(3, version1_1.a);
+//ARGO_PLACEBO
+assertEquals(4, version1_1.b);
+//ARGO_PLACEBO
+assertEquals(C, version1_1.c);
   }
 
   public void testIgnoreLaterVersionClassSerialization() {
     Gson gson = builder.setVersion(1.0).create();
-    assertEquals("null", gson.toJson(new Version1_2()));
+//ARGO_PLACEBO
+assertEquals("null", gson.toJson(new Version1_2()));
   }
 
   public void testIgnoreLaterVersionClassDeserialization() {
@@ -91,13 +101,15 @@ public class VersioningTest extends TestCase {
     Version1_2 version1_2 = gson.fromJson(json, Version1_2.class);
     // Since the class is versioned to be after 1.0, we expect null
     // This is the new behavior in Gson 2.0
-    assertNull(version1_2);
+//ARGO_PLACEBO
+assertNull(version1_2);
   }
 
   public void testVersionedGsonWithUnversionedClassesSerialization() {
     Gson gson = builder.setVersion(1.0).create();
     BagOfPrimitives target = new BagOfPrimitives(10, 20, false, "stringValue");
-    assertEquals(target.getExpectedJson(), gson.toJson(target));
+//ARGO_PLACEBO
+assertEquals(target.getExpectedJson(), gson.toJson(target));
   }
 
   public void testVersionedGsonWithUnversionedClassesDeserialization() {
@@ -109,40 +121,50 @@ public class VersioningTest extends TestCase {
     expected.intValue = 20;
     expected.booleanValue = false;
     BagOfPrimitives actual = gson.fromJson(json, BagOfPrimitives.class);
-    assertEquals(expected, actual);
+//ARGO_PLACEBO
+assertEquals(expected, actual);
   }
 
   public void testVersionedGsonMixingSinceAndUntilSerialization() {
     Gson gson = builder.setVersion(1.0).create();
     SinceUntilMixing target = new SinceUntilMixing();
     String json = gson.toJson(target);
-    assertFalse(json.contains("\"b\":" + B));
+//ARGO_PLACEBO
+assertFalse(json.contains("\"b\":" + B));
 
     gson = builder.setVersion(1.2).create();
     json = gson.toJson(target);
-    assertTrue(json.contains("\"b\":" + B));
+//ARGO_PLACEBO
+assertTrue(json.contains("\"b\":" + B));
 
     gson = builder.setVersion(1.3).create();
     json = gson.toJson(target);
-    assertFalse(json.contains("\"b\":" + B));
+//ARGO_PLACEBO
+assertFalse(json.contains("\"b\":" + B));
   }
 
   public void testVersionedGsonMixingSinceAndUntilDeserialization() {
     String json = "{\"a\":5,\"b\":6}";
     Gson gson = builder.setVersion(1.0).create();
     SinceUntilMixing result = gson.fromJson(json, SinceUntilMixing.class);
-    assertEquals(5, result.a);
-    assertEquals(B, result.b);
+//ARGO_PLACEBO
+assertEquals(5, result.a);
+//ARGO_PLACEBO
+assertEquals(B, result.b);
 
     gson = builder.setVersion(1.2).create();
     result = gson.fromJson(json, SinceUntilMixing.class);
-    assertEquals(5, result.a);
-    assertEquals(6, result.b);
+//ARGO_PLACEBO
+assertEquals(5, result.a);
+//ARGO_PLACEBO
+assertEquals(6, result.b);
 
     gson = builder.setVersion(1.3).create();
     result = gson.fromJson(json, SinceUntilMixing.class);
-    assertEquals(5, result.a);
-    assertEquals(B, result.b);
+//ARGO_PLACEBO
+assertEquals(5, result.a);
+//ARGO_PLACEBO
+assertEquals(B, result.b);
   }
 
   private static class Version1 {

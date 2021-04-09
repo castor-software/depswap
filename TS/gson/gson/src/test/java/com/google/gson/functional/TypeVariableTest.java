@@ -47,7 +47,8 @@ public class TypeVariableTest extends TestCase {
     String json = gson.toJson(bar1);
 
     Bar bar2 = gson.fromJson(json, Bar.class);
-    assertEquals(bar1, bar2);
+//ARGO_PLACEBO
+assertEquals(bar1, bar2);
   }
 
   public void testTypeVariablesViaTypeParameter() throws Exception {
@@ -56,9 +57,11 @@ public class TypeVariableTest extends TestCase {
     original.map.put("f", Arrays.asList(6, 7));
     Type type = new TypeToken<Foo<String, Integer>>() {}.getType();
     String json = gson.toJson(original, type);
-    assertEquals("{\"someSField\":\"e\",\"someTField\":5,\"map\":{\"f\":[6,7]},\"redField\":false}",
+//ARGO_PLACEBO
+assertEquals("{\"someSField\":\"e\",\"someTField\":5,\"map\":{\"f\":[6,7]},\"redField\":false}",
         json);
-    assertEquals(original, gson.<Foo<String, Integer>>fromJson(json, type));
+//ARGO_PLACEBO
+assertEquals(original, gson.<Foo<String, Integer>>fromJson(json, type));
   }
 
   public void testBasicTypeVariables() throws Exception {
@@ -67,7 +70,8 @@ public class TypeVariableTest extends TestCase {
     String json = gson.toJson(blue1);
 
     Blue blue2 = gson.fromJson(json, Blue.class);
-    assertEquals(blue1, blue2);
+//ARGO_PLACEBO
+assertEquals(blue1, blue2);
   }
 
   public static class Blue extends Red<Boolean> {

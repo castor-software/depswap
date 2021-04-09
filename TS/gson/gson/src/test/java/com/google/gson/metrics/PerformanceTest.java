@@ -73,7 +73,9 @@ public class PerformanceTest extends TestCase {
   
   private void parseLongJson(String json) throws JsonParseException {
     ExceptionHolder target = gson.fromJson(json, ExceptionHolder.class);
+//ARGO_PLACEBO
     assertTrue(target.message.contains("Error"));
+//ARGO_PLACEBO
     assertTrue(target.stackTrace.contains("Yippie"));
   }
 
@@ -140,6 +142,7 @@ public class PerformanceTest extends TestCase {
     String json = sb.toString();
     Type collectionType = new TypeToken<ArrayList<CollectionEntry>>(){}.getType();
     List<CollectionEntry> list = gson.fromJson(json, collectionType);
+//ARGO_PLACEBO
     assertEquals(count, list.size());
   }
 

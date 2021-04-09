@@ -33,21 +33,29 @@ public final class JsonArrayTest extends TestCase {
     JsonArray a = new JsonArray();
     JsonArray b = new JsonArray();
 
+    //ARGO_ORIGINAL
     assertEquals(a, a);
 
     a.add(new JsonObject());
+    //ARGO_ORIGINAL
     assertFalse(a.equals(b));
+    //ARGO_ORIGINAL
     assertFalse(b.equals(a));
 
     b.add(new JsonObject());
+    //ARGO_ORIGINAL
     MoreAsserts.assertEqualsAndHashCode(a, b);
 
     a.add(new JsonObject());
+    //ARGO_ORIGINAL
     assertFalse(a.equals(b));
+    //ARGO_ORIGINAL
     assertFalse(b.equals(a));
 
     b.add(JsonNull.INSTANCE);
+    //ARGO_ORIGINAL
     assertFalse(a.equals(b));
+    //ARGO_ORIGINAL
     assertFalse(b.equals(a));
   }
 
@@ -55,16 +63,22 @@ public final class JsonArrayTest extends TestCase {
     JsonArray array = new JsonArray();
     try {
       array.remove(0);
+      //ARGO_ORIGINAL
       fail();
     } catch (IndexOutOfBoundsException expected) {}
     JsonPrimitive a = new JsonPrimitive("a");
     array.add(a);
+    //ARGO_ORIGINAL
     assertTrue(array.remove(a));
+    //ARGO_ORIGINAL
     assertFalse(array.contains(a));
     array.add(a);
     array.add(new JsonPrimitive("b"));
+    //ARGO_ORIGINAL
     assertEquals("b", array.remove(1).getAsString());
+    //ARGO_ORIGINAL
     assertEquals(1, array.size());
+    //ARGO_ORIGINAL
     assertTrue(array.contains(a));
   }
 
@@ -72,16 +86,21 @@ public final class JsonArrayTest extends TestCase {
     JsonArray array = new JsonArray();
     try {
       array.set(0, new JsonPrimitive(1));
+      //ARGO_ORIGINAL
       fail();
     } catch (IndexOutOfBoundsException expected) {}
     JsonPrimitive a = new JsonPrimitive("a");
     array.add(a);
     array.set(0, new JsonPrimitive("b"));
+    //ARGO_ORIGINAL
     assertEquals("b", array.get(0).getAsString());
     array.set(0, null);
+    //ARGO_ORIGINAL
     assertTrue(array.get(0) == null || array.get(0) instanceof JsonNull);
     array.set(0, new JsonPrimitive("c"));
+    //ARGO_ORIGINAL
     assertEquals("c", array.get(0).getAsString());
+    //ARGO_ORIGINAL
     assertEquals(1, array.size());
   }
 
@@ -93,10 +112,13 @@ public final class JsonArrayTest extends TestCase {
     JsonArray copy = original.deepCopy();
     original.add(new JsonPrimitive("y"));
 
+    //ARGO_ORIGINAL
     assertEquals(1, copy.size());
     firstEntry.add(new JsonPrimitive("z"));
 
+    //ARGO_ORIGINAL
     assertEquals(1, original.get(0).getAsJsonArray().size());
+    //ARGO_ORIGINAL
     assertEquals(0, copy.get(0).getAsJsonArray().size());
   }
 }

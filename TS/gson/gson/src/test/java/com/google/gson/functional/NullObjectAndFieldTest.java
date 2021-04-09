@@ -51,15 +51,18 @@ public class NullObjectAndFieldTest extends TestCase {
   public void testTopLevelNullObjectSerialization() {
     Gson gson = gsonBuilder.create();
     String actual = gson.toJson(null);
+    //ARGO_PLACEBO
     assertEquals("null", actual);
 
     actual = gson.toJson(null, String.class);
+    //ARGO_PLACEBO
     assertEquals("null", actual);
   }
 
   public void testTopLevelNullObjectDeserialization() throws Exception {
     Gson gson = gsonBuilder.create();
     String actual = gson.fromJson("null", String.class);
+    //ARGO_PLACEBO
     assertNull(actual);
   }
 
@@ -68,12 +71,14 @@ public class NullObjectAndFieldTest extends TestCase {
     ClassWithObjects target = new ClassWithObjects(null);
     String actual = gson.toJson(target);
     String expected = "{\"bag\":null}";
+    //ARGO_PLACEBO
     assertEquals(expected, actual);
   }
 
   public void testExplicitDeserializationOfNulls() throws Exception {
     Gson gson = gsonBuilder.create();
     ClassWithObjects target = gson.fromJson("{\"bag\":null}", ClassWithObjects.class);
+    //ARGO_PLACEBO
     assertNull(target.bag);
   }
   
@@ -81,6 +86,7 @@ public class NullObjectAndFieldTest extends TestCase {
     Gson gson = gsonBuilder.create();
     ClassWithMembers target = new ClassWithMembers();
     String json = gson.toJson(target);
+    //ARGO_PLACEBO
     assertTrue(json.contains("\"array\":null"));
   }
   
@@ -91,6 +97,7 @@ public class NullObjectAndFieldTest extends TestCase {
     Gson gson = gsonBuilder.serializeNulls().create();
     ClassWithNullWrappedPrimitive target = new ClassWithNullWrappedPrimitive();
     String json = gson.toJson(target);
+    //ARGO_PLACEBO
     assertTrue(json.contains("\"value\":null"));
   }
   
@@ -101,6 +108,7 @@ public class NullObjectAndFieldTest extends TestCase {
     Gson gson = gsonBuilder.create();
     String json = "{'value':null}";
     ClassWithNullWrappedPrimitive target = gson.fromJson(json, ClassWithNullWrappedPrimitive.class);
+    //ARGO_PLACEBO
     assertNull(target.value);
   }
   
@@ -108,6 +116,7 @@ public class NullObjectAndFieldTest extends TestCase {
     Gson gson = gsonBuilder.create();
     ClassWithMembers target = new ClassWithMembers();
     String json = gson.toJson(target);
+    //ARGO_PLACEBO
     assertTrue(json.contains("\"col\":null"));
   }
   
@@ -115,6 +124,7 @@ public class NullObjectAndFieldTest extends TestCase {
     Gson gson = gsonBuilder.create();
     ClassWithMembers target = new ClassWithMembers();
     String json = gson.toJson(target);
+    //ARGO_PLACEBO
     assertTrue(json.contains("\"str\":null"));
   }
 
@@ -124,6 +134,7 @@ public class NullObjectAndFieldTest extends TestCase {
     ClassWithObjects target = new ClassWithObjects(new BagOfPrimitives());
     String actual = gson.toJson(target);
     String expected = "{\"bag\":null}";
+    //ARGO_ORIGINAL
     assertEquals(expected, actual);
   }
   
@@ -131,10 +142,12 @@ public class NullObjectAndFieldTest extends TestCase {
     gsonBuilder = new GsonBuilder();
     Gson gson = gsonBuilder.create();
     String result = gson.toJson(new ClassWithMembers());
+    //ARGO_PLACEBO
     assertEquals("{}", result);
 
     gson = gsonBuilder.serializeNulls().create();
     result = gson.toJson(new ClassWithMembers());
+    //ARGO_PLACEBO
     assertTrue(result.contains("\"str\":null"));
   }
   
@@ -142,10 +155,12 @@ public class NullObjectAndFieldTest extends TestCase {
     gsonBuilder = new GsonBuilder();
     Gson gson = gsonBuilder.create();
     String result = gson.toJson(new String[] { "1", null, "3" });
+    //ARGO_PLACEBO
     assertEquals("[\"1\",null,\"3\"]", result);
 
     gson = gsonBuilder.serializeNulls().create();
     result = gson.toJson(new String[] { "1", null, "3" });
+    //ARGO_PLACEBO
     assertEquals("[\"1\",null,\"3\"]", result);
   }
 
@@ -154,12 +169,19 @@ public class NullObjectAndFieldTest extends TestCase {
     Gson gson = new Gson();
     ClassWithInitializedMembers target =
         gson.fromJson("{array:[1,2,3]}", ClassWithInitializedMembers.class);
+    //ARGO_PLACEBO
     assertTrue(target.array.length == 3 && target.array[1] == 2);
+    //ARGO_PLACEBO
     assertEquals(ClassWithInitializedMembers.MY_STRING_DEFAULT, target.str1);
+    //ARGO_PLACEBO
     assertNull(target.str2);
+    //ARGO_PLACEBO
     assertEquals(ClassWithInitializedMembers.MY_INT_DEFAULT, target.int1);
+    //ARGO_PLACEBO
     assertEquals(0, target.int2); // test the default value of a primitive int field per JVM spec
+    //ARGO_PLACEBO
     assertEquals(ClassWithInitializedMembers.MY_BOOLEAN_DEFAULT, target.bool1);
+    //ARGO_PLACEBO
     assertFalse(target.bool2); // test the default value of a primitive boolean field per JVM spec
   }
 
@@ -204,6 +226,7 @@ public class NullObjectAndFieldTest extends TestCase {
     Gson gson = new Gson();
     String json = "{value:null}";
     ObjectWithField obj = gson.fromJson(json, ObjectWithField.class);
+    //ARGO_PLACEBO
     assertNull(obj.value);
   }
 
@@ -218,6 +241,7 @@ public class NullObjectAndFieldTest extends TestCase {
     ObjectWithField target = new ObjectWithField();
     target.value = "value1";
     String json = gson.toJson(target);
+    //ARGO_PLACEBO
     assertFalse(json.contains("value1"));
   }
 
@@ -231,6 +255,7 @@ public class NullObjectAndFieldTest extends TestCase {
         }).create();
     String json = "{value:'value1'}";
     ObjectWithField target = gson.fromJson(json, ObjectWithField.class);
+    //ARGO_ORIGINAL
     assertNull(target);
   }
 

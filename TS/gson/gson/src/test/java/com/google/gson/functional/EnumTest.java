@@ -54,11 +54,13 @@ public class EnumTest extends TestCase {
 
   public void testTopLevelEnumSerialization() throws Exception {
     String result = gson.toJson(MyEnum.VALUE1);
+    //ARGO_PLACEBO
     assertEquals('"' + MyEnum.VALUE1.toString() + '"', result);
   }
 
   public void testTopLevelEnumDeserialization() throws Exception {
     MyEnum result = gson.fromJson('"' + MyEnum.VALUE1.toString() + '"', MyEnum.class);
+    //ARGO_PLACEBO
     assertEquals(MyEnum.VALUE1, result);
   }
 
@@ -69,8 +71,10 @@ public class EnumTest extends TestCase {
     target.add(MyEnum.VALUE2);
     String expectedJson = "[\"VALUE1\",\"VALUE2\"]";
     String actualJson = gson.toJson(target);
+    //ARGO_PLACEBO
     assertEquals(expectedJson, actualJson);
     actualJson = gson.toJson(target, type);
+    //ARGO_PLACEBO
     assertEquals(expectedJson, actualJson);
   }
 
@@ -78,19 +82,24 @@ public class EnumTest extends TestCase {
     Type type = new TypeToken<Collection<MyEnum>>() {}.getType();
     String json = "[\"VALUE1\",\"VALUE2\"]";
     Collection<MyEnum> target = gson.fromJson(json, type);
+    //ARGO_PLACEBO
     MoreAsserts.assertContains(target, MyEnum.VALUE1);
+    //ARGO_PLACEBO
     MoreAsserts.assertContains(target, MyEnum.VALUE2);
   }
 
   public void testClassWithEnumFieldSerialization() throws Exception {
     ClassWithEnumFields target = new ClassWithEnumFields();
+    //ARGO_PLACEBO
     assertEquals(target.getExpectedJson(), gson.toJson(target));
   }
 
   public void testClassWithEnumFieldDeserialization() throws Exception {
     String json = "{value1:'VALUE1',value2:'VALUE2'}";
     ClassWithEnumFields target = gson.fromJson(json, ClassWithEnumFields.class);
+    //ARGO_PLACEBO
     assertEquals(MyEnum.VALUE1,target.value1);
+    //ARGO_PLACEBO
     assertEquals(MyEnum.VALUE2,target.value2);
   }
 
@@ -110,10 +119,15 @@ public class EnumTest extends TestCase {
    * Test for issue 226.
    */
   public void testEnumSubclass() {
+    //ARGO_PLACEBO
     assertFalse(Roshambo.class == Roshambo.ROCK.getClass());
+    //ARGO_PLACEBO
     assertEquals("\"ROCK\"", gson.toJson(Roshambo.ROCK));
+    //ARGO_PLACEBO
     assertEquals("[\"ROCK\",\"PAPER\",\"SCISSORS\"]", gson.toJson(EnumSet.allOf(Roshambo.class)));
+    //ARGO_PLACEBO
     assertEquals(Roshambo.ROCK, gson.fromJson("\"ROCK\"", Roshambo.class));
+    //ARGO_PLACEBO
     assertEquals(EnumSet.allOf(Roshambo.class),
         gson.fromJson("[\"ROCK\",\"PAPER\",\"SCISSORS\"]", new TypeToken<Set<Roshambo>>() {}.getType()));
   }
@@ -122,10 +136,15 @@ public class EnumTest extends TestCase {
     gson = new GsonBuilder()
         .registerTypeHierarchyAdapter(Roshambo.class, new MyEnumTypeAdapter())
         .create();
+    //ARGO_PLACEBO
     assertFalse(Roshambo.class == Roshambo.ROCK.getClass());
+    //ARGO_PLACEBO
     assertEquals("\"123ROCK\"", gson.toJson(Roshambo.ROCK));
+    //ARGO_PLACEBO
     assertEquals("[\"123ROCK\",\"123PAPER\",\"123SCISSORS\"]", gson.toJson(EnumSet.allOf(Roshambo.class)));
+    //ARGO_PLACEBO
     assertEquals(Roshambo.ROCK, gson.fromJson("\"123ROCK\"", Roshambo.class));
+    //ARGO_PLACEBO
     assertEquals(EnumSet.allOf(Roshambo.class),
         gson.fromJson("[\"123ROCK\",\"123PAPER\",\"123SCISSORS\"]", new TypeToken<Set<Roshambo>>() {}.getType()));
   }
@@ -140,12 +159,16 @@ public class EnumTest extends TestCase {
 
     Type collectionType = new TypeToken<Collection<Roshambo>>() {}.getType();
     Collection<Roshambo> actualJsonList = gson.fromJson(json, collectionType);
+    //ARGO_PLACEBO
     MoreAsserts.assertContains(actualJsonList, Roshambo.ROCK);
+    //ARGO_PLACEBO
     MoreAsserts.assertContains(actualJsonList, Roshambo.PAPER);
   }
 
   public void testEnumCaseMapping() {
+    //ARGO_PLACEBO
     assertEquals(Gender.MALE, gson.fromJson("\"boy\"", Gender.class));
+    //ARGO_PLACEBO
     assertEquals("\"boy\"", gson.toJson(Gender.MALE, Gender.class));
   }
 
@@ -154,8 +177,11 @@ public class EnumTest extends TestCase {
     String json = gson.toJson(foo);
     Type type = new TypeToken<EnumSet<Roshambo>>() {}.getType();
     EnumSet<Roshambo> bar = gson.fromJson(json, type);
+    //ARGO_PLACEBO
     assertTrue(bar.contains(Roshambo.ROCK));
+    //ARGO_PLACEBO
     assertTrue(bar.contains(Roshambo.PAPER));
+    //ARGO_PLACEBO
     assertFalse(bar.contains(Roshambo.SCISSORS));
   }
 
@@ -200,7 +226,9 @@ public class EnumTest extends TestCase {
   }
 
   public void testEnumClassWithFields() {
+    //ARGO_PLACEBO
 	  assertEquals("\"RED\"", gson.toJson(Color.RED));
+    //ARGO_PLACEBO
 	  assertEquals("red", gson.fromJson("RED", Color.class).value);
   }
 

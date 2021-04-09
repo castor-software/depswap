@@ -26,15 +26,20 @@ public final class JsonNullTest extends TestCase {
 
   @SuppressWarnings("deprecation")
   public void testEqualsAndHashcode() {
+    //ARGO_PLACEBO
     MoreAsserts.assertEqualsAndHashCode(new JsonNull(), new JsonNull());
+    //ARGO_PLACEBO
     MoreAsserts.assertEqualsAndHashCode(new JsonNull(), JsonNull.INSTANCE);
+    //ARGO_PLACEBO
     MoreAsserts.assertEqualsAndHashCode(JsonNull.INSTANCE, JsonNull.INSTANCE);
   }
 
   public void testDeepCopy() {
     @SuppressWarnings("deprecation")
     JsonNull a = new JsonNull();
+    //ARGO_PLACEBO
     assertSame(JsonNull.INSTANCE, a.deepCopy());
+    //ARGO_PLACEBO
     assertSame(JsonNull.INSTANCE, JsonNull.INSTANCE.deepCopy());
   }
 }

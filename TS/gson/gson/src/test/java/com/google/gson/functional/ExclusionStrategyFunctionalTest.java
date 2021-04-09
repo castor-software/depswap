@@ -56,8 +56,11 @@ public class ExclusionStrategyFunctionalTest extends TestCase {
   public void testExclusionStrategySerialization() throws Exception {
     Gson gson = createGson(new MyExclusionStrategy(String.class), true);
     String json = gson.toJson(src);
+    //ARGO_PLACEBO
     assertFalse(json.contains("\"stringField\""));
+    //ARGO_PLACEBO
     assertFalse(json.contains("\"annotatedField\""));
+    //ARGO_PLACEBO
     assertTrue(json.contains("\"longField\""));
   }
 
@@ -65,8 +68,11 @@ public class ExclusionStrategyFunctionalTest extends TestCase {
     String json = "{\"annotatedField\":1,\"stringField\":\"x\",\"longField\":2}";
     Gson gson = createGson(new MyExclusionStrategy(String.class), true);
     SampleObjectForTest value = gson.fromJson(json, SampleObjectForTest.class);
+    //ARGO_PLACEBO
     assertEquals(1, value.annotatedField);
+    //ARGO_PLACEBO
     assertEquals("x", value.stringField);
+    //ARGO_PLACEBO
     assertEquals(2, value.longField);
   }
 
@@ -78,18 +84,24 @@ public class ExclusionStrategyFunctionalTest extends TestCase {
     json.add("longField", new JsonPrimitive(1212311L));
 
     SampleObjectForTest target = gson.fromJson(json, SampleObjectForTest.class);
+    //ARGO_ORIGINAL
     assertEquals(1212311L, target.longField);
 
     // assert excluded fields are set to the defaults
+    //ARGO_ORIGINAL
     assertEquals(src.annotatedField, target.annotatedField);
+    //ARGO_ORIGINAL
     assertEquals(src.stringField, target.stringField);
   }
 
   public void testExclusionStrategySerializationDoesNotImpactSerialization() throws Exception {
     Gson gson = createGson(new MyExclusionStrategy(String.class), false);
     String json = gson.toJson(src);
+    //ARGO_PLACEBO
     assertTrue(json.contains("\"stringField\""));
+    //ARGO_PLACEBO
     assertTrue(json.contains("\"annotatedField\""));
+    //ARGO_PLACEBO
     assertTrue(json.contains("\"longField\""));
   }
 
@@ -100,15 +112,21 @@ public class ExclusionStrategyFunctionalTest extends TestCase {
 
     Gson gson = createGson(new MyExclusionStrategy(String.class), false);
     JsonObject json = gson.toJsonTree(testObj).getAsJsonObject();
+    //ARGO_ORIGINAL
     assertEquals(testObj.annotatedField, json.get("annotatedField").getAsInt());
+    //ARGO_ORIGINAL
     assertEquals(testObj.stringField, json.get("stringField").getAsString());
+    //ARGO_ORIGINAL
     assertEquals(testObj.longField, json.get("longField").getAsLong());
 
     SampleObjectForTest target = gson.fromJson(json, SampleObjectForTest.class);
+    //ARGO_ORIGINAL
     assertEquals(testObj.longField, target.longField);
 
     // assert excluded fields are set to the defaults
+    //ARGO_ORIGINAL
     assertEquals(src.annotatedField, target.annotatedField);
+    //ARGO_ORIGINAL
     assertEquals(src.stringField, target.stringField);
   }
 
@@ -116,6 +134,7 @@ public class ExclusionStrategyFunctionalTest extends TestCase {
     Gson gson = new GsonBuilder()
         .addSerializationExclusionStrategy(EXCLUDE_SAMPLE_OBJECT_FOR_TEST)
         .create();
+    //ARGO_PLACEBO
     assertEquals("null", gson.toJson(new SampleObjectForTest(), SampleObjectForTest.class));
   }
 
@@ -125,8 +144,11 @@ public class ExclusionStrategyFunctionalTest extends TestCase {
         .create();
     String json = "{\"annotatedField\":1,\"stringField\":\"x\",\"longField\":2}";
     SampleObjectForTest value = gson.fromJson(json, SampleObjectForTest.class);
+    //ARGO_PLACEBO
     assertEquals(1, value.annotatedField);
+    //ARGO_PLACEBO
     assertEquals("x", value.stringField);
+    //ARGO_PLACEBO
     assertEquals(2, value.longField);
   }
 
@@ -136,6 +158,7 @@ public class ExclusionStrategyFunctionalTest extends TestCase {
         .create();
     String json = "{\"annotatedField\":1,\"stringField\":\"x\",\"longField\":2}";
     SampleObjectForTest value = gson.fromJson(json, SampleObjectForTest.class);
+    //ARGO_PLACEBO
     assertNull(value);
   }
 
@@ -144,8 +167,11 @@ public class ExclusionStrategyFunctionalTest extends TestCase {
         .addDeserializationExclusionStrategy(EXCLUDE_SAMPLE_OBJECT_FOR_TEST)
         .create();
     String json = gson.toJson(new SampleObjectForTest(), SampleObjectForTest.class);
+    //ARGO_PLACEBO
     assertTrue(json.contains("\"stringField\""));
+    //ARGO_PLACEBO
     assertTrue(json.contains("\"annotatedField\""));
+    //ARGO_PLACEBO
     assertTrue(json.contains("\"longField\""));
   }
 

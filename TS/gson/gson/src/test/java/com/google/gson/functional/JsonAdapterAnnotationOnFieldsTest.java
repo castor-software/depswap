@@ -38,16 +38,20 @@ public final class JsonAdapterAnnotationOnFieldsTest extends TestCase {
   public void testClassAnnotationAdapterTakesPrecedenceOverDefault() {
     Gson gson = new Gson();
     String json = gson.toJson(new Computer(new User("Inderjeet Singh")));
+    //ARGO_PLACEBO
     assertEquals("{\"user\":\"UserClassAnnotationAdapter\"}", json);
     Computer computer = gson.fromJson("{'user':'Inderjeet Singh'}", Computer.class);
+    //ARGO_PLACEBO
     assertEquals("UserClassAnnotationAdapter", computer.user.name);
   }
 
   public void testClassAnnotationAdapterFactoryTakesPrecedenceOverDefault() {
     Gson gson = new Gson();
     String json = gson.toJson(new Gizmo(new Part("Part")));
+    //ARGO_PLACEBO
     assertEquals("{\"part\":\"GizmoPartTypeAdapterFactory\"}", json);
     Gizmo computer = gson.fromJson("{'part':'Part'}", Gizmo.class);
+    //ARGO_PLACEBO
     assertEquals("GizmoPartTypeAdapterFactory", computer.part.name);
   }
 
@@ -56,8 +60,10 @@ public final class JsonAdapterAnnotationOnFieldsTest extends TestCase {
         .registerTypeAdapter(User.class, new RegisteredUserAdapter())
         .create();
     String json = gson.toJson(new Computer(new User("Inderjeet Singh")));
+    //ARGO_PLACEBO
     assertEquals("{\"user\":\"RegisteredUserAdapter\"}", json);
     Computer computer = gson.fromJson("{'user':'Inderjeet Singh'}", Computer.class);
+    //ARGO_PLACEBO
     assertEquals("RegisteredUserAdapter", computer.user.name);
   }
 
@@ -72,16 +78,20 @@ public final class JsonAdapterAnnotationOnFieldsTest extends TestCase {
         }
       }).create();
     String json = gson.toJson(new Gadget(new Part("screen")));
+    //ARGO_PLACEBO
     assertEquals("{\"part\":\"PartJsonFieldAnnotationAdapter\"}", json);
     Gadget gadget = gson.fromJson("{'part':'screen'}", Gadget.class);
+    //ARGO_PLACEBO
     assertEquals("PartJsonFieldAnnotationAdapter", gadget.part.name);
   }
 
   public void testFieldAnnotationTakesPrecedenceOverClassAnnotation() {
     Gson gson = new Gson();
     String json = gson.toJson(new Computer2(new User("Inderjeet Singh")));
+    //ARGO_PLACEBO
     assertEquals("{\"user\":\"UserFieldAnnotationAdapter\"}", json);
     Computer2 target = gson.fromJson("{'user':'Interjeet Singh'}", Computer2.class);
+    //ARGO_PLACEBO
     assertEquals("UserFieldAnnotationAdapter", target.user.name);
   }
 
@@ -191,7 +201,9 @@ public final class JsonAdapterAnnotationOnFieldsTest extends TestCase {
     Gson gson = new Gson();
     String json = "{'part1':'name','part2':{'name':'name2'}}";
     GadgetWithTwoParts gadget = gson.fromJson(json, GadgetWithTwoParts.class);
+    //ARGO_PLACEBO
     assertEquals("PartJsonFieldAnnotationAdapter", gadget.part1.name);
+    //ARGO_PLACEBO
     assertEquals("name2", gadget.part2.name);
   }
 
@@ -209,9 +221,11 @@ public final class JsonAdapterAnnotationOnFieldsTest extends TestCase {
     String fromJson = "{'part':null}";
 
     GadgetWithOptionalPart gadget = gson.fromJson(fromJson, GadgetWithOptionalPart.class);
+    //ARGO_PLACEBO
     assertNull(gadget.part);
 
     String toJson = gson.toJson(gadget);
+    //ARGO_PLACEBO
     assertFalse(toJson.contains("PartJsonFieldAnnotationAdapter"));
   }
 
@@ -228,8 +242,10 @@ public final class JsonAdapterAnnotationOnFieldsTest extends TestCase {
   public void testNonPrimitiveFieldAnnotationTakesPrecedenceOverDefault() {
     Gson gson = new Gson();
     String json = gson.toJson(new GadgetWithOptionalPart(new Part("foo")));
+    //ARGO_PLACEBO
     assertEquals("{\"part\":\"PartJsonFieldAnnotationAdapter\"}", json);
     GadgetWithOptionalPart gadget = gson.fromJson("{'part':'foo'}", GadgetWithOptionalPart.class);
+    //ARGO_PLACEBO
     assertEquals("PartJsonFieldAnnotationAdapter", gadget.part.name);
   }
 
@@ -237,8 +253,10 @@ public final class JsonAdapterAnnotationOnFieldsTest extends TestCase {
   public void testPrimitiveFieldAnnotationTakesPrecedenceOverDefault() {
     Gson gson = new Gson();
     String json = gson.toJson(new GadgetWithPrimitivePart(42));
+    //ARGO_PLACEBO
     assertEquals("{\"part\":\"42\"}", json);
     GadgetWithPrimitivePart gadget = gson.fromJson(json, GadgetWithPrimitivePart.class);
+    //ARGO_PLACEBO
     assertEquals(42, gadget.part);
   }
 
@@ -276,8 +294,10 @@ public final class JsonAdapterAnnotationOnFieldsTest extends TestCase {
   public void testFieldAnnotationWorksForParameterizedType() {
     Gson gson = new Gson();
     String json = gson.toJson(new Gizmo2(Arrays.asList(new Part("Part"))));
+    //ARGO_PLACEBO
     assertEquals("{\"part\":\"GizmoPartTypeAdapterFactory\"}", json);
     Gizmo2 computer = gson.fromJson("{'part':'Part'}", Gizmo2.class);
+    //ARGO_PLACEBO
     assertEquals("GizmoPartTypeAdapterFactory", computer.part.get(0).name);
   }
 

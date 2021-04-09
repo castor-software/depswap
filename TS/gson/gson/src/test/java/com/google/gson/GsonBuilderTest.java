@@ -49,6 +49,7 @@ public class GsonBuilderTest extends TestCase {
     Gson gson = new GsonBuilder()
         .excludeFieldsWithModifiers(Modifier.VOLATILE, Modifier.PRIVATE)
         .create();
+    //ARGO_PLACEBO
     assertEquals("{\"d\":\"d\"}", gson.toJson(new HasModifiers()));
   }
 
@@ -78,6 +79,7 @@ public class GsonBuilderTest extends TestCase {
     Gson gson = new GsonBuilder()
         .excludeFieldsWithModifiers()
         .create();
+    //ARGO_PLACEBO
     assertEquals("{\"a\":\"a\"}", gson.toJson(new HasTransients()));
   }
 

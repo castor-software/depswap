@@ -54,7 +54,9 @@ public final class RuntimeTypeAdapterFactoryFunctionalTest extends TestCase {
     shape = new Square(15);
     json = gson.toJson(shape);
     shape = gson.fromJson(json, Shape.class);
+    //ARGO_ORIGINAL
     assertEquals(15, ((Square)shape).side);
+    //ARGO_ORIGINAL
     assertEquals(ShapeType.SQUARE, shape.type);
   }
 

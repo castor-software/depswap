@@ -66,6 +66,7 @@ public class CustomTypeAdaptersTest extends TestCase {
       }
     }).create();
     ClassWithCustomTypeConverter target = new ClassWithCustomTypeConverter();
+    //ARGO_ORIGINAL
     assertEquals("{\"bag\":5,\"value\":25}", gson.toJson(target));
   }
 
@@ -82,6 +83,7 @@ public class CustomTypeAdaptersTest extends TestCase {
     }).create();
     String json = "{\"bag\":5,\"value\":25}";
     ClassWithCustomTypeConverter target = gson.fromJson(json, ClassWithCustomTypeConverter.class);
+    //ARGO_ORIGINAL
     assertEquals(5, target.getBag().getIntValue());
   }
 
@@ -115,6 +117,7 @@ public class CustomTypeAdaptersTest extends TestCase {
       }
     }).create();
     ClassWithCustomTypeConverter target = new ClassWithCustomTypeConverter();
+    //ARGO_PLACEBO
     assertEquals("{\"bag\":6,\"value\":10}", gson.toJson(target));
   }
 
@@ -129,6 +132,7 @@ public class CustomTypeAdaptersTest extends TestCase {
     }).create();
     String json = "{\"bag\":7,\"value\":25}";
     ClassWithCustomTypeConverter target = gson.fromJson(json, ClassWithCustomTypeConverter.class);
+    //ARGO_PLACEBO
     assertEquals(7, target.getBag().getIntValue());
   }
 
@@ -143,9 +147,11 @@ public class CustomTypeAdaptersTest extends TestCase {
     }).create();
     Base b = new Base();
     String json = gson.toJson(b);
+    //ARGO_ORIGINAL
     assertTrue(json.contains("value"));
     b = new Derived();
     json = gson.toJson(b);
+    //ARGO_ORIGINAL
     assertTrue(json.contains("derivedValue"));
   }
 
@@ -160,10 +166,13 @@ public class CustomTypeAdaptersTest extends TestCase {
     }).create();
     Base b = new Base();
     String json = gson.toJson(b);
+    //ARGO_ORIGINAL
     assertTrue(json.contains("value"));
     b = new Derived();
     json = gson.toJson(b, Base.class);
+    //ARGO_ORIGINAL
     assertTrue(json.contains("value"));
+    //ARGO_ORIGINAL
     assertFalse(json.contains("derivedValue"));
   }
 
@@ -216,7 +225,9 @@ public class CustomTypeAdaptersTest extends TestCase {
           }
         })
         .create();
+    //ARGO_PLACEBO
     assertEquals("1", gson.toJson(true, boolean.class));
+    //ARGO_PLACEBO
     assertEquals("true", gson.toJson(true, Boolean.class));
   }
 
@@ -230,7 +241,9 @@ public class CustomTypeAdaptersTest extends TestCase {
           }
         })
         .create();
+    //ARGO_PLACEBO
     assertEquals(Boolean.TRUE, gson.fromJson("1", boolean.class));
+    //ARGO_PLACEBO
     assertEquals(Boolean.TRUE, gson.fromJson("true", Boolean.class));
   }
 
@@ -247,6 +260,7 @@ public class CustomTypeAdaptersTest extends TestCase {
     }).create();
     byte[] data = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
     String json = gson.toJson(data);
+    //ARGO_PLACEBO
     assertEquals("\"0123456789\"", json);
   }
 
@@ -268,6 +282,7 @@ public class CustomTypeAdaptersTest extends TestCase {
     byte[] actual = gson.fromJson(json, byte[].class);
     byte[] expected = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
     for (int i = 0; i < actual.length; ++i) {
+      //ARGO_PLACEBO
       assertEquals(expected[i], actual[i]);
     }
   }
@@ -317,6 +332,7 @@ public class CustomTypeAdaptersTest extends TestCase {
     Set<StringHolder> setOfHolders = new HashSet<StringHolder>();
     setOfHolders.add(holder);
     String json = gson.toJson(setOfHolders, setType);
+    //ARGO_PLACEBO
     assertTrue(json.contains("Jacob:Tomaw"));
   }
 
@@ -329,6 +345,7 @@ public class CustomTypeAdaptersTest extends TestCase {
     Set<StringHolder> setOfHolders = new HashSet<StringHolder>();
     setOfHolders.add(holder);
     String json = gson.toJson(setOfHolders);
+    //ARGO_PLACEBO
     assertTrue(json.contains("Jacob:Tomaw"));
   }
 
@@ -341,7 +358,9 @@ public class CustomTypeAdaptersTest extends TestCase {
     Set<StringHolder> setOfHolders = gson.fromJson("['Jacob:Tomaw']", setType);
     assertEquals(1, setOfHolders.size());
     StringHolder foo = setOfHolders.iterator().next();
+    //ARGO_PLACEBO
     assertEquals("Jacob", foo.part1);
+    //ARGO_PLACEBO
     assertEquals("Tomaw", foo.part2);
   }
 
@@ -355,6 +374,7 @@ public class CustomTypeAdaptersTest extends TestCase {
     Map<String, StringHolder> mapOfHolders = new HashMap<String, StringHolder>();
     mapOfHolders.put("foo", holder);
     String json = gson.toJson(mapOfHolders, mapType);
+    //ARGO_PLACEBO
     assertTrue(json.contains("\"foo\":\"Jacob:Tomaw\""));
   }
 
@@ -367,6 +387,7 @@ public class CustomTypeAdaptersTest extends TestCase {
     Map<String, StringHolder> mapOfHolders = new HashMap<String, StringHolder>();
     mapOfHolders.put("foo", holder);
     String json = gson.toJson(mapOfHolders);
+    //ARGO_PLACEBO
     assertTrue(json.contains("\"foo\":\"Jacob:Tomaw\""));
   }
 
@@ -377,9 +398,12 @@ public class CustomTypeAdaptersTest extends TestCase {
       .create();
     Type mapType = new TypeToken<Map<String, StringHolder>>() {}.getType();
     Map<String, StringHolder> mapOfFoo = gson.fromJson("{'foo':'Jacob:Tomaw'}", mapType);
+    //ARGO_PLACEBO
     assertEquals(1, mapOfFoo.size());
     StringHolder foo = mapOfFoo.get("foo");
+    //ARGO_PLACEBO
     assertEquals("Jacob", foo.part1);
+    //ARGO_PLACEBO
     assertEquals("Tomaw", foo.part2);
   }
 
@@ -389,6 +413,7 @@ public class CustomTypeAdaptersTest extends TestCase {
         .create();
     DataHolderWrapper target = new DataHolderWrapper(new DataHolder("abc"));
     String json = gson.toJson(target);
+    //ARGO_ORIGINAL
     assertEquals("{\"wrappedData\":{\"myData\":\"abc\"}}", json);
   }
 
@@ -398,6 +423,7 @@ public class CustomTypeAdaptersTest extends TestCase {
         .create();
     String json = "{wrappedData:null}";
     DataHolderWrapper actual = gson.fromJson(json, DataHolderWrapper.class);
+    //ARGO_PLACEBO
     assertNull(actual.wrappedData);
   }
 
@@ -406,9 +432,13 @@ public class CustomTypeAdaptersTest extends TestCase {
     Gson gson = new GsonBuilder()
         .registerTypeHierarchyAdapter(Date.class, new DateTypeAdapter())
         .create();
+    //ARGO_PLACEBO
     assertEquals("0", gson.toJson(new Date(0)));
+    //ARGO_PLACEBO
     assertEquals("0", gson.toJson(new java.sql.Date(0)));
+    //ARGO_PLACEBO
     assertEquals(new Date(0), gson.fromJson("0", Date.class));
+    //ARGO_PLACEBO
     assertEquals(new java.sql.Date(0), gson.fromJson("0", java.sql.Date.class));
   }
 

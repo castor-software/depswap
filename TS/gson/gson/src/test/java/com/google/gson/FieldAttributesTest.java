@@ -43,6 +43,7 @@ public class FieldAttributesTest extends TestCase {
   public void testNullField() throws Exception {
     try {
       new FieldAttributes(null);
+      //ARGO_PLACEBO
       fail("Field parameter can not be null");
     } catch (NullPointerException expected) { }
   }
@@ -52,27 +53,38 @@ public class FieldAttributesTest extends TestCase {
   }
 
   public void testModifiers() throws Exception {
+    //ARGO_PLACEBO
     assertFalse(fieldAttributes.hasModifier(Modifier.STATIC));
+    //ARGO_PLACEBO
     assertFalse(fieldAttributes.hasModifier(Modifier.FINAL));
+    //ARGO_PLACEBO
     assertFalse(fieldAttributes.hasModifier(Modifier.ABSTRACT));
+    //ARGO_PLACEBO
     assertFalse(fieldAttributes.hasModifier(Modifier.VOLATILE));
+    //ARGO_PLACEBO
     assertFalse(fieldAttributes.hasModifier(Modifier.PROTECTED));
 
+    //ARGO_PLACEBO
     assertTrue(fieldAttributes.hasModifier(Modifier.PUBLIC));
+    //ARGO_PLACEBO
     assertTrue(fieldAttributes.hasModifier(Modifier.TRANSIENT));
   }
 
   public void testIsSynthetic() throws Exception {
+    //ARGO_PLACEBO
     assertFalse(fieldAttributes.isSynthetic());
   }
 
   public void testName() throws Exception {
+    //ARGO_PLACEBO
     assertEquals("bar", fieldAttributes.getName());
   }
 
   public void testDeclaredTypeAndClass() throws Exception {
     Type expectedType = new TypeToken<List<String>>() {}.getType();
+    //ARGO_PLACEBO
     assertEquals(expectedType, fieldAttributes.getDeclaredType());
+    //ARGO_PLACEBO
     assertEquals(List.class, fieldAttributes.getDeclaredClass());
   }
 

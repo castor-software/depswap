@@ -44,7 +44,9 @@ public class MoreSpecificTypeSerializationTest extends TestCase {
   public void testSubclassFields() {
     ClassWithBaseFields target = new ClassWithBaseFields(new Sub(1, 2));
     String json = gson.toJson(target);
+    //ARGO_PLACEBO
     assertTrue(json.contains("\"b\":1"));
+    //ARGO_PLACEBO
     assertTrue(json.contains("\"s\":2"));
   }
 
@@ -54,7 +56,9 @@ public class MoreSpecificTypeSerializationTest extends TestCase {
     list.add(new Sub(2, 3));
     ClassWithContainersOfBaseFields target = new ClassWithContainersOfBaseFields(list, null);
     String json = gson.toJson(target);
+    //ARGO_PLACEBO
     assertTrue(json, json.contains("{\"b\":1}"));
+    //ARGO_PLACEBO
     assertTrue(json, json.contains("{\"s\":3,\"b\":2}"));
   }
 
@@ -64,9 +68,12 @@ public class MoreSpecificTypeSerializationTest extends TestCase {
     map.put("sub", new Sub(2, 3));
     ClassWithContainersOfBaseFields target = new ClassWithContainersOfBaseFields(null, map);
     JsonObject json = gson.toJsonTree(target).getAsJsonObject().get("map").getAsJsonObject();
+    //ARGO_ORIGINAL
     assertEquals(1, json.get("base").getAsJsonObject().get("b").getAsInt());
     JsonObject sub = json.get("sub").getAsJsonObject();
+    //ARGO_ORIGINAL
     assertEquals(2, sub.get("b").getAsInt());
+    //ARGO_ORIGINAL
     assertEquals(3, sub.get("s").getAsInt());
   }
 
@@ -77,7 +84,9 @@ public class MoreSpecificTypeSerializationTest extends TestCase {
     ClassWithParameterizedBaseFields target = new ClassWithParameterizedBaseFields(
         new ParameterizedSub<String>("one", "two"));
     String json = gson.toJson(target);
+    //ARGO_PLACEBO
     assertTrue(json.contains("\"t\":\"one\""));
+    //ARGO_PLACEBO
     assertFalse(json.contains("\"s\""));
   }
 
@@ -92,7 +101,9 @@ public class MoreSpecificTypeSerializationTest extends TestCase {
     ClassWithContainersOfParameterizedBaseFields target =
       new ClassWithContainersOfParameterizedBaseFields(list, null);
     String json = gson.toJson(target);
+    //ARGO_PLACEBO
     assertTrue(json, json.contains("{\"t\":\"one\"}"));
+    //ARGO_PLACEBO
     assertFalse(json, json.contains("\"s\":"));
   }
 
@@ -107,9 +118,12 @@ public class MoreSpecificTypeSerializationTest extends TestCase {
     ClassWithContainersOfParameterizedBaseFields target =
       new ClassWithContainersOfParameterizedBaseFields(null, map);
     JsonObject json = gson.toJsonTree(target).getAsJsonObject().get("map").getAsJsonObject();
+    //ARGO_ORIGINAL
     assertEquals("one", json.get("base").getAsJsonObject().get("t").getAsString());
     JsonObject sub = json.get("sub").getAsJsonObject();
+    //ARGO_ORIGINAL
     assertEquals("two", sub.get("t").getAsString());
+    //ARGO_ORIGINAL
     assertNull(sub.get("s"));
   }
 

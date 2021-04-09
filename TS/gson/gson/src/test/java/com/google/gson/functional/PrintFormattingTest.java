@@ -54,6 +54,7 @@ public class PrintFormattingTest extends TestCase {
     list.add(new ClassWithTransientFields());
 
     String json = gson.toJson(list);
+    //ARGO_PLACEBO
     assertContainsNoWhiteSpace(json);
   }
 
@@ -62,7 +63,9 @@ public class PrintFormattingTest extends TestCase {
     obj.addProperty("field1", "value1");
     obj.addProperty("field2", (String) null);
     String json = gson.toJson(obj);
+    //ARGO_ORIGINAL
     assertTrue(json.contains("field1"));
+    //ARGO_ORIGINAL
     assertFalse(json.contains("field2"));
   }
 
@@ -72,7 +75,9 @@ public class PrintFormattingTest extends TestCase {
     obj.addProperty("field1", "value1");
     obj.addProperty("field2", (String) null);
     String json = gson.toJson(obj);
+    //ARGO_ORIGINAL
     assertTrue(json.contains("field1"));
+    //ARGO_ORIGINAL
     assertTrue(json.contains("field2"));
   }
 

@@ -37,9 +37,11 @@ public class DefaultInetAddressTypeAdapterTest extends TestCase {
   public void testInetAddressSerializationAndDeserialization() throws Exception {
     InetAddress address = InetAddress.getByName("8.8.8.8");
     String jsonAddress = gson.toJson(address);
+    //ARGO_PLACEBO
     assertEquals("\"8.8.8.8\"", jsonAddress);
     
     InetAddress value = gson.fromJson(jsonAddress, InetAddress.class);
+    //ARGO_PLACEBO
     assertEquals(value, address);
   } 
 }

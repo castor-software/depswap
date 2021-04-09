@@ -43,11 +43,13 @@ public class FieldExclusionTest extends TestCase {
     Gson gson = new Gson();
     Outer.Inner target = outer.new Inner(VALUE);
     String result = gson.toJson(target);
+    //ARGO_PLACEBO
     assertEquals(target.toJson(), result);
 
     gson = new GsonBuilder().create();
     target = outer.new Inner(VALUE);
     result = gson.toJson(target);
+    //ARGO_PLACEBO
     assertEquals(target.toJson(), result);
   }
 
@@ -55,6 +57,7 @@ public class FieldExclusionTest extends TestCase {
     Gson gson = new GsonBuilder().disableInnerClassSerialization().create();
     Outer.Inner target = outer.new Inner(VALUE);
     String result = gson.toJson(target);
+    //ARGO_PLACEBO
     assertEquals("null", result);
   }
 
@@ -62,11 +65,13 @@ public class FieldExclusionTest extends TestCase {
     Gson gson = new Gson();
     Outer.Inner target = outer.new Inner(VALUE);
     String result = gson.toJson(target);
+    //ARGO_PLACEBO
     assertEquals(target.toJson(), result);
 
     gson = new GsonBuilder().create();
     target = outer.new Inner(VALUE);
     result = gson.toJson(target);
+    //ARGO_PLACEBO
     assertEquals(target.toJson(), result);
   }
 

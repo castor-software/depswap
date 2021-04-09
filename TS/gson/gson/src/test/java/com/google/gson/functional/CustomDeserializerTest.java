@@ -53,6 +53,7 @@ public class CustomDeserializerTest extends TestCase {
     String json = gson.toJson(data);
 
     DataHolder actual = gson.fromJson(json, DataHolder.class);
+    //ARGO_ORIGINAL
     assertEquals(DEFAULT_VALUE + SUFFIX, actual.getData());
   }
 
@@ -61,6 +62,7 @@ public class CustomDeserializerTest extends TestCase {
     String json = gson.toJson(dataWrapper);
 
     DataHolderWrapper actual = gson.fromJson(json, DataHolderWrapper.class);
+    //ARGO_ORIGINAL
     assertEquals(DEFAULT_VALUE + SUFFIX, actual.getWrappedData().getData());
   }
 
@@ -120,6 +122,7 @@ public class CustomDeserializerTest extends TestCase {
       }
     }).create();
     SubType1 target = (SubType1) gson.fromJson(json, MyBase.class);
+    //ARGO_ORIGINAL
     assertEquals("abc", target.field1);
   }
 
@@ -159,6 +162,7 @@ public class CustomDeserializerTest extends TestCase {
       }).create();
     String json = "{baseName:'Base',subName:'SubRevised'}";
     Base target = gson.fromJson(json, Base.class);
+    //ARGO_ORIGINAL
     assertNull(target);
   }
 
@@ -173,6 +177,7 @@ public class CustomDeserializerTest extends TestCase {
       }).create();
     String json = "{base:{baseName:'Base',subName:'SubRevised'}}";
     ClassWithBaseField target = gson.fromJson(json, ClassWithBaseField.class);
+    //ARGO_ORIGINAL
     assertNull(target.base);
   }
 
@@ -187,7 +192,9 @@ public class CustomDeserializerTest extends TestCase {
       }).create();
     String json = "[{baseName:'Base'},{baseName:'Base'}]";
     Base[] target = gson.fromJson(json, Base[].class);
+    //ARGO_ORIGINAL
     assertNull(target[0]);
+    //ARGO_ORIGINAL
     assertNull(target[1]);
   }
 
@@ -202,7 +209,9 @@ public class CustomDeserializerTest extends TestCase {
       }).create();
     String json = "{bases:[{baseName:'Base'},{baseName:'Base'}]}";
     ClassWithBaseArray target = gson.fromJson(json, ClassWithBaseArray.class);
+    //ARGO_ORIGINAL
     assertNull(target.bases[0]);
+    //ARGO_ORIGINAL
     assertNull(target.bases[1]);
   }
 

@@ -57,6 +57,7 @@ public class InheritanceTest extends TestCase {
   public void testSubClassSerialization() throws Exception {
     SubTypeOfNested target = new SubTypeOfNested(new BagOfPrimitives(10, 20, false, "stringValue"),
         new BagOfPrimitives(30, 40, true, "stringValue"));
+    //ARGO_PLACEBO
     assertEquals(target.getExpectedJson(), gson.toJson(target));
   }
 
@@ -66,6 +67,7 @@ public class InheritanceTest extends TestCase {
         + "{\"longValue\":30,\"intValue\":40,\"booleanValue\":true,"
         + "\"stringValue\":\"stringValue\"}}";
     SubTypeOfNested target = gson.fromJson(json, SubTypeOfNested.class);
+    //ARGO_PLACEBO
     assertEquals(json, target.getExpectedJson());
   }
 
@@ -73,6 +75,7 @@ public class InheritanceTest extends TestCase {
     ClassWithBaseField sub = new ClassWithBaseField(new Sub());
     JsonObject json = (JsonObject) gson.toJsonTree(sub);
     JsonElement base = json.getAsJsonObject().get(ClassWithBaseField.FIELD_KEY);
+    //ARGO_ORIGINAL
     assertEquals(Sub.SUB_NAME, base.getAsJsonObject().get(Sub.SUB_FIELD_KEY).getAsString());
   }
 
@@ -81,7 +84,8 @@ public class InheritanceTest extends TestCase {
     ClassWithBaseArrayField sub = new ClassWithBaseArrayField(baseClasses);
     JsonObject json = gson.toJsonTree(sub).getAsJsonObject();
     JsonArray bases = json.get(ClassWithBaseArrayField.FIELD_KEY).getAsJsonArray();
-    for (JsonElement element : bases) { 
+    for (JsonElement element : bases) {
+      //ARGO_ORIGINAL
       assertEquals(Sub.SUB_NAME, element.getAsJsonObject().get(Sub.SUB_FIELD_KEY).getAsString());
     }
   }
@@ -93,7 +97,8 @@ public class InheritanceTest extends TestCase {
     ClassWithBaseCollectionField sub = new ClassWithBaseCollectionField(baseClasses);
     JsonObject json = gson.toJsonTree(sub).getAsJsonObject();
     JsonArray bases = json.get(ClassWithBaseArrayField.FIELD_KEY).getAsJsonArray();
-    for (JsonElement element : bases) { 
+    for (JsonElement element : bases) {
+      //ARGO_ORIGINAL
       assertEquals(Sub.SUB_NAME, element.getAsJsonObject().get(Sub.SUB_FIELD_KEY).getAsString());
     }
   }
@@ -101,38 +106,46 @@ public class InheritanceTest extends TestCase {
   public void testBaseSerializedAsSub() {
     Base base = new Sub();
     JsonObject json = gson.toJsonTree(base).getAsJsonObject();
+    //ARGO_ORIGINAL
     assertEquals(Sub.SUB_NAME, json.get(Sub.SUB_FIELD_KEY).getAsString());
   }
 
   public void testBaseSerializedAsSubForToJsonMethod() {
     Base base = new Sub();
     String json = gson.toJson(base);
+    //ARGO_PLACEBO
     assertTrue(json.contains(Sub.SUB_NAME));
   }
 
   public void testBaseSerializedAsBaseWhenSpecifiedWithExplicitType() {
     Base base = new Sub();
     JsonObject json = gson.toJsonTree(base, Base.class).getAsJsonObject();
+    //ARGO_ORIGINAL
     assertEquals(Base.BASE_NAME, json.get(Base.BASE_FIELD_KEY).getAsString());
+    //ARGO_ORIGINAL
     assertNull(json.get(Sub.SUB_FIELD_KEY));
   }
 
   public void testBaseSerializedAsBaseWhenSpecifiedWithExplicitTypeForToJsonMethod() {
     Base base = new Sub();
     String json = gson.toJson(base, Base.class);
+    //ARGO_PLACEBO
     assertTrue(json.contains(Base.BASE_NAME));
+    //ARGO_PLACEBO
     assertFalse(json.contains(Sub.SUB_FIELD_KEY));
   }
 
   public void testBaseSerializedAsSubWhenSpecifiedWithExplicitType() {
     Base base = new Sub();
     JsonObject json = gson.toJsonTree(base, Sub.class).getAsJsonObject();
+    //ARGO_ORIGINAL
     assertEquals(Sub.SUB_NAME, json.get(Sub.SUB_FIELD_KEY).getAsString());
   }
 
   public void testBaseSerializedAsSubWhenSpecifiedWithExplicitTypeForToJsonMethod() {
     Base base = new Sub();
     String json = gson.toJson(base, Sub.class);
+    //ARGO_PLACEBO
     assertTrue(json.contains(Sub.SUB_NAME));
   }
 
@@ -173,6 +186,7 @@ public class InheritanceTest extends TestCase {
     sortedSet.add('d');
     ClassWithSubInterfacesOfCollection target =
         new ClassWithSubInterfacesOfCollection(list, queue, set, sortedSet);
+    //ARGO_PLACEBO
     assertEquals(target.getExpectedJson(), gson.toJson(target));
   }
 
@@ -182,9 +196,13 @@ public class InheritanceTest extends TestCase {
         + "}";
     ClassWithSubInterfacesOfCollection target = 
       gson.fromJson(json, ClassWithSubInterfacesOfCollection.class);
+    //ARGO_PLACEBO
     assertTrue(target.listContains(0, 1, 2, 3));
+    //ARGO_PLACEBO
     assertTrue(target.queueContains(0, 1, 2, 3));
+    //ARGO_PLACEBO
     assertTrue(target.setContains(0.1F, 0.2F, 0.3F, 0.4F));
+    //ARGO_PLACEBO
     assertTrue(target.sortedSetContains('a', 'b', 'c', 'd'));
   }
   

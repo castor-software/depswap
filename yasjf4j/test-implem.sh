@@ -6,10 +6,15 @@ if [ "$#" -lt 1 ]; then
   exit 1
 fi
 
+ROOT=$(pwd)
+CSV_OUTPUT="$ROOT/differential_testing_results.csv"
+echo "Implementation,Bridge,Outcome,Failures" > $CSV_OUTPUT
+
 JARS_PATH=$1
 echo "Path to lib dir: $JARS_PATH"
 
 BRIDGES=('json-simple-over-yasjf4j' 'json-over-yasjf4j' 'gson-over-yasjf4j' 'jackson-databind-over-yasjf4j')
+#BRIDGES=('json-simple-over-yasjf4j' 'json-over-yasjf4j' 'gson-over-yasjf4j')
 TMP_LIST=$(ls | grep "yasjf4j-" | grep -v "yasjf4j-api" | grep -v "yasjf4j-nothing")
 IMPLEMENTATIONS=("${(@f)$(echo $TMP_LIST)}")
 
@@ -76,15 +81,15 @@ do
 		cd $ROOT_DIR
 		bb=$(echo $b | sed 's/-over-yasjf4j//')
 		ii=$(echo $i | sed 's/yasjf4j-//')
-		if [ $bb = $ii ];
-		then
-			echo "----------- Skip $b for implem $i -------------------"
-				RESULTS=$(printf "$RESULTS %25s |" $i)
-				RESULTS=$(printf "$RESULTS %30s |" $b)
-				RESULTS=$(printf "$RESULTS ${GREY}%8s${NC} |" "NA")
-				RESULTS="$RESULTS ${GREY}NA${NC}\n"
-				echo "Skipped"
-		else
+		#if [ $bb = $ii ];
+		#then
+		#	echo "----------- Skip $b for implem $i -------------------"
+		#		RESULTS=$(printf "$RESULTS %25s |" $i)
+		#		RESULTS=$(printf "$RESULTS %30s |" $b)
+		#		RESULTS=$(printf "$RESULTS ${GREY}%8s${NC} |" "NA")
+		#		RESULTS="$RESULTS ${GREY}NA${NC}\n"
+		#		echo "Skipped"
+		#else
 			echo "----------------- Bridge $b -------------------------"
 			#RESULTS="$RESULTS $b |"
 			RESULTS=$(printf "$RESULTS %25s |" $i)
@@ -100,6 +105,7 @@ do
 				RESULTS=$(printf "$RESULTS ${GREEN}%8s${NC} |" "OK")
 				RESULTS="$RESULTS ${GREEN}0${NC}\n"
 				echo "Alls test passed"
+				echo "$i,$b,true,0" >> $CSV_OUTPUT
 			else
 				cat log-$b-$i.log
 				#RESULTS="$RESULTS   ${RED}KO${NC}\n"
@@ -107,9 +113,10 @@ do
 				failures=$(grep "Tests run: " log-$b-$i.log | tail -n 1 | cut -d ',' -f2,3 |  cut -d ' ' -f3,5 | sed 's/,/ +/' | bc)
 				total=$(grep "Tests run: " log-$b-$i.log | tail -n 1 | cut -d ',' -f1 | cut -d ' ' -f4)
 				RESULTS="$RESULTS ${RED}$failures / $total${NC}\n"
+				echo "$i,$b,false,$failures" >> $CSV_OUTPUT
 			fi
 			java -cp $JARS_PATH/depswap-test-harness-0.1-SNAPSHOT-jar-with-dependencies.jar se.kth.assertteam.depswap.SwapTestDep ./ "$g:$a:$v" "$g:$b:$v" $JARS_PATH -r
-		fi
+		#fi
 	done
 done
 RESULTS="$RESULTS-----------------------------------------------------------------------------------\n"

@@ -27,6 +27,7 @@ public class JsonTreeReaderTest extends TestCase {
   public void testSkipValue_emptyJsonObject() throws IOException {
     JsonTreeReader in = new JsonTreeReader(new JsonObject());
     in.skipValue();
+    //ARGO_ORIGINAL
     assertEquals(JsonToken.END_DOCUMENT, in.peek());
   }
 
@@ -45,6 +46,7 @@ public class JsonTreeReaderTest extends TestCase {
     jsonObject.addProperty("s", "text");
     JsonTreeReader in = new JsonTreeReader(jsonObject);
     in.skipValue();
+    //ARGO_ORIGINAL
     assertEquals(JsonToken.END_DOCUMENT, in.peek());
   }
 }

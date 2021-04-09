@@ -32,21 +32,25 @@ public class InnerClassExclusionStrategyTest extends TestCase {
 
   public void testExcludeInnerClassObject() throws Exception {
     Class<?> clazz = innerClass.getClass();
+    //ARGO_PLACEBO
     assertTrue(excluder.excludeClass(clazz, true));
   }
 
   public void testExcludeInnerClassField() throws Exception {
     Field f = getClass().getField("innerClass");
+    //ARGO_PLACEBO
     assertTrue(excluder.excludeField(f, true));
   }
 
   public void testIncludeStaticNestedClassObject() throws Exception {
     Class<?> clazz = staticNestedClass.getClass();
+    //ARGO_PLACEBO
     assertFalse(excluder.excludeClass(clazz, true));
   }
 
   public void testIncludeStaticNestedClassField() throws Exception {
     Field f = getClass().getField("staticNestedClass");
+    //ARGO_PLACEBO
     assertFalse(excluder.excludeField(f, true));
   }
 

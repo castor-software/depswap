@@ -47,6 +47,7 @@ public class InternationalizationTest extends TestCase {
     String expected = "好好好";
     String json = "\"" + expected + "\"";
     String actual = gson.fromJson(json, String.class);
+    //ARGO_PLACEBO
     assertEquals(expected, actual);
   }
 
@@ -54,6 +55,7 @@ public class InternationalizationTest extends TestCase {
     String target = "\u597d\u597d\u597d";
     String json = gson.toJson(target);
     String expected = "\"\u597d\u597d\u597d\"";
+    //ARGO_PLACEBO
     assertEquals(expected, json);
   }
 
@@ -61,11 +63,13 @@ public class InternationalizationTest extends TestCase {
     String expected = "\u597d\u597d\u597d";
     String json = "\"" + expected + "\"";
     String actual = gson.fromJson(json, String.class);
+    //ARGO_PLACEBO
     assertEquals(expected, actual);
   }
 
   public void testStringsWithUnicodeChineseCharactersEscapedDeserialization() throws Exception {
     String actual = gson.fromJson("'\\u597d\\u597d\\u597d'", String.class);
+    //ARGO_PLACEBO
     assertEquals("\u597d\u597d\u597d", actual);
   }
 }

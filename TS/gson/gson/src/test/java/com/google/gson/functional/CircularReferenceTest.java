@@ -51,6 +51,7 @@ public class CircularReferenceTest extends TestCase {
     b.children.add(a);
     try {
       gson.toJson(a);
+      //ARGO_PLACEBO
       fail("Circular types should not get printed!");
     } catch (StackOverflowError expected) {
     }
@@ -61,6 +62,7 @@ public class CircularReferenceTest extends TestCase {
     objA.ref = objA;
 
     String json = gson.toJson(objA);
+    //ARGO_PLACEBO
     assertFalse(json.contains("ref")); // self-reference is ignored
   }
 
@@ -70,6 +72,7 @@ public class CircularReferenceTest extends TestCase {
 
     try {
       gson.toJson(objA);
+      //ARGO_PLACEBO
       fail("Circular reference to self can not be serialized!");
     } catch (StackOverflowError expected) {
     }
@@ -89,6 +92,7 @@ public class CircularReferenceTest extends TestCase {
     }).create();
     try {
       gson.toJson(obj);
+      //ARGO_ORIGINAL
       fail("Circular reference to self can not be serialized!");
     } catch (StackOverflowError expected) {
     }
@@ -101,13 +105,16 @@ public class CircularReferenceTest extends TestCase {
     a.children.add(b);
     a.children.add(c);
     b.children.add(c);
+    //ARGO_PLACEBO
     assertNotNull(gson.toJson(a));
   }
 
   public void testDirectedAcyclicGraphDeserialization() throws Exception {
     String json = "{\"children\":[{\"children\":[{\"children\":[]}]},{\"children\":[]}]}";
     ContainsReferenceToSelfType target = gson.fromJson(json, ContainsReferenceToSelfType.class);
+    //ARGO_PLACEBO
     assertNotNull(target);
+    //ARGO_PLACEBO
     assertEquals(2, target.children.size());
   }
 

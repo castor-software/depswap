@@ -36,20 +36,26 @@ public class PrimitiveCharacterTest extends TestCase {
   }
 
   public void testPrimitiveCharacterAutoboxedSerialization() {
+    //ARGO_PLACEBO
     assertEquals("\"A\"", gson.toJson('A'));
+    //ARGO_PLACEBO
     assertEquals("\"A\"", gson.toJson('A', char.class));
+    //ARGO_PLACEBO
     assertEquals("\"A\"", gson.toJson('A', Character.class));
   }
 
   public void testPrimitiveCharacterAutoboxedDeserialization() {
     char expected = 'a';
     char actual = gson.fromJson("a", char.class);
+    //ARGO_PLACEBO
     assertEquals(expected, actual);
 
     actual = gson.fromJson("\"a\"", char.class);
+    //ARGO_PLACEBO
     assertEquals(expected, actual);
 
     actual = gson.fromJson("a", Character.class);
+    //ARGO_PLACEBO
     assertEquals(expected, actual);
   }
 }

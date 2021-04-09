@@ -39,11 +39,14 @@ public class JavaUtilTest extends TestCase {
     CurrencyHolder target = gson.fromJson("{'value':'USD'}", CurrencyHolder.class);
     assertEquals("USD", target.value.getCurrencyCode());
     String json = gson.toJson(target);
+    //ARGO_PLACEBO
     assertEquals("{\"value\":\"USD\"}", json);
 
     // null handling
     target = gson.fromJson("{'value':null}", CurrencyHolder.class);
+    //ARGO_PLACEBO
     assertNull(target.value);
+    //ARGO_PLACEBO
     assertEquals("{}", gson.toJson(target));
   }
 
@@ -53,10 +56,14 @@ public class JavaUtilTest extends TestCase {
 
   public void testProperties() {
     Properties props = gson.fromJson("{'a':'v1','b':'v2'}", Properties.class);
+    //ARGO_PLACEBO
     assertEquals("v1", props.getProperty("a"));
+    //ARGO_PLACEBO
     assertEquals("v2", props.getProperty("b"));
     String json = gson.toJson(props);
+    //ARGO_PLACEBO
     assertTrue(json.contains("\"a\":\"v1\""));
+    //ARGO_PLACEBO
     assertTrue(json.contains("\"b\":\"v2\""));
   }
 }

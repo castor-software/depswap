@@ -41,6 +41,7 @@ public class LeniencyTest extends TestCase {
         + "[ # One!\n"
         + "  'Hi' #Element!\n"
         + "] # Array!", new TypeToken<List<String>>() {}.getType());
+    //ARGO_PLACEBO
     assertEquals(singletonList("Hi"), json);
   }
 }

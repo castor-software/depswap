@@ -35,30 +35,46 @@ public class JsonStreamParserTest extends TestCase {
 
   public void testParseTwoStrings() {
     String actualOne = parser.next().getAsString();
+    //ARGO_PLACEBO
     assertEquals("one", actualOne);
     String actualTwo = parser.next().getAsString();
+    //ARGO_PLACEBO
     assertEquals("two", actualTwo);
   }
 
   public void testIterator() {
+    //ARGO_PLACEBO
     assertTrue(parser.hasNext());
+    //ARGO_PLACEBO
     assertEquals("one", parser.next().getAsString());
+    //ARGO_PLACEBO
     assertTrue(parser.hasNext());
+    //ARGO_PLACEBO
     assertEquals("two", parser.next().getAsString());
+    //ARGO_PLACEBO
     assertFalse(parser.hasNext());
   }
 
   public void testNoSideEffectForHasNext() throws Exception {
+    //ARGO_PLACEBO
     assertTrue(parser.hasNext());
+    //ARGO_PLACEBO
     assertTrue(parser.hasNext());
+    //ARGO_PLACEBO
     assertTrue(parser.hasNext());
+    //ARGO_PLACEBO
     assertEquals("one", parser.next().getAsString());
-    
+
+    //ARGO_PLACEBO
     assertTrue(parser.hasNext());
+    //ARGO_PLACEBO
     assertTrue(parser.hasNext());
+    //ARGO_PLACEBO
     assertEquals("two", parser.next().getAsString());
-    
+
+    //ARGO_PLACEBO
     assertFalse(parser.hasNext());
+    //ARGO_PLACEBO
     assertFalse(parser.hasNext());
   }
 
@@ -67,6 +83,7 @@ public class JsonStreamParserTest extends TestCase {
     parser.next();
     try {
       parser.next();
+      //ARGO_PLACEBO
       fail("Parser should not go beyond available input");
     } catch (NoSuchElementException expected) {
     }

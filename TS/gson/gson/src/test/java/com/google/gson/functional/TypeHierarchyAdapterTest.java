@@ -29,6 +29,8 @@ import com.google.gson.JsonSerializer;
 import java.lang.reflect.Type;
 import junit.framework.TestCase;
 
+import static com.google.gson.JSONTestUtils.assertEquivalent;
+
 /**
  * Test that the hierarchy adapter works when subtypes are used.
  */
@@ -64,7 +66,8 @@ public final class TypeHierarchyAdapterTest extends TestCase {
     company.ceo = eric;
 
     String json = gson.toJson(company, Company.class);
-    assertEquals("{\n" +
+    //ARGO_EQUIVALENT
+    assertEquivalent("{\n" +
         "  \"ceo\": {\n" +
         "    \"userid\": \"eric\",\n" +
         "    \"startDate\": 2001,\n" +
@@ -101,17 +104,25 @@ public final class TypeHierarchyAdapterTest extends TestCase {
         "      \"startDate\": 2006\n" +
         "    }\n" +
         "  }\n" +
-        "}", json);
+        "}", json, gson);
 
     Company copied = gson.fromJson(json, Company.class);
+    //ARGO_ORIGINAL
     assertEquals(json, gson.toJson(copied, Company.class));
+    //ARGO_ORIGINAL
     assertEquals(copied.ceo.userid, company.ceo.userid);
+    //ARGO_ORIGINAL
     assertEquals(copied.ceo.assistant.userid, company.ceo.assistant.userid);
+    //ARGO_ORIGINAL
     assertEquals(copied.ceo.minions[0].userid, company.ceo.minions[0].userid);
+    //ARGO_ORIGINAL
     assertEquals(copied.ceo.minions[1].userid, company.ceo.minions[1].userid);
+    //ARGO_ORIGINAL
     assertEquals(copied.ceo.minions[2].userid, company.ceo.minions[2].userid);
+    //ARGO_ORIGINAL
     assertEquals(((Manager) copied.ceo.minions[2]).minions[0].userid,
         ((Manager) company.ceo.minions[2]).minions[0].userid);
+    //ARGO_ORIGINAL
     assertEquals(((Manager) copied.ceo.minions[2]).minions[1].userid,
         ((Manager) company.ceo.minions[2]).minions[1].userid);
   }
@@ -126,8 +137,10 @@ public final class TypeHierarchyAdapterTest extends TestCase {
     manager.userid = "inder";
 
     String json = gson.toJson(manager, Manager.class);
+    //ARGO_PLACEBO
     assertEquals("\"inder\"", json);
     Manager copied = gson.fromJson(json, Manager.class);
+    //ARGO_PLACEBO
     assertEquals(manager.userid, copied.userid);
   }
 

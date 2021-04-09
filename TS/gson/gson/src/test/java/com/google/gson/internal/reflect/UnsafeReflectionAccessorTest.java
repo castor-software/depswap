@@ -35,8 +35,10 @@ public class UnsafeReflectionAccessorTest {
     Field field = ClassWithPrivateFinalFields.class.getDeclaredField("a");
     try {
       boolean success = accessor.makeAccessibleWithUnsafe(field);
+//ARGO_PLACEBO
       assertTrue(success);
     } catch (Exception e) {
+//ARGO_PLACEBO
       fail("Unsafe didn't work on the JDK");
     }
   }

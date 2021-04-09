@@ -63,6 +63,7 @@ public class CollectionTest extends TestCase {
     Collection<Integer> target = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9);
     Type targetType = new TypeToken<Collection<Integer>>() {}.getType();
     String json = gson.toJson(target, targetType);
+    //ARGO_PLACEBO
     assertEquals("[1,2,3,4,5,6,7,8,9]", json);
   }
 
@@ -71,6 +72,7 @@ public class CollectionTest extends TestCase {
     Type collectionType = new TypeToken<Collection<Integer>>() { }.getType();
     Collection<Integer> target = gson.fromJson(json, collectionType);
     int[] expected = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+    //ARGO_PLACEBO
     assertArrayEquals(expected, toIntArray(target));
   }
 
@@ -87,6 +89,7 @@ public class CollectionTest extends TestCase {
     }
 
     for (int i = 0; i < 3; i++) {
+      //ARGO_PLACEBO
       assertArrayEquals(expected[i], toIntArray(target.get(i)));
     }
   }
@@ -97,7 +100,9 @@ public class CollectionTest extends TestCase {
     list.add("a2");
     Type linkedListType = new TypeToken<LinkedList<String>>() {}.getType();
     String json = gson.toJson(list, linkedListType);
+    //ARGO_PLACEBO
     assertTrue(json.contains("a1"));
+    //ARGO_PLACEBO
     assertTrue(json.contains("a2"));
   }
 
@@ -105,7 +110,9 @@ public class CollectionTest extends TestCase {
     String json = "['a1','a2']";
     Type linkedListType = new TypeToken<LinkedList<String>>() {}.getType();
     List<String> list = gson.fromJson(json, linkedListType);
+    //ARGO_PLACEBO
     assertEquals("a1", list.get(0));
+    //ARGO_PLACEBO
     assertEquals("a2", list.get(1));
   }
 
@@ -115,7 +122,9 @@ public class CollectionTest extends TestCase {
     queue.add("a2");
     Type queueType = new TypeToken<Queue<String>>() {}.getType();
     String json = gson.toJson(queue, queueType);
+    //ARGO_PLACEBO
     assertTrue(json.contains("a1"));
+    //ARGO_PLACEBO
     assertTrue(json.contains("a2"));
   }
 
@@ -123,8 +132,10 @@ public class CollectionTest extends TestCase {
     String json = "['a1','a2']";
     Type queueType = new TypeToken<Queue<String>>() {}.getType();
     Queue<String> queue = gson.fromJson(json, queueType);
+    //ARGO_PLACEBO
     assertEquals("a1", queue.element());
     queue.remove();
+    //ARGO_PLACEBO
     assertEquals("a2", queue.element());
   }
 
@@ -133,31 +144,45 @@ public class CollectionTest extends TestCase {
     PriorityQueue<Integer> queue = gson.fromJson("[10, 20, 22]", type);
     assertEquals(3, queue.size());
     String json = gson.toJson(queue);
+    //ARGO_PLACEBO
     assertEquals(10, queue.remove().intValue());
+    //ARGO_PLACEBO
     assertEquals(20, queue.remove().intValue());
+    //ARGO_PLACEBO
     assertEquals(22, queue.remove().intValue());
+    //ARGO_PLACEBO
     assertEquals("[10,20,22]", json);
   }
 
   public void testVector() {
     Type type = new TypeToken<Vector<Integer>>(){}.getType();
     Vector<Integer> target = gson.fromJson("[10, 20, 31]", type);
+    //ARGO_PLACEBO
     assertEquals(3, target.size());
+    //ARGO_PLACEBO
     assertEquals(10, target.get(0).intValue());
+    //ARGO_PLACEBO
     assertEquals(20, target.get(1).intValue());
+    //ARGO_PLACEBO
     assertEquals(31, target.get(2).intValue());
     String json = gson.toJson(target);
+    //ARGO_PLACEBO
     assertEquals("[10,20,31]", json);
   }
 
   public void testStack() {
     Type type = new TypeToken<Stack<Integer>>(){}.getType();
     Stack<Integer> target = gson.fromJson("[11, 13, 17]", type);
+    //ARGO_PLACEBO
     assertEquals(3, target.size());
     String json = gson.toJson(target);
+    //ARGO_PLACEBO
     assertEquals(17, target.pop().intValue());
+    //ARGO_PLACEBO
     assertEquals(13, target.pop().intValue());
+    //ARGO_PLACEBO
     assertEquals(11, target.pop().intValue());
+    //ARGO_PLACEBO
     assertEquals("[11,13,17]", json);
   }
 
@@ -169,6 +194,7 @@ public class CollectionTest extends TestCase {
     String expected = "[\"foo\",null,\"bar\"]";
     Type typeOfList = new TypeToken<List<String>>() {}.getType();
     String json = gson.toJson(list, typeOfList);
+    //ARGO_PLACEBO
     assertEquals(expected, json);
   }
 
@@ -181,6 +207,7 @@ public class CollectionTest extends TestCase {
     Type expectedType = new TypeToken<List<String>>() {}.getType();
     List<String> target = gson.fromJson(json, expectedType);
     for (int i = 0; i < expected.size(); ++i) {
+      //ARGO_PLACEBO
       assertEquals(expected.get(i), target.get(i));
     }
   }
@@ -189,9 +216,11 @@ public class CollectionTest extends TestCase {
     List<Object> target = new ArrayList<Object>();
     target.add("Hello");
     target.add("World");
+    //ARGO_PLACEBO
     assertEquals("[\"Hello\",\"World\"]", gson.toJson(target));
 
     Type type = new TypeToken<List<Object>>() {}.getType();
+    //ARGO_PLACEBO
     assertEquals("[\"Hello\",\"World\"]", gson.toJson(target, type));
   }
 
@@ -200,9 +229,11 @@ public class CollectionTest extends TestCase {
     target.add("Hello");
     target.add(null);
     target.add("World");
+    //ARGO_PLACEBO
     assertEquals("[\"Hello\",null,\"World\"]", gson.toJson(target));
 
     Type type = new TypeToken<List<Object>>() {}.getType();
+    //ARGO_PLACEBO
     assertEquals("[\"Hello\",null,\"World\"]", gson.toJson(target, type));
   }
 
@@ -210,6 +241,7 @@ public class CollectionTest extends TestCase {
     List<String> target = new ArrayList<String>();
     target.add("Hello");
     target.add("World");
+    //ARGO_PLACEBO
     assertEquals("[\"Hello\",\"World\"]", gson.toJson(target));
   }
 
@@ -221,9 +253,12 @@ public class CollectionTest extends TestCase {
     target.add(objB);
 
     String result = gson.toJson(target);
+    //ARGO_PLACEBO
     assertTrue(result.startsWith("["));
+    //ARGO_PLACEBO
     assertTrue(result.endsWith("]"));
     for (BagOfPrimitives obj : target) {
+      //ARGO_PLACEBO
       assertTrue(result.contains(obj.getExpectedJson()));
     }
   }
@@ -233,12 +268,15 @@ public class CollectionTest extends TestCase {
     Type collectionType = new TypeToken<Collection<String>>() { }.getType();
     Collection<String> target = gson.fromJson(json, collectionType);
 
+    //ARGO_PLACEBO
     assertTrue(target.contains("Hello"));
+    //ARGO_PLACEBO
     assertTrue(target.contains("World"));
   }
 
   public void testRawCollectionOfIntegersSerialization() {
     Collection<Integer> target = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9);
+    //ARGO_PLACEBO
     assertEquals("[1,2,3,4,5,6,7,8,9]", gson.toJson(target));
   }
 
@@ -247,6 +285,7 @@ public class CollectionTest extends TestCase {
     BagOfPrimitives bag1 = new BagOfPrimitives();
     Collection target = Arrays.asList(bag1, bag1);
     String json = gson.toJson(target);
+    //ARGO_PLACEBO
     assertTrue(json.contains(bag1.getExpectedJson()));
   }
 
@@ -255,11 +294,14 @@ public class CollectionTest extends TestCase {
     String json = "[0,1,2,3,4,5,6,7,8,9]";
     Collection integers = gson.fromJson(json, Collection.class);
     // JsonReader converts numbers to double by default so we need a floating point comparison
+    //ARGO_PLACEBO
     assertEquals(Arrays.asList(0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0), integers);
 
     json = "[\"Hello\", \"World\"]";
     Collection strings = gson.fromJson(json, Collection.class);
+    //ARGO_PLACEBO
     assertTrue(strings.contains("Hello"));
+    //ARGO_PLACEBO
     assertTrue(strings.contains("World"));
   }
 
@@ -268,12 +310,16 @@ public class CollectionTest extends TestCase {
     BagOfPrimitives bag = new BagOfPrimitives(10, 20, false, "stringValue");
     String json = '[' + bag.getExpectedJson() + ',' + bag.getExpectedJson() + ']';
     Collection target = gson.fromJson(json, Collection.class);
+    //ARGO_PLACEBO
     assertEquals(2, target.size());
     for (Object bag1 : target) {
       // Gson 2.0 converts raw objects into maps
       Map<String, Object> values = (Map<String, Object>) bag1;
+      //ARGO_PLACEBO
       assertTrue(values.containsValue(10.0));
+      //ARGO_PLACEBO
       assertTrue(values.containsValue(20.0));
+      //ARGO_PLACEBO
       assertTrue(values.containsValue("stringValue"));
     }
   }
@@ -282,9 +328,11 @@ public class CollectionTest extends TestCase {
     Collection<? extends Integer> target = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9);
     Type collectionType = new TypeToken<Collection<? extends Integer>>() { }.getType();
     String json = gson.toJson(target, collectionType);
+    //ARGO_PLACEBO
     assertEquals("[1,2,3,4,5,6,7,8,9]", json);
 
     json = gson.toJson(target);
+    //ARGO_PLACEBO
     assertEquals("[1,2,3,4,5,6,7,8,9]", json);
   }
 
@@ -292,8 +340,11 @@ public class CollectionTest extends TestCase {
     String json = "[1,2,3,4,5,6,7,8,9]";
     Type collectionType = new TypeToken<Collection<? extends Integer>>() { }.getType();
     Collection<? extends Integer> target = gson.fromJson(json, collectionType);
+    //ARGO_PLACEBO
     assertEquals(9, target.size());
+    //ARGO_PLACEBO
     assertTrue(target.contains(1));
+    //ARGO_PLACEBO
     assertTrue(target.contains(9));
   }
 
@@ -306,13 +357,18 @@ public class CollectionTest extends TestCase {
 
     ObjectWithWildcardCollection target = new ObjectWithWildcardCollection(collection);
     String json = gson.toJson(target);
+    //ARGO_PLACEBO
     assertTrue(json.contains(objA.getExpectedJson()));
+    //ARGO_PLACEBO
     assertTrue(json.contains(objB.getExpectedJson()));
 
     target = gson.fromJson(json, ObjectWithWildcardCollection.class);
     Collection<? extends BagOfPrimitives> deserializedCollection = target.getCollection();
+    //ARGO_PLACEBO
     assertEquals(2, deserializedCollection.size());
+    //ARGO_PLACEBO
     assertTrue(deserializedCollection.contains(objA));
+    //ARGO_PLACEBO
     assertTrue(deserializedCollection.contains(objB));
   }
 
@@ -321,8 +377,10 @@ public class CollectionTest extends TestCase {
     object.longs.add(1L);
     object.longs.add(3L);
     String json = gson.toJson(object, HasArrayListField.class);
+    //ARGO_PLACEBO
     assertEquals("{\"longs\":[1,3]}", json);
     HasArrayListField copy = gson.fromJson("{\"longs\":[1,3]}", HasArrayListField.class);
+    //ARGO_PLACEBO
     assertEquals(Arrays.asList(1L, 3L), copy.longs);
   }
   
@@ -337,6 +395,7 @@ public class CollectionTest extends TestCase {
     Gson gson = new GsonBuilder()
         .registerTypeAdapter(listOfString, stringListSerializer)
         .create();
+    //ARGO_PLACEBO
     assertEquals("\"ab;cd\"", gson.toJson(Arrays.asList("ab", "cd"), listOfString));
   }
 
@@ -382,15 +441,19 @@ public class CollectionTest extends TestCase {
     set.add(new Entry(1));
     set.add(new Entry(2));
     String json = gson.toJson(set);
+    //ARGO_PLACEBO
     assertTrue(json.contains("1"));
+    //ARGO_PLACEBO
     assertTrue(json.contains("2"));
   }
   public void testSetDeserialization() {
     String json = "[{value:1},{value:2}]";
     Type type = new TypeToken<Set<Entry>>() {}.getType();
     Set<Entry> set = gson.fromJson(json, type);
+    //ARGO_PLACEBO
     assertEquals(2, set.size());
     for (Entry entry : set) {
+      //ARGO_PLACEBO
       assertTrue(entry.value == 1 || entry.value == 2);
     }
   }
@@ -409,7 +472,9 @@ public class CollectionTest extends TestCase {
             "}";
     BigClass bigClass = new Gson().fromJson(json, BigClass.class);
     SmallClass small = bigClass.inBig.get("key").get(0);
+    //ARGO_PLACEBO
     assertNotNull(small);
+    //ARGO_PLACEBO
     assertEquals("hello", small.inSmall);
   }
 

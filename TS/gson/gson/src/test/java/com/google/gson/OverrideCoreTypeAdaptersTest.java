@@ -49,10 +49,15 @@ public class OverrideCoreTypeAdaptersTest extends TestCase {
     Gson gson = new GsonBuilder()
         .registerTypeAdapter(Boolean.class, booleanAsIntAdapter)
         .create();
+    //ARGO_PLACEBO
     assertEquals("true", gson.toJson(true, boolean.class));
+    //ARGO_PLACEBO
     assertEquals("1", gson.toJson(true, Boolean.class));
+    //ARGO_PLACEBO
     assertEquals(Boolean.TRUE, gson.fromJson("true", boolean.class));
+    //ARGO_PLACEBO
     assertEquals(Boolean.TRUE, gson.fromJson("1", Boolean.class));
+    //ARGO_PLACEBO
     assertEquals(Boolean.FALSE, gson.fromJson("0", Boolean.class));
   }
 
@@ -60,10 +65,15 @@ public class OverrideCoreTypeAdaptersTest extends TestCase {
     Gson gson = new GsonBuilder()
         .registerTypeAdapter(boolean.class, booleanAsIntAdapter)
         .create();
+    //ARGO_PLACEBO
     assertEquals("1", gson.toJson(true, boolean.class));
+    //ARGO_PLACEBO
     assertEquals("true", gson.toJson(true, Boolean.class));
+    //ARGO_PLACEBO
     assertEquals(Boolean.TRUE, gson.fromJson("1", boolean.class));
+    //ARGO_PLACEBO
     assertEquals(Boolean.TRUE, gson.fromJson("true", Boolean.class));
+    //ARGO_PLACEBO
     assertEquals("0", gson.toJson(false, boolean.class));
   }
 
@@ -71,7 +81,9 @@ public class OverrideCoreTypeAdaptersTest extends TestCase {
     Gson gson = new GsonBuilder()
         .registerTypeAdapter(String.class, swapCaseStringAdapter)
         .create();
+    //ARGO_PLACEBO
     assertEquals("\"HELLO\"", gson.toJson("Hello", String.class));
+    //ARGO_PLACEBO
     assertEquals("hello", gson.fromJson("\"Hello\"", String.class));
   }
 }

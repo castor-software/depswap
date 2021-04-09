@@ -34,8 +34,10 @@ public class DefaultMapJsonSerializerTest extends TestCase {
   public void testEmptyMapNoTypeSerialization() {
     Map<String, String> emptyMap = new HashMap<String, String>();
     JsonElement element = gson.toJsonTree(emptyMap, emptyMap.getClass());
+    //ARGO_ORIGINAL
     assertTrue(element instanceof JsonObject);
     JsonObject emptyMapJsonObject = (JsonObject) element;
+    //ARGO_ORIGINAL
     assertTrue(emptyMapJsonObject.entrySet().isEmpty());
   }
 
@@ -44,8 +46,10 @@ public class DefaultMapJsonSerializerTest extends TestCase {
     Map<String, String> emptyMap = new HashMap<String, String>();
     JsonElement element = gson.toJsonTree(emptyMap, mapType);
 
+    //ARGO_ORIGINAL
     assertTrue(element instanceof JsonObject);
     JsonObject emptyMapJsonObject = (JsonObject) element;
+    //ARGO_ORIGINAL
     assertTrue(emptyMapJsonObject.entrySet().isEmpty());
   }
 
@@ -57,8 +61,10 @@ public class DefaultMapJsonSerializerTest extends TestCase {
     Gson gson = new Gson();
     JsonElement element = gson.toJsonTree(myMap, mapType);
 
+    //ARGO_ORIGINAL
     assertTrue(element.isJsonObject());
     JsonObject mapJsonObject = element.getAsJsonObject();
+    //ARGO_ORIGINAL
     assertTrue(mapJsonObject.has(key));
   }
 }

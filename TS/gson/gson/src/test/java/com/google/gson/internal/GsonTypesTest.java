@@ -27,10 +27,12 @@ public final class GsonTypesTest extends TestCase {
   public void testNewParameterizedTypeWithoutOwner() throws Exception {
     // List<A>. List is a top-level class
     Type type = $Gson$Types.newParameterizedTypeWithOwner(null, List.class, A.class);
+    //ARGO_PLACEBO
     assertEquals(A.class, getFirstTypeArgument(type));
 
     // A<B>. A is a static inner class.
     type = $Gson$Types.newParameterizedTypeWithOwner(null, A.class, B.class);
+    //ARGO_PLACEBO
     assertEquals(B.class, getFirstTypeArgument(type));
 
     final class D {
@@ -38,18 +40,22 @@ public final class GsonTypesTest extends TestCase {
     try {
       // D<A> is not allowed since D is not a static inner class
       $Gson$Types.newParameterizedTypeWithOwner(null, D.class, A.class);
+      //ARGO_PLACEBO
       fail();
     } catch (IllegalArgumentException expected) {}
 
     // A<D> is allowed.
     type = $Gson$Types.newParameterizedTypeWithOwner(null, A.class, D.class);
+    //ARGO_PLACEBO
     assertEquals(D.class, getFirstTypeArgument(type));
   }
 
   public void testGetFirstTypeArgument() throws Exception {
+    //ARGO_PLACEBO
     assertNull(getFirstTypeArgument(A.class));
 
     Type type = $Gson$Types.newParameterizedTypeWithOwner(null, A.class, B.class, C.class);
+    //ARGO_PLACEBO
     assertEquals(B.class, getFirstTypeArgument(type));
   }
 

@@ -26,6 +26,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import static com.google.gson.JsonObject.toObject;
+
 /**
  * A class representing an array type in Json. An array is a list of {@link JsonElement}s each of
  * which can be of a different type. This is an ordered list, meaning that the order in which
@@ -60,7 +62,7 @@ public final class JsonArray extends JsonElement implements Iterable<JsonElement
     json = JFactory.createJArray();
     for(Object o: l) {
       try {
-        json.YASJF4J_add(JsonObject.toObject(o));
+        json.YASJF4J_add(toObject(o));
       } catch (JException e) {
         e.printStackTrace();
       }
@@ -101,7 +103,7 @@ public final class JsonArray extends JsonElement implements Iterable<JsonElement
   public void add(Boolean bool) {
     //elements.add(bool == null ? JsonNull.INSTANCE : new JsonPrimitive(bool));
     try {
-      json.YASJF4J_add(bool);
+      json.YASJF4J_add(toObject(bool));
       //json.YASJF4J_add(bool == null ? JsonNull.INSTANCE : new JsonPrimitive(bool));
     } catch (JException e) {
       e.printStackTrace();
@@ -116,7 +118,7 @@ public final class JsonArray extends JsonElement implements Iterable<JsonElement
   public void add(Character character) {
     //elements.add(character == null ? JsonNull.INSTANCE : new JsonPrimitive(character));
     try {
-      json.YASJF4J_add(character);
+      json.YASJF4J_add(toObject(character));
       //json.YASJF4J_add(character == null ? JsonNull.INSTANCE : new JsonPrimitive(character));
     } catch (JException e) {
       e.printStackTrace();
@@ -131,7 +133,7 @@ public final class JsonArray extends JsonElement implements Iterable<JsonElement
   public void add(Number number) {
     //elements.add(number == null ? JsonNull.INSTANCE : new JsonPrimitive(number));
     try {
-      json.YASJF4J_add(number);
+      json.YASJF4J_add(toObject(number));
       //json.YASJF4J_add(number == null ? JsonNull.INSTANCE : new JsonPrimitive(number));
     } catch (JException e) {
       e.printStackTrace();
@@ -146,7 +148,7 @@ public final class JsonArray extends JsonElement implements Iterable<JsonElement
   public void add(String string) {
     //elements.add(string == null ? JsonNull.INSTANCE : new JsonPrimitive(string));
     try {
-      json.YASJF4J_add(string);
+      json.YASJF4J_add(toObject(string));
       //json.YASJF4J_add(string == null ? JsonNull.INSTANCE : new JsonPrimitive(string));
     } catch (JException e) {
       e.printStackTrace();
@@ -164,7 +166,7 @@ public final class JsonArray extends JsonElement implements Iterable<JsonElement
     }
     elements.add(element);*/
     try {
-      json.YASJF4J_add(JsonObject.toObject(element));
+      json.YASJF4J_add(toObject(element));
       //json.YASJF4J_add(element == null ? JsonNull.INSTANCE : element);
     } catch (JException e) {
       e.printStackTrace();
@@ -180,7 +182,7 @@ public final class JsonArray extends JsonElement implements Iterable<JsonElement
     //elements.addAll(array.elements);
     try {
       for(int i = 0; i < json.YASJF4J_size(); i++) {
-          json.YASJF4J_add(JsonObject.toObject(array.get(i)));
+          json.YASJF4J_add(toObject(array.get(i)));
       }
     } catch (JException e) {
       e.printStackTrace();
@@ -205,7 +207,7 @@ public final class JsonArray extends JsonElement implements Iterable<JsonElement
       e.printStackTrace();
     }
     try {
-      json.YASJF4J_set(index, JsonObject.toObject(element));
+      json.YASJF4J_set(index, toObject(element));
     } catch (JException e) {
       e.printStackTrace();
     }
@@ -609,12 +611,14 @@ public final class JsonArray extends JsonElement implements Iterable<JsonElement
   @Override
   public boolean equals(Object o) {
     //return (o == this) || (o instanceof JsonArray && ((JsonArray) o).elements.equals(elements));
-    return (o == this) || (o instanceof JsonArray && ((JsonArray) o).json.equals(json));
+    //return (o == this) || (o instanceof JsonArray && ((JsonArray) o).json.equals(json));
+    return (o == this) || (o instanceof JsonArray && JsonObject.equivalence(json, ((JsonArray) o).json));
   }
 
   @Override
   public int hashCode() {
     //return elements.hashCode();
-    return json.hashCode();
+    //return json.hashCode();
+    return json.YASJF4J_size();
   }
 }

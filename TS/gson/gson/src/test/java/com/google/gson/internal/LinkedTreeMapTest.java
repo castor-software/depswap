@@ -33,8 +33,10 @@ public final class LinkedTreeMapTest extends TestCase {
     map.put("a", "android");
     map.put("c", "cola");
     map.put("b", "bbq");
-    assertIterationOrder(map.keySet(), "a", "c", "b");
-    assertIterationOrder(map.values(), "android", "cola", "bbq");
+//ARGO_PLACEBO
+assertIterationOrder(map.keySet(), "a", "c", "b");
+//ARGO_PLACEBO
+assertIterationOrder(map.values(), "android", "cola", "bbq");
   }
 
   public void testRemoveRootDoesNotDoubleUnlink() {
@@ -47,14 +49,16 @@ public final class LinkedTreeMapTest extends TestCase {
     it.next();
     it.next();
     it.remove();
-    assertIterationOrder(map.keySet(), "a", "c");
+//ARGO_PLACEBO
+assertIterationOrder(map.keySet(), "a", "c");
   }
 
   public void testPutNullKeyFails() {
     LinkedTreeMap<String, String> map = new LinkedTreeMap<String, String>();
     try {
       map.put(null, "android");
-      fail();
+//ARGO_PLACEBO
+fail();
     } catch (NullPointerException expected) {
     }
   }
@@ -63,39 +67,51 @@ public final class LinkedTreeMapTest extends TestCase {
     LinkedTreeMap<Object, String> map = new LinkedTreeMap<Object, String>();
     try {
       map.put(new Object(), "android");
-      fail();
+//ARGO_PLACEBO
+fail();
     } catch (ClassCastException expected) {}
   }
 
   public void testContainsNonComparableKeyReturnsFalse() {
     LinkedTreeMap<String, String> map = new LinkedTreeMap<String, String>();
     map.put("a", "android");
-    assertFalse(map.containsKey(new Object()));
+//ARGO_PLACEBO
+assertFalse(map.containsKey(new Object()));
   }
 
   public void testContainsNullKeyIsAlwaysFalse() {
     LinkedTreeMap<String, String> map = new LinkedTreeMap<String, String>();
     map.put("a", "android");
-    assertFalse(map.containsKey(null));
+//ARGO_PLACEBO
+assertFalse(map.containsKey(null));
   }
 
   public void testPutOverrides() throws Exception {
     LinkedTreeMap<String, String> map = new LinkedTreeMap<String, String>();
-    assertNull(map.put("d", "donut"));
-    assertNull(map.put("e", "eclair"));
-    assertNull(map.put("f", "froyo"));
-    assertEquals(3, map.size());
+//ARGO_PLACEBO
+assertNull(map.put("d", "donut"));
+//ARGO_PLACEBO
+assertNull(map.put("e", "eclair"));
+//ARGO_PLACEBO
+assertNull(map.put("f", "froyo"));
+//ARGO_PLACEBO
+assertEquals(3, map.size());
 
-    assertEquals("donut", map.get("d"));
-    assertEquals("donut", map.put("d", "done"));
-    assertEquals(3, map.size());
+//ARGO_PLACEBO
+assertEquals("donut", map.get("d"));
+//ARGO_PLACEBO
+assertEquals("donut", map.put("d", "done"));
+//ARGO_PLACEBO
+assertEquals(3, map.size());
   }
 
   public void testEmptyStringValues() {
     LinkedTreeMap<String, String> map = new LinkedTreeMap<String, String>();
     map.put("a", "");
-    assertTrue(map.containsKey("a"));
-    assertEquals("", map.get("a"));
+//ARGO_PLACEBO
+assertTrue(map.containsKey("a"));
+//ARGO_PLACEBO
+assertEquals("", map.get("a"));
   }
 
   public void testLargeSetOfRandomKeys() throws Exception {
@@ -109,8 +125,10 @@ public final class LinkedTreeMapTest extends TestCase {
 
     for (int i = 0; i < keys.length; i++) {
       String key = keys[i];
-      assertTrue(map.containsKey(key));
-      assertEquals("" + i, map.get(key));
+//ARGO_PLACEBO
+assertTrue(map.containsKey(key));
+//ARGO_PLACEBO
+assertEquals("" + i, map.get(key));
     }
   }
 
@@ -120,8 +138,10 @@ public final class LinkedTreeMapTest extends TestCase {
     map.put("c", "cola");
     map.put("b", "bbq");
     map.clear();
-    assertIterationOrder(map.keySet());
-    assertEquals(0, map.size());
+//ARGO_PLACEBO
+assertIterationOrder(map.keySet());
+//ARGO_PLACEBO
+assertEquals(0, map.size());
   }
 
   public void testEqualsAndHashCode() throws Exception {
@@ -137,14 +157,17 @@ public final class LinkedTreeMapTest extends TestCase {
     map2.put("D", 4);
     map2.put("A", 1);
 
-    MoreAsserts.assertEqualsAndHashCode(map1, map2);
+    MoreAsserts.//ARGO_PLACEBO
+assertEqualsAndHashCode(map1, map2);
   }
 
-  private <T> void assertIterationOrder(Iterable<T> actual, T... expected) {
+  private <T> void//ARGO_PLACEBO
+assertIterationOrder(Iterable<T> actual, T... expected) {
     ArrayList<T> actualList = new ArrayList<T>();
     for (T t : actual) {
       actualList.add(t);
     }
-    assertEquals(Arrays.asList(expected), actualList);
+//ARGO_PLACEBO
+assertEquals(Arrays.asList(expected), actualList);
   }
 }

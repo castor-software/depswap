@@ -29,9 +29,12 @@ public final class JsonElementReaderTest extends TestCase {
     JsonElement element = JsonParser.parseString("[1, 2, 3]");
     JsonTreeReader reader = new JsonTreeReader(element);
     reader.beginArray();
-    assertEquals(1, reader.nextInt());
-    assertEquals(2L, reader.nextLong());
-    assertEquals(3.0, reader.nextDouble());
+//ARGO_ORIGINAL
+assertEquals(1, reader.nextInt());
+//ARGO_ORIGINAL
+assertEquals(2L, reader.nextLong());
+//ARGO_ORIGINAL
+assertEquals(3.0, reader.nextDouble());
     reader.endArray();
   }
 
@@ -40,9 +43,12 @@ public final class JsonElementReaderTest extends TestCase {
     JsonTreeReader reader = new JsonTreeReader(element);
     reader.setLenient(true);
     reader.beginArray();
-    assertTrue(Double.isNaN(reader.nextDouble()));
-    assertEquals(Double.NEGATIVE_INFINITY, reader.nextDouble());
-    assertEquals(Double.POSITIVE_INFINITY, reader.nextDouble());
+//ARGO_ORIGINAL
+assertTrue(Double.isNaN(reader.nextDouble()));
+//ARGO_ORIGINAL
+assertEquals(Double.NEGATIVE_INFINITY, reader.nextDouble());
+//ARGO_ORIGINAL
+assertEquals(Double.POSITIVE_INFINITY, reader.nextDouble());
     reader.endArray();
   }
 
@@ -53,22 +59,28 @@ public final class JsonElementReaderTest extends TestCase {
     reader.beginArray();
     try {
       reader.nextDouble();
-      fail();
+//ARGO_ORIGINAL
+fail();
     } catch (NumberFormatException e) {
     }
-    assertEquals("NaN", reader.nextString());
+//ARGO_ORIGINAL
+assertEquals("NaN", reader.nextString());
     try {
       reader.nextDouble();
-      fail();
+//ARGO_ORIGINAL
+fail();
     } catch (NumberFormatException e) {
     }
-    assertEquals("-Infinity", reader.nextString());
+//ARGO_ORIGINAL
+assertEquals("-Infinity", reader.nextString());
     try {
       reader.nextDouble();
-      fail();
+//ARGO_ORIGINAL
+fail();
     } catch (NumberFormatException e) {
     }
-    assertEquals("Infinity", reader.nextString());
+//ARGO_ORIGINAL
+assertEquals("Infinity", reader.nextString());
     reader.endArray();
   }
 
@@ -76,9 +88,12 @@ public final class JsonElementReaderTest extends TestCase {
     JsonElement element = JsonParser.parseString("[\"1\", \"2\", \"3\"]");
     JsonTreeReader reader = new JsonTreeReader(element);
     reader.beginArray();
-    assertEquals(1, reader.nextInt());
-    assertEquals(2L, reader.nextLong());
-    assertEquals(3.0, reader.nextDouble());
+//ARGO_ORIGINAL
+assertEquals(1, reader.nextInt());
+//ARGO_ORIGINAL
+assertEquals(2L, reader.nextLong());
+//ARGO_ORIGINAL
+assertEquals(3.0, reader.nextDouble());
     reader.endArray();
   }
 
@@ -86,7 +101,8 @@ public final class JsonElementReaderTest extends TestCase {
     JsonElement element = JsonParser.parseString("[1]");
     JsonTreeReader reader = new JsonTreeReader(element);
     reader.beginArray();
-    assertEquals("1", reader.nextString());
+//ARGO_ORIGINAL
+assertEquals("1", reader.nextString());
     reader.endArray();
   }
 
@@ -94,8 +110,10 @@ public final class JsonElementReaderTest extends TestCase {
     JsonElement element = JsonParser.parseString("[true, false]");
     JsonTreeReader reader = new JsonTreeReader(element);
     reader.beginArray();
-    assertEquals(true, reader.nextBoolean());
-    assertEquals(false, reader.nextBoolean());
+//ARGO_ORIGINAL
+assertEquals(true, reader.nextBoolean());
+//ARGO_ORIGINAL
+assertEquals(false, reader.nextBoolean());
     reader.endArray();
   }
 
@@ -112,43 +130,65 @@ public final class JsonElementReaderTest extends TestCase {
     JsonElement element = JsonParser.parseString("[\"A\",\"B\"]");
     JsonTreeReader reader = new JsonTreeReader(element);
     reader.beginArray();
-    assertEquals("A", reader.nextString());
-    assertEquals("B", reader.nextString());
+//ARGO_ORIGINAL
+assertEquals("A", reader.nextString());
+//ARGO_ORIGINAL
+assertEquals("B", reader.nextString());
     reader.endArray();
   }
 
   public void testArray() throws IOException {
     JsonElement element = JsonParser.parseString("[1, 2, 3]");
     JsonTreeReader reader = new JsonTreeReader(element);
-    assertEquals(JsonToken.BEGIN_ARRAY, reader.peek());
+//ARGO_ORIGINAL
+assertEquals(JsonToken.BEGIN_ARRAY, reader.peek());
     reader.beginArray();
-    assertEquals(JsonToken.NUMBER, reader.peek());
-    assertEquals(1, reader.nextInt());
-    assertEquals(JsonToken.NUMBER, reader.peek());
-    assertEquals(2, reader.nextInt());
-    assertEquals(JsonToken.NUMBER, reader.peek());
-    assertEquals(3, reader.nextInt());
-    assertEquals(JsonToken.END_ARRAY, reader.peek());
+//ARGO_ORIGINAL
+assertEquals(JsonToken.NUMBER, reader.peek());
+//ARGO_ORIGINAL
+assertEquals(1, reader.nextInt());
+//ARGO_ORIGINAL
+assertEquals(JsonToken.NUMBER, reader.peek());
+//ARGO_ORIGINAL
+assertEquals(2, reader.nextInt());
+//ARGO_ORIGINAL
+assertEquals(JsonToken.NUMBER, reader.peek());
+//ARGO_ORIGINAL
+assertEquals(3, reader.nextInt());
+//ARGO_ORIGINAL
+assertEquals(JsonToken.END_ARRAY, reader.peek());
     reader.endArray();
-    assertEquals(JsonToken.END_DOCUMENT, reader.peek());
+//ARGO_ORIGINAL
+assertEquals(JsonToken.END_DOCUMENT, reader.peek());
   }
 
   public void testObject() throws IOException {
     JsonElement element = JsonParser.parseString("{\"A\": 1, \"B\": 2}");
     JsonTreeReader reader = new JsonTreeReader(element);
-    assertEquals(JsonToken.BEGIN_OBJECT, reader.peek());
+//ARGO_ORIGINAL
+assertEquals(JsonToken.BEGIN_OBJECT, reader.peek());
     reader.beginObject();
-    assertEquals(JsonToken.NAME, reader.peek());
-    assertEquals("A", reader.nextName());
-    assertEquals(JsonToken.NUMBER, reader.peek());
-    assertEquals(1, reader.nextInt());
-    assertEquals(JsonToken.NAME, reader.peek());
-    assertEquals("B", reader.nextName());
-    assertEquals(JsonToken.NUMBER, reader.peek());
-    assertEquals(2, reader.nextInt());
-    assertEquals(JsonToken.END_OBJECT, reader.peek());
+//ARGO_ORIGINAL
+assertEquals(JsonToken.NAME, reader.peek());
+//ARGO_ORIGINAL
+assertEquals("A", reader.nextName());
+//ARGO_ORIGINAL
+assertEquals(JsonToken.NUMBER, reader.peek());
+//ARGO_ORIGINAL
+assertEquals(1, reader.nextInt());
+//ARGO_ORIGINAL
+assertEquals(JsonToken.NAME, reader.peek());
+//ARGO_ORIGINAL
+assertEquals("B", reader.nextName());
+//ARGO_ORIGINAL
+assertEquals(JsonToken.NUMBER, reader.peek());
+//ARGO_ORIGINAL
+assertEquals(2, reader.nextInt());
+//ARGO_ORIGINAL
+assertEquals(JsonToken.END_OBJECT, reader.peek());
     reader.endObject();
-    assertEquals(JsonToken.END_DOCUMENT, reader.peek());
+//ARGO_ORIGINAL
+assertEquals(JsonToken.END_DOCUMENT, reader.peek());
   }
 
   public void testEmptyArray() throws IOException {
@@ -175,12 +215,15 @@ public final class JsonElementReaderTest extends TestCase {
     JsonElement element = JsonParser.parseString("{\"A\":{},\"B\":{\"C\":{}}}");
     JsonTreeReader reader = new JsonTreeReader(element);
     reader.beginObject();
-    assertEquals("A", reader.nextName());
+//ARGO_ORIGINAL
+assertEquals("A", reader.nextName());
     reader.beginObject();
     reader.endObject();
-    assertEquals("B", reader.nextName());
+//ARGO_ORIGINAL
+assertEquals("B", reader.nextName());
     reader.beginObject();
-    assertEquals("C", reader.nextName());
+//ARGO_ORIGINAL
+assertEquals("C", reader.nextName());
     reader.beginObject();
     reader.endObject();
     reader.endObject();
@@ -198,11 +241,14 @@ public final class JsonElementReaderTest extends TestCase {
     JsonElement element = JsonParser.parseString("[\"A\",{\"B\":[[]]},\"C\",[[]],\"D\",null]");
     JsonTreeReader reader = new JsonTreeReader(element);
     reader.beginArray();
-    assertEquals("A", reader.nextString());
+//ARGO_ORIGINAL
+assertEquals("A", reader.nextString());
     reader.skipValue();
-    assertEquals("C", reader.nextString());
+//ARGO_ORIGINAL
+assertEquals("C", reader.nextString());
     reader.skipValue();
-    assertEquals("D", reader.nextString());
+//ARGO_ORIGINAL
+assertEquals("D", reader.nextString());
     reader.skipValue();
     reader.endArray();
   }
@@ -213,52 +259,62 @@ public final class JsonElementReaderTest extends TestCase {
     reader.beginArray();
     try {
       reader.nextBoolean();
-      fail();
+//ARGO_ORIGINAL
+fail();
     } catch (IllegalStateException expected) {
     }
     try {
       reader.nextNull();
-      fail();
+//ARGO_ORIGINAL
+fail();
     } catch (IllegalStateException expected) {
     }
     try {
       reader.nextString();
-      fail();
+//ARGO_ORIGINAL
+fail();
     } catch (IllegalStateException expected) {
     }
     try {
       reader.nextInt();
-      fail();
+//ARGO_ORIGINAL
+fail();
     } catch (IllegalStateException expected) {
     }
     try {
       reader.nextLong();
-      fail();
+//ARGO_ORIGINAL
+fail();
     } catch (IllegalStateException expected) {
     }
     try {
       reader.nextDouble();
-      fail();
+//ARGO_ORIGINAL
+fail();
     } catch (IllegalStateException expected) {
     }
     try {
       reader.nextName();
-      fail();
+//ARGO_ORIGINAL
+fail();
     } catch (IllegalStateException expected) {
     }
     try {
       reader.beginObject();
-      fail();
+//ARGO_ORIGINAL
+fail();
     } catch (IllegalStateException expected) {
     }
     try {
       reader.endArray();
-      fail();
+//ARGO_ORIGINAL
+fail();
     } catch (IllegalStateException expected) {
     }
     try {
       reader.endObject();
-      fail();
+//ARGO_ORIGINAL
+fail();
     } catch (IllegalStateException expected) {
     }
     reader.beginArray();
@@ -266,35 +322,42 @@ public final class JsonElementReaderTest extends TestCase {
 
     try {
       reader.nextBoolean();
-      fail();
+//ARGO_ORIGINAL
+fail();
     } catch (IllegalStateException expected) {
     }
     try {
       reader.nextNull();
-      fail();
+//ARGO_ORIGINAL
+fail();
     } catch (IllegalStateException expected) {
     }
     try {
       reader.nextInt();
-      fail();
+//ARGO_ORIGINAL
+fail();
     } catch (NumberFormatException expected) {
     }
     try {
       reader.nextLong();
-      fail();
+//ARGO_ORIGINAL
+fail();
     } catch (NumberFormatException expected) {
     }
     try {
       reader.nextDouble();
-      fail();
+//ARGO_ORIGINAL
+fail();
     } catch (NumberFormatException expected) {
     }
     try {
       reader.nextName();
-      fail();
+//ARGO_ORIGINAL
+fail();
     } catch (IllegalStateException expected) {
     }
-    assertEquals("A", reader.nextString());
+//ARGO_ORIGINAL
+assertEquals("A", reader.nextString());
     reader.endArray();
   }
 
@@ -305,7 +368,8 @@ public final class JsonElementReaderTest extends TestCase {
     reader.close();
     try {
       reader.peek();
-      fail();
+//ARGO_ORIGINAL
+fail();
     } catch (IllegalStateException expected) {
     }
   }

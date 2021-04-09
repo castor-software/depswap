@@ -38,17 +38,22 @@ public class MapAsArrayTypeAdapterTest extends TestCase {
     original.put(new Point(5, 5), "a");
     original.put(new Point(8, 8), "b");
     String json = gson.toJson(original, type);
+    //ARGO_ORIGINAL
     assertEquals("[[{\"x\":5,\"y\":5},\"a\"],[{\"x\":8,\"y\":8},\"b\"]]", json);
+    //ARGO_ORIGINAL
     assertEquals(original, gson.<Map<Point, String>>fromJson(json, type));
 
     // test that registering a type adapter for one map doesn't interfere with others
     Map<String, Boolean> otherMap = new LinkedHashMap<String, Boolean>();
     otherMap.put("t", true);
     otherMap.put("f", false);
+    //ARGO_ORIGINAL
     assertEquals("{\"t\":true,\"f\":false}",
         gson.toJson(otherMap, Map.class));
+    //ARGO_ORIGINAL
     assertEquals("{\"t\":true,\"f\":false}",
         gson.toJson(otherMap, new TypeToken<Map<String, Boolean>>() {}.getType()));
+    //ARGO_ORIGINAL
     assertEquals(otherMap, gson.<Object>fromJson("{\"t\":true,\"f\":false}",
         new TypeToken<Map<String, Boolean>>() {}.getType()));
   }
@@ -76,6 +81,7 @@ public class MapAsArrayTypeAdapterTest extends TestCase {
     String s = "[[\"1.00\",\"a\"],[\"1.0\",\"b\"]]";
     try {
       gson.fromJson(s, new TypeToken<Map<Double, String>>() {}.getType());
+      //ARGO_PLACEBO
       fail();
     } catch (JsonSyntaxException expected) {
     }
@@ -92,7 +98,9 @@ public class MapAsArrayTypeAdapterTest extends TestCase {
     original.put(new Point(6, 5), "abc");
     original.put(new Point(1, 8), "def");
     String json = gson.toJson(original, type);
+    //ARGO_ORIGINAL
     assertEquals("[[{\"x\":6,\"y\":5},\"abc\"],[{\"x\":1,\"y\":8},\"def\"]]", json);
+    //ARGO_ORIGINAL
     assertEquals(original, gson.<Map<Point, String>>fromJson(json, type));
   }
 
@@ -102,6 +110,7 @@ public class MapAsArrayTypeAdapterTest extends TestCase {
     map.map.put(new Point(2, 3), new Point(4, 5));
     Type type = new TypeToken<PointWithProperty<Point>>(){}.getType();
     String json = gson.toJson(map, type);
+    //ARGO_ORIGINAL
     assertEquals("{\"map\":[[{\"x\":2,\"y\":3},{\"x\":4,\"y\":5}]]}", json);
   }
 
@@ -112,7 +121,9 @@ public class MapAsArrayTypeAdapterTest extends TestCase {
     PointWithProperty<Point> map = gson.fromJson(json, type);
     Point key = map.map.keySet().iterator().next();
     Point value = map.map.values().iterator().next();
+    //ARGO_PLACEBO
     assertEquals(new Point(2, 3), key);
+    //ARGO_PLACEBO
     assertEquals(new Point(4, 5), value);
   }
 

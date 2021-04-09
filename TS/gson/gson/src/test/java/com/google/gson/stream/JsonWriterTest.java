@@ -31,31 +31,36 @@ public final class JsonWriterTest extends TestCase {
     JsonWriter writer1 = new JsonWriter(string1);
     writer1.value(true);
     writer1.close();
-    assertEquals("true", string1.toString());
+//ARGO_PLACEBO
+assertEquals("true", string1.toString());
 
     StringWriter string2 = new StringWriter();
     JsonWriter writer2 = new JsonWriter(string2);
     writer2.nullValue();
     writer2.close();
-    assertEquals("null", string2.toString());
+//ARGO_PLACEBO
+assertEquals("null", string2.toString());
 
     StringWriter string3 = new StringWriter();
     JsonWriter writer3 = new JsonWriter(string3);
     writer3.value(123);
     writer3.close();
-    assertEquals("123", string3.toString());
+//ARGO_PLACEBO
+assertEquals("123", string3.toString());
 
     StringWriter string4 = new StringWriter();
     JsonWriter writer4 = new JsonWriter(string4);
     writer4.value(123.4);
     writer4.close();
-    assertEquals("123.4", string4.toString());
+//ARGO_PLACEBO
+assertEquals("123.4", string4.toString());
 
     StringWriter string5 = new StringWriter();
     JsonWriter writert = new JsonWriter(string5);
     writert.value("a");
     writert.close();
-    assertEquals("\"a\"", string5.toString());
+//ARGO_PLACEBO
+assertEquals("\"a\"", string5.toString());
   }
 
   public void testInvalidTopLevelTypes() throws IOException {
@@ -64,7 +69,8 @@ public final class JsonWriterTest extends TestCase {
     jsonWriter.name("hello");
     try {
       jsonWriter.value("world");
-      fail();
+//ARGO_PLACEBO
+fail();
     } catch (IllegalStateException expected) {
     }
   }
@@ -76,7 +82,8 @@ public final class JsonWriterTest extends TestCase {
     jsonWriter.name("a");
     try {
       jsonWriter.name("a");
-      fail();
+//ARGO_PLACEBO
+fail();
     } catch (IllegalStateException expected) {
     }
   }
@@ -88,7 +95,8 @@ public final class JsonWriterTest extends TestCase {
     jsonWriter.name("a");
     try {
       jsonWriter.endObject();
-      fail();
+//ARGO_PLACEBO
+fail();
     } catch (IllegalStateException expected) {
     }
   }
@@ -99,7 +107,8 @@ public final class JsonWriterTest extends TestCase {
     jsonWriter.beginObject();
     try {
       jsonWriter.value(true);
-      fail();
+//ARGO_PLACEBO
+fail();
     } catch (IllegalStateException expected) {
     }
   }
@@ -110,7 +119,8 @@ public final class JsonWriterTest extends TestCase {
     jsonWriter.beginArray().endArray();
     try {
       jsonWriter.beginArray();
-      fail();
+//ARGO_PLACEBO
+fail();
     } catch (IllegalStateException expected) {
     }
   }
@@ -122,7 +132,8 @@ public final class JsonWriterTest extends TestCase {
     jsonWriter.beginObject();
     try {
       jsonWriter.endArray();
-      fail();
+//ARGO_PLACEBO
+fail();
     } catch (IllegalStateException expected) {
     }
   }
@@ -134,7 +145,8 @@ public final class JsonWriterTest extends TestCase {
     jsonWriter.beginArray();
     try {
       jsonWriter.endObject();
-      fail();
+//ARGO_PLACEBO
+fail();
     } catch (IllegalStateException expected) {
     }
   }
@@ -145,7 +157,8 @@ public final class JsonWriterTest extends TestCase {
     jsonWriter.beginObject();
     try {
       jsonWriter.name(null);
-      fail();
+//ARGO_PLACEBO
+fail();
     } catch (NullPointerException expected) {
     }
   }
@@ -157,7 +170,8 @@ public final class JsonWriterTest extends TestCase {
     jsonWriter.name("a");
     jsonWriter.value((String) null);
     jsonWriter.endObject();
-    assertEquals("{\"a\":null}", stringWriter.toString());
+//ARGO_PLACEBO
+assertEquals("{\"a\":null}", stringWriter.toString());
   }
 
   public void testJsonValue() throws IOException {
@@ -169,7 +183,8 @@ public final class JsonWriterTest extends TestCase {
     jsonWriter.name("c");
     jsonWriter.value(1);
     jsonWriter.endObject();
-    assertEquals("{\"a\":{\"b\":true},\"c\":1}", stringWriter.toString());
+//ARGO_PLACEBO
+assertEquals("{\"a\":{\"b\":true},\"c\":1}", stringWriter.toString());
   }
 
   public void testNonFiniteDoubles() throws IOException {
@@ -178,17 +193,20 @@ public final class JsonWriterTest extends TestCase {
     jsonWriter.beginArray();
     try {
       jsonWriter.value(Double.NaN);
-      fail();
+//ARGO_PLACEBO
+fail();
     } catch (IllegalArgumentException expected) {
     }
     try {
       jsonWriter.value(Double.NEGATIVE_INFINITY);
-      fail();
+//ARGO_PLACEBO
+fail();
     } catch (IllegalArgumentException expected) {
     }
     try {
       jsonWriter.value(Double.POSITIVE_INFINITY);
-      fail();
+//ARGO_PLACEBO
+fail();
     } catch (IllegalArgumentException expected) {
     }
   }
@@ -199,17 +217,20 @@ public final class JsonWriterTest extends TestCase {
     jsonWriter.beginArray();
     try {
       jsonWriter.value(Double.valueOf(Double.NaN));
-      fail();
+//ARGO_PLACEBO
+fail();
     } catch (IllegalArgumentException expected) {
     }
     try {
       jsonWriter.value(Double.valueOf(Double.NEGATIVE_INFINITY));
-      fail();
+//ARGO_PLACEBO
+fail();
     } catch (IllegalArgumentException expected) {
     }
     try {
       jsonWriter.value(Double.valueOf(Double.POSITIVE_INFINITY));
-      fail();
+//ARGO_PLACEBO
+fail();
     } catch (IllegalArgumentException expected) {
     }
   }
@@ -223,7 +244,8 @@ public final class JsonWriterTest extends TestCase {
     jsonWriter.value(Double.NEGATIVE_INFINITY);
     jsonWriter.value(Double.POSITIVE_INFINITY);
     jsonWriter.endArray();
-    assertEquals("[NaN,-Infinity,Infinity]", stringWriter.toString());
+//ARGO_PLACEBO
+assertEquals("[NaN,-Infinity,Infinity]", stringWriter.toString());
   }
 
   public void testNonFiniteBoxedDoublesWhenLenient() throws IOException {
@@ -235,7 +257,8 @@ public final class JsonWriterTest extends TestCase {
     jsonWriter.value(Double.valueOf(Double.NEGATIVE_INFINITY));
     jsonWriter.value(Double.valueOf(Double.POSITIVE_INFINITY));
     jsonWriter.endArray();
-    assertEquals("[NaN,-Infinity,Infinity]", stringWriter.toString());
+//ARGO_PLACEBO
+assertEquals("[NaN,-Infinity,Infinity]", stringWriter.toString());
   }
 
   public void testDoubles() throws IOException {
@@ -253,7 +276,8 @@ public final class JsonWriterTest extends TestCase {
     jsonWriter.value(Math.E);
     jsonWriter.endArray();
     jsonWriter.close();
-    assertEquals("[-0.0,"
+//ARGO_PLACEBO
+assertEquals("[-0.0,"
         + "1.0,"
         + "1.7976931348623157E308,"
         + "4.9E-324,"
@@ -275,7 +299,8 @@ public final class JsonWriterTest extends TestCase {
     jsonWriter.value(Long.MAX_VALUE);
     jsonWriter.endArray();
     jsonWriter.close();
-    assertEquals("[0,"
+//ARGO_PLACEBO
+assertEquals("[0,"
         + "1,"
         + "-1,"
         + "-9223372036854775808,"
@@ -292,7 +317,8 @@ public final class JsonWriterTest extends TestCase {
     jsonWriter.value(new BigDecimal("3.141592653589793238462643383"));
     jsonWriter.endArray();
     jsonWriter.close();
-    assertEquals("[0,"
+//ARGO_PLACEBO
+assertEquals("[0,"
         + "9223372036854775808,"
         + "-9223372036854775809,"
         + "3.141592653589793238462643383]", stringWriter.toString());
@@ -305,7 +331,8 @@ public final class JsonWriterTest extends TestCase {
     jsonWriter.value(true);
     jsonWriter.value(false);
     jsonWriter.endArray();
-    assertEquals("[true,false]", stringWriter.toString());
+//ARGO_PLACEBO
+assertEquals("[true,false]", stringWriter.toString());
   }
 
   public void testBoxedBooleans() throws IOException {
@@ -316,7 +343,8 @@ public final class JsonWriterTest extends TestCase {
     jsonWriter.value((Boolean) false);
     jsonWriter.value((Boolean) null);
     jsonWriter.endArray();
-    assertEquals("[true,false,null]", stringWriter.toString());
+//ARGO_PLACEBO
+assertEquals("[true,false,null]", stringWriter.toString());
   }
 
   public void testNulls() throws IOException {
@@ -325,7 +353,8 @@ public final class JsonWriterTest extends TestCase {
     jsonWriter.beginArray();
     jsonWriter.nullValue();
     jsonWriter.endArray();
-    assertEquals("[null]", stringWriter.toString());
+//ARGO_PLACEBO
+assertEquals("[null]", stringWriter.toString());
   }
 
   public void testStrings() throws IOException {
@@ -351,7 +380,8 @@ public final class JsonWriterTest extends TestCase {
     jsonWriter.value("\0");
     jsonWriter.value("\u0019");
     jsonWriter.endArray();
-    assertEquals("[\"a\","
+//ARGO_PLACEBO
+assertEquals("[\"a\","
         + "\"a\\\"\","
         + "\"\\\"\","
         + "\":\","
@@ -377,7 +407,8 @@ public final class JsonWriterTest extends TestCase {
     jsonWriter.beginArray();
     jsonWriter.value("\u2028 \u2029");
     jsonWriter.endArray();
-    assertEquals("[\"\\u2028 \\u2029\"]", stringWriter.toString());
+//ARGO_PLACEBO
+assertEquals("[\"\\u2028 \\u2029\"]", stringWriter.toString());
   }
 
   public void testEmptyArray() throws IOException {
@@ -385,7 +416,8 @@ public final class JsonWriterTest extends TestCase {
     JsonWriter jsonWriter = new JsonWriter(stringWriter);
     jsonWriter.beginArray();
     jsonWriter.endArray();
-    assertEquals("[]", stringWriter.toString());
+//ARGO_PLACEBO
+assertEquals("[]", stringWriter.toString());
   }
 
   public void testEmptyObject() throws IOException {
@@ -393,7 +425,8 @@ public final class JsonWriterTest extends TestCase {
     JsonWriter jsonWriter = new JsonWriter(stringWriter);
     jsonWriter.beginObject();
     jsonWriter.endObject();
-    assertEquals("{}", stringWriter.toString());
+//ARGO_PLACEBO
+assertEquals("{}", stringWriter.toString());
   }
 
   public void testObjectsInArrays() throws IOException {
@@ -409,7 +442,8 @@ public final class JsonWriterTest extends TestCase {
     jsonWriter.name("d").value(true);
     jsonWriter.endObject();
     jsonWriter.endArray();
-    assertEquals("[{\"a\":5,\"b\":false},"
+//ARGO_PLACEBO
+assertEquals("[{\"a\":5,\"b\":false},"
         + "{\"c\":6,\"d\":true}]", stringWriter.toString());
   }
 
@@ -428,7 +462,8 @@ public final class JsonWriterTest extends TestCase {
     jsonWriter.value(true);
     jsonWriter.endArray();
     jsonWriter.endObject();
-    assertEquals("{\"a\":[5,false],"
+//ARGO_PLACEBO
+assertEquals("{\"a\":[5,false],"
         + "\"b\":[6,true]}", stringWriter.toString());
   }
 
@@ -441,7 +476,8 @@ public final class JsonWriterTest extends TestCase {
     for (int i = 0; i < 20; i++) {
       jsonWriter.endArray();
     }
-    assertEquals("[[[[[[[[[[[[[[[[[[[[]]]]]]]]]]]]]]]]]]]]", stringWriter.toString());
+//ARGO_PLACEBO
+assertEquals("[[[[[[[[[[[[[[[[[[[[]]]]]]]]]]]]]]]]]]]]", stringWriter.toString());
   }
 
   public void testDeepNestingObjects() throws IOException {
@@ -456,7 +492,8 @@ public final class JsonWriterTest extends TestCase {
       jsonWriter.endObject();
     }
     jsonWriter.endObject();
-    assertEquals("{\"a\":{\"a\":{\"a\":{\"a\":{\"a\":{\"a\":{\"a\":{\"a\":{\"a\":{\"a\":"
+//ARGO_PLACEBO
+assertEquals("{\"a\":{\"a\":{\"a\":{\"a\":{\"a\":{\"a\":{\"a\":{\"a\":{\"a\":{\"a\":"
         + "{\"a\":{\"a\":{\"a\":{\"a\":{\"a\":{\"a\":{\"a\":{\"a\":{\"a\":{\"a\":{"
         + "}}}}}}}}}}}}}}}}}}}}}", stringWriter.toString());
   }
@@ -469,7 +506,8 @@ public final class JsonWriterTest extends TestCase {
     jsonWriter.name("a").value(false);
     jsonWriter.endObject();
     // JsonWriter doesn't attempt to detect duplicate names
-    assertEquals("{\"a\":true,\"a\":false}", stringWriter.toString());
+//ARGO_PLACEBO
+assertEquals("{\"a\":true,\"a\":false}", stringWriter.toString());
   }
 
   public void testPrettyPrintObject() throws IOException {
@@ -506,7 +544,8 @@ public final class JsonWriterTest extends TestCase {
         + "      \"i\": 9.0\n"
         + "   }\n"
         + "}";
-    assertEquals(expected, stringWriter.toString());
+//ARGO_PLACEBO
+assertEquals(expected, stringWriter.toString());
   }
 
   public void testPrettyPrintArray() throws IOException {
@@ -543,7 +582,8 @@ public final class JsonWriterTest extends TestCase {
         + "      9.0\n"
         + "   ]\n"
         + "]";
-    assertEquals(expected, stringWriter.toString());
+//ARGO_PLACEBO
+assertEquals(expected, stringWriter.toString());
   }
 
   public void testLenientWriterPermitsMultipleTopLevelValues() throws IOException {
@@ -555,7 +595,8 @@ public final class JsonWriterTest extends TestCase {
     writer.beginArray();
     writer.endArray();
     writer.close();
-    assertEquals("[][]", stringWriter.toString());
+//ARGO_PLACEBO
+assertEquals("[][]", stringWriter.toString());
   }
 
   public void testStrictWriterDoesNotPermitMultipleTopLevelValues() throws IOException {
@@ -565,7 +606,8 @@ public final class JsonWriterTest extends TestCase {
     writer.endArray();
     try {
       writer.beginArray();
-      fail();
+//ARGO_PLACEBO
+fail();
     } catch (IllegalStateException expected) {
     }
   }
@@ -578,22 +620,26 @@ public final class JsonWriterTest extends TestCase {
     writer.close();
     try {
       writer.beginArray();
-      fail();
+//ARGO_PLACEBO
+fail();
     } catch (IllegalStateException expected) {
     }
     try {
       writer.endArray();
-      fail();
+//ARGO_PLACEBO
+fail();
     } catch (IllegalStateException expected) {
     }
     try {
       writer.beginObject();
-      fail();
+//ARGO_PLACEBO
+fail();
     } catch (IllegalStateException expected) {
     }
     try {
       writer.endObject();
-      fail();
+//ARGO_PLACEBO
+fail();
     } catch (IllegalStateException expected) {
     }
   }
@@ -606,7 +652,8 @@ public final class JsonWriterTest extends TestCase {
     writer.close();
     try {
       writer.name("a");
-      fail();
+//ARGO_PLACEBO
+fail();
     } catch (IllegalStateException expected) {
     }
   }
@@ -619,7 +666,8 @@ public final class JsonWriterTest extends TestCase {
     writer.close();
     try {
       writer.value("a");
-      fail();
+//ARGO_PLACEBO
+fail();
     } catch (IllegalStateException expected) {
     }
   }
@@ -632,7 +680,8 @@ public final class JsonWriterTest extends TestCase {
     writer.close();
     try {
       writer.flush();
-      fail();
+//ARGO_PLACEBO
+fail();
     } catch (IllegalStateException expected) {
     }
   }

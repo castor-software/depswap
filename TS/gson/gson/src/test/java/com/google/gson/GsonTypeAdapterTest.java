@@ -43,6 +43,7 @@ public class GsonTypeAdapterTest extends TestCase {
   public void testDefaultTypeAdapterThrowsParseException() throws Exception {
     try {
       gson.fromJson("{\"abc\":123}", BigInteger.class);
+      //ARGO_PLACEBO
       fail("Should have thrown a JsonParseException");
     } catch (JsonParseException expected) { }
   }
@@ -50,11 +51,13 @@ public class GsonTypeAdapterTest extends TestCase {
   public void testTypeAdapterThrowsException() throws Exception {
     try {
       gson.toJson(new AtomicLong(0));
+      //ARGO_PLACEBO
       fail("Type Adapter should have thrown an exception");
     } catch (IllegalStateException expected) { }
 
     try {
       gson.fromJson("123", AtomicLong.class);
+      //ARGO_PLACEBO
       fail("Type Adapter should have thrown an exception");
     } catch (JsonParseException expected) { }
   }
@@ -63,18 +66,22 @@ public class GsonTypeAdapterTest extends TestCase {
     int intialValue = 1;
     AtomicInteger atomicInt = new AtomicInteger(intialValue);
     String json = gson.toJson(atomicInt);
+    //ARGO_PLACEBO
     assertEquals(intialValue + 1, Integer.parseInt(json));
 
     atomicInt = gson.fromJson(json, AtomicInteger.class);
+    //ARGO_PLACEBO
     assertEquals(intialValue, atomicInt.get());
   }
 
   public void testTypeAdapterDoesNotAffectNonAdaptedTypes() throws Exception {
     String expected = "blah";
     String actual = gson.toJson(expected);
+    //ARGO_PLACEBO
     assertEquals("\"" + expected + "\"", actual);
 
     actual = gson.fromJson(actual, String.class);
+    //ARGO_PLACEBO
     assertEquals(expected, actual);
   }
 
@@ -117,13 +124,21 @@ public class GsonTypeAdapterTest extends TestCase {
     Concrete instance = new Concrete();
     instance.a = "android";
     instance.b = "beep";
+    //ARGO_PLACEBO
     assertSerialized("{\"a\":\"android\"}", Abstract.class, true, true, instance);
+    //ARGO_PLACEBO
     assertSerialized("{\"a\":\"android\"}", Abstract.class, true, false, instance);
+    //ARGO_PLACEBO
     assertSerialized("{\"a\":\"android\"}", Abstract.class, false, true, instance);
+    //ARGO_PLACEBO
     assertSerialized("{\"a\":\"android\"}", Abstract.class, false, false, instance);
+    //ARGO_PLACEBO
     assertSerialized("{\"b\":\"beep\",\"a\":\"android\"}", Concrete.class, true, true, instance);
+    //ARGO_PLACEBO
     assertSerialized("{\"b\":\"beep\",\"a\":\"android\"}", Concrete.class, true, false, instance);
+    //ARGO_PLACEBO
     assertSerialized("{\"b\":\"beep\",\"a\":\"android\"}", Concrete.class, false, true, instance);
+    //ARGO_PLACEBO
     assertSerialized("{\"b\":\"beep\",\"a\":\"android\"}", Concrete.class, false, false, instance);
   }
 
@@ -143,6 +158,7 @@ public class GsonTypeAdapterTest extends TestCase {
       builder.registerTypeHierarchyAdapter(Abstract.class, deserializer);
     }
     Gson gson = builder.create();
+    //ARGO_PLACEBO
     assertEquals(expected, gson.toJson(instance, instanceType));
   }
 }

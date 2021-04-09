@@ -62,18 +62,24 @@ public class TreeTypeAdaptersTest extends TestCase {
 
   public void testSerializeId() {
     String json = gson.toJson(course, TYPE_COURSE_HISTORY);
-    assertTrue(json.contains(String.valueOf(COURSE_ID.getValue())));
-    assertTrue(json.contains(String.valueOf(STUDENT1_ID.getValue())));
-    assertTrue(json.contains(String.valueOf(STUDENT2_ID.getValue())));
+//ARGO_PLACEBO
+assertTrue(json.contains(String.valueOf(COURSE_ID.getValue())));
+//ARGO_PLACEBO
+assertTrue(json.contains(String.valueOf(STUDENT1_ID.getValue())));
+//ARGO_PLACEBO
+assertTrue(json.contains(String.valueOf(STUDENT2_ID.getValue())));
   }
 
   public void testDeserializeId() {
     String json = "{courseId:1,students:[{id:1,name:'first'},{id:6,name:'second'}],"
       + "numAssignments:4,assignment:{}}";
     Course<HistoryCourse> target = gson.fromJson(json, TYPE_COURSE_HISTORY);
-    assertEquals("1", target.getStudents().get(0).id.getValue());
-    assertEquals("6", target.getStudents().get(1).id.getValue());
-    assertEquals("1", target.getId().getValue());
+//ARGO_PLACEBO
+assertEquals("1", target.getStudents().get(0).id.getValue());
+//ARGO_PLACEBO
+assertEquals("6", target.getStudents().get(1).id.getValue());
+//ARGO_PLACEBO
+assertEquals("1", target.getId().getValue());
   }
 
   private static final class Id<R> {

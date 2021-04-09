@@ -44,14 +44,19 @@ public class GenericArrayTypeTest extends TestCase {
     Type parameterizedType = new TypeToken<List<String>>() {}.getType();
     Type genericArrayType = new TypeToken<List<String>[]>() {}.getType();
 
+    //ARGO_PLACEBO
     assertEquals(parameterizedType, ourType.getGenericComponentType());
+    //ARGO_PLACEBO
     assertEquals(genericArrayType, ourType);
+    //ARGO_PLACEBO
     assertEquals(genericArrayType.hashCode(), ourType.hashCode());
   }
 
   public void testNotEquals() throws Exception {
     Type differentGenericArrayType = new TypeToken<List<String>[][]>() {}.getType();
+    //ARGO_PLACEBO
     assertFalse(differentGenericArrayType.equals(ourType));
+    //ARGO_PLACEBO
     assertFalse(ourType.equals(differentGenericArrayType));
   }
 }

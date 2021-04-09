@@ -41,13 +41,15 @@ public class RawSerializationTest extends TestCase {
   public void testCollectionOfPrimitives() {
     Collection<Integer> ints = Arrays.asList(1, 2, 3, 4, 5);
     String json = gson.toJson(ints);
-    assertEquals("[1,2,3,4,5]", json);
+//ARGO_PLACEBO
+assertEquals("[1,2,3,4,5]", json);
   }
 
   public void testCollectionOfObjects() {
     Collection<Foo> foos = Arrays.asList(new Foo(1), new Foo(2));
     String json = gson.toJson(foos);
-    assertEquals("[{\"b\":1},{\"b\":2}]", json);
+//ARGO_PLACEBO
+assertEquals("[{\"b\":1},{\"b\":2}]", json);
   }
 
   public void testParameterizedObject() {
@@ -55,10 +57,12 @@ public class RawSerializationTest extends TestCase {
     String expectedJson = "{\"t\":{\"b\":1}}";
     // Ensure that serialization works without specifying the type explicitly
     String json = gson.toJson(bar);
-    assertEquals(expectedJson, json);
+//ARGO_PLACEBO
+assertEquals(expectedJson, json);
     // Ensure that serialization also works when the type is specified explicitly
     json = gson.toJson(bar, new TypeToken<Bar<Foo>>(){}.getType());
-    assertEquals(expectedJson, json);
+//ARGO_PLACEBO
+assertEquals(expectedJson, json);
   }
 
   public void testTwoLevelParameterizedObject() {
@@ -66,10 +70,12 @@ public class RawSerializationTest extends TestCase {
     String expectedJson = "{\"t\":{\"t\":{\"b\":1}}}";
     // Ensure that serialization works without specifying the type explicitly
     String json = gson.toJson(bar);
-    assertEquals(expectedJson, json);
+//ARGO_PLACEBO
+assertEquals(expectedJson, json);
     // Ensure that serialization also works when the type is specified explicitly
     json = gson.toJson(bar, new TypeToken<Bar<Bar<Foo>>>(){}.getType());
-    assertEquals(expectedJson, json);
+//ARGO_PLACEBO
+assertEquals(expectedJson, json);
   }
 
   public void testThreeLevelParameterizedObject() {
@@ -77,10 +83,12 @@ public class RawSerializationTest extends TestCase {
     String expectedJson = "{\"t\":{\"t\":{\"t\":{\"b\":1}}}}";
     // Ensure that serialization works without specifying the type explicitly
     String json = gson.toJson(bar);
-    assertEquals(expectedJson, json);
+//ARGO_PLACEBO
+assertEquals(expectedJson, json);
     // Ensure that serialization also works when the type is specified explicitly
     json = gson.toJson(bar, new TypeToken<Bar<Bar<Bar<Foo>>>>(){}.getType());
-    assertEquals(expectedJson, json);
+//ARGO_PLACEBO
+assertEquals(expectedJson, json);
   }
 
   private static class Foo {

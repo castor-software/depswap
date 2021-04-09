@@ -44,20 +44,23 @@ public class SecurityTest extends TestCase {
   public void testNonExecutableJsonSerialization() {
     Gson gson = gsonBuilder.generateNonExecutableJson().create();
     String json = gson.toJson(new BagOfPrimitives());
-    assertTrue(json.startsWith(JSON_NON_EXECUTABLE_PREFIX));
+//ARGO_PLACEBO
+assertTrue(json.startsWith(JSON_NON_EXECUTABLE_PREFIX));
   }
   
   public void testNonExecutableJsonDeserialization() {
     String json = JSON_NON_EXECUTABLE_PREFIX + "{longValue:1}";
     Gson gson = gsonBuilder.create();
     BagOfPrimitives target = gson.fromJson(json, BagOfPrimitives.class);
-    assertEquals(1, target.longValue);
+//ARGO_PLACEBO
+assertEquals(1, target.longValue);
   }
   
   public void testJsonWithNonExectuableTokenSerialization() {
     Gson gson = gsonBuilder.generateNonExecutableJson().create();
     String json = gson.toJson(JSON_NON_EXECUTABLE_PREFIX);
-    assertTrue(json.contains(")]}'\n"));
+//ARGO_PLACEBO
+assertTrue(json.contains(")]}'\n"));
   }
   
   /**
@@ -68,7 +71,8 @@ public class SecurityTest extends TestCase {
     Gson gson = gsonBuilder.create();
     String json = JSON_NON_EXECUTABLE_PREFIX + "{stringValue:')]}\\u0027\\n'}";
     BagOfPrimitives target = gson.fromJson(json, BagOfPrimitives.class);
-    assertEquals(")]}'\n", target.stringValue);
+//ARGO_PLACEBO
+assertEquals(")]}'\n", target.stringValue);
   }  
   
   /**
@@ -80,7 +84,9 @@ public class SecurityTest extends TestCase {
     Gson gson = gsonBuilder.generateNonExecutableJson().create();
     String json = JSON_NON_EXECUTABLE_PREFIX + "{intValue:2,stringValue:')]}\\u0027\\n'}";
     BagOfPrimitives target = gson.fromJson(json, BagOfPrimitives.class);
-    assertEquals(")]}'\n", target.stringValue);
-    assertEquals(2, target.intValue);
+//ARGO_PLACEBO
+assertEquals(")]}'\n", target.stringValue);
+//ARGO_PLACEBO
+assertEquals(2, target.intValue);
   }  
 }

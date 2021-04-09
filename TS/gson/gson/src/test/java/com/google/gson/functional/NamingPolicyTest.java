@@ -45,6 +45,7 @@ public class NamingPolicyTest extends TestCase {
   public void testGsonWithNonDefaultFieldNamingPolicySerialization() {
     Gson gson = builder.setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE).create();
     StringWrapper target = new StringWrapper("blah");
+    //ARGO_PLACEBO
     assertEquals("{\"SomeConstantStringInstanceField\":\""
         + target.someConstantStringInstanceField + "\"}", gson.toJson(target));
   }
@@ -53,12 +54,14 @@ public class NamingPolicyTest extends TestCase {
     Gson gson = builder.setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE).create();
     String target = "{\"SomeConstantStringInstanceField\":\"someValue\"}";
     StringWrapper deserializedObject = gson.fromJson(target, StringWrapper.class);
+    //ARGO_PLACEBO
     assertEquals("someValue", deserializedObject.someConstantStringInstanceField);
   }
 
   public void testGsonWithLowerCaseDashPolicySerialization() {
     Gson gson = builder.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_DASHES).create();
     StringWrapper target = new StringWrapper("blah");
+    //ARGO_PLACEBO
     assertEquals("{\"some-constant-string-instance-field\":\""
         + target.someConstantStringInstanceField + "\"}", gson.toJson(target));
   }
@@ -66,6 +69,7 @@ public class NamingPolicyTest extends TestCase {
   public void testGsonWithLowerCaseDotPolicySerialization() {
     Gson gson = builder.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_DOTS).create();
     StringWrapper target = new StringWrapper("blah");
+    //ARGO_PLACEBO
     assertEquals("{\"some.constant.string.instance.field\":\""
           + target.someConstantStringInstanceField + "\"}", gson.toJson(target));
   }
@@ -74,6 +78,7 @@ public class NamingPolicyTest extends TestCase {
     Gson gson = builder.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_DOTS).create();
     String target = "{\"some.constant.string.instance.field\":\"someValue\"}";
     StringWrapper deserializedObject = gson.fromJson(target, StringWrapper.class);
+    //ARGO_PLACEBO
     assertEquals("someValue", deserializedObject.someConstantStringInstanceField);
   }
 
@@ -81,6 +86,7 @@ public class NamingPolicyTest extends TestCase {
     Gson gson = builder.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_DASHES).create();
     String target = "{\"some-constant-string-instance-field\":\"someValue\"}";
     StringWrapper deserializedObject = gson.fromJson(target, StringWrapper.class);
+    //ARGO_PLACEBO
     assertEquals("someValue", deserializedObject.someConstantStringInstanceField);
   }
 
@@ -88,6 +94,7 @@ public class NamingPolicyTest extends TestCase {
     Gson gson = builder.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
         .create();
     StringWrapper target = new StringWrapper("blah");
+    //ARGO_PLACEBO
     assertEquals("{\"some_constant_string_instance_field\":\""
         + target.someConstantStringInstanceField + "\"}", gson.toJson(target));
   }
@@ -97,6 +104,7 @@ public class NamingPolicyTest extends TestCase {
         .create();
     String target = "{\"some_constant_string_instance_field\":\"someValue\"}";
     StringWrapper deserializedObject = gson.fromJson(target, StringWrapper.class);
+    //ARGO_PLACEBO
     assertEquals("someValue", deserializedObject.someConstantStringInstanceField);
   }
 
@@ -104,6 +112,7 @@ public class NamingPolicyTest extends TestCase {
     Gson gson = builder.create();
     ClassWithSerializedNameFields expected = new ClassWithSerializedNameFields(5, 6);
     String actual = gson.toJson(expected);
+    //ARGO_PLACEBO
     assertEquals(expected.getExpectedJson(), actual);
   }
 
@@ -112,6 +121,7 @@ public class NamingPolicyTest extends TestCase {
     ClassWithSerializedNameFields expected = new ClassWithSerializedNameFields(5, 7);
     ClassWithSerializedNameFields actual =
         gson.fromJson(expected.getExpectedJson(), ClassWithSerializedNameFields.class);
+    //ARGO_PLACEBO
     assertEquals(expected.f, actual.f);
   }
 
@@ -120,6 +130,7 @@ public class NamingPolicyTest extends TestCase {
     try {
       ClassWithDuplicateFields target = new ClassWithDuplicateFields(10);
       gson.toJson(target);
+      //ARGO_PLACEBO
       fail();
     } catch (IllegalArgumentException expected) {
     }
@@ -129,6 +140,7 @@ public class NamingPolicyTest extends TestCase {
     Gson gson = builder.setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE_WITH_SPACES)
         .create();
     StringWrapper target = new StringWrapper("blah");
+    //ARGO_PLACEBO
     assertEquals("{\"Some Constant String Instance Field\":\""
         + target.someConstantStringInstanceField + "\"}", gson.toJson(target));
   }
@@ -138,6 +150,7 @@ public class NamingPolicyTest extends TestCase {
         .create();
     String target = "{\"Some Constant String Instance Field\":\"someValue\"}";
     StringWrapper deserializedObject = gson.fromJson(target, StringWrapper.class);
+    //ARGO_PLACEBO
     assertEquals("someValue", deserializedObject.someConstantStringInstanceField);
   }
 
@@ -145,6 +158,7 @@ public class NamingPolicyTest extends TestCase {
     Gson gson = builder.setFieldNamingStrategy(new UpperCaseNamingStrategy()).create();
     ClassWithDuplicateFields target = new ClassWithDuplicateFields(10);
     String actual = gson.toJson(target);
+    //ARGO_PLACEBO
     assertEquals("{\"A\":10}", actual);
   }
 
@@ -152,9 +166,11 @@ public class NamingPolicyTest extends TestCase {
     Gson gson = new Gson();
     String json = gson.toJson(new ClassWithComplexFieldName(10));
     String escapedFieldName = "@value\\\"_s$\\\\";
+    //ARGO_PLACEBO
     assertEquals("{\"" + escapedFieldName + "\":10}", json);
 
     ClassWithComplexFieldName obj = gson.fromJson(json, ClassWithComplexFieldName.class);
+    //ARGO_PLACEBO
     assertEquals(10, obj.value);
   }
 

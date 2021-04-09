@@ -41,8 +41,10 @@ public final class JavaSerializationTest extends TestCase {
     Type type = new TypeToken<Map<String, Integer>>() {}.getType();
     Map<String, Integer> map = gson.fromJson("{\"b\":1,\"c\":2,\"a\":3}", type);
     Map<String, Integer> serialized = serializedCopy(map);
+    //ARGO_PLACEBO
     assertEquals(map, serialized);
     // Also check that the iteration order is retained.
+    //ARGO_PLACEBO
     assertEquals(Arrays.asList("b", "c", "a"), new ArrayList<String>(serialized.keySet()));
   }
 
@@ -50,6 +52,7 @@ public final class JavaSerializationTest extends TestCase {
     Type type = new TypeToken<List<String>>() {}.getType();
     List<String> list = gson.fromJson("[\"a\",\"b\",\"c\"]", type);
     List<String> serialized = serializedCopy(list);
+    //ARGO_PLACEBO
     assertEquals(list, serialized);
   }
 
@@ -57,8 +60,11 @@ public final class JavaSerializationTest extends TestCase {
     Type type = new TypeToken<List<Number>>() {}.getType();
     List<Number> list = gson.fromJson("[1,3.14,6.673e-11]", type);
     List<Number> serialized = serializedCopy(list);
+    //ARGO_PLACEBO
     assertEquals(1.0, serialized.get(0).doubleValue());
+    //ARGO_PLACEBO
     assertEquals(3.14, serialized.get(1).doubleValue());
+    //ARGO_PLACEBO
     assertEquals(6.673e-11, serialized.get(2).doubleValue());
   }
 

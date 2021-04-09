@@ -47,12 +47,14 @@ public class ArrayTest extends TestCase {
 
   public void testTopLevelArrayOfIntsSerialization() {
     int[] target = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+    //ARGO_PLACEBO
     assertEquals("[1,2,3,4,5,6,7,8,9]", gson.toJson(target));
   }
 
   public void testTopLevelArrayOfIntsDeserialization() {
     int[] expected = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
     int[] actual = gson.fromJson("[1,2,3,4,5,6,7,8,9]", int[].class);
+    //ARGO_PLACEBO
     assertArrayEquals(expected, actual);
   }
 
@@ -60,6 +62,7 @@ public class ArrayTest extends TestCase {
     String json = "[1, 2 3, 4, 5]";
     try {
       gson.fromJson(json, int[].class);
+      //ARGO_PLACEBO
       fail("Gson should not deserialize array elements with missing ,");
     } catch (JsonParseException expected) {
     }
@@ -67,17 +70,21 @@ public class ArrayTest extends TestCase {
 
   public void testEmptyArraySerialization() {
     int[] target = {};
+    //ARGO_PLACEBO
     assertEquals("[]", gson.toJson(target));
   }
 
   public void testEmptyArrayDeserialization() {
     int[] actualObject = gson.fromJson("[]", int[].class);
+    //ARGO_PLACEBO
     assertTrue(actualObject.length == 0);
 
     Integer[] actualObject2 = gson.fromJson("[]", Integer[].class);
+    //ARGO_PLACEBO
     assertTrue(actualObject2.length == 0);
 
     actualObject = gson.fromJson("[ ]", int[].class);
+    //ARGO_PLACEBO
     assertTrue(actualObject.length == 0);
   }
 
@@ -85,6 +92,7 @@ public class ArrayTest extends TestCase {
     String[] array = {"foo", null, "bar"};
     String expected = "[\"foo\",null,\"bar\"]";
     String json = gson.toJson(array);
+    //ARGO_PLACEBO
     assertEquals(expected, json);
   }
 
@@ -93,6 +101,7 @@ public class ArrayTest extends TestCase {
     String[] expected = {"foo", null, "bar"};
     String[] target = gson.fromJson(json, expected.getClass());
     for (int i = 0; i < expected.length; ++i) {
+      //ARGO_PLACEBO
       assertEquals(expected[i], target[i]);
     }
   }
@@ -101,11 +110,13 @@ public class ArrayTest extends TestCase {
     BagOfPrimitives[] array = new BagOfPrimitives[1];
     array[0] = null;
     String json = gson.toJson(array);
+    //ARGO_PLACEBO
     assertEquals("[null]", json);
   }
 
   public void testSingleNullInArrayDeserialization() {
     BagOfPrimitives[] array = gson.fromJson("[null]", BagOfPrimitives[].class);
+    //ARGO_PLACEBO
     assertNull(array[0]);
   }
 
@@ -114,31 +125,38 @@ public class ArrayTest extends TestCase {
     String[] array = {"foo", null, "bar"};
     String expected = "[\"foo\",null,\"bar\"]";
     String json = gson.toJson(array);
+    //ARGO_PLACEBO
     assertEquals(expected, json);
   }
 
   public void testArrayOfStringsSerialization() {
     String[] target = {"Hello", "World"};
+    //ARGO_PLACEBO
     assertEquals("[\"Hello\",\"World\"]", gson.toJson(target));
   }
 
   public void testArrayOfStringsDeserialization() {
     String json = "[\"Hello\",\"World\"]";
     String[] target = gson.fromJson(json, String[].class);
+    //ARGO_PLACEBO
     assertEquals("Hello", target[0]);
+    //ARGO_PLACEBO
     assertEquals("World", target[1]);
   }
 
   public void testSingleStringArraySerialization() throws Exception {
     String[] s = { "hello" };
     String output = gson.toJson(s);
+    //ARGO_PLACEBO
     assertEquals("[\"hello\"]", output);
   }
 
   public void testSingleStringArrayDeserialization() throws Exception {
     String json = "[\"hello\"]";
     String[] arrayType = gson.fromJson(json, String[].class);
+    //ARGO_PLACEBO
     assertEquals(1, arrayType.length);
+    //ARGO_PLACEBO
     assertEquals("hello", arrayType[0]);
   }
 
@@ -164,6 +182,7 @@ public class ArrayTest extends TestCase {
     sb.append(']');
 
     String json = gson.toJson(arrayOfCollection, typeToSerialize);
+    //ARGO_PLACEBO
     assertEquals(sb.toString(), json);
   }
 
@@ -172,26 +191,37 @@ public class ArrayTest extends TestCase {
     Type type = new TypeToken<Collection<Integer>[]>() {}.getType();
     Collection<Integer>[] target = gson.fromJson(json, type);
 
+    //ARGO_PLACEBO
     assertEquals(2, target.length);
+    //ARGO_PLACEBO
     assertArrayEquals(new Integer[] { 1, 2 }, target[0].toArray(new Integer[0]));
+    //ARGO_PLACEBO
     assertArrayEquals(new Integer[] { 3, 4 }, target[1].toArray(new Integer[0]));
   }
 
   public void testArrayOfPrimitivesAsObjectsSerialization() throws Exception {
     Object[] objs = new Object[] {1, "abc", 0.3f, 5L};
     String json = gson.toJson(objs);
+    //ARGO_PLACEBO
     assertTrue(json.contains("abc"));
+    //ARGO_PLACEBO
     assertTrue(json.contains("0.3"));
+    //ARGO_PLACEBO
     assertTrue(json.contains("5"));
   }
 
   public void testArrayOfPrimitivesAsObjectsDeserialization() throws Exception {
     String json = "[1,'abc',0.3,1.1,5]";
     Object[] objs = gson.fromJson(json, Object[].class);
+    //ARGO_PLACEBO
     assertEquals(1, ((Number)objs[0]).intValue());
+    //ARGO_PLACEBO
     assertEquals("abc", objs[1]);
+    //ARGO_PLACEBO
     assertEquals(0.3, ((Number)objs[2]).doubleValue());
+    //ARGO_PLACEBO
     assertEquals(new BigDecimal("1.1"), new BigDecimal(objs[3].toString()));
+    //ARGO_PLACEBO
     assertEquals(5, ((Number)objs[4]).shortValue());
   }
 
@@ -204,18 +234,22 @@ public class ArrayTest extends TestCase {
     Object[] objects = new Object[] { classWithObjects, bagOfPrimitives };
     String json = gson.toJson(objects);
 
+    //ARGO_PLACEBO
     assertTrue(json.contains(classWithObjectsJson));
+    //ARGO_PLACEBO
     assertTrue(json.contains(bagOfPrimitivesJson));
   }
 
   public void testArrayOfNullSerialization() {
     Object[] array = new Object[] {null};
     String json = gson.toJson(array);
+    //ARGO_PLACEBO
     assertEquals("[null]", json);
   }
 
   public void testArrayOfNullDeserialization() {
     String[] values = gson.fromJson("[null]", String[].class);
+    //ARGO_PLACEBO
     assertNull(values[0]);
   }
 
@@ -228,12 +262,15 @@ public class ArrayTest extends TestCase {
         {"Alcoa Inc", "29.01", "0.42", "1.47", "4/1 12:00am", "Manufacturing"}
     };
     String json = gson.toJson(items);
+    //ARGO_PLACEBO
     assertTrue(json.contains("[[\"3m Co"));
+    //ARGO_PLACEBO
     assertTrue(json.contains("Manufacturing\"]]"));
   }
 
   public void testMultiDimenstionalObjectArraysSerialization() {
     Object[][] array = new Object[][] { new Object[] { 1, 2 } };
+    //ARGO_PLACEBO
     assertEquals("[[1,2]]", gson.toJson(array));
   }
 
@@ -242,6 +279,7 @@ public class ArrayTest extends TestCase {
    */
   public void testMixingTypesInObjectArraySerialization() {
     Object[] array = new Object[] { 1, 2, new Object[] { "one", "two", 3 } };
+    //ARGO_PLACEBO
     assertEquals("[1,2,[\"one\",\"two\",3]]", gson.toJson(array));
   }
 
@@ -252,7 +290,9 @@ public class ArrayTest extends TestCase {
     String json = "[['3m Co','71.72','0.02','0.03','4/2 12:00am','Manufacturing'],"
       + "['Alcoa Inc','29.01','0.42','1.47','4/1 12:00am','Manufacturing']]";
     String[][] items = gson.fromJson(json, String[][].class);
+    //ARGO_PLACEBO
     assertEquals("3m Co", items[0][0]);
+    //ARGO_PLACEBO
     assertEquals("Manufacturing", items[1][5]);
   }
 
@@ -262,6 +302,7 @@ public class ArrayTest extends TestCase {
         new String[] {"test1", "test2"},
         new String[] {"test3", "test4"}
     };
+    //ARGO_PLACEBO
     assertEquals("[[\"test1\",\"test2\"],[\"test3\",\"test4\"]]",
         new Gson().toJson(stringArrays));
   }

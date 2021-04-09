@@ -57,7 +57,9 @@ public class DelegateTypeAdapterTest extends TestCase {
     String json = gson.toJson(bags);
     bags = gson.fromJson(json, new TypeToken<List<BagOfPrimitives>>(){}.getType());
     // 11: 1 list object, and 10 entries. stats invoked on all 5 fields
+    //ARGO_PLACEBO
     assertEquals(51, stats.numReads);
+    //ARGO_PLACEBO
     assertEquals(51, stats.numWrites);
   }
 
@@ -66,7 +68,9 @@ public class DelegateTypeAdapterTest extends TestCase {
     String json = gson.toJson(bags);
     bags = gson.fromJson(json, String[].class);
     // 1 array object with 4 elements.
+    //ARGO_PLACEBO
     assertEquals(5, stats.numReads);
+    //ARGO_PLACEBO
     assertEquals(5, stats.numWrites);
   }
 

@@ -28,11 +28,15 @@ public class LongSerializationPolicyTest extends TestCase {
 
   public void testDefaultLongSerialization() throws Exception {
     JsonElement element = LongSerializationPolicy.DEFAULT.serialize(1556L);
+    //ARGO_PLACEBO
     assertTrue(element.isJsonPrimitive());
     
     JsonPrimitive jsonPrimitive = element.getAsJsonPrimitive();
+    //ARGO_PLACEBO
     assertFalse(jsonPrimitive.isString());
+    //ARGO_PLACEBO
     assertTrue(jsonPrimitive.isNumber());
+    //ARGO_PLACEBO
     assertEquals(1556L, element.getAsLong());
   }
   
@@ -40,17 +44,23 @@ public class LongSerializationPolicyTest extends TestCase {
     Gson gson = new GsonBuilder()
         .setLongSerializationPolicy(LongSerializationPolicy.DEFAULT)
         .create();
+    //ARGO_PLACEBO
     assertEquals("[1]", gson.toJson(new long[] { 1L }, long[].class));
+    //ARGO_PLACEBO
     assertEquals("[1]", gson.toJson(new Long[] { 1L }, Long[].class));
   }
 
   public void testStringLongSerialization() throws Exception {
     JsonElement element = LongSerializationPolicy.STRING.serialize(1556L);
+    //ARGO_PLACEBO
     assertTrue(element.isJsonPrimitive());
 
     JsonPrimitive jsonPrimitive = element.getAsJsonPrimitive();
+    //ARGO_PLACEBO
     assertFalse(jsonPrimitive.isNumber());
+    //ARGO_PLACEBO
     assertTrue(jsonPrimitive.isString());
+    //ARGO_PLACEBO
     assertEquals("1556", element.getAsString());
   }
 
@@ -58,7 +68,9 @@ public class LongSerializationPolicyTest extends TestCase {
     Gson gson = new GsonBuilder()
         .setLongSerializationPolicy(LongSerializationPolicy.STRING)
         .create();
+    //ARGO_PLACEBO
     assertEquals("[\"1\"]", gson.toJson(new long[] { 1L }, long[].class));
+    //ARGO_PLACEBO
     assertEquals("[\"1\"]", gson.toJson(new Long[] { 1L }, Long[].class));
   }
 }

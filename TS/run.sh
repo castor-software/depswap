@@ -12,8 +12,8 @@ echo "Implementation,Bridge,Outcome,Failures" > $CSV_OUTPUT
 JARS_PATH=$1
 echo "Path to lib dir: $JARS_PATH"
 
-#BRIDGES=('json-simple' 'json')
-BRIDGES=('gson')
+BRIDGES=('json-simple' 'json' 'gson')
+#BRIDGES=('gson')
 #BRIDGES=('json-simple')
 # 'json'  'jackson-databind' 'gson'
 #IMPLEMENTATIONS=('yasjf4j-argo' 'yasjf4j-cookjson' 'yasjf4j-corn')

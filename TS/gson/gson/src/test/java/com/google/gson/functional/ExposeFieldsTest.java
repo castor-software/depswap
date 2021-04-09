@@ -47,6 +47,7 @@ public class ExposeFieldsTest extends TestCase {
     ClassWithExposedFields object = new ClassWithExposedFields(null, 1);
     String json = gson.toJson(object);
 
+    //ARGO_PLACEBO
     assertEquals(object.getExpectedJson(), json);
   }
 
@@ -63,11 +64,13 @@ public class ExposeFieldsTest extends TestCase {
         .append(object3.getExpectedJson()).append(']')
         .toString();
 
+    //ARGO_PLACEBO
     assertEquals(expected, json);
   }
 
   public void testExposeAnnotationSerialization() throws Exception {
     ClassWithExposedFields target = new ClassWithExposedFields(1, 2);
+    //ARGO_PLACEBO
     assertEquals(target.getExpectedJson(), gson.toJson(target));
   }
 
@@ -75,8 +78,11 @@ public class ExposeFieldsTest extends TestCase {
     String json = "{a:3,b:4,d:20.0}";
     ClassWithExposedFields target = gson.fromJson(json, ClassWithExposedFields.class);
 
+    //ARGO_PLACEBO
     assertEquals(3, (int) target.a);
+    //ARGO_PLACEBO
     assertNull(target.b);
+    //ARGO_PLACEBO
     assertFalse(target.d == 20);
   }
 
@@ -84,6 +90,7 @@ public class ExposeFieldsTest extends TestCase {
     ClassWithNoExposedFields obj = new ClassWithNoExposedFields();
     String json = gson.toJson(obj);
 
+    //ARGO_PLACEBO
     assertEquals("{}", json);
   }
 
@@ -91,7 +98,9 @@ public class ExposeFieldsTest extends TestCase {
     String json = "{a:4,b:5}";
     ClassWithNoExposedFields obj = gson.fromJson(json, ClassWithNoExposedFields.class);
 
+    //ARGO_PLACEBO
     assertEquals(0, obj.a);
+    //ARGO_PLACEBO
     assertEquals(1, obj.b);
   }
   
@@ -99,7 +108,8 @@ public class ExposeFieldsTest extends TestCase {
     String expected = "{\"interfaceField\":{}}";
     ClassWithInterfaceField target = new ClassWithInterfaceField(new SomeObject());
     String actual = gson.toJson(target);
-    
+
+    //ARGO_PLACEBO
     assertEquals(expected, actual);
   }
   
@@ -107,6 +117,7 @@ public class ExposeFieldsTest extends TestCase {
     String json = "{\"interfaceField\":{}}";
     ClassWithInterfaceField obj = gson.fromJson(json, ClassWithInterfaceField.class);
 
+    //ARGO_PLACEBO
     assertNotNull(obj.interfaceField);
   }
 

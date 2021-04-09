@@ -55,6 +55,7 @@ public class ParameterizedTypesTest extends TestCase {
     MyParameterizedType<Integer> src = new MyParameterizedType<Integer>(10);
     Type typeOfSrc = new TypeToken<MyParameterizedType<Integer>>() {}.getType();
     String json = gson.toJson(src, typeOfSrc);
+    //ARGO_PLACEBO
     assertEquals(src.getExpectedJson(), json);
   }
 
@@ -69,6 +70,7 @@ public class ParameterizedTypesTest extends TestCase {
 
     String json = expected.getExpectedJson();
     MyParameterizedType<BagOfPrimitives> actual = gson.fromJson(json, expectedType);
+    //ARGO_PLACEBO
     assertEquals(expected, actual);
   }
 
@@ -81,6 +83,7 @@ public class ParameterizedTypesTest extends TestCase {
     String json = gson.toJson(src, typeOfSrc);
     String expected = "{\"a\":10,\"b\":1.0,\"c\":2.1,\"d\":\"abc\","
         + "\"e\":{\"longValue\":0,\"intValue\":0,\"booleanValue\":false,\"stringValue\":\"\"}}";
+    //ARGO_PLACEBO
     assertEquals(expected, json);
   }
 
@@ -94,6 +97,7 @@ public class ParameterizedTypesTest extends TestCase {
     MultiParameters<Integer, Float, Double, String, BagOfPrimitives> expected =
         new MultiParameters<Integer, Float, Double, String, BagOfPrimitives>(10, 1.0F, 2.1D,
             "abc", new BagOfPrimitives());
+    //ARGO_PLACEBO
     assertEquals(expected, target);
   }
 
@@ -106,10 +110,12 @@ public class ParameterizedTypesTest extends TestCase {
         .create();
     MyParameterizedType<Integer> intTarget = new MyParameterizedType<Integer>(10);
     String json = gson.toJson(intTarget, ptIntegerType);
+    //ARGO_ORIGINAL
     assertEquals(MyParameterizedTypeAdapter.<Integer>getExpectedJson(intTarget), json);
 
     MyParameterizedType<String> stringTarget = new MyParameterizedType<String>("abc");
     json = gson.toJson(stringTarget, ptStringType);
+    //ARGO_ORIGINAL
     assertEquals(MyParameterizedTypeAdapter.<String>getExpectedJson(stringTarget), json);
   }
 
@@ -127,11 +133,13 @@ public class ParameterizedTypesTest extends TestCase {
     MyParameterizedType<Integer> src = new MyParameterizedType<Integer>(10);
     String json = MyParameterizedTypeAdapter.<Integer>getExpectedJson(src);
     MyParameterizedType<Integer> intTarget = gson.fromJson(json, ptIntegerType);
+    //ARGO_ORIGINAL
     assertEquals(10, intTarget.value.intValue());
 
     MyParameterizedType<String> srcStr = new MyParameterizedType<String>("abc");
     json = MyParameterizedTypeAdapter.<String>getExpectedJson(srcStr);
     MyParameterizedType<String> stringTarget = gson.fromJson(json, ptStringType);
+    //ARGO_ORIGINAL
     assertEquals("abc", stringTarget.value);
   }
 
@@ -140,6 +148,7 @@ public class ParameterizedTypesTest extends TestCase {
     MyParameterizedType<Integer> src = new MyParameterizedType<Integer>(10);
     Type typeOfSrc = new TypeToken<MyParameterizedType<Integer>>() {}.getType();
     gson.toJson(src, typeOfSrc, writer);
+    //ARGO_PLACEBO
     assertEquals(src.getExpectedJson(), writer.toString());
   }
 
@@ -154,6 +163,7 @@ public class ParameterizedTypesTest extends TestCase {
 
     Reader json = new StringReader(expected.getExpectedJson());
     MyParameterizedType<Integer> actual = gson.fromJson(json, expectedType);
+    //ARGO_PLACEBO
     assertEquals(expected, actual);
   }
 
@@ -171,6 +181,7 @@ public class ParameterizedTypesTest extends TestCase {
         new ObjectWithTypeVariables<Integer>(obj, array, list, arrayOfLists, list, arrayOfLists);
     String json = gson.toJson(objToSerialize, typeOfSrc);
 
+    //ARGO_PLACEBO
     assertEquals(objToSerialize.getExpectedJson(), json);
   }
 
@@ -189,6 +200,7 @@ public class ParameterizedTypesTest extends TestCase {
     String json = gson.toJson(objToSerialize, typeOfSrc);
     ObjectWithTypeVariables<Integer> objAfterDeserialization = gson.fromJson(json, typeOfSrc);
 
+    //ARGO_PLACEBO
     assertEquals(objAfterDeserialization.getExpectedJson(), json);
   }
 
@@ -199,6 +211,7 @@ public class ParameterizedTypesTest extends TestCase {
     String json = gson.toJson(objToSerialize, typeOfSrc);
     ObjectWithTypeVariables<Integer> objAfterDeserialization = gson.fromJson(json, typeOfSrc);
 
+    //ARGO_PLACEBO
     assertEquals(objAfterDeserialization.getExpectedJson(), json);
   }
 
@@ -211,6 +224,7 @@ public class ParameterizedTypesTest extends TestCase {
     String json = gson.toJson(objToSerialize, typeOfSrc);
     ObjectWithTypeVariables<Integer> objAfterDeserialization = gson.fromJson(json, typeOfSrc);
 
+    //ARGO_PLACEBO
     assertEquals(objAfterDeserialization.getExpectedJson(), json);
   }
 
@@ -225,6 +239,7 @@ public class ParameterizedTypesTest extends TestCase {
     String json = gson.toJson(objToSerialize, typeOfSrc);
     ObjectWithTypeVariables<Integer> objAfterDeserialization = gson.fromJson(json, typeOfSrc);
 
+    //ARGO_PLACEBO
     assertEquals(objAfterDeserialization.getExpectedJson(), json);
   }
 
@@ -239,6 +254,7 @@ public class ParameterizedTypesTest extends TestCase {
     ObjectWithTypeVariables<Integer> objToSerialize =
         new ObjectWithTypeVariables<Integer>(null, null, null, arrayOfLists, null, null);
     String json = gson.toJson(objToSerialize, typeOfSrc);
+    //ARGO_PLACEBO
     assertEquals("{\"arrayOfListOfTypeParameters\":[[1,2],[1,2]]}", json);
   }
 
@@ -255,6 +271,7 @@ public class ParameterizedTypesTest extends TestCase {
     String json = gson.toJson(objToSerialize, typeOfSrc);
     ObjectWithTypeVariables<Integer> objAfterDeserialization = gson.fromJson(json, typeOfSrc);
 
+    //ARGO_PLACEBO
     assertEquals(objAfterDeserialization.getExpectedJson(), json);
   }
 
@@ -489,7 +506,9 @@ public class ParameterizedTypesTest extends TestCase {
   public void testDeepParameterizedTypeSerialization() {
     Amount<MyQuantity> amount = new Amount<MyQuantity>();
     String json = gson.toJson(amount);
+    //ARGO_PLACEBO
     assertTrue(json.contains("value"));
+    //ARGO_PLACEBO
     assertTrue(json.contains("30"));
   }
   
@@ -497,6 +516,7 @@ public class ParameterizedTypesTest extends TestCase {
     String json = "{value:30}";
     Type type = new TypeToken<Amount<MyQuantity>>() {}.getType();
     Amount<MyQuantity> amount = gson.fromJson(json, type);
+    //ARGO_PLACEBO
     assertEquals(30, amount.value);
   }
   // End: tests to reproduce issue 103

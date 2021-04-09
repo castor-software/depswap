@@ -66,7 +66,9 @@ public class MapTest extends TestCase {
     map.put("b", 2);
     Type typeOfMap = new TypeToken<Map<String, Integer>>() {}.getType();
     String json = gson.toJson(map, typeOfMap);
+    //ARGO_PLACEBO
     assertTrue(json.contains("\"a\":1"));
+    //ARGO_PLACEBO
     assertTrue(json.contains("\"b\":2"));
   }
 
@@ -74,7 +76,9 @@ public class MapTest extends TestCase {
     String json = "{\"a\":1,\"b\":2}";
     Type typeOfMap = new TypeToken<Map<String,Integer>>(){}.getType();
     Map<String, Integer> target = gson.fromJson(json, typeOfMap);
+    //ARGO_PLACEBO
     assertEquals(1, target.get("a").intValue());
+    //ARGO_PLACEBO
     assertEquals(2, target.get("b").intValue());
   }
 
@@ -84,7 +88,9 @@ public class MapTest extends TestCase {
     map.put("a", 1);
     map.put("b", "string");
     String json = gson.toJson(map);
+    //ARGO_PLACEBO
     assertTrue(json.contains("\"a\":1"));
+    //ARGO_PLACEBO
     assertTrue(json.contains("\"b\":\"string\""));
   }
 
@@ -92,12 +98,14 @@ public class MapTest extends TestCase {
     Map<String, Integer> map = new LinkedHashMap<String, Integer>();
     Type typeOfMap = new TypeToken<Map<String, Integer>>() {}.getType();
     String json = gson.toJson(map, typeOfMap);
+    //ARGO_PLACEBO
     assertEquals("{}", json);
   }
 
   public void testMapDeserializationEmpty() {
     Type typeOfMap = new TypeToken<Map<String, Integer>>() {}.getType();
     Map<String, Integer> map = gson.fromJson("{}", typeOfMap);
+    //ARGO_PLACEBO
     assertTrue(map.isEmpty());
   }
 
@@ -108,13 +116,16 @@ public class MapTest extends TestCase {
     String json = gson.toJson(map, typeOfMap);
 
     // Maps are represented as JSON objects, so ignoring null field
+    //ARGO_PLACEBO
     assertEquals("{}", json);
   }
 
   public void testMapDeserializationWithNullValue() {
     Type typeOfMap = new TypeToken<Map<String, Integer>>() {}.getType();
     Map<String, Integer> map = gson.fromJson("{\"abc\":null}", typeOfMap);
+    //ARGO_PLACEBO
     assertEquals(1, map.size());
+    //ARGO_PLACEBO
     assertNull(map.get("abc"));
   }
 
@@ -125,6 +136,7 @@ public class MapTest extends TestCase {
     Type typeOfMap = new TypeToken<Map<String, Integer>>() {}.getType();
     String json = gson.toJson(map, typeOfMap);
 
+    //ARGO_PLACEBO
     assertEquals("{\"abc\":null}", json);
   }
 
@@ -134,19 +146,26 @@ public class MapTest extends TestCase {
     Type typeOfMap = new TypeToken<Map<String, Integer>>() {}.getType();
     String json = gson.toJson(map, typeOfMap);
 
+    //ARGO_PLACEBO
     assertEquals("{\"null\":123}", json);
   }
 
   public void testMapDeserializationWithNullKey() {
     Type typeOfMap = new TypeToken<Map<String, Integer>>() {}.getType();
     Map<String, Integer> map = gson.fromJson("{\"null\":123}", typeOfMap);
+    //ARGO_PLACEBO
     assertEquals(1, map.size());
+    //ARGO_PLACEBO
     assertEquals(123, map.get("null").intValue());
+    //ARGO_PLACEBO
     assertNull(map.get(null));
 
     map = gson.fromJson("{null:123}", typeOfMap);
+    //ARGO_PLACEBO
     assertEquals(1, map.size());
+    //ARGO_PLACEBO
     assertEquals(123, map.get("null").intValue());
+    //ARGO_PLACEBO
     assertNull(map.get(null));
   }
 
@@ -156,22 +175,29 @@ public class MapTest extends TestCase {
     Type typeOfMap = new TypeToken<Map<Integer, String>>() {}.getType();
     String json = gson.toJson(map, typeOfMap);
 
+    //ARGO_PLACEBO
     assertEquals("{\"123\":\"456\"}", json);
   }
 
   public void testMapDeserializationWithIntegerKeys() {
     Type typeOfMap = new TypeToken<Map<Integer, String>>() {}.getType();
     Map<Integer, String> map = gson.fromJson("{\"123\":\"456\"}", typeOfMap);
+    //ARGO_PLACEBO
     assertEquals(1, map.size());
+    //ARGO_PLACEBO
     assertTrue(map.containsKey(123));
+    //ARGO_PLACEBO
     assertEquals("456", map.get(123));
   }
 
   public void testMapDeserializationWithUnquotedIntegerKeys() {
     Type typeOfMap = new TypeToken<Map<Integer, String>>() {}.getType();
     Map<Integer, String> map = gson.fromJson("{123:\"456\"}", typeOfMap);
+    //ARGO_PLACEBO
     assertEquals(1, map.size());
+    //ARGO_PLACEBO
     assertTrue(map.containsKey(123));
+    //ARGO_PLACEBO
     assertEquals("456", map.get(123));
   }
 
@@ -180,8 +206,11 @@ public class MapTest extends TestCase {
     String json = String.format("{\"%d\":\"456\"}", longValue);
     Type typeOfMap = new TypeToken<Map<Long, String>>() {}.getType();
     Map<Long, String> map = gson.fromJson(json, typeOfMap);
+    //ARGO_PLACEBO
     assertEquals(1, map.size());
+    //ARGO_PLACEBO
     assertTrue(map.containsKey(longValue));
+    //ARGO_PLACEBO
     assertEquals("456", map.get(longValue));
   }
 
@@ -190,64 +219,89 @@ public class MapTest extends TestCase {
     String json = String.format("{%d:\"456\"}", longKey);
     Type typeOfMap = new TypeToken<Map<Long, String>>() {}.getType();
     Map<Long, String> map = gson.fromJson(json, typeOfMap);
+    //ARGO_PLACEBO
     assertEquals(1, map.size());
+    //ARGO_PLACEBO
     assertTrue(map.containsKey(longKey));
+    //ARGO_PLACEBO
     assertEquals("456", map.get(longKey));
   }
 
   public void testHashMapDeserialization() throws Exception {
     Type typeOfMap = new TypeToken<HashMap<Integer, String>>() {}.getType();
     HashMap<Integer, String> map = gson.fromJson("{\"123\":\"456\"}", typeOfMap);
+    //ARGO_PLACEBO
     assertEquals(1, map.size());
+    //ARGO_PLACEBO
     assertTrue(map.containsKey(123));
+    //ARGO_PLACEBO
     assertEquals("456", map.get(123));
   }
 
   public void testSortedMap() throws Exception {
     Type typeOfMap = new TypeToken<SortedMap<Integer, String>>() {}.getType();
     SortedMap<Integer, String> map = gson.fromJson("{\"123\":\"456\"}", typeOfMap);
+    //ARGO_PLACEBO
     assertEquals(1, map.size());
+    //ARGO_PLACEBO
     assertTrue(map.containsKey(123));
+    //ARGO_PLACEBO
     assertEquals("456", map.get(123));
   }
 
   public void testConcurrentMap() throws Exception {
     Type typeOfMap = new TypeToken<ConcurrentMap<Integer, String>>() {}.getType();
     ConcurrentMap<Integer, String> map = gson.fromJson("{\"123\":\"456\"}", typeOfMap);
+    //ARGO_PLACEBO
     assertEquals(1, map.size());
+    //ARGO_PLACEBO
     assertTrue(map.containsKey(123));
+    //ARGO_PLACEBO
     assertEquals("456", map.get(123));
     String json = gson.toJson(map);
+    //ARGO_PLACEBO
     assertEquals("{\"123\":\"456\"}", json);
   }
 
   public void testConcurrentHashMap() throws Exception {
     Type typeOfMap = new TypeToken<ConcurrentHashMap<Integer, String>>() {}.getType();
     ConcurrentHashMap<Integer, String> map = gson.fromJson("{\"123\":\"456\"}", typeOfMap);
+    //ARGO_PLACEBO
     assertEquals(1, map.size());
+    //ARGO_PLACEBO
     assertTrue(map.containsKey(123));
+    //ARGO_PLACEBO
     assertEquals("456", map.get(123));
     String json = gson.toJson(map);
+    //ARGO_PLACEBO
     assertEquals("{\"123\":\"456\"}", json);
   }
 
   public void testConcurrentNavigableMap() throws Exception {
     Type typeOfMap = new TypeToken<ConcurrentNavigableMap<Integer, String>>() {}.getType();
     ConcurrentNavigableMap<Integer, String> map = gson.fromJson("{\"123\":\"456\"}", typeOfMap);
+    //ARGO_PLACEBO
     assertEquals(1, map.size());
+    //ARGO_PLACEBO
     assertTrue(map.containsKey(123));
+    //ARGO_PLACEBO
     assertEquals("456", map.get(123));
     String json = gson.toJson(map);
+    //ARGO_PLACEBO
     assertEquals("{\"123\":\"456\"}", json);
   }
 
   public void testConcurrentSkipListMap() throws Exception {
     Type typeOfMap = new TypeToken<ConcurrentSkipListMap<Integer, String>>() {}.getType();
     ConcurrentSkipListMap<Integer, String> map = gson.fromJson("{\"123\":\"456\"}", typeOfMap);
+    //ARGO_PLACEBO
     assertEquals(1, map.size());
+    //ARGO_PLACEBO
     assertTrue(map.containsKey(123));
+    //ARGO_PLACEBO
     assertEquals("456", map.get(123));
     String json = gson.toJson(map);
+    //ARGO_PLACEBO
     assertEquals("{\"123\":\"456\"}", json);
   }
 
@@ -256,6 +310,7 @@ public class MapTest extends TestCase {
     map.put("a", "b");
     Type type = new TypeToken<MyParameterizedMap<String, String>>() {}.getType();
     String json = gson.toJson(map, type);
+    //ARGO_PLACEBO
     assertTrue(json.contains("\"a\":\"b\""));
   }
 
@@ -271,6 +326,7 @@ public class MapTest extends TestCase {
     MyMap map = new MyMap();
     map.put("a", "b");
     String json = gson.toJson(map, MyMap.class);
+    //ARGO_PLACEBO
     assertTrue(json.contains("\"a\":\"b\""));
   }
 
@@ -278,7 +334,9 @@ public class MapTest extends TestCase {
     String json = "{a:'1',b:'2'}";
     Type type = new TypeToken<LinkedHashMap<String, String>>() {}.getType();
     LinkedHashMap<String, Integer> map = gson.fromJson(json, type);
+    //ARGO_PLACEBO
     assertEquals("1", map.get("a"));
+    //ARGO_PLACEBO
     assertEquals("2", map.get("b"));
   }
 
@@ -290,7 +348,9 @@ public class MapTest extends TestCase {
     }).create();
     String json = "{\"a\":1,\"b\":2}";
     MyMap map = gson.fromJson(json, MyMap.class);
+    //ARGO_PLACEBO
     assertEquals("1", map.get("a"));
+    //ARGO_PLACEBO
     assertEquals("2", map.get("b"));
   }
 
@@ -314,6 +374,7 @@ public class MapTest extends TestCase {
     src.put("two", 2L);
     src.put("three", 3L);
 
+    //ARGO_ORIGINAL
     assertEquals("[1,2,3]", gson.toJson(src, type));
   }
 
@@ -332,7 +393,9 @@ public class MapTest extends TestCase {
     target.map.put("name1", null);
     target.map.put("name2", "value2");
     String json = gson.toJson(target);
+    //ARGO_PLACEBO
     assertFalse(json.contains("name1"));
+    //ARGO_PLACEBO
     assertTrue(json.contains("name2"));
   }
 
@@ -345,7 +408,9 @@ public class MapTest extends TestCase {
     target.map.put("name1", null);
     target.map.put("name2", "value2");
     String json = gson.toJson(target);
+    //ARGO_PLACEBO
     assertTrue(json.contains("name1"));
+    //ARGO_PLACEBO
     assertTrue(json.contains("name2"));
   }
 
@@ -357,13 +422,16 @@ public class MapTest extends TestCase {
         new TypeToken<Map<String, ? extends Collection<? extends Integer>>>() {}.getType();
     String json = gson.toJson(map, typeOfMap);
 
+    //ARGO_PLACEBO
     assertEquals("{}", json);
   }
 
   public void testMapDeserializationWithWildcardValues() {
     Type typeOfMap = new TypeToken<Map<String, ? extends Long>>() {}.getType();
     Map<String, ? extends Long> map = gson.fromJson("{\"test\":123}", typeOfMap);
+    //ARGO_PLACEBO
     assertEquals(1, map.size());
+    //ARGO_PLACEBO
     assertEquals(Long.valueOf(123L), map.get("test"));
   }
 
@@ -385,8 +453,11 @@ public class MapTest extends TestCase {
     nestedMap.put("2", "2");
     map.put("nestedMap", nestedMap);
     String json = gson.toJson(map);
+    //ARGO_PLACEBO
     assertTrue(json.contains("nestedMap"));
+    //ARGO_PLACEBO
     assertTrue(json.contains("\"1\":\"1\""));
+    //ARGO_PLACEBO
     assertTrue(json.contains("\"2\":\"2\""));
   }
 
@@ -398,7 +469,9 @@ public class MapTest extends TestCase {
     Type type = new TypeToken<Map<String, Map<String, String>>>(){}.getType();
     Map<String, Map<String, String>> map = gson.fromJson(json, type);
     Map<String, String> nested = map.get("nestedMap");
+    //ARGO_PLACEBO
     assertEquals("1", nested.get("1"));
+    //ARGO_PLACEBO
     assertEquals("2", nested.get("2"));
   }
 
@@ -409,6 +482,7 @@ public class MapTest extends TestCase {
     Map<String, String> map = new HashMap<String, String>();
     map.put("a\"b", "c\"d");
     String json = gson.toJson(map);
+    //ARGO_PLACEBO
     assertEquals("{\"a\\\"b\":\"c\\\"d\"}", json);
   }
 
@@ -418,12 +492,14 @@ public class MapTest extends TestCase {
   public void testWriteMapsWithEmptyStringKey() {
     Map<String, Boolean> map = new HashMap<String, Boolean>();
     map.put("", true);
+    //ARGO_PLACEBO
     assertEquals("{\"\":true}", gson.toJson(map));
 
   }
 
   public void testReadMapsWithEmptyStringKey() {
     Map<String, Boolean> map = gson.fromJson("{\"\":true}", new TypeToken<Map<String, Boolean>>() {}.getType());
+    //ARGO_PLACEBO
     assertEquals(Boolean.TRUE, map.get(""));
   }
 
@@ -440,20 +516,25 @@ public class MapTest extends TestCase {
     innerMap.put("TestStringArray", new String[] { "one", "two" });
     map.put("c", innerMap);
 
+    //ARGO_PLACEBO
     assertEquals("{\"a\":12,\"b\":null,\"c\":{\"test\":1,\"TestStringArray\":[\"one\",\"two\"]}}",
         new GsonBuilder().serializeNulls().create().toJson(map));
+    //ARGO_PLACEBO
     assertEquals("{\n  \"a\": 12,\n  \"b\": null,\n  \"c\": "
   		+ "{\n    \"test\": 1,\n    \"TestStringArray\": "
   		+ "[\n      \"one\",\n      \"two\"\n    ]\n  }\n}",
         new GsonBuilder().setPrettyPrinting().serializeNulls().create().toJson(map));
+    //ARGO_PLACEBO
     assertEquals("{\"a\":12,\"c\":{\"test\":1,\"TestStringArray\":[\"one\",\"two\"]}}",
         new GsonBuilder().create().toJson(map));
+    //ARGO_PLACEBO
     assertEquals("{\n  \"a\": 12,\n  \"c\": "
         + "{\n    \"test\": 1,\n    \"TestStringArray\": "
         + "[\n      \"one\",\n      \"two\"\n    ]\n  }\n}",
         new GsonBuilder().setPrettyPrinting().create().toJson(map));
 
     innerMap.put("d", "e");
+    //ARGO_PLACEBO
     assertEquals("{\"a\":12,\"c\":{\"test\":1,\"TestStringArray\":[\"one\",\"two\"],\"d\":\"e\"}}",
         new Gson().toJson(map));
   }
@@ -472,10 +553,12 @@ public class MapTest extends TestCase {
         .enableComplexMapKeySerialization()
         .create();
     String json = gsonWithComplexKeys.toJson(element);
+    //ARGO_PLACEBO
     assertEquals(expected, json);
 
     Gson gson = new Gson();
     json = gson.toJson(element);
+    //ARGO_PLACEBO
     assertEquals(expected, json);
   }
 
@@ -504,12 +587,14 @@ public class MapTest extends TestCase {
         .registerTypeAdapter(TestTypes.Base.class, baseTypeAdapter)
         .create();
     String json = gson.toJson(element);
+    //ARGO_ORIGINAL
     assertEquals(expected, json);
 
     gson = new GsonBuilder()
         .registerTypeAdapter(TestTypes.Base.class, baseTypeAdapter)
         .create();
     json = gson.toJson(element);
+    //ARGO_ORIGINAL
     assertEquals(expected, json);
   }
 
@@ -521,11 +606,13 @@ public class MapTest extends TestCase {
 
     String expected = "{\"map\":{\"string\":\"testString\",\"stringArray\":"
         + "[\"one\",\"two\"],\"objectArray\":[1,2,\"three\"]}}";
+    //ARGO_PLACEBO
     assertEquals(expected, gson.toJson(map));
 
     gson = new GsonBuilder()
         .enableComplexMapKeySerialization()
         .create();
+    //ARGO_PLACEBO
     assertEquals(expected, gson.toJson(map));
   }
 
@@ -534,7 +621,9 @@ public class MapTest extends TestCase {
     map.put(new Point(2, 3), "a");
     map.put(new Point(5, 7), "b");
     String json = "{\"2,3\":\"a\",\"5,7\":\"b\"}";
+    //ARGO_PLACEBO
     assertEquals(json, gson.toJson(map, new TypeToken<Map<Point, String>>() {}.getType()));
+    //ARGO_PLACEBO
     assertEquals(json, gson.toJson(map, Map.class));
   }
 
@@ -542,6 +631,7 @@ public class MapTest extends TestCase {
     String json = "{'2,3':'a','5,7':'b'}";
     try {
       gson.fromJson(json, new TypeToken<Map<Point, String>>() {}.getType());
+      //ARGO_PLACEBO
       fail();
     } catch (JsonParseException expected) {
     }
@@ -552,6 +642,7 @@ public class MapTest extends TestCase {
     Map<String, String> map = new LinkedHashMap<String, String>();
     map.put("2,3", "a");
     map.put("5,7", "b");
+    //ARGO_PLACEBO
     assertEquals(map, gson.fromJson(json, new TypeToken<Map<String, String>>() {}.getType()));
   }
 
@@ -560,6 +651,7 @@ public class MapTest extends TestCase {
     Map<Double, String> map = new LinkedHashMap<Double, String>();
     map.put(2.3, "a");
     map.put(5.7, "b");
+    //ARGO_PLACEBO
     assertEquals(map, gson.fromJson(json, new TypeToken<Map<Double, String>>() {}.getType()));
   }
 
@@ -568,12 +660,14 @@ public class MapTest extends TestCase {
     Map<Boolean, String> map = new LinkedHashMap<Boolean, String>();
     map.put(true, "a");
     map.put(false, "b");
+    //ARGO_PLACEBO
     assertEquals(map, gson.fromJson(json, new TypeToken<Map<Boolean, String>>() {}.getType()));
   }
 
   public void testMapDeserializationWithDuplicateKeys() {
     try {
       gson.fromJson("{'a':1,'a':2}", new TypeToken<Map<String, Integer>>() {}.getType());
+      //ARGO_PLACEBO
       fail();
     } catch (JsonSyntaxException expected) {
     }
@@ -584,6 +678,7 @@ public class MapTest extends TestCase {
     Map<String, Map<String, String>> map = newMap(
         "a", newMap("ka1", "va1", "ka2", "va2"),
         "b", newMap("kb1", "vb1", "kb2", "vb2"));
+    //ARGO_PLACEBO
     assertEquals("{'a':{'ka1':'va1','ka2':'va2'},'b':{'kb1':'vb1','kb2':'vb2'}}",
         gson.toJson(map, type).replace('"', '\''));
   }
@@ -594,6 +689,7 @@ public class MapTest extends TestCase {
         "a", newMap("ka1", "va1", "ka2", "va2"),
         "b", newMap("kb1", "vb1", "kb2", "vb2"));
     String json = "{'a':{'ka1':'va1','ka2':'va2'},'b':{'kb1':'vb1','kb2':'vb2'}}";
+    //ARGO_PLACEBO
     assertEquals(map, gson.fromJson(json, type));
   }
 
@@ -609,6 +705,7 @@ public class MapTest extends TestCase {
     Map<Double, String> map = new LinkedHashMap<Double, String>();
     map.put(2.3, "a");
     JsonElement tree = JsonParser.parseString(json);
+    //ARGO_ORIGINAL
     assertEquals(map, gson.fromJson(tree, new TypeToken<Map<Double, String>>() {}.getType()));
   }
 

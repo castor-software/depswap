@@ -18,15 +18,16 @@ public class NoClassDefFoundWorkaroundTest extends BaseMapTest
         public Measure<?> measure;
     }
 
-    public void testClassIsMissing()
-    {
-        try {
-            Class.forName("javax.measure.Measure");
-            fail("Should not have found javax.measure.Measure");
-        } catch (ClassNotFoundException ex) {
-            ; // expected case
-        }
-    }
+//    public void testClassIsMissing()
+//    {
+//        try {
+//            Class.forName("javax.measure.Measure");
+//              //ARGO_NON_COVERED_FEATURE
+//            fail("Should not have found javax.measure.Measure");
+//        } catch (ClassNotFoundException ex) {
+//            ; // expected case
+//        }
+//    }
 
     public void testDeserialize() throws Exception
     {

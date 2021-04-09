@@ -8,6 +8,8 @@ import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.*;
 
+import static com.fasterxml.jackson.databind.JSONTestUtils.equivalent;
+
 public class AnyPropSorting518Test extends BaseMapTest
 {
     @JsonPropertyOrder(alphabetic = true)
@@ -43,7 +45,8 @@ public class AnyPropSorting518Test extends BaseMapTest
         extra.put("y", 4);
         extra.put("x", 3);
         String json = MAPPER.writeValueAsString(new Bean(1, 2, extra));
-        assertEquals(aposToQuotes("{'a':1,'b':2,'x':3,'y':4}"),
+        //ARGO_EQUIVALENT
+        equivalent(aposToQuotes("{'a':1,'b':2,'x':3,'y':4}"),
                 json);
     }
 }

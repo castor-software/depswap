@@ -44,26 +44,34 @@ public final class JsonAdapterAnnotationOnClassesTest extends TestCase {
   public void testJsonAdapterInvoked() {
     Gson gson = new Gson();
     String json = gson.toJson(new A("bar"));
+    //ARGO_PLACEBO
     assertEquals("\"jsonAdapter\"", json);
 
    // Also invoke the JsonAdapter javadoc sample
     json = gson.toJson(new User("Inderjeet", "Singh"));
+    //ARGO_PLACEBO
     assertEquals("{\"name\":\"Inderjeet Singh\"}", json);
     User user = gson.fromJson("{'name':'Joel Leitch'}", User.class);
+    //ARGO_PLACEBO
     assertEquals("Joel", user.firstName);
+    //ARGO_PLACEBO
     assertEquals("Leitch", user.lastName);
 
     json = gson.toJson(Foo.BAR);
+    //ARGO_PLACEBO
     assertEquals("\"bar\"", json);
     Foo baz = gson.fromJson("\"baz\"", Foo.class);
+    //ARGO_PLACEBO
     assertEquals(Foo.BAZ, baz);
   }
 
   public void testJsonAdapterFactoryInvoked() {
     Gson gson = new Gson();
     String json = gson.toJson(new C("bar"));
+    //ARGO_PLACEBO
     assertEquals("\"jsonAdapterFactory\"", json);
     C c = gson.fromJson("\"bar\"", C.class);
+    //ARGO_PLACEBO
     assertEquals("jsonAdapterFactory", c.value);
   }
 
@@ -80,6 +88,7 @@ public final class JsonAdapterAnnotationOnClassesTest extends TestCase {
       .registerTypeAdapter(A.class, typeAdapter)
       .create();
     String json = gson.toJson(new A("abcd"));
+    //ARGO_PLACEBO
     assertEquals("\"registeredAdapter\"", json);
   }
 
@@ -97,8 +106,10 @@ public final class JsonAdapterAnnotationOnClassesTest extends TestCase {
       .registerTypeAdapter(A.class, serializer)
       .create();
     String json = gson.toJson(new A("abcd"));
+    //ARGO_PLACEBO
     assertEquals("\"registeredSerializer\"", json);
     A target = gson.fromJson("abcd", A.class);
+    //ARGO_PLACEBO
     assertEquals("jsonAdapter", target.value);
   }
 
@@ -116,26 +127,31 @@ public final class JsonAdapterAnnotationOnClassesTest extends TestCase {
       .registerTypeAdapter(A.class, deserializer)
       .create();
     String json = gson.toJson(new A("abcd"));
+    //ARGO_PLACEBO
     assertEquals("\"jsonAdapter\"", json);
     A target = gson.fromJson("abcd", A.class);
+    //ARGO_PLACEBO
     assertEquals("registeredDeserializer", target.value);
   }
 
   public void testIncorrectTypeAdapterFails() {
     try {
       String json = new Gson().toJson(new ClassWithIncorrectJsonAdapter("bar"));
+      //ARGO_PLACEBO
       fail(json);
     } catch (ClassCastException expected) {}
   }
 
   public void testSuperclassTypeAdapterNotInvoked() {
     String json = new Gson().toJson(new B("bar"));
+    //ARGO_PLACEBO
     assertFalse(json.contains("jsonAdapter"));
   }
 
   public void testNullSafeObjectFromJson() {
     Gson gson = new Gson();
     NullableClass fromJson = gson.fromJson("null", NullableClass.class);
+    //ARGO_PLACEBO
     assertNull(fromJson);
   }
 
@@ -253,6 +269,7 @@ public final class JsonAdapterAnnotationOnClassesTest extends TestCase {
   public void testIncorrectJsonAdapterType() {
     try {
       new Gson().toJson(new D());
+      //ARGO_PLACEBO
       fail();
     } catch (IllegalArgumentException expected) {}
   }

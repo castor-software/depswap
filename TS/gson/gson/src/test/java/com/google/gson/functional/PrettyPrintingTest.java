@@ -68,6 +68,7 @@ public class PrettyPrintingTest extends TestCase {
   public void testPrettyPrintArrayOfPrimitives() {
     int[] ints = new int[] { 1, 2, 3, 4, 5 };
     String json = gson.toJson(ints);
+    //ARGO_PLACEBO
     assertEquals("[\n  1,\n  2,\n  3,\n  4,\n  5\n]", json);
   }
 
@@ -75,6 +76,7 @@ public class PrettyPrintingTest extends TestCase {
     int[][] ints = new int[][] { { 1, 2 }, { 3, 4 }, { 5, 6 }, { 7, 8 },
         { 9, 0 }, { 10 } };
     String json = gson.toJson(ints);
+    //ARGO_PLACEBO
     assertEquals("[\n  [\n    1,\n    2\n  ],\n  [\n    3,\n    4\n  ],\n  [\n    5,\n    6\n  ],"
         + "\n  [\n    7,\n    8\n  ],\n  [\n    9,\n    0\n  ],\n  [\n    10\n  ]\n]", json);
   }
@@ -83,6 +85,7 @@ public class PrettyPrintingTest extends TestCase {
     List<Integer[]> list = Arrays.asList(new Integer[][] { { 1, 2 }, { 3, 4 },
         { 5, 6 }, { 7, 8 }, { 9, 0 }, { 10 } });
     String json = gson.toJson(list);
+    //ARGO_PLACEBO
     assertEquals("[\n  [\n    1,\n    2\n  ],\n  [\n    3,\n    4\n  ],\n  [\n    5,\n    6\n  ],"
         + "\n  [\n    7,\n    8\n  ],\n  [\n    9,\n    0\n  ],\n  [\n    10\n  ]\n]", json);
   }
@@ -92,6 +95,7 @@ public class PrettyPrintingTest extends TestCase {
     map.put("abc", 1);
     map.put("def", 5);
     String json = gson.toJson(map);
+    //ARGO_PLACEBO
     assertEquals("{\n  \"abc\": 1,\n  \"def\": 5\n}", json);
   }
 
@@ -100,6 +104,7 @@ public class PrettyPrintingTest extends TestCase {
     ClassWithMap obj = new ClassWithMap();
     obj.map = new LinkedHashMap<String, Integer>();
     String json = gson.toJson(obj);
+    //ARGO_PLACEBO
     assertTrue(json.contains("{\n  \"map\": {},\n  \"value\": 2\n}"));
   }
 
@@ -112,6 +117,7 @@ public class PrettyPrintingTest extends TestCase {
   public void testMultipleArrays() {
     int[][][] ints = new int[][][] { { { 1 }, { 2 } } };
     String json = gson.toJson(ints);
+    //ARGO_PLACEBO
     assertEquals("[\n  [\n    [\n      1\n    ],\n    [\n      2\n    ]\n  ]\n]", json);
   }
 

@@ -49,7 +49,8 @@ public class RecursiveTypesResolveTest extends TestCase {
 
   public void testRecursiveResolveSimple() {
     TypeAdapter<Foo1> adapter = new Gson().getAdapter(Foo1.class);
-    assertNotNull(adapter);
+//ARGO_PLACEBO
+assertNotNull(adapter);
   }
 
   /**
@@ -58,12 +59,14 @@ public class RecursiveTypesResolveTest extends TestCase {
 
   public void testIssue603PrintStream() {
     TypeAdapter<PrintStream> adapter = new Gson().getAdapter(PrintStream.class);
-    assertNotNull(adapter);
+//ARGO_PLACEBO
+assertNotNull(adapter);
   }
 
   public void testIssue440WeakReference() throws Exception {
     TypeAdapter<WeakReference> adapter = new Gson().getAdapter(WeakReference.class);
-    assertNotNull(adapter);
+//ARGO_PLACEBO
+assertNotNull(adapter);
   }
 
   /**
@@ -71,22 +74,26 @@ public class RecursiveTypesResolveTest extends TestCase {
    */
 
   public void testDoubleSupertype() {
-    assertEquals($Gson$Types.supertypeOf(Number.class),
+//ARGO_PLACEBO
+assertEquals($Gson$Types.supertypeOf(Number.class),
             $Gson$Types.supertypeOf($Gson$Types.supertypeOf(Number.class)));
   }
 
   public void testDoubleSubtype() {
-    assertEquals($Gson$Types.subtypeOf(Number.class),
+//ARGO_PLACEBO
+assertEquals($Gson$Types.subtypeOf(Number.class),
             $Gson$Types.subtypeOf($Gson$Types.subtypeOf(Number.class)));
   }
 
   public void testSuperSubtype() {
-    assertEquals($Gson$Types.subtypeOf(Object.class),
+//ARGO_PLACEBO
+assertEquals($Gson$Types.subtypeOf(Object.class),
             $Gson$Types.supertypeOf($Gson$Types.subtypeOf(Number.class)));
   }
 
   public void testSubSupertype() {
-    assertEquals($Gson$Types.subtypeOf(Object.class),
+//ARGO_PLACEBO
+assertEquals($Gson$Types.subtypeOf(Object.class),
             $Gson$Types.subtypeOf($Gson$Types.supertypeOf(Number.class)));
   }
 
@@ -106,11 +113,13 @@ public class RecursiveTypesResolveTest extends TestCase {
 
   public void testRecursiveTypeVariablesResolve1() throws Exception {
     TypeAdapter<TestType> adapter = new Gson().getAdapter(TestType.class);
-    assertNotNull(adapter);
+//ARGO_PLACEBO
+assertNotNull(adapter);
   }
 
   public void testRecursiveTypeVariablesResolve12() throws Exception {
     TypeAdapter<TestType2> adapter = new Gson().getAdapter(TestType2.class);
-    assertNotNull(adapter);
+//ARGO_PLACEBO
+assertNotNull(adapter);
   }
 }

@@ -13,6 +13,7 @@ import com.fasterxml.jackson.databind.util.RawValue;
 import se.kth.castor.yasjf4j.JArray;
 import se.kth.castor.yasjf4j.JException;
 import se.kth.castor.yasjf4j.JFactory;
+import se.kth.castor.yasjf4j.JNull;
 import se.kth.castor.yasjf4j.JObject;
 
 /**
@@ -60,6 +61,7 @@ public class ObjectNode
 
     public static JsonNode toJsonNode(Object o) {
         if(o instanceof JsonNode) return (JsonNode) o;
+        else if (o instanceof JNull) return NullNode.getInstance();
         else if (o == null) return NullNode.getInstance();
         else if (o instanceof String) return new TextNode((String) o);
         else if (o instanceof Integer) return new IntNode((Integer) o);
@@ -80,7 +82,7 @@ public class ObjectNode
     }
 
     public static Object toObject(Object e) {
-        if(e instanceof NullNode) return null;
+        if(e instanceof NullNode) return JNull.getInstance();
         else if (e instanceof TextNode) return ((TextNode) e).asText();
         else if (e instanceof IntNode) return ((IntNode) e).intValue();
         else if (e instanceof LongNode) return ((LongNode) e).longValue();

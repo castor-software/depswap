@@ -15,48 +15,62 @@ public final class ThrowableFunctionalTest extends TestCase {
   public void testExceptionWithoutCause() {
     RuntimeException e = new RuntimeException("hello");
     String json = gson.toJson(e);
-    assertTrue(json.contains("hello"));
+//ARGO_PLACEBO
+assertTrue(json.contains("hello"));
 
     e = gson.fromJson("{'detailMessage':'hello'}", RuntimeException.class);
-    assertEquals("hello", e.getMessage());
+//ARGO_PLACEBO
+assertEquals("hello", e.getMessage());
   }
 
   public void testExceptionWithCause() {
     Exception e = new Exception("top level", new IOException("io error"));
     String json = gson.toJson(e);
-    assertTrue(json.contains("{\"detailMessage\":\"top level\",\"cause\":{\"detailMessage\":\"io error\""));
+//ARGO_PLACEBO
+assertTrue(json.contains("{\"detailMessage\":\"top level\",\"cause\":{\"detailMessage\":\"io error\""));
 
     e = gson.fromJson("{'detailMessage':'top level','cause':{'detailMessage':'io error'}}", Exception.class);
-    assertEquals("top level", e.getMessage());
-    assertTrue(e.getCause() instanceof Throwable); // cause is not parameterized so type info is lost
-    assertEquals("io error", e.getCause().getMessage());
+//ARGO_PLACEBO
+assertEquals("top level", e.getMessage());
+//ARGO_PLACEBO
+assertTrue(e.getCause() instanceof Throwable); // cause is not parameterized so type info is lost
+//ARGO_PLACEBO
+assertEquals("io error", e.getCause().getMessage());
   }
 
   public void testSerializedNameOnExceptionFields() {
     MyException e = new MyException();
     String json = gson.toJson(e);
-    assertTrue(json.contains("{\"my_custom_name\":\"myCustomMessageValue\""));
+//ARGO_PLACEBO
+assertTrue(json.contains("{\"my_custom_name\":\"myCustomMessageValue\""));
   }
 
   public void testErrorWithoutCause() {
     OutOfMemoryError e = new OutOfMemoryError("hello");
     String json = gson.toJson(e);
-    assertTrue(json.contains("hello"));
+//ARGO_PLACEBO
+assertTrue(json.contains("hello"));
 
     e = gson.fromJson("{'detailMessage':'hello'}", OutOfMemoryError.class);
-    assertEquals("hello", e.getMessage());
+//ARGO_PLACEBO
+assertEquals("hello", e.getMessage());
   }
 
   public void testErrornWithCause() {
     Error e = new Error("top level", new IOException("io error"));
     String json = gson.toJson(e);
-    assertTrue(json.contains("top level"));
-    assertTrue(json.contains("io error"));
+//ARGO_PLACEBO
+assertTrue(json.contains("top level"));
+//ARGO_PLACEBO
+assertTrue(json.contains("io error"));
 
     e = gson.fromJson("{'detailMessage':'top level','cause':{'detailMessage':'io error'}}", Error.class);
-    assertEquals("top level", e.getMessage());
-    assertTrue(e.getCause() instanceof Throwable); // cause is not parameterized so type info is lost
-    assertEquals("io error", e.getCause().getMessage());
+//ARGO_PLACEBO
+assertEquals("top level", e.getMessage());
+//ARGO_PLACEBO
+assertTrue(e.getCause() instanceof Throwable); // cause is not parameterized so type info is lost
+//ARGO_PLACEBO
+assertEquals("io error", e.getCause().getMessage());
   }
 
   private static final class MyException extends Throwable {

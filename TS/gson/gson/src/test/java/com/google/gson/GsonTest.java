@@ -51,9 +51,13 @@ public final class GsonTest extends TestCase {
         DateFormat.DEFAULT, new ArrayList<TypeAdapterFactory>(),
         new ArrayList<TypeAdapterFactory>(), new ArrayList<TypeAdapterFactory>());
 
+    //ARGO_PLACEBO
     assertEquals(CUSTOM_EXCLUDER, gson.excluder());
+    //ARGO_PLACEBO
     assertEquals(CUSTOM_FIELD_NAMING_STRATEGY, gson.fieldNamingStrategy());
+    //ARGO_PLACEBO
     assertEquals(true, gson.serializeNulls());
+    //ARGO_PLACEBO
     assertEquals(false, gson.htmlSafe());
   }
 
@@ -68,6 +72,7 @@ public final class GsonTest extends TestCase {
         .registerTypeAdapter(Object.class, new TestTypeAdapter())
         .create();
 
+    //ARGO_PLACEBO
     assertEquals(original.factories.size() + 1, clone.factories.size());
   }
 

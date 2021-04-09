@@ -20,6 +20,7 @@ import com.google.gson.internal.LinkedTreeMap;
 import se.kth.castor.yasjf4j.JArray;
 import se.kth.castor.yasjf4j.JException;
 import se.kth.castor.yasjf4j.JFactory;
+import se.kth.castor.yasjf4j.JNull;
 import se.kth.castor.yasjf4j.JObject;
 
 import java.util.HashMap;
@@ -167,7 +168,7 @@ public final class JsonObject extends JsonElement {
   public void addProperty(String property, String value) {
     //add(property, value == null ? JsonNull.INSTANCE : new JsonPrimitive(value));
     try {
-      json.YASJF4J_put(property,value);
+      json.YASJF4J_put(property,toObject(value));
       //json.YASJF4J_put(property, value == null ? JsonNull.INSTANCE : new JsonPrimitive(value));
     } catch (JException e) {
       e.printStackTrace();
@@ -184,7 +185,7 @@ public final class JsonObject extends JsonElement {
   public void addProperty(String property, Number value) {
     //add(property, value == null ? JsonNull.INSTANCE : new JsonPrimitive(value));
     try {
-      json.YASJF4J_put(property,value);
+      json.YASJF4J_put(property,toObject(value));
       //json.YASJF4J_put(property, value == null ? JsonNull.INSTANCE : new JsonPrimitive(value));
     } catch (JException e) {
       e.printStackTrace();
@@ -201,7 +202,7 @@ public final class JsonObject extends JsonElement {
   public void addProperty(String property, Boolean value) {
     //add(property, value == null ? JsonNull.INSTANCE : new JsonPrimitive(value));
     try {
-      json.YASJF4J_put(property,value);
+      json.YASJF4J_put(property,toObject(value));
       //json.YASJF4J_put(property, value == null ? JsonNull.INSTANCE : new JsonPrimitive(value));
     } catch (JException e) {
       e.printStackTrace();
@@ -218,7 +219,7 @@ public final class JsonObject extends JsonElement {
   public void addProperty(String property, Character value) {
     //add(property, value == null ? JsonNull.INSTANCE : new JsonPrimitive(value));
     try {
-      json.YASJF4J_put(property,value);
+      json.YASJF4J_put(property,toObject(value));
       //json.YASJF4J_put(property, value == null ? JsonNull.INSTANCE : new JsonPrimitive(value));
     } catch (JException e) {
       e.printStackTrace();
@@ -345,14 +346,19 @@ public final class JsonObject extends JsonElement {
   public boolean equals(Object o) {
     //return (o == this) || (o instanceof JsonObject
     //    && ((JsonObject) o).members.equals(members));
-    return (o == this) || (o instanceof JsonObject
-            && ((JsonObject) o).json.equals(json));
+    //return (o == this) || (o instanceof JsonObject
+    //        && ((JsonObject) o).json.equals(json));
+    return (o == this) || (o instanceof JsonObject && JsonObject.equivalence(json, ((JsonObject) o).json));
   }
 
   @Override
   public int hashCode() {
     //return members.hashCode();
-    return json.hashCode();
+    int h = 0;
+    for(String key: json.YASJF4J_getKeys()) {
+      h += key.hashCode();
+    }
+    return h;
   }
 
   public JsonObject(JObject o) {
@@ -373,6 +379,7 @@ public final class JsonObject extends JsonElement {
   public static JsonElement toJsonElement(Object o) {
     if(o instanceof JsonElement) return (JsonElement) o;
     else if (o == null) return JsonNull.INSTANCE;
+    else if (o instanceof JNull) return JsonNull.INSTANCE;
     else if (o instanceof String) return new JsonPrimitive((String) o);
     else if (o instanceof Number) return new JsonPrimitive((Number) o);
     else if (o instanceof Boolean) return new JsonPrimitive((Boolean) o);
@@ -385,7 +392,8 @@ public final class JsonObject extends JsonElement {
   }
 
   public static Object toObject(Object e) {
-    if(e instanceof JsonNull) return null;
+    if(e instanceof JsonNull) return JNull.getInstance();
+    else if (e == null) return JNull.getInstance();
     else if (e instanceof JsonPrimitive) {
       JsonPrimitive p = (JsonPrimitive) e;
       if (p.isBoolean()) return p.getAsBoolean();
@@ -394,5 +402,72 @@ public final class JsonObject extends JsonElement {
     } else if (e instanceof JsonArray) return ((JsonArray) e).json;
     else if (e instanceof JsonObject) return ((JsonObject) e).json;
     return e;
+  }
+
+  public static boolean equivalence(Object a, Object b) {
+    if(a == null) return b == null;
+    if(b == null) return false;
+    if(a.getClass() != b.getClass()) {
+      return false;
+    } else if(a.equals(b)) {
+      return true;
+    } else if(a instanceof JsonObject) {
+      JsonObject ao, bo;
+      ao = (JsonObject) a;
+      bo = (JsonObject) b;
+      if(ao.size() != bo.size()) {
+        return false;
+      }
+      for(String key: ao.keySet()) {
+        if(!bo.has(key)) return false;
+        if(!equivalence(ao.get(key), bo.get(key))) return false;
+      }
+      return true;
+    } else if(a instanceof JObject) {
+      JObject ao, bo;
+      ao = (JObject) a;
+      bo = (JObject) b;
+      if(ao.YASJF4J_getKeys().size() != bo.YASJF4J_getKeys().size()) {
+        return false;
+      }
+      for(String key: ao.YASJF4J_getKeys()) {
+        if(!bo.YASJF4J_getKeys().contains(key)) return false;
+        try {
+          if(!equivalence(ao.YASJF4J_get(key), bo.YASJF4J_get(key))) return false;
+        } catch (JException e) {
+          return false;
+        }
+      }
+      return true;
+
+    } else if(a instanceof JsonArray) {
+      JsonArray ao, bo;
+      ao = (JsonArray) a;
+      bo = (JsonArray) b;
+      if(ao.size() != bo.size()) {
+        return false;
+      }
+      for(int i = 0; i < ao.size(); i++) {
+        if (!equivalence(ao.get(i), bo.get(i))) return false;
+      }
+      return true;
+    } else if(a instanceof JArray) {
+      JArray ao, bo;
+      ao = (JArray) a;
+      bo = (JArray) b;
+      if(ao.YASJF4J_size() != bo.YASJF4J_size()) {
+        return false;
+      }
+      for(int i = 0; i < ao.YASJF4J_size(); i++) {
+        try {
+          if (!equivalence(ao.YASJF4J_get(i), bo.YASJF4J_get(i))) return false;
+        } catch (JException e) {
+          return false;
+        }
+      }
+      return true;
+
+    }
+    return false;
   }
 }

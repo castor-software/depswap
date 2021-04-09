@@ -28,30 +28,38 @@ public final class ObjectTypeAdapterTest extends TestCase {
 
   public void testDeserialize() throws Exception {
     Map<?, ?> map = (Map<?, ?>) adapter.fromJson("{\"a\":5,\"b\":[1,2,null],\"c\":{\"x\":\"y\"}}");
+    //ARGO_PLACEBO
     assertEquals(5.0, map.get("a"));
+    //ARGO_PLACEBO
     assertEquals(Arrays.asList(1.0, 2.0, null), map.get("b"));
+    //ARGO_PLACEBO
     assertEquals(Collections.singletonMap("x", "y"), map.get("c"));
+    //ARGO_PLACEBO
     assertEquals(3, map.size());
   }
 
   public void testSerialize() throws Exception {
     Object object = new RuntimeType();
+    //ARGO_PLACEBO
     assertEquals("{'a':5,'b':[1,2,null]}", adapter.toJson(object).replace("\"", "'"));
   }
   
   public void testSerializeNullValue() throws Exception {
     Map<String, Object> map = new LinkedHashMap<String, Object>();
     map.put("a", null);
+    //ARGO_PLACEBO
     assertEquals("{'a':null}", adapter.toJson(map).replace('"', '\''));
   }
 
   public void testDeserializeNullValue() throws Exception {
     Map<String, Object> map = new LinkedHashMap<String, Object>();
     map.put("a", null);
+    //ARGO_PLACEBO
     assertEquals(map, adapter.fromJson("{\"a\":null}"));
   }
 
   public void testSerializeObject() throws Exception {
+    //ARGO_PLACEBO
     assertEquals("{}", adapter.toJson(new Object()));
   }
 

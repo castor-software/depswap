@@ -29,7 +29,8 @@ public final class JsonTreeWriterTest extends TestCase {
     writer.value(2);
     writer.value(3);
     writer.endArray();
-    assertEquals("[1,2,3]", writer.get().toString());
+//ARGO_ORIGINAL
+assertEquals("[1,2,3]", writer.get().toString());
   }
 
   public void testNestedArray() throws IOException {
@@ -42,7 +43,8 @@ public final class JsonTreeWriterTest extends TestCase {
     writer.endArray();
     writer.endArray();
     writer.endArray();
-    assertEquals("[[],[[]]]", writer.get().toString());
+//ARGO_ORIGINAL
+assertEquals("[[],[[]]]", writer.get().toString());
   }
 
   public void testObject() throws IOException {
@@ -51,7 +53,8 @@ public final class JsonTreeWriterTest extends TestCase {
     writer.name("A").value(1);
     writer.name("B").value(2);
     writer.endObject();
-    assertEquals("{\"A\":1,\"B\":2}", writer.get().toString());
+//ARGO_ORIGINAL
+assertEquals("{\"A\":1,\"B\":2}", writer.get().toString());
   }
 
   public void testNestedObject() throws IOException {
@@ -67,7 +70,8 @@ public final class JsonTreeWriterTest extends TestCase {
     writer.beginObject();
     writer.endObject();
     writer.endObject();
-    assertEquals("{\"A\":{\"B\":{}},\"C\":{}}", writer.get().toString());
+//ARGO_ORIGINAL
+assertEquals("{\"A\":{\"B\":{}},\"C\":{}}", writer.get().toString());
   }
 
   public void testWriteAfterClose() throws Exception {
@@ -79,7 +83,8 @@ public final class JsonTreeWriterTest extends TestCase {
     writer.close();
     try {
       writer.beginArray();
-      fail();
+//ARGO_ORIGINAL
+fail();
     } catch (IllegalStateException expected) {
     }
   }
@@ -90,7 +95,8 @@ public final class JsonTreeWriterTest extends TestCase {
     writer.beginArray();
     try {
       writer.close();
-      fail();
+//ARGO_ORIGINAL
+fail();
     } catch (IOException expected) {
     }
   }
@@ -102,7 +108,8 @@ public final class JsonTreeWriterTest extends TestCase {
     writer.name("A");
     writer.nullValue();
     writer.endObject();
-    assertEquals("{}", writer.get().toString());
+//ARGO_ORIGINAL
+assertEquals("{}", writer.get().toString());
   }
 
   public void testSerializeNullsTrue() throws IOException {
@@ -112,12 +119,14 @@ public final class JsonTreeWriterTest extends TestCase {
     writer.name("A");
     writer.nullValue();
     writer.endObject();
-    assertEquals("{\"A\":null}", writer.get().toString());
+//ARGO_ORIGINAL
+assertEquals("{\"A\":null}", writer.get().toString());
   }
 
   public void testEmptyWriter() {
     JsonTreeWriter writer = new JsonTreeWriter();
-    assertEquals(JsonNull.INSTANCE, writer.get());
+//ARGO_PLACEBO
+assertEquals(JsonNull.INSTANCE, writer.get());
   }
 
   public void testLenientNansAndInfinities() throws IOException {
@@ -128,7 +137,8 @@ public final class JsonTreeWriterTest extends TestCase {
     writer.value(Double.NEGATIVE_INFINITY);
     writer.value(Double.POSITIVE_INFINITY);
     writer.endArray();
-    assertEquals("[NaN,-Infinity,Infinity]", writer.get().toString());
+//ARGO_ORIGINAL
+assertEquals("[NaN,-Infinity,Infinity]", writer.get().toString());
   }
 
   public void testStrictNansAndInfinities() throws IOException {
@@ -137,17 +147,20 @@ public final class JsonTreeWriterTest extends TestCase {
     writer.beginArray();
     try {
       writer.value(Double.NaN);
-      fail();
+//ARGO_ORIGINAL
+fail();
     } catch (IllegalArgumentException expected) {
     }
     try {
       writer.value(Double.NEGATIVE_INFINITY);
-      fail();
+//ARGO_ORIGINAL
+fail();
     } catch (IllegalArgumentException expected) {
     }
     try {
       writer.value(Double.POSITIVE_INFINITY);
-      fail();
+//ARGO_ORIGINAL
+fail();
     } catch (IllegalArgumentException expected) {
     }
   }
@@ -158,17 +171,20 @@ public final class JsonTreeWriterTest extends TestCase {
     writer.beginArray();
     try {
       writer.value(Double.valueOf(Double.NaN));
-      fail();
+//ARGO_ORIGINAL
+fail();
     } catch (IllegalArgumentException expected) {
     }
     try {
       writer.value(Double.valueOf(Double.NEGATIVE_INFINITY));
-      fail();
+//ARGO_ORIGINAL
+fail();
     } catch (IllegalArgumentException expected) {
     }
     try {
       writer.value(Double.valueOf(Double.POSITIVE_INFINITY));
-      fail();
+//ARGO_ORIGINAL
+fail();
     } catch (IllegalArgumentException expected) {
     }
   }

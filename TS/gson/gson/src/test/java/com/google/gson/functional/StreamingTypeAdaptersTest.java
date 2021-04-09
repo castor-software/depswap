@@ -46,6 +46,7 @@ public final class StreamingTypeAdaptersTest extends TestCase {
     truck.passengers = Arrays.asList(new Person("Jesse", 29), new Person("Jodie", 29));
     truck.horsePower = 300;
 
+    //ARGO_PLACEBO
     assertEquals("{'horsePower':300.0,"
         + "'passengers':[{'age':29,'name':'Jesse'},{'age':29,'name':'Jodie'}]}",
         truckAdapter.toJson(truck).replace('\"', '\''));
@@ -55,31 +56,37 @@ public final class StreamingTypeAdaptersTest extends TestCase {
     String json = "{'horsePower':300.0,"
         + "'passengers':[{'age':29,'name':'Jesse'},{'age':29,'name':'Jodie'}]}";
     Truck truck = truckAdapter.fromJson(json.replace('\'', '\"'));
+    //ARGO_PLACEBO
     assertEquals(300.0, truck.horsePower);
+    //ARGO_PLACEBO
     assertEquals(Arrays.asList(new Person("Jesse", 29), new Person("Jodie", 29)), truck.passengers);
   }
 
   public void testSerializeNullField() {
     Truck truck = new Truck();
     truck.passengers = null;
+    //ARGO_PLACEBO
     assertEquals("{'horsePower':0.0,'passengers':null}",
         truckAdapter.toJson(truck).replace('\"', '\''));
   }
 
   public void testDeserializeNullField() throws IOException {
     Truck truck = truckAdapter.fromJson("{'horsePower':0.0,'passengers':null}".replace('\'', '\"'));
+    //ARGO_PLACEBO
     assertNull(truck.passengers);
   }
 
   public void testSerializeNullObject() {
     Truck truck = new Truck();
     truck.passengers = Arrays.asList((Person) null);
+    //ARGO_PLACEBO
     assertEquals("{'horsePower':0.0,'passengers':[null]}",
         truckAdapter.toJson(truck).replace('\"', '\''));
   }
 
   public void testDeserializeNullObject() throws IOException {
     Truck truck = truckAdapter.fromJson("{'horsePower':0.0,'passengers':[null]}".replace('\'', '\"'));
+    //ARGO_PLACEBO
     assertEquals(Arrays.asList((Person) null), truck.passengers);
   }
 
@@ -87,6 +94,7 @@ public final class StreamingTypeAdaptersTest extends TestCase {
     usePersonNameAdapter();
     Truck truck = new Truck();
     truck.passengers = Arrays.asList(new Person("Jesse", 29), new Person("Jodie", 29));
+    //ARGO_PLACEBO
     assertEquals("{'horsePower':0.0,'passengers':['Jesse','Jodie']}",
         truckAdapter.toJson(truck).replace('\"', '\''));
   }
@@ -94,6 +102,7 @@ public final class StreamingTypeAdaptersTest extends TestCase {
   public void testDeserializeWithCustomTypeAdapter() throws IOException {
     usePersonNameAdapter();
     Truck truck = truckAdapter.fromJson("{'horsePower':0.0,'passengers':['Jesse','Jodie']}".replace('\'', '\"'));
+    //ARGO_PLACEBO
     assertEquals(Arrays.asList(new Person("Jesse", -1), new Person("Jodie", -1)), truck.passengers);
   }
 
@@ -115,6 +124,7 @@ public final class StreamingTypeAdaptersTest extends TestCase {
     Map<String, Double> map = new LinkedHashMap<String, Double>();
     map.put("a", 5.0);
     map.put("b", 10.0);
+    //ARGO_PLACEBO
     assertEquals("{'a':5.0,'b':10.0}", mapAdapter.toJson(map).replace('"', '\''));
   }
 
@@ -122,23 +132,27 @@ public final class StreamingTypeAdaptersTest extends TestCase {
     Map<String, Double> map = new LinkedHashMap<String, Double>();
     map.put("a", 5.0);
     map.put("b", 10.0);
+    //ARGO_PLACEBO
     assertEquals(map, mapAdapter.fromJson("{'a':5.0,'b':10.0}".replace('\'', '\"')));
   }
 
   public void testSerialize1dArray() {
     TypeAdapter<double[]> arrayAdapter = miniGson.getAdapter(new TypeToken<double[]>() {});
+    //ARGO_PLACEBO
     assertEquals("[1.0,2.0,3.0]", arrayAdapter.toJson(new double[]{ 1.0, 2.0, 3.0 }));
   }
 
   public void testDeserialize1dArray() throws IOException {
     TypeAdapter<double[]> arrayAdapter = miniGson.getAdapter(new TypeToken<double[]>() {});
     double[] array = arrayAdapter.fromJson("[1.0,2.0,3.0]");
+    //ARGO_PLACEBO
     assertTrue(Arrays.toString(array), Arrays.equals(new double[]{1.0, 2.0, 3.0}, array));
   }
 
   public void testSerialize2dArray() {
     TypeAdapter<double[][]> arrayAdapter = miniGson.getAdapter(new TypeToken<double[][]>() {});
     double[][] array = { {1.0, 2.0 }, { 3.0 } };
+    //ARGO_PLACEBO
     assertEquals("[[1.0,2.0],[3.0]]", arrayAdapter.toJson(array));
   }
 
@@ -146,6 +160,7 @@ public final class StreamingTypeAdaptersTest extends TestCase {
     TypeAdapter<double[][]> arrayAdapter = miniGson.getAdapter(new TypeToken<double[][]>() {});
     double[][] array = arrayAdapter.fromJson("[[1.0,2.0],[3.0]]");
     double[][] expected = { {1.0, 2.0 }, { 3.0 } };
+    //ARGO_PLACEBO
     assertTrue(Arrays.toString(array), Arrays.deepEquals(expected, array));
   }
 
@@ -168,19 +183,24 @@ public final class StreamingTypeAdaptersTest extends TestCase {
     truck.passengers.add(new Person("jesse", 30));
     try {
       gson.toJson(truck, Truck.class);
+      //ARGO_PLACEBO
       fail();
     } catch (NullPointerException expected) {}
     String json = "{horsePower:1.0,passengers:[null,'jesse,30']}";
     try {
       gson.fromJson(json, Truck.class);
+      //ARGO_PLACEBO
       fail();
     } catch (JsonSyntaxException expected) {}
     gson = new GsonBuilder().registerTypeAdapter(Person.class, typeAdapter.nullSafe()).create();
     assertEquals("{\"horsePower\":1.0,\"passengers\":[null,\"jesse,30\"]}",
         gson.toJson(truck, Truck.class));
     truck = gson.fromJson(json, Truck.class);
+    //ARGO_PLACEBO
     assertEquals(1.0D, truck.horsePower);
+    //ARGO_PLACEBO
     assertNull(truck.passengers.get(0));
+    //ARGO_PLACEBO
     assertEquals("jesse", truck.passengers.get(1).name);
   }
 
@@ -189,6 +209,7 @@ public final class StreamingTypeAdaptersTest extends TestCase {
     Node root = new Node("root");
     root.left = new Node("left");
     root.right = new Node("right");
+    //ARGO_PLACEBO
     assertEquals("{'label':'root',"
         + "'left':{'label':'left','left':null,'right':null},"
         + "'right':{'label':'right','left':null,'right':null}}",
@@ -206,7 +227,9 @@ public final class StreamingTypeAdaptersTest extends TestCase {
     truckObject.add("passengers", passengersArray);
 
     Truck truck = truckAdapter.fromJsonTree(truckObject);
+    //ARGO_ORIGINAL
     assertEquals(300.0, truck.horsePower);
+    //ARGO_ORIGINAL
     assertEquals(Arrays.asList(new Person("Jesse", 30)), truck.passengers);
   }
 

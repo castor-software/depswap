@@ -59,6 +59,7 @@ public final class MixedStreamTest extends TestCase {
     gson.toJson(RED_MIATA, Car.class, jsonWriter);
     jsonWriter.endArray();
 
+    //ARGO_PLACEBO
     assertEquals(CARS_JSON, stringWriter.toString());
   }
 
@@ -68,8 +69,11 @@ public final class MixedStreamTest extends TestCase {
     JsonReader jsonReader = new JsonReader(stringReader);
 
     jsonReader.beginArray();
+    //ARGO_PLACEBO
     assertEquals(BLUE_MUSTANG, gson.fromJson(jsonReader, Car.class));
+    //ARGO_PLACEBO
     assertEquals(BLACK_BMW, gson.fromJson(jsonReader, Car.class));
+    //ARGO_PLACEBO
     assertEquals(RED_MIATA, gson.fromJson(jsonReader, Car.class));
     jsonReader.endArray();
   }
@@ -81,10 +85,12 @@ public final class MixedStreamTest extends TestCase {
 
     jsonReader.setLenient(false);
     gson.fromJson(jsonReader, Car.class);
+    //ARGO_PLACEBO
     assertFalse(jsonReader.isLenient());
 
     jsonReader.setLenient(true);
     gson.fromJson(jsonReader, Car.class);
+    //ARGO_PLACEBO
     assertTrue(jsonReader.isLenient());
   }
 
@@ -96,13 +102,17 @@ public final class MixedStreamTest extends TestCase {
     jsonWriter.setHtmlSafe(true);
     jsonWriter.setLenient(true);
     gson.toJson(BLUE_MUSTANG, Car.class, jsonWriter);
+    //ARGO_PLACEBO
     assertTrue(jsonWriter.isHtmlSafe());
+    //ARGO_PLACEBO
     assertTrue(jsonWriter.isLenient());
 
     jsonWriter.setHtmlSafe(false);
     jsonWriter.setLenient(false);
     gson.toJson(BLUE_MUSTANG, Car.class, jsonWriter);
+    //ARGO_PLACEBO
     assertFalse(jsonWriter.isHtmlSafe());
+    //ARGO_PLACEBO
     assertFalse(jsonWriter.isLenient());
   }
 
@@ -113,6 +123,7 @@ public final class MixedStreamTest extends TestCase {
     jsonReader.beginObject();
     try {
       gson.fromJson(jsonReader, String.class);
+      //ARGO_PLACEBO
       fail();
     } catch (JsonParseException expected) {
     }
@@ -124,6 +135,7 @@ public final class MixedStreamTest extends TestCase {
     jsonReader.close();
     try {
       gson.fromJson(jsonReader, new TypeToken<List<Car>>() {}.getType());
+      //ARGO_PLACEBO
       fail();
     } catch (JsonParseException expected) {
     }
@@ -135,6 +147,7 @@ public final class MixedStreamTest extends TestCase {
     jsonWriter.beginObject();
     try {
       gson.toJson(BLUE_MUSTANG, Car.class, jsonWriter);
+      //ARGO_PLACEBO
       fail();
     } catch (IllegalStateException expected) {
     }
@@ -148,6 +161,7 @@ public final class MixedStreamTest extends TestCase {
     jsonWriter.close();
     try {
       gson.toJson(BLUE_MUSTANG, Car.class, jsonWriter);
+      //ARGO_PLACEBO
       fail();
     } catch (IllegalStateException expected) {
     }
@@ -157,12 +171,14 @@ public final class MixedStreamTest extends TestCase {
     Gson gson = new Gson();
     try {
       gson.toJson(new JsonPrimitive("hello"), (JsonWriter) null);
+      //ARGO_PLACEBO
       fail();
     } catch (NullPointerException expected) {
     }
 
     StringWriter stringWriter = new StringWriter();
     gson.toJson(null, new JsonWriter(stringWriter));
+    //ARGO_PLACEBO
     assertEquals("null", stringWriter.toString());
   }
 
@@ -170,11 +186,13 @@ public final class MixedStreamTest extends TestCase {
     Gson gson = new Gson();
     try {
       gson.fromJson((JsonReader) null, Integer.class);
+      //ARGO_PLACEBO
       fail();
     } catch (NullPointerException expected) {
     }
     try {
       gson.fromJson(new JsonReader(new StringReader("true")), null);
+      //ARGO_PLACEBO
       fail();
     } catch (NullPointerException expected) {
     }
@@ -186,12 +204,14 @@ public final class MixedStreamTest extends TestCase {
 
     StringWriter writer = new StringWriter();
     new Gson().toJson(contents, type, new JsonWriter(writer));
+    //ARGO_PLACEBO
     assertEquals("[\"\\u003c\",\"\\u003e\",\"\\u0026\",\"\\u003d\",\"\\u0027\"]",
         writer.toString());
 
     writer = new StringWriter();
     new GsonBuilder().disableHtmlEscaping().create()
         .toJson(contents, type, new JsonWriter(writer));
+    //ARGO_PLACEBO
     assertEquals("[\"<\",\">\",\"&\",\"=\",\"'\"]",
         writer.toString());
   }
@@ -205,10 +225,12 @@ public final class MixedStreamTest extends TestCase {
     JsonWriter jsonWriter = new JsonWriter(writer);
     new GsonBuilder().serializeSpecialFloatingPointValues().create()
         .toJson(doubles, type, jsonWriter);
+    //ARGO_PLACEBO
     assertEquals("[NaN,-Infinity,Infinity,-0.0,0.5,0.0]", writer.toString());
 
     try {
       new Gson().toJson(doubles, type, new JsonWriter(new StringWriter()));
+      //ARGO_PLACEBO
       fail();
     } catch (IllegalArgumentException expected) {
     }

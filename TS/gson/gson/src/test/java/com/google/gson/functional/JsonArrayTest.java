@@ -37,6 +37,7 @@ public class JsonArrayTest extends TestCase {
     jsonArray.add((String) null);
     jsonArray.add("Yes");
 
+    //ARGO_ORIGINAL
     assertEquals("[\"Hello\",\"Goodbye\",\"Thank you\",null,\"Yes\"]", jsonArray.toString());
   }
 
@@ -60,6 +61,7 @@ public class JsonArrayTest extends TestCase {
     x = 0;
     jsonArray.add(x);
 
+    //ARGO_ORIGINAL
     assertEquals("[1,2,-3,null,4,0]", jsonArray.toString());
   }
 
@@ -82,6 +84,7 @@ public class JsonArrayTest extends TestCase {
 
     jsonArray.add((Double) null);
 
+    //ARGO_ORIGINAL
     assertEquals("[1.0,2.13232,0.121,null,-0.00234,null]", jsonArray.toString());
   }
 
@@ -95,6 +98,7 @@ public class JsonArrayTest extends TestCase {
     jsonArray.add((Boolean) null);
     jsonArray.add(true);
 
+    //ARGO_ORIGINAL
     assertEquals("[true,true,false,false,null,true]", jsonArray.toString());
   }
 
@@ -109,6 +113,7 @@ public class JsonArrayTest extends TestCase {
     jsonArray.add('u');
     jsonArray.add("and sometimes Y");
 
+    //ARGO_ORIGINAL
     assertEquals("[\"a\",\"e\",\"i\",\"o\",null,\"u\",\"and sometimes Y\"]", jsonArray.toString());
   }
 
@@ -124,6 +129,7 @@ public class JsonArrayTest extends TestCase {
     jsonArray.add(12.232);
     jsonArray.add(BigInteger.valueOf(2323));
 
+    //ARGO_ORIGINAL
     assertEquals("[\"a\",\"apple\",12121,\"o\",null,null,12.232,2323]", jsonArray.toString());
   }
 
@@ -140,6 +146,7 @@ public class JsonArrayTest extends TestCase {
     jsonArray.add((Boolean) null);
     jsonArray.add((Number) null);
 
+    //ARGO_ORIGINAL
     assertEquals("[null,null,null,null,null,null,null,null,null]", jsonArray.toString());
   }
 
@@ -157,6 +164,7 @@ public class JsonArrayTest extends TestCase {
     jsonArray.add((Boolean) null);
     jsonArray.add((Boolean) null);
 
+    //ARGO_ORIGINAL
     assertEquals("[\"a\",\"a\",true,true,1212,1212,34.34,34.34,null,null]", jsonArray.toString());
   }
 }

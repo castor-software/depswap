@@ -42,7 +42,9 @@ public class EscapingTest extends TestCase {
     String[] valueWithQuotes = { "beforeQuote\"afterQuote" };
     String jsonRepresentation = gson.toJson(valueWithQuotes);
     String[] target = gson.fromJson(jsonRepresentation, String[].class);
+    //ARGO_PLACEBO
     assertEquals(1, target.length);
+    //ARGO_PLACEBO
     assertEquals(valueWithQuotes[0], target[0]);
   }
 
@@ -54,6 +56,7 @@ public class EscapingTest extends TestCase {
     strings.add("&");
     strings.add("'");
     strings.add("\"");
+    //ARGO_PLACEBO
     assertEquals("[\"\\u003c\",\"\\u003e\",\"\\u003d\",\"\\u0026\",\"\\u0027\",\"\\\"\"]",
         gson.toJson(strings));
   }
@@ -61,11 +64,15 @@ public class EscapingTest extends TestCase {
   public void testEscapingObjectFields() throws Exception {
     BagOfPrimitives objWithPrimitives = new BagOfPrimitives(1L, 1, true, "test with\" <script>");
     String jsonRepresentation = gson.toJson(objWithPrimitives);
+    //ARGO_PLACEBO
     assertFalse(jsonRepresentation.contains("<"));
+    //ARGO_PLACEBO
     assertFalse(jsonRepresentation.contains(">"));
+    //ARGO_PLACEBO
     assertTrue(jsonRepresentation.contains("\\\""));
 
     BagOfPrimitives expectedObject = gson.fromJson(jsonRepresentation, BagOfPrimitives.class);
+    //ARGO_PLACEBO
     assertEquals(objWithPrimitives.getExpectedJson(), expectedObject.getExpectedJson());
   }
   
@@ -76,9 +83,12 @@ public class EscapingTest extends TestCase {
     BagOfPrimitives target = new BagOfPrimitives(1L, 1, true, "test' / w'ith\" / \\ <script>");
     String escapedJsonForm = escapeHtmlGson.toJson(target);
     String nonEscapedJsonForm = noEscapeHtmlGson.toJson(target);
+    //ARGO_PLACEBO
     assertFalse(escapedJsonForm.equals(nonEscapedJsonForm));
-    
+
+    //ARGO_PLACEBO
     assertEquals(target, noEscapeHtmlGson.fromJson(escapedJsonForm, BagOfPrimitives.class));
+    //ARGO_PLACEBO
     assertEquals(target, escapeHtmlGson.fromJson(nonEscapedJsonForm, BagOfPrimitives.class));
   }
 
@@ -87,6 +97,7 @@ public class EscapingTest extends TestCase {
     String json = gson.toJson(gson.toJson(expected));
     String value = gson.fromJson(json, String.class);
     BagOfPrimitives actual = gson.fromJson(value, BagOfPrimitives.class);
+    //ARGO_PLACEBO
     assertEquals(expected, actual);
   }
 }

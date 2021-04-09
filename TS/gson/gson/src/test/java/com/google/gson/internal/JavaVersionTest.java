@@ -36,46 +36,63 @@ public class JavaVersionTest {
 
   @Test
   public void testJava6() {
+    //ARGO_PLACEBO
     assertEquals(6, JavaVersion.getMajorJavaVersion("1.6.0")); // http://www.oracle.com/technetwork/java/javase/version-6-141920.html
   }
 
   @Test
   public void testJava7() {
+    //ARGO_PLACEBO
     assertEquals(7, JavaVersion.getMajorJavaVersion("1.7.0")); // http://www.oracle.com/technetwork/java/javase/jdk7-naming-418744.html
   }
 
   @Test
   public void testJava8() {
+    //ARGO_PLACEBO
     assertEquals(8, JavaVersion.getMajorJavaVersion("1.8"));
+    //ARGO_PLACEBO
     assertEquals(8, JavaVersion.getMajorJavaVersion("1.8.0"));
+    //ARGO_PLACEBO
     assertEquals(8, JavaVersion.getMajorJavaVersion("1.8.0_131"));
+    //ARGO_PLACEBO
     assertEquals(8, JavaVersion.getMajorJavaVersion("1.8.0_60-ea"));
+    //ARGO_PLACEBO
     assertEquals(8, JavaVersion.getMajorJavaVersion("1.8.0_111-internal"));
 
     // openjdk8 per https://github.com/AdoptOpenJDK/openjdk-build/issues/93
+    //ARGO_PLACEBO
     assertEquals(8, JavaVersion.getMajorJavaVersion("1.8.0-internal"));
+    //ARGO_PLACEBO
     assertEquals(8, JavaVersion.getMajorJavaVersion("1.8.0_131-adoptopenjdk"));
   }
 
   @Test
   public void testJava9() {
     // Legacy style
+    //ARGO_PLACEBO
     assertEquals(9, JavaVersion.getMajorJavaVersion("9.0.4")); // Oracle JDK 9
+    //ARGO_PLACEBO
     assertEquals(9, JavaVersion.getMajorJavaVersion("9-Debian")); // Debian as reported in https://github.com/google/gson/issues/1310
     // New style
+    //ARGO_PLACEBO
     assertEquals(9, JavaVersion.getMajorJavaVersion("9-ea+19"));
+    //ARGO_PLACEBO
     assertEquals(9, JavaVersion.getMajorJavaVersion("9+100"));
+    //ARGO_PLACEBO
     assertEquals(9, JavaVersion.getMajorJavaVersion("9.0.1+20"));
+    //ARGO_PLACEBO
     assertEquals(9, JavaVersion.getMajorJavaVersion("9.1.1+20"));
   }
 
   @Test
   public void testJava10() {
+    //ARGO_PLACEBO
     assertEquals(10, JavaVersion.getMajorJavaVersion("10.0.1")); // Oracle JDK 10.0.1
   }
 
   @Test
   public void testUnknownVersionFormat() {
+    //ARGO_PLACEBO
     assertEquals(6, JavaVersion.getMajorJavaVersion("Java9")); // unknown format
   }
 }

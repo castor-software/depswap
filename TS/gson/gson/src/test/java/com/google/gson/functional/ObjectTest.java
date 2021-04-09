@@ -74,21 +74,28 @@ public class ObjectTest extends TestCase {
   public void testJsonInSingleQuotesDeserialization() {
     String json = "{'stringValue':'no message','intValue':10,'longValue':20}";
     BagOfPrimitives target = gson.fromJson(json, BagOfPrimitives.class);
+    //ARGO_PLACEBO
     assertEquals("no message", target.stringValue);
+    //ARGO_PLACEBO
     assertEquals(10, target.intValue);
+    //ARGO_PLACEBO
     assertEquals(20, target.longValue);
   }
 
   public void testJsonInMixedQuotesDeserialization() {
     String json = "{\"stringValue\":'no message','intValue':10,'longValue':20}";
     BagOfPrimitives target = gson.fromJson(json, BagOfPrimitives.class);
+    //ARGO_PLACEBO
     assertEquals("no message", target.stringValue);
+    //ARGO_PLACEBO
     assertEquals(10, target.intValue);
+    //ARGO_PLACEBO
     assertEquals(20, target.longValue);
   }
 
   public void testBagOfPrimitivesSerialization() throws Exception {
     BagOfPrimitives target = new BagOfPrimitives(10, 20, false, "stringValue");
+    //ARGO_PLACEBO
     assertEquals(target.getExpectedJson(), gson.toJson(target));
   }
 
@@ -96,11 +103,13 @@ public class ObjectTest extends TestCase {
     BagOfPrimitives src = new BagOfPrimitives(10, 20, false, "stringValue");
     String json = src.getExpectedJson();
     BagOfPrimitives target = gson.fromJson(json, BagOfPrimitives.class);
+    //ARGO_PLACEBO
     assertEquals(json, target.getExpectedJson());
   }
 
   public void testBagOfPrimitiveWrappersSerialization() throws Exception {
     BagOfPrimitiveWrappers target = new BagOfPrimitiveWrappers(10L, 20, false);
+    //ARGO_PLACEBO
     assertEquals(target.getExpectedJson(), gson.toJson(target));
   }
 
@@ -108,11 +117,13 @@ public class ObjectTest extends TestCase {
     BagOfPrimitiveWrappers target = new BagOfPrimitiveWrappers(10L, 20, false);
     String jsonString = target.getExpectedJson();
     target = gson.fromJson(jsonString, BagOfPrimitiveWrappers.class);
+    //ARGO_PLACEBO
     assertEquals(jsonString, target.getExpectedJson());
   }
 
   public void testClassWithTransientFieldsSerialization() throws Exception {
     ClassWithTransientFields<Long> target = new ClassWithTransientFields<Long>(1L);
+    //ARGO_PLACEBO
     assertEquals(target.getExpectedJson(), gson.toJson(target));
   }
 
@@ -120,6 +131,7 @@ public class ObjectTest extends TestCase {
   public void testClassWithTransientFieldsDeserialization() throws Exception {
     String json = "{\"longValue\":[1]}";
     ClassWithTransientFields target = gson.fromJson(json, ClassWithTransientFields.class);
+    //ARGO_PLACEBO
     assertEquals(json, target.getExpectedJson());
   }
 
@@ -128,10 +140,12 @@ public class ObjectTest extends TestCase {
       throws Exception {
     String json = "{\"transientLongValue\":1,\"longValue\":[1]}";
     ClassWithTransientFields target = gson.fromJson(json, ClassWithTransientFields.class);
+    //ARGO_PLACEBO
     assertFalse(target.transientLongValue != 1);
   }
 
   public void testClassWithNoFieldsSerialization() throws Exception {
+    //ARGO_PLACEBO
     assertEquals("{}", gson.toJson(new ClassWithNoFields()));
   }
 
@@ -139,12 +153,14 @@ public class ObjectTest extends TestCase {
     String json = "{}";
     ClassWithNoFields target = gson.fromJson(json, ClassWithNoFields.class);
     ClassWithNoFields expected = new ClassWithNoFields();
+    //ARGO_PLACEBO
     assertEquals(expected, target);
   }
 
   public void testNestedSerialization() throws Exception {
     Nested target = new Nested(new BagOfPrimitives(10, 20, false, "stringValue"),
        new BagOfPrimitives(30, 40, true, "stringValue"));
+    //ARGO_PLACEBO
     assertEquals(target.getExpectedJson(), gson.toJson(target));
   }
 
@@ -153,20 +169,24 @@ public class ObjectTest extends TestCase {
         + "\"stringValue\":\"stringValue\"},\"primitive2\":{\"longValue\":30,\"intValue\":40,"
         + "\"booleanValue\":true,\"stringValue\":\"stringValue\"}}";
     Nested target = gson.fromJson(json, Nested.class);
+    //ARGO_PLACEBO
     assertEquals(json, target.getExpectedJson());
   }
   public void testNullSerialization() throws Exception {
+    //ARGO_PLACEBO
     assertEquals("null", gson.toJson(null));
   }
 
   public void testEmptyStringDeserialization() throws Exception {
     Object object = gson.fromJson("", Object.class);
+    //ARGO_PLACEBO
     assertNull(object);
   }
 
   public void testTruncatedDeserialization() {
     try {
       gson.fromJson("[\"a\", \"b\",", new TypeToken<List<String>>() {}.getType());
+      //ARGO_PLACEBO
       fail();
     } catch (JsonParseException expected) {
     }
@@ -175,11 +195,13 @@ public class ObjectTest extends TestCase {
   public void testNullDeserialization() throws Exception {
     String myNullObject = null;
     Object object = gson.fromJson(myNullObject, Object.class);
+    //ARGO_PLACEBO
     assertNull(object);
   }
 
   public void testNullFieldsSerialization() throws Exception {
     Nested target = new Nested(new BagOfPrimitives(10, 20, false, "stringValue"), null);
+    //ARGO_PLACEBO
     assertEquals(target.getExpectedJson(), gson.toJson(target));
   }
 
@@ -187,28 +209,33 @@ public class ObjectTest extends TestCase {
     String json = "{\"primitive1\":{\"longValue\":10,\"intValue\":20,\"booleanValue\":false"
         + ",\"stringValue\":\"stringValue\"}}";
     Nested target = gson.fromJson(json, Nested.class);
+    //ARGO_PLACEBO
     assertEquals(json, target.getExpectedJson());
   }
 
   public void testArrayOfObjectsSerialization() throws Exception {
     ArrayOfObjects target = new ArrayOfObjects();
+    //ARGO_PLACEBO
     assertEquals(target.getExpectedJson(), gson.toJson(target));
   }
 
   public void testArrayOfObjectsDeserialization() throws Exception {
     String json = new ArrayOfObjects().getExpectedJson();
     ArrayOfObjects target = gson.fromJson(json, ArrayOfObjects.class);
+    //ARGO_PLACEBO
     assertEquals(json, target.getExpectedJson());
   }
 
   public void testArrayOfArraysSerialization() throws Exception {
     ArrayOfArrays target = new ArrayOfArrays();
+    //ARGO_PLACEBO
     assertEquals(target.getExpectedJson(), gson.toJson(target));
   }
 
   public void testArrayOfArraysDeserialization() throws Exception {
     String json = new ArrayOfArrays().getExpectedJson();
     ArrayOfArrays target = gson.fromJson(json, ArrayOfArrays.class);
+    //ARGO_PLACEBO
     assertEquals(json, target.getExpectedJson());
   }
 
@@ -223,8 +250,11 @@ public class ObjectTest extends TestCase {
         new Object[] { stringValue, classWithObjects, bagOfPrimitives });
     String json = gson.toJson(classWithArray);
 
+    //ARGO_PLACEBO
     assertTrue(json.contains(classWithObjectsJson));
+    //ARGO_PLACEBO
     assertTrue(json.contains(bagOfPrimitivesJson));
+    //ARGO_PLACEBO
     assertTrue(json.contains("\"" + stringValue + "\""));
   }
 
@@ -234,6 +264,7 @@ public class ObjectTest extends TestCase {
   public void testNullArraysDeserialization() throws Exception {
     String json = "{\"array\": null}";
     ClassWithArray target = gson.fromJson(json, ClassWithArray.class);
+    //ARGO_PLACEBO
     assertNull(target.array);
   }
 
@@ -243,13 +274,16 @@ public class ObjectTest extends TestCase {
   public void testNullObjectFieldsDeserialization() throws Exception {
     String json = "{\"bag\": null}";
     ClassWithObjects target = gson.fromJson(json, ClassWithObjects.class);
+    //ARGO_PLACEBO
     assertNull(target.bag);
   }
 
   public void testEmptyCollectionInAnObjectDeserialization() throws Exception {
     String json = "{\"children\":[]}";
     ClassWithCollectionField target = gson.fromJson(json, ClassWithCollectionField.class);
+    //ARGO_PLACEBO
     assertNotNull(target);
+    //ARGO_PLACEBO
     assertTrue(target.children.isEmpty());
   }
 
@@ -260,6 +294,7 @@ public class ObjectTest extends TestCase {
   public void testPrimitiveArrayInAnObjectDeserialization() throws Exception {
     String json = "{\"longArray\":[0,1,2,3,4,5,6,7,8,9]}";
     PrimitiveArray target = gson.fromJson(json, PrimitiveArray.class);
+    //ARGO_PLACEBO
     assertEquals(json, target.getExpectedJson());
   }
 
@@ -269,21 +304,25 @@ public class ObjectTest extends TestCase {
   public void testNullPrimitiveFieldsDeserialization() throws Exception {
     String json = "{\"longValue\":null}";
     BagOfPrimitives target = gson.fromJson(json, BagOfPrimitives.class);
+    //ARGO_PLACEBO
     assertEquals(BagOfPrimitives.DEFAULT_VALUE, target.longValue);
   }
 
   public void testEmptyCollectionInAnObjectSerialization() throws Exception {
     ClassWithCollectionField target = new ClassWithCollectionField();
+    //ARGO_PLACEBO
     assertEquals("{\"children\":[]}", gson.toJson(target));
   }
 
   public void testPrivateNoArgConstructorDeserialization() throws Exception {
     ClassWithPrivateNoArgsConstructor target =
       gson.fromJson("{\"a\":20}", ClassWithPrivateNoArgsConstructor.class);
+    //ARGO_PLACEBO
     assertEquals(20, target.a);
   }
 
   public void testAnonymousLocalClassesSerialization() throws Exception {
+    //ARGO_PLACEBO
     assertEquals("null", gson.toJson(new ClassWithNoFields() {
       // empty anonymous class
     }));
@@ -299,6 +338,7 @@ public class ObjectTest extends TestCase {
               }
             }).create();
 
+    //ARGO_PLACEBO
     assertEquals("null", gson.toJson(new ClassWithNoFields() {
       // empty anonymous class
     }));
@@ -306,6 +346,7 @@ public class ObjectTest extends TestCase {
 
   public void testPrimitiveArrayFieldSerialization() {
     PrimitiveArray target = new PrimitiveArray(new long[] { 1L, 2L, 3L });
+    //ARGO_PLACEBO
     assertEquals(target.getExpectedJson(), gson.toJson(target));
   }
 
@@ -317,6 +358,7 @@ public class ObjectTest extends TestCase {
     ClassWithObjectField obj = new ClassWithObjectField();
     obj.member = "abc";
     String json = gson.toJson(obj);
+    //ARGO_PLACEBO
     assertTrue(json.contains("abc"));
   }
 
@@ -329,7 +371,9 @@ public class ObjectTest extends TestCase {
     Parent p = new Parent();
     Parent.Child c = p.new Child();
     String json = gson.toJson(c);
+    //ARGO_PLACEBO
     assertTrue(json.contains("value2"));
+    //ARGO_PLACEBO
     assertFalse(json.contains("value1"));
   }
 
@@ -343,6 +387,7 @@ public class ObjectTest extends TestCase {
     }).create();
     String json = "{'value2':3}";
     Parent.Child c = gson.fromJson(json, Parent.Child.class);
+    //ARGO_PLACEBO
     assertEquals(3, c.value2);
   }
 
@@ -404,22 +449,28 @@ public class ObjectTest extends TestCase {
   public void testObjectFieldNamesWithoutQuotesDeserialization() {
     String json = "{longValue:1,'booleanValue':true,\"stringValue\":'bar'}";
     BagOfPrimitives bag = gson.fromJson(json, BagOfPrimitives.class);
+    //ARGO_PLACEBO
     assertEquals(1, bag.longValue);
+    //ARGO_PLACEBO
     assertTrue(bag.booleanValue);
+    //ARGO_PLACEBO
     assertEquals("bar", bag.stringValue);
   }
 
   public void testStringFieldWithNumberValueDeserialization() {
     String json = "{\"stringValue\":1}";
     BagOfPrimitives bag = gson.fromJson(json, BagOfPrimitives.class);
+    //ARGO_PLACEBO
     assertEquals("1", bag.stringValue);
 
     json = "{\"stringValue\":1.5E+6}";
     bag = gson.fromJson(json, BagOfPrimitives.class);
+    //ARGO_PLACEBO
     assertEquals("1.5E+6", bag.stringValue);
 
     json = "{\"stringValue\":true}";
     bag = gson.fromJson(json, BagOfPrimitives.class);
+    //ARGO_PLACEBO
     assertEquals("true", bag.stringValue);
   }
 
@@ -430,8 +481,11 @@ public class ObjectTest extends TestCase {
     ClassWithEmptyStringFields target = new ClassWithEmptyStringFields();
     target.a = "5794749";
     String json = gson.toJson(target);
+    //ARGO_PLACEBO
     assertTrue(json.contains("\"a\":\"5794749\""));
+    //ARGO_PLACEBO
     assertTrue(json.contains("\"b\":\"\""));
+    //ARGO_PLACEBO
     assertTrue(json.contains("\"c\":\"\""));
   }
 
@@ -441,8 +495,11 @@ public class ObjectTest extends TestCase {
   public void testStringFieldWithEmptyValueDeserialization() {
     String json = "{a:\"5794749\",b:\"\",c:\"\"}";
     ClassWithEmptyStringFields target = gson.fromJson(json, ClassWithEmptyStringFields.class);
+    //ARGO_PLACEBO
     assertEquals("5794749", target.a);
+    //ARGO_PLACEBO
     assertEquals("", target.b);
+    //ARGO_PLACEBO
     assertEquals("", target.c);
   }
 
@@ -456,6 +513,7 @@ public class ObjectTest extends TestCase {
     Gson gson = new GsonBuilder().serializeNulls().create();
     JsonObject obj = new JsonObject();
     String json = gson.toJson(obj);
+    //ARGO_ORIGINAL
     assertEquals("{}", json);
   }
 
@@ -465,16 +523,19 @@ public class ObjectTest extends TestCase {
   public void testSingletonLists() {
     Gson gson = new Gson();
     Product product = new Product();
+    //ARGO_PLACEBO
     assertEquals("{\"attributes\":[],\"departments\":[]}",
         gson.toJson(product));
     gson.fromJson(gson.toJson(product), Product.class);
 
     product.departments.add(new Department());
+    //ARGO_PLACEBO
     assertEquals("{\"attributes\":[],\"departments\":[{\"name\":\"abc\",\"code\":\"123\"}]}",
         gson.toJson(product));
     gson.fromJson(gson.toJson(product), Product.class);
 
     product.attributes.add("456");
+    //ARGO_PLACEBO
     assertEquals("{\"attributes\":[\"456\"],\"departments\":[{\"name\":\"abc\",\"code\":\"123\"}]}",
         gson.toJson(product));
     gson.fromJson(gson.toJson(product), Product.class);
@@ -485,8 +546,10 @@ public class ObjectTest extends TestCase {
     HasObjectMap a = new HasObjectMap();
     a.map.put("date", new Date(0));
     if (JavaVersion.isJava9OrLater()) {
+      //ARGO_PLACEBO
       assertEquals("{\"map\":{\"date\":\"Dec 31, 1969, 4:00:00 PM\"}}", gson.toJson(a));
     } else {
+      //ARGO_PLACEBO
       assertEquals("{\"map\":{\"date\":\"Dec 31, 1969 4:00:00 PM\"}}", gson.toJson(a));
     }
   }

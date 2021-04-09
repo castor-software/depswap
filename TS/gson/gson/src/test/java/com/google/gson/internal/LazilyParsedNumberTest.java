@@ -21,12 +21,14 @@ public class LazilyParsedNumberTest extends TestCase {
   public void testHashCode() {
     LazilyParsedNumber n1 = new LazilyParsedNumber("1");
     LazilyParsedNumber n1Another = new LazilyParsedNumber("1");
+    //ARGO_PLACEBO
     assertEquals(n1.hashCode(), n1Another.hashCode());
   }
 
   public void testEquals() {
     LazilyParsedNumber n1 = new LazilyParsedNumber("1");
     LazilyParsedNumber n1Another = new LazilyParsedNumber("1");
+    //ARGO_PLACEBO
     assertTrue(n1.equals(n1Another));
   }
 }

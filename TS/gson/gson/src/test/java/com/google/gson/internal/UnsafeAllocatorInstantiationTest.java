@@ -40,8 +40,10 @@ public final class UnsafeAllocatorInstantiationTest extends TestCase {
     UnsafeAllocator unsafeAllocator = UnsafeAllocator.create();
     try {
       unsafeAllocator.newInstance(Interface.class);
+//ARGO_PLACEBO
       fail();
     } catch (Exception e) {
+//ARGO_PLACEBO
       assertEquals(e.getClass(), UnsupportedOperationException.class);
     }
   }
@@ -54,8 +56,10 @@ public final class UnsafeAllocatorInstantiationTest extends TestCase {
     UnsafeAllocator unsafeAllocator = UnsafeAllocator.create();
     try {
       unsafeAllocator.newInstance(AbstractClass.class);
+//ARGO_PLACEBO
       fail();
     } catch (Exception e) {
+//ARGO_PLACEBO
       assertEquals(e.getClass(), UnsupportedOperationException.class);
     }
   }
@@ -68,6 +72,7 @@ public final class UnsafeAllocatorInstantiationTest extends TestCase {
     try {
       unsafeAllocator.newInstance(ConcreteClass.class);
     } catch (Exception e) {
+//ARGO_PLACEBO
       fail();
     }
   }

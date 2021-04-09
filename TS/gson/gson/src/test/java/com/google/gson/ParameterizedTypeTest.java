@@ -42,16 +42,23 @@ public class ParameterizedTypeTest extends TestCase {
 
   public void testOurTypeFunctionality() throws Exception {
     Type parameterizedType = new TypeToken<List<String>>() {}.getType();
+    //ARGO_PLACEBO
     assertNull(ourType.getOwnerType());
+    //ARGO_PLACEBO
     assertEquals(String.class, ourType.getActualTypeArguments()[0]);
+    //ARGO_PLACEBO
     assertEquals(List.class, ourType.getRawType());
+    //ARGO_PLACEBO
     assertEquals(parameterizedType, ourType);
+    //ARGO_PLACEBO
     assertEquals(parameterizedType.hashCode(), ourType.hashCode());
   }
 
   public void testNotEquals() throws Exception {
     Type differentParameterizedType = new TypeToken<List<Integer>>() {}.getType();
+    //ARGO_PLACEBO
     assertFalse(differentParameterizedType.equals(ourType));
+    //ARGO_PLACEBO
     assertFalse(ourType.equals(differentParameterizedType));
   }
 }

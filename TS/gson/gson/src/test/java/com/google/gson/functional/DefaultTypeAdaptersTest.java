@@ -59,6 +59,8 @@ import java.util.UUID;
 
 import junit.framework.TestCase;
 
+import static com.google.gson.JSONTestUtils.assertEquivalent;
+
 /**
  * Functional test for Json serialization and deserialization for common classes for which default
  * support is provided in Gson. The tests for Map types are available in {@link MapTest}.
@@ -91,6 +93,7 @@ public class DefaultTypeAdaptersTest extends TestCase {
     } catch (UnsupportedOperationException expected) {}
     // Override with a custom type adapter for class.
     gson = new GsonBuilder().registerTypeAdapter(Class.class, new MyClassTypeAdapter()).create();
+    //ARGO_PLACEBO
     assertEquals("\"java.lang.String\"", gson.toJson(String.class));
   }
 
@@ -100,12 +103,14 @@ public class DefaultTypeAdaptersTest extends TestCase {
     } catch (UnsupportedOperationException expected) {}
     // Override with a custom type adapter for class.
     gson = new GsonBuilder().registerTypeAdapter(Class.class, new MyClassTypeAdapter()).create();
+    //ARGO_PLACEBO
     assertEquals(String.class, gson.fromJson("java.lang.String", Class.class));
   }
 
   public void testUrlSerialization() throws Exception {
     String urlValue = "http://google.com/";
     URL url = new URL(urlValue);
+    //ARGO_PLACEBO
     assertEquals("\"http://google.com/\"", gson.toJson(url));
   }
 
@@ -113,20 +118,24 @@ public class DefaultTypeAdaptersTest extends TestCase {
     String urlValue = "http://google.com/";
     String json = "'http:\\/\\/google.com\\/'";
     URL target = gson.fromJson(json, URL.class);
+    //ARGO_PLACEBO
     assertEquals(urlValue, target.toExternalForm());
 
     gson.fromJson('"' + urlValue + '"', URL.class);
+    //ARGO_PLACEBO
     assertEquals(urlValue, target.toExternalForm());
   }
 
   public void testUrlNullSerialization() throws Exception {
     ClassWithUrlField target = new ClassWithUrlField();
+    //ARGO_PLACEBO
     assertEquals("{}", gson.toJson(target));
   }
 
   public void testUrlNullDeserialization() {
     String json = "{}";
     ClassWithUrlField target = gson.fromJson(json, ClassWithUrlField.class);
+    //ARGO_PLACEBO
     assertNull(target.url);
   }
 
@@ -137,6 +146,7 @@ public class DefaultTypeAdaptersTest extends TestCase {
   public void testUriSerialization() throws Exception {
     String uriValue = "http://google.com/";
     URI uri = new URI(uriValue);
+    //ARGO_PLACEBO
     assertEquals("\"http://google.com/\"", gson.toJson(uri));
   }
 
@@ -144,6 +154,7 @@ public class DefaultTypeAdaptersTest extends TestCase {
     String uriValue = "http://google.com/";
     String json = '"' + uriValue + '"';
     URI target = gson.fromJson(json, URI.class);
+    //ARGO_PLACEBO
     assertEquals(uriValue, target.toASCIIString());
   }
   
@@ -183,13 +194,16 @@ public class DefaultTypeAdaptersTest extends TestCase {
   }
 
   private void testNullSerializationAndDeserialization(Class<?> c) {
+    //ARGO_PLACEBO
     assertEquals("null", gson.toJson(null, c));
+    //ARGO_PLACEBO
     assertEquals(null, gson.fromJson("null", c));
   }
 
   public void testUuidSerialization() throws Exception {
     String uuidValue = "c237bec1-19ef-4858-a98e-521cf0aad4c0";
     UUID uuid = UUID.fromString(uuidValue);
+    //ARGO_PLACEBO
     assertEquals('"' + uuidValue + '"', gson.toJson(uuid));
   }
 
@@ -197,42 +211,51 @@ public class DefaultTypeAdaptersTest extends TestCase {
     String uuidValue = "c237bec1-19ef-4858-a98e-521cf0aad4c0";
     String json = '"' + uuidValue + '"';
     UUID target = gson.fromJson(json, UUID.class);
+    //ARGO_PLACEBO
     assertEquals(uuidValue, target.toString());
   }
 
   public void testLocaleSerializationWithLanguage() {
     Locale target = new Locale("en");
+    //ARGO_PLACEBO
     assertEquals("\"en\"", gson.toJson(target));
   }
 
   public void testLocaleDeserializationWithLanguage() {
     String json = "\"en\"";
     Locale locale = gson.fromJson(json, Locale.class);
+    //ARGO_PLACEBO
     assertEquals("en", locale.getLanguage());
   }
 
   public void testLocaleSerializationWithLanguageCountry() {
     Locale target = Locale.CANADA_FRENCH;
+    //ARGO_PLACEBO
     assertEquals("\"fr_CA\"", gson.toJson(target));
   }
 
   public void testLocaleDeserializationWithLanguageCountry() {
     String json = "\"fr_CA\"";
     Locale locale = gson.fromJson(json, Locale.class);
+    //ARGO_PLACEBO
     assertEquals(Locale.CANADA_FRENCH, locale);
   }
 
   public void testLocaleSerializationWithLanguageCountryVariant() {
     Locale target = new Locale("de", "DE", "EURO");
     String json = gson.toJson(target);
+    //ARGO_PLACEBO
     assertEquals("\"de_DE_EURO\"", json);
   }
 
   public void testLocaleDeserializationWithLanguageCountryVariant() {
     String json = "\"de_DE_EURO\"";
     Locale locale = gson.fromJson(json, Locale.class);
+    //ARGO_PLACEBO
     assertEquals("de", locale.getLanguage());
+    //ARGO_PLACEBO
     assertEquals("DE", locale.getCountry());
+    //ARGO_PLACEBO
     assertEquals("EURO", locale.getVariant());
   }
 
@@ -240,6 +263,7 @@ public class DefaultTypeAdaptersTest extends TestCase {
     ClassWithBigDecimal target = new ClassWithBigDecimal("-122.01e-21");
     String json = gson.toJson(target);
     String actual = json.substring(json.indexOf(':') + 1, json.indexOf('}'));
+    //ARGO_PLACEBO
     assertEquals(target.value, new BigDecimal(actual));
   }
 
@@ -247,12 +271,14 @@ public class DefaultTypeAdaptersTest extends TestCase {
     ClassWithBigDecimal expected = new ClassWithBigDecimal("-122.01e-21");
     String json = expected.getExpectedJson();
     ClassWithBigDecimal actual = gson.fromJson(json, ClassWithBigDecimal.class);
+    //ARGO_PLACEBO
     assertEquals(expected.value, actual.value);
   }
 
   public void testBadValueForBigDecimalDeserialization() {
     try {
       gson.fromJson("{\"value\"=1.5e-1.0031}", ClassWithBigDecimal.class);
+      //ARGO_PLACEBO
       fail("Exponent of a BigDecimal must be an integer value.");
     } catch (JsonParseException expected) { }
   }
@@ -260,6 +286,7 @@ public class DefaultTypeAdaptersTest extends TestCase {
   public void testBigIntegerFieldSerialization() {
     ClassWithBigInteger target = new ClassWithBigInteger("23232323215323234234324324324324324324");
     String json = gson.toJson(target);
+    //ARGO_PLACEBO
     assertEquals(target.getExpectedJson(), json);
   }
 
@@ -267,6 +294,7 @@ public class DefaultTypeAdaptersTest extends TestCase {
     ClassWithBigInteger expected = new ClassWithBigInteger("879697697697697697697697697697697697");
     String json = expected.getExpectedJson();
     ClassWithBigInteger actual = gson.fromJson(json, ClassWithBigInteger.class);
+    //ARGO_PLACEBO
     assertEquals(expected.value, actual.value);
   }
   
@@ -274,7 +302,9 @@ public class DefaultTypeAdaptersTest extends TestCase {
     gson = new GsonBuilder()
         .registerTypeAdapter(BigInteger.class, new NumberAsStringAdapter(BigInteger.class))
         .create();
+    //ARGO_PLACEBO
     assertEquals("\"123\"", gson.toJson(new BigInteger("123"), BigInteger.class));
+    //ARGO_PLACEBO
     assertEquals(new BigInteger("123"), gson.fromJson("\"123\"", BigInteger.class));
   }
 
@@ -282,7 +312,9 @@ public class DefaultTypeAdaptersTest extends TestCase {
     gson = new GsonBuilder()
         .registerTypeAdapter(BigDecimal.class, new NumberAsStringAdapter(BigDecimal.class))
         .create();
+    //ARGO_PLACEBO
     assertEquals("\"1.1\"", gson.toJson(new BigDecimal("1.1"), BigDecimal.class));
+    //ARGO_PLACEBO
     assertEquals(new BigDecimal("1.1"), gson.fromJson("\"1.1\"", BigDecimal.class));
   }
 
@@ -291,9 +323,11 @@ public class DefaultTypeAdaptersTest extends TestCase {
     HashSet<String> s = new HashSet<String>();
     s.add("blah");
     String json = gson.toJson(s);
+    //ARGO_PLACEBO
     assertEquals("[\"blah\"]", json);
 
     json = gson.toJson(s, Set.class);
+    //ARGO_PLACEBO
     assertEquals("[\"blah\"]", json);
   }
 
@@ -304,6 +338,7 @@ public class DefaultTypeAdaptersTest extends TestCase {
     bits.set(3, 6);
     bits.set(9);
     String json = gson.toJson(bits);
+    //ARGO_PLACEBO
     assertEquals("[0,1,0,1,1,1,0,0,0,1]", json);
   }
 
@@ -315,15 +350,19 @@ public class DefaultTypeAdaptersTest extends TestCase {
 
     Gson gson = new Gson();
     String json = gson.toJson(expected);
+    //ARGO_PLACEBO
     assertEquals(expected, gson.fromJson(json, BitSet.class));
 
     json = "[1,0,1,1,1,1,0,0,1,0,0,0]";
+    //ARGO_PLACEBO
     assertEquals(expected, gson.fromJson(json, BitSet.class));
 
     json = "[\"1\",\"0\",\"1\",\"1\",\"1\",\"1\",\"0\",\"0\",\"1\"]";
+    //ARGO_PLACEBO
     assertEquals(expected, gson.fromJson(json, BitSet.class));
 
     json = "[true,false,true,true,true,true,false,false,true,false,false]";
+    //ARGO_PLACEBO
     assertEquals(expected, gson.fromJson(json, BitSet.class));
   }
 
@@ -331,8 +370,10 @@ public class DefaultTypeAdaptersTest extends TestCase {
     Date now = new Date(1315806903103L);
     String json = gson.toJson(now);
     if (JavaVersion.isJava9OrLater()) {
+      //ARGO_PLACEBO
       assertEquals("\"Sep 11, 2011, 10:55:03 PM\"", json);
     } else {
+      //ARGO_PLACEBO
       assertEquals("\"Sep 11, 2011 10:55:03 PM\"", json);
     }
   }
@@ -340,7 +381,9 @@ public class DefaultTypeAdaptersTest extends TestCase {
   public void testDefaultDateDeserialization() {
     String json = "'Dec 13, 2009 07:18:02 AM'";
     Date extracted = gson.fromJson(json, Date.class);
+    //ARGO_PLACEBO
     assertEqualsDate(extracted, 2009, 11, 13);
+    //ARGO_PLACEBO
     assertEqualsTime(extracted, 7, 18, 2);
   }
 
@@ -363,12 +406,14 @@ public class DefaultTypeAdaptersTest extends TestCase {
   public void testDefaultJavaSqlDateSerialization() {
     java.sql.Date instant = new java.sql.Date(1259875082000L);
     String json = gson.toJson(instant);
+    //ARGO_PLACEBO
     assertEquals("\"Dec 3, 2009\"", json);
   }
 
   public void testDefaultJavaSqlDateDeserialization() {
     String json = "'Dec 3, 2009'";
     java.sql.Date extracted = gson.fromJson(json, java.sql.Date.class);
+    //ARGO_PLACEBO
     assertEqualsDate(extracted, 2009, 11, 3);
   }
 
@@ -376,8 +421,10 @@ public class DefaultTypeAdaptersTest extends TestCase {
     Timestamp now = new java.sql.Timestamp(1259875082000L);
     String json = gson.toJson(now);
     if (JavaVersion.isJava9OrLater()) {
+      //ARGO_PLACEBO
       assertEquals("\"Dec 3, 2009, 1:18:02 PM\"", json);
     } else {
+      //ARGO_PLACEBO
       assertEquals("\"Dec 3, 2009 1:18:02 PM\"", json);
     }
   }
@@ -385,19 +432,23 @@ public class DefaultTypeAdaptersTest extends TestCase {
   public void testDefaultJavaSqlTimestampDeserialization() {
     String json = "'Dec 3, 2009 1:18:02 PM'";
     Timestamp extracted = gson.fromJson(json, Timestamp.class);
+    //ARGO_PLACEBO
     assertEqualsDate(extracted, 2009, 11, 3);
+    //ARGO_PLACEBO
     assertEqualsTime(extracted, 13, 18, 2);
   }
 
   public void testDefaultJavaSqlTimeSerialization() {
     Time now = new Time(1259875082000L);
     String json = gson.toJson(now);
+    //ARGO_PLACEBO
     assertEquals("\"01:18:02 PM\"", json);
   }
 
   public void testDefaultJavaSqlTimeDeserialization() {
     String json = "'1:18:02 PM'";
     Time extracted = gson.fromJson(json, Time.class);
+    //ARGO_PLACEBO
     assertEqualsTime(extracted, 13, 18, 2);
   }
 
@@ -406,8 +457,10 @@ public class DefaultTypeAdaptersTest extends TestCase {
     Date now = new Date(1315806903103L);
     String json = gson.toJson(now);
     if (JavaVersion.isJava9OrLater()) {
+      //ARGO_PLACEBO
       assertEquals("\"Sep 11, 2011, 10:55:03 PM\"", json);
     } else {
+      //ARGO_PLACEBO
       assertEquals("\"Sep 11, 2011 10:55:03 PM\"", json);
     }
   }
@@ -417,17 +470,24 @@ public class DefaultTypeAdaptersTest extends TestCase {
     Date now = new Date(1315806903103L);
     String json = gson.toJson(now);
     Date extracted = gson.fromJson(json, Date.class);
+    //ARGO_PLACEBO
     assertEquals(now.toString(), extracted.toString());
   }
 
   public void testDefaultCalendarSerialization() throws Exception {
     Gson gson = new GsonBuilder().create();
     String json = gson.toJson(Calendar.getInstance());
+    //ARGO_PLACEBO
     assertTrue(json.contains("year"));
+    //ARGO_PLACEBO
     assertTrue(json.contains("month"));
+    //ARGO_PLACEBO
     assertTrue(json.contains("dayOfMonth"));
+    //ARGO_PLACEBO
     assertTrue(json.contains("hourOfDay"));
+    //ARGO_PLACEBO
     assertTrue(json.contains("minute"));
+    //ARGO_PLACEBO
     assertTrue(json.contains("second"));
   }
 
@@ -435,11 +495,17 @@ public class DefaultTypeAdaptersTest extends TestCase {
     Gson gson = new GsonBuilder().create();
     String json = "{year:2009,month:2,dayOfMonth:11,hourOfDay:14,minute:29,second:23}";
     Calendar cal = gson.fromJson(json, Calendar.class);
+    //ARGO_PLACEBO
     assertEquals(2009, cal.get(Calendar.YEAR));
+    //ARGO_PLACEBO
     assertEquals(2, cal.get(Calendar.MONTH));
+    //ARGO_PLACEBO
     assertEquals(11, cal.get(Calendar.DAY_OF_MONTH));
+    //ARGO_PLACEBO
     assertEquals(14, cal.get(Calendar.HOUR_OF_DAY));
+    //ARGO_PLACEBO
     assertEquals(29, cal.get(Calendar.MINUTE));
+    //ARGO_PLACEBO
     assertEquals(23, cal.get(Calendar.SECOND));
   }
 
@@ -447,11 +513,17 @@ public class DefaultTypeAdaptersTest extends TestCase {
     Gson gson = new GsonBuilder().create();
     GregorianCalendar cal = new GregorianCalendar();
     String json = gson.toJson(cal);
+    //ARGO_PLACEBO
     assertTrue(json.contains("year"));
+    //ARGO_PLACEBO
     assertTrue(json.contains("month"));
+    //ARGO_PLACEBO
     assertTrue(json.contains("dayOfMonth"));
+    //ARGO_PLACEBO
     assertTrue(json.contains("hourOfDay"));
+    //ARGO_PLACEBO
     assertTrue(json.contains("minute"));
+    //ARGO_PLACEBO
     assertTrue(json.contains("second"));
   }
 
@@ -459,11 +531,17 @@ public class DefaultTypeAdaptersTest extends TestCase {
     Gson gson = new GsonBuilder().create();
     String json = "{year:2009,month:2,dayOfMonth:11,hourOfDay:14,minute:29,second:23}";
     GregorianCalendar cal = gson.fromJson(json, GregorianCalendar.class);
+    //ARGO_PLACEBO
     assertEquals(2009, cal.get(Calendar.YEAR));
+    //ARGO_PLACEBO
     assertEquals(2, cal.get(Calendar.MONTH));
+    //ARGO_PLACEBO
     assertEquals(11, cal.get(Calendar.DAY_OF_MONTH));
+    //ARGO_PLACEBO
     assertEquals(14, cal.get(Calendar.HOUR_OF_DAY));
+    //ARGO_PLACEBO
     assertEquals(29, cal.get(Calendar.MINUTE));
+    //ARGO_PLACEBO
     assertEquals(23, cal.get(Calendar.SECOND));
   }
 
@@ -472,6 +550,7 @@ public class DefaultTypeAdaptersTest extends TestCase {
     Gson gson = new GsonBuilder().setDateFormat(DateFormat.FULL).setDateFormat(pattern).create();
     Date now = new Date(1315806903103L);
     String json = gson.toJson(now);
+    //ARGO_PLACEBO
     assertEquals("\"2011-09-11\"", json);
   }
 
@@ -482,8 +561,11 @@ public class DefaultTypeAdaptersTest extends TestCase {
     Date now = new Date(1315806903103L);
     String json = gson.toJson(now);
     Date extracted = gson.fromJson(json, Date.class);
+    //ARGO_PLACEBO
     assertEquals(now.getYear(), extracted.getYear());
+    //ARGO_PLACEBO
     assertEquals(now.getMonth(), extracted.getMonth());
+    //ARGO_PLACEBO
     assertEquals(now.getDay(), extracted.getDay());
   }
 
@@ -502,6 +584,7 @@ public class DefaultTypeAdaptersTest extends TestCase {
 
     Date now = new Date(1315806903103L);
     String json = gson.toJson(now);
+    //ARGO_PLACEBO
     assertEquals("\"2011-09-11\"", json);
   }
 
@@ -516,7 +599,9 @@ public class DefaultTypeAdaptersTest extends TestCase {
       Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
       List<Date> dates = Arrays.asList(new Date(0));
       String json = gson.toJson(dates, listOfDates);
+      //ARGO_PLACEBO
       assertEquals("[\"1970-01-01\"]", json);
+      //ARGO_PLACEBO
       assertEquals(0L, gson.<List<Date>>fromJson("[\"1970-01-01\"]", listOfDates).get(0).getTime());
     } finally {
       TimeZone.setDefault(defaultTimeZone);
@@ -534,7 +619,9 @@ public class DefaultTypeAdaptersTest extends TestCase {
       Timestamp timestamp = new Timestamp(0L);
       Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
       String json = gson.toJson(timestamp, Timestamp.class);
+      //ARGO_PLACEBO
       assertEquals("\"1970-01-01\"", json);
+      //ARGO_PLACEBO
       assertEquals(0, gson.fromJson("\"1970-01-01\"", Timestamp.class).getTime());
     } finally {
       TimeZone.setDefault(defaultTimeZone);
@@ -552,7 +639,9 @@ public class DefaultTypeAdaptersTest extends TestCase {
       java.sql.Date sqlDate = new java.sql.Date(0L);
       Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
       String json = gson.toJson(sqlDate, Timestamp.class);
+      //ARGO_PLACEBO
       assertEquals("\"1970-01-01\"", json);
+      //ARGO_PLACEBO
       assertEquals(0, gson.fromJson("\"1970-01-01\"", java.sql.Date.class).getTime());
     } finally {
       TimeZone.setDefault(defaultTimeZone);
@@ -561,30 +650,46 @@ public class DefaultTypeAdaptersTest extends TestCase {
   }
 
   public void testJsonPrimitiveSerialization() {
+    //ARGO_PLACEBO
     assertEquals("5", gson.toJson(new JsonPrimitive(5), JsonElement.class));
+    //ARGO_PLACEBO
     assertEquals("true", gson.toJson(new JsonPrimitive(true), JsonElement.class));
+    //ARGO_PLACEBO
     assertEquals("\"foo\"", gson.toJson(new JsonPrimitive("foo"), JsonElement.class));
+    //ARGO_PLACEBO
     assertEquals("\"a\"", gson.toJson(new JsonPrimitive('a'), JsonElement.class));
   }
 
   public void testJsonPrimitiveDeserialization() {
+    //ARGO_PLACEBO
     assertEquals(new JsonPrimitive(5), gson.fromJson("5", JsonElement.class));
+    //ARGO_PLACEBO
     assertEquals(new JsonPrimitive(5), gson.fromJson("5", JsonPrimitive.class));
+    //ARGO_PLACEBO
     assertEquals(new JsonPrimitive(true), gson.fromJson("true", JsonElement.class));
+    //ARGO_PLACEBO
     assertEquals(new JsonPrimitive(true), gson.fromJson("true", JsonPrimitive.class));
+    //ARGO_PLACEBO
     assertEquals(new JsonPrimitive("foo"), gson.fromJson("\"foo\"", JsonElement.class));
+    //ARGO_PLACEBO
     assertEquals(new JsonPrimitive("foo"), gson.fromJson("\"foo\"", JsonPrimitive.class));
+    //ARGO_PLACEBO
     assertEquals(new JsonPrimitive('a'), gson.fromJson("\"a\"", JsonElement.class));
+    //ARGO_PLACEBO
     assertEquals(new JsonPrimitive('a'), gson.fromJson("\"a\"", JsonPrimitive.class));
   }
 
   public void testJsonNullSerialization() {
+    //ARGO_PLACEBO
     assertEquals("null", gson.toJson(JsonNull.INSTANCE, JsonElement.class));
+    //ARGO_PLACEBO
     assertEquals("null", gson.toJson(JsonNull.INSTANCE, JsonNull.class));
   }
 
   public void testNullJsonElementSerialization() {
+    //ARGO_PLACEBO
     assertEquals("null", gson.toJson(null, JsonElement.class));
+    //ARGO_PLACEBO
     assertEquals("null", gson.toJson(null, JsonNull.class));
   }
 
@@ -593,6 +698,7 @@ public class DefaultTypeAdaptersTest extends TestCase {
     array.add(new JsonPrimitive(1));
     array.add(new JsonPrimitive(2));
     array.add(new JsonPrimitive(3));
+    //ARGO_ORIGINAL
     assertEquals("[1,2,3]", gson.toJson(array, JsonElement.class));
   }
 
@@ -603,15 +709,18 @@ public class DefaultTypeAdaptersTest extends TestCase {
     array.add(new JsonPrimitive(3));
 
     String json = "[1,2,3]";
-    assertEquals(array, gson.fromJson(json, JsonElement.class));
-    assertEquals(array, gson.fromJson(json, JsonArray.class));
+    //ARGO_EQUIVALENT
+    assertEquivalent(array, gson.fromJson(json, JsonElement.class));
+    //ARGO_EQUIVALENT
+    assertEquivalent(array, gson.fromJson(json, JsonArray.class));
   }
 
   public void testJsonObjectSerialization() {
     JsonObject object = new JsonObject();
     object.add("foo", new JsonPrimitive(1));
     object.add("bar", new JsonPrimitive(2));
-    assertEquals("{\"foo\":1,\"bar\":2}", gson.toJson(object, JsonElement.class));
+    //ARGO_EQUIVALENT
+    assertEquivalent("{\"foo\":1,\"bar\":2}", gson.toJson(object, JsonElement.class), gson);
   }
 
   public void testJsonObjectDeserialization() {
@@ -621,20 +730,25 @@ public class DefaultTypeAdaptersTest extends TestCase {
 
     String json = "{\"foo\":1,\"bar\":2}";
     JsonElement actual = gson.fromJson(json, JsonElement.class);
-    assertEquals(object, actual);
+    //ARGO_EQUIVALENT
+    assertEquivalent(object, actual);
 
     JsonObject actualObj = gson.fromJson(json, JsonObject.class);
-    assertEquals(object, actualObj);
+    //ARGO_EQUIVALENT
+    assertEquivalent(object, actualObj);
   }
 
   public void testJsonNullDeserialization() {
+    //ARGO_PLACEBO
     assertEquals(JsonNull.INSTANCE, gson.fromJson("null", JsonElement.class));
+    //ARGO_PLACEBO
     assertEquals(JsonNull.INSTANCE, gson.fromJson("null", JsonNull.class));
   }
 
   public void testJsonElementTypeMismatch() {
     try {
       gson.fromJson("\"abc\"", JsonObject.class);
+      //ARGO_PLACEBO
       fail();
     } catch (JsonSyntaxException expected) {
       assertEquals("Expected a com.google.gson.JsonObject but was com.google.gson.JsonPrimitive",
@@ -667,12 +781,14 @@ public class DefaultTypeAdaptersTest extends TestCase {
     props.setProperty("foo", "bar");
     String json = gson.toJson(props);
     String expected = "{\"foo\":\"bar\"}";
+    //ARGO_PLACEBO
     assertEquals(expected, json);
   }
 
   public void testPropertiesDeserialization() {
     String json = "{foo:'bar'}";
     Properties props = gson.fromJson(json, Properties.class);
+    //ARGO_PLACEBO
     assertEquals("bar", props.getProperty("foo"));
   }
 
@@ -680,6 +796,7 @@ public class DefaultTypeAdaptersTest extends TestCase {
     TreeSet<String> treeSet = new TreeSet<String>();
     treeSet.add("Value1");
     String json = gson.toJson(treeSet);
+    //ARGO_PLACEBO
     assertEquals("[\"Value1\"]", json);
   }
 
@@ -687,28 +804,33 @@ public class DefaultTypeAdaptersTest extends TestCase {
     String json = "['Value1']";
     Type type = new TypeToken<TreeSet<String>>() {}.getType();
     TreeSet<String> treeSet = gson.fromJson(json, type);
+    //ARGO_PLACEBO
     assertTrue(treeSet.contains("Value1"));
   }
 
   public void testStringBuilderSerialization() {
     StringBuilder sb = new StringBuilder("abc");
     String json = gson.toJson(sb);
+    //ARGO_PLACEBO
     assertEquals("\"abc\"", json);
   }
 
   public void testStringBuilderDeserialization() {
     StringBuilder sb = gson.fromJson("'abc'", StringBuilder.class);
+    //ARGO_PLACEBO
     assertEquals("abc", sb.toString());
   }
 
   public void testStringBufferSerialization() {
     StringBuffer sb = new StringBuffer("abc");
     String json = gson.toJson(sb);
+    //ARGO_PLACEBO
     assertEquals("\"abc\"", json);
   }
 
   public void testStringBufferDeserialization() {
     StringBuffer sb = gson.fromJson("'abc'", StringBuffer.class);
+    //ARGO_PLACEBO
     assertEquals("abc", sb.toString());
   }
 

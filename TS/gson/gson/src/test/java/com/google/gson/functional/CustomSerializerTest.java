@@ -50,6 +50,7 @@ public class CustomSerializerTest extends TestCase {
      ClassWithBaseField target = new ClassWithBaseField(new Base());
      JsonObject json = (JsonObject) gson.toJsonTree(target);
      JsonObject base = json.get("base").getAsJsonObject();
+       //ARGO_ORIGINAL
      assertEquals(BaseSerializer.NAME, base.get(Base.SERIALIZER_KEY).getAsString());
    }
 
@@ -61,6 +62,7 @@ public class CustomSerializerTest extends TestCase {
      ClassWithBaseField target = new ClassWithBaseField(new Sub());
      JsonObject json = (JsonObject) gson.toJsonTree(target);
      JsonObject base = json.get("base").getAsJsonObject();
+       //ARGO_ORIGINAL
      assertEquals(SubSerializer.NAME, base.get(Base.SERIALIZER_KEY).getAsString());
    }
 
@@ -74,6 +76,7 @@ public class CustomSerializerTest extends TestCase {
      JsonArray array = json.get("base").getAsJsonArray();
      for (JsonElement element : array) {
        JsonElement serializerKey = element.getAsJsonObject().get(Base.SERIALIZER_KEY);
+         //ARGO_ORIGINAL
       assertEquals(SubSerializer.NAME, serializerKey.getAsString());
      }
    }
@@ -85,6 +88,7 @@ public class CustomSerializerTest extends TestCase {
      ClassWithBaseField target = new ClassWithBaseField(new Sub());
      JsonObject json = (JsonObject) gson.toJsonTree(target);
      JsonObject base = json.get("base").getAsJsonObject();
+       //ARGO_ORIGINAL
      assertEquals(BaseSerializer.NAME, base.get(Base.SERIALIZER_KEY).getAsString());
    }
 
@@ -97,6 +101,7 @@ public class CustomSerializerTest extends TestCase {
        })
        .create();
        JsonElement json = gson.toJsonTree(new Base());
+       //ARGO_PLACEBO
        assertTrue(json.isJsonNull());
    }
 }

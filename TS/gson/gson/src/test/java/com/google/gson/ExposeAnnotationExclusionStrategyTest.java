@@ -32,37 +32,49 @@ public class ExposeAnnotationExclusionStrategyTest extends TestCase {
   private Excluder excluder = Excluder.DEFAULT.excludeFieldsWithoutExposeAnnotation();
 
   public void testNeverSkipClasses() throws Exception {
+    //ARGO_PLACEBO
     assertFalse(excluder.excludeClass(MockObject.class, true));
+    //ARGO_PLACEBO
     assertFalse(excluder.excludeClass(MockObject.class, false));
   }
 
   public void testSkipNonAnnotatedFields() throws Exception {
     Field f = createFieldAttributes("hiddenField");
+    //ARGO_PLACEBO
     assertTrue(excluder.excludeField(f, true));
+    //ARGO_PLACEBO
     assertTrue(excluder.excludeField(f, false));
   }
 
   public void testSkipExplicitlySkippedFields() throws Exception {
     Field f = createFieldAttributes("explicitlyHiddenField");
+    //ARGO_PLACEBO
     assertTrue(excluder.excludeField(f, true));
+    //ARGO_PLACEBO
     assertTrue(excluder.excludeField(f, false));
   }
 
   public void testNeverSkipExposedAnnotatedFields() throws Exception {
     Field f = createFieldAttributes("exposedField");
+    //ARGO_PLACEBO
     assertFalse(excluder.excludeField(f, true));
+    //ARGO_PLACEBO
     assertFalse(excluder.excludeField(f, false));
   }
 
   public void testNeverSkipExplicitlyExposedAnnotatedFields() throws Exception {
     Field f = createFieldAttributes("explicitlyExposedField");
+    //ARGO_PLACEBO
     assertFalse(excluder.excludeField(f, true));
+    //ARGO_PLACEBO
     assertFalse(excluder.excludeField(f, false));
   }
 
   public void testDifferentSerializeAndDeserializeField() throws Exception {
     Field f = createFieldAttributes("explicitlyDifferentModeField");
+    //ARGO_PLACEBO
     assertFalse(excluder.excludeField(f, true));
+    //ARGO_PLACEBO
     assertTrue(excluder.excludeField(f, false));
   }
 

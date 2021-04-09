@@ -28,6 +28,7 @@ public class GsonBuildConfigTest {
 
   @Test
   public void testEnsureGsonBuildConfigGetsUpdatedToMavenVersion() {
+    //ARGO_PLACEBO
     assertFalse("${project.version}".equals(GsonBuildConfig.VERSION));
   }
 }
