@@ -60,7 +60,7 @@
     </dependency>
     <dependency>
       <groupId>se.kth.castor</groupId>
-      <artifactId>yasjf4j-argo</artifactId>
+      <artifactId>yasjf4j-json</artifactId>
       <version>1.0-SNAPSHOT</version>
       <scope>test</scope>
     </dependency>

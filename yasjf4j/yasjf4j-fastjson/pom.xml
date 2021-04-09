@@ -82,6 +82,47 @@
       </plugins>
     </pluginManagement>
     <plugins>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>3.2.4</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <configuration>
+				<!--<finalName>${project.artifactId}-${project.version}-jar-with-dependencies</finalName>-->
+				<artifactSet>
+		            <includes>
+		                <include>com.alibaba:fastjson</include>
+		            </includes>
+				</artifactSet>
+				<relocations>
+				    <relocation>
+				        <pattern>com.alibaba.fastjson</pattern>
+				        <shadedPattern>se.kth.castor.com.alibaba.fastjson</shadedPattern>
+				    </relocation>
+				</relocations>
+            <filters>
+                <filter>
+                    <artifact>*:*</artifact>
+                    <excludes>
+                        <exclude>META-INF/license/**</exclude>
+                        <exclude>META-INF/*</exclude>
+                        <exclude>META-INF/maven/**</exclude>
+                        <exclude>LICENSE</exclude>
+                        <exclude>NOTICE</exclude>
+                        <exclude>/*.txt</exclude>
+                        <exclude>build.properties</exclude>
+                    </excludes>
+                </filter>
+            </filters>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
@@ -91,7 +132,7 @@
         </configuration>
       </plugin>
 
-      <plugin>
+      <!--<plugin>
         <artifactId>maven-assembly-plugin</artifactId>
         <configuration>
           <descriptorRefs>
@@ -107,7 +148,7 @@
             </goals>
           </execution>
         </executions>
-      </plugin>
+      </plugin>-->
     </plugins>
   </build>
 </project>
