@@ -26,6 +26,60 @@ angular
       };
     },
   ])
+  .directive("testsummary", [
+    function () {
+      return {
+        restrict: "A",
+        scope: {
+          tests: "=testsummary",
+        },
+        link: function (scope, elem, attrs) {
+          function printTests(tests) {
+            $(elem).text("");
+
+            let executionTime = 0;
+            let count = {
+              total: 0,
+              passing: 0,
+              failing: 0,
+              error: 0,
+            };
+            let errors = [];
+            for (let cl in tests) {
+              test = tests[cl];
+              executionTime += test.execution_time;
+              count.total += test.passing + test.failing + test.error;
+              count.passing += test.passing;
+              count.failing += test.failing;
+              count.error +=  test.error;
+              if (test.error > 0 || test.failing > 0) {
+                for (let m of test.test_cases) {
+                  if (m.error) {
+                    errors.push({
+                      name: cl + "#" + m.name,
+                      error: m.error,
+                    });
+                  } else if (m.failure) {
+                    errors.push({
+                      name: cl + "#" + m.name,
+                      error: m.failure,
+                    });
+                  }
+                }
+              }
+            }
+            executionTime = Math.round(executionTime * 100) / 100;
+            let content = `T: ${count.total} P: ${count.passing} F: ${count.failing} E: ${count.error} (${executionTime}ms)`;
+            $(elem).html(content);
+          }
+          scope.$watch("tests", function () {
+            printTests(scope.tests);
+          });
+          printTests(scope.tests);
+        },
+      };
+    },
+  ])
   .directive("tests", [
     function () {
       return {
@@ -39,6 +93,7 @@ angular
 
             let executionTime = 0;
             let count = {
+              total: 0,
               passing: 0,
               failing: 0,
               error: 0,
@@ -48,6 +103,7 @@ angular
               test = tests[cl];
               executionTime += test.execution_time;
 
+              count.total += test.passing + test.failing + test.error;
               count.passing += test.passing;
               count.failing += test.failing;
               count.error += test.error;
@@ -70,7 +126,7 @@ angular
             executionTime = Math.round(executionTime * 100) / 100;
             let content = `P: ${count.passing} F: ${count.failing} E: ${count.error} (${executionTime}ms)<br>`;
             for (let error of errors) {
-              content += `<div>${error.name}<pre class="stacktrace">${error.error.error}</pre></div>\n`;
+              content += `<div>${error.name}<pre class="stacktrace"><code>${error.error.error.replace(/&/g, "&amp;").replace(/>/g, "&gt;").replace(/</g, "&lt;").replace(/"/g, "&quot;")}</code></pre></div>\n`;
             }
             $(elem).html(content);
           }
@@ -92,30 +148,68 @@ angular
     var $ctrl = this;
     $ctrl.bug = bug;
 
+    $ctrl.execs = [
+      "original",
+      "nothing",
+      "json",
+      "json-simple",
+      "gson",
+      "fastjson",
+      "cookjson",
+      "jjson",
+      "json-io",
+      "json-lib",
+      "jsonp",
+      "jackson-databind",
+      "jsonutil",
+      "mjson",
+      "klaxon",
+      "argo",
+      "corn",
+      "flexjson",
+      "genson",
+      "johnzon",
+      "jsonij",
+      "progbase-json",
+      "sojo",
+    ];
+
     function download() {
-      $http
+      $ctrl.info = {executions: {}}
+
+      for (let exec of $ctrl.execs) {
+        $http
         .get(
-          `data/exp/${$ctrl.bug.owner}/${$ctrl.bug.project}/${$ctrl.bug.lib}.json`
+          `data/exp/${$ctrl.bug.owner}/${$ctrl.bug.project}/${$ctrl.bug.lib}/${exec}.json`
         )
         .then((res) => {
-          $ctrl.info = res.data;
-          for (let exec of $ctrl.info.executions) {
-            for (let i in exec.classpath) {
-              const cl = exec.classpath[i]
+          const data = res.data;
+          $ctrl.info.executions[data.name] = data;
+          $http
+            .get(
+              `data/logs/${$ctrl.bug.owner}/${$ctrl.bug.project}_${$ctrl.bug.lib}_${exec}.log`
+            )
+            .then((res) => {
+              $ctrl.info.executions[data.name].log = res.data
+            })
+          if (data.classpath) {
+            for (let i in data.classpath) {
+              const cl = data.classpath[i]
                 .replace(/\/home\/runner\/\.m2\/repository\//g, "")
                 .split(":");
-              exec.classpath[i] = "";
+                data.classpath[i] = "";
               for (c of cl) {
                 const pp = c.split("/");
-                exec.classpath[i] += pp[pp.length - 1] + " ";
+                data.classpath[i] += pp[pp.length - 1] + " ";
               }
             }
-            exec.classpath = exec.classpath.join("\n");
-            if (exec.errors && !exec.error) {
-              exec.error = exec.errors.join("\n");
-            }
+            data.classpath = data.classpath.join("\n");
+          }
+          if (data.errors && !data.error) {
+            data.error = data.errors.join("\n").replace(/&/g, "&amp;").replace(/>/g, "&gt;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
           }
         });
+      }
     }
     download();
 
@@ -296,12 +390,16 @@ angular
     $scope.filters = {
       allvalid: true,
       allinvalid: true,
+      originalPassing: true,
+      nothingFailing: true,
       libs: {},
       reasons: {},
     };
     $scope.reasons = [];
     $scope.libs = [];
     $scope.execs = [
+      "original",
+      "nothing",
       "json",
       "json-simple",
       "gson",
@@ -311,9 +409,18 @@ angular
       "json-io",
       "json-lib",
       "jsonp",
-      "jackson",
+      "jackson-databind",
       "jsonutil",
       "mjson",
+      "klaxon",
+      "argo",
+      "corn",
+      "flexjson",
+      "genson",
+      "johnzon",
+      "jsonij",
+      "progbase-json",
+      "sojo",
     ];
 
     // create the list of sushi rolls
@@ -323,6 +430,10 @@ angular
       $http.get("data/projects.json").then(function (response) {
         const bugs = response.data;
         for (let bug of bugs) {
+          if (!bug.url) {
+            console.log(bug)
+            continue;
+          }
           const tmp = bug.url.split("/");
           bug.owner = tmp[tmp.length - 2];
           bug.project = tmp[tmp.length - 1];
@@ -381,6 +492,27 @@ angular
       }
       return Math.floor((count * 100) / total) + "% " + count + "/" + total;
     };
+    $scope.countReason = function (reason) {
+      let count = 0;
+      let total = 0;
+      for (let bug of $scope.filteredBugs) {
+        for (let key in bug.executions) {
+          if (key == "original" || key == 'nothing') {
+            continue;
+          }
+          if (bug.executions[key]) {
+            total++;
+            if (bug.executions[key].reason == reason) {
+              count++;
+            }
+          }
+        }
+      }
+      if (total == 0) {
+        return "N.A";
+      }
+      return Math.floor((count * 100) / total) + "% " + count + "/" + total;
+    }
     $scope.countBugs = function (key, filter) {
       if (filter == null) {
         filter = {};
@@ -416,6 +548,10 @@ angular
       if (a.type === "number") {
         return a.value - b.value;
       }
+      if (a.value == null || b.value == null) {
+        return -1;
+      }
+      return (a.value - b.value)
       return naturalSort(a.value, b.value);
     };
     $scope.bugsFilter = function (bug, index, array) {
@@ -467,6 +603,12 @@ angular
         return false;
       }
       if (!$scope.filters.allinvalid && allinvalid) {
+        return false;
+      }
+      if ($scope.filters.originalPassing && bug.executions.original && !bug.executions.original.valid) {
+        return false;
+      }
+      if ($scope.filters.nothingFailing && bug.executions.nothing && bug.executions.nothing.valid) {
         return false;
       }
       return true;

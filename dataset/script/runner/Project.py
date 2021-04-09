@@ -208,7 +208,7 @@ class Project:
             os.path.realpath(__file__)), "maven-proxy.xml")
         if os.path.exists(maven_proxy_path):
             maven_proxy = '-gs %s' % (maven_proxy_path)
-        cmd = 'cd %s;%s%s mvn %s compile -e --fail-never -ntp -Dmaven.test.failure.ignore=true -B -Dmaven.javadoc.skip=true -Drat.skip=true -Danimal.sniffer.skip=true -Dmaven.javadoc.skip=true -Dlicense.skip=true -Dsource.skip=true' % (
+        cmd = 'cd %s;%s%s mvn %s compile -e --fail-never -ntp -Dmaven.test.failure.ignore=true -B -Denforcer.skip=true -Dmaven.javadoc.skip=true -Drat.skip=true -Danimal.sniffer.skip=true -Dmaven.javadoc.skip=true -Dlicense.skip=true -Dsource.skip=true' % (
             self.path, clean_cmd, timeout_cmd, maven_proxy)
         if stdout is not None:
             cmd += ' > %s 2>&1' % (stdout)
@@ -230,7 +230,7 @@ class Project:
             os.path.realpath(__file__)), "maven-proxy.xml")
         if os.path.exists(maven_proxy_path):
             maven_proxy = '-gs %s' % (maven_proxy_path)
-        cmd = 'cd %s;%s%s mvn %s test -DtrimStackTrace=false -e --fail-never -ntp -Dmaven.test.failure.ignore=true -B -Dmaven.javadoc.skip=true -Drat.skip=true -Danimal.sniffer.skip=true -Dmaven.javadoc.skip=true -Dlicense.skip=true -Dsource.skip=true' % (
+        cmd = 'cd %s;%s%s mvn %s test -DtrimStackTrace=false -e --fail-never -ntp -Dmaven.test.failure.ignore=true -B -Dmaven.javadoc.skip=true -Denforcer.skip=true -Drat.skip=true -Danimal.sniffer.skip=true -Dmaven.javadoc.skip=true -Dlicense.skip=true -Dsource.skip=true' % (
             self.path, clean_cmd, timeout_cmd, maven_proxy)
         if stdout is not None:
             cmd += ' > %s 2>&1' % (stdout)
@@ -318,7 +318,7 @@ class Project:
             os.path.realpath(__file__)), "maven-proxy.xml")
         if os.path.exists(maven_proxy_path):
             maven_proxy = '-gs %s' % (maven_proxy_path)
-        cmd = 'cd %s; %s mvn %s install -DskipTests -ntp -Dmaven.test.error.ignore=true -Dmaven.test.failure.ignore=true -B -Dmaven.javadoc.skip=true -Drat.skip=true -Danimal.sniffer.skip=true -Dmaven.javadoc.skip=true -Dlicense.skip=true -Dsource.skip=true' % (
+        cmd = 'cd %s; %s mvn %s install -DskipTests -ntp -Dmaven.test.error.ignore=true -Dmaven.test.failure.ignore=true -B -Dmaven.javadoc.skip=true -Denforcer.skip=true -Drat.skip=true -Danimal.sniffer.skip=true -Dmaven.javadoc.skip=true -Dlicense.skip=true -Dsource.skip=true' % (
             self.path,
             timeout_cmd,
             maven_proxy)
@@ -339,7 +339,7 @@ class Project:
             os.path.realpath(__file__)), "maven-proxy.xml")
         if os.path.exists(maven_proxy_path):
             maven_proxy = '-gs %s' % (maven_proxy_path)
-        cmd = 'cd %s; mvn clean -q -B;%s mvn %s package -e --fail-never -ntp -Dmaven.test.error.ignore=true -Dmaven.test.failure.ignore=true -B -Dmaven.javadoc.skip=true -Drat.skip=true -Danimal.sniffer.skip=true -Dmaven.javadoc.skip=true -Dlicense.skip=true -Dsource.skip=true' % (
+        cmd = 'cd %s; mvn clean -q -B;%s mvn %s package -e --fail-never -ntp -Dmaven.test.error.ignore=true -Dmaven.test.failure.ignore=true -Denforcer.skip=true -B -Dmaven.javadoc.skip=true -Drat.skip=true -Danimal.sniffer.skip=true -Dmaven.javadoc.skip=true -Dlicense.skip=true -Dsource.skip=true' % (
             self.path,
             timeout_cmd,
             maven_proxy)
