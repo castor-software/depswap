@@ -3,6 +3,7 @@ package se.kth.castor.yasjf4j;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.ClassUtils;
+import org.yuanheng.cookjson.CookJsonGenerator;
 import org.yuanheng.cookjson.TextJsonGenerator;
 import org.yuanheng.cookjson.TextJsonParser;
 import org.yuanheng.cookjson.value.CookJsonArray;
@@ -94,6 +95,7 @@ public class JObjectImpl extends CookJsonObject implements JObject {
 
 	@Override
 	public Object YASJF4J_get(String s) throws JException {
+		if(!containsKey(s)) throw new JException();
 		try {
 			return toObject(get(s));
 		} catch (Exception e) {

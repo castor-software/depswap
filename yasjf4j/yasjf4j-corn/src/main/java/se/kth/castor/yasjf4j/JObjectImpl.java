@@ -64,6 +64,7 @@ public class JObjectImpl extends JsTypeComplex implements JObject {
 
 	@Override
 	public Object YASJF4J_get(String s) throws JException {
+		if(!has(s)) throw new JException();
 		try {
 			return unshield(get(s));
 		} catch (Exception e) {

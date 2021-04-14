@@ -65,6 +65,7 @@ public class JObjectImpl extends HashMap implements JObject {
 
 	@Override
 	public Object YASJF4J_get(String s) throws JException {
+		if(!containsKey(s)) throw new JException();
 		return unshield(get(s));
 	}
 

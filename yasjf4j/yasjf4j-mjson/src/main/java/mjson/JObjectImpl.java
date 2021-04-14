@@ -59,6 +59,7 @@ public class JObjectImpl extends Json.ObjectJson implements JObject {
 
 	@Override
 	public Object YASJF4J_get(String s) throws JException {
+		if(!has(s)) throw new JException();
 		Object o = at(s);
 		if(o instanceof NumberJson) {
 			return ((NumberJson) o).val;

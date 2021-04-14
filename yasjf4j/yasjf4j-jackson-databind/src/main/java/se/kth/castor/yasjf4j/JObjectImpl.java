@@ -18,6 +18,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeType;
 import com.fasterxml.jackson.databind.node.LongNode;
 import com.fasterxml.jackson.databind.node.NullNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.fasterxml.jackson.databind.node.POJONode;
 import com.fasterxml.jackson.databind.node.ShortNode;
 import com.fasterxml.jackson.databind.node.TextNode;
 import org.apache.commons.lang3.ArrayUtils;
@@ -102,6 +103,7 @@ public class JObjectImpl extends ObjectNode implements JObject {
 
 	@Override
 	public Object YASJF4J_get(String s) throws JException {
+		if(!_children.containsKey(s)) throw new JException();
 		try {
 			return toObject(get(s));
 		} catch (Exception e) {
@@ -171,7 +173,8 @@ public class JObjectImpl extends ObjectNode implements JObject {
 		} else if (o instanceof  Character) {
 			return new TextNode(((Character) o).toString());
 		} else {
-			return new TextNode(o.toString());
+			return new POJONode(o);
+			//return new TextNode(o.toString());
 		}
 	}
 
@@ -192,6 +195,8 @@ public class JObjectImpl extends ObjectNode implements JObject {
 			return ((ShortNode) o).shortValue();
 		} else if (o instanceof BigIntegerNode) {
 			return ((BigIntegerNode) o).bigIntegerValue();
+		} else if (o instanceof POJONode) {
+			return ((POJONode) o).getPojo();
 		} else if (o instanceof BooleanNode) {
 			return ((BooleanNode) o).booleanValue();
 		} else if (o == NullNode.getInstance()) {

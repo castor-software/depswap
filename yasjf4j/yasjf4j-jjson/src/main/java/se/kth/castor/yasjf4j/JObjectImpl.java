@@ -91,6 +91,7 @@ public class JObjectImpl extends JSONObject implements JObject {
 
 	@Override
 	public Object YASJF4J_get(String s) throws JException {
+		if(!getValue().containsKey(s)) throw new JException();
 		try {
 			JSONValue v = getValue().get(s);
 			return toObject(v);

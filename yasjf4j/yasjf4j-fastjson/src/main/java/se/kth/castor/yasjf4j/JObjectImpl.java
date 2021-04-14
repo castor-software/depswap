@@ -57,6 +57,7 @@ public class JObjectImpl extends JSONObject implements JObject {
 
 	@Override
 	public Object YASJF4J_get(String s) throws JException {
+		if(!containsKey(s)) throw new JException();
 		try {
 			return unshield(get(s));
 		} catch (Exception e) {
@@ -86,10 +87,12 @@ public class JObjectImpl extends JSONObject implements JObject {
 	public static Object shield(Object o) {
 		if (o instanceof JNull) return null;
 		else return o;
+		//return o;
 	}
 
 	public static Object unshield(Object o) {
 		if (o == null) return JNull.getInstance();
 		else return o;
+		//return o;
 	}
 }

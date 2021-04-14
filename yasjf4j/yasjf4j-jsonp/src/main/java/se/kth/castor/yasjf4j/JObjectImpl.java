@@ -97,6 +97,7 @@ public class JObjectImpl extends LinkedHashMap<String, JsonValue> implements Jso
 
 	@Override
 	public Object YASJF4J_get(String s) throws JException {
+		if(!containsKey(s)) throw new JException();
 		try {
 			return toObject(get(s));
 		} catch (Exception e) {

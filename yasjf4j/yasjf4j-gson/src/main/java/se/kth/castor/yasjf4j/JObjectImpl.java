@@ -103,6 +103,7 @@ public class JObjectImpl extends JsonElement implements JObject {
 
 	@Override
 	public Object YASJF4J_get(String s) throws JException {
+		if(!contained.containsKey(s)) throw new JException();
 		try {
 			return toObject(contained.get(s));
 		} catch (Exception e) {

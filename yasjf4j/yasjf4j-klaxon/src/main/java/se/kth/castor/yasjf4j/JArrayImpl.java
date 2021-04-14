@@ -84,13 +84,14 @@ public class JArrayImpl extends ArrayList implements JArray {
 
 
 	public static Object shield(Object o) {
-		if (o instanceof JNull) return o;
-		else if (o == null) return JNull.getInstance();
+		if (o instanceof JNull) return MyNull.getInstance();
+		else if (o == null) return MyNull.getInstance();
 		else return o;
 	}
 
 	public static Object unshield(Object o) {
 		if (o == null) return JNull.getInstance();
+		else if (o instanceof MyNull) return JNull.getInstance();
 		else return o;
 	}
 }

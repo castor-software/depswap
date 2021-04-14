@@ -85,6 +85,7 @@ public class JObjectImpl extends LinkedHashMap<String, Object> implements JObjec
 
 	@Override
 	public Object YASJF4J_get(String s) throws JException {
+		if(!containsKey(s)) throw new JException();
 		try {
 			return shield(get(s));
 		} catch (Exception e) {
