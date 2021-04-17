@@ -5,6 +5,7 @@ import se.kth.castor.yasjf4j.JArray;
 import se.kth.castor.yasjf4j.JError;
 import se.kth.castor.yasjf4j.JException;
 import se.kth.castor.yasjf4j.JFactory;
+import se.kth.castor.yasjf4j.JNull;
 import se.kth.castor.yasjf4j.JObject;
 import se.kth.castor.yasjf4j.util.Utils;
 import org.json.simple.parser.ParseException;
@@ -33,7 +34,7 @@ public class JSONObject implements Map<Object,Object>, JSONAware, JSONStreamAwar
 		in.forEach((k,v) -> {
 			try {
 				if(v == null) {
-					json.YASJF4J_put(k.toString(),v);
+					json.YASJF4J_put(k.toString(), JNull.getInstance());
 				} else if(v instanceof Map) {
 					json.YASJF4J_put(k.toString(),recO((Map) v));
 				} else if (v instanceof  List) {
@@ -43,9 +44,9 @@ public class JSONObject implements Map<Object,Object>, JSONAware, JSONStreamAwar
 				} else if(v instanceof Character) {
 					json.YASJF4J_put(k.toString(),v.toString());
 				} else {
-					json.YASJF4J_put(k.toString(),v);
+					json.YASJF4J_put(k.toString(), JSONValue.unshield(v));
 				}
-				json.YASJF4J_put(k.toString(),JSONValue.unshield(v));
+				//json.YASJF4J_put(k.toString(), JSONValue.unshield(v));
 			} catch (JException e) {
 				e.printStackTrace();
 			}
@@ -212,7 +213,11 @@ public class JSONObject implements Map<Object,Object>, JSONAware, JSONStreamAwar
 			if(!other.containsKey(e0.getKey())) {
 				return false;
 			} else {
-				if(!other.get(e0.getKey()).equals(e0.getValue())) {
+				Object v0 = e0.getValue();
+				Object v1 = other.get(e0.getKey());
+				if(v0 == null && v1 != null) return false;
+				else if(v0 == null) continue;
+				else if(!v0.equals(v1)) {
 					return false;
 				}
 			}

@@ -108,7 +108,8 @@ public class JArrayImpl extends ArrayList implements JArray {
 
 	JsonArrayNodeBuilder getBuilder() {
 		JsonArrayNodeBuilder builder = anArrayBuilder();
-		for(Object val: this) {
+		for(Object valT: this) {
+			Object val = shield(valT);
 			JsonNodeBuilder b;
 			if(val == null) {
 				b = aNullBuilder();

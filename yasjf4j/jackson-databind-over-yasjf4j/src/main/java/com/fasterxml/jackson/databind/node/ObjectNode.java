@@ -397,7 +397,7 @@ public class ObjectNode
         }
         ObjectNode result = objectNode();
         try {
-            json.YASJF4J_put(propertyName, toJsonNode(result));
+            json.YASJF4J_put(propertyName, toObject(result));
         } catch (JException e) {
             e.printStackTrace();
         }
@@ -436,7 +436,7 @@ public class ObjectNode
         }
         ArrayNode result = new ArrayNode(_nodeFactory);
         try {
-            json.YASJF4J_put(propertyName, toJsonNode(result));
+            json.YASJF4J_put(propertyName, toObject(result));
         } catch (JException e) {
             e.printStackTrace();
         }
@@ -1212,7 +1212,7 @@ public class ObjectNode
         /*_children.put(fieldName, nullNode());
         return this;*/
         try {
-            json.YASJF4J_put(fieldName, null);
+            json.YASJF4J_put(fieldName, toObject(nullNode()));
         } catch (JException e) {
             e.printStackTrace();
         }

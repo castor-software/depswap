@@ -24,7 +24,12 @@ import java.util.Map;
 import java.util.Set;
 
 public class JObjectImpl extends JsonElement implements JObject {
-	public static Gson gson = new Gson();
+	public static Gson gson;
+	static {
+		GsonBuilder b = new GsonBuilder();
+		b.serializeNulls();
+		gson= b.create();
+	}
 	public HashMap<String, JsonElement> contained = new HashMap<>();
 
 	public JObjectImpl() {

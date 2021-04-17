@@ -6,6 +6,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.parser.DefaultJSONParser;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 
 import java.util.Set;
 
@@ -81,7 +82,7 @@ public class JObjectImpl extends JSONObject implements JObject {
 
 	@Override
 	public String YASJF4J_toString() {
-		return toString();
+		return JSONObject.toJSONString(this, SerializerFeature.WriteMapNullValue);
 	}
 
 	public static Object shield(Object o) {

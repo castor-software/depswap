@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.parser.DefaultJSONParser;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 
 import static se.kth.castor.yasjf4j.JObjectImpl.shield;
 import static se.kth.castor.yasjf4j.JObjectImpl.unshield;
@@ -89,7 +90,7 @@ public class JArrayImpl extends JSONArray implements JArray {
 
 	@Override
 	public String YASJF4J_toString() {
-		return toString();
+		return JSONArray.toJSONString(this, SerializerFeature.WriteMapNullValue);
 	}
 
 	@Override protected void finalize() {

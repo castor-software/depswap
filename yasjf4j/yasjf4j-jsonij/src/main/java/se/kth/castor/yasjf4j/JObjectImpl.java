@@ -68,7 +68,7 @@ public class JObjectImpl extends HashMap<String, Object> implements JObject {
 	@Override
 	public void YASJF4J_put(String s, Object o) throws JException {
 		try {
-			put(s,o);
+			put(s, unshield(o));
 		} catch (Exception e) {
 			throw new JException();
 		}

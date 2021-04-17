@@ -9,6 +9,7 @@ import argo.format.JsonNumberUtils;
 import argo.jdom.JdomParser;
 import argo.jdom.JsonNode;
 import argo.jdom.JsonNodeBuilder;
+import argo.jdom.JsonNodeBuilders;
 import argo.jdom.JsonObjectNodeBuilder;
 import argo.jdom.JsonStringNode;
 
@@ -114,6 +115,8 @@ public class JObjectImpl extends LinkedHashMap<String, Object> implements JObjec
 			Object val = shield(get(key));
 			if(val == null) {
 				b = aNullBuilder();
+			} else if(val instanceof JNull) {
+				b = aNullBuilder();
 			} else if(val instanceof JObjectImpl) {
 				b = ((JObjectImpl) val).getBuilder();
 			} else if(val instanceof JArrayImpl) {
@@ -138,10 +141,17 @@ public class JObjectImpl extends LinkedHashMap<String, Object> implements JObjec
 	}
 
 	public static Object unshield(Object o) {
-		if(o instanceof JsonNode) {
+
+		if(o instanceof JNull) {
+			return null;
+			//return JsonNodeBuilders.aNullBuilder().build();
+		} else if(o instanceof JsonNode) {
 			JsonNode n = (JsonNode) o;
-			if(n.isNullNode()) {
-				return JNull.getInstance();
+//			if(n.isNullNode()) {
+//				return JNull.getInstance();
+			if(n == null) {
+				return null;
+				//return JsonNodeBuilders.aNullBuilder().build();
 			} else if (n.isNumberValue()) {
 				String val = n.getNumberValue();
 				if(val.contains("e-") || val.contains("E-") || val.contains(".")) {

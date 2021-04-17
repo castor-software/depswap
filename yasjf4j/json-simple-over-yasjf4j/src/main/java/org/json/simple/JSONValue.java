@@ -7,6 +7,7 @@ import org.json.simple.parser.ParseException;
 import se.kth.castor.yasjf4j.JArray;
 import se.kth.castor.yasjf4j.JException;
 import se.kth.castor.yasjf4j.JFactory;
+import se.kth.castor.yasjf4j.JNull;
 import se.kth.castor.yasjf4j.JObject;
 
 import java.io.IOException;
@@ -203,12 +204,14 @@ public class JSONValue {
 	public static Object shield(Object o) {
 		if (o instanceof JObject) return new JSONObject((JObject) o);
 		else if (o instanceof JArray) return new JSONArray((JArray) o);
+		else if (o instanceof JNull) return null;
 		else return o;
 	}
 
 	public static Object unshield(Object o) {
 		if (o instanceof JSONObject) return ((JSONObject) o).json;
 		else if (o instanceof JSONArray) return ((JSONArray) o).json;
+		else if (o == null) return JNull.getInstance();
 		else return o;
 	}
 
@@ -220,7 +223,7 @@ public class JSONValue {
 			try {
 				Object v = e.getValue();
 				if(v == null) {
-					o.YASJF4J_put(e.getKey().toString(),v);
+					o.YASJF4J_put(e.getKey().toString(),JNull.getInstance());
 				} else if(v instanceof Map) {
 					o.YASJF4J_put(e.getKey().toString(),recO((Map) v));
 				} else if(v instanceof List) {
@@ -242,7 +245,7 @@ public class JSONValue {
 		for(Object e: m) {
 			try {
 				if(e == null) {
-					a.YASJF4J_add(e);
+					a.YASJF4J_add(JNull.getInstance());
 				} else if(e instanceof Map) {
 					a.YASJF4J_add(recO((Map) e));
 				} else if(e instanceof List) {

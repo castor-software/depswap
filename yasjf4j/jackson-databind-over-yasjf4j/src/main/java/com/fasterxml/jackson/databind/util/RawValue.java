@@ -3,10 +3,13 @@ package com.fasterxml.jackson.databind.util;
 import java.io.IOException;
 
 import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.SerializableString;
 import com.fasterxml.jackson.databind.JsonSerializable;
 import com.fasterxml.jackson.databind.SerializerProvider;
+import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.databind.jsontype.TypeSerializer;
+import se.kth.castor.yasjf4j.JFactory;
 
 /**
  * Helper class used to encapsulate "raw values", pre-encoded textual content

@@ -4,6 +4,7 @@ import org.json.simple.parser.ParseException;
 import se.kth.castor.yasjf4j.JArray;
 import se.kth.castor.yasjf4j.JException;
 import se.kth.castor.yasjf4j.JFactory;
+import se.kth.castor.yasjf4j.JNull;
 
 import java.io.IOException;
 import java.io.StringWriter;
@@ -27,7 +28,7 @@ public class JSONArray implements List<Object>, JSONAware, JSONStreamAware {
 		for(Object o: in) {
 			try {
 				if(o == null) {
-					json.YASJF4J_add(o);
+					json.YASJF4J_add(JNull.getInstance());
 				} else if(o instanceof Map) {
 					json.YASJF4J_add(recO((Map) o));
 				} else if (o instanceof  List) {
@@ -50,7 +51,7 @@ public class JSONArray implements List<Object>, JSONAware, JSONStreamAware {
 		for(Object o: in) {
 			try {
 				if(o == null) {
-					json.YASJF4J_add(o);
+					json.YASJF4J_add(JNull.getInstance());
 				} else if(o instanceof Map) {
 					json.YASJF4J_add(recO((Map) o));
 				} else if (o instanceof  List) {
@@ -172,7 +173,8 @@ public class JSONArray implements List<Object>, JSONAware, JSONStreamAware {
 	@Override
 	public boolean add(Object o) {
 		try {
-			json.YASJF4J_add(o);
+			if(o == null) json.YASJF4J_add(JNull.getInstance());
+			else json.YASJF4J_add(o);
 		} catch (JException e) {
 			e.printStackTrace();
 		}
@@ -198,7 +200,8 @@ public class JSONArray implements List<Object>, JSONAware, JSONStreamAware {
 	public boolean addAll(Collection c) {
 		for(Object o: c) {
 			try {
-				json.YASJF4J_add(o);
+				if(o == null) json.YASJF4J_add(JNull.getInstance());
+				else json.YASJF4J_add(o);
 			} catch (JException e) {
 				e.printStackTrace();
 			}
@@ -226,7 +229,8 @@ public class JSONArray implements List<Object>, JSONAware, JSONStreamAware {
 		}
 
 		try {
-			json.YASJF4J_set(index, element);
+			if(element == null) json.YASJF4J_set(index, JNull.getInstance());
+			else json.YASJF4J_set(index, element);
 		} catch (JException e) {
 			e.printStackTrace();
 		}
@@ -256,6 +260,7 @@ public class JSONArray implements List<Object>, JSONAware, JSONStreamAware {
 
 	@Override
 	public int indexOf(Object o) {
+		if(o == null) o = JNull.getInstance();
 		for(int i = 0; i < json.YASJF4J_size(); i++) {
 			try {
 				if(json.YASJF4J_get(i).equals(o)) {
@@ -270,6 +275,7 @@ public class JSONArray implements List<Object>, JSONAware, JSONStreamAware {
 
 	@Override
 	public int lastIndexOf(Object o) {
+		if(o == null) o = JNull.getInstance();
 		int index = -1;
 		for(int i = 0; i < json.YASJF4J_size(); i++) {
 			try {
@@ -343,7 +349,9 @@ public class JSONArray implements List<Object>, JSONAware, JSONStreamAware {
 			@Override
 			public void set(Object o) {
 				try {
-					json.YASJF4J_set(index, o);
+
+					if(o == null) json.YASJF4J_set(index, JNull.getInstance());
+					else json.YASJF4J_set(index, o);
 				} catch (JException e) {
 					e.printStackTrace();
 				}
@@ -352,7 +360,8 @@ public class JSONArray implements List<Object>, JSONAware, JSONStreamAware {
 			@Override
 			public void add(Object o) {
 				try {
-					json.YASJF4J_add(o);
+					if(o == null) json.YASJF4J_add(JNull.getInstance());
+					else json.YASJF4J_add(o);
 				} catch (JException e) {
 					e.printStackTrace();
 				}
