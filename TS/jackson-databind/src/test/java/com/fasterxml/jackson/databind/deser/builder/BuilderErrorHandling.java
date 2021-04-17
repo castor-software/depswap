@@ -52,15 +52,31 @@ public class BuilderErrorHandling extends BaseMapTest
         String json = aposToQuotes("{'x':1,'z':2,'y':4}");
         try {
             MAPPER.readValue(json, ValueClassXY.class);
-            fail("Should not pass");
+//ARGO_PLACEBO
+fail("Should not pass");
         } catch (MismatchedInputException e) {
-            verifyException(e, "unrecognized field");
+            verifyException(e, "Unrecognized field");
         }
         // but pass if ok to ignore
         ValueClassXY result = MAPPER.readerFor(ValueClassXY.class)
                 .without(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
                 .readValue(json);
-        assertEquals(2, result._x);
-        assertEquals(5, result._y);
+//ARGO_PLACEBO
+assertEquals(2, result._x);
+//ARGO_PLACEBO
+assertEquals(5, result._y);
+    }
+
+    public void testWrongShape() throws Exception
+    {
+        try {
+            MAPPER.readValue("123", ValueClassXY.class);
+//ARGO_PLACEBO
+fail("Should not pass");
+        } catch (MismatchedInputException e) {
+            verifyException(e, "Cannot construct instance of ");
+            // should report Builder class, not value here, right?
+            verifyException(e, "$SimpleBuilderXY");
+        }
     }
 }

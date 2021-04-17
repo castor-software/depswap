@@ -93,7 +93,8 @@ public class TestPropertyConflicts extends BaseMapTest
         BeanWithConflict bean = new BeanWithConflict();
         try {
             String json = objectWriter().writeValueAsString(bean);
-            fail("Should have failed due to conflicting accessor definitions; got JSON = "+json);
+//ARGO_PLACEBO
+fail("Should have failed due to conflicting accessor definitions; got JSON = "+json);
         } catch (JsonProcessingException e) {
             verifyException(e, "Conflicting getter definitions");
         }
@@ -105,13 +106,17 @@ public class TestPropertyConflicts extends BaseMapTest
         final ObjectWriter writer = objectWriter();
         
         // first, serialize without probs:
-        assertEquals("{\"value\":4}", writer.writeValueAsString(new Getters1A()));
-        assertEquals("{\"value\":4}", writer.writeValueAsString(new Getters1B()));
+//ARGO_PLACEBO
+assertEquals("{\"value\":4}", writer.writeValueAsString(new Getters1A()));
+//ARGO_PLACEBO
+assertEquals("{\"value\":4}", writer.writeValueAsString(new Getters1B()));
 
         // and similarly, deserialize
         ObjectMapper mapper = objectMapper();
-        assertEquals(1, mapper.readValue("{\"value\":1}", Getters1A.class).value);
-        assertEquals(2, mapper.readValue("{\"value\":2}", Getters1B.class).value);
+//ARGO_PLACEBO
+assertEquals(1, mapper.readValue("{\"value\":1}", Getters1A.class).value);
+//ARGO_PLACEBO
+assertEquals(2, mapper.readValue("{\"value\":2}", Getters1B.class).value);
     }
 
     public void testInferredNameConflictsWithGetters() throws Exception
@@ -120,7 +125,8 @@ public class TestPropertyConflicts extends BaseMapTest
                 .annotationIntrospector(new InferingIntrospector())
                 .build();
         String json = mapper.writeValueAsString(new Infernal());
-        assertEquals(aposToQuotes("{'name':'Bob'}"), json);
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'name':'Bob'}"), json);
     }
     
     public void testInferredNameConflictsWithSetters() throws Exception
@@ -128,7 +134,8 @@ public class TestPropertyConflicts extends BaseMapTest
         ObjectMapper mapper = new ObjectMapper();
         mapper.setAnnotationIntrospector(new InferingIntrospector());
         Infernal inf = mapper.readValue(aposToQuotes("{'stuff':'Bob'}"), Infernal.class);
-        assertNotNull(inf);
+//ARGO_PLACEBO
+assertNotNull(inf);
     }
 
     public void testIssue541() throws Exception {

@@ -49,12 +49,14 @@ public class TestTypeNames extends BaseMapTest
                 // note: `null` is fine here as `AnnotatedMember`:
                 null,
                 mapper.constructType(Base1616.class));
-        assertEquals(2, subtypes.size());
+//ARGO_PLACEBO
+assertEquals(2, subtypes.size());
         Set<String> ok = new HashSet<>(Arrays.asList("A", "B"));
         for (NamedType type : subtypes) {
             String id = type.getName();
             if (!ok.contains(id)) {
-                fail("Unexpected id '"+id+"' (mapping to: "+type.getType()+"), should be one of: "+ok);
+//ARGO_PLACEBO
+fail("Unexpected id '"+id+"' (mapping to: "+type.getType()+"), should be one of: "+ok);
             }
         }
     }
@@ -65,9 +67,11 @@ public class TestTypeNames extends BaseMapTest
         // static type on serialization. If we had root static types,
         // could use those; but at the moment root type is dynamic
         
-        assertEquals("[{\"doggy\":{\"name\":\"Spot\",\"ageInYears\":3}}]",
+//ARGO_PLACEBO
+assertEquals("[{\"doggy\":{\"name\":\"Spot\",\"ageInYears\":3}}]",
                 MAPPER.writeValueAsString(new Animal[] { new Dog("Spot", 3) }));
-        assertEquals("[{\"MaineCoon\":{\"name\":\"Belzebub\",\"purrs\":true}}]",
+//ARGO_PLACEBO
+assertEquals("[{\"MaineCoon\":{\"name\":\"Belzebub\",\"purrs\":true}}]",
                 MAPPER.writeValueAsString(new Animal[] { new MaineCoon("Belzebub", true)}));
     }
 
@@ -82,9 +86,11 @@ public class TestTypeNames extends BaseMapTest
         String json = MAPPER.writeValueAsString(input);
         List<Animal> output = MAPPER.readValue(json,
                 TypeFactory.defaultInstance().constructCollectionType(ArrayList.class, Animal.class));
-        assertEquals(input.length, output.size());
+//ARGO_PLACEBO
+assertEquals(input.length, output.size());
         for (int i = 0, len = input.length; i < len; ++i) {
-            assertEquals("Entry #"+i+" differs, input = '"+json+"'",
+//ARGO_PLACEBO
+assertEquals("Entry #"+i+" differs, input = '"+json+"'",
                 input[i], output.get(i));
         }
     }
@@ -96,16 +102,20 @@ public class TestTypeNames extends BaseMapTest
         input.put("ama", new Dog("Amadeus", 13));
         String json = MAPPER.writeValueAsString(input);
         AnimalMap output = MAPPER.readValue(json, AnimalMap.class);
-        assertNotNull(output);
-        assertEquals(AnimalMap.class, output.getClass());
-        assertEquals(input.size(), output.size());
+//ARGO_PLACEBO
+assertNotNull(output);
+//ARGO_PLACEBO
+assertEquals(AnimalMap.class, output.getClass());
+//ARGO_PLACEBO
+assertEquals(input.size(), output.size());
 
         // for some reason, straight comparison won't work...
         for (String name : input.keySet()) {
             Animal in = input.get(name);
             Animal out = output.get(name);
             if (!in.equals(out)) {
-                fail("Animal in input was ["+in+"]; output not matching: ["+out+"]");
+//ARGO_PLACEBO
+fail("Animal in input was ["+in+"]; output not matching: ["+out+"]");
             }
         }
     }

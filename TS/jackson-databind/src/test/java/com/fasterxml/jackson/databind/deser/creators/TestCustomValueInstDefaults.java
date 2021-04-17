@@ -339,7 +339,8 @@ public class TestCustomValueInstDefaults extends BaseTest
         @Override
         public Object createFromObjectWith(DeserializationContext ctxt, SettableBeanProperty[] props, PropertyValueBuffer buffer) throws IOException {
             for (SettableBeanProperty prop : props) {
-                assertTrue("prop " + prop.getName() + " was expected to have buffer.hasParameter(prop) be true but was false", buffer.hasParameter(prop));
+//ARGO_PLACEBO
+assertTrue("prop " + prop.getName() + " was expected to have buffer.hasParameter(prop) be true but was false", buffer.hasParameter(prop));
             }
             return super.createFromObjectWith(ctxt, props, buffer);
         }
@@ -384,10 +385,14 @@ public class TestCustomValueInstDefaults extends BaseTest
                 "{\"a\":8,\"b\":9,\"c\":\"y\",\"d\":\"z\"}",
                 Bucket.class);
 
-        assertEquals(8, allPresent.a);
-        assertEquals(9, allPresent.b);
-        assertEquals("y", allPresent.c);
-        assertEquals("z", allPresent.d);
+//ARGO_PLACEBO
+assertEquals(8, allPresent.a);
+//ARGO_PLACEBO
+assertEquals(9, allPresent.b);
+//ARGO_PLACEBO
+assertEquals("y", allPresent.c);
+//ARGO_PLACEBO
+assertEquals("z", allPresent.d);
     }
 
     // When no values are in the source, all defaults should be used.
@@ -400,10 +405,14 @@ public class TestCustomValueInstDefaults extends BaseTest
                 "{}",
                 Bucket.class);
 
-        assertEquals(Bucket.DEFAULT_A, allAbsent.a);
-        assertEquals(Bucket.DEFAULT_B, allAbsent.b);
-        assertEquals(Bucket.DEFAULT_C, allAbsent.c);
-        assertEquals(Bucket.DEFAULT_D, allAbsent.d);
+//ARGO_PLACEBO
+assertEquals(Bucket.DEFAULT_A, allAbsent.a);
+//ARGO_PLACEBO
+assertEquals(Bucket.DEFAULT_B, allAbsent.b);
+//ARGO_PLACEBO
+assertEquals(Bucket.DEFAULT_C, allAbsent.c);
+//ARGO_PLACEBO
+assertEquals(Bucket.DEFAULT_D, allAbsent.d);
     }
 
     // When some values are in the source and some are not, defaults should only
@@ -417,37 +426,53 @@ public class TestCustomValueInstDefaults extends BaseTest
                 "{\"b\":9,\"c\":\"y\",\"d\":\"z\"}",
                 Bucket.class);
 
-        assertEquals(Bucket.DEFAULT_A, aAbsent.a);
-        assertEquals(9, aAbsent.b);
-        assertEquals("y", aAbsent.c);
-        assertEquals("z", aAbsent.d);
+//ARGO_PLACEBO
+assertEquals(Bucket.DEFAULT_A, aAbsent.a);
+//ARGO_PLACEBO
+assertEquals(9, aAbsent.b);
+//ARGO_PLACEBO
+assertEquals("y", aAbsent.c);
+//ARGO_PLACEBO
+assertEquals("z", aAbsent.d);
 
         Bucket bAbsent = mapper.readValue(
                 "{\"a\":8,\"c\":\"y\",\"d\":\"z\"}",
                 Bucket.class);
 
-        assertEquals(8, bAbsent.a);
-        assertEquals(Bucket.DEFAULT_B, bAbsent.b);
-        assertEquals("y", bAbsent.c);
-        assertEquals("z", bAbsent.d);
+//ARGO_PLACEBO
+assertEquals(8, bAbsent.a);
+//ARGO_PLACEBO
+assertEquals(Bucket.DEFAULT_B, bAbsent.b);
+//ARGO_PLACEBO
+assertEquals("y", bAbsent.c);
+//ARGO_PLACEBO
+assertEquals("z", bAbsent.d);
 
         Bucket cAbsent = mapper.readValue(
                 "{\"a\":8,\"b\":9,\"d\":\"z\"}",
                 Bucket.class);
 
-        assertEquals(8, cAbsent.a);
-        assertEquals(9, cAbsent.b);
-        assertEquals(Bucket.DEFAULT_C, cAbsent.c);
-        assertEquals("z", cAbsent.d);
+//ARGO_PLACEBO
+assertEquals(8, cAbsent.a);
+//ARGO_PLACEBO
+assertEquals(9, cAbsent.b);
+//ARGO_PLACEBO
+assertEquals(Bucket.DEFAULT_C, cAbsent.c);
+//ARGO_PLACEBO
+assertEquals("z", cAbsent.d);
 
         Bucket dAbsent = mapper.readValue(
                 "{\"a\":8,\"b\":9,\"c\":\"y\"}",
                 Bucket.class);
 
-        assertEquals(8, dAbsent.a);
-        assertEquals(9, dAbsent.b);
-        assertEquals("y", dAbsent.c);
-        assertEquals(Bucket.DEFAULT_D, dAbsent.d);
+//ARGO_PLACEBO
+assertEquals(8, dAbsent.a);
+//ARGO_PLACEBO
+assertEquals(9, dAbsent.b);
+//ARGO_PLACEBO
+assertEquals("y", dAbsent.c);
+//ARGO_PLACEBO
+assertEquals(Bucket.DEFAULT_D, dAbsent.d);
     }
 
     // Ensure that 0 is not mistaken for a missing int value.
@@ -460,10 +485,14 @@ public class TestCustomValueInstDefaults extends BaseTest
                 "{\"a\":0}",
                 Bucket.class);
 
-        assertEquals(0, aZeroRestAbsent.a);
-        assertEquals(Bucket.DEFAULT_B, aZeroRestAbsent.b);
-        assertEquals(Bucket.DEFAULT_C, aZeroRestAbsent.c);
-        assertEquals(Bucket.DEFAULT_D, aZeroRestAbsent.d);
+//ARGO_PLACEBO
+assertEquals(0, aZeroRestAbsent.a);
+//ARGO_PLACEBO
+assertEquals(Bucket.DEFAULT_B, aZeroRestAbsent.b);
+//ARGO_PLACEBO
+assertEquals(Bucket.DEFAULT_C, aZeroRestAbsent.c);
+//ARGO_PLACEBO
+assertEquals(Bucket.DEFAULT_D, aZeroRestAbsent.d);
     }
 
     // Ensure that null is not mistaken for a missing String value.
@@ -476,10 +505,14 @@ public class TestCustomValueInstDefaults extends BaseTest
                 "{\"c\":null}",
                 Bucket.class);
 
-        assertEquals(Bucket.DEFAULT_A, cNullRestAbsent.a);
-        assertEquals(Bucket.DEFAULT_B, cNullRestAbsent.b);
-        assertEquals(null, cNullRestAbsent.c);
-        assertEquals(Bucket.DEFAULT_D, cNullRestAbsent.d);
+//ARGO_PLACEBO
+assertEquals(Bucket.DEFAULT_A, cNullRestAbsent.a);
+//ARGO_PLACEBO
+assertEquals(Bucket.DEFAULT_B, cNullRestAbsent.b);
+//ARGO_PLACEBO
+assertEquals(null, cNullRestAbsent.c);
+//ARGO_PLACEBO
+assertEquals(Bucket.DEFAULT_D, cNullRestAbsent.d);
     }
 
     // When we have more than 32 creator parameters, the buffer will use a
@@ -494,38 +527,70 @@ public class TestCustomValueInstDefaults extends BaseTest
                 "{\"i03\":0,\"i11\":1,\"s05\":null,\"s08\":\"x\"}",
                 BigBucket.class);
 
-        assertEquals(BigBucket.DEFAULT_I, big.i01);
-        assertEquals(BigBucket.DEFAULT_I, big.i02);
-        assertEquals(0, big.i03);
-        assertEquals(BigBucket.DEFAULT_I, big.i04);
-        assertEquals(BigBucket.DEFAULT_I, big.i05);
-        assertEquals(BigBucket.DEFAULT_I, big.i06);
-        assertEquals(BigBucket.DEFAULT_I, big.i07);
-        assertEquals(BigBucket.DEFAULT_I, big.i08);
-        assertEquals(BigBucket.DEFAULT_I, big.i09);
-        assertEquals(BigBucket.DEFAULT_I, big.i10);
-        assertEquals(1, big.i11);
-        assertEquals(BigBucket.DEFAULT_I, big.i12);
-        assertEquals(BigBucket.DEFAULT_I, big.i13);
-        assertEquals(BigBucket.DEFAULT_I, big.i14);
-        assertEquals(BigBucket.DEFAULT_I, big.i15);
-        assertEquals(BigBucket.DEFAULT_I, big.i16);
-        assertEquals(BigBucket.DEFAULT_S, big.s01);
-        assertEquals(BigBucket.DEFAULT_S, big.s02);
-        assertEquals(BigBucket.DEFAULT_S, big.s03);
-        assertEquals(BigBucket.DEFAULT_S, big.s04);
-        assertEquals(null, big.s05);
-        assertEquals(BigBucket.DEFAULT_S, big.s06);
-        assertEquals(BigBucket.DEFAULT_S, big.s07);
-        assertEquals("x", big.s08);
-        assertEquals(BigBucket.DEFAULT_S, big.s09);
-        assertEquals(BigBucket.DEFAULT_S, big.s10);
-        assertEquals(BigBucket.DEFAULT_S, big.s11);
-        assertEquals(BigBucket.DEFAULT_S, big.s12);
-        assertEquals(BigBucket.DEFAULT_S, big.s13);
-        assertEquals(BigBucket.DEFAULT_S, big.s14);
-        assertEquals(BigBucket.DEFAULT_S, big.s15);
-        assertEquals(BigBucket.DEFAULT_S, big.s16);
+//ARGO_PLACEBO
+assertEquals(BigBucket.DEFAULT_I, big.i01);
+//ARGO_PLACEBO
+assertEquals(BigBucket.DEFAULT_I, big.i02);
+//ARGO_PLACEBO
+assertEquals(0, big.i03);
+//ARGO_PLACEBO
+assertEquals(BigBucket.DEFAULT_I, big.i04);
+//ARGO_PLACEBO
+assertEquals(BigBucket.DEFAULT_I, big.i05);
+//ARGO_PLACEBO
+assertEquals(BigBucket.DEFAULT_I, big.i06);
+//ARGO_PLACEBO
+assertEquals(BigBucket.DEFAULT_I, big.i07);
+//ARGO_PLACEBO
+assertEquals(BigBucket.DEFAULT_I, big.i08);
+//ARGO_PLACEBO
+assertEquals(BigBucket.DEFAULT_I, big.i09);
+//ARGO_PLACEBO
+assertEquals(BigBucket.DEFAULT_I, big.i10);
+//ARGO_PLACEBO
+assertEquals(1, big.i11);
+//ARGO_PLACEBO
+assertEquals(BigBucket.DEFAULT_I, big.i12);
+//ARGO_PLACEBO
+assertEquals(BigBucket.DEFAULT_I, big.i13);
+//ARGO_PLACEBO
+assertEquals(BigBucket.DEFAULT_I, big.i14);
+//ARGO_PLACEBO
+assertEquals(BigBucket.DEFAULT_I, big.i15);
+//ARGO_PLACEBO
+assertEquals(BigBucket.DEFAULT_I, big.i16);
+//ARGO_PLACEBO
+assertEquals(BigBucket.DEFAULT_S, big.s01);
+//ARGO_PLACEBO
+assertEquals(BigBucket.DEFAULT_S, big.s02);
+//ARGO_PLACEBO
+assertEquals(BigBucket.DEFAULT_S, big.s03);
+//ARGO_PLACEBO
+assertEquals(BigBucket.DEFAULT_S, big.s04);
+//ARGO_PLACEBO
+assertEquals(null, big.s05);
+//ARGO_PLACEBO
+assertEquals(BigBucket.DEFAULT_S, big.s06);
+//ARGO_PLACEBO
+assertEquals(BigBucket.DEFAULT_S, big.s07);
+//ARGO_PLACEBO
+assertEquals("x", big.s08);
+//ARGO_PLACEBO
+assertEquals(BigBucket.DEFAULT_S, big.s09);
+//ARGO_PLACEBO
+assertEquals(BigBucket.DEFAULT_S, big.s10);
+//ARGO_PLACEBO
+assertEquals(BigBucket.DEFAULT_S, big.s11);
+//ARGO_PLACEBO
+assertEquals(BigBucket.DEFAULT_S, big.s12);
+//ARGO_PLACEBO
+assertEquals(BigBucket.DEFAULT_S, big.s13);
+//ARGO_PLACEBO
+assertEquals(BigBucket.DEFAULT_S, big.s14);
+//ARGO_PLACEBO
+assertEquals(BigBucket.DEFAULT_S, big.s15);
+//ARGO_PLACEBO
+assertEquals(BigBucket.DEFAULT_S, big.s16);
     }
 
     // [databind#1432]
@@ -546,10 +611,14 @@ public class TestCustomValueInstDefaults extends BaseTest
                 .registerModule(new ClassWith32Module());
         ClassWith32Props result = mapper.readValue(json, ClassWith32Props.class);
         // let's assume couple of first, last ones suffice
-        assertEquals("NotNull1", result.p1);
-        assertEquals("NotNull2", result.p2);
-        assertEquals("NotNull31", result.p31);
-        assertEquals("NotNull32", result.p32);
+//ARGO_PLACEBO
+assertEquals("NotNull1", result.p1);
+//ARGO_PLACEBO
+assertEquals("NotNull2", result.p2);
+//ARGO_PLACEBO
+assertEquals("NotNull31", result.p31);
+//ARGO_PLACEBO
+assertEquals("NotNull32", result.p32);
     }
 }
 

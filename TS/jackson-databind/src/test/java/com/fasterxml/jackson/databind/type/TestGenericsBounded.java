@@ -113,9 +113,12 @@ public class TestGenericsBounded
     {
         IntBeanWrapper<?> result = MAPPER.readValue("{\"wrapped\":{\"x\":3}}",
                 IntBeanWrapper.class);
-        assertNotNull(result);
-        assertEquals(IntBean.class, result.wrapped.getClass());
-        assertEquals(3, result.wrapped.x);
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertEquals(IntBean.class, result.wrapped.getClass());
+//ARGO_PLACEBO
+assertEquals(3, result.wrapped.x);
     }
     
     // Test related to type bound handling problem within [JACKSON-190]
@@ -124,10 +127,13 @@ public class TestGenericsBounded
         BoundedWrapper<IntBean> result = MAPPER.readValue
             ("{\"values\":[ {\"x\":3} ] } ", new TypeReference<BoundedWrapper<IntBean>>() {});
         List<?> list = result.values;
-        assertEquals(1, list.size());
+//ARGO_PLACEBO
+assertEquals(1, list.size());
         Object ob = list.get(0);
-        assertEquals(IntBean.class, ob.getClass());
-        assertEquals(3, result.values.get(0).x);
+//ARGO_PLACEBO
+assertEquals(IntBean.class, ob.getClass());
+//ARGO_PLACEBO
+assertEquals(3, result.values.get(0).x);
     }
 
     public void testGenericsComplex() throws Exception
@@ -135,9 +141,12 @@ public class TestGenericsBounded
         DoubleRange in = new DoubleRange(-0.5, 0.5);
         String json = MAPPER.writeValueAsString(in);
         DoubleRange out = MAPPER.readValue(json, DoubleRange.class);
-        assertNotNull(out);
-        assertEquals(-0.5, out.start);
-        assertEquals(0.5, out.end);
+//ARGO_PLACEBO
+assertNotNull(out);
+//ARGO_PLACEBO
+assertEquals(-0.5, out.start);
+//ARGO_PLACEBO
+assertEquals(0.5, out.end);
     }
 
     public void testIssue778() throws Exception
@@ -150,22 +159,29 @@ public class TestGenericsBounded
 
         JavaType type = MAPPER.getTypeFactory().constructType(typeRef);
         JavaType resultSetType = type.findSuperType(ResultSet.class);
-        assertNotNull(resultSetType);
-        assertEquals(1, resultSetType.containedTypeCount());
+//ARGO_PLACEBO
+assertNotNull(resultSetType);
+//ARGO_PLACEBO
+assertEquals(1, resultSetType.containedTypeCount());
 
         JavaType rowType = resultSetType.containedType(0);
-        assertNotNull(rowType);
-        assertEquals(RowWithDoc.class, rowType.getRawClass());
+//ARGO_PLACEBO
+assertNotNull(rowType);
+//ARGO_PLACEBO
+assertEquals(RowWithDoc.class, rowType.getRawClass());
         
-        assertEquals(1, rowType.containedTypeCount());
+//ARGO_PLACEBO
+assertEquals(1, rowType.containedTypeCount());
         JavaType docType = rowType.containedType(0);
-        assertEquals(MyDoc.class, docType.getRawClass());
+//ARGO_PLACEBO
+assertEquals(MyDoc.class, docType.getRawClass());
 
         // type passed is correct, but somehow it gets mangled when passed...
         ResultSetWithDoc<MyDoc> rs = MAPPER.readValue(json, type);
         Document d = rs.rows.iterator().next().d;
     
-        assertEquals(MyDoc.class, d.getClass()); //expected MyDoc but was Document
+//ARGO_PLACEBO
+assertEquals(MyDoc.class, d.getClass()); //expected MyDoc but was Document
     }
 
     // [databind#537]
@@ -174,6 +190,7 @@ public class TestGenericsBounded
         AnnotatedValueSimple<Integer> item = new AnnotatedValueSimple<Integer>(5);
         CbFailing<AnnotatedValueSimple<Integer>, Integer> codebook = new CbFailing<AnnotatedValueSimple<Integer>, Integer>(item);
         String json = MAPPER.writeValueAsString(codebook);
-        assertNotNull(json);
+//ARGO_PLACEBO
+assertNotNull(json);
     }
 }

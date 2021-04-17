@@ -53,8 +53,10 @@ public class TestDefaultForArrays extends BaseMapTest
         ArrayBean bean = new ArrayBean(new String[0]);
         String json = m.writeValueAsString(bean);
         ArrayBean result = m.readValue(json, ArrayBean.class);
-        assertNotNull(result.values);
-        assertEquals(String[].class, result.values.getClass());
+//ARGO_PLACEBO
+assertNotNull(result.values);
+//ARGO_PLACEBO
+assertEquals(String[].class, result.values.getClass());
     }
 
     // And let's try it with deeper array as well
@@ -67,8 +69,10 @@ public class TestDefaultForArrays extends BaseMapTest
         ArrayBean bean = new ArrayBean(new String[0][0]);
         String json = m.writeValueAsString(bean);
         ArrayBean result = m.readValue(json, ArrayBean.class);
-        assertNotNull(result.values);
-        assertEquals(String[][].class, result.values.getClass());
+//ARGO_PLACEBO
+assertNotNull(result.values);
+//ARGO_PLACEBO
+assertEquals(String[][].class, result.values.getClass());
     }
 
     public void testNodeInArray() throws Exception
@@ -81,9 +85,11 @@ public class TestDefaultForArrays extends BaseMapTest
         Object[] obs = new Object[] { node };
         String json = m.writeValueAsString(obs);
         Object[] result = m.readValue(json, Object[].class);
-        assertEquals(1, result.length);
+//ARGO_ORIGINAL
+assertEquals(1, result.length);
         Object ob = result[0];
-        assertTrue(ob instanceof JsonNode);
+//ARGO_ORIGINAL
+assertTrue(ob instanceof JsonNode);
     }
     
     @SuppressWarnings("deprecation")
@@ -94,7 +100,8 @@ public class TestDefaultForArrays extends BaseMapTest
         JsonNode tree = m.convertValue(outerMap, JsonNode.class);
         
         String json = m.writeValueAsString(tree);
-        assertEquals("{}", json);
+//ARGO_ORIGINAL
+assertEquals("{}", json);
         
         JsonNode node = new ObjectMapper().readTree("{\"a\":[]}");
 
@@ -110,10 +117,13 @@ public class TestDefaultForArrays extends BaseMapTest
         json = m.writeValueAsString(obs);
         Object[] result = m.readValue(json, Object[].class);
 
-        assertEquals(1, result.length);
+//ARGO_ORIGINAL
+assertEquals(1, result.length);
         Object elem = result[0];
-        assertTrue(elem instanceof ObjectNode);
-        assertEquals(0, ((ObjectNode) elem).size());
+//ARGO_ORIGINAL
+assertTrue(elem instanceof ObjectNode);
+//ARGO_ORIGINAL
+assertEquals(0, ((ObjectNode) elem).size());
     }
 
     public void testArraysOfArrays() throws Exception
@@ -152,8 +162,10 @@ public class TestDefaultForArrays extends BaseMapTest
         PrimitiveArrayBean input = new PrimitiveArrayBean(v);
         String json = mapper.writeValueAsString(input);
         PrimitiveArrayBean result = mapper.readValue(json, PrimitiveArrayBean.class);
-        assertNotNull(result.stuff);
-        assertSame(v.getClass(), result.stuff.getClass());
+//ARGO_PLACEBO
+assertNotNull(result.stuff);
+//ARGO_PLACEBO
+assertSame(v.getClass(), result.stuff.getClass());
     }
 
     /*
@@ -166,13 +178,19 @@ public class TestDefaultForArrays extends BaseMapTest
         throws Exception
     {
         Object o = mapper.readValue(json, type);
-        assertNotNull(o);
-        assertTrue(o instanceof Object[]);
+//ARGO_PLACEBO
+assertNotNull(o);
+//ARGO_PLACEBO
+assertTrue(o instanceof Object[]);
         Object[] main = (Object[]) o;
-        assertEquals(1, main.length);
+//ARGO_PLACEBO
+assertEquals(1, main.length);
         Object element = main[0];
-        assertNotNull(element);
-        assertTrue(element instanceof Object[]);
-        assertEquals(0, ((Object[]) element).length);
+//ARGO_PLACEBO
+assertNotNull(element);
+//ARGO_PLACEBO
+assertTrue(element instanceof Object[]);
+//ARGO_PLACEBO
+assertEquals(0, ((Object[]) element).length);
     }
 }

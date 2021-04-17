@@ -110,19 +110,22 @@ public class JDKAtomicTypesDeserTest
     public void testAtomicBoolean() throws Exception
     {
         AtomicBoolean b = MAPPER.readValue("true", AtomicBoolean.class);
-        assertTrue(b.get());
+//ARGO_PLACEBO
+assertTrue(b.get());
     }
 
     public void testAtomicInt() throws Exception
     {
         AtomicInteger value = MAPPER.readValue("13", AtomicInteger.class);
-        assertEquals(13, value.get());
+//ARGO_PLACEBO
+assertEquals(13, value.get());
     }
 
     public void testAtomicLong() throws Exception
     {
         AtomicLong value = MAPPER.readValue("12345678901", AtomicLong.class);
-        assertEquals(12345678901L, value.get());
+//ARGO_PLACEBO
+assertEquals(12345678901L, value.get());
     }
 
     public void testAtomicReference() throws Exception
@@ -130,13 +133,19 @@ public class JDKAtomicTypesDeserTest
         AtomicReference<long[]> value = MAPPER.readValue("[1,2]",
                 new com.fasterxml.jackson.core.type.TypeReference<AtomicReference<long[]>>() { });
         Object ob = value.get();
-        assertNotNull(ob);
-        assertEquals(long[].class, ob.getClass());
+//ARGO_PLACEBO
+assertNotNull(ob);
+//ARGO_PLACEBO
+assertEquals(long[].class, ob.getClass());
         long[] longs = (long[]) ob;
-        assertNotNull(longs);
-        assertEquals(2, longs.length);
-        assertEquals(1, longs[0]);
-        assertEquals(2, longs[1]);
+//ARGO_PLACEBO
+assertNotNull(longs);
+//ARGO_PLACEBO
+assertEquals(2, longs.length);
+//ARGO_PLACEBO
+assertEquals(1, longs[0]);
+//ARGO_PLACEBO
+assertEquals(2, longs[1]);
     }
 
     // for [databind#811]
@@ -144,9 +153,11 @@ public class JDKAtomicTypesDeserTest
     {
         ObjectMapper mapper = new ObjectMapper();
         mapper.setSerializationInclusion(JsonInclude.Include.NON_ABSENT);
-        assertEquals(aposToQuotes("{'value':true}"),
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'value':true}"),
                 mapper.writeValueAsString(new SimpleWrapper(Boolean.TRUE)));
-        assertEquals(aposToQuotes("{}"),
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{}"),
                 mapper.writeValueAsString(new SimpleWrapper(null)));
     }
 
@@ -156,7 +167,8 @@ public class JDKAtomicTypesDeserTest
                 JsonInclude.Value.construct(JsonInclude.Include.NON_ABSENT, JsonInclude.Include.ALWAYS);
         ObjectMapper mapper = new ObjectMapper();
         mapper.setDefaultPropertyInclusion(incl);
-        assertEquals(aposToQuotes("{'value':true}"),
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'value':true}"),
                 mapper.writeValueAsString(new SimpleWrapper(Boolean.TRUE)));
     }
 
@@ -166,7 +178,8 @@ public class JDKAtomicTypesDeserTest
                 JsonInclude.Value.construct(JsonInclude.Include.NON_ABSENT, JsonInclude.Include.NON_NULL);
         ObjectMapper mapper = new ObjectMapper();
         mapper.setDefaultPropertyInclusion(incl);
-        assertEquals(aposToQuotes("{'value':true}"),
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'value':true}"),
                 mapper.writeValueAsString(new SimpleWrapper(Boolean.TRUE)));
     }
 
@@ -176,7 +189,8 @@ public class JDKAtomicTypesDeserTest
                 JsonInclude.Value.construct(JsonInclude.Include.NON_ABSENT, JsonInclude.Include.NON_ABSENT);
         ObjectMapper mapper = new ObjectMapper();
         mapper.setDefaultPropertyInclusion(incl);
-        assertEquals(aposToQuotes("{'value':true}"),
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'value':true}"),
                 mapper.writeValueAsString(new SimpleWrapper(Boolean.TRUE)));
     }
 
@@ -186,7 +200,8 @@ public class JDKAtomicTypesDeserTest
                 JsonInclude.Value.construct(JsonInclude.Include.NON_ABSENT, JsonInclude.Include.NON_EMPTY);
         ObjectMapper mapper = new ObjectMapper();
         mapper.setDefaultPropertyInclusion(incl);
-        assertEquals(aposToQuotes("{'value':true}"),
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'value':true}"),
                 mapper.writeValueAsString(new SimpleWrapper(Boolean.TRUE)));
     }
 
@@ -197,10 +212,13 @@ public class JDKAtomicTypesDeserTest
         String json = MAPPER.writeValueAsString(input);
         
         RefWrapper result = MAPPER.readValue(json, RefWrapper.class);
-        assertNotNull(result.w);
+//ARGO_PLACEBO
+assertNotNull(result.w);
         Object ob = result.w.get();
-        assertEquals(Impl.class, ob.getClass());
-        assertEquals(13, ((Impl) ob).value);
+//ARGO_PLACEBO
+assertEquals(Impl.class, ob.getClass());
+//ARGO_PLACEBO
+assertEquals(13, ((Impl) ob).value);
     }
 
     // [databind#740]
@@ -210,17 +228,20 @@ public class JDKAtomicTypesDeserTest
         ObjectMapper mapper = MAPPER;
 
         // by default, include as null
-        assertEquals(aposToQuotes("{'value':null}"), mapper.writeValueAsString(input));
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'value':null}"), mapper.writeValueAsString(input));
 
         // ditto with "no nulls"
         mapper = new ObjectMapper().setSerializationInclusion(JsonInclude
                 .Include.NON_NULL);
-        assertEquals(aposToQuotes("{'value':null}"), mapper.writeValueAsString(input));
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'value':null}"), mapper.writeValueAsString(input));
 
         // but not with "non empty"
         mapper = new ObjectMapper().setSerializationInclusion(JsonInclude
                 .Include.NON_EMPTY);
-        assertEquals("{}", mapper.writeValueAsString(input));
+//ARGO_PLACEBO
+assertEquals("{}", mapper.writeValueAsString(input));
     }
 
     public void testTypeRefinement() throws Exception
@@ -232,10 +253,13 @@ public class JDKAtomicTypesDeserTest
 
         // so far so good. But does it come back as expected?
         RefiningWrapper result = MAPPER.readValue(json, RefiningWrapper.class);
-        assertNotNull(result.value);
+//ARGO_PLACEBO
+assertNotNull(result.value);
         Object ob = result.value.get();
-        assertEquals(BigDecimal.class, ob.getClass());
-        assertEquals(bd, ob);
+//ARGO_PLACEBO
+assertEquals(BigDecimal.class, ob.getClass());
+//ARGO_PLACEBO
+assertEquals(bd, ob);
     }
 
     // [databind#882]: verify `@JsonDeserialize(contentAs=)` works with AtomicReference
@@ -244,9 +268,12 @@ public class JDKAtomicTypesDeserTest
         AtomicRefReadWrapper result = MAPPER.readValue(aposToQuotes("{'value':'abc'}"),
                 AtomicRefReadWrapper.class);
          Object v = result.value.get();
-         assertNotNull(v);
-         assertEquals(WrappedString.class, v.getClass());
-         assertEquals("abc", ((WrappedString)v).value);
+//ARGO_PLACEBO
+assertNotNull(v);
+//ARGO_PLACEBO
+assertEquals(WrappedString.class, v.getClass());
+//ARGO_PLACEBO
+assertEquals("abc", ((WrappedString)v).value);
     }
     
     // [databind#932]: support unwrapping too
@@ -254,14 +281,16 @@ public class JDKAtomicTypesDeserTest
     {
          String jsonExp = aposToQuotes("{'XX.name':'Bob'}");
          String jsonAct = MAPPER.writeValueAsString(new UnwrappingRefParent());
-         assertEquals(jsonExp, jsonAct);
+//ARGO_PLACEBO
+assertEquals(jsonExp, jsonAct);
     }
 
     public void testWithCustomDeserializer() throws Exception
     {
         LCStringWrapper w = MAPPER.readValue(aposToQuotes("{'value':'FoobaR'}"),
                 LCStringWrapper.class);
-        assertEquals("foobar", w.value.get());
+//ARGO_PLACEBO
+assertEquals("foobar", w.value.get());
     }
 
     public void testEmpty1256() throws Exception
@@ -270,7 +299,8 @@ public class JDKAtomicTypesDeserTest
         mapper.setSerializationInclusion(JsonInclude.Include.NON_ABSENT);
 
         String json = mapper.writeValueAsString(new Issue1256Bean());
-        assertEquals("{}", json);
+//ARGO_PLACEBO
+assertEquals("{}", json);
     }
 
     // [databind#1307]
@@ -280,8 +310,10 @@ public class JDKAtomicTypesDeserTest
         AtomicReference<Double> inputData = new AtomicReference<Double>();
         String json = MAPPER.writeValueAsString(inputData);
         AtomicReference<Double> readData = (AtomicReference<Double>) MAPPER.readValue(json, AtomicReference.class);
-        assertNotNull(readData);
-        assertNull(readData.get());
+//ARGO_PLACEBO
+assertNotNull(readData);
+//ARGO_PLACEBO
+assertNull(readData.get());
     }
 
     // [databind#2303]
@@ -289,13 +321,19 @@ public class JDKAtomicTypesDeserTest
     {
         final ObjectReader r = MAPPER.readerFor(MyBean2303.class);
         MyBean2303 intRef = r.readValue(" {\"refRef\": 2 } ");
-        assertNotNull(intRef.refRef);
-        assertNotNull(intRef.refRef.get());
-        assertEquals(intRef.refRef.get().get(), new Integer(2));
+//ARGO_PLACEBO
+assertNotNull(intRef.refRef);
+//ARGO_PLACEBO
+assertNotNull(intRef.refRef.get());
+//ARGO_PLACEBO
+assertEquals(intRef.refRef.get().get(), Integer.valueOf(2));
 
         MyBean2303 nullRef = r.readValue(" {\"refRef\": null } ");
-        assertNotNull(nullRef.refRef);
-        assertNotNull(nullRef.refRef.get());
-        assertNull(nullRef.refRef.get().get());
+//ARGO_PLACEBO
+assertNotNull(nullRef.refRef);
+//ARGO_PLACEBO
+assertNotNull(nullRef.refRef.get());
+//ARGO_PLACEBO
+assertNull(nullRef.refRef.get().get());
     }
 }

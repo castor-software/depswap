@@ -134,7 +134,7 @@ public class AnyGetterTest extends BaseMapTest
 
     static class Bean2592NoAnnotations
     {
-        protected Map<String, String> properties = new HashMap<>();
+        protected Map<String, String> properties = new LinkedHashMap<>();
 
         @JsonAnyGetter
         public Map<String, String> getProperties() {
@@ -163,21 +163,57 @@ public class AnyGetterTest extends BaseMapTest
     @JsonFilter("Bean2592")
     static class Bean2592WithFilter extends Bean2592NoAnnotations {}
 
+    // [databind#1458]: Allow `@JsonAnyGetter` on fields too
+    static class DynaFieldBean {
+        public int id;
+
+        @JsonAnyGetter
+        @JsonAnySetter
+        protected HashMap<String,String> other = new HashMap<String,String>();
+
+        public Map<String,String> any() {
+            return other;
+        }
+
+        public void set(String name, String value) {
+            other.put(name, value);
+        }
+    }
+
+    // [databind#1458]: Allow `@JsonAnyGetter` on fields too
+    public void testDynaFieldBean() throws Exception
+    {
+        DynaFieldBean b = new DynaFieldBean();
+        b.id = 123;
+        b.set("name", "Billy");
+//ARGO_PLACEBO
+assertEquals("{\"id\":123,\"name\":\"Billy\"}", MAPPER.writeValueAsString(b));
+
+        DynaFieldBean result = MAPPER.readValue("{\"id\":2,\"name\":\"Joe\"}", DynaFieldBean.class);
+//ARGO_PLACEBO
+assertEquals(2, result.id);
+//ARGO_PLACEBO
+assertEquals("Joe", result.other.get("name"));
+    }
+
     /*
     /**********************************************************
     /* Test methods
     /**********************************************************
      */
 
-    private final ObjectMapper MAPPER = new ObjectMapper();
+    private final ObjectMapper MAPPER = newJsonMapper();
     
     public void testSimpleAnyBean() throws Exception
     {
         String json = MAPPER.writeValueAsString(new Bean());
         Map<?,?> map = MAPPER.readValue(json, Map.class);
-        assertEquals(2, map.size());
-        assertEquals(Integer.valueOf(3), map.get("x"));
-        assertEquals(Boolean.TRUE, map.get("a"));
+//ARGO_PLACEBO
+assertEquals(2, map.size());
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(3), map.get("x"));
+//ARGO_PLACEBO
+assertEquals(Boolean.TRUE, map.get("a"));
     }
 
     public void testAnyOnly() throws Exception
@@ -188,19 +224,22 @@ public class AnyGetterTest extends BaseMapTest
         m = new ObjectMapper();
         m.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, true);
         String json = serializeAsString(m, new AnyOnlyBean());
-        assertEquals("{\"a\":3}", json);
+//ARGO_PLACEBO
+assertEquals("{\"a\":3}", json);
 
         // then without fail
         m = new ObjectMapper();
         m.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
         json = serializeAsString(m, new AnyOnlyBean());
-        assertEquals("{\"a\":3}", json);
+//ARGO_PLACEBO
+assertEquals("{\"a\":3}", json);
     }
 
     public void testAnyDisabling() throws Exception
     {
         String json = MAPPER.writeValueAsString(new NotEvenAnyBean());
-        assertEquals(aposToQuotes("{'value':42}"), json);
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'value':42}"), json);
     }
 
     // Trying to repro [databind#577]
@@ -208,7 +247,8 @@ public class AnyGetterTest extends BaseMapTest
     {
         MapAsAny input = new MapAsAny();
         input.add("bar", null);
-        assertEquals(aposToQuotes("{'bar':null}"),
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'bar':null}"),
                 MAPPER.writeValueAsString(input));
     }
 
@@ -216,7 +256,8 @@ public class AnyGetterTest extends BaseMapTest
     {
         Issue705Bean input = new Issue705Bean("key", "value");        
         String json = MAPPER.writeValueAsString(input);
-        assertEquals("{\"stuff\":\"[key/value]\"}", json);
+//ARGO_PLACEBO
+assertEquals("{\"stuff\":\"[key/value]\"}", json);
     }
 
     // [databind#1124]
@@ -226,7 +267,8 @@ public class AnyGetterTest extends BaseMapTest
         Bean1124 input = new Bean1124();
         input.addAdditionalProperty("key", "value");
         String json = mapper.writeValueAsString(input);
-        assertEquals("{\"key\":\"VALUE\"}", json);
+//ARGO_PLACEBO
+assertEquals("{\"key\":\"VALUE\"}", json);
     }
 
     // [databind#2592]
@@ -239,7 +281,8 @@ public class AnyGetterTest extends BaseMapTest
         input.add("empty", "");
         input.add("null", null);
         String json = mapper.writeValueAsString(input);
-        assertEquals("{\"non-empty\":\"property\"}", json);
+//ARGO_PLACEBO
+assertEquals("{\"non-empty\":\"property\"}", json);
     }
 
     // [databind#2592]
@@ -256,7 +299,8 @@ public class AnyGetterTest extends BaseMapTest
         input.add("null", null);
         String json = mapper.writeValueAsString(input);
         // Unfortunately path for bean with filter is different. It still skips nulls.
-        assertEquals("{\"non-empty\":\"property\",\"empty\":\"\"}", json);
+//ARGO_PLACEBO
+assertEquals("{\"non-empty\":\"property\",\"empty\":\"\"}", json);
     }
 
     // [databind#2592]
@@ -268,7 +312,8 @@ public class AnyGetterTest extends BaseMapTest
         input.add("empty", "");
         input.add("null", null);
         String json = mapper.writeValueAsString(input);
-        assertEquals("{\"non-empty\":\"property\"}", json);
+//ARGO_PLACEBO
+assertEquals("{\"non-empty\":\"property\"}", json);
     }
 
     // [databind#2592]
@@ -284,6 +329,7 @@ public class AnyGetterTest extends BaseMapTest
         input.add("empty", "");
         input.add("null", null);
         String json = mapper.writeValueAsString(input);
-        assertEquals("{\"non-empty\":\"property\"}", json);
+//ARGO_PLACEBO
+assertEquals("{\"non-empty\":\"property\"}", json);
     }
 }

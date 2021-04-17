@@ -29,24 +29,33 @@ public class TestObjectOrArrayDeserialization extends BaseMapTest
         }
     }
 
+    private final ObjectMapper MAPPER = newJsonMapper();
+
     public void testObjectCase() throws Exception {
-        ArrayOrObject arrayOrObject = new ObjectMapper().readValue("{}", ArrayOrObject.class);
-        assertNull("expected objects field to be null", arrayOrObject.objects);
-        assertNotNull("expected object field not to be null", arrayOrObject.object);
+        ArrayOrObject arrayOrObject = MAPPER.readValue("{}", ArrayOrObject.class);
+//ARGO_PLACEBO
+assertNull("expected objects field to be null", arrayOrObject.objects);
+//ARGO_PLACEBO
+assertNotNull("expected object field not to be null", arrayOrObject.object);
     }
 
     public void testEmptyArrayCase() throws Exception {
-        ArrayOrObject arrayOrObject = new ObjectMapper().readValue("[]", ArrayOrObject.class);
-        assertNotNull("expected objects field not to be null", arrayOrObject.objects);
-        assertTrue("expected objects field to be an empty list", arrayOrObject.objects.isEmpty());
-        assertNull("expected object field to be null", arrayOrObject.object);
+        ArrayOrObject arrayOrObject = MAPPER.readValue("[]", ArrayOrObject.class);
+//ARGO_PLACEBO
+assertNotNull("expected objects field not to be null", arrayOrObject.objects);
+//ARGO_PLACEBO
+assertTrue("expected objects field to be an empty list", arrayOrObject.objects.isEmpty());
+//ARGO_PLACEBO
+assertNull("expected object field to be null", arrayOrObject.object);
     }
 
     public void testNotEmptyArrayCase() throws Exception {
-        ArrayOrObject arrayOrObject = new ObjectMapper().readValue("[{}, {}]", ArrayOrObject.class);
-        assertNotNull("expected objects field not to be null", arrayOrObject.objects);
-        assertEquals("expected objects field to have size 2", 2, arrayOrObject.objects.size());
-        assertNull("expected object field to be null", arrayOrObject.object);
+        ArrayOrObject arrayOrObject = MAPPER.readValue("[{}, {}]", ArrayOrObject.class);
+//ARGO_PLACEBO
+assertNotNull("expected objects field not to be null", arrayOrObject.objects);
+//ARGO_PLACEBO
+assertEquals("expected objects field to have size 2", 2, arrayOrObject.objects.size());
+//ARGO_PLACEBO
+assertNull("expected object field to be null", arrayOrObject.object);
     }
-
 }

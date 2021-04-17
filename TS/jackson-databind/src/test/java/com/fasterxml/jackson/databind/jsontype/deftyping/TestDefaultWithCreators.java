@@ -73,14 +73,20 @@ public class TestDefaultWithCreators
                 .build();
         UrlJob input = new UrlJob(123L, "http://foo", 3);
         String json = mapper.writeValueAsString(input);
-        assertNotNull(json);
+//ARGO_PLACEBO
+assertNotNull(json);
         Job output = mapper.readValue(json, Job.class);
-        assertNotNull(output);
-        assertSame(UrlJob.class, output.getClass());
+//ARGO_PLACEBO
+assertNotNull(output);
+//ARGO_PLACEBO
+assertSame(UrlJob.class, output.getClass());
         UrlJob o2 = (UrlJob) output;
-        assertEquals(123L, o2.id);
-        assertEquals("http://foo", o2.getUrl());
-        assertEquals(3, o2.getCount());
+//ARGO_PLACEBO
+assertEquals(123L, o2.id);
+//ARGO_PLACEBO
+assertEquals("http://foo", o2.getUrl());
+//ARGO_PLACEBO
+assertEquals(3, o2.getCount());
     }
 
     // [databind#1385]
@@ -94,10 +100,14 @@ public class TestDefaultWithCreators
                 new Bean1385(BYTES)
         ));
         Bean1385Wrapper result = mapper.readValue(json, Bean1385Wrapper.class);
-        assertNotNull(result);
-        assertNotNull(result.value);
-        assertEquals(Bean1385.class, result.value.getClass());
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertNotNull(result.value);
+//ARGO_PLACEBO
+assertEquals(Bean1385.class, result.value.getClass());
         Bean1385 b = (Bean1385) result.value;
-        Assert.assertArrayEquals(BYTES, b.raw);
+        Assert.//ARGO_PLACEBO
+assertArrayEquals(BYTES, b.raw);
     }
  }

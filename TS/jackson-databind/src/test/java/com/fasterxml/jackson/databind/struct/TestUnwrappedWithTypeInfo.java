@@ -62,7 +62,8 @@ public class TestUnwrappedWithTypeInfo extends BaseMapTest
 
 	    try {
 	        mapper.writeValueAsString(outer);
-	         fail("Expected exception to be thrown.");
+//ARGO_PLACEBO
+fail("Expected exception to be thrown.");
 	    } catch (JsonMappingException ex) {
 	        verifyException(ex, "requires use of type information");
 	    }
@@ -84,6 +85,7 @@ public class TestUnwrappedWithTypeInfo extends BaseMapTest
 
 		String json = mapper.writeValueAsString(outer);
 
-		assertEquals("{\"@type\":\"OuterType\",\"p2\":\"202\",\"p1\":\"101\"}", json);
+//ARGO_PLACEBO
+assertEquals("{\"@type\":\"OuterType\",\"p2\":\"202\",\"p1\":\"101\"}", json);
 	}
 }

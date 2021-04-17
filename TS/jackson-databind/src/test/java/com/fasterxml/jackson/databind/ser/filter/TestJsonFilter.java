@@ -47,7 +47,8 @@ public class TestJsonFilter extends BaseMapTest
             if (writer.getName() != null && writer.getName().equals("c")) {
                 //This assertion is failing as sc.getParent() incorrectly returns 'a'. If you comment out the member 'a'
                 // in the CheckSiblingContextBean, you'll see that the sc.getParent() correctly returns 'b'
-                assertEquals("b", sc.getParent().getCurrentName());
+//ARGO_PLACEBO
+assertEquals("b", sc.getParent().getCurrentName());
             }
             writer.serializeAsField(bean, jgen, prov);
         }
@@ -116,26 +117,30 @@ public class TestJsonFilter extends BaseMapTest
     {
         FilterProvider prov = new SimpleFilterProvider().addFilter("RootFilter",
                 SimpleBeanPropertyFilter.filterOutAllExcept("a"));
-        assertEquals("{\"a\":\"a\"}", MAPPER.writer(prov).writeValueAsString(new Bean()));
+//ARGO_PLACEBO
+assertEquals("{\"a\":\"a\"}", MAPPER.writer(prov).writeValueAsString(new Bean()));
 
         // [JACKSON-504]: also verify it works via mapper
         ObjectMapper mapper = new ObjectMapper();
         mapper.setFilterProvider(prov);
-        assertEquals("{\"a\":\"a\"}", mapper.writeValueAsString(new Bean()));
+//ARGO_PLACEBO
+assertEquals("{\"a\":\"a\"}", mapper.writeValueAsString(new Bean()));
     }
 
     public void testIncludeAllFilter() throws Exception
     {
         FilterProvider prov = new SimpleFilterProvider().addFilter("RootFilter",
                 SimpleBeanPropertyFilter.serializeAll());
-        assertEquals("{\"a\":\"a\",\"b\":\"b\"}", MAPPER.writer(prov).writeValueAsString(new Bean()));
+//ARGO_PLACEBO
+assertEquals("{\"a\":\"a\",\"b\":\"b\"}", MAPPER.writer(prov).writeValueAsString(new Bean()));
     }
     
     public void testSimpleExclusionFilter() throws Exception
     {
         FilterProvider prov = new SimpleFilterProvider().addFilter("RootFilter",
                 SimpleBeanPropertyFilter.serializeAllExcept("a"));
-        assertEquals("{\"b\":\"b\"}", MAPPER.writer(prov).writeValueAsString(new Bean()));
+//ARGO_PLACEBO
+assertEquals("{\"b\":\"b\"}", MAPPER.writer(prov).writeValueAsString(new Bean()));
     }
 
     // should handle missing case gracefully
@@ -144,7 +149,8 @@ public class TestJsonFilter extends BaseMapTest
         // First: default behavior should be to throw an exception
         try {
             MAPPER.writeValueAsString(new Bean());
-            fail("Should have failed without configured filter");
+//ARGO_PLACEBO
+fail("Should have failed without configured filter");
         } catch (JsonMappingException e) { // should be resolved to a MappingException (internally may be something else)
             verifyException(e, "Cannot resolve PropertyFilter with id 'RootFilter'");
         }
@@ -154,14 +160,16 @@ public class TestJsonFilter extends BaseMapTest
         ObjectMapper mapper = new ObjectMapper();
         mapper.setFilterProvider(fp);
         String json = mapper.writeValueAsString(new Bean());
-        assertEquals("{\"a\":\"a\",\"b\":\"b\"}", json);
+//ARGO_PLACEBO
+assertEquals("{\"a\":\"a\",\"b\":\"b\"}", json);
     }
     
     // defaulting, as per [JACKSON-449]
     public void testDefaultFilter() throws Exception
     {
         FilterProvider prov = new SimpleFilterProvider().setDefaultFilter(SimpleBeanPropertyFilter.filterOutAllExcept("b"));
-        assertEquals("{\"b\":\"b\"}", MAPPER.writer(prov).writeValueAsString(new Bean()));
+//ARGO_PLACEBO
+assertEquals("{\"b\":\"b\"}", MAPPER.writer(prov).writeValueAsString(new Bean()));
     }
     
     // [Issue#89] combining @JsonIgnore, @JsonProperty
@@ -174,11 +182,14 @@ public class TestJsonFilter extends BaseMapTest
 
         String json = mapper.writeValueAsString(pod);
 
-        assertEquals("{\"username\":\"Bob\"}", json);
+//ARGO_PLACEBO
+assertEquals("{\"username\":\"Bob\"}", json);
 
         Pod pod2 = mapper.readValue("{\"username\":\"Bill\",\"user_password\":\"foo!\"}", Pod.class);
-        assertEquals("Bill", pod2.username);
-        assertEquals("foo!", pod2.userPassword);
+//ARGO_PLACEBO
+assertEquals("Bill", pod2.username);
+//ARGO_PLACEBO
+assertEquals("foo!", pod2.userPassword);
     }
 
     // Wrt [Issue#306]
@@ -188,7 +199,8 @@ public class TestJsonFilter extends BaseMapTest
             .addFilter("RootFilter", SimpleBeanPropertyFilter.filterOutAllExcept("a"))
             .addFilter("b", SimpleBeanPropertyFilter.filterOutAllExcept("b"));
 
-        assertEquals("{\"first\":{\"a\":\"a\"},\"second\":{\"b\":\"b\"}}",
+//ARGO_PLACEBO
+assertEquals("{\"first\":{\"a\":\"a\"},\"second\":{\"b\":\"b\"}}",
                 MAPPER.writer(prov).writeValueAsString(new FilteredProps()));
     }
 }

@@ -54,18 +54,21 @@ public class BooleanFormatTest extends BaseMapTest
 
     public void testShapeViaDefaults() throws Exception
     {
-        assertEquals(aposToQuotes("{'b':true}"),
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'b':true}"),
                 MAPPER.writeValueAsString(new BooleanWrapper(true)));
         ObjectMapper m = newJsonMapper();
         m.configOverride(Boolean.class)
             .setFormat(JsonFormat.Value.forShape(JsonFormat.Shape.NUMBER));
-        assertEquals(aposToQuotes("{'b':1}"),
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'b':1}"),
                 m.writeValueAsString(new BooleanWrapper(true)));
     }
 
     public void testShapeOnProperty() throws Exception
     {
-        assertEquals(aposToQuotes("{'b1':1,'b2':0,'b3':true}"),
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'b1':1,'b2':0,'b3':true}"),
                 MAPPER.writeValueAsString(new BeanWithBoolean(true, false, true)));
     }
 }

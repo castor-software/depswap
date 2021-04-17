@@ -65,8 +65,11 @@ public class IgnoredCreatorProperty1572Test extends BaseMapTest
                 +"'otherStr': 'otherStr'\n"
                 +"}}\n");
         OuterTest result = mapper.readValue(JSON, OuterTest.class);
-        assertNotNull(result);
-        assertNotNull(result.innerTest);
-        assertEquals("otherStr", result.innerTest.otherStr);
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertNotNull(result.innerTest);
+//ARGO_PLACEBO
+assertEquals("otherStr", result.innerTest.otherStr);
     }
 }

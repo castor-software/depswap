@@ -63,18 +63,21 @@ public class CustomPTVMatchersTest extends BaseMapTest
         // runtime type here)
         final String goodJson = mapper.writeValueAsString(new CustomBad(42) );
         CustomBase result = mapper.readValue(goodJson, CustomBase.class);
-        assertEquals(CustomBad.class, result.getClass());
+//ARGO_PLACEBO
+assertEquals(CustomBad.class, result.getClass());
 
         // but other types not so good
         final String badJson = mapper.writeValueAsString(new URL("http://localhost") );
         try {
             mapper.readValue(badJson, URL.class);
-            fail("Should not pass");
+//ARGO_PLACEBO
+fail("Should not pass");
         } catch (InvalidTypeIdException e) {
             verifyException(e, "Could not resolve type id 'java.net.URL'");
             verifyException(e, "as a subtype of");
         }
-        assertEquals(CustomBad.class, result.getClass());
+//ARGO_PLACEBO
+assertEquals(CustomBad.class, result.getClass());
     }
 
     public void testCustomSubtypeMatchers() throws Exception
@@ -95,15 +98,19 @@ public class CustomPTVMatchersTest extends BaseMapTest
         // First: allow "Good" one:
         final String goodJson = mapper.writeValueAsString(new ObjectWrapper(new CustomGood(42) ));
         ObjectWrapper w = mapper.readValue(goodJson, ObjectWrapper.class);
-        assertNotNull(w);
-        assertNotNull(w.value);
-        assertEquals(CustomGood.class, w.value.getClass());
+//ARGO_PLACEBO
+assertNotNull(w);
+//ARGO_PLACEBO
+assertNotNull(w.value);
+//ARGO_PLACEBO
+assertEquals(CustomGood.class, w.value.getClass());
 
         // Then something else
         final String badJson = mapper.writeValueAsString(new ObjectWrapper(new CustomBad(42) ));
         try {
             mapper.readValue(badJson, ObjectWrapper.class);
-            fail("Should not pass");
+//ARGO_PLACEBO
+fail("Should not pass");
         } catch (InvalidTypeIdException e) {
             verifyException(e, "Could not resolve type id 'com.fasterxml.jackson.");
             verifyException(e, "as a subtype of");

@@ -4,6 +4,9 @@ import com.fasterxml.jackson.databind.BaseMapTest;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import static com.fasterxml.jackson.databind.JSONTestUtils.assertEquivalent;
+import static com.fasterxml.jackson.databind.JSONTestUtils.assertNonEquivalent;
+
 /**
  * This unit test suite tries to verify that JsonNode-based trees
  * can be deserialized as expected.
@@ -30,18 +33,24 @@ public class TestTreeDeserialization
         ObjectNode n1 = new ObjectNode(null);
         ObjectNode n2 = new ObjectNode(null);
 
-        assertTrue(n1.equals(n2));
-        assertTrue(n2.equals(n1));
+        //ARGO_EQUIVALENT
+        assertEquivalent(n1,n2);
+        //assertTrue(n1.equals(n2));
+        //assertTrue(n2.equals(n1));
 
         n1.set("x", TextNode.valueOf("Test"));
 
-        assertFalse(n1.equals(n2));
-        assertFalse(n2.equals(n1));
+        //ARGO_EQUIVALENT
+        assertNonEquivalent(n1, n2);
+        //assertFalse(n1.equals(n2));
+        //assertFalse(n2.equals(n1));
 
         n2.set("x", TextNode.valueOf("Test"));
 
-        assertTrue(n1.equals(n2));
-        assertTrue(n2.equals(n1));
+        //ARGO_EQUIVALENT
+        assertEquivalent(n1,n2);
+        //assertTrue(n1.equals(n2));
+        //assertTrue(n2.equals(n1));
     }
 
     public void testReadFromString() throws Exception

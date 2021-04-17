@@ -11,6 +11,8 @@ import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.exc.MismatchedInputException;
 
+import static com.fasterxml.jackson.databind.JSONTestUtils.assertEquivalent;
+
 /**
  * Additional tests for {@link ObjectNode} container class.
  */
@@ -433,8 +435,10 @@ public class ObjectNodeTest
         ob2.put("c", 3);
         ob2.put("a", 1);
 
-        assertTrue(ob1.equals(ob2));
-        assertTrue(ob2.equals(ob1));
+        //ARGO_EQUIVALENT
+        assertEquivalent(ob1,ob2);
+        //assertTrue(ob1.equals(ob2));
+        //assertTrue(ob2.equals(ob1));
     }
 
     public void testSimplePath() throws Exception

@@ -4,6 +4,87 @@ Project: jackson-databind
 === Releases === 
 ------------------------------------------------------------------------
 
+
+2.12.0-rc2 (not yet released)
+
+#1458: `@JsonAnyGetter` should be allowed on a field
+ (contributed by Dominik K)
+#2775: Disabling `FAIL_ON_INVALID_SUBTYPE` breaks polymorphic deserialization of Enums
+ (reported by holgerknoche@github)
+#2878: Revert change initially made to fix #2805: change in signature
+  of `ObjectMapper.treeToValue()` regarding exceptions
+#2880: Revert removal of 2.7-deprecated `PropertyNamingStrategy` constants
+ (reported by brettkail-wk@github)
+#2804: Throw `InvalidFormatException` instead of `MismatchedInputException`
+   for ACCEPT_FLOAT_AS_INT coercion failures
+ (requested by mjustin@github)
+
+2.12.0-rc1 (12-Oct-2020)
+
+#43: Add option to resolve type from multiple existing properties,
+  `@JsonTypeInfo(use=DEDUCTION)`
+ (contributed by drekbour@github)
+#426: `@JsonIgnoreProperties` does not prevent Exception Conflicting getter/setter
+  definitions for property
+ (reported by gmkll@github)
+#921: Deserialization Not Working Right with Generic Types and Builders
+ (reported by Mike G; fix contributed by Ville K)
+#1296: Add `@JsonIncludeProperties(propertyNames)` (reverse of `@JsonIgnoreProperties`)
+ (contributed Baptiste P)
+#1498: Allow handling of single-arg constructor as property based by default
+ (requested by Lovro P)
+#1852: Allow case insensitive deserialization of String value into
+  `boolean`/`Boolean` (esp for Excel)
+ (requested by Patrick J)
+#1886: Allow use of `@JsonFormat(with=JsonFormat.Feature.ACCEPT_CASE_INSENSITIVE_PROPERTIES)`
+  on Class
+#1919: Abstract class included as part of known type ids for error message
+  when using JsonSubTypes
+ (reported by Incara@github)
+#2066: Distinguish null from empty string for UUID deserialization
+ (requested by leonshaw@github)
+#2091: `ReferenceType` does not expose valid containedType
+ (reported by Nate B)
+#2113: Add `CoercionConfig[s]` mechanism for configuring allowed coercions
+#2118: `JsonProperty.Access.READ_ONLY` does not work with "getter-as-setter" `Collection`s
+ (reported by Xiang Z)
+#2215: Support `BigInteger` and `BigDecimal` creators in `StdValueInstantiator`
+ (requested by David N, implementation contributed by Tiago M)
+#2283: `JsonProperty.Access.READ_ONLY` fails with collections when a property name is specified
+ (reported by Yona A)
+#2644: `BigDecimal` precision not retained for polymorphic deserialization
+ (reported by rost5000@github)
+#2675: Support use of `Void` valued properties (`MapperFeature.ALLOW_VOID_VALUED_PROPERTIES`)
+#2683: Explicitly fail (de)serialization of `java.time.*` types in absence of
+  registered custom (de)serializers
+#2707: Improve description included in by `DeserializationContext.handleUnexpectedToken()`
+#2709: Support for JDK 14 record types (`java.lang.Record`)
+ (contributed by Youri B)
+#2715: `PropertyNamingStrategy` class initialization depends on its subclass, this can
+  lead to class loading deadlock
+ (reported by fangwentong@github)
+#2719: `FAIL_ON_IGNORED_PROPERTIES` does not throw on `READONLY` properties with
+  an explicit name
+ (reported, fix contributed by David B)
+#2726: Add Gradle Module Metadata for version alignment with Gradle 6
+ (contributed by Jendrik J)
+#2732: Allow `JsonNode` auto-convert into `ArrayNode` if duplicates found (for XML)
+#2733: Allow values of "untyped" auto-convert into `List` if duplicates found (for XML)
+#2751: Add `ValueInstantiator.createContextual(...)
+#2761: Support multiple names in `JsonSubType.Type`
+ (contributed by Swayam R)
+#2776: Explicitly fail (de)serialization of `org.joda.time.*` types in absence of registered
+  custom (de)serializers
+#2784: Trailing zeros are stripped when deserializing BigDecimal values inside a
+  @JsonUnwrapped property
+ (reported by mjustin@github)
+#2800: Extract getter/setter/field name mangling from `BeanUtil` into
+  pluggable `AccessorNamingStrategy`
+#2873: `MapperFeature.ACCEPT_CASE_INSENSITIVE_ENUMS` should work for enum as keys
+ (fix contributed by Ilya G)
+- Add `BeanDeserializerBase.isCaseInsensitive()`
+- Some refactoring of `CollectionDeserializer` to solve CSV array handling issues
+
 2.11.3 (02-Oct-2020)
 
 #2795: Cannot detect creator arguments of mixins for JDK types
@@ -96,7 +177,7 @@ Project: jackson-databind
 #2587: Add `MapperFeature.BLOCK_UNSAFE_POLYMORPHIC_BASE_TYPES` to allow blocking
   use of unsafe base type for polymorphic deserialization
 #2589: `DOMDeserializer`: setExpandEntityReferences(false) may not prevent
-  external entity expansion in all cases
+  external entity expansion in all cases [CVE-2020-25649]
  (reported by Bartosz B)
 #2592: `ObjectMapper.setSerializationInclusion()` is ignored for `JsonAnyGetter`
  (reported by Oleksii K)

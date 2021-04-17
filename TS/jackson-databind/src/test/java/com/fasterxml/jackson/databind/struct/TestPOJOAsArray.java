@@ -141,11 +141,16 @@ public class TestPOJOAsArray extends BaseMapTest
     {
         String json = "{\"value\":[true,\"Foobar\",42,13]}";
         PojoAsArrayWrapper p = MAPPER.readValue(json, PojoAsArrayWrapper.class);
-        assertNotNull(p.value);
-        assertTrue(p.value.complete);
-        assertEquals("Foobar", p.value.name);
-        assertEquals(42, p.value.x);
-        assertEquals(13, p.value.y);
+//ARGO_PLACEBO
+assertNotNull(p.value);
+//ARGO_PLACEBO
+assertTrue(p.value.complete);
+//ARGO_PLACEBO
+assertEquals("Foobar", p.value.name);
+//ARGO_PLACEBO
+assertEquals(42, p.value.x);
+//ARGO_PLACEBO
+assertEquals(13, p.value.y);
     }
 
     /**
@@ -155,10 +160,14 @@ public class TestPOJOAsArray extends BaseMapTest
     {
         String json = "[false,\"Bubba\",1,2]";
         FlatPojo p = MAPPER.readValue(json, FlatPojo.class);
-        assertFalse(p.complete);
-        assertEquals("Bubba", p.name);
-        assertEquals(1, p.x);
-        assertEquals(2, p.y);
+//ARGO_PLACEBO
+assertFalse(p.complete);
+//ARGO_PLACEBO
+assertEquals("Bubba", p.name);
+//ARGO_PLACEBO
+assertEquals(1, p.x);
+//ARGO_PLACEBO
+assertEquals(2, p.y);
     }
     
     /**
@@ -168,7 +177,8 @@ public class TestPOJOAsArray extends BaseMapTest
     {
         String json = MAPPER.writeValueAsString(new PojoAsArrayWrapper("Foobar", 42, 13, true));
         // will have wrapper POJO, then POJO-as-array..
-        assertEquals("{\"value\":[true,\"Foobar\",42,13]}", json);
+//ARGO_PLACEBO
+assertEquals("{\"value\":[true,\"Foobar\",42,13]}", json);
     }
 
     /**
@@ -178,13 +188,15 @@ public class TestPOJOAsArray extends BaseMapTest
     {
         String json = MAPPER.writeValueAsString(new FlatPojo("Bubba", 1, 2, false));
         // will have wrapper POJO, then POJO-as-array..
-        assertEquals("[false,\"Bubba\",1,2]", json);
+//ARGO_PLACEBO
+assertEquals("[false,\"Bubba\",1,2]", json);
     }
 
     // [Issue#223]
     public void testNullColumn() throws Exception
     {
-        assertEquals("[null,\"bar\"]", MAPPER.writeValueAsString(new TwoStringsBean()));
+//ARGO_PLACEBO
+assertEquals("[null,\"bar\"]", MAPPER.writeValueAsString(new TwoStringsBean()));
     }
 
     /*
@@ -197,7 +209,8 @@ public class TestPOJOAsArray extends BaseMapTest
         ObjectMapper mapper = new ObjectMapper();
         mapper.enable(SerializationFeature.WRITE_SINGLE_ELEM_ARRAYS_UNWRAPPED);
         String json = mapper.writeValueAsString(new SingleBean());
-        assertEquals("\"foo\"", json);
+//ARGO_PLACEBO
+assertEquals("\"foo\"", json);
     }
 
     public void testBeanAsArrayUnwrapped() throws Exception
@@ -205,8 +218,10 @@ public class TestPOJOAsArray extends BaseMapTest
         ObjectMapper mapper = new ObjectMapper();
         mapper.enable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY);
         SingleBean result = mapper.readValue("[\"foobar\"]", SingleBean.class);
-        assertNotNull(result);
-        assertEquals("foobar", result.name);
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertEquals("foobar", result.name);
     }
 
     /*
@@ -218,12 +233,14 @@ public class TestPOJOAsArray extends BaseMapTest
     public void testAnnotationOverride() throws Exception
     {
         // by default, POJOs become JSON Objects;
-        assertEquals("{\"value\":{\"x\":1,\"y\":2}}", MAPPER.writeValueAsString(new A()));
+//ARGO_PLACEBO
+assertEquals("{\"value\":{\"x\":1,\"y\":2}}", MAPPER.writeValueAsString(new A()));
 
         // but override should change it:
         ObjectMapper mapper2 = new ObjectMapper();
         mapper2.setAnnotationIntrospector(new ForceArraysIntrospector());
-        assertEquals("[[1,2]]", mapper2.writeValueAsString(new A()));
+//ARGO_PLACEBO
+assertEquals("[[1,2]]", mapper2.writeValueAsString(new A()));
 
         // and allow reading back, too
     }
@@ -233,10 +250,14 @@ public class TestPOJOAsArray extends BaseMapTest
         AsArrayWithMap input = new AsArrayWithMap(1, 2);
         String json = MAPPER.writeValueAsString(input);
         AsArrayWithMap output = MAPPER.readValue(json, AsArrayWithMap.class);
-        assertNotNull(output);
-        assertNotNull(output.attrs);
-        assertEquals(1, output.attrs.size());
-        assertEquals(Integer.valueOf(2), output.attrs.get(1));
+//ARGO_PLACEBO
+assertNotNull(output);
+//ARGO_PLACEBO
+assertNotNull(output.attrs);
+//ARGO_PLACEBO
+assertEquals(1, output.attrs.size());
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(2), output.attrs.get(1));
     }
 
     public void testSimpleWithIndex() throws Exception
@@ -245,8 +266,10 @@ public class TestPOJOAsArray extends BaseMapTest
 //        CreatorWithIndex value = MAPPER.readValue(aposToQuotes("{'b':1,'a':2}"),
         CreatorWithIndex value = MAPPER.readValue(aposToQuotes("[2,1]"),
                 CreatorWithIndex.class);
-        assertEquals(2, value._a);
-        assertEquals(1, value._b);
+//ARGO_PLACEBO
+assertEquals(2, value._a);
+//ARGO_PLACEBO
+assertEquals(1, value._b);
     }
 
     public void testWithConfigOverrides() throws Exception
@@ -255,12 +278,15 @@ public class TestPOJOAsArray extends BaseMapTest
         mapper.configOverride(NonAnnotatedXY.class)
             .setFormat(JsonFormat.Value.forShape(JsonFormat.Shape.ARRAY));
         String json = mapper.writeValueAsString(new NonAnnotatedXY(2, 3));
-        assertEquals("[2,3]", json);
+//ARGO_PLACEBO
+assertEquals("[2,3]", json);
 
         // also, read it back
         NonAnnotatedXY result = mapper.readValue(json, NonAnnotatedXY.class);
-        assertNotNull(result);
-        assertEquals(3, result.y);
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertEquals(3, result.y);
     }
 
     /*
@@ -274,7 +300,8 @@ public class TestPOJOAsArray extends BaseMapTest
         String json = "{\"value\":[true,\"Foobar\",42,13, false]}";
         try {
             MAPPER.readValue(json, PojoAsArrayWrapper.class);
-            fail("should not pass with extra element");
+//ARGO_PLACEBO
+fail("should not pass with extra element");
         } catch (MismatchedInputException e) {
             verifyException(e, "Unexpected JSON values");
         }
@@ -283,11 +310,16 @@ public class TestPOJOAsArray extends BaseMapTest
         PojoAsArrayWrapper v = MAPPER.readerFor(PojoAsArrayWrapper.class)
                 .without(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
                 .readValue(json);
-        assertNotNull(v);
+//ARGO_PLACEBO
+assertNotNull(v);
         // note: +1 for both so
-        assertEquals(v.value.x, 42);
-        assertEquals(v.value.y, 13);
-        assertTrue(v.value.complete);
-        assertEquals("Foobar", v.value.name);
+//ARGO_PLACEBO
+assertEquals(v.value.x, 42);
+//ARGO_PLACEBO
+assertEquals(v.value.y, 13);
+//ARGO_PLACEBO
+assertTrue(v.value.complete);
+//ARGO_PLACEBO
+assertEquals("Foobar", v.value.name);
     }
 }

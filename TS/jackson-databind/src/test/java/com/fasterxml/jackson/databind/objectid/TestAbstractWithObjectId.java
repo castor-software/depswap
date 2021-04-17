@@ -65,8 +65,10 @@ public class TestAbstractWithObjectId extends BaseMapTest
         
         result = om.readValue(json, new TypeReference<ListWrapper<BaseInterfaceImpl>>() { });
 
-        assertNotNull(result);
+//ARGO_PLACEBO
+assertNotNull(result);
         // see what we get back
-        assertEquals(2, result.size());
+//ARGO_PLACEBO
+assertEquals(2, result.size());
     }
 }

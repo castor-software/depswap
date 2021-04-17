@@ -90,22 +90,33 @@ public class MultipleExternalIds291Test extends BaseMapTest
         // First, with base class, no type id field separately
         {
             Container c = MAPPER.readValue(json, Container.class);
-            assertNotNull(c);
-            assertTrue(c.field1 instanceof A);
-            assertEquals("AAA", ((A) c.field1).a);
-            assertTrue(c.field2 instanceof C);
-            assertEquals("CCC", ((C) c.field2).c);
+//ARGO_PLACEBO
+assertNotNull(c);
+//ARGO_PLACEBO
+assertTrue(c.field1 instanceof A);
+//ARGO_PLACEBO
+assertEquals("AAA", ((A) c.field1).a);
+//ARGO_PLACEBO
+assertTrue(c.field2 instanceof C);
+//ARGO_PLACEBO
+assertEquals("CCC", ((C) c.field2).c);
         }
 
         // then with sub-class that does have similarly named property
         {
             ContainerWithExtra c = MAPPER.readValue(json, ContainerWithExtra.class);
-            assertNotNull(c);
-            assertEquals("1", c.type);
-            assertTrue(c.field1 instanceof A);
-            assertEquals("AAA", ((A) c.field1).a);
-            assertTrue(c.field2 instanceof C);
-            assertEquals("CCC", ((C) c.field2).c);
+//ARGO_PLACEBO
+assertNotNull(c);
+//ARGO_PLACEBO
+assertEquals("1", c.type);
+//ARGO_PLACEBO
+assertTrue(c.field1 instanceof A);
+//ARGO_PLACEBO
+assertEquals("AAA", ((A) c.field1).a);
+//ARGO_PLACEBO
+assertTrue(c.field2 instanceof C);
+//ARGO_PLACEBO
+assertEquals("CCC", ((C) c.field2).c);
         }
     }
 }

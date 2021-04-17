@@ -11,7 +11,8 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 
-import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.//ARGO_PLACEBO
+assertArrayEquals;
 
 /**
  * Unit tests for verifying that "updating reader" works as
@@ -126,23 +127,35 @@ public class TestUpdateViaObjectReader extends BaseMapTest
     public void testBeanUpdate() throws Exception
     {
         Bean bean = new Bean();
-        assertEquals("b", bean.b);
-        assertEquals(3, bean.c.length);
-        assertNull(bean.child);
+//ARGO_PLACEBO
+assertEquals("b", bean.b);
+//ARGO_PLACEBO
+assertEquals(3, bean.c.length);
+//ARGO_PLACEBO
+assertNull(bean.child);
 
         Object ob = MAPPER.readerForUpdating(bean).readValue("{ \"b\":\"x\", \"c\":[4,5], \"child\":{ \"a\":\"y\"} }");
-        assertSame(ob, bean);
+//ARGO_PLACEBO
+assertSame(ob, bean);
 
-        assertEquals("a", bean.a);
-        assertEquals("x", bean.b);
-        assertArrayEquals(new int[] { 4, 5 }, bean.c);
+//ARGO_PLACEBO
+assertEquals("a", bean.a);
+//ARGO_PLACEBO
+assertEquals("x", bean.b);
+//ARGO_PLACEBO
+assertArrayEquals(new int[] { 4, 5 }, bean.c);
 
         Bean child = bean.child;
-        assertNotNull(child);
-        assertEquals("y", child.a);
-        assertEquals("b", child.b);
-        assertArrayEquals(new int[] { 1, 2, 3 }, child.c);
-        assertNull(child.child);
+//ARGO_PLACEBO
+assertNotNull(child);
+//ARGO_PLACEBO
+assertEquals("y", child.a);
+//ARGO_PLACEBO
+assertEquals("b", child.b);
+//ARGO_PLACEBO
+assertArrayEquals(new int[] { 1, 2, 3 }, child.c);
+//ARGO_PLACEBO
+assertNull(child.child);
     }
 
     public void testListUpdate() throws Exception
@@ -151,12 +164,18 @@ public class TestUpdateViaObjectReader extends BaseMapTest
         strs.add("a");
         // for lists, we will be appending entries
         Object ob = MAPPER.readerForUpdating(strs).readValue("[ \"b\", \"c\", \"d\" ]");
-        assertSame(strs, ob);
-        assertEquals(4, strs.size());
-        assertEquals("a", strs.get(0));
-        assertEquals("b", strs.get(1));
-        assertEquals("c", strs.get(2));
-        assertEquals("d", strs.get(3));
+//ARGO_PLACEBO
+assertSame(strs, ob);
+//ARGO_PLACEBO
+assertEquals(4, strs.size());
+//ARGO_PLACEBO
+assertEquals("a", strs.get(0));
+//ARGO_PLACEBO
+assertEquals("b", strs.get(1));
+//ARGO_PLACEBO
+assertEquals("c", strs.get(2));
+//ARGO_PLACEBO
+assertEquals("d", strs.get(3));
     }
 
     public void testMapUpdate() throws Exception
@@ -166,11 +185,16 @@ public class TestUpdateViaObjectReader extends BaseMapTest
         strs.put("b", "b");
         // for maps, we will be adding and/or overwriting entries
         Object ob = MAPPER.readerForUpdating(strs).readValue("{ \"c\" : \"c\", \"a\" : \"z\" }");
-        assertSame(strs, ob);
-        assertEquals(3, strs.size());
-        assertEquals("z", strs.get("a"));
-        assertEquals("b", strs.get("b"));
-        assertEquals("c", strs.get("c"));
+//ARGO_PLACEBO
+assertSame(strs, ob);
+//ARGO_PLACEBO
+assertEquals(3, strs.size());
+//ARGO_PLACEBO
+assertEquals("z", strs.get("a"));
+//ARGO_PLACEBO
+assertEquals("b", strs.get("b"));
+//ARGO_PLACEBO
+assertEquals("c", strs.get("c"));
     }
 
     // Test for [JACKSON-717] -- ensure 'readValues' also does update
@@ -181,25 +205,38 @@ public class TestUpdateViaObjectReader extends BaseMapTest
         Iterator<XYBean> it = MAPPER.readerForUpdating(toUpdate).readValues(
                 "{\"x\":1,\"y\":2}\n{\"x\":16}{\"y\":37}");
 
-        assertTrue(it.hasNext());
+//ARGO_PLACEBO
+assertTrue(it.hasNext());
         XYBean value = it.next();
-        assertSame(toUpdate, value);
-        assertEquals(1, value.x);
-        assertEquals(2, value.y);
+//ARGO_PLACEBO
+assertSame(toUpdate, value);
+//ARGO_PLACEBO
+assertEquals(1, value.x);
+//ARGO_PLACEBO
+assertEquals(2, value.y);
 
-        assertTrue(it.hasNext());
+//ARGO_PLACEBO
+assertTrue(it.hasNext());
         value = it.next();
-        assertSame(toUpdate, value);
-        assertEquals(16, value.x);
-        assertEquals(2, value.y); // unchanged
+//ARGO_PLACEBO
+assertSame(toUpdate, value);
+//ARGO_PLACEBO
+assertEquals(16, value.x);
+//ARGO_PLACEBO
+assertEquals(2, value.y); // unchanged
 
-        assertTrue(it.hasNext());
+//ARGO_PLACEBO
+assertTrue(it.hasNext());
         value = it.next();
-        assertSame(toUpdate, value);
-        assertEquals(16, value.x); // unchanged
-        assertEquals(37, value.y);
+//ARGO_PLACEBO
+assertSame(toUpdate, value);
+//ARGO_PLACEBO
+assertEquals(16, value.x); // unchanged
+//ARGO_PLACEBO
+assertEquals(37, value.y);
         
-        assertFalse(it.hasNext());
+//ARGO_PLACEBO
+assertFalse(it.hasNext());
     }
 
     // [JACKSON-824]
@@ -211,10 +248,13 @@ public class TestUpdateViaObjectReader extends BaseMapTest
         Updateable result = MAPPER.readerForUpdating(bean)
                 .withView(TextView.class)
                 .readValue("{\"num\": 10, \"str\":\"foobar\"}");    
-        assertSame(bean, result);
+//ARGO_PLACEBO
+assertSame(bean, result);
 
-        assertEquals(100, bean.num);
-        assertEquals("foobar", bean.str);
+//ARGO_PLACEBO
+assertEquals(100, bean.num);
+//ARGO_PLACEBO
+assertEquals("foobar", bean.str);
     }
 
     // [databind#744]
@@ -233,29 +273,41 @@ public class TestUpdateViaObjectReader extends BaseMapTest
 
         // create parent
         DataB dbNewViaString = mapper.readValue(jsonBString, DataB.class);
-        assertEquals(5, dbNewViaString.da.i);
-        assertEquals(13, dbNewViaString.k);
+//ARGO_ORIGINAL
+assertEquals(5, dbNewViaString.da.i);
+//ARGO_ORIGINAL
+assertEquals(13, dbNewViaString.k);
 
         DataB dbNewViaNode = mapper.treeToValue(jsonBNode, DataB.class);
-        assertEquals(5, dbNewViaNode.da.i);
-        assertEquals(13, dbNewViaNode.k);
+//ARGO_ORIGINAL
+assertEquals(5, dbNewViaNode.da.i);
+//ARGO_ORIGINAL
+assertEquals(13, dbNewViaNode.k);
 
         // update parent
         DataB dbUpdViaString = new DataB();
         DataB dbUpdViaNode = new DataB();
 
-        assertEquals(1, dbUpdViaString.da.i);
-        assertEquals(3, dbUpdViaString.k);
+//ARGO_ORIGINAL
+assertEquals(1, dbUpdViaString.da.i);
+//ARGO_ORIGINAL
+assertEquals(3, dbUpdViaString.k);
         mapper.readerForUpdating(dbUpdViaString).readValue(jsonBString);
-        assertEquals(5, dbUpdViaString.da.i);
-        assertEquals(13, dbUpdViaString.k);
+//ARGO_ORIGINAL
+assertEquals(5, dbUpdViaString.da.i);
+//ARGO_ORIGINAL
+assertEquals(13, dbUpdViaString.k);
 
-        assertEquals(1, dbUpdViaNode.da.i);
-        assertEquals(3, dbUpdViaNode.k);
+//ARGO_ORIGINAL
+assertEquals(1, dbUpdViaNode.da.i);
+//ARGO_ORIGINAL
+assertEquals(3, dbUpdViaNode.k);
         
         mapper.readerForUpdating(dbUpdViaNode).readValue(jsonBNode);
-        assertEquals(5, dbUpdViaNode.da.i);
-        assertEquals(13, dbUpdViaNode.k);
+//ARGO_ORIGINAL
+assertEquals(5, dbUpdViaNode.da.i);
+//ARGO_ORIGINAL
+assertEquals(13, dbUpdViaNode.k);
     }
 
     // [databind#1831]
@@ -265,13 +317,15 @@ public class TestUpdateViaObjectReader extends BaseMapTest
         AnimalWrapper optionalCat = new AnimalWrapper();
         ObjectReader r = MAPPER.readerForUpdating(optionalCat);
         AnimalWrapper result = r.readValue(jsonNode);
-        assertSame(optionalCat, result);
+//ARGO_ORIGINAL
+assertSame(optionalCat, result);
     }
 
     public void test1831UsingString() throws IOException {
         String catJson = MAPPER.writeValueAsString(new Cat());
         AnimalWrapper optionalCat = new AnimalWrapper();
         AnimalWrapper result = MAPPER.readerForUpdating(optionalCat).readValue(catJson);
-        assertSame(optionalCat, result);
+//ARGO_PLACEBO
+assertSame(optionalCat, result);
     }
 }

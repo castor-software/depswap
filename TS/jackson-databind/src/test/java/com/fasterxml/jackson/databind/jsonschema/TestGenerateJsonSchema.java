@@ -13,6 +13,9 @@ import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
+import static com.fasterxml.jackson.databind.JSONTestUtils.//ARGO_PLACEBO
+assertEquivalent;
+
 /**
  * @author Ryan Heaton
  */
@@ -127,41 +130,64 @@ public class TestGenerateJsonSchema
     public void testOldSchemaGeneration() throws Exception
     {
         JsonSchema jsonSchema = MAPPER.generateJsonSchema(SimpleBean.class);
-        
-        assertNotNull(jsonSchema);
+
+//ARGO_ORIGINAL
+assertNotNull(jsonSchema);
 
         // test basic equality, and that equals() handles null, other obs
-        assertTrue(jsonSchema.equals(jsonSchema));
-        assertFalse(jsonSchema.equals(null));
-        assertFalse(jsonSchema.equals("foo"));
+//ARGO_ORIGINAL
+assertTrue(jsonSchema.equals(jsonSchema));
+//ARGO_ORIGINAL
+assertFalse(jsonSchema.equals(null));
+//ARGO_ORIGINAL
+assertFalse(jsonSchema.equals("foo"));
 
         // other basic things
-        assertNotNull(jsonSchema.toString());
-        assertNotNull(JsonSchema.getDefaultSchemaNode());
+//ARGO_ORIGINAL
+assertNotNull(jsonSchema.toString());
+//ARGO_ORIGINAL
+assertNotNull(JsonSchema.getDefaultSchemaNode());
 
         ObjectNode root = jsonSchema.getSchemaNode();
-        assertEquals("object", root.get("type").asText());
-        assertEquals(false, root.path("required").booleanValue());
+//ARGO_ORIGINAL
+assertEquals("object", root.get("type").asText());
+//ARGO_ORIGINAL
+assertEquals(false, root.path("required").booleanValue());
         JsonNode propertiesSchema = root.get("properties");
-        assertNotNull(propertiesSchema);
+//ARGO_ORIGINAL
+assertNotNull(propertiesSchema);
         JsonNode property1Schema = propertiesSchema.get("property1");
-        assertNotNull(property1Schema);
-        assertEquals("integer", property1Schema.get("type").asText());
-        assertEquals(false, property1Schema.path("required").booleanValue());
+//ARGO_ORIGINAL
+assertNotNull(property1Schema);
+//ARGO_ORIGINAL
+assertEquals("integer", property1Schema.get("type").asText());
+//ARGO_ORIGINAL
+assertEquals(false, property1Schema.path("required").booleanValue());
         JsonNode property2Schema = propertiesSchema.get("property2");
-        assertNotNull(property2Schema);
-        assertEquals("string", property2Schema.get("type").asText());
-        assertEquals(false, property2Schema.path("required").booleanValue());
+//ARGO_ORIGINAL
+assertNotNull(property2Schema);
+//ARGO_ORIGINAL
+assertEquals("string", property2Schema.get("type").asText());
+//ARGO_ORIGINAL
+assertEquals(false, property2Schema.path("required").booleanValue());
         JsonNode property3Schema = propertiesSchema.get("property3");
-        assertNotNull(property3Schema);
-        assertEquals("array", property3Schema.get("type").asText());
-        assertEquals(false, property3Schema.path("required").booleanValue());
-        assertEquals("string", property3Schema.get("items").get("type").asText());
+//ARGO_ORIGINAL
+assertNotNull(property3Schema);
+//ARGO_ORIGINAL
+assertEquals("array", property3Schema.get("type").asText());
+//ARGO_ORIGINAL
+assertEquals(false, property3Schema.path("required").booleanValue());
+//ARGO_ORIGINAL
+assertEquals("string", property3Schema.get("items").get("type").asText());
         JsonNode property4Schema = propertiesSchema.get("property4");
-        assertNotNull(property4Schema);
-        assertEquals("array", property4Schema.get("type").asText());
-        assertEquals(false, property4Schema.path("required").booleanValue());
-        assertEquals("number", property4Schema.get("items").get("type").asText());
+//ARGO_ORIGINAL
+assertNotNull(property4Schema);
+//ARGO_ORIGINAL
+assertEquals("array", property4Schema.get("type").asText());
+//ARGO_ORIGINAL
+assertEquals(false, property4Schema.path("required").booleanValue());
+//ARGO_ORIGINAL
+assertEquals("number", property4Schema.get("items").get("type").asText());
     }
     
     @JsonFilter("filteredBean")
@@ -188,8 +214,10 @@ public class TestGenerateJsonSchema
     	mapper.setFilters(secretFilterProvider);
     	JsonSchema schema = mapper.generateJsonSchema(FilteredBean.class);
     	JsonNode node = schema.getSchemaNode().get("properties");
-    	assertTrue(node.has("obvious"));
-    	assertFalse(node.has("secret"));
+//ARGO_ORIGINAL
+assertTrue(node.has("obvious"));
+//ARGO_ORIGINAL
+assertFalse(node.has("secret"));
     }
 
     /**
@@ -200,12 +228,16 @@ public class TestGenerateJsonSchema
     {
         JsonSchema jsonSchema = MAPPER.generateJsonSchema(SimpleBean.class);
         Map<String,Object> result = writeAndMap(MAPPER, jsonSchema);
-        assertNotNull(result);
+//ARGO_ORIGINAL
+assertNotNull(result);
         // no need to check out full structure, just basics...
-        assertEquals("object", result.get("type"));
+//ARGO_ORIGINAL
+assertEquals("object", result.get("type"));
         // only add 'required' if it is true...
-        assertNull(result.get("required"));
-        assertNotNull(result.get("properties"));
+//ARGO_ORIGINAL
+assertNull(result.get("required"));
+//ARGO_ORIGINAL
+assertNotNull(result.get("properties"));
     }
 
     public void testThatObjectsHaveNoItems() throws Exception
@@ -214,7 +246,8 @@ public class TestGenerateJsonSchema
         String json = jsonSchema.toString().replaceAll("\"", "'");
         // can we count on ordering being stable? I think this is true with current ObjectNode impl
         // as perh [JACKSON-563]; 'required' is only included if true
-        assertEquals("{'type':'object','properties':{'name':{'type':'string'}}}",
+//ARGO_ORIGINAL
+assertEquals("{'type':'object','properties':{'name':{'type':'string'}}}",
                 json);
     }
 
@@ -222,8 +255,10 @@ public class TestGenerateJsonSchema
     {
         JsonSchema jsonSchema = MAPPER.generateJsonSchema(BeanWithId.class);
         String json = jsonSchema.toString().replaceAll("\"", "'");
-        assertEquals("{'type':'object','id':'myType','properties':{'value':{'type':'string'}}}",
-                json);
+//ARGO_EQUIVALENT
+assertEquivalent(jsonSchema.getSchemaNode(), json.replace("'", "\""));
+//ARGO_EQUIVALENT
+        assertEquivalent("{'type':'object','id':'myType','properties':{'value':{'type':'string'}}}".replace("'", "\""), json.replace("'", "\""));
     }
 
     // [databind#271]
@@ -234,7 +269,10 @@ public class TestGenerateJsonSchema
         String EXP = "{'type':'object',"
                 +"'properties':{'age':{'type':'integer'},"
                 +"'name.first':{'type':'string'},'name.last':{'type':'string'}}}";
-        assertEquals(EXP, json);
+//ARGO_EQUIVALENT
+        assertEquivalent(EXP.replace("'", "\""), json.replace("'", "\""));
+//ARGO_EQUIVALENT
+assertEquivalent(jsonSchema.getSchemaNode(), json.replace("'", "\""));
     }
 
     // 
@@ -245,6 +283,7 @@ public class TestGenerateJsonSchema
         String EXP = "{'type':'object',"
                 +"'properties':{'dec':{'type':'number'},"
                 +"'bigInt':{'type':'integer'}}}";
-        assertEquals(EXP, json);
+//ARGO_ORIGINAL
+assertEquals(EXP, json);
     }
 }

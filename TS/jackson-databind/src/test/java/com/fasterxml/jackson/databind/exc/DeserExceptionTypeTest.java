@@ -46,10 +46,13 @@ public class DeserExceptionTypeTest
             exc = e;
         }
         if (exc == null) {
-            fail("Should have failed binding");
+//ARGO_PLACEBO
+fail("Should have failed binding");
         }
-        assertEquals("bar", exc.getPropertyName());
-        assertEquals(Bean.class, exc.getReferringClass());
+//ARGO_PLACEBO
+assertEquals("bar", exc.getPropertyName());
+//ARGO_PLACEBO
+assertEquals(Bean.class, exc.getReferringClass());
         // also: should get list of known properties
         verifyException(exc, "propX");
     }
@@ -63,7 +66,8 @@ public class DeserExceptionTypeTest
     {
         try {
             Object result = MAPPER.readValue("    ", Object.class);
-            fail("Expected an exception, but got result value: "+result);
+//ARGO_PLACEBO
+fail("Expected an exception, but got result value: "+result);
         } catch (Exception e) {
             verifyException(e, MismatchedInputException.class, "No content");
         }
@@ -78,7 +82,8 @@ public class DeserExceptionTypeTest
         try {
             @SuppressWarnings("unused")
             Object ob = MAPPER.readValue(p, Object.class);
-            fail("Should have gotten an exception");
+//ARGO_PLACEBO
+fail("Should have gotten an exception");
         } catch (IOException e) {
             /* For "bona fide" IO problems (due to low-level problem,
              * thrown by reader/stream), IOException must be thrown
@@ -92,19 +97,22 @@ public class DeserExceptionTypeTest
         JsonParser p = MAPPER.createParser("  3");
 
         Integer I = MAPPER.readValue(p, Integer.class);
-        assertEquals(3, I.intValue());
+//ARGO_PLACEBO
+assertEquals(3, I.intValue());
 
         // and then end-of-input...
         try {
             I = MAPPER.readValue(p, Integer.class);
-            fail("Should have gotten an exception");
+//ARGO_PLACEBO
+fail("Should have gotten an exception");
         } catch (IOException e) {
             verifyException(e, MismatchedInputException.class, "No content");
         }
         // also: should have no current token after end-of-input
         JsonToken t = p.currentToken();
         if (t != null) {
-            fail("Expected current token to be null after end-of-stream, was: "+t);
+//ARGO_PLACEBO
+fail("Expected current token to be null after end-of-stream, was: "+t);
         }
         p.close();
     }
@@ -114,7 +122,8 @@ public class DeserExceptionTypeTest
     {
         try {
             NoCreatorsBean b = MAPPER.readValue("{}", NoCreatorsBean.class);
-            fail("Should not succeed, got: "+b);
+//ARGO_PLACEBO
+fail("Should not succeed, got: "+b);
         } catch (JsonMappingException e) {
             verifyException(e, InvalidDefinitionException.class, "no Creators");
         }
@@ -130,7 +139,8 @@ public class DeserExceptionTypeTest
         throws Exception
     {
         if (e.getClass() != expType) {
-            fail("Expected exception of type "+expType.getName()+", got "+e.getClass().getName());
+//ARGO_PLACEBO
+fail("Expected exception of type "+expType.getName()+", got "+e.getClass().getName());
         }
         if (expMsg != null) {
             verifyException(e, expMsg);

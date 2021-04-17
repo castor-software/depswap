@@ -25,17 +25,21 @@ public class TestJSONP
 
     public void testSimpleScalars() throws Exception
     {
-        assertEquals("callback(\"abc\")",
+//ARGO_PLACEBO
+assertEquals("callback(\"abc\")",
                 MAPPER.writeValueAsString(new JSONPObject("callback", "abc")));
-        assertEquals("calc(123)",
+//ARGO_PLACEBO
+assertEquals("calc(123)",
                 MAPPER.writeValueAsString(new JSONPObject("calc", Integer.valueOf(123))));
-        assertEquals("dummy(null)",
+//ARGO_PLACEBO
+assertEquals("dummy(null)",
                 MAPPER.writeValueAsString(new JSONPObject("dummy", null)));
     }
 
     public void testSimpleBean() throws Exception
     {
-        assertEquals("xxx({\"a\":\"123\",\"b\":\"456\"})",
+//ARGO_PLACEBO
+assertEquals("xxx({\"a\":\"123\",\"b\":\"456\"})",
                 MAPPER.writeValueAsString(new JSONPObject("xxx",
                         new Impl("123", "456"))));
     }
@@ -48,7 +52,8 @@ public class TestJSONP
     {
         Object ob = new Impl("abc", "def");
         JavaType type = MAPPER.constructType(Base.class);
-        assertEquals("do({\"a\":\"abc\"})",
+//ARGO_PLACEBO
+assertEquals("do({\"a\":\"abc\"})",
                 MAPPER.writeValueAsString(new JSONPObject("do", ob, type)));
     }
 
@@ -56,6 +61,7 @@ public class TestJSONP
     {
         JSONWrappedObject input = new JSONWrappedObject("/*Foo*/", "\n// the end",
                 Arrays.asList());
-        assertEquals("/*Foo*/[]\n// the end", MAPPER.writeValueAsString(input));
+//ARGO_PLACEBO
+assertEquals("/*Foo*/[]\n// the end", MAPPER.writeValueAsString(input));
     }
 }

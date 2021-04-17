@@ -64,28 +64,34 @@ public class TestScalars extends BaseMapTest
         // first, check "native" types
         json = m.writeValueAsString(new DynamicWrapper(Integer.valueOf(3)));
         result = m.readValue(json, DynamicWrapper.class);
-        assertEquals(Integer.valueOf(3), result.value);
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(3), result.value);
 
         json = m.writeValueAsString(new DynamicWrapper("abc"));
         result = m.readValue(json, DynamicWrapper.class);
-        assertEquals("abc", result.value);
+//ARGO_PLACEBO
+assertEquals("abc", result.value);
 
         json = m.writeValueAsString(new DynamicWrapper("abc"));
         result = m.readValue(json, DynamicWrapper.class);
-        assertEquals("abc", result.value);
+//ARGO_PLACEBO
+assertEquals("abc", result.value);
 
         json = m.writeValueAsString(new DynamicWrapper(Boolean.TRUE));
         result = m.readValue(json, DynamicWrapper.class);
-        assertEquals(Boolean.TRUE, result.value);
+//ARGO_PLACEBO
+assertEquals(Boolean.TRUE, result.value);
         
         // then verify other scalars
         json = m.writeValueAsString(new DynamicWrapper(Long.valueOf(7L)));
         result = m.readValue(json, DynamicWrapper.class);
-        assertEquals(Long.valueOf(7), result.value);
+//ARGO_PLACEBO
+assertEquals(Long.valueOf(7), result.value);
 
         json = m.writeValueAsString(new DynamicWrapper(TestEnum.B));
         result = m.readValue(json, DynamicWrapper.class);
-        assertEquals(TestEnum.B, result.value);
+//ARGO_PLACEBO
+assertEquals(TestEnum.B, result.value);
     }
 
     public void testScalarsViaAbstractType() throws Exception
@@ -97,28 +103,34 @@ public class TestScalars extends BaseMapTest
         // first, check "native" types
         json = m.writeValueAsString(new AbstractWrapper(Integer.valueOf(3)));
         result = m.readValue(json, AbstractWrapper.class);
-        assertEquals(Integer.valueOf(3), result.value);
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(3), result.value);
 
         json = m.writeValueAsString(new AbstractWrapper("abc"));
         result = m.readValue(json, AbstractWrapper.class);
-        assertEquals("abc", result.value);
+//ARGO_PLACEBO
+assertEquals("abc", result.value);
 
         json = m.writeValueAsString(new AbstractWrapper("abc"));
         result = m.readValue(json, AbstractWrapper.class);
-        assertEquals("abc", result.value);
+//ARGO_PLACEBO
+assertEquals("abc", result.value);
 
         json = m.writeValueAsString(new AbstractWrapper(Boolean.TRUE));
         result = m.readValue(json, AbstractWrapper.class);
-        assertEquals(Boolean.TRUE, result.value);
+//ARGO_PLACEBO
+assertEquals(Boolean.TRUE, result.value);
         
         // then verify other scalars
         json = m.writeValueAsString(new AbstractWrapper(Long.valueOf(7L)));
         result = m.readValue(json, AbstractWrapper.class);
-        assertEquals(Long.valueOf(7), result.value);
+//ARGO_PLACEBO
+assertEquals(Long.valueOf(7), result.value);
 
         json = m.writeValueAsString(new AbstractWrapper(TestEnum.B));
         result = m.readValue(json, AbstractWrapper.class);
-        assertEquals(TestEnum.B, result.value);
+//ARGO_PLACEBO
+assertEquals(TestEnum.B, result.value);
     }
 
     // Test inspired by [databind#1104]
@@ -133,10 +145,15 @@ public class TestScalars extends BaseMapTest
         String json = MAPPER.writeValueAsString(input);
 
         ScalarList result = MAPPER.readValue(json, ScalarList.class);
-        assertNotNull(result.values);
-        assertEquals(3, result.values.size());
-        assertEquals("Test", result.values.get(0));
-        assertEquals(Object.class, result.values.get(1));
-        assertEquals(NULL_UUID, result.values.get(2));
+//ARGO_PLACEBO
+assertNotNull(result.values);
+//ARGO_PLACEBO
+assertEquals(3, result.values.size());
+//ARGO_PLACEBO
+assertEquals("Test", result.values.get(0));
+//ARGO_PLACEBO
+assertEquals(Object.class, result.values.get(1));
+//ARGO_PLACEBO
+assertEquals(NULL_UUID, result.values.get(2));
     }
 }

@@ -75,10 +75,12 @@ public class TestTypedArraySerialization
     public void testListWithPolymorphic() throws Exception
     {
         BeanListWrapper beans = new BeanListWrapper();
-        assertEquals("{\"beans\":[{\"@type\":\"bean\",\"x\":0}]}", MAPPER.writeValueAsString(beans));
+//ARGO_PLACEBO
+assertEquals("{\"beans\":[{\"@type\":\"bean\",\"x\":0}]}", MAPPER.writeValueAsString(beans));
         // Related to [JACKSON-364]
         ObjectWriter w = MAPPER.writerWithView(Object.class);
-        assertEquals("{\"beans\":[{\"@type\":\"bean\",\"x\":0}]}", w.writeValueAsString(beans));
+//ARGO_PLACEBO
+assertEquals("{\"beans\":[{\"@type\":\"bean\",\"x\":0}]}", w.writeValueAsString(beans));
     }
     
     public void testIntList() throws Exception
@@ -87,7 +89,8 @@ public class TestTypedArraySerialization
         input.add(5);
         input.add(13);
         // uses WRAPPER_ARRAY inclusion:
-        assertEquals("[\""+TypedList.class.getName()+"\",[5,13]]",
+//ARGO_PLACEBO
+assertEquals("[\""+TypedList.class.getName()+"\",[5,13]]",
                 MAPPER.writeValueAsString(input));
     }
     
@@ -100,7 +103,8 @@ public class TestTypedArraySerialization
         TypedListAsProp<String> input = new TypedListAsProp<String>();
         input.add("a");
         input.add("b");
-        assertEquals("[\""+TypedListAsProp.class.getName()+"\",[\"a\",\"b\"]]",
+//ARGO_PLACEBO
+assertEquals("[\""+TypedListAsProp.class.getName()+"\",[\"a\",\"b\"]]",
                 MAPPER.writeValueAsString(input));
     }
 
@@ -114,7 +118,8 @@ public class TestTypedArraySerialization
         // non-qualified class name as type name, since there are no
         // annotations
         String expName = "TestTypedArraySerialization$TypedListAsWrapper";
-        assertEquals("{\""+expName+"\":[true,null,false]}",
+//ARGO_PLACEBO
+assertEquals("{\""+expName+"\":[true,null,false]}",
                 MAPPER.writeValueAsString(input));
     }
 
@@ -130,7 +135,8 @@ public class TestTypedArraySerialization
         m.addMixIn(int[].class, WrapperMixIn.class);
         int[] input = new int[] { 1, 2, 3 };
         String clsName = int[].class.getName();
-        assertEquals("{\""+clsName+"\":[1,2,3]}", m.writeValueAsString(input));
+//ARGO_PLACEBO
+assertEquals("{\""+clsName+"\":[1,2,3]}", m.writeValueAsString(input));
     }
 
     /*
@@ -145,12 +151,14 @@ public class TestTypedArraySerialization
         final String EXP = "[{\"BB\":{\"value\":2}}]";
 
         // first, with defaults
-        assertEquals(EXP, MAPPER.writeValueAsString(input));
+//ARGO_PLACEBO
+assertEquals(EXP, MAPPER.writeValueAsString(input));
 
         // then with static typing enabled:
         ObjectMapper m = jsonMapperBuilder()
                 .configure(MapperFeature.USE_STATIC_TYPING, true)
                 .build();
-        assertEquals(EXP, m.writeValueAsString(input));
+//ARGO_PLACEBO
+assertEquals(EXP, m.writeValueAsString(input));
     }
 }

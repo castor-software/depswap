@@ -48,9 +48,11 @@ public class TypeResolverTest extends BaseMapTest
         A a = mapper.readValue(value, A.class);
         
         Map map = a.getMap();
-        assertEquals(MyMap.class, map.getClass());
+//ARGO_PLACEBO
+assertEquals(MyMap.class, map.getClass());
 
         Object ob = map.get("zz");
-        assertEquals(B.class, ob.getClass());
+//ARGO_PLACEBO
+assertEquals(B.class, ob.getClass());
     }
 }

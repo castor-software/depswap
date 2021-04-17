@@ -8,6 +8,7 @@ import com.fasterxml.jackson.core.*;
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.type.TypeFactory;
@@ -57,6 +58,7 @@ public class TestRootType
     }
 
     // [databind#412]
+    @JsonPropertyOrder({ "uuid", "type" })
     static class TestCommandParent {
         public String uuid;
         public int type;
@@ -83,19 +85,27 @@ public class TestRootType
 
         // first, test with dynamically detected type
         Map<String,Object> result = writeAndMap(mapper, bean);
-        assertEquals(4, result.size());
-        assertEquals("a", result.get("a"));
-        assertEquals(Integer.valueOf(3), result.get("b"));
-        assertEquals("x", result.get("a2"));
-        assertEquals(Boolean.TRUE, result.get("b2"));
+//ARGO_PLACEBO
+assertEquals(4, result.size());
+//ARGO_PLACEBO
+assertEquals("a", result.get("a"));
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(3), result.get("b"));
+//ARGO_PLACEBO
+assertEquals("x", result.get("a2"));
+//ARGO_PLACEBO
+assertEquals(Boolean.TRUE, result.get("b2"));
 
         // and then using specified typed writer
         ObjectWriter w = mapper.writerFor(BaseType.class);
         String json = w.writeValueAsString(bean);
         result = (Map<String,Object>)mapper.readValue(json, Map.class);
-        assertEquals(2, result.size());
-        assertEquals("a", result.get("a"));
-        assertEquals(Integer.valueOf(3), result.get("b"));
+//ARGO_PLACEBO
+assertEquals(2, result.size());
+//ARGO_PLACEBO
+assertEquals("a", result.get("a"));
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(3), result.get("b"));
     }
 
     public void testSuperInterface() throws Exception
@@ -108,8 +118,10 @@ public class TestRootType
         String json = w.writeValueAsString(bean);
         @SuppressWarnings("unchecked")
         Map<String,Object> result = mapper.readValue(json, Map.class);
-        assertEquals(1, result.size());
-        assertEquals(Integer.valueOf(3), result.get("b"));
+//ARGO_PLACEBO
+assertEquals(1, result.size());
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(3), result.get("b"));
     }
 
     public void testInArray() throws Exception
@@ -121,7 +133,8 @@ public class TestRootType
         SubType[] ob = new SubType[] { new SubType() };
         String json = mapper.writerFor(BaseInterface[].class).writeValueAsString(ob);
         // should propagate interface type through due to root declaration; static typing
-        assertEquals("[{\"b\":3}]", json);
+//ARGO_PLACEBO
+assertEquals("[{\"b\":3}]", json);
     }
     
     /**
@@ -137,7 +150,8 @@ public class TestRootType
         ObjectWriter w = mapper.writerFor(HashMap.class);
         try {
             w.writeValueAsString(bean);
-            fail("Should have failed due to incompatible type");
+//ARGO_PLACEBO
+fail("Should have failed due to incompatible type");
         } catch (JsonProcessingException e) {
             verifyException(e, "Incompatible types");
         }
@@ -145,7 +159,8 @@ public class TestRootType
         // and also with alternate output method
         try {
             w.writeValueAsBytes(bean);
-            fail("Should have failed due to incompatible type");
+//ARGO_PLACEBO
+fail("Should have failed due to incompatible type");
         } catch (JsonProcessingException e) {
             verifyException(e, "Incompatible types");
         }
@@ -162,20 +177,23 @@ public class TestRootType
         
         // First simplest way:
         String json = mapper.writerFor(collectionType).writeValueAsString(typedList);
-        assertEquals(EXP, json);
+//ARGO_PLACEBO
+assertEquals(EXP, json);
 
         StringWriter out = new StringWriter();
         JsonFactory f = new JsonFactory();
         mapper.writerFor(collectionType).writeValue(f.createGenerator(out), typedList);
 
-        assertEquals(EXP, out.toString());
+//ARGO_PLACEBO
+assertEquals(EXP, out.toString());
     }
 
     // [JACKSON-163]
     public void testRootWrapping() throws Exception
     {
         String json = WRAP_ROOT_MAPPER.writeValueAsString(new StringWrapper("abc"));
-        assertEquals("{\"StringWrapper\":{\"str\":\"abc\"}}", json);
+//ARGO_PLACEBO
+assertEquals("{\"StringWrapper\":{\"str\":\"abc\"}}", json);
     }
 
     /**
@@ -187,14 +205,17 @@ public class TestRootType
     public void testIssue456WrapperPart() throws Exception
     {
         ObjectMapper mapper = objectMapper();
-        assertEquals("123", mapper.writerFor(Integer.TYPE).writeValueAsString(Integer.valueOf(123)));
-        assertEquals("456", mapper.writerFor(Long.TYPE).writeValueAsString(Long.valueOf(456L)));
+//ARGO_PLACEBO
+assertEquals("123", mapper.writerFor(Integer.TYPE).writeValueAsString(Integer.valueOf(123)));
+//ARGO_PLACEBO
+assertEquals("456", mapper.writerFor(Long.TYPE).writeValueAsString(Long.valueOf(456L)));
     }
 
     public void testRootNameAnnotation() throws Exception
     {
         String json = WRAP_ROOT_MAPPER.writeValueAsString(new WithRootName());
-        assertEquals("{\"root\":{\"a\":3}}", json);
+//ARGO_PLACEBO
+assertEquals("{\"root\":{\"a\":3}}", json);
     }
 
     // [databind#412]
@@ -207,6 +228,7 @@ public class TestRootType
         ObjectWriter writer = WRAP_ROOT_MAPPER.writerFor(TestCommandParent.class);
         String json =  writer.writeValueAsString(cmd);
 
-        assertEquals("{\"TestCommandParent\":{\"uuid\":\"1234\",\"type\":1}}", json);
+//ARGO_PLACEBO
+assertEquals("{\"TestCommandParent\":{\"uuid\":\"1234\",\"type\":1}}", json);
     }
 }

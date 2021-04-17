@@ -37,19 +37,23 @@ public class CaseInsensitiveDeser953Test extends BaseMapTest
     private void _testTurkishILetterDeserialization(ObjectMapper mapper, Locale locale) throws Exception
     {
         // Sanity check first
-        assertEquals(locale, mapper.getDeserializationConfig().getLocale());
+//ARGO_PLACEBO
+assertEquals(locale, mapper.getDeserializationConfig().getLocale());
         
         final String ORIGINAL_KEY = "someId";
         
         Id953 result;
         result = mapper.readValue("{\""+ORIGINAL_KEY+"\":1}", Id953.class);
-        assertEquals(1, result.someId);
+//ARGO_PLACEBO
+assertEquals(1, result.someId);
 
         result = mapper.readValue("{\""+ORIGINAL_KEY.toUpperCase(locale)+"\":1}", Id953.class);
-        assertEquals(1, result.someId);
+//ARGO_PLACEBO
+assertEquals(1, result.someId);
 
         result = mapper.readValue("{\""+ORIGINAL_KEY.toLowerCase(locale)+"\":1}", Id953.class);
-        assertEquals(1, result.someId);
+//ARGO_PLACEBO
+assertEquals(1, result.someId);
 
         // and finally round-trip too...
         final Id953 input = new Id953();
@@ -57,6 +61,7 @@ public class CaseInsensitiveDeser953Test extends BaseMapTest
         final String json = mapper.writeValueAsString(input);
 
         result = mapper.readValue(json, Id953.class);
-        assertEquals(1, result.someId);
+//ARGO_PLACEBO
+assertEquals(1, result.someId);
     }
 }

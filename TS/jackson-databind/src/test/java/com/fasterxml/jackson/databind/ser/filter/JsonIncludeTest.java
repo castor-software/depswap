@@ -205,20 +205,29 @@ public class JsonIncludeTest
     public void testGlobal() throws IOException
     {
         Map<String,Object> result = writeAndMap(MAPPER, new SimpleBean());
-        assertEquals(2, result.size());
-        assertEquals("a", result.get("a"));
-        assertNull(result.get("b"));
-        assertTrue(result.containsKey("b"));
+//ARGO_PLACEBO
+assertEquals(2, result.size());
+//ARGO_PLACEBO
+assertEquals("a", result.get("a"));
+//ARGO_PLACEBO
+assertNull(result.get("b"));
+//ARGO_PLACEBO
+assertTrue(result.containsKey("b"));
     }
 
     public void testNonNullByClass() throws IOException
     {
         Map<String,Object> result = writeAndMap(MAPPER, new NoNullsBean());
-        assertEquals(1, result.size());
-        assertFalse(result.containsKey("a"));
-        assertNull(result.get("a"));
-        assertTrue(result.containsKey("b"));
-        assertNull(result.get("b"));
+//ARGO_PLACEBO
+assertEquals(1, result.size());
+//ARGO_PLACEBO
+assertFalse(result.containsKey("a"));
+//ARGO_PLACEBO
+assertNull(result.get("a"));
+//ARGO_PLACEBO
+assertTrue(result.containsKey("b"));
+//ARGO_PLACEBO
+assertNull(result.get("b"));
     }
 
     public void testNonDefaultByClass() throws IOException
@@ -227,11 +236,16 @@ public class JsonIncludeTest
         // need to change one of defaults
         bean._a = "notA";
         Map<String,Object> result = writeAndMap(MAPPER, bean);
-        assertEquals(1, result.size());
-        assertTrue(result.containsKey("a"));
-        assertEquals("notA", result.get("a"));
-        assertFalse(result.containsKey("b"));
-        assertNull(result.get("b"));
+//ARGO_PLACEBO
+assertEquals(1, result.size());
+//ARGO_PLACEBO
+assertTrue(result.containsKey("a"));
+//ARGO_PLACEBO
+assertEquals("notA", result.get("a"));
+//ARGO_PLACEBO
+assertFalse(result.containsKey("b"));
+//ARGO_PLACEBO
+assertNull(result.get("b"));
     }
 
     // [databind#998]
@@ -239,7 +253,8 @@ public class JsonIncludeTest
     {
         NonDefaultBeanXYZ bean = new NonDefaultBeanXYZ(1, 2, 0);
         String json = MAPPER.writeValueAsString(bean);
-        assertEquals(aposToQuotes("{'x':1,'y':2}"), json);
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'x':1,'y':2}"), json);
     }
     
     public void testMixedMethod() throws IOException
@@ -248,34 +263,45 @@ public class JsonIncludeTest
         bean._a = "xyz";
         bean._b = null;
         Map<String,Object> result = writeAndMap(MAPPER, bean);
-        assertEquals(1, result.size());
-        assertEquals("xyz", result.get("a"));
-        assertFalse(result.containsKey("b"));
+//ARGO_PLACEBO
+assertEquals(1, result.size());
+//ARGO_PLACEBO
+assertEquals("xyz", result.get("a"));
+//ARGO_PLACEBO
+assertFalse(result.containsKey("b"));
 
         bean._a = "a";
         bean._b = "b";
         result = writeAndMap(MAPPER, bean);
-        assertEquals(1, result.size());
-        assertEquals("b", result.get("b"));
-        assertFalse(result.containsKey("a"));
+//ARGO_PLACEBO
+assertEquals(1, result.size());
+//ARGO_PLACEBO
+assertEquals("b", result.get("b"));
+//ARGO_PLACEBO
+assertFalse(result.containsKey("a"));
     }
 
     public void testDefaultForEmptyList() throws IOException
     {
-        assertEquals("{}", MAPPER.writeValueAsString(new ListBean()));
+//ARGO_PLACEBO
+assertEquals("{}", MAPPER.writeValueAsString(new ListBean()));
     }
 
     // NON_DEFAULT shoud work for arrays too
     public void testNonEmptyDefaultArray() throws IOException
     {
-        assertEquals("{}", MAPPER.writeValueAsString(new ArrayBean()));
+//ARGO_PLACEBO
+assertEquals("{}", MAPPER.writeValueAsString(new ArrayBean()));
     }
 
     public void testDefaultForIntegers() throws IOException
     {
-        assertEquals("{}", MAPPER.writeValueAsString(new DefaultIntBean(0, Integer.valueOf(0))));
-        assertEquals("{\"i2\":1}", MAPPER.writeValueAsString(new DefaultIntBean(0, Integer.valueOf(1))));
-        assertEquals("{\"i1\":3}", MAPPER.writeValueAsString(new DefaultIntBean(3, Integer.valueOf(0))));
+//ARGO_PLACEBO
+assertEquals("{}", MAPPER.writeValueAsString(new DefaultIntBean(0, Integer.valueOf(0))));
+//ARGO_PLACEBO
+assertEquals("{\"i2\":1}", MAPPER.writeValueAsString(new DefaultIntBean(0, Integer.valueOf(1))));
+//ARGO_PLACEBO
+assertEquals("{\"i1\":3}", MAPPER.writeValueAsString(new DefaultIntBean(3, Integer.valueOf(0))));
     }
 
     public void testEmptyInclusionScalars() throws IOException
@@ -285,25 +311,36 @@ public class JsonIncludeTest
 
         // First, Strings
         StringWrapper str = new StringWrapper("");
-        assertEquals("{\"str\":\"\"}", defMapper.writeValueAsString(str));
-        assertEquals("{}", inclMapper.writeValueAsString(str));
-        assertEquals("{}", inclMapper.writeValueAsString(new StringWrapper()));
+//ARGO_PLACEBO
+assertEquals("{\"str\":\"\"}", defMapper.writeValueAsString(str));
+//ARGO_PLACEBO
+assertEquals("{}", inclMapper.writeValueAsString(str));
+//ARGO_PLACEBO
+assertEquals("{}", inclMapper.writeValueAsString(new StringWrapper()));
 
-        assertEquals("{\"value\":\"x\"}", defMapper.writeValueAsString(new NonEmptyString("x")));
-        assertEquals("{}", defMapper.writeValueAsString(new NonEmptyString("")));
+//ARGO_PLACEBO
+assertEquals("{\"value\":\"x\"}", defMapper.writeValueAsString(new NonEmptyString("x")));
+//ARGO_PLACEBO
+assertEquals("{}", defMapper.writeValueAsString(new NonEmptyString("")));
 
         // Then numbers
         // 11-Nov-2015, tatu: As of Jackson 2.7, scalars should NOT be considered empty,
         //   except for wrappers if they are `null`
-        assertEquals("{\"value\":12}", defMapper.writeValueAsString(new NonEmptyInt(12)));
-        assertEquals("{\"value\":0}", defMapper.writeValueAsString(new NonEmptyInt(0)));
+//ARGO_PLACEBO
+assertEquals("{\"value\":12}", defMapper.writeValueAsString(new NonEmptyInt(12)));
+//ARGO_PLACEBO
+assertEquals("{\"value\":0}", defMapper.writeValueAsString(new NonEmptyInt(0)));
 
-        assertEquals("{\"value\":1.25}", defMapper.writeValueAsString(new NonEmptyDouble(1.25)));
-        assertEquals("{\"value\":0.0}", defMapper.writeValueAsString(new NonEmptyDouble(0.0)));
+//ARGO_PLACEBO
+assertEquals("{\"value\":1.25}", defMapper.writeValueAsString(new NonEmptyDouble(1.25)));
+//ARGO_PLACEBO
+assertEquals("{\"value\":0.0}", defMapper.writeValueAsString(new NonEmptyDouble(0.0)));
 
         IntWrapper zero = new IntWrapper(0);
-        assertEquals("{\"i\":0}", defMapper.writeValueAsString(zero));
-        assertEquals("{\"i\":0}", inclMapper.writeValueAsString(zero));
+//ARGO_PLACEBO
+assertEquals("{\"i\":0}", defMapper.writeValueAsString(zero));
+//ARGO_PLACEBO
+assertEquals("{\"i\":0}", inclMapper.writeValueAsString(zero));
     }
 
     // [databind#1351], [databind#1417]
@@ -311,10 +348,12 @@ public class JsonIncludeTest
     {
         ObjectMapper mapper = new ObjectMapper();
         mapper.setSerializationInclusion(JsonInclude.Include.NON_DEFAULT);
-        assertEquals(aposToQuotes("{}"),
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{}"),
                 mapper.writeValueAsString(new Issue1351Bean(null, (double) 0)));
         // [databind#1417]
-        assertEquals(aposToQuotes("{}"),
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{}"),
                 mapper.writeValueAsString(new Issue1351NonBean(0)));
     }
 
@@ -322,9 +361,11 @@ public class JsonIncludeTest
     public void testInclusionOfDate() throws Exception
     {
         final Date input = new Date(0L);
-        assertEquals(aposToQuotes("{'value':0}"), 
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'value':0}"), 
                 MAPPER.writeValueAsString(new NonEmptyDate(input)));
-        assertEquals("{}", 
+//ARGO_PLACEBO
+assertEquals("{}", 
                 MAPPER.writeValueAsString(new NonDefaultDate(input)));
 
     
@@ -335,9 +376,11 @@ public class JsonIncludeTest
     {
         final Calendar input = new GregorianCalendar();
         input.setTimeInMillis(0L);
-        assertEquals(aposToQuotes("{'value':0}"), 
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'value':0}"), 
                 MAPPER.writeValueAsString(new NonEmptyCalendar(input)));
-        assertEquals("{}", 
+//ARGO_PLACEBO
+assertEquals("{}", 
                 MAPPER.writeValueAsString(new NonDefaultCalendar(input)));
     }
 }

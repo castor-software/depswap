@@ -90,6 +90,7 @@ public class BuilderInfiniteLoop1978Test extends BaseMapTest
         String json = "{\"sub.el1\":34,\"sub.el2\":\"some text\"}";
         ObjectMapper mapper = new ObjectMapper();
         Bean bean = mapper.readValue( json, Bean.class );
-        assertNotNull(bean);
+//ARGO_PLACEBO
+assertNotNull(bean);
     }
 }

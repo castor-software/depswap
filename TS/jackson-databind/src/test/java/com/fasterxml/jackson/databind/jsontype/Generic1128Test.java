@@ -64,6 +64,7 @@ public class Generic1128Test extends BaseMapTest
         final DevMContainer devMContainer = mapper.readValue(json, DevMContainer.class);
         long id = devMContainer.entity.parent.id;
 //        System.out.println("devMContainer.getEntity().getParent().getId() = " + id);
-        assertEquals(2, id);
+//ARGO_PLACEBO
+assertEquals(2, id);
     }
 }

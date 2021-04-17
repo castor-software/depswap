@@ -64,7 +64,8 @@ public class InnerClassCreatorTest extends BaseMapTest
         String ser = MAPPER.writeValueAsString(new Something1501(false));
         try {
             MAPPER.readValue(ser, Something1501.class);
-            fail("Should not pass");
+//ARGO_PLACEBO
+fail("Should not pass");
         } catch (InvalidDefinitionException e) {
             verifyException(e, "Cannot construct instance");
             verifyException(e, "InnerSomething1501");
@@ -77,7 +78,8 @@ public class InnerClassCreatorTest extends BaseMapTest
         String ser = MAPPER.writeValueAsString(new Something1502(null));
         try {
             MAPPER.readValue(ser, Something1502.class);
-            fail("Should not pass");
+//ARGO_PLACEBO
+fail("Should not pass");
         } catch (InvalidDefinitionException e) {
             verifyException(e, "Cannot construct instance");
             verifyException(e, "InnerSomething1502");
@@ -89,6 +91,7 @@ public class InnerClassCreatorTest extends BaseMapTest
     {
         String ser = MAPPER.writeValueAsString(new Outer1503());
         Outer1503 result = MAPPER.readValue(ser, Outer1503.class);
-        assertNotNull(result);
+//ARGO_PLACEBO
+assertNotNull(result);
     }
 }

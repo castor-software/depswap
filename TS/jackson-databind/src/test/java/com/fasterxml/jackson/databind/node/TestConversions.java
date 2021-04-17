@@ -117,28 +117,45 @@ public class TestConversions extends BaseMapTest
     
     public void testAsInt() throws Exception
     {
-        assertEquals(9, IntNode.valueOf(9).asInt());
-        assertEquals(7, LongNode.valueOf(7L).asInt());
-        assertEquals(13, new TextNode("13").asInt());
-        assertEquals(0, new TextNode("foobar").asInt());
-        assertEquals(27, new TextNode("foobar").asInt(27));
-        assertEquals(1, BooleanNode.TRUE.asInt());
+//ARGO_PLACEBO
+assertEquals(9, IntNode.valueOf(9).asInt());
+//ARGO_PLACEBO
+assertEquals(7, LongNode.valueOf(7L).asInt());
+//ARGO_PLACEBO
+assertEquals(13, new TextNode("13").asInt());
+//ARGO_PLACEBO
+assertEquals(0, new TextNode("foobar").asInt());
+//ARGO_PLACEBO
+assertEquals(27, new TextNode("foobar").asInt(27));
+//ARGO_PLACEBO
+assertEquals(1, BooleanNode.TRUE.asInt());
     }
 
     public void testAsBoolean() throws Exception
     {
-        assertEquals(false, BooleanNode.FALSE.asBoolean());
-        assertEquals(true, BooleanNode.TRUE.asBoolean());
-        assertEquals(false, IntNode.valueOf(0).asBoolean());
-        assertEquals(true, IntNode.valueOf(1).asBoolean());
-        assertEquals(false, LongNode.valueOf(0).asBoolean());
-        assertEquals(true, LongNode.valueOf(-34L).asBoolean());
-        assertEquals(true, new TextNode("true").asBoolean());
-        assertEquals(false, new TextNode("false").asBoolean());
-        assertEquals(false, new TextNode("barf").asBoolean());
-        assertEquals(true, new TextNode("barf").asBoolean(true));
+//ARGO_PLACEBO
+assertEquals(false, BooleanNode.FALSE.asBoolean());
+//ARGO_PLACEBO
+assertEquals(true, BooleanNode.TRUE.asBoolean());
+//ARGO_PLACEBO
+assertEquals(false, IntNode.valueOf(0).asBoolean());
+//ARGO_PLACEBO
+assertEquals(true, IntNode.valueOf(1).asBoolean());
+//ARGO_PLACEBO
+assertEquals(false, LongNode.valueOf(0).asBoolean());
+//ARGO_PLACEBO
+assertEquals(true, LongNode.valueOf(-34L).asBoolean());
+//ARGO_PLACEBO
+assertEquals(true, new TextNode("true").asBoolean());
+//ARGO_PLACEBO
+assertEquals(false, new TextNode("false").asBoolean());
+//ARGO_PLACEBO
+assertEquals(false, new TextNode("barf").asBoolean());
+//ARGO_PLACEBO
+assertEquals(true, new TextNode("barf").asBoolean(true));
 
-        assertEquals(true, new POJONode(Boolean.TRUE).asBoolean());
+//ARGO_PLACEBO
+assertEquals(true, new POJONode(Boolean.TRUE).asBoolean());
     }
     
     // Deserializer to trigger the problem described in [JACKSON-554]
@@ -163,8 +180,10 @@ public class TestConversions extends BaseMapTest
         JsonNode root = mapper.readTree(JSON);
         // Ok, try converting to bean using two mechanisms
         Root r1 = mapper.treeToValue(root, Root.class);
-        assertNotNull(r1);
-        assertEquals(13, r1.leaf.value);
+//ARGO_ORIGINAL
+assertNotNull(r1);
+//ARGO_ORIGINAL
+assertEquals(13, r1.leaf.value);
     }
 
     // [databind#1208]: should coerce POJOs at least at root level
@@ -174,8 +193,10 @@ public class TestConversions extends BaseMapTest
         c.setTime(new java.util.Date(0));
         ValueNode pojoNode = MAPPER.getNodeFactory().pojoNode(c);        
         Calendar result = MAPPER.treeToValue(pojoNode, Calendar.class);
-        assertNotNull(result);
-        assertEquals(result.getTimeInMillis(), c.getTimeInMillis());
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertEquals(result.getTimeInMillis(), c.getTimeInMillis());
     }
 
     public void testBase64Text() throws Exception
@@ -201,21 +222,28 @@ public class TestConversions extends BaseMapTest
                 try {
                     data = n.getBinaryValue(variant);
                 } catch (Exception e) {
-                    fail("Failed (variant "+variant+", data length "+len+"): "+e.getMessage());
+//ARGO_PLACEBO
+fail("Failed (variant "+variant+", data length "+len+"): "+e.getMessage());
                 }
-                assertNotNull(data);
-                assertArrayEquals(data, input);
+//ARGO_PLACEBO
+assertNotNull(data);
+//ARGO_PLACEBO
+assertArrayEquals(data, input);
 
                 // 15-Aug-2018, tatu: [databind#2096] requires another test
                 JsonParser p = new TreeTraversingParser(n);
-                assertEquals(JsonToken.VALUE_STRING, p.nextToken());
+//ARGO_PLACEBO
+assertEquals(JsonToken.VALUE_STRING, p.nextToken());
                 try {
                     data = p.getBinaryValue(variant);
                 } catch (Exception e) {
-                    fail("Failed (variant "+variant+", data length "+len+"): "+e.getMessage());
+//ARGO_PLACEBO
+fail("Failed (variant "+variant+", data length "+len+"): "+e.getMessage());
                 }
-                assertNotNull(data);
-                assertArrayEquals(data, input);
+//ARGO_PLACEBO
+assertNotNull(data);
+//ARGO_PLACEBO
+assertArrayEquals(data, input);
                 p.close();
             }
         }
@@ -236,8 +264,11 @@ public class TestConversions extends BaseMapTest
         Issue709Bean resultFromConvert = MAPPER.convertValue(node, Issue709Bean.class);
         
         // all methods should work equally well:
+        //ARGO_ORIGINAL
         Assert.assertArrayEquals(inputData, resultFromString.data);
+        //ARGO_ORIGINAL
         Assert.assertArrayEquals(inputData, resultFromConvert.data);
+        //ARGO_ORIGINAL
         Assert.assertArrayEquals(inputData, result.data);
     }
 
@@ -247,10 +278,13 @@ public class TestConversions extends BaseMapTest
         buf.writeObject(new byte[3]);
         JsonNode node = MAPPER.readTree(buf.asParser());
         buf.close();
-        assertTrue(node.isBinary());
+//ARGO_PLACEBO
+assertTrue(node.isBinary());
         byte[] data = node.binaryValue();
-        assertNotNull(data);
-        assertEquals(3, data.length);
+//ARGO_PLACEBO
+assertNotNull(data);
+//ARGO_PLACEBO
+assertEquals(3, data.length);
     }
 
     // [databind#232]
@@ -262,9 +296,12 @@ public class TestConversions extends BaseMapTest
         String PI_STR = "3.00000000";
         map.put("pi", new BigDecimal(PI_STR));
         JsonNode tree = mapper.valueToTree(map);
-        assertNotNull(tree);
-        assertEquals(1, tree.size());
-        assertTrue(tree.has("pi"));
+//ARGO_ORIGINAL
+assertNotNull(tree);
+//ARGO_ORIGINAL
+assertEquals(1, tree.size());
+//ARGO_ORIGINAL
+assertTrue(tree.has("pi"));
     }
 
     // [databind#433]
@@ -273,7 +310,8 @@ public class TestConversions extends BaseMapTest
         final CustomSerializedPojo pojo = new CustomSerializedPojo();
         pojo.setFoo("bar");
         final JsonNode node = MAPPER.valueToTree(pojo);
-        assertEquals(JsonNodeType.OBJECT, node.getNodeType());
+//ARGO_ORIGINAL
+assertEquals(JsonNodeType.OBJECT, node.getNodeType());
     }
 
     // [databind#467]
@@ -284,12 +322,15 @@ public class TestConversions extends BaseMapTest
         
         // first, sanity check
         String json = MAPPER.writeValueAsString(input);
-        assertEquals(EXP, json);
+//ARGO_ORIGINAL
+assertEquals(EXP, json);
 
         // then via conversions: should become JSON Object
         JsonNode tree = MAPPER.valueToTree(input);
-        assertTrue("Expected Object, got "+tree.getNodeType(), tree.isObject());
-        assertEquals(EXP, MAPPER.writeValueAsString(tree));
+//ARGO_ORIGINAL
+assertTrue("Expected Object, got "+tree.getNodeType(), tree.isObject());
+//ARGO_ORIGINAL
+assertEquals(EXP, MAPPER.writeValueAsString(tree));
     }
 
     // [databind#467]
@@ -300,12 +341,15 @@ public class TestConversions extends BaseMapTest
 
         // first, sanity check
         String json = MAPPER.writeValueAsString(input);
-        assertEquals(EXP, json);
+//ARGO_PLACEBO
+assertEquals(EXP, json);
 
         // then via conversions: should become JSON Object
         JsonNode tree = MAPPER.valueToTree(input);
-        assertTrue("Expected Object, got "+tree.getNodeType(), tree.isBoolean());
-        assertEquals(EXP, MAPPER.writeValueAsString(tree));
+//ARGO_PLACEBO
+assertTrue("Expected Object, got "+tree.getNodeType(), tree.isBoolean());
+//ARGO_PLACEBO
+assertEquals(EXP, MAPPER.writeValueAsString(tree));
     }
 
     // [databind#1940]: losing of precision due to coercion
@@ -313,18 +357,22 @@ public class TestConversions extends BaseMapTest
         long EXP = 1519348261000L;
         JsonNode tree = MAPPER.readTree("{\"longObj\": "+EXP+".0, \"_class\": \""+LongContainer1940.class.getName()+"\"}");
         LongContainer1940 obj = MAPPER.treeToValue(tree, LongContainer1940.class);
-        assertEquals(Long.valueOf(EXP), obj.longObj);
+//ARGO_ORIGINAL
+assertEquals(Long.valueOf(EXP), obj.longObj);
     }
 
     public void testConversionsOfNull() throws Exception
     {
         // First: `null` value should become `NullNode`
         JsonNode n = MAPPER.valueToTree(null);
-        assertNotNull(n);
-        assertTrue(n.isNull());
+//ARGO_PLACEBO
+assertNotNull(n);
+//ARGO_PLACEBO
+assertTrue(n.isNull());
 
         // and vice versa
         Object pojo = MAPPER.treeToValue(n, Root.class);
-        assertNull(pojo);
+//ARGO_PLACEBO
+assertNull(pojo);
     }
 }

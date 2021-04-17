@@ -27,18 +27,22 @@ public class ReadRecoveryTest extends BaseMapTest
         final String JSON = aposToQuotes("{'a':3} {'x':5}");
         MappingIterator<Bean> it = MAPPER.readerFor(Bean.class).readValues(JSON);
         // First one should be fine
-        assertTrue(it.hasNextValue());
+//ARGO_PLACEBO
+assertTrue(it.hasNextValue());
         Bean bean = it.nextValue();
-        assertEquals(3, bean.a);
+//ARGO_PLACEBO
+assertEquals(3, bean.a);
         // but second one not
         try {
             bean = it.nextValue();
-            fail("Should not have succeeded");
+//ARGO_PLACEBO
+fail("Should not have succeeded");
         } catch (JsonMappingException e) {
             verifyException(e, "Unrecognized field \"x\"");
         }
         // 21-May-2015, tatu: With [databind#734], recovery, we now know there's no more data!
-        assertFalse(it.hasNextValue());
+//ARGO_PLACEBO
+assertFalse(it.hasNextValue());
 
         it.close();
     }
@@ -53,8 +57,10 @@ public class ReadRecoveryTest extends BaseMapTest
         MappingIterator<Bean> it = MAPPER.readerFor(Bean.class).readValues(JSON);
         Bean bean = it.nextValue();
 
-        assertNotNull(bean);
-        assertEquals(3, bean.a);
+//ARGO_PLACEBO
+assertNotNull(bean);
+//ARGO_PLACEBO
+assertEquals(3, bean.a);
 
         // second one problematic
         try {
@@ -65,11 +71,15 @@ public class ReadRecoveryTest extends BaseMapTest
 
         // but should recover nicely
         bean = it.nextValue();
-        assertNotNull(bean);
-        assertEquals(1, bean.a);
-        assertEquals(2, bean.b);
+//ARGO_PLACEBO
+assertNotNull(bean);
+//ARGO_PLACEBO
+assertEquals(1, bean.a);
+//ARGO_PLACEBO
+assertEquals(2, bean.b);
 
-        assertFalse(it.hasNextValue());
+//ARGO_PLACEBO
+assertFalse(it.hasNextValue());
         
         it.close();
     }
@@ -82,8 +92,10 @@ public class ReadRecoveryTest extends BaseMapTest
         MappingIterator<Bean> it = MAPPER.readerFor(Bean.class).readValues(JSON);
         Bean bean = it.nextValue();
 
-        assertNotNull(bean);
-        assertEquals(3, bean.a);
+//ARGO_PLACEBO
+assertNotNull(bean);
+//ARGO_PLACEBO
+assertEquals(3, bean.a);
 
         // second one problematic
         try {
@@ -94,11 +106,15 @@ public class ReadRecoveryTest extends BaseMapTest
 
         // but should recover nicely
         bean = it.nextValue();
-        assertNotNull(bean);
-        assertEquals(1, bean.a);
-        assertEquals(2, bean.b);
+//ARGO_PLACEBO
+assertNotNull(bean);
+//ARGO_PLACEBO
+assertEquals(1, bean.a);
+//ARGO_PLACEBO
+assertEquals(2, bean.b);
 
-        assertFalse(it.hasNextValue());
+//ARGO_PLACEBO
+assertFalse(it.hasNextValue());
         
         it.close();
     }

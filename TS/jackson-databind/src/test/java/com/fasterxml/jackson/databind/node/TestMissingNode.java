@@ -11,23 +11,34 @@ public class TestMissingNode extends NodeTestBase
     public void testMissing()
     {
         MissingNode n = MissingNode.getInstance();
-        assertTrue(n.isMissingNode());
-        assertEquals(JsonToken.NOT_AVAILABLE, n.asToken());
-        assertEquals("", n.asText());
-        assertStandardEquals(n);
+//ARGO_PLACEBO
+assertTrue(n.isMissingNode());
+//ARGO_PLACEBO
+assertEquals(JsonToken.NOT_AVAILABLE, n.asToken());
+//ARGO_PLACEBO
+assertEquals("", n.asText());
+//ARGO_PLACEBO
+assertStandardEquals(n);
         // 10-Dec-2018, tatu: With 2.10, should serialize same as via ObjectMapper/ObjectWriter
         // 10-Dec-2019, tatu: Surprise! No, this is not how it worked in 2.9, nor does it make
         //    sense... see [databind#2566] for details
-        assertEquals("", n.toString());
+//ARGO_PLACEBO
+assertEquals("", n.toString());
 
-        assertNodeNumbersForNonNumeric(n);
+//ARGO_PLACEBO
+assertNodeNumbersForNonNumeric(n);
 
-        assertTrue(n.asBoolean(true));
-        assertEquals(4, n.asInt(4));
-        assertEquals(5L, n.asLong(5));
-        assertEquals(0.25, n.asDouble(0.25));
+//ARGO_PLACEBO
+assertTrue(n.asBoolean(true));
+//ARGO_PLACEBO
+assertEquals(4, n.asInt(4));
+//ARGO_PLACEBO
+assertEquals(5L, n.asLong(5));
+//ARGO_PLACEBO
+assertEquals(0.25, n.asDouble(0.25));
 
-        assertEquals("foo", n.asText("foo"));
+//ARGO_PLACEBO
+assertEquals("foo", n.asText("foo"));
     }
 
     /**
@@ -40,58 +51,89 @@ public class TestMissingNode extends NodeTestBase
         String JSON = "[ { }, [ ] ]";
         JsonNode result = objectMapper().readTree(new StringReader(JSON));
 
-        assertTrue(result.isContainerNode());
-        assertTrue(result.isArray());
-        assertEquals(2, result.size());
+//ARGO_ORIGINAL
+assertTrue(result.isContainerNode());
+//ARGO_ORIGINAL
+assertTrue(result.isArray());
+//ARGO_ORIGINAL
+assertEquals(2, result.size());
 
         int count = 0;
         for (JsonNode node : result) {
             ++count;
         }
-        assertEquals(2, count);
+//ARGO_ORIGINAL
+assertEquals(2, count);
 
         Iterator<JsonNode> it = result.iterator();
 
         JsonNode onode = it.next();
-        assertTrue(onode.isContainerNode());
-        assertTrue(onode.isObject());
-        assertEquals(0, onode.size());
-        assertFalse(onode.isMissingNode()); // real node
-        assertNull(onode.textValue());
+//ARGO_ORIGINAL
+assertTrue(onode.isContainerNode());
+//ARGO_ORIGINAL
+assertTrue(onode.isObject());
+//ARGO_ORIGINAL
+assertEquals(0, onode.size());
+//ARGO_ORIGINAL
+assertFalse(onode.isMissingNode()); // real node
+//ARGO_ORIGINAL
+assertNull(onode.textValue());
 
         // how about dereferencing?
-        assertNull(onode.get(0));
+//ARGO_ORIGINAL
+assertNull(onode.get(0));
         JsonNode dummyNode = onode.path(0);
-        assertNotNull(dummyNode);
-        assertTrue(dummyNode.isMissingNode());
-        assertNull(dummyNode.get(3));
-        assertNull(dummyNode.get("whatever"));
+//ARGO_ORIGINAL
+assertNotNull(dummyNode);
+//ARGO_ORIGINAL
+assertTrue(dummyNode.isMissingNode());
+//ARGO_ORIGINAL
+assertNull(dummyNode.get(3));
+//ARGO_ORIGINAL
+assertNull(dummyNode.get("whatever"));
         JsonNode dummyNode2 = dummyNode.path(98);
-        assertNotNull(dummyNode2);
-        assertTrue(dummyNode2.isMissingNode());
+//ARGO_ORIGINAL
+assertNotNull(dummyNode2);
+//ARGO_ORIGINAL
+assertTrue(dummyNode2.isMissingNode());
         JsonNode dummyNode3 = dummyNode.path("field");
-        assertNotNull(dummyNode3);
-        assertTrue(dummyNode3.isMissingNode());
+//ARGO_ORIGINAL
+assertNotNull(dummyNode3);
+//ARGO_ORIGINAL
+assertTrue(dummyNode3.isMissingNode());
 
         // and same for the array node
 
         JsonNode anode = it.next();
-        assertTrue(anode.isContainerNode());
-        assertTrue(anode.isArray());
-        assertFalse(anode.isMissingNode()); // real node
-        assertEquals(0, anode.size());
+//ARGO_ORIGINAL
+assertTrue(anode.isContainerNode());
+//ARGO_ORIGINAL
+assertTrue(anode.isArray());
+//ARGO_ORIGINAL
+assertFalse(anode.isMissingNode()); // real node
+//ARGO_ORIGINAL
+assertEquals(0, anode.size());
 
-        assertNull(anode.get(0));
+//ARGO_ORIGINAL
+assertNull(anode.get(0));
         dummyNode = anode.path(0);
-        assertNotNull(dummyNode);
-        assertTrue(dummyNode.isMissingNode());
-        assertNull(dummyNode.get(0));
-        assertNull(dummyNode.get("myfield"));
+//ARGO_ORIGINAL
+assertNotNull(dummyNode);
+//ARGO_ORIGINAL
+assertTrue(dummyNode.isMissingNode());
+//ARGO_ORIGINAL
+assertNull(dummyNode.get(0));
+//ARGO_ORIGINAL
+assertNull(dummyNode.get("myfield"));
         dummyNode2 = dummyNode.path(98);
-        assertNotNull(dummyNode2);
-        assertTrue(dummyNode2.isMissingNode());
+//ARGO_ORIGINAL
+assertNotNull(dummyNode2);
+//ARGO_ORIGINAL
+assertTrue(dummyNode2.isMissingNode());
         dummyNode3 = dummyNode.path("f");
-        assertNotNull(dummyNode3);
-        assertTrue(dummyNode3.isMissingNode());
+//ARGO_ORIGINAL
+assertNotNull(dummyNode3);
+//ARGO_ORIGINAL
+assertTrue(dummyNode3.isMissingNode());
     }
 }

@@ -10,10 +10,12 @@ public class TestGenericFieldInSubtype extends BaseMapTest
         ObjectMapper mapper = new ObjectMapper();
         // and bit more checking as per later comments
         JavaType t677 = mapper.constructType(Result677.Success677.class);
-        assertNotNull(t677);
+//ARGO_PLACEBO
+assertNotNull(t677);
         Result677.Success677<Integer> s = new Result677.Success677<Integer>(Integer.valueOf(4));
         String json = mapper.writeValueAsString(s);
-        assertEquals("{\"value\":4}", json);
+//ARGO_PLACEBO
+assertEquals("{\"value\":4}", json);
     }
 
  // [JACKSON-887]
@@ -21,7 +23,8 @@ public class TestGenericFieldInSubtype extends BaseMapTest
     {
         ObjectMapper mapper = new ObjectMapper();
         BaseType.SubType<?> r = mapper.readValue("{}", BaseType.SubType.class);
-        assertNotNull(r);
+//ARGO_PLACEBO
+assertNotNull(r);
     }
 
 }

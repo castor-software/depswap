@@ -40,13 +40,16 @@ public class DisablingCreatorsTest extends BaseMapTest
 
           // first, non-problematic case
           NonConflictingCreators value = mapper.readValue(quote("abc"), NonConflictingCreators.class);
-          assertNotNull(value);
-          assertEquals("abc", value._value);
+//ARGO_PLACEBO
+assertNotNull(value);
+//ARGO_PLACEBO
+assertEquals("abc", value._value);
 
           // then something that ought to fail
           try {
                /*ConflictingCreators value =*/ mapper.readValue(quote("abc"), ConflictingCreators.class);
-               fail("Should have failed with JsonCreator conflict");
+//ARGO_PLACEBO
+fail("Should have failed with JsonCreator conflict");
           } catch (JsonProcessingException e) {
                verifyException(e, "Conflicting property-based creators");
           }

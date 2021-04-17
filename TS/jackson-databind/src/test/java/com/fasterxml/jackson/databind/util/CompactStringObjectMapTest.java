@@ -14,15 +14,20 @@ public class CompactStringObjectMapTest extends BaseMapTest
             all.put(key, key);
         }
         CompactStringObjectMap map = CompactStringObjectMap.construct(all);
-        assertEquals(1000, map.keys().size());
+//ARGO_PLACEBO
+assertEquals(1000, map.keys().size());
 
         for (String key : all.keySet()) {
-            assertEquals(key, map.find(key));
+//ARGO_PLACEBO
+assertEquals(key, map.find(key));
         }
 
         // and then bogus empty keys
-        assertNull(map.find("key1000"));
-        assertNull(map.find("keyXXX"));
-        assertNull(map.find(""));
+//ARGO_PLACEBO
+assertNull(map.find("key1000"));
+//ARGO_PLACEBO
+assertNull(map.find("keyXXX"));
+//ARGO_PLACEBO
+assertNull(map.find(""));
     }
 }

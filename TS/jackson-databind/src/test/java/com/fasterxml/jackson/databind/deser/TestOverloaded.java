@@ -92,10 +92,12 @@ public class TestOverloaded
         try {
             bean = new ObjectMapper().readValue("{ \"a\" : 13 }", OverloadBean.class);
         } catch (JsonMappingException e) {
-            fail("Did not expect an exception, got: "+e.getMessage());
+//ARGO_PLACEBO
+fail("Did not expect an exception, got: "+e.getMessage());
             return;
         }
-        assertEquals("13", bean.a);
+//ARGO_PLACEBO
+assertEquals("13", bean.a);
     }
     */
 
@@ -107,12 +109,18 @@ public class TestOverloaded
     {
         ArrayListBean bean = MAPPER.readValue
             ("{\"list\":[\"a\",\"b\",\"c\"]}", ArrayListBean.class);
-        assertNotNull(bean.list);
-        assertEquals(3, bean.list.size());
-        assertEquals(ArrayList.class, bean.list.getClass());
-        assertEquals("a", bean.list.get(0));
-        assertEquals("b", bean.list.get(1));
-        assertEquals("c", bean.list.get(2));
+//ARGO_PLACEBO
+assertNotNull(bean.list);
+//ARGO_PLACEBO
+assertEquals(3, bean.list.size());
+//ARGO_PLACEBO
+assertEquals(ArrayList.class, bean.list.getClass());
+//ARGO_PLACEBO
+assertEquals("a", bean.list.get(0));
+//ARGO_PLACEBO
+assertEquals("b", bean.list.get(1));
+//ARGO_PLACEBO
+assertEquals("c", bean.list.get(2));
     }
 
     /**
@@ -123,8 +131,10 @@ public class TestOverloaded
     {
         WasNumberBean bean = MAPPER.readValue
             ("{\"value\" : \"abc\"}", WasNumberBean.class);
-        assertNotNull(bean);
-        assertEquals("abc", bean.value);
+//ARGO_PLACEBO
+assertNotNull(bean);
+//ARGO_PLACEBO
+assertEquals("abc", bean.value);
     }
 
     // for [JACKSON-739]
@@ -132,8 +142,10 @@ public class TestOverloaded
     {
         Overloaded739 bean = MAPPER.readValue
                 ("{\"value\":\"abc\"}", Overloaded739.class);
-        assertNotNull(bean);
-        assertEquals("abc", bean._value);
+//ARGO_PLACEBO
+assertNotNull(bean);
+//ARGO_PLACEBO
+assertEquals("abc", bean._value);
     }
     
     /*

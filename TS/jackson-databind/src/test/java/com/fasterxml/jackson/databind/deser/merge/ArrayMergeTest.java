@@ -40,21 +40,30 @@ public class ArrayMergeTest extends BaseMapTest
         MergedX<Object[]> result = MAPPER.readerFor(type)
                 .withValueToUpdate(input)
                 .readValue(aposToQuotes("{'value':['bar']}"));
-        assertSame(input, result);
-        assertEquals(2, result.value.length);
-        assertEquals("foo", result.value[0]);
-        assertEquals("bar", result.value[1]);
+//ARGO_PLACEBO
+assertSame(input, result);
+//ARGO_PLACEBO
+assertEquals(2, result.value.length);
+//ARGO_PLACEBO
+assertEquals("foo", result.value[0]);
+//ARGO_PLACEBO
+assertEquals("bar", result.value[1]);
 
         // and with one trick
         result = MAPPER.readerFor(type)
                 .with(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY)
                 .withValueToUpdate(input)
                 .readValue(aposToQuotes("{'value':'zap'}"));
-        assertSame(input, result);
-        assertEquals(3, result.value.length);
-        assertEquals("foo", result.value[0]);
-        assertEquals("bar", result.value[1]);
-        assertEquals("zap", result.value[2]);
+//ARGO_PLACEBO
+assertSame(input, result);
+//ARGO_PLACEBO
+assertEquals(3, result.value.length);
+//ARGO_PLACEBO
+assertEquals("foo", result.value[0]);
+//ARGO_PLACEBO
+assertEquals("bar", result.value[1]);
+//ARGO_PLACEBO
+assertEquals("zap", result.value[2]);
     }
 
     public void testStringArrayMerging() throws Exception
@@ -64,10 +73,14 @@ public class ArrayMergeTest extends BaseMapTest
                 .readerFor(new TypeReference<MergedX<String[]>>() {})
                 .withValueToUpdate(input)
                 .readValue(aposToQuotes("{'value':['bar']}"));
-        assertSame(input, result);
-        assertEquals(2, result.value.length);
-        assertEquals("foo", result.value[0]);
-        assertEquals("bar", result.value[1]);
+//ARGO_PLACEBO
+assertSame(input, result);
+//ARGO_PLACEBO
+assertEquals(2, result.value.length);
+//ARGO_PLACEBO
+assertEquals("foo", result.value[0]);
+//ARGO_PLACEBO
+assertEquals("bar", result.value[1]);
     }
 
     public void testBooleanArrayMerging() throws Exception
@@ -77,9 +90,12 @@ public class ArrayMergeTest extends BaseMapTest
                 .readerFor(new TypeReference<MergedX<boolean[]>>() {})
                 .withValueToUpdate(input)
                 .readValue(aposToQuotes("{'value':[true]}"));
-        assertSame(input, result);
-        assertEquals(3, result.value.length);
-        Assert.assertArrayEquals(new boolean[] { true, false, true }, result.value);
+//ARGO_PLACEBO
+assertSame(input, result);
+//ARGO_PLACEBO
+assertEquals(3, result.value.length);
+        Assert.//ARGO_PLACEBO
+assertArrayEquals(new boolean[] { true, false, true }, result.value);
     }
 
     public void testByteArrayMerging() throws Exception
@@ -89,9 +105,12 @@ public class ArrayMergeTest extends BaseMapTest
                 .readerFor(new TypeReference<MergedX<byte[]>>() {})
                 .withValueToUpdate(input)
                 .readValue(aposToQuotes("{'value':[4, 6.0, null]}"));
-        assertSame(input, result);
-        assertEquals(5, result.value.length);
-        Assert.assertArrayEquals(new byte[] { 1, 2, 4, 6, 0 }, result.value);
+//ARGO_PLACEBO
+assertSame(input, result);
+//ARGO_PLACEBO
+assertEquals(5, result.value.length);
+        Assert.//ARGO_PLACEBO
+assertArrayEquals(new byte[] { 1, 2, 4, 6, 0 }, result.value);
     }
 
     public void testShortArrayMerging() throws Exception
@@ -101,9 +120,12 @@ public class ArrayMergeTest extends BaseMapTest
                 .readerFor(new TypeReference<MergedX<short[]>>() {})
                 .withValueToUpdate(input)
                 .readValue(aposToQuotes("{'value':[4, 6]}"));
-        assertSame(input, result);
-        assertEquals(4, result.value.length);
-        Assert.assertArrayEquals(new short[] { 1, 2, 4, 6 }, result.value);
+//ARGO_PLACEBO
+assertSame(input, result);
+//ARGO_PLACEBO
+assertEquals(4, result.value.length);
+        Assert.//ARGO_PLACEBO
+assertArrayEquals(new short[] { 1, 2, 4, 6 }, result.value);
     }
 
     public void testCharArrayMerging() throws Exception
@@ -113,8 +135,10 @@ public class ArrayMergeTest extends BaseMapTest
                 .readerFor(new TypeReference<MergedX<char[]>>() {})
                 .withValueToUpdate(input)
                 .readValue(aposToQuotes("{'value':['c']}"));
-        assertSame(input, result);
-        Assert.assertArrayEquals(new char[] { 'a', 'b', 'c' }, result.value);
+//ARGO_PLACEBO
+assertSame(input, result);
+        Assert.//ARGO_PLACEBO
+assertArrayEquals(new char[] { 'a', 'b', 'c' }, result.value);
 
         // also some variation
         input = new MergedX<char[]>(new char[] { });
@@ -122,8 +146,10 @@ public class ArrayMergeTest extends BaseMapTest
                 .readerFor(new TypeReference<MergedX<char[]>>() {})
                 .withValueToUpdate(input)
                 .readValue(aposToQuotes("{'value':['c']}"));
-        assertSame(input, result);
-        Assert.assertArrayEquals(new char[] { 'c' }, result.value);
+//ARGO_PLACEBO
+assertSame(input, result);
+        Assert.//ARGO_PLACEBO
+assertArrayEquals(new char[] { 'c' }, result.value);
     }
     
     public void testIntArrayMerging() throws Exception
@@ -133,9 +159,12 @@ public class ArrayMergeTest extends BaseMapTest
                 .readerFor(new TypeReference<MergedX<int[]>>() {})
                 .withValueToUpdate(input)
                 .readValue(aposToQuotes("{'value':[4, 6]}"));
-        assertSame(input, result);
-        assertEquals(4, result.value.length);
-        Assert.assertArrayEquals(new int[] { 1, 2, 4, 6 }, result.value);
+//ARGO_PLACEBO
+assertSame(input, result);
+//ARGO_PLACEBO
+assertEquals(4, result.value.length);
+        Assert.//ARGO_PLACEBO
+assertArrayEquals(new int[] { 1, 2, 4, 6 }, result.value);
 
         // also some variation
         input = new MergedX<int[]>(new int[] { 3, 4, 6 });
@@ -143,8 +172,10 @@ public class ArrayMergeTest extends BaseMapTest
                 .readerFor(new TypeReference<MergedX<int[]>>() {})
                 .withValueToUpdate(input)
                 .readValue(aposToQuotes("{'value':[ ]}"));
-        assertSame(input, result);
-        Assert.assertArrayEquals(new int[] { 3, 4, 6 }, result.value);
+//ARGO_PLACEBO
+assertSame(input, result);
+        Assert.//ARGO_PLACEBO
+assertArrayEquals(new int[] { 3, 4, 6 }, result.value);
     }
 
     public void testLongArrayMerging() throws Exception
@@ -154,8 +185,11 @@ public class ArrayMergeTest extends BaseMapTest
                 .readerFor(new TypeReference<MergedX<long[]>>() {})
                 .withValueToUpdate(input)
                 .readValue(aposToQuotes("{'value':[4, 6]}"));
-        assertSame(input, result);
-        assertEquals(4, result.value.length);
-        Assert.assertArrayEquals(new long[] { 1, 2, 4, 6 }, result.value);
+//ARGO_PLACEBO
+assertSame(input, result);
+//ARGO_PLACEBO
+assertEquals(4, result.value.length);
+        Assert.//ARGO_PLACEBO
+assertArrayEquals(new long[] { 1, 2, 4, 6 }, result.value);
     }
 }

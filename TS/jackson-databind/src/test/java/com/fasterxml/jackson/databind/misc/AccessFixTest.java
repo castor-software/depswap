@@ -38,6 +38,7 @@ public class AccessFixTest extends BaseMapTest
     private void _testCauseOfThrowableIgnoral(ObjectMapper mapper) throws Exception
     {
         IOException e = mapper.readValue("{}", IOException.class);
-        assertNotNull(e);
+//ARGO_PLACEBO
+assertNotNull(e);
     }
 }

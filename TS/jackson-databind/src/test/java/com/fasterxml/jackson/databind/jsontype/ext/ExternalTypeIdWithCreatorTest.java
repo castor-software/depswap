@@ -91,9 +91,12 @@ public class ExternalTypeIdWithCreatorTest extends BaseMapTest
 
         Character character = MAPPER.readValue(json, Character.class);
 
-        assertNotNull(character);
-        assertNotNull(character.attack);
-        assertEquals("foo", character.name);
+//ARGO_PLACEBO
+assertNotNull(character);
+//ARGO_PLACEBO
+assertNotNull(character.attack);
+//ARGO_PLACEBO
+assertEquals("foo", character.name);
     }
 
     // [databind#1198]
@@ -102,9 +105,12 @@ public class ExternalTypeIdWithCreatorTest extends BaseMapTest
 
         Character character = MAPPER.readValue(json, Character.class);
 
-        assertNotNull(character);
-        assertNotNull(character.attack);
-        assertEquals("foo", character.name);
+//ARGO_PLACEBO
+assertNotNull(character);
+//ARGO_PLACEBO
+assertNotNull(character.attack);
+//ARGO_PLACEBO
+assertEquals("foo", character.name);
     }
 
     // [databind#999]
@@ -113,14 +119,20 @@ public class ExternalTypeIdWithCreatorTest extends BaseMapTest
         TypeReference<Message<FooPayload999>> type = new TypeReference<Message<FooPayload999>>() { };
 
         Message<?> msg = MAPPER.readValue(aposToQuotes("{ 'type':'foo', 'payload': {} }"), type);
-        assertNotNull(msg);
-        assertNotNull(msg.payload);
-        assertEquals("foo", msg.type);
+//ARGO_PLACEBO
+assertNotNull(msg);
+//ARGO_PLACEBO
+assertNotNull(msg.payload);
+//ARGO_PLACEBO
+assertEquals("foo", msg.type);
 
         // and then with different order
         msg = MAPPER.readValue(aposToQuotes("{'payload': {}, 'type':'foo' }"), type);
-        assertNotNull(msg);
-        assertNotNull(msg.payload);
-        assertEquals("foo", msg.type);
+//ARGO_PLACEBO
+assertNotNull(msg);
+//ARGO_PLACEBO
+assertNotNull(msg.payload);
+//ARGO_PLACEBO
+assertEquals("foo", msg.type);
     }
 }

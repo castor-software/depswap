@@ -23,22 +23,26 @@ public class ISO8601DateFormatTest extends BaseMapTest
 
     public void testFormat() {
         String result = df.format(date);
-        assertEquals("2007-08-13T19:51:23Z", result);
+//ARGO_PLACEBO
+assertEquals("2007-08-13T19:51:23Z", result);
     }
 
     public void testParse() throws Exception {
         Date result = df.parse("2007-08-13T19:51:23Z");
-        assertEquals(date, result);
+//ARGO_PLACEBO
+assertEquals(date, result);
 
         // Test parsing date-only values with and without a timezone designation
         Date dateOnly = df.parse("2007-08-14");
         Calendar cal = new GregorianCalendar(2007, 8-1, 14);
-        assertEquals(cal.getTime(), dateOnly);
+//ARGO_PLACEBO
+assertEquals(cal.getTime(), dateOnly);
 
         dateOnly = df.parse("2007-08-14Z");
         cal = new GregorianCalendar(2007, 8-1, 14);
         cal.setTimeZone(TimeZone.getTimeZone("GMT"));
-        assertEquals(cal.getTime(), dateOnly);
+//ARGO_PLACEBO
+assertEquals(cal.getTime(), dateOnly);
     }
 
     public void testPartialParse() throws Exception {
@@ -46,19 +50,23 @@ public class ISO8601DateFormatTest extends BaseMapTest
         String timestamp = "2007-08-13T19:51:23Z";
         Date result = df.parse(timestamp + "hello", pos);
         
-        assertEquals(date, result);
-        assertEquals(timestamp.length(), pos.getIndex());
+//ARGO_PLACEBO
+assertEquals(date, result);
+//ARGO_PLACEBO
+assertEquals(timestamp.length(), pos.getIndex());
     }
 
     public void testCloneObject() throws Exception {
         DateFormat clone = (DateFormat)df.clone();
-        assertSame(df, clone);
+//ARGO_PLACEBO
+assertSame(df, clone);
     }
 
     public void testHashCodeEquals() throws Exception {
         // for [databind#1130]
         DateFormat defaultDF = StdDateFormat.instance;
         defaultDF.hashCode();
-        assertTrue(defaultDF.equals(defaultDF));
+//ARGO_PLACEBO
+assertTrue(defaultDF.equals(defaultDF));
     }
 }

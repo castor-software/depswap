@@ -83,97 +83,130 @@ public class FormatFeatureAcceptSingleTest extends BaseMapTest
         String json = aposToQuotes(
                 "{ 'values': 'first' }");
         StringArrayWrapper result = MAPPER.readValue(json, StringArrayWrapper.class);
-        assertNotNull(result.values);
-        assertEquals(1, result.values.length);
-        assertEquals("first", result.values[0]);
+//ARGO_PLACEBO
+assertNotNull(result.values);
+//ARGO_PLACEBO
+assertEquals(1, result.values.length);
+//ARGO_PLACEBO
+assertEquals("first", result.values[0]);
 
         // and then without annotation, but with global override
         ObjectMapper mapper = new ObjectMapper();
         mapper.configOverride(String[].class).setFormat(JsonFormat.Value.empty()
                 .withFeature(JsonFormat.Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY));
         StringArrayNotAnnoted result2 = mapper.readValue(json, StringArrayNotAnnoted.class);
-        assertNotNull(result2.values);
-        assertEquals(1, result2.values.length);
-        assertEquals("first", result2.values[0]);
+//ARGO_PLACEBO
+assertNotNull(result2.values);
+//ARGO_PLACEBO
+assertEquals(1, result2.values.length);
+//ARGO_PLACEBO
+assertEquals("first", result2.values[0]);
     }
 
     public void testSingleIntArrayRead() throws Exception {
         String json = aposToQuotes(
                 "{ 'values': 123 }");
         IntArrayWrapper result = MAPPER.readValue(json, IntArrayWrapper.class);
-        assertNotNull(result.values);
-        assertEquals(1, result.values.length);
-        assertEquals(123, result.values[0]);
+//ARGO_PLACEBO
+assertNotNull(result.values);
+//ARGO_PLACEBO
+assertEquals(1, result.values.length);
+//ARGO_PLACEBO
+assertEquals(123, result.values[0]);
     }
 
     public void testSingleLongArrayRead() throws Exception {
         String json = aposToQuotes(
                 "{ 'values': -205 }");
         LongArrayWrapper result = MAPPER.readValue(json, LongArrayWrapper.class);
-        assertNotNull(result.values);
-        assertEquals(1, result.values.length);
-        assertEquals(-205L, result.values[0]);
+//ARGO_PLACEBO
+assertNotNull(result.values);
+//ARGO_PLACEBO
+assertEquals(1, result.values.length);
+//ARGO_PLACEBO
+assertEquals(-205L, result.values[0]);
     }
 
     public void testSingleBooleanArrayRead() throws Exception {
         String json = aposToQuotes(
                 "{ 'values': true }");
         BooleanArrayWrapper result = MAPPER.readValue(json, BooleanArrayWrapper.class);
-        assertNotNull(result.values);
-        assertEquals(1, result.values.length);
-        assertEquals(true, result.values[0]);
+//ARGO_PLACEBO
+assertNotNull(result.values);
+//ARGO_PLACEBO
+assertEquals(1, result.values.length);
+//ARGO_PLACEBO
+assertEquals(true, result.values[0]);
     }
 
     public void testSingleDoubleArrayRead() throws Exception {
         String json = aposToQuotes(
                 "{ 'values': -0.5 }");
         DoubleArrayWrapper result = MAPPER.readValue(json, DoubleArrayWrapper.class);
-        assertNotNull(result.values);
-        assertEquals(1, result.values.length);
-        assertEquals(-0.5, result.values[0]);
+//ARGO_PLACEBO
+assertNotNull(result.values);
+//ARGO_PLACEBO
+assertEquals(1, result.values.length);
+//ARGO_PLACEBO
+assertEquals(-0.5, result.values[0]);
     }
 
     public void testSingleFloatArrayRead() throws Exception {
         String json = aposToQuotes(
                 "{ 'values': 0.25 }");
         FloatArrayWrapper result = MAPPER.readValue(json, FloatArrayWrapper.class);
-        assertNotNull(result.values);
-        assertEquals(1, result.values.length);
-        assertEquals(0.25f, result.values[0]);
+//ARGO_PLACEBO
+assertNotNull(result.values);
+//ARGO_PLACEBO
+assertEquals(1, result.values.length);
+//ARGO_PLACEBO
+assertEquals(0.25f, result.values[0]);
     }
     
     public void testSingleElementArrayRead() throws Exception {
         String json = aposToQuotes(
                 "{ 'roles': { 'Name': 'User', 'ID': '333' } }");
         RolesInArray response = MAPPER.readValue(json, RolesInArray.class);
-        assertNotNull(response.roles);
-        assertEquals(1, response.roles.length);
-        assertEquals("333", response.roles[0].ID);
+//ARGO_PLACEBO
+assertNotNull(response.roles);
+//ARGO_PLACEBO
+assertEquals(1, response.roles.length);
+//ARGO_PLACEBO
+assertEquals("333", response.roles[0].ID);
     }
     
     public void testSingleStringListRead() throws Exception {
         String json = aposToQuotes(
                 "{ 'values': 'first' }");
         StringListWrapper result = MAPPER.readValue(json, StringListWrapper.class);
-        assertNotNull(result.values);
-        assertEquals(1, result.values.size());
-        assertEquals("first", result.values.get(0));
+//ARGO_PLACEBO
+assertNotNull(result.values);
+//ARGO_PLACEBO
+assertEquals(1, result.values.size());
+//ARGO_PLACEBO
+assertEquals("first", result.values.get(0));
     }
 
     public void testSingleElementListRead() throws Exception {
         String json = aposToQuotes(
                 "{ 'roles': { 'Name': 'User', 'ID': '333' } }");
         RolesInList response = MAPPER.readValue(json, RolesInList.class);
-        assertNotNull(response.roles);
-        assertEquals(1, response.roles.size());
-        assertEquals("333", response.roles.get(0).ID);
+//ARGO_PLACEBO
+assertNotNull(response.roles);
+//ARGO_PLACEBO
+assertEquals(1, response.roles.size());
+//ARGO_PLACEBO
+assertEquals("333", response.roles.get(0).ID);
     }
 
     public void testSingleEnumSetRead() throws Exception {
         EnumSetWrapper result = MAPPER.readValue(aposToQuotes("{ 'values': 'B' }"),
                 EnumSetWrapper.class);
-        assertNotNull(result.values);
-        assertEquals(1, result.values.size());
-        assertEquals(ABC.B, result.values.iterator().next());
+//ARGO_PLACEBO
+assertNotNull(result.values);
+//ARGO_PLACEBO
+assertEquals(1, result.values.size());
+//ARGO_PLACEBO
+assertEquals(ABC.B, result.values.iterator().next());
     }
 }

@@ -38,6 +38,7 @@ public class MixinsWithBundlesTest extends BaseMapTest
     {
         ObjectMapper mapper = new ObjectMapper().addMixIn(Foo.class, FooMixin.class);
         String result = mapper.writeValueAsString(new Foo("result"));
-        assertEquals("{\"bar\":\"result\"}", result);
+//ARGO_PLACEBO
+assertEquals("{\"bar\":\"result\"}", result);
     }
 }

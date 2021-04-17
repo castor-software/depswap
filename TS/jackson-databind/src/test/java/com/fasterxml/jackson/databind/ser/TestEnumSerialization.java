@@ -142,13 +142,15 @@ public class TestEnumSerialization
     
     public void testSimple() throws Exception
     {
-        assertEquals("\"B\"", MAPPER.writeValueAsString(TestEnum.B));
+//ARGO_PLACEBO
+assertEquals("\"B\"", MAPPER.writeValueAsString(TestEnum.B));
     }
 
     public void testEnumSet() throws Exception
     {
         final EnumSet<TestEnum> value = EnumSet.of(TestEnum.B);
-        assertEquals("[\"B\"]", MAPPER.writeValueAsString(value));
+//ARGO_PLACEBO
+assertEquals("[\"B\"]", MAPPER.writeValueAsString(value));
     }
 
     /**
@@ -158,16 +160,19 @@ public class TestEnumSerialization
      */
     public void testEnumUsingToString() throws Exception
     {
-        assertEquals("\"c2\"", MAPPER.writeValueAsString(AnnotatedTestEnum.C2));
+//ARGO_PLACEBO
+assertEquals("\"c2\"", MAPPER.writeValueAsString(AnnotatedTestEnum.C2));
     }
 
     public void testSubclassedEnums() throws Exception
     {
-        assertEquals("\"B\"", MAPPER.writeValueAsString(EnumWithSubClass.B));
+//ARGO_PLACEBO
+assertEquals("\"B\"", MAPPER.writeValueAsString(EnumWithSubClass.B));
     }
 
     public void testEnumsWithJsonValue() throws Exception {
-        assertEquals("\"value:bar\"", MAPPER.writeValueAsString(EnumWithJsonValue.B));
+//ARGO_PLACEBO
+assertEquals("\"value:bar\"", MAPPER.writeValueAsString(EnumWithJsonValue.B));
     }
 
     public void testEnumsWithJsonValueUsingMixin() throws Exception
@@ -175,7 +180,8 @@ public class TestEnumSerialization
         // can't share, as new mix-ins are added
         ObjectMapper m = new ObjectMapper();
         m.addMixIn(TestEnum.class, ToStringMixin.class);
-        assertEquals("\"b\"", m.writeValueAsString(TestEnum.B));
+//ARGO_PLACEBO
+assertEquals("\"b\"", m.writeValueAsString(TestEnum.B));
     }
 
     // [databind#601]
@@ -184,7 +190,8 @@ public class TestEnumSerialization
         EnumMap<EnumWithJsonValue,String> input = new EnumMap<EnumWithJsonValue,String>(EnumWithJsonValue.class);
         input.put(EnumWithJsonValue.B, "x");
         // 24-Sep-2015, tatu: SHOULD actually use annotated method, as per:
-        assertEquals("{\"value:bar\":\"x\"}", MAPPER.writeValueAsString(input));
+//ARGO_PLACEBO
+assertEquals("{\"value:bar\":\"x\"}", MAPPER.writeValueAsString(input));
     }
 
     /**
@@ -193,17 +200,20 @@ public class TestEnumSerialization
      */
     public void testSerializableEnum() throws Exception
     {
-        assertEquals("\"foo\"", MAPPER.writeValueAsString(SerializableEnum.A));
+//ARGO_PLACEBO
+assertEquals("\"foo\"", MAPPER.writeValueAsString(SerializableEnum.A));
     }
 
     public void testToStringEnum() throws Exception
     {
         ObjectMapper m = new ObjectMapper();
         m.configure(SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-        assertEquals("\"b\"", m.writeValueAsString(LowerCaseEnum.B));
+//ARGO_PLACEBO
+assertEquals("\"b\"", m.writeValueAsString(LowerCaseEnum.B));
 
         // [databind#749] but should also be able to dynamically disable
-        assertEquals("\"B\"",
+//ARGO_PLACEBO
+assertEquals("\"B\"",
                 m.writer().without(SerializationFeature.WRITE_ENUMS_USING_TO_STRING)
                     .writeValueAsString(LowerCaseEnum.B));
     }
@@ -214,26 +224,33 @@ public class TestEnumSerialization
         m.enable(SerializationFeature.WRITE_ENUMS_USING_TO_STRING);
         EnumMap<LowerCaseEnum,String> enums = new EnumMap<LowerCaseEnum,String>(LowerCaseEnum.class);
         enums.put(LowerCaseEnum.C, "value");
-        assertEquals("{\"c\":\"value\"}", m.writeValueAsString(enums));
+//ARGO_PLACEBO
+assertEquals("{\"c\":\"value\"}", m.writeValueAsString(enums));
     }
 
     public void testAsIndex() throws Exception
     {
         // By default, serialize using name
         ObjectMapper m = new ObjectMapper();
-        assertFalse(m.isEnabled(SerializationFeature.WRITE_ENUMS_USING_INDEX));
-        assertEquals(quote("B"), m.writeValueAsString(TestEnum.B));
+//ARGO_PLACEBO
+assertFalse(m.isEnabled(SerializationFeature.WRITE_ENUMS_USING_INDEX));
+//ARGO_PLACEBO
+assertEquals(quote("B"), m.writeValueAsString(TestEnum.B));
 
         // but we can change (dynamically, too!) it to be number-based
         m.enable(SerializationFeature.WRITE_ENUMS_USING_INDEX);
-        assertEquals("1", m.writeValueAsString(TestEnum.B));
+//ARGO_PLACEBO
+assertEquals("1", m.writeValueAsString(TestEnum.B));
     }
 
     public void testAnnotationsOnEnumCtor() throws Exception
     {
-        assertEquals(quote("V1"), MAPPER.writeValueAsString(OK.V1));
-        assertEquals(quote("V1"), MAPPER.writeValueAsString(NOT_OK.V1));
-        assertEquals(quote("V2"), MAPPER.writeValueAsString(NOT_OK2.V2));
+//ARGO_PLACEBO
+assertEquals(quote("V1"), MAPPER.writeValueAsString(OK.V1));
+//ARGO_PLACEBO
+assertEquals(quote("V1"), MAPPER.writeValueAsString(NOT_OK.V1));
+//ARGO_PLACEBO
+assertEquals(quote("V2"), MAPPER.writeValueAsString(NOT_OK2.V2));
     }
 
     // [databind#227]
@@ -244,7 +261,8 @@ public class TestEnumSerialization
         SimpleModule module = new SimpleModule("foobar");
         module.addSerializer(Enum.class, new LowerCasingEnumSerializer());
         m.registerModule(module);
-        assertEquals(quote("b"), m.writeValueAsString(TestEnum.B));
+//ARGO_PLACEBO
+assertEquals(quote("b"), m.writeValueAsString(TestEnum.B));
     }
 
     // [databind#749]
@@ -253,7 +271,8 @@ public class TestEnumSerialization
         final ObjectMapper mapper = newJsonMapper();
         EnumMap<LC749Enum, String> m = new EnumMap<LC749Enum, String>(LC749Enum.class);
         m.put(LC749Enum.A, "value");
-        assertEquals("{\"A\":\"value\"}", mapper.writeValueAsString(m));
+//ARGO_PLACEBO
+assertEquals("{\"A\":\"value\"}", mapper.writeValueAsString(m));
     }
     
     public void testEnumMapSerDisableToString() throws Exception {
@@ -261,7 +280,8 @@ public class TestEnumSerialization
         ObjectWriter w = mapper.writer().without(SerializationFeature.WRITE_ENUMS_USING_TO_STRING);
         EnumMap<LC749Enum, String> m = new EnumMap<LC749Enum, String>(LC749Enum.class);
         m.put(LC749Enum.A, "value");
-        assertEquals("{\"A\":\"value\"}", w.writeValueAsString(m));
+//ARGO_PLACEBO
+assertEquals("{\"A\":\"value\"}", w.writeValueAsString(m));
     }
 
     public void testEnumMapSerEnableToString() throws Exception {
@@ -269,25 +289,29 @@ public class TestEnumSerialization
         ObjectWriter w = mapper.writer().with(SerializationFeature.WRITE_ENUMS_USING_TO_STRING);
         EnumMap<LC749Enum, String> m = new EnumMap<LC749Enum, String>(LC749Enum.class);
         m.put(LC749Enum.A, "value");
-        assertEquals("{\"a\":\"value\"}", w.writeValueAsString(m));
+//ARGO_PLACEBO
+assertEquals("{\"a\":\"value\"}", w.writeValueAsString(m));
     }
 
     // [databind#1322]
     public void testEnumsWithJsonProperty() throws Exception {
-        assertEquals(quote("aleph"), MAPPER.writeValueAsString(EnumWithJsonProperty.A));
+//ARGO_PLACEBO
+assertEquals(quote("aleph"), MAPPER.writeValueAsString(EnumWithJsonProperty.A));
     }
 
     // [databind#1535]
     public void testEnumKeysWithJsonProperty() throws Exception {
         Map<EnumWithJsonProperty,Integer> input = new HashMap<EnumWithJsonProperty,Integer>();
         input.put(EnumWithJsonProperty.A, 13);
-        assertEquals(aposToQuotes("{'aleph':13}"), MAPPER.writeValueAsString(input));
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'aleph':13}"), MAPPER.writeValueAsString(input));
     }
 
     // [databind#1322]
     public void testEnumsWithJsonPropertyInSet() throws Exception
     {
-        assertEquals("[\"aleph\"]",
+//ARGO_PLACEBO
+assertEquals("[\"aleph\"]",
                 MAPPER.writeValueAsString(EnumSet.of(EnumWithJsonProperty.A)));
     }
 
@@ -296,7 +320,8 @@ public class TestEnumSerialization
     {
         EnumMap<EnumWithJsonProperty,String> input = new EnumMap<EnumWithJsonProperty,String>(EnumWithJsonProperty.class);
         input.put(EnumWithJsonProperty.A, "b");
-        assertEquals("{\"aleph\":\"b\"}", MAPPER.writeValueAsString(input));
+//ARGO_PLACEBO
+assertEquals("{\"aleph\":\"b\"}", MAPPER.writeValueAsString(input));
     }
 }
 

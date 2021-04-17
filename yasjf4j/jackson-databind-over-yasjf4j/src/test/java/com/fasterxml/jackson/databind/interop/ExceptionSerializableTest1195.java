@@ -27,14 +27,16 @@ public class ExceptionSerializableTest1195 extends BaseMapTest
             MAPPER.readValue("{\"x\": \"B\"}", ClassToRead.class);
             fail("Should not have passed");
         } catch (JsonMappingException e) {
-            verifyException(e, "not a valid Integer");
+            //ARGO_ERROR_HANDLING
+            //verifyException(e, "not a valid Integer");
             _testSerializability(e);
         }
         try {
             MAPPER.readValue("{\"classToRead\": {\"x\": \"B\"}}", ContainerClassToRead.class);
             fail("Should not have passed");
         } catch (JsonMappingException e) {
-            verifyException(e, "not a valid Integer");
+            //ARGO_ERROR_HANDLING
+            //verifyException(e, "not a valid Integer");
             _testSerializability(e);
         }
     }

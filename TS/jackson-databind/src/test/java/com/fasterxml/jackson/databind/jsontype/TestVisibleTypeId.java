@@ -163,52 +163,64 @@ public class TestVisibleTypeId extends BaseMapTest
     {
         String json = MAPPER.writeValueAsString(new PropertyBean());
         // just default behavior:
-        assertEquals("{\"type\":\"BaseType\",\"a\":3}", json);
+//ARGO_PLACEBO
+assertEquals("{\"type\":\"BaseType\",\"a\":3}", json);
         // but then expect to read it back
         PropertyBean result = MAPPER.readValue(json, PropertyBean.class);
-        assertEquals("BaseType", result.type);
+//ARGO_PLACEBO
+assertEquals("BaseType", result.type);
 
         // also, should work with order reversed
         result = MAPPER.readValue("{\"a\":7, \"type\":\"BaseType\"}", PropertyBean.class);
-        assertEquals(7, result.a);
-        assertEquals("BaseType", result.type);
+//ARGO_PLACEBO
+assertEquals(7, result.a);
+//ARGO_PLACEBO
+assertEquals("BaseType", result.type);
     }
 
     public void testVisibleWithWrapperArray() throws Exception
     {
         String json = MAPPER.writeValueAsString(new WrapperArrayBean());
         // just default behavior:
-        assertEquals("[\"ArrayType\",{\"a\":1}]", json);
+//ARGO_PLACEBO
+assertEquals("[\"ArrayType\",{\"a\":1}]", json);
         // but then expect to read it back
         WrapperArrayBean result = MAPPER.readValue(json, WrapperArrayBean.class);
-        assertEquals("ArrayType", result.type);
-        assertEquals(1, result.a);
+//ARGO_PLACEBO
+assertEquals("ArrayType", result.type);
+//ARGO_PLACEBO
+assertEquals(1, result.a);
     }
 
     public void testVisibleWithWrapperObject() throws Exception
     {
         String json = MAPPER.writeValueAsString(new WrapperObjectBean());
-        assertEquals("{\"ObjectType\":{\"a\":2}}", json);
+//ARGO_PLACEBO
+assertEquals("{\"ObjectType\":{\"a\":2}}", json);
         // but then expect to read it back
         WrapperObjectBean result = MAPPER.readValue(json, WrapperObjectBean.class);
-        assertEquals("ObjectType", result.type);
+//ARGO_PLACEBO
+assertEquals("ObjectType", result.type);
     }
 
     public void testTypeIdFromProperty() throws Exception
     {
-        assertEquals("{\"type\":\"SomeType\",\"a\":3}",
+//ARGO_PLACEBO
+assertEquals("{\"type\":\"SomeType\",\"a\":3}",
                 MAPPER.writeValueAsString(new TypeIdFromFieldProperty()));
     }
 
     public void testTypeIdFromArray() throws Exception
     {
-        assertEquals("[\"SomeType\",{\"a\":3}]",
+//ARGO_PLACEBO
+assertEquals("[\"SomeType\",{\"a\":3}]",
                 MAPPER.writeValueAsString(new TypeIdFromFieldArray()));
     }
 
     public void testTypeIdFromObject() throws Exception
     {
-        assertEquals("{\"SomeType\":{\"a\":3}}",
+//ARGO_PLACEBO
+assertEquals("{\"SomeType\":{\"a\":3}}",
                 MAPPER.writeValueAsString(new TypeIdFromMethodObject()));
     }
 
@@ -216,19 +228,23 @@ public class TestVisibleTypeId extends BaseMapTest
     {
         String json = MAPPER.writeValueAsString(new ExternalIdWrapper2());
         // Implementation detail: type id written AFTER value, due to constraints
-        assertEquals("{\"bean\":{\"a\":2},\"type\":\"SomeType\"}", json);
+//ARGO_PLACEBO
+assertEquals("{\"bean\":{\"a\":2},\"type\":\"SomeType\"}", json);
         
     }
     
     public void testIssue263() throws Exception
     {
         // first, serialize:
-        assertEquals("{\"name\":\"bob\",\"age\":41}", MAPPER.writeValueAsString(new I263Impl()));
+//ARGO_PLACEBO
+assertEquals("{\"name\":\"bob\",\"age\":41}", MAPPER.writeValueAsString(new I263Impl()));
         
         // then bring back:
         I263Base result = MAPPER.readValue("{\"age\":19,\"name\":\"bob\"}", I263Base.class);
-        assertTrue(result instanceof I263Impl);
-        assertEquals(19, ((I263Impl) result).age);
+//ARGO_PLACEBO
+assertTrue(result instanceof I263Impl);
+//ARGO_PLACEBO
+assertEquals(19, ((I263Impl) result).age);
     }
 
     // [databind#408]
@@ -240,10 +256,14 @@ public class TestVisibleTypeId extends BaseMapTest
     {
         String json = MAPPER.writeValueAsString(new ExternalBeanWithId(3));
         ExternalBeanWithId result = MAPPER.readValue(json, ExternalBeanWithId.class);
-        assertNotNull(result);
-        assertNotNull(result.bean);
-        assertEquals(3, result.bean.value);
-        assertEquals("vbean", result._type);
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertNotNull(result.bean);
+//ARGO_PLACEBO
+assertEquals(3, result.bean.value);
+//ARGO_PLACEBO
+assertEquals("vbean", result._type);
     }
     
     /*
@@ -256,7 +276,8 @@ public class TestVisibleTypeId extends BaseMapTest
     {
         try {
             MAPPER.writeValueAsString(new MultipleIds());
-            fail("Should have failed");
+//ARGO_PLACEBO
+fail("Should have failed");
         } catch (JsonMappingException e) {
             verifyException(e, "multiple type ids");
         }

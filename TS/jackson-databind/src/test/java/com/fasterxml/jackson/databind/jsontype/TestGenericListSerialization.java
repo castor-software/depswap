@@ -65,17 +65,27 @@ public class TestGenericListSerialization
 
         List<Parent> deserializedContent = out.getResult();
 
-        assertEquals(2, deserializedContent.size());
-        assertTrue(deserializedContent.get(0) instanceof Parent);
-        assertTrue(deserializedContent.get(0) instanceof Child1);
-        assertFalse(deserializedContent.get(0) instanceof Child2);
-        assertTrue(deserializedContent.get(1) instanceof Child2);
-        assertFalse(deserializedContent.get(1) instanceof Child1);
+//ARGO_PLACEBO
+assertEquals(2, deserializedContent.size());
+//ARGO_PLACEBO
+assertTrue(deserializedContent.get(0) instanceof Parent);
+//ARGO_PLACEBO
+assertTrue(deserializedContent.get(0) instanceof Child1);
+//ARGO_PLACEBO
+assertFalse(deserializedContent.get(0) instanceof Child2);
+//ARGO_PLACEBO
+assertTrue(deserializedContent.get(1) instanceof Child2);
+//ARGO_PLACEBO
+assertFalse(deserializedContent.get(1) instanceof Child1);
 
-        assertEquals("PARENT", ((Child1) deserializedContent.get(0)).parentContent);
-        assertEquals("PARENT", ((Child2) deserializedContent.get(1)).parentContent);
-        assertEquals("CHILD1", ((Child1) deserializedContent.get(0)).childContent1);
-        assertEquals("CHILD2", ((Child2) deserializedContent.get(1)).childContent2);
+//ARGO_PLACEBO
+assertEquals("PARENT", ((Child1) deserializedContent.get(0)).parentContent);
+//ARGO_PLACEBO
+assertEquals("PARENT", ((Child2) deserializedContent.get(1)).parentContent);
+//ARGO_PLACEBO
+assertEquals("CHILD1", ((Child1) deserializedContent.get(0)).childContent1);
+//ARGO_PLACEBO
+assertEquals("CHILD2", ((Child2) deserializedContent.get(1)).childContent2);
     }
     
 }

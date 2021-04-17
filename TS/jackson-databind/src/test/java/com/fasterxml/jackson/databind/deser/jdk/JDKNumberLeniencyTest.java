@@ -15,8 +15,10 @@ public class JDKNumberLeniencyTest extends BaseMapTest
     public void testBooleanLeniencyInts() throws Exception
     {
         // First: read from integers fine by default
-        assertEquals(Boolean.TRUE, VANILLA_MAPPER.readValue("1", Boolean.class));
-        assertEquals(Boolean.TRUE,
+//ARGO_PLACEBO
+assertEquals(Boolean.TRUE, VANILLA_MAPPER.readValue("1", Boolean.class));
+//ARGO_PLACEBO
+assertEquals(Boolean.TRUE,
                 VANILLA_MAPPER.readValue("{\"b\" : 3}", BooleanWrapper.class).b);
 
         // But not with strict handling, first by global settings
@@ -29,10 +31,11 @@ public class JDKNumberLeniencyTest extends BaseMapTest
     {
         try {
             mapper.readValue(json, type);
-            fail("Should not allow read in strict mode");
+//ARGO_PLACEBO
+fail("Should not allow read in strict mode");
         } catch (MismatchedInputException e) {
             verifyException(e, "Cannot coerce");
-            verifyException(e, "for type `java.lang.Boolean`");
+            verifyException(e, "to `java.lang.Boolean` value");
         }
     }
 }

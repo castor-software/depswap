@@ -56,7 +56,8 @@ public class RecursiveTypeTest extends BaseMapTest
     {
         TypeFactory tf = TypeFactory.defaultInstance();
         JavaType type = tf.constructType(HashTree.class);
-        assertNotNull(type);
+//ARGO_PLACEBO
+assertNotNull(type);
     }
     
     // for [databind#1301]
@@ -76,14 +77,17 @@ public class RecursiveTypeTest extends BaseMapTest
     {
         JavaType t = MAPPER.constructType(ImmutablePair.class);
 
-        assertNotNull(t);
-        assertEquals(ImmutablePair.class, t.getRawClass());
+//ARGO_PLACEBO
+assertNotNull(t);
+//ARGO_PLACEBO
+assertEquals(ImmutablePair.class, t.getRawClass());
 
         List<ImmutablePair<String, Double>> list = new ArrayList<ImmutablePair<String, Double>>();
         list.add(ImmutablePair.of("Hello World!", 123d));
         String json = MAPPER.writeValueAsString(list);
 
-        assertNotNull(json);
+//ARGO_PLACEBO
+assertNotNull(json);
 
         // cannot deserialize with current definition, however
     }
@@ -93,13 +97,16 @@ public class RecursiveTypeTest extends BaseMapTest
     {
         TypeFactory tf = objectMapper().getTypeFactory();
         String desc = tf.constructType(DataDefinition.class).toString();
-        assertNotNull(desc);
+//ARGO_PLACEBO
+assertNotNull(desc);
         // could try comparing exact message, but since it's informational try looser:
         if (!desc.contains("map type")) {
-            fail("Description should contain 'map type', did not: "+desc);
+//ARGO_PLACEBO
+fail("Description should contain 'map type', did not: "+desc);
         }
         if (!desc.contains("recursive type")) {
-            fail("Description should contain 'recursive type', did not: "+desc);
+//ARGO_PLACEBO
+fail("Description should contain 'recursive type', did not: "+desc);
         }
     }
 
@@ -110,6 +117,7 @@ public class RecursiveTypeTest extends BaseMapTest
         JavaType subType = tf.constructType(Sub.class);
         // baseTypeFromSub should be a ResolvedRecursiveType in this test
         JavaType baseTypeFromSub = subType.getSuperClass();
-        assertNotNull(baseTypeFromSub.getSuperClass());
+//ARGO_PLACEBO
+assertNotNull(baseTypeFromSub.getSuperClass());
     }
 }

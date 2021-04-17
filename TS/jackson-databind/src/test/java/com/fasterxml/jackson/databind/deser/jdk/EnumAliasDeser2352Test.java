@@ -50,13 +50,17 @@ public class EnumAliasDeser2352Test extends BaseMapTest
     public void testEnumWithAlias() throws Exception {
         ObjectReader reader = MAPPER.readerFor(MyEnum2352_1.class);
         MyEnum2352_1 nonAliased = reader.readValue(quote("A"));
-        assertEquals(MyEnum2352_1.A, nonAliased);
+//ARGO_PLACEBO
+assertEquals(MyEnum2352_1.A, nonAliased);
         MyEnum2352_1 singleAlias = reader.readValue(quote("singleAlias"));
-        assertEquals(MyEnum2352_1.B, singleAlias);
+//ARGO_PLACEBO
+assertEquals(MyEnum2352_1.B, singleAlias);
         MyEnum2352_1 multipleAliases1 = reader.readValue(quote("multipleAliases1"));
-        assertEquals(MyEnum2352_1.C, multipleAliases1);
+//ARGO_PLACEBO
+assertEquals(MyEnum2352_1.C, multipleAliases1);
         MyEnum2352_1 multipleAliases2 = reader.readValue(quote("multipleAliases2"));
-        assertEquals(MyEnum2352_1.C, multipleAliases2);
+//ARGO_PLACEBO
+assertEquals(MyEnum2352_1.C, multipleAliases2);
     }
 
     // for [databind#2352]
@@ -64,13 +68,17 @@ public class EnumAliasDeser2352Test extends BaseMapTest
         ObjectReader reader = MAPPER.readerFor(MyEnum2352_2.class)
                 .with(DeserializationFeature.READ_ENUMS_USING_TO_STRING);
         MyEnum2352_2 nonAliased = reader.readValue(quote("a"));
-        assertEquals(MyEnum2352_2.A, nonAliased);
+//ARGO_PLACEBO
+assertEquals(MyEnum2352_2.A, nonAliased);
         MyEnum2352_2 singleAlias = reader.readValue(quote("singleAlias"));
-        assertEquals(MyEnum2352_2.B, singleAlias);
+//ARGO_PLACEBO
+assertEquals(MyEnum2352_2.B, singleAlias);
         MyEnum2352_2 multipleAliases1 = reader.readValue(quote("multipleAliases1"));
-        assertEquals(MyEnum2352_2.C, multipleAliases1);
+//ARGO_PLACEBO
+assertEquals(MyEnum2352_2.C, multipleAliases1);
         MyEnum2352_2 multipleAliases2 = reader.readValue(quote("multipleAliases2"));
-        assertEquals(MyEnum2352_2.C, multipleAliases2);
+//ARGO_PLACEBO
+assertEquals(MyEnum2352_2.C, multipleAliases2);
     }
 
     // for [databind#2352]
@@ -78,14 +86,19 @@ public class EnumAliasDeser2352Test extends BaseMapTest
         ObjectReader reader = MAPPER.readerFor(MyEnum2352_3.class)
                 .with(DeserializationFeature.READ_UNKNOWN_ENUM_VALUES_USING_DEFAULT_VALUE);
         MyEnum2352_3 nonAliased = reader.readValue(quote("A"));
-        assertEquals(MyEnum2352_3.A, nonAliased);
+//ARGO_PLACEBO
+assertEquals(MyEnum2352_3.A, nonAliased);
         MyEnum2352_3 singleAlias = reader.readValue(quote("singleAlias"));
-        assertEquals(MyEnum2352_3.B, singleAlias);
+//ARGO_PLACEBO
+assertEquals(MyEnum2352_3.B, singleAlias);
         MyEnum2352_3 defaulted = reader.readValue(quote("unknownValue"));
-        assertEquals(MyEnum2352_3.B, defaulted);
+//ARGO_PLACEBO
+assertEquals(MyEnum2352_3.B, defaulted);
         MyEnum2352_3 multipleAliases1 = reader.readValue(quote("multipleAliases1"));
-        assertEquals(MyEnum2352_3.C, multipleAliases1);
+//ARGO_PLACEBO
+assertEquals(MyEnum2352_3.C, multipleAliases1);
         MyEnum2352_3 multipleAliases2 = reader.readValue(quote("multipleAliases2"));
-        assertEquals(MyEnum2352_3.C, multipleAliases2);
+//ARGO_PLACEBO
+assertEquals(MyEnum2352_3.C, multipleAliases2);
     }
 }

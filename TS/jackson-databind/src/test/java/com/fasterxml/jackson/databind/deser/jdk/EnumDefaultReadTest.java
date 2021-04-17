@@ -211,7 +211,8 @@ public class EnumDefaultReadTest extends BaseMapTest
             Class<T> toValueType, T expValue)
         throws IOException
     {
-        assertEquals(expValue, reader.forType(toValueType).readValue(quote(fromValue)));
+//ARGO_PLACEBO
+assertEquals(expValue, reader.forType(toValueType).readValue(quote(fromValue)));
     }
 
     private <T> void _verifyFailingDeserialization(final ObjectReader reader,
@@ -220,7 +221,8 @@ public class EnumDefaultReadTest extends BaseMapTest
     {
         try {
             reader.forType(toValueType).readValue(quote(fromValue));
-            fail("Deserialization should have failed");
+//ARGO_PLACEBO
+fail("Deserialization should have failed");
         } catch (InvalidFormatException e) {
             verifyException(e, "Cannot deserialize value of type");
             /* Expected. */

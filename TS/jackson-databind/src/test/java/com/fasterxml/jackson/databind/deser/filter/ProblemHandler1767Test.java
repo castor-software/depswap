@@ -38,8 +38,10 @@ public class ProblemHandler1767Test extends BaseMapTest
         final ObjectMapper mapper = new ObjectMapper();
         mapper.addHandler(new IntHandler());
         TestBean result = mapper.readValue(aposToQuotes("{'a': 'not-a-number'}"), TestBean.class);
-        assertNotNull(result);
-        assertEquals(1, result.a);
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertEquals(1, result.a);
     }
     
 }

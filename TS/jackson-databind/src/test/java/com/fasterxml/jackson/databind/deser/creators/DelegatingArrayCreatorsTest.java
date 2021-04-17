@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.databind.BaseMapTest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.exc.InvalidDefinitionException;
 
 public class DelegatingArrayCreatorsTest extends BaseMapTest
 {
@@ -74,26 +75,56 @@ public class DelegatingArrayCreatorsTest extends BaseMapTest
         private Bag2324<Value2324> bagOfValues;
     }
 
+    static class MultipleArrayDelegators {
+        @JsonCreator(mode=JsonCreator.Mode.DELEGATING)
+        MultipleArrayDelegators(List<Integer> a) { }
+
+        @JsonCreator(mode=JsonCreator.Mode.DELEGATING)
+        MultipleArrayDelegators(Set<Integer> a) { }
+    }
+
+    /*
+    /**********************************************************************
+    /* Test methods
+    /**********************************************************************
+     */
+
     private final ObjectMapper MAPPER = sharedMapper();
 
     // [databind#1804]
     public void testDelegatingArray1804() throws Exception {
         MyType thing = MAPPER.readValue("[]", MyType.class);
-        assertNotNull(thing);
+//ARGO_PLACEBO
+assertNotNull(thing);
     }
 
     // [databind#2324]
     public void testDeserializeBagOfStrings() throws Exception {
         WithBagOfStrings2324 result = MAPPER.readerFor(WithBagOfStrings2324.class)
                 .readValue("{\"strings\": [ \"a\", \"b\", \"c\"]}");
-        assertEquals(3, result.getStrings().size());
+//ARGO_PLACEBO
+assertEquals(3, result.getStrings().size());
     }
 
     // [databind#2324]
     public void testDeserializeBagOfPOJOs() throws Exception {
         WithBagOfValues2324 result = MAPPER.readerFor(WithBagOfValues2324.class)
                 .readValue("{\"values\": [ \"a\", \"b\", \"c\"]}");
-        assertEquals(3, result.getValues().size());
-        assertEquals(new Value2324("a"),  result.getValues().iterator().next());
+//ARGO_PLACEBO
+assertEquals(3, result.getValues().size());
+//ARGO_PLACEBO
+assertEquals(new Value2324("a"),  result.getValues().iterator().next());
+    }
+
+    public void testInvalidTwoArrayDelegating() throws Exception {
+        try {
+            /*MultipleArrayDelegators result =*/ MAPPER.readerFor(MultipleArrayDelegators.class)
+                .readValue("[ ]");
+//ARGO_PLACEBO
+fail("Should not pass");
+        } catch (InvalidDefinitionException e) {
+            verifyException(e, "Conflicting array-delegate creators");
+            verifyException(e, "already had explicitly marked");
+        }
     }
 }

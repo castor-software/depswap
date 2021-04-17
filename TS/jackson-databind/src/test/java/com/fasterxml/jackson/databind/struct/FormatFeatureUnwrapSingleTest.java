@@ -129,16 +129,19 @@ public class FormatFeatureUnwrapSingleTest extends BaseMapTest
     public void testWithArrayTypes() throws Exception
     {
         // default: strings unwrapped, ints wrapped
-        assertEquals(aposToQuotes("{'strings':'a','ints':[1],'bools':[true]}"),
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'strings':'a','ints':[1],'bools':[true]}"),
                 MAPPER.writeValueAsString(new WrapWriteWithArrays()));
 
         // change global default to "yes, unwrap"; changes 'bools' only
-        assertEquals(aposToQuotes("{'strings':'a','ints':[1],'bools':true}"),
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'strings':'a','ints':[1],'bools':true}"),
                 MAPPER.writer().with(SerializationFeature.WRITE_SINGLE_ELEM_ARRAYS_UNWRAPPED)
                 .writeValueAsString(new WrapWriteWithArrays()));
 
         // change global default to "no, don't, unwrap", same as first case
-        assertEquals(aposToQuotes("{'strings':'a','ints':[1],'bools':[true]}"),
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'strings':'a','ints':[1],'bools':[true]}"),
                 MAPPER.writer().without(SerializationFeature.WRITE_SINGLE_ELEM_ARRAYS_UNWRAPPED)
                 .writeValueAsString(new WrapWriteWithArrays()));
 
@@ -146,47 +149,65 @@ public class FormatFeatureUnwrapSingleTest extends BaseMapTest
         ObjectMapper mapper = new ObjectMapper();
         mapper.configOverride(String[].class).setFormat(JsonFormat.Value.empty()
                 .withFeature(JsonFormat.Feature.WRITE_SINGLE_ELEM_ARRAYS_UNWRAPPED));
-        assertEquals(aposToQuotes("{'values':'a'}"),
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'values':'a'}"),
                 mapper.writeValueAsString(new StringArrayNotAnnoted("a")));
     }
 
     public void testWithCollectionTypes() throws Exception
     {
         // default: strings unwrapped, ints wrapped
-        assertEquals(aposToQuotes("{'strings':'a','ints':[1],'bools':[true],'enums':'B'}"),
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'strings':'a','ints':[1],'bools':[true],'enums':'B'}"),
                 MAPPER.writeValueAsString(new WrapWriteWithCollections()));
 
         // change global default to "yes, unwrap"; changes 'bools' only
-        assertEquals(aposToQuotes("{'strings':'a','ints':[1],'bools':true,'enums':'B'}"),
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'strings':'a','ints':[1],'bools':true,'enums':'B'}"),
                 MAPPER.writer().with(SerializationFeature.WRITE_SINGLE_ELEM_ARRAYS_UNWRAPPED)
                 .writeValueAsString(new WrapWriteWithCollections()));
 
         // change global default to "no, don't, unwrap", same as first case
-        assertEquals(aposToQuotes("{'strings':'a','ints':[1],'bools':[true],'enums':'B'}"),
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'strings':'a','ints':[1],'bools':[true],'enums':'B'}"),
                 MAPPER.writer().without(SerializationFeature.WRITE_SINGLE_ELEM_ARRAYS_UNWRAPPED)
                 .writeValueAsString(new WrapWriteWithCollections()));
     }
 
     public void testUnwrapWithPrimitiveArraysEtc() throws Exception {
-        assertEquals("{\"v\":7}", MAPPER.writeValueAsString(new UnwrapShortArray()));
-        assertEquals("{\"v\":3}", MAPPER.writeValueAsString(new UnwrapIntArray()));
-        assertEquals("{\"v\":1}", MAPPER.writeValueAsString(new UnwrapLongArray()));
-        assertEquals("{\"v\":true}", MAPPER.writeValueAsString(new UnwrapBooleanArray()));
+//ARGO_PLACEBO
+assertEquals("{\"v\":7}", MAPPER.writeValueAsString(new UnwrapShortArray()));
+//ARGO_PLACEBO
+assertEquals("{\"v\":3}", MAPPER.writeValueAsString(new UnwrapIntArray()));
+//ARGO_PLACEBO
+assertEquals("{\"v\":1}", MAPPER.writeValueAsString(new UnwrapLongArray()));
+//ARGO_PLACEBO
+assertEquals("{\"v\":true}", MAPPER.writeValueAsString(new UnwrapBooleanArray()));
 
-        assertEquals("{\"v\":0.5}", MAPPER.writeValueAsString(new UnwrapFloatArray()));
-        assertEquals("{\"v\":0.25}", MAPPER.writeValueAsString(new UnwrapDoubleArray()));
-        assertEquals("0.5",
+//ARGO_PLACEBO
+assertEquals("{\"v\":0.5}", MAPPER.writeValueAsString(new UnwrapFloatArray()));
+//ARGO_PLACEBO
+assertEquals("{\"v\":0.25}", MAPPER.writeValueAsString(new UnwrapDoubleArray()));
+//ARGO_PLACEBO
+assertEquals("0.5",
                 MAPPER.writer().with(SerializationFeature.WRITE_SINGLE_ELEM_ARRAYS_UNWRAPPED)
                 .writeValueAsString(new double[] { 0.5 }));
 
-        assertEquals("{\"v\":\"foo\"}", MAPPER.writeValueAsString(new UnwrapIterable()));
-        assertEquals("{\"v\":\"x\"}", MAPPER.writeValueAsString(new UnwrapIterable("x")));
-        assertEquals("{\"v\":[\"x\",null]}", MAPPER.writeValueAsString(new UnwrapIterable("x", null)));
+//ARGO_PLACEBO
+assertEquals("{\"v\":\"foo\"}", MAPPER.writeValueAsString(new UnwrapIterable()));
+//ARGO_PLACEBO
+assertEquals("{\"v\":\"x\"}", MAPPER.writeValueAsString(new UnwrapIterable("x")));
+//ARGO_PLACEBO
+assertEquals("{\"v\":[\"x\",null]}", MAPPER.writeValueAsString(new UnwrapIterable("x", null)));
 
-        assertEquals("{\"v\":\"foo\"}", MAPPER.writeValueAsString(new UnwrapCollection()));
-        assertEquals("{\"v\":\"x\"}", MAPPER.writeValueAsString(new UnwrapCollection("x")));
-        assertEquals("{\"v\":[\"x\",null]}", MAPPER.writeValueAsString(new UnwrapCollection("x", null)));
+//ARGO_PLACEBO
+assertEquals("{\"v\":\"foo\"}", MAPPER.writeValueAsString(new UnwrapCollection()));
+//ARGO_PLACEBO
+assertEquals("{\"v\":\"x\"}", MAPPER.writeValueAsString(new UnwrapCollection("x")));
+//ARGO_PLACEBO
+assertEquals("{\"v\":[\"x\",null]}", MAPPER.writeValueAsString(new UnwrapCollection("x", null)));
 
-        assertEquals("{\"v\":\"http://foo\"}", MAPPER.writeValueAsString(new UnwrapStringLike()));
+//ARGO_PLACEBO
+assertEquals("{\"v\":\"http://foo\"}", MAPPER.writeValueAsString(new UnwrapStringLike()));
     }
 }

@@ -64,7 +64,8 @@ public class BigCreatorTest extends BaseMapTest
             default:
                 exp = 0;
             }
-            assertEquals("Entry #"+i, exp, stuff[i]);
+//ARGO_PLACEBO
+assertEquals("Entry #"+i, exp, stuff[i]);
         }
     }
 }

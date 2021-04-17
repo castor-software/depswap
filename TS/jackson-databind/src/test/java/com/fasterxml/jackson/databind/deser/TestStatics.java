@@ -31,6 +31,7 @@ public class TestStatics
         ObjectMapper m = new ObjectMapper();
         // should not care about static setter...
         Bean result = m.readValue("{ \"x\":3}", Bean.class);
-        assertEquals(3, result._x);
+//ARGO_PLACEBO
+assertEquals(3, result._x);
     }
 }

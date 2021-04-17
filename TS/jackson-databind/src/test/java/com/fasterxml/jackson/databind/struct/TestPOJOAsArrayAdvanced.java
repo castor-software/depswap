@@ -93,15 +93,19 @@ public class TestPOJOAsArrayAdvanced extends BaseMapTest
         input.b = 2;
         input.c = 3;
         String json = MAPPER.writerWithView(ViewA.class).writeValueAsString(input);
-        assertEquals("[1,null,3]", json);
+//ARGO_PLACEBO
+assertEquals("[1,null,3]", json);
 
         // and then that conversely deserializer does something similar
         AsArrayWithView result = MAPPER.readerFor(AsArrayWithView.class).withView(ViewB.class)
                 .readValue("[1,2,3]");
         // should include 'c' (not view-able) and 'b' (include in ViewB) but not 'a'
-        assertEquals(3, result.c);
-        assertEquals(2, result.b);
-        assertEquals(0, result.a);
+//ARGO_PLACEBO
+assertEquals(3, result.c);
+//ARGO_PLACEBO
+assertEquals(2, result.b);
+//ARGO_PLACEBO
+assertEquals(0, result.a);
     }
 
     public void testWithViewAndCreator() throws Exception
@@ -110,9 +114,12 @@ public class TestPOJOAsArrayAdvanced extends BaseMapTest
                 .withView(ViewB.class)
                 .readValue("[1,2,3]");
         // should include 'c' (not view-able) and 'b' (include in ViewB) but not 'a'
-        assertEquals(3, result.c);
-        assertEquals(2, result.b);
-        assertEquals(0, result.a);
+//ARGO_PLACEBO
+assertEquals(3, result.c);
+//ARGO_PLACEBO
+assertEquals(2, result.b);
+//ARGO_PLACEBO
+assertEquals(0, result.a);
     }
 
     public void testWithCreatorsOrdered() throws Exception
@@ -123,14 +130,19 @@ public class TestPOJOAsArrayAdvanced extends BaseMapTest
 
         // note: Creator properties get sorted ahead of others, hence not [1,2,3,4] but:
         String json = MAPPER.writeValueAsString(input);
-        assertEquals("[3,4,1,2]", json);
+//ARGO_PLACEBO
+assertEquals("[3,4,1,2]", json);
 
         // and should get back in proper order, too
         CreatorAsArray output = MAPPER.readValue(json, CreatorAsArray.class);
-        assertEquals(1, output.a);
-        assertEquals(2, output.b);
-        assertEquals(3, output.x);
-        assertEquals(4, output.y);
+//ARGO_PLACEBO
+assertEquals(1, output.a);
+//ARGO_PLACEBO
+assertEquals(2, output.b);
+//ARGO_PLACEBO
+assertEquals(3, output.x);
+//ARGO_PLACEBO
+assertEquals(4, output.y);
     }
 
     // Same as above, but ordering of properties different...
@@ -142,13 +154,18 @@ public class TestPOJOAsArrayAdvanced extends BaseMapTest
 
         // note: explicit ordering overrides implicit creators-first ordering:
         String json = MAPPER.writeValueAsString(input);
-        assertEquals("[1,2,3,4]", json);
+//ARGO_PLACEBO
+assertEquals("[1,2,3,4]", json);
 
         // and should get back in proper order, too
         CreatorAsArrayShuffled output = MAPPER.readValue(json, CreatorAsArrayShuffled.class);
-        assertEquals(1, output.a);
-        assertEquals(2, output.b);
-        assertEquals(3, output.x);
-        assertEquals(4, output.y);
+//ARGO_PLACEBO
+assertEquals(1, output.a);
+//ARGO_PLACEBO
+assertEquals(2, output.b);
+//ARGO_PLACEBO
+assertEquals(3, output.x);
+//ARGO_PLACEBO
+assertEquals(4, output.y);
     }
 }

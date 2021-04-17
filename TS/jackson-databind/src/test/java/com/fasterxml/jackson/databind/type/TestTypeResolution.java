@@ -39,9 +39,12 @@ public class TestTypeResolution extends BaseMapTest
         TypeFactory tf = TypeFactory.defaultInstance();
         JavaType t = tf.constructType(new TypeReference<LongValuedMap<String>>() { });
         MapType type = (MapType) t;
-        assertSame(LongValuedMap.class, type.getRawClass());
-        assertEquals(tf.constructType(String.class), type.getKeyType());
-        assertEquals(tf.constructType(Long.class), type.getContentType());        
+//ARGO_PLACEBO
+assertSame(LongValuedMap.class, type.getRawClass());
+//ARGO_PLACEBO
+assertEquals(tf.constructType(String.class), type.getKeyType());
+//ARGO_PLACEBO
+assertEquals(tf.constructType(Long.class), type.getContentType());        
     }
 
     public void testListViaTypeRef()
@@ -49,8 +52,10 @@ public class TestTypeResolution extends BaseMapTest
         TypeFactory tf = TypeFactory.defaultInstance();
         JavaType t = tf.constructType(new TypeReference<MyLongList<Integer>>() {});
         CollectionType type = (CollectionType) t;
-        assertSame(MyLongList.class, type.getRawClass());
-        assertEquals(tf.constructType(Long.class), type.getContentType());        
+//ARGO_PLACEBO
+assertSame(MyLongList.class, type.getRawClass());
+//ARGO_PLACEBO
+assertEquals(tf.constructType(Long.class), type.getContentType());        
     }
 
     public void testListViaClass()
@@ -58,8 +63,10 @@ public class TestTypeResolution extends BaseMapTest
         TypeFactory tf = TypeFactory.defaultInstance();
         JavaType t = tf.constructType(LongList.class);
         JavaType type = (CollectionType) t;
-        assertSame(LongList.class, type.getRawClass());
-        assertEquals(tf.constructType(Long.class), type.getContentType());        
+//ARGO_PLACEBO
+assertSame(LongList.class, type.getRawClass());
+//ARGO_PLACEBO
+assertEquals(tf.constructType(Long.class), type.getContentType());        
     }
 
     public void testGeneric()
@@ -69,13 +76,17 @@ public class TestTypeResolution extends BaseMapTest
         // First, via simple sub-class
         JavaType t = tf.constructType(DoubleRange.class);
         JavaType rangeParams = t.findSuperType(Range.class);
-        assertEquals(1, rangeParams.containedTypeCount());
-        assertEquals(Double.class, rangeParams.containedType(0).getRawClass());
+//ARGO_PLACEBO
+assertEquals(1, rangeParams.containedTypeCount());
+//ARGO_PLACEBO
+assertEquals(Double.class, rangeParams.containedType(0).getRawClass());
 
         // then using TypeRef
         t = tf.constructType(new TypeReference<DoubleRange>() { });
         rangeParams = t.findSuperType(Range.class);
-        assertEquals(1, rangeParams.containedTypeCount());
-        assertEquals(Double.class, rangeParams.containedType(0).getRawClass());
+//ARGO_PLACEBO
+assertEquals(1, rangeParams.containedTypeCount());
+//ARGO_PLACEBO
+assertEquals(Double.class, rangeParams.containedType(0).getRawClass());
     }
 }

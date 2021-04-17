@@ -72,23 +72,30 @@ public class ObjectMapperTest extends BaseMapTest
 
     public void testFactoryFeatures()
     {
-        assertTrue(MAPPER.isEnabled(JsonFactory.Feature.CANONICALIZE_FIELD_NAMES));
+//ARGO_PLACEBO
+assertTrue(MAPPER.isEnabled(JsonFactory.Feature.CANONICALIZE_FIELD_NAMES));
     }
 
     public void testGeneratorFeatures()
     {
         // and also for mapper
         JsonMapper mapper = new JsonMapper();
-        assertTrue(mapper.isEnabled(JsonGenerator.Feature.AUTO_CLOSE_TARGET));
-        assertTrue(mapper.isEnabled(StreamWriteFeature.AUTO_CLOSE_TARGET));
-        assertFalse(mapper.isEnabled(JsonWriteFeature.ESCAPE_NON_ASCII));
-        assertTrue(mapper.isEnabled(JsonWriteFeature.WRITE_NAN_AS_STRINGS));
+//ARGO_PLACEBO
+assertTrue(mapper.isEnabled(JsonGenerator.Feature.AUTO_CLOSE_TARGET));
+//ARGO_PLACEBO
+assertTrue(mapper.isEnabled(StreamWriteFeature.AUTO_CLOSE_TARGET));
+//ARGO_PLACEBO
+assertFalse(mapper.isEnabled(JsonWriteFeature.ESCAPE_NON_ASCII));
+//ARGO_PLACEBO
+assertTrue(mapper.isEnabled(JsonWriteFeature.WRITE_NAN_AS_STRINGS));
         mapper = JsonMapper.builder()
                 .disable(StreamWriteFeature.FLUSH_PASSED_TO_STREAM)
                 .disable(JsonWriteFeature.WRITE_NAN_AS_STRINGS)
                 .build();
-        assertFalse(mapper.isEnabled(StreamWriteFeature.FLUSH_PASSED_TO_STREAM));
-        assertFalse(mapper.isEnabled(JsonWriteFeature.WRITE_NAN_AS_STRINGS));
+//ARGO_PLACEBO
+assertFalse(mapper.isEnabled(StreamWriteFeature.FLUSH_PASSED_TO_STREAM));
+//ARGO_PLACEBO
+assertFalse(mapper.isEnabled(JsonWriteFeature.WRITE_NAN_AS_STRINGS));
     }
 
     public void testParserFeatures()
@@ -96,14 +103,19 @@ public class ObjectMapperTest extends BaseMapTest
         // and also for mapper
         ObjectMapper mapper = new ObjectMapper();
 
-        assertTrue(mapper.isEnabled(JsonParser.Feature.AUTO_CLOSE_SOURCE));
-        assertTrue(mapper.isEnabled(StreamReadFeature.AUTO_CLOSE_SOURCE));
-        assertFalse(mapper.isEnabled(JsonParser.Feature.IGNORE_UNDEFINED));
+//ARGO_PLACEBO
+assertTrue(mapper.isEnabled(JsonParser.Feature.AUTO_CLOSE_SOURCE));
+//ARGO_PLACEBO
+assertTrue(mapper.isEnabled(StreamReadFeature.AUTO_CLOSE_SOURCE));
+//ARGO_PLACEBO
+assertFalse(mapper.isEnabled(JsonParser.Feature.IGNORE_UNDEFINED));
 
         mapper.disable(JsonParser.Feature.AUTO_CLOSE_SOURCE,
                 JsonParser.Feature.STRICT_DUPLICATE_DETECTION);
-        assertFalse(mapper.isEnabled(JsonParser.Feature.AUTO_CLOSE_SOURCE));
-        assertFalse(mapper.isEnabled(StreamReadFeature.AUTO_CLOSE_SOURCE));
+//ARGO_PLACEBO
+assertFalse(mapper.isEnabled(JsonParser.Feature.AUTO_CLOSE_SOURCE));
+//ARGO_PLACEBO
+assertFalse(mapper.isEnabled(StreamReadFeature.AUTO_CLOSE_SOURCE));
     }
 
     /*
@@ -116,53 +128,76 @@ public class ObjectMapperTest extends BaseMapTest
     public void testCopy() throws Exception
     {
         ObjectMapper m = new ObjectMapper();
-        assertTrue(m.isEnabled(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES));
+//ARGO_PLACEBO
+assertTrue(m.isEnabled(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES));
         m.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
-        assertFalse(m.isEnabled(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES));
+//ARGO_PLACEBO
+assertFalse(m.isEnabled(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES));
         InjectableValues inj = new InjectableValues.Std();
         m.setInjectableValues(inj);
-        assertFalse(m.isEnabled(JsonParser.Feature.IGNORE_UNDEFINED));
+//ARGO_PLACEBO
+assertFalse(m.isEnabled(JsonParser.Feature.IGNORE_UNDEFINED));
         m.enable(JsonParser.Feature.IGNORE_UNDEFINED);
-        assertTrue(m.isEnabled(JsonParser.Feature.IGNORE_UNDEFINED));
+//ARGO_PLACEBO
+assertTrue(m.isEnabled(JsonParser.Feature.IGNORE_UNDEFINED));
 
         // // First: verify that handling of features is decoupled:
         
         ObjectMapper m2 = m.copy();
-        assertFalse(m2.isEnabled(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES));
+//ARGO_PLACEBO
+assertFalse(m2.isEnabled(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES));
         m2.enable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
-        assertTrue(m2.isEnabled(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES));
-        assertSame(inj, m2.getInjectableValues());
+//ARGO_PLACEBO
+assertTrue(m2.isEnabled(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES));
+//ARGO_PLACEBO
+assertSame(inj, m2.getInjectableValues());
 
         // but should NOT change the original
-        assertFalse(m.isEnabled(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES));
+//ARGO_PLACEBO
+assertFalse(m.isEnabled(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES));
 
         // nor vice versa:
-        assertFalse(m.isEnabled(DeserializationFeature.UNWRAP_ROOT_VALUE));
-        assertFalse(m2.isEnabled(DeserializationFeature.UNWRAP_ROOT_VALUE));
+//ARGO_PLACEBO
+assertFalse(m.isEnabled(DeserializationFeature.UNWRAP_ROOT_VALUE));
+//ARGO_PLACEBO
+assertFalse(m2.isEnabled(DeserializationFeature.UNWRAP_ROOT_VALUE));
         m.enable(DeserializationFeature.UNWRAP_ROOT_VALUE);
-        assertTrue(m.isEnabled(DeserializationFeature.UNWRAP_ROOT_VALUE));
-        assertFalse(m2.isEnabled(DeserializationFeature.UNWRAP_ROOT_VALUE));
+//ARGO_PLACEBO
+assertTrue(m.isEnabled(DeserializationFeature.UNWRAP_ROOT_VALUE));
+//ARGO_PLACEBO
+assertFalse(m2.isEnabled(DeserializationFeature.UNWRAP_ROOT_VALUE));
 
         // // Also, underlying JsonFactory instances should be distinct
-        assertNotSame(m.getFactory(), m2.getFactory());
+//ARGO_PLACEBO
+assertNotSame(m.getFactory(), m2.getFactory());
 
         // [databind#2755]: also need to copy this:
-        assertNotSame(m.getSubtypeResolver(), m2.getSubtypeResolver());
+//ARGO_PLACEBO
+assertNotSame(m.getSubtypeResolver(), m2.getSubtypeResolver());
 
         // [databind#122]: Need to ensure mix-ins are not shared
-        assertEquals(0, m.getSerializationConfig().mixInCount());
-        assertEquals(0, m2.getSerializationConfig().mixInCount());
-        assertEquals(0, m.getDeserializationConfig().mixInCount());
-        assertEquals(0, m2.getDeserializationConfig().mixInCount());
+//ARGO_PLACEBO
+assertEquals(0, m.getSerializationConfig().mixInCount());
+//ARGO_PLACEBO
+assertEquals(0, m2.getSerializationConfig().mixInCount());
+//ARGO_PLACEBO
+assertEquals(0, m.getDeserializationConfig().mixInCount());
+//ARGO_PLACEBO
+assertEquals(0, m2.getDeserializationConfig().mixInCount());
 
         m.addMixIn(String.class, Integer.class);
-        assertEquals(1, m.getSerializationConfig().mixInCount());
-        assertEquals(0, m2.getSerializationConfig().mixInCount());
-        assertEquals(1, m.getDeserializationConfig().mixInCount());
-        assertEquals(0, m2.getDeserializationConfig().mixInCount());
+//ARGO_PLACEBO
+assertEquals(1, m.getSerializationConfig().mixInCount());
+//ARGO_PLACEBO
+assertEquals(0, m2.getSerializationConfig().mixInCount());
+//ARGO_PLACEBO
+assertEquals(1, m.getDeserializationConfig().mixInCount());
+//ARGO_PLACEBO
+assertEquals(0, m2.getDeserializationConfig().mixInCount());
 
         // [databind#913]: Ensure JsonFactory Features copied
-        assertTrue(m2.isEnabled(JsonParser.Feature.IGNORE_UNDEFINED));
+//ARGO_PLACEBO
+assertTrue(m2.isEnabled(JsonParser.Feature.IGNORE_UNDEFINED));
     }
 
     // [databind#1580]
@@ -170,11 +205,15 @@ public class ObjectMapperTest extends BaseMapTest
     {
         ObjectMapper m = new ObjectMapper();
         SerializationConfig config = m.getSerializationConfig();
-        assertEquals(JsonInclude.Value.empty(), config.getDefaultPropertyInclusion());
-        assertEquals(JsonSetter.Value.empty(), config.getDefaultSetterInfo());
-        assertNull(config.getDefaultMergeable());
+//ARGO_PLACEBO
+assertEquals(JsonInclude.Value.empty(), config.getDefaultPropertyInclusion());
+//ARGO_PLACEBO
+assertEquals(JsonSetter.Value.empty(), config.getDefaultSetterInfo());
+//ARGO_PLACEBO
+assertNull(config.getDefaultMergeable());
         VisibilityChecker<?> defaultVis = config.getDefaultVisibilityChecker();
-        assertEquals(VisibilityChecker.Std.class, defaultVis.getClass());
+//ARGO_PLACEBO
+assertEquals(VisibilityChecker.Std.class, defaultVis.getClass());
 
         // change
         JsonInclude.Value customIncl = JsonInclude.Value.empty().withValueInclusion(JsonInclude.Include.NON_DEFAULT);
@@ -185,15 +224,20 @@ public class ObjectMapperTest extends BaseMapTest
         VisibilityChecker<?> customVis = VisibilityChecker.Std.defaultInstance()
                 .withFieldVisibility(Visibility.ANY);
         m.setVisibility(customVis);
-        assertSame(customVis, m.getVisibilityChecker());
+//ARGO_PLACEBO
+assertSame(customVis, m.getVisibilityChecker());
 
         // and verify that copy retains these settings
         ObjectMapper m2 = m.copy();
         SerializationConfig config2 = m2.getSerializationConfig();
-        assertSame(customIncl, config2.getDefaultPropertyInclusion());
-        assertSame(customSetter, config2.getDefaultSetterInfo());
-        assertEquals(Boolean.TRUE, config2.getDefaultMergeable());
-        assertSame(customVis, config2.getDefaultVisibilityChecker());
+//ARGO_PLACEBO
+assertSame(customIncl, config2.getDefaultPropertyInclusion());
+//ARGO_PLACEBO
+assertSame(customSetter, config2.getDefaultSetterInfo());
+//ARGO_PLACEBO
+assertEquals(Boolean.TRUE, config2.getDefaultMergeable());
+//ARGO_PLACEBO
+assertSame(customVis, config2.getDefaultVisibilityChecker());
     }
 
     // [databind#2785]
@@ -201,7 +245,8 @@ public class ObjectMapperTest extends BaseMapTest
         ObjectMapper objectMapper = new ObjectMapper().copy();
         objectMapper.registerSubtypes(Impl2785.class);
         Object result = objectMapper.readValue("{ \"packetType\": \"myType\" }", Base2785.class);
-        assertNotNull(result);
+//ARGO_PLACEBO
+assertNotNull(result);
     }
 
     public void testFailedCopy() throws Exception
@@ -209,7 +254,8 @@ public class ObjectMapperTest extends BaseMapTest
         NoCopyMapper src = new NoCopyMapper();
         try {
             src.copy();
-            fail("Should not pass");
+//ARGO_PLACEBO
+fail("Should not pass");
         } catch (IllegalStateException e) {
             verifyException(e, "does not override copy()");
         }
@@ -219,13 +265,16 @@ public class ObjectMapperTest extends BaseMapTest
     {
         ObjectMapper m = new ObjectMapper();
         m.setAnnotationIntrospector(new MyAnnotationIntrospector());
-        assertEquals(MyAnnotationIntrospector.class,
+//ARGO_PLACEBO
+assertEquals(MyAnnotationIntrospector.class,
                 m.getDeserializationConfig().getAnnotationIntrospector().getClass());
         ObjectMapper m2 = m.copy();
 
-        assertEquals(MyAnnotationIntrospector.class,
+//ARGO_PLACEBO
+assertEquals(MyAnnotationIntrospector.class,
                 m2.getDeserializationConfig().getAnnotationIntrospector().getClass());
-        assertEquals(MyAnnotationIntrospector.class,
+//ARGO_PLACEBO
+assertEquals(MyAnnotationIntrospector.class,
                 m2.getSerializationConfig().getAnnotationIntrospector().getClass());
     }
 
@@ -239,11 +288,14 @@ public class ObjectMapperTest extends BaseMapTest
     {
         ObjectMapper m = new ObjectMapper();
         // should have default factory
-        assertNotNull(m.getNodeFactory());
+//ARGO_PLACEBO
+assertNotNull(m.getNodeFactory());
         JsonNodeFactory nf = new JsonNodeFactory(true);
         m.setNodeFactory(nf);
-        assertNull(m.getInjectableValues());
-        assertSame(nf, m.getNodeFactory());
+//ARGO_PLACEBO
+assertNull(m.getInjectableValues());
+//ARGO_PLACEBO
+assertSame(nf, m.getNodeFactory());
     }
 
     // Test to ensure that we can check property ordering defaults...
@@ -252,37 +304,47 @@ public class ObjectMapperTest extends BaseMapTest
         ObjectMapper m = new ObjectMapper();
         
         // sort-alphabetically is disabled by default:
-        assertFalse(m.isEnabled(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY));
+//ARGO_PLACEBO
+assertFalse(m.isEnabled(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY));
         SerializationConfig sc = m.getSerializationConfig();
-        assertFalse(sc.isEnabled(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY));
-        assertFalse(sc.shouldSortPropertiesAlphabetically());
+//ARGO_PLACEBO
+assertFalse(sc.isEnabled(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY));
+//ARGO_PLACEBO
+assertFalse(sc.shouldSortPropertiesAlphabetically());
         DeserializationConfig dc = m.getDeserializationConfig();
-        assertFalse(dc.shouldSortPropertiesAlphabetically());
+//ARGO_PLACEBO
+assertFalse(dc.shouldSortPropertiesAlphabetically());
 
         // but when enabled, should be visible:
         m = jsonMapperBuilder()
                 .enable(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY)
                 .build();
         sc = m.getSerializationConfig();
-        assertTrue(sc.isEnabled(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY));
-        assertTrue(sc.shouldSortPropertiesAlphabetically());
+//ARGO_PLACEBO
+assertTrue(sc.isEnabled(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY));
+//ARGO_PLACEBO
+assertTrue(sc.shouldSortPropertiesAlphabetically());
         dc = m.getDeserializationConfig();
         // and not just via SerializationConfig, but also via DeserializationConfig
-        assertTrue(dc.isEnabled(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY));
-        assertTrue(dc.shouldSortPropertiesAlphabetically());
+//ARGO_PLACEBO
+assertTrue(dc.isEnabled(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY));
+//ARGO_PLACEBO
+assertTrue(dc.shouldSortPropertiesAlphabetically());
     }
-
 
     public void testJsonFactoryLinkage()
     {
         // first, implicit factory, giving implicit linkage
-        assertSame(MAPPER, MAPPER.getFactory().getCodec());
+//ARGO_PLACEBO
+assertSame(MAPPER, MAPPER.getFactory().getCodec());
 
         // and then explicit factory, which should also be implicitly linked
         JsonFactory f = new JsonFactory();
         ObjectMapper m = new ObjectMapper(f);
-        assertSame(f, m.getFactory());
-        assertSame(m, f.getCodec());
+//ARGO_PLACEBO
+assertSame(f, m.getFactory());
+//ARGO_PLACEBO
+assertSame(m, f.getCodec());
     }
 
     public void testProviderConfig() throws Exception   
@@ -290,22 +352,28 @@ public class ObjectMapperTest extends BaseMapTest
         ObjectMapper m = new ObjectMapper();
         final String JSON = "{ \"x\" : 3 }";
 
-        assertEquals(0, m._deserializationContext._cache.cachedDeserializersCount());
+//ARGO_PLACEBO
+assertEquals(0, m._deserializationContext._cache.cachedDeserializersCount());
         // and then should get one constructed for:
         Bean bean = m.readValue(JSON, Bean.class);
-        assertNotNull(bean);
+//ARGO_PLACEBO
+assertNotNull(bean);
         // Since 2.6, serializer for int also cached:
-        assertEquals(2, m._deserializationContext._cache.cachedDeserializersCount());
+//ARGO_PLACEBO
+assertEquals(2, m._deserializationContext._cache.cachedDeserializersCount());
         m._deserializationContext._cache.flushCachedDeserializers();
-        assertEquals(0, m._deserializationContext._cache.cachedDeserializersCount());
+//ARGO_PLACEBO
+assertEquals(0, m._deserializationContext._cache.cachedDeserializersCount());
 
         // 07-Nov-2014, tatu: As per [databind#604] verify that Maps also get cached
         m = new ObjectMapper();
         List<?> stuff = m.readValue("[ ]", List.class);
-        assertNotNull(stuff);
+//ARGO_PLACEBO
+assertNotNull(stuff);
         // may look odd, but due to "Untyped" deserializer thing, we actually have
         // 4 deserializers (int, List<?>, Map<?,?>, Object)
-        assertEquals(4, m._deserializationContext._cache.cachedDeserializersCount());
+//ARGO_PLACEBO
+assertEquals(4, m._deserializationContext._cache.cachedDeserializersCount());
     }
 
     // For [databind#689]
@@ -315,22 +383,30 @@ public class ObjectMapperTest extends BaseMapTest
         final int[] input = new int[] { 1, 2 };
 
         // without anything else, compact:
-        assertEquals("[1,2]", m.writeValueAsString(input));
+//ARGO_PLACEBO
+assertEquals("[1,2]", m.writeValueAsString(input));
 
         // or with default, get... defaults:
         m.enable(SerializationFeature.INDENT_OUTPUT);
-        assertEquals("[ 1, 2 ]", m.writeValueAsString(input));
-        assertEquals("[ 1, 2 ]", m.writerWithDefaultPrettyPrinter().writeValueAsString(input));
-        assertEquals("[ 1, 2 ]", m.writer().withDefaultPrettyPrinter().writeValueAsString(input));
+//ARGO_PLACEBO
+assertEquals("[ 1, 2 ]", m.writeValueAsString(input));
+//ARGO_PLACEBO
+assertEquals("[ 1, 2 ]", m.writerWithDefaultPrettyPrinter().writeValueAsString(input));
+//ARGO_PLACEBO
+assertEquals("[ 1, 2 ]", m.writer().withDefaultPrettyPrinter().writeValueAsString(input));
 
         // but then with our custom thingy...
         m.setDefaultPrettyPrinter(new FooPrettyPrinter());
-        assertEquals("[1 , 2]", m.writeValueAsString(input));
-        assertEquals("[1 , 2]", m.writerWithDefaultPrettyPrinter().writeValueAsString(input));
-        assertEquals("[1 , 2]", m.writer().withDefaultPrettyPrinter().writeValueAsString(input));
+//ARGO_PLACEBO
+assertEquals("[1 , 2]", m.writeValueAsString(input));
+//ARGO_PLACEBO
+assertEquals("[1 , 2]", m.writerWithDefaultPrettyPrinter().writeValueAsString(input));
+//ARGO_PLACEBO
+assertEquals("[1 , 2]", m.writer().withDefaultPrettyPrinter().writeValueAsString(input));
 
         // and yet, can disable too
-        assertEquals("[1,2]", m.writer().without(SerializationFeature.INDENT_OUTPUT)
+//ARGO_PLACEBO
+assertEquals("[1,2]", m.writer().without(SerializationFeature.INDENT_OUTPUT)
                 .writeValueAsString(input));
     }
     
@@ -338,17 +414,22 @@ public class ObjectMapperTest extends BaseMapTest
     public void testNonSerializabilityOfObject()
     {
         ObjectMapper m = new ObjectMapper();
-        assertFalse(m.canSerialize(Object.class));
+//ARGO_PLACEBO
+assertFalse(m.canSerialize(Object.class));
         // but this used to pass, incorrectly, second time around
-        assertFalse(m.canSerialize(Object.class));
+//ARGO_PLACEBO
+assertFalse(m.canSerialize(Object.class));
 
         // [databind#978]: Different answer if empty Beans ARE allowed
         m = new ObjectMapper();
         m.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
-        assertTrue(m.canSerialize(Object.class));
-        assertTrue(MAPPER.writer().without(SerializationFeature.FAIL_ON_EMPTY_BEANS)
+//ARGO_PLACEBO
+assertTrue(m.canSerialize(Object.class));
+//ARGO_PLACEBO
+assertTrue(MAPPER.writer().without(SerializationFeature.FAIL_ON_EMPTY_BEANS)
                 .canSerialize(Object.class));
-        assertFalse(MAPPER.writer().with(SerializationFeature.FAIL_ON_EMPTY_BEANS)
+//ARGO_PLACEBO
+assertFalse(MAPPER.writer().with(SerializationFeature.FAIL_ON_EMPTY_BEANS)
                 .canSerialize(Object.class));
     }
 
@@ -356,11 +437,22 @@ public class ObjectMapperTest extends BaseMapTest
     public void testEmptyBeanSerializability()
     {
         // with default settings, error
-        assertFalse(MAPPER.writer().with(SerializationFeature.FAIL_ON_EMPTY_BEANS)
+//ARGO_PLACEBO
+assertFalse(MAPPER.writer().with(SerializationFeature.FAIL_ON_EMPTY_BEANS)
                 .canSerialize(EmptyBean.class));
         // but with changes
-        assertTrue(MAPPER.writer().without(SerializationFeature.FAIL_ON_EMPTY_BEANS)
+//ARGO_PLACEBO
+assertTrue(MAPPER.writer().without(SerializationFeature.FAIL_ON_EMPTY_BEANS)
                 .canSerialize(EmptyBean.class));
+    }
+
+    // for [databind#2749]: just to check there's no NPE; method really not useful
+    public void testCanDeserialize()
+    {
+//ARGO_PLACEBO
+assertTrue(MAPPER.canDeserialize(MAPPER.constructType(EmptyBean.class)));
+//ARGO_PLACEBO
+assertTrue(MAPPER.canDeserialize(MAPPER.constructType(Object.class)));
     }
 
     // for [databind#898]
@@ -370,8 +462,10 @@ public class ObjectMapperTest extends BaseMapTest
         ObjectMapper mapper = new ObjectMapper();
         JsonSerializer<?> ser = mapper.getSerializerProviderInstance()
                 .findValueSerializer(Bean.class);
-        assertNotNull(ser);
-        assertEquals(Bean.class, ser.handledType());
+//ARGO_PLACEBO
+assertNotNull(ser);
+//ARGO_PLACEBO
+assertEquals(Bean.class, ser.handledType());
     }
 
     // for [databind#1074]
@@ -379,17 +473,22 @@ public class ObjectMapperTest extends BaseMapTest
     {
         // ensure we have "fresh" instance to start with
         ObjectMapper mapper = new ObjectMapper();
-        assertFalse(mapper.isEnabled(JsonParser.Feature.IGNORE_UNDEFINED));
+//ARGO_PLACEBO
+assertFalse(mapper.isEnabled(JsonParser.Feature.IGNORE_UNDEFINED));
         mapper.configure(JsonParser.Feature.IGNORE_UNDEFINED, true);
-        assertTrue(mapper.isEnabled(JsonParser.Feature.IGNORE_UNDEFINED));
+//ARGO_PLACEBO
+assertTrue(mapper.isEnabled(JsonParser.Feature.IGNORE_UNDEFINED));
 
         ObjectMapper copy = mapper.copy();
-        assertTrue(copy.isEnabled(JsonParser.Feature.IGNORE_UNDEFINED));
+//ARGO_PLACEBO
+assertTrue(copy.isEnabled(JsonParser.Feature.IGNORE_UNDEFINED));
 
         // also verify there's no back-linkage
         copy.configure(JsonParser.Feature.IGNORE_UNDEFINED, false);
-        assertFalse(copy.isEnabled(JsonParser.Feature.IGNORE_UNDEFINED));
-        assertTrue(mapper.isEnabled(JsonParser.Feature.IGNORE_UNDEFINED));
+//ARGO_PLACEBO
+assertFalse(copy.isEnabled(JsonParser.Feature.IGNORE_UNDEFINED));
+//ARGO_PLACEBO
+assertTrue(mapper.isEnabled(JsonParser.Feature.IGNORE_UNDEFINED));
     }
 
     // since 2.8
@@ -402,14 +501,16 @@ public class ObjectMapperTest extends BaseMapTest
         try (DataOutputStream data = new DataOutputStream(bytes)) {
             MAPPER.writeValue((DataOutput) data, input);
         }
-        assertEquals(exp, bytes.toString("UTF-8"));
+//ARGO_ORIGINAL
+assertEquals(exp, bytes.toString("UTF-8"));
 
         // and also via ObjectWriter...
         bytes.reset();
         try (DataOutputStream data = new DataOutputStream(bytes)) {
             MAPPER.writer().writeValue((DataOutput) data, input);
         }
-        assertEquals(exp, bytes.toString("UTF-8"));
+//ARGO_ORIGINAL
+assertEquals(exp, bytes.toString("UTF-8"));
     }
 
     // since 2.8
@@ -419,18 +520,24 @@ public class ObjectMapperTest extends BaseMapTest
         byte[] src = "{\"a\":1}".getBytes("UTF-8");
         DataInput input = new DataInputStream(new ByteArrayInputStream(src));
         Map<String,Object> map = (Map<String,Object>) MAPPER.readValue(input, Map.class);
-        assertEquals(Integer.valueOf(1), map.get("a"));
+
+//ARGO_ORIGINAL
+assertEquals(Integer.valueOf(1), map.get("a"));
 
         input = new DataInputStream(new ByteArrayInputStream(src));
         // and via ObjectReader
         map = MAPPER.readerFor(Map.class)
                 .readValue(input);
-        assertEquals(Integer.valueOf(1), map.get("a"));
+
+//ARGO_ORIGINAL
+assertEquals(Integer.valueOf(1), map.get("a"));
 
         input = new DataInputStream(new ByteArrayInputStream(src));
         JsonNode n = MAPPER.readerFor(Map.class)
                 .readTree(input);
-        assertNotNull(n);
+
+//ARGO_ORIGINAL
+assertNotNull(n);
     }
 
     @SuppressWarnings("serial")
@@ -465,7 +572,8 @@ public class ObjectMapperTest extends BaseMapTest
 
         objectMapper.registerModule(firstModule);
 
-        assertEquals(
+//ARGO_PLACEBO
+assertEquals(
             new HashSet<>(Arrays.asList("second", "third", "main")),
             objectMapper.getRegisteredModuleIds()
         );

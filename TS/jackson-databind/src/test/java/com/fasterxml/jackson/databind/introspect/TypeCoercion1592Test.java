@@ -30,6 +30,7 @@ public class TypeCoercion1592Test extends BaseMapTest
         // first, serialize
         MAPPER.writeValueAsString(new Bean1592());
         Bean1592 result = MAPPER.readValue("{}", Bean1592.class);
-        assertNotNull(result);
+//ARGO_PLACEBO
+assertNotNull(result);
     }
 }

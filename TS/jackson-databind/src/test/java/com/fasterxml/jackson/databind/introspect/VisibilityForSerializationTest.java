@@ -84,9 +84,12 @@ public class VisibilityForSerializationTest
         // First: auto-detection enabled (default):
         ObjectMapper m = new ObjectMapper();
         Map<String,Object> result = writeAndMap(m, new GetterClass());
-        assertEquals(2, result.size());
-        assertEquals(Integer.valueOf(-2), result.get("x"));
-        assertEquals(Integer.valueOf(1), result.get("y"));
+//ARGO_PLACEBO
+assertEquals(2, result.size());
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(-2), result.get("x"));
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(1), result.get("y"));
 
         // Then auto-detection disabled. But note: we MUST create a new
         // mapper, since old version of serializer may be cached by now
@@ -94,8 +97,10 @@ public class VisibilityForSerializationTest
                 .configure(MapperFeature.AUTO_DETECT_GETTERS, false)
                 .build();
         result = writeAndMap(m, new GetterClass());
-        assertEquals(1, result.size());
-        assertTrue(result.containsKey("x"));
+//ARGO_PLACEBO
+assertEquals(1, result.size());
+//ARGO_PLACEBO
+assertTrue(result.containsKey("x"));
     }
 
     public void testPerClassAutoDetection() throws IOException
@@ -103,17 +108,22 @@ public class VisibilityForSerializationTest
         // First: class-level auto-detection disabling
         ObjectMapper m = new ObjectMapper();
         Map<String,Object> result = writeAndMap(m, new DisabledGetterClass());
-        assertEquals(1, result.size());
-        assertTrue(result.containsKey("x"));
+//ARGO_PLACEBO
+assertEquals(1, result.size());
+//ARGO_PLACEBO
+assertTrue(result.containsKey("x"));
 
         // And then class-level auto-detection enabling, should override defaults
         m = jsonMapperBuilder()
                 .configure(MapperFeature.AUTO_DETECT_GETTERS, true)
                 .build();
         result = writeAndMap(m, new EnabledGetterClass());
-        assertEquals(2, result.size());
-        assertTrue(result.containsKey("x"));
-        assertTrue(result.containsKey("y"));
+//ARGO_PLACEBO
+assertEquals(2, result.size());
+//ARGO_PLACEBO
+assertTrue(result.containsKey("x"));
+//ARGO_PLACEBO
+assertTrue(result.containsKey("y"));
     }
 
     public void testPerClassAutoDetectionForIsGetter() throws IOException
@@ -124,22 +134,28 @@ public class VisibilityForSerializationTest
                 .configure(MapperFeature.AUTO_DETECT_IS_GETTERS, false)
                 .build();
         Map<String,Object> result = writeAndMap(m, new EnabledIsGetterClass());
-        assertEquals(0, result.size());
-        assertFalse(result.containsKey("ok"));
+//ARGO_PLACEBO
+assertEquals(0, result.size());
+//ARGO_PLACEBO
+assertFalse(result.containsKey("ok"));
     }
 
     // Simple test verifying that chainable methods work ok...
     public void testConfigChainability()
     {
         ObjectMapper m = new ObjectMapper();
-        assertTrue(m.isEnabled(MapperFeature.AUTO_DETECT_SETTERS));
-        assertTrue(m.isEnabled(MapperFeature.AUTO_DETECT_GETTERS));
+//ARGO_PLACEBO
+assertTrue(m.isEnabled(MapperFeature.AUTO_DETECT_SETTERS));
+//ARGO_PLACEBO
+assertTrue(m.isEnabled(MapperFeature.AUTO_DETECT_GETTERS));
         m = jsonMapperBuilder()
                 .configure(MapperFeature.AUTO_DETECT_SETTERS, false)
                 .configure(MapperFeature.AUTO_DETECT_GETTERS, false)
                 .build();
-        assertFalse(m.isEnabled(MapperFeature.AUTO_DETECT_SETTERS));
-        assertFalse(m.isEnabled(MapperFeature.AUTO_DETECT_GETTERS));
+//ARGO_PLACEBO
+assertFalse(m.isEnabled(MapperFeature.AUTO_DETECT_SETTERS));
+//ARGO_PLACEBO
+assertFalse(m.isEnabled(MapperFeature.AUTO_DETECT_GETTERS));
     }
 
     public void testVisibilityFeatures() throws Exception
@@ -160,7 +176,8 @@ public class VisibilityForSerializationTest
         BeanDescription desc = (BeanDescription) om.getSerializationConfig().introspect(javaType);
         List<BeanPropertyDefinition> props = desc.findProperties();
         if (props.size() != 1) {
-            fail("Should find 1 property, not "+props.size()+"; properties = "+props);
+//ARGO_PLACEBO
+fail("Should find 1 property, not "+props.size()+"; properties = "+props);
         }
     }
 }

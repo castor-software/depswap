@@ -4,6 +4,9 @@ import java.util.*;
 
 import com.fasterxml.jackson.databind.*;
 
+import static com.fasterxml.jackson.databind.JSONTestUtils.//ARGO_PLACEBO
+assertEquivalent;
+
 /**
  * Trivial test to ensure <code>JsonSchema</code> can be also deserialized
  */
@@ -51,11 +54,15 @@ public class TestReadJsonSchema
     {
         ObjectMapper mapper = new ObjectMapper();
         JsonSchema schema = mapper.generateJsonSchema(Schemable.class);
-        assertNotNull(schema);
+//ARGO_PLACEBO
+assertNotNull(schema);
 
         String schemaStr = mapper.writeValueAsString(schema);
-        assertNotNull(schemaStr);
+//ARGO_PLACEBO
+assertNotNull(schemaStr);
         JsonSchema result = mapper.readValue(schemaStr, JsonSchema.class);
-        assertEquals("Trying to read from '"+schemaStr+"'", schema, result);
+        //ARGO_EQUIVALENT
+//ARGO_PLACEBO
+assertEquivalent(schema.toString(), result.toString());
     }
 }

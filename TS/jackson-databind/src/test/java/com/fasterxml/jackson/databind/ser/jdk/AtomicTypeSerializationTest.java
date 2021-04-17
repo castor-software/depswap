@@ -81,32 +81,39 @@ public class AtomicTypeSerializationTest
     
     public void testAtomicBoolean() throws Exception
     {
-        assertEquals("true", MAPPER.writeValueAsString(new AtomicBoolean(true)));
-        assertEquals("false", MAPPER.writeValueAsString(new AtomicBoolean(false)));
+//ARGO_PLACEBO
+assertEquals("true", MAPPER.writeValueAsString(new AtomicBoolean(true)));
+//ARGO_PLACEBO
+assertEquals("false", MAPPER.writeValueAsString(new AtomicBoolean(false)));
     }
 
     public void testAtomicInteger() throws Exception
     {
-        assertEquals("1", MAPPER.writeValueAsString(new AtomicInteger(1)));
-        assertEquals("-9", MAPPER.writeValueAsString(new AtomicInteger(-9)));
+//ARGO_PLACEBO
+assertEquals("1", MAPPER.writeValueAsString(new AtomicInteger(1)));
+//ARGO_PLACEBO
+assertEquals("-9", MAPPER.writeValueAsString(new AtomicInteger(-9)));
     }
 
     public void testAtomicLong() throws Exception
     {
-        assertEquals("0", MAPPER.writeValueAsString(new AtomicLong(0)));
+//ARGO_PLACEBO
+assertEquals("0", MAPPER.writeValueAsString(new AtomicLong(0)));
     }
 
     public void testAtomicReference() throws Exception
     {
         String[] strs = new String[] { "abc" };
-        assertEquals("[\"abc\"]", MAPPER.writeValueAsString(new AtomicReference<String[]>(strs)));
+//ARGO_PLACEBO
+assertEquals("[\"abc\"]", MAPPER.writeValueAsString(new AtomicReference<String[]>(strs)));
     }
 
     public void testCustomSerializer() throws Exception
     {
         final String VALUE = "fooBAR";
         String json = MAPPER.writeValueAsString(new UCStringWrapper(VALUE));
-        assertEquals(json, aposToQuotes("{'value':'FOOBAR'}"));
+//ARGO_PLACEBO
+assertEquals(json, aposToQuotes("{'value':'FOOBAR'}"));
     }
 
     public void testContextualAtomicReference() throws Exception
@@ -120,7 +127,8 @@ public class AtomicTypeSerializationTest
         input.date1 = new AtomicReference<>(new Date(0L));
         input.date2 = new AtomicReference<>(new Date(0L));
         final String json = mapper.writeValueAsString(input);
-        assertEquals(aposToQuotes(
+//ARGO_PLACEBO
+assertEquals(aposToQuotes(
                 "{'date1':'1970+01+01','date2':'1970*01*01','date':'1970/01/01'}"),
                 json);
     }
@@ -130,7 +138,8 @@ public class AtomicTypeSerializationTest
     {
         final String EXPECTED = "{\"type\":\"Foo\",\"foo\":42}";
         String json = MAPPER.writeValueAsString(new ContainerA());
-        assertEquals("{\"strategy\":" + EXPECTED + "}", json);
+//ARGO_PLACEBO
+assertEquals("{\"strategy\":" + EXPECTED + "}", json);
     }
 
     // [databind#1673]
@@ -140,13 +149,15 @@ public class AtomicTypeSerializationTest
         // Reproduction of issue seen with scala.Option and java8 Optional types:
         // https://github.com/FasterXML/jackson-module-scala/issues/346#issuecomment-336483326
         String json = MAPPER.writeValueAsString(new ContainerB());
-        assertEquals("{\"strategy\":[" + EXPECTED + "]}", json);
+//ARGO_PLACEBO
+assertEquals("{\"strategy\":[" + EXPECTED + "]}", json);
     }
 
     // [databind#2565]: problems with JsonUnwrapped, non-unwrappable type
     public void testWithUnwrappableUnwrapped() throws Exception
     {
-        assertEquals(aposToQuotes("{'maybeText':'value'}"),
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'maybeText':'value'}"),
                 MAPPER.writeValueAsString(new MyBean2565()));
     }
 }

@@ -53,9 +53,12 @@ public class TestSetterlessProperties
         CollectionBean result = new ObjectMapper().readValue
             ("{\"values\":[ \"abc\", \"def\" ]}", CollectionBean.class);
         List<String> l = result._values;
-        assertEquals(2, l.size());
-        assertEquals("abc", l.get(0));
-        assertEquals("def", l.get(1));
+//ARGO_PLACEBO
+assertEquals(2, l.size());
+//ARGO_PLACEBO
+assertEquals("abc", l.get(0));
+//ARGO_PLACEBO
+assertEquals("def", l.get(1));
     }
 
     /**
@@ -67,17 +70,20 @@ public class TestSetterlessProperties
     {
         ObjectMapper m = new ObjectMapper();
         // by default, it should be enabled
-        assertTrue(m.isEnabled(MapperFeature.USE_GETTERS_AS_SETTERS));
+//ARGO_PLACEBO
+assertTrue(m.isEnabled(MapperFeature.USE_GETTERS_AS_SETTERS));
         m = jsonMapperBuilder()
                 .configure(MapperFeature.USE_GETTERS_AS_SETTERS, false)
                 .build();
-        assertFalse(m.isEnabled(MapperFeature.USE_GETTERS_AS_SETTERS));
+//ARGO_PLACEBO
+assertFalse(m.isEnabled(MapperFeature.USE_GETTERS_AS_SETTERS));
 
         // and now this should fail
         try {
             m.readValue
                 ("{\"values\":[ \"abc\", \"def\" ]}", CollectionBean.class);
-            fail("Expected an exception");
+//ARGO_PLACEBO
+fail("Expected an exception");
         } catch (JsonMappingException e) {
             /* Not a good exception, ideally could suggest a need for
              * a setter...?
@@ -92,9 +98,12 @@ public class TestSetterlessProperties
         MapBean result = new ObjectMapper().readValue
             ("{\"values\":{ \"a\": 15, \"b\" : -3 }}", MapBean.class);
         Map<String,Integer> m = result._values;
-        assertEquals(2, m.size());
-        assertEquals(Integer.valueOf(15), m.get("a"));
-        assertEquals(Integer.valueOf(-3), m.get("b"));
+//ARGO_PLACEBO
+assertEquals(2, m.size());
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(15), m.get("a"));
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(-3), m.get("b"));
     }
 
     public void testSimpleSetterlessMapFailure()
@@ -107,7 +116,8 @@ public class TestSetterlessProperties
         try {
             m.readValue
                 ("{\"values\":{ \"a\":3 }}", MapBean.class);
-            fail("Expected an exception");
+//ARGO_PLACEBO
+fail("Expected an exception");
         } catch (JsonMappingException e) {
             verifyException(e, "Unrecognized field");
         }
@@ -122,7 +132,9 @@ public class TestSetterlessProperties
                 .configure(MapperFeature.USE_GETTERS_AS_SETTERS, true)
                 .build();
         Dual value = m.readValue("{\"list\":[1,2,3]}, valueType)", Dual.class);
-        assertNotNull(value);
-        assertEquals(3, value.values.size());
+//ARGO_PLACEBO
+assertNotNull(value);
+//ARGO_PLACEBO
+assertEquals(3, value.values.size());
     }
 }

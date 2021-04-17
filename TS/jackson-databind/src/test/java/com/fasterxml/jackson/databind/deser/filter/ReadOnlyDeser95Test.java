@@ -21,9 +21,11 @@ public class ReadOnlyDeser95Test extends BaseMapTest
         ObjectMapper m = new ObjectMapper();
         String json = m.writeValueAsString(new ReadOnlyBean());
         if (json.indexOf("computed") < 0) {
-            fail("Should have property 'computed', didn't: "+json);
+//ARGO_PLACEBO
+fail("Should have property 'computed', didn't: "+json);
         }
         ReadOnlyBean bean = m.readValue(json, ReadOnlyBean.class);
-        assertNotNull(bean);
+//ARGO_PLACEBO
+assertNotNull(bean);
     }
 }

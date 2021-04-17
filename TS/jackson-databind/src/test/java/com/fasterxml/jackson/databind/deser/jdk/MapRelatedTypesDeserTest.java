@@ -20,24 +20,34 @@ public class MapRelatedTypesDeserTest
     {
         List<Map.Entry<String,Long>> stuff = MAPPER.readValue(aposToQuotes("[{'a':15},{'b':42}]"),
                 new TypeReference<List<Map.Entry<String,Long>>>() { });
-        assertNotNull(stuff);
-        assertEquals(2, stuff.size());
-        assertNotNull(stuff.get(1));
-        assertEquals("b", stuff.get(1).getKey());
-        assertEquals(Long.valueOf(42), stuff.get(1).getValue());
+//ARGO_PLACEBO
+assertNotNull(stuff);
+//ARGO_PLACEBO
+assertEquals(2, stuff.size());
+//ARGO_PLACEBO
+assertNotNull(stuff.get(1));
+//ARGO_PLACEBO
+assertEquals("b", stuff.get(1).getKey());
+//ARGO_PLACEBO
+assertEquals(Long.valueOf(42), stuff.get(1).getValue());
     }
 
     public void testMapEntryWithStringBean() throws Exception
     {
         List<Map.Entry<Integer,StringWrapper>> stuff = MAPPER.readValue(aposToQuotes("[{'28':'Foo'},{'13':'Bar'}]"),
                 new TypeReference<List<Map.Entry<Integer,StringWrapper>>>() { });
-        assertNotNull(stuff);
-        assertEquals(2, stuff.size());
-        assertNotNull(stuff.get(1));
-        assertEquals(Integer.valueOf(13), stuff.get(1).getKey());
+//ARGO_PLACEBO
+assertNotNull(stuff);
+//ARGO_PLACEBO
+assertEquals(2, stuff.size());
+//ARGO_PLACEBO
+assertNotNull(stuff.get(1));
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(13), stuff.get(1).getKey());
         
         StringWrapper sw = stuff.get(1).getValue();
-        assertEquals("Bar", sw.str);
+//ARGO_PLACEBO
+assertEquals("Bar", sw.str);
     }
 
     public void testMapEntryFail() throws Exception
@@ -45,7 +55,8 @@ public class MapRelatedTypesDeserTest
         try {
             /*List<Map.Entry<Integer,StringWrapper>> stuff =*/ MAPPER.readValue(aposToQuotes("[{'28':'Foo','13':'Bar'}]"),
                     new TypeReference<List<Map.Entry<Integer,StringWrapper>>>() { });
-            fail("Should not have passed");
+//ARGO_PLACEBO
+fail("Should not have passed");
         } catch (Exception e) {
             verifyException(e, "more than one entry in JSON");
         }
@@ -62,10 +73,14 @@ public class MapRelatedTypesDeserTest
     {
         Properties props = MAPPER.readValue(aposToQuotes("{'a':'foo', 'b':123, 'c':true}"),
                 Properties.class);
-        assertEquals(3, props.size());
-        assertEquals("foo", props.getProperty("a"));
-        assertEquals("123", props.getProperty("b"));
-        assertEquals("true", props.getProperty("c"));
+//ARGO_PLACEBO
+assertEquals(3, props.size());
+//ARGO_PLACEBO
+assertEquals("foo", props.getProperty("a"));
+//ARGO_PLACEBO
+assertEquals("123", props.getProperty("b"));
+//ARGO_PLACEBO
+assertEquals("true", props.getProperty("c"));
     }
 
     // JDK singletonMap
@@ -75,10 +90,14 @@ public class MapRelatedTypesDeserTest
 
         String json = MAPPER.writeValueAsString(Collections.singletonMap("value", new IntWrapper(5)));
         Map<String,IntWrapper> result = MAPPER.readValue(json, type);
-        assertNotNull(result);
-        assertEquals(1, result.size());
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertEquals(1, result.size());
         IntWrapper w = result.get("value");
-        assertNotNull(w);
-        assertEquals(5, w.i);
+//ARGO_PLACEBO
+assertNotNull(w);
+//ARGO_PLACEBO
+assertEquals(5, w.i);
     }
 }

@@ -136,10 +136,15 @@ public class ObjectId825BTest extends BaseMapTest
         private static final long serialVersionUID = 1L;
     }
 
+    /*
+    /*****************************************************
+    /* Test methods
+    /*****************************************************
+     */
+
     public void testFull825() throws Exception
     {
         final ObjectMapper mapper = jsonMapperBuilder()
-                .enable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT)
                 .activateDefaultTyping(NoCheckSubTypeValidator.instance,
                         ObjectMapper.DefaultTyping.OBJECT_AND_NON_CONCRETE)
                 .build();
@@ -192,6 +197,7 @@ public class ObjectId825BTest extends BaseMapTest
         INPUT = INPUT.replaceAll("_PKG_", newPkg);
         
         CTC result = mapper.readValue(INPUT, CTC.class);
-        assertNotNull(result);
+//ARGO_PLACEBO
+assertNotNull(result);
     }
 }

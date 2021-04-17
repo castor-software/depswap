@@ -22,6 +22,7 @@ public class IgnoredFieldPresentInCreatorProperty2001Test extends BaseMapTest
 
     public void testIgnoredFieldPresentInPropertyCreator() throws Exception {
         Foo deserialized = newJsonMapper().readValue("{\"query\": \"bar\"}", Foo.class);
-        assertEquals("bar", deserialized.query);
+//ARGO_PLACEBO
+assertEquals("bar", deserialized.query);
     }
 }

@@ -149,7 +149,8 @@ public class MapFormatShapeTest extends BaseMapTest
     public void testSerializeAsPOJOViaClass() throws Exception
     {
         String result = MAPPER.writeValueAsString(new Bean476Container(1,2,0));
-        assertEquals(aposToQuotes("{'a':{'extra':13,'empty':false},'b':{'value':2}}"),
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'a':{'extra':13,'empty':false},'b':{'value':2}}"),
                 result);
     }
 
@@ -159,14 +160,16 @@ public class MapFormatShapeTest extends BaseMapTest
     public void testSerializeAsPOJOViaProperty() throws Exception
     {
         String result = MAPPER.writeValueAsString(new Bean476Container(1,0,3));
-        assertEquals(aposToQuotes("{'a':{'extra':13,'empty':false},'c':{'empty':false,'value':3}}"),
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'a':{'extra':13,'empty':false},'c':{'empty':false,'value':3}}"),
                 result);
     }
 
     public void testSerializeNaturalViaOverride() throws Exception
     {
         String result = MAPPER.writeValueAsString(new Bean476Override(123));
-        assertEquals(aposToQuotes("{'stuff':{'value':123}}"),
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'stuff':{'value':123}}"),
                 result);
     }
     */
@@ -187,11 +190,14 @@ public class MapFormatShapeTest extends BaseMapTest
         JsonMapper mapper = JsonMapper.builder().enable(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY).build();
         String json = mapper.writeValueAsString(input);
 
-        assertEquals(aposToQuotes("{'property':55,'map':{'12':45,'6':88}}"), json);
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'property':55,'map':{'12':45,'6':88}}"), json);
 
         Map1540Implementation result = MAPPER.readValue(json, Map1540Implementation.class);
-        assertEquals(result.property, input.property);
-        assertEquals(input.getMap(), input.getMap());
+//ARGO_PLACEBO
+assertEquals(result.property, input.property);
+//ARGO_PLACEBO
+assertEquals(input.getMap(), input.getMap());
    }
     
     // [databind#1554]
@@ -199,7 +205,9 @@ public class MapFormatShapeTest extends BaseMapTest
     {
         Map476AsPOJO result = MAPPER.readValue(aposToQuotes("{'extra':42}"),
                 Map476AsPOJO.class);
-        assertEquals(0, result.size());
-        assertEquals(42, result.extra);
+//ARGO_PLACEBO
+assertEquals(0, result.size());
+//ARGO_PLACEBO
+assertEquals(42, result.extra);
     }
 }

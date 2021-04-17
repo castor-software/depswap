@@ -36,6 +36,7 @@ public class GenericNestedType2331Test extends BaseMapTest
         root.children.add(new Node());
 
         String json = newJsonMapper().writeValueAsString(root);
-        assertNotNull(json);
+//ARGO_PLACEBO
+assertNotNull(json);
     }
 }

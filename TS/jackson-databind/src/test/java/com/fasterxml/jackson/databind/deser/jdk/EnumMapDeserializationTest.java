@@ -106,7 +106,8 @@ public class EnumMapDeserializationTest extends BaseMapTest
     {
         EnumMap<TestEnum,String> value = MAPPER.readValue("{\"OK\":\"value\"}",
                 new TypeReference<EnumMap<TestEnum,String>>() { });
-        assertEquals("value", value.get(TestEnum.OK));
+//ARGO_PLACEBO
+assertEquals("value", value.get(TestEnum.OK));
     }
 
     public void testToStringEnumMaps() throws Exception
@@ -117,7 +118,8 @@ public class EnumMapDeserializationTest extends BaseMapTest
         EnumMap<LowerCaseEnum,String> value = r.forType(
             new TypeReference<EnumMap<LowerCaseEnum,String>>() { })
                 .readValue("{\"a\":\"value\"}");
-        assertEquals("value", value.get(LowerCaseEnum.A));
+//ARGO_PLACEBO
+assertEquals("value", value.get(LowerCaseEnum.A));
     }
 
     /*
@@ -130,22 +132,28 @@ public class EnumMapDeserializationTest extends BaseMapTest
     {
         MySimpleEnumMap map = MAPPER.readValue(aposToQuotes("{'RULES':'waves'}"),
                 MySimpleEnumMap.class);   
-        assertEquals(1, map.size());
-        assertEquals("waves", map.get(TestEnum.RULES));
+//ARGO_PLACEBO
+assertEquals(1, map.size());
+//ARGO_PLACEBO
+assertEquals("waves", map.get(TestEnum.RULES));
     }
 
     public void testCustomEnumMapFromString() throws Exception
     {
         FromStringEnumMap map = MAPPER.readValue(quote("kewl"), FromStringEnumMap.class);   
-        assertEquals(1, map.size());
-        assertEquals("kewl", map.get(TestEnum.JACKSON));
+//ARGO_PLACEBO
+assertEquals(1, map.size());
+//ARGO_PLACEBO
+assertEquals("kewl", map.get(TestEnum.JACKSON));
     }
 
     public void testCustomEnumMapWithDelegate() throws Exception
     {
         FromDelegateEnumMap map = MAPPER.readValue(aposToQuotes("{'foo':'bar'}"), FromDelegateEnumMap.class);   
-        assertEquals(1, map.size());
-        assertEquals("{foo=bar}", map.get(TestEnum.OK));
+//ARGO_PLACEBO
+assertEquals(1, map.size());
+//ARGO_PLACEBO
+assertEquals("{foo=bar}", map.get(TestEnum.OK));
     }
 
     public void testCustomEnumMapFromProps() throws Exception
@@ -154,12 +162,17 @@ public class EnumMapDeserializationTest extends BaseMapTest
                 "{'a':13,'RULES':'jackson','b':-731,'OK':'yes'}"),
                 FromPropertiesEnumMap.class);
 
-        assertEquals(13, map.a0);
-        assertEquals(-731, map.b0);
+//ARGO_PLACEBO
+assertEquals(13, map.a0);
+//ARGO_PLACEBO
+assertEquals(-731, map.b0);
 
-        assertEquals("jackson", map.get(TestEnum.RULES));
-        assertEquals("yes", map.get(TestEnum.OK));
-        assertEquals(2, map.size());
+//ARGO_PLACEBO
+assertEquals("jackson", map.get(TestEnum.RULES));
+//ARGO_PLACEBO
+assertEquals("yes", map.get(TestEnum.OK));
+//ARGO_PLACEBO
+assertEquals(2, map.size());
     }
 
     /*
@@ -183,9 +196,12 @@ public class EnumMapDeserializationTest extends BaseMapTest
 
         String json = mapper.writeValueAsString(input);
         Pojo1859 result = mapper.readValue(json, Pojo1859.class);
-        assertNotNull(result);
-        assertNotNull(result.values);
-        assertEquals(2, result.values.size());
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertNotNull(result.values);
+//ARGO_PLACEBO
+assertEquals(2, result.values.size());
     }
 
     /*
@@ -202,15 +218,19 @@ public class EnumMapDeserializationTest extends BaseMapTest
                 .readerFor(new TypeReference<EnumMap<TestEnumWithDefault,String>>() { })
                 .with(DeserializationFeature.READ_UNKNOWN_ENUM_VALUES_USING_DEFAULT_VALUE)
                 .readValue("{\"unknown\":\"value\"}");
-        assertEquals(1, value.size());
-        assertEquals("value", value.get(TestEnumWithDefault.OK));
+//ARGO_PLACEBO
+assertEquals(1, value.size());
+//ARGO_PLACEBO
+assertEquals("value", value.get(TestEnumWithDefault.OK));
 
         Map<TestEnumWithDefault,String> value2 = MAPPER
                 .readerFor(new TypeReference<Map<TestEnumWithDefault,String>>() { })
                 .with(DeserializationFeature.READ_UNKNOWN_ENUM_VALUES_USING_DEFAULT_VALUE)
                 .readValue("{\"unknown\":\"value\"}");
-        assertEquals(1, value2.size());
-        assertEquals("value", value2.get(TestEnumWithDefault.OK));
+//ARGO_PLACEBO
+assertEquals(1, value2.size());
+//ARGO_PLACEBO
+assertEquals("value", value2.get(TestEnumWithDefault.OK));
     }
 
     // [databind#1859]
@@ -221,7 +241,8 @@ public class EnumMapDeserializationTest extends BaseMapTest
                 .readerFor(new TypeReference<EnumMap<TestEnumWithDefault,String>>() { })
                 .with(DeserializationFeature.READ_UNKNOWN_ENUM_VALUES_AS_NULL)
                 .readValue("{\"unknown\":\"value\"}");
-        assertEquals(0, value.size());
+//ARGO_PLACEBO
+assertEquals(0, value.size());
 
         // then regular Map
         Map<TestEnumWithDefault,String> value2 = MAPPER
@@ -230,8 +251,10 @@ public class EnumMapDeserializationTest extends BaseMapTest
                 .readValue("{\"unknown\":\"value\"}");
         // 04-Jan-2017, tatu: Not sure if this is weird or not, but since `null`s are typically
         //    ok for "regular" JDK Maps...
-        assertEquals(1, value2.size());
-        assertEquals("value", value2.get(null));
+//ARGO_PLACEBO
+assertEquals(1, value2.size());
+//ARGO_PLACEBO
+assertEquals("value", value2.get(null));
     }
 
     // [databind#2457]
@@ -241,11 +264,13 @@ public class EnumMapDeserializationTest extends BaseMapTest
         final Map<MyEnum2457, String> map = new LinkedHashMap<>();
         map.put(MyEnum2457.A, "1");
         map.put(MyEnum2457.B, "2");
-        assertEquals(aposToQuotes("{'A':'1','B':'2'}"),
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'A':'1','B':'2'}"),
                 mapper.writeValueAsString(map));
 
         // But should be able to override
-        assertEquals(aposToQuotes("{'"+MyEnum2457.A.toString()+"':'1','"+MyEnum2457.B.toString()+"':'2'}"),
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'"+MyEnum2457.A.toString()+"':'1','"+MyEnum2457.B.toString()+"':'2'}"),
                 mapper.writer()
                     .with(SerializationFeature.WRITE_ENUMS_USING_TO_STRING)
                     .writeValueAsString(map));

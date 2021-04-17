@@ -55,26 +55,34 @@ public class TestMapConversions
         input.put("B", Integer.valueOf(-4));
         Map<AB,String> output = MAPPER.convertValue(input,
                 new TypeReference<Map<AB,String>>() { });
-        assertEquals(2, output.size());
-        assertEquals("3", output.get(AB.A));
-        assertEquals("-4", output.get(AB.B));
+//ARGO_PLACEBO
+assertEquals(2, output.size());
+//ARGO_PLACEBO
+assertEquals("3", output.get(AB.A));
+//ARGO_PLACEBO
+assertEquals("-4", output.get(AB.B));
 
         // Let's try the other way too... and mix up types a bit
         Map<String,Integer> roundtrip = MAPPER.convertValue(input,
                 new TypeReference<TreeMap<String,Integer>>() { });
-        assertEquals(2, roundtrip.size());
-        assertEquals(Integer.valueOf(3), roundtrip.get("A"));
-        assertEquals(Integer.valueOf(-4), roundtrip.get("B"));
+//ARGO_PLACEBO
+assertEquals(2, roundtrip.size());
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(3), roundtrip.get("A"));
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(-4), roundtrip.get("B"));
     }
 
     public void testMapToBean()
     {
         EnumMap<AB,String> map = new EnumMap<AB,String>(AB.class);
-        map.put(AB.A, "   17");
-        map.put(AB.B, " -1");
+        map.put(AB.A, "17");
+        map.put(AB.B, "-1");
         Bean bean = MAPPER.convertValue(map, Bean.class);
-        assertEquals(Integer.valueOf(17), bean.A);
-        assertEquals(" -1", bean.B);
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(17), bean.A);
+//ARGO_PLACEBO
+assertEquals("-1", bean.B);
     }
 
     public void testBeanToMap()
@@ -84,8 +92,10 @@ public class TestMapConversions
         bean.B = "13";
         EnumMap<AB,String> result = MAPPER.convertValue(bean,
                 new TypeReference<EnumMap<AB,String>>() { });
-        assertEquals("129", result.get(AB.A));
-        assertEquals("13", result.get(AB.B));
+//ARGO_PLACEBO
+assertEquals("129", result.get(AB.A));
+//ARGO_PLACEBO
+assertEquals("13", result.get(AB.B));
     }
 
     // [Issue#287]: Odd problems with `Object` type, static typing
@@ -95,7 +105,8 @@ public class TestMapConversions
         final ObjectMapper mapper = new ObjectMapper();
         final Request request = new Request();
         final String retString = mapper.writeValueAsString(request);
-        assertEquals("{\"hello\":{\"value\":1}}",retString);
+//ARGO_PLACEBO
+assertEquals("{\"hello\":{\"value\":1}}",retString);
     }
 
     // [databind#810]
@@ -106,10 +117,13 @@ public class TestMapConversions
         bean.B = "13";
         Properties props = MAPPER.convertValue(bean, Properties.class);
 
-        assertEquals(2, props.size());
+//ARGO_PLACEBO
+assertEquals(2, props.size());
 
-        assertEquals("13", props.getProperty("B"));
+//ARGO_PLACEBO
+assertEquals("13", props.getProperty("B"));
         // should coercce non-Strings to Strings
-        assertEquals("129", props.getProperty("A"));
+//ARGO_PLACEBO
+assertEquals("129", props.getProperty("A"));
     }
 }

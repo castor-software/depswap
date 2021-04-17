@@ -19,12 +19,18 @@ public class TestJacksonTypes
         JsonLocation loc = new JsonLocation(f, -1, 100, 13);
         ObjectMapper mapper = new ObjectMapper();
         Map<String,Object> result = writeAndMap(mapper, loc);
-        assertEquals(5, result.size());
-        assertEquals(f.getAbsolutePath(), result.get("sourceRef"));
-        assertEquals(Integer.valueOf(-1), result.get("charOffset"));
-        assertEquals(Integer.valueOf(-1), result.get("byteOffset"));
-        assertEquals(Integer.valueOf(100), result.get("lineNr"));
-        assertEquals(Integer.valueOf(13), result.get("columnNr"));
+//ARGO_PLACEBO
+assertEquals(5, result.size());
+//ARGO_PLACEBO
+assertEquals(f.getAbsolutePath(), result.get("sourceRef"));
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(-1), result.get("charOffset"));
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(-1), result.get("byteOffset"));
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(100), result.get("lineNr"));
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(13), result.get("columnNr"));
 
     }
 

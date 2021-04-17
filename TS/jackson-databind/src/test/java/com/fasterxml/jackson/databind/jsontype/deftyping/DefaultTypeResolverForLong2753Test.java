@@ -56,7 +56,9 @@ public class DefaultTypeResolverForLong2753Test extends BaseMapTest
         String json = mapper.writeValueAsString(mapData);
 //System.err.println("JSON:\n"+json);
         Map<?,?> result = mapper.readValue(json, Map.class);
-        assertNotNull(result);
-        assertEquals(2, result.size());
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertEquals(2, result.size());
     }
 }

@@ -23,12 +23,15 @@ public class TestBlocking
     {
         ObjectMapper mapper = new ObjectMapper();
         JsonParser jp = createParserUsingReader("[ 1  ");
-        assertToken(JsonToken.START_ARRAY, jp.nextToken());
-        assertToken(JsonToken.VALUE_NUMBER_INT, jp.nextToken());
+//ARGO_PLACEBO
+assertToken(JsonToken.START_ARRAY, jp.nextToken());
+//ARGO_PLACEBO
+assertToken(JsonToken.VALUE_NUMBER_INT, jp.nextToken());
 
         // And then try to map just a single entry: shouldn't fail:
         Integer I = mapper.readValue(jp, Integer.class);
-        assertEquals(Integer.valueOf(1), I);
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(1), I);
 
         // and should fail only now:
         try {

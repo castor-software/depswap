@@ -29,7 +29,8 @@ public class FormatFeatureOrderedMapTest extends BaseMapTest
         SortedKeysMap map = new SortedKeysMap()
             .put("b", 2)
             .put("a", 1);
-        assertEquals(aposToQuotes("{'values':{'a':1,'b':2}}"),
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'values':{'a':1,'b':2}}"),
                 MAPPER.writeValueAsString(map));
     }
 }

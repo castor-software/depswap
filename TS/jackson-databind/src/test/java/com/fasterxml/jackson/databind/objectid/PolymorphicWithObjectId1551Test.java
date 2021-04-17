@@ -48,8 +48,10 @@ public class PolymorphicWithObjectId1551Test extends BaseMapTest
         // 02-May-2017, tatu: Not possible to support as of Jackson 2.8 at least, so:
 
         VehicleOwnerViaProp[] deserialized = objectMapper.readValue(serialized, VehicleOwnerViaProp[].class);
-        assertEquals(2, deserialized.length);
-        assertSame(deserialized[0].ownedVehicle, deserialized[1].ownedVehicle);
+//ARGO_PLACEBO
+assertEquals(2, deserialized.length);
+//ARGO_PLACEBO
+assertSame(deserialized[0].ownedVehicle, deserialized[1].ownedVehicle);
     }
 
     public void testFailingAbstractUsingProp() throws Exception
@@ -69,7 +71,8 @@ public class PolymorphicWithObjectId1551Test extends BaseMapTest
                 .writeValueAsString(new VehicleOwnerBroken[] { v1, v2 });
         } catch (InvalidDefinitionException e) {
             // on serialization, reported for different type
-            assertEquals(Car.class, e.getType().getRawClass());
+//ARGO_PLACEBO
+assertEquals(Car.class, e.getType().getRawClass());
             verifyException(e, "Invalid Object Id definition");
             verifyException(e, "cannot find property with name 'bogus'");
         }
@@ -81,9 +84,11 @@ public class PolymorphicWithObjectId1551Test extends BaseMapTest
                 );
         try {
             objectMapper.readValue(JSON, VehicleOwnerBroken[].class);
-            fail("Should not pass");
+//ARGO_PLACEBO
+fail("Should not pass");
         } catch (InvalidDefinitionException e) {
-            assertEquals(Vehicle.class, e.getType().getRawClass());
+//ARGO_PLACEBO
+assertEquals(Vehicle.class, e.getType().getRawClass());
             verifyException(e, "Invalid Object Id definition");
             verifyException(e, "cannot find property with name 'bogus'");
         }

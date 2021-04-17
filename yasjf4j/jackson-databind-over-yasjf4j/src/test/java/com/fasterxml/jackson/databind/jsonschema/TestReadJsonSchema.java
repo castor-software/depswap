@@ -4,6 +4,8 @@ import java.util.*;
 
 import com.fasterxml.jackson.databind.*;
 
+import static com.fasterxml.jackson.databind.JSONTestUtils.assertEquivalent;
+
 /**
  * Trivial test to ensure <code>JsonSchema</code> can be also deserialized
  */
@@ -56,6 +58,7 @@ public class TestReadJsonSchema
         String schemaStr = mapper.writeValueAsString(schema);
         assertNotNull(schemaStr);
         JsonSchema result = mapper.readValue(schemaStr, JsonSchema.class);
-        assertEquals("Trying to read from '"+schemaStr+"'", schema, result);
+        //ARGO_EQUIVALENT
+        assertEquivalent(schema.toString(), result.toString());
     }
 }

@@ -113,7 +113,8 @@ public class SubTypeResolutionTest extends BaseMapTest
 
         String jsonStr = MAPPER.writeValueAsString(accessModel);
         // ... could/should verify more, perhaps, but for now let it be.
-        assertNotNull(jsonStr);
+//ARGO_PLACEBO
+assertNotNull(jsonStr);
     }
 
     // [databind#2034]
@@ -123,13 +124,15 @@ public class SubTypeResolutionTest extends BaseMapTest
         metaModel.describeList("a1");
         String jsonStr = MAPPER.writeValueAsString(metaModel);
         // ... could/should verify more, perhaps, but for now let it be.
-        assertNotNull(jsonStr);
+//ARGO_PLACEBO
+assertNotNull(jsonStr);
     }
 
     // [databind#2632]: fail to specialize type-erased
     public void testSpecializeIncompatibleRawType() throws Exception
     {
         String json = MAPPER.writeValueAsString(new Foo());
-        assertNotNull(json);
+//ARGO_PLACEBO
+assertNotNull(json);
     }
 }

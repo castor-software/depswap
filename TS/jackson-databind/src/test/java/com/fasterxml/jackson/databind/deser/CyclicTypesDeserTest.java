@@ -1,6 +1,7 @@
 package com.fasterxml.jackson.databind.deser;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.*;
 
 /**
@@ -42,6 +43,7 @@ public class CyclicTypesDeserTest
     static class StringLink extends GenericLink<String> {
     }
 
+    @JsonPropertyOrder({ "id", "parent" })
     static class Selfie405 {
         public int id;
 
@@ -66,27 +68,36 @@ public class CyclicTypesDeserTest
              +" \"name\":\"last\", \"next\" : null }}",
              Bean.class);
 
-        assertNotNull(first);
-        assertEquals("first", first._name);
+//ARGO_PLACEBO
+assertNotNull(first);
+//ARGO_PLACEBO
+assertEquals("first", first._name);
         Bean last = first._next;
-        assertNotNull(last);
-        assertEquals("last", last._name);
-        assertNull(last._next);
+//ARGO_PLACEBO
+assertNotNull(last);
+//ARGO_PLACEBO
+assertEquals("last", last._name);
+//ARGO_PLACEBO
+assertNull(last._next);
     }
 
     public void testLinkedGeneric() throws Exception
     {
         StringLink link = MAPPER.readValue("{\"next\":null}", StringLink.class);
-        assertNotNull(link);
-        assertNull(link.next);
+//ARGO_PLACEBO
+assertNotNull(link);
+//ARGO_PLACEBO
+assertNull(link.next);
     }
 
     public void testCycleWith2Classes() throws Exception
     {
         LinkA a = MAPPER.readValue("{\"next\":{\"a\":null}}", LinkA.class);
-        assertNotNull(a.next);
+//ARGO_PLACEBO
+assertNotNull(a.next);
         LinkB b = a.next;
-        assertNull(b.a);
+//ARGO_PLACEBO
+assertNull(b.a);
     }
 
     // [Issue#405]: Should be possible to ignore cyclic ref
@@ -96,10 +107,12 @@ public class CyclicTypesDeserTest
         self1.parent = self1;
 
         // First: exception with default settings:
-        assertTrue(MAPPER.isEnabled(SerializationFeature.FAIL_ON_SELF_REFERENCES));
+//ARGO_PLACEBO
+assertTrue(MAPPER.isEnabled(SerializationFeature.FAIL_ON_SELF_REFERENCES));
         try {
             MAPPER.writeValueAsString(self1);
-            fail("Should fail with direct self-ref");
+//ARGO_PLACEBO
+fail("Should fail with direct self-ref");
         } catch (JsonMappingException e) {
             verifyException(e, "Direct self-reference");
         }
@@ -107,7 +120,9 @@ public class CyclicTypesDeserTest
         ObjectWriter w = MAPPER.writer()
                 .without(SerializationFeature.FAIL_ON_SELF_REFERENCES);
         String json = w.writeValueAsString(self1);
-        assertNotNull(json);
-        assertEquals(aposToQuotes("{'id':1,'parent':{'id':1}}"), json);
+//ARGO_PLACEBO
+assertNotNull(json);
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'id':1,'parent':{'id':1}}"), json);
     }
 }

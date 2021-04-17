@@ -45,20 +45,25 @@ public class TestTypeBindings
     public void testInnerType() throws Exception
     {
         JavaType type = DEFAULT_TF.constructType(InnerGenericTyping.InnerClass.class);
-        assertEquals(MapType.class, type.getClass());
+//ARGO_PLACEBO
+assertEquals(MapType.class, type.getClass());
         JavaType keyType = type.getKeyType();
-        assertEquals(Object.class, keyType.getRawClass());
+//ARGO_PLACEBO
+assertEquals(Object.class, keyType.getRawClass());
         JavaType valueType = type.getContentType();
-        assertEquals(Collection.class, valueType.getRawClass());
+//ARGO_PLACEBO
+assertEquals(Collection.class, valueType.getRawClass());
         JavaType vt2 = valueType.getContentType();
-        assertEquals(Object.class, vt2.getRawClass());
+//ARGO_PLACEBO
+assertEquals(Object.class, vt2.getRawClass());
     }
 
     // for [databind#76]
     public void testRecursiveType()
     {
         JavaType type = DEFAULT_TF.constructType(HashTree.class);
-        assertNotNull(type);
+//ARGO_PLACEBO
+assertNotNull(type);
     }
 
     public void testBindingsBasics()
@@ -66,14 +71,21 @@ public class TestTypeBindings
         TypeBindings b = TypeBindings.create(Collection.class,
                 TypeFactory.unknownType());
         // let's just call it -- should probably try to inspect but...
-        assertNotNull(b.toString());
-        assertEquals(Object.class, b.getBoundType(0).getRawClass());
-        assertNull(b.getBoundName(-1));
-        assertNull(b.getBoundType(-1));
-        assertNull(b.getBoundName(1));
-        assertNull(b.getBoundType(1));
+//ARGO_PLACEBO
+assertNotNull(b.toString());
+//ARGO_PLACEBO
+assertEquals(Object.class, b.getBoundType(0).getRawClass());
+//ARGO_PLACEBO
+assertNull(b.getBoundName(-1));
+//ARGO_PLACEBO
+assertNull(b.getBoundType(-1));
+//ARGO_PLACEBO
+assertNull(b.getBoundName(1));
+//ARGO_PLACEBO
+assertNull(b.getBoundType(1));
 
-        assertFalse(b.equals("foo"));
+//ARGO_PLACEBO
+assertFalse(b.equals("foo"));
     }
     
     public void testInvalidBindings()
@@ -81,7 +93,8 @@ public class TestTypeBindings
         JavaType unknown = TypeFactory.unknownType();
         try {
             TypeBindings.create(AbstractType.class, unknown);
-            fail("Should not pass");
+//ARGO_PLACEBO
+fail("Should not pass");
         } catch (IllegalArgumentException e) {
             verifyException(e, "Cannot create TypeBindings");
             verifyException(e, "class expects 2");

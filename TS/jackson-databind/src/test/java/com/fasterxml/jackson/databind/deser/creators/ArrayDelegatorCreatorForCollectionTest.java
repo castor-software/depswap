@@ -29,6 +29,7 @@ public class ArrayDelegatorCreatorForCollectionTest extends BaseMapTest
         final String EXPECTED_JSON = "[\""+unmodSetType.getName()+"\",[]]";
 
         Set<?> foo = mapper.readValue(EXPECTED_JSON, Set.class);
-        assertTrue(foo.isEmpty());
+//ARGO_PLACEBO
+assertTrue(foo.isEmpty());
     }
 }

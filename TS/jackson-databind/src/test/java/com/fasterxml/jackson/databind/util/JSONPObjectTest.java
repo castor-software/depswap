@@ -18,20 +18,23 @@ public class JSONPObjectTest extends BaseMapTest {
     String containsU2028 = String.format("This string contains %c char", '\u2028');
     JSONPObject jsonpObject = new JSONPObject(CALLBACK, containsU2028);
     String valueAsString = MAPPER.writeValueAsString(jsonpObject);
-    assertFalse(valueAsString.contains("\u2028"));
+//ARGO_PLACEBO
+assertFalse(valueAsString.contains("\u2028"));
   }
 
   public void testU2029Escaped() throws IOException {
     String containsU2029 = String.format("This string contains %c char", '\u2029');
     JSONPObject jsonpObject = new JSONPObject(CALLBACK, containsU2029);
     String valueAsString = MAPPER.writeValueAsString(jsonpObject);
-    assertFalse(valueAsString.contains("\u2029"));
+//ARGO_PLACEBO
+assertFalse(valueAsString.contains("\u2029"));
   }
 
   public void testU2030NotEscaped() throws IOException {
     String containsU2030 = String.format("This string contains %c char", '\u2030');
     JSONPObject jsonpObject = new JSONPObject(CALLBACK, containsU2030);
     String valueAsString = MAPPER.writeValueAsString(jsonpObject);
-    assertTrue(valueAsString.contains("\u2030"));
+//ARGO_PLACEBO
+assertTrue(valueAsString.contains("\u2030"));
   }
 }

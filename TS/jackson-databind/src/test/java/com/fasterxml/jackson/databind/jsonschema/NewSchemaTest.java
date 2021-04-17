@@ -148,7 +148,8 @@ public class NewSchemaTest extends BaseMapTest
                     }
                     // and this just for bit of extra coverage...
                     if (ser instanceof StdSerializer) {
-                        assertNotNull(((StdSerializer<?>) ser).getSchema(prov, prop.getType()));
+//ARGO_PLACEBO
+assertNotNull(((StdSerializer<?>) ser).getSchema(prov, prop.getType()));
                     }
                     JsonFormatVisitorWrapper visitor = new JsonFormatVisitorWrapper.Base(getProvider());
                     ser.acceptJsonFormatVisitor(visitor, prop.getType());
@@ -242,13 +243,15 @@ public class NewSchemaTest extends BaseMapTest
             }
         });
 
-        assertEquals(3, values.size());
+//ARGO_PLACEBO
+assertEquals(3, values.size());
         TreeSet<String> exp = new TreeSet<String>(Arrays.asList(
                         "ToString:A",
                         "ToString:B",
                         "ToString:C"
                         ));
-        assertEquals(exp, values);
+//ARGO_PLACEBO
+assertEquals(exp, values);
     }
 
     public void testEnumWithJsonValue() throws Exception
@@ -270,13 +273,15 @@ public class NewSchemaTest extends BaseMapTest
             }
         });
 
-        assertEquals(3, values.size());
+//ARGO_PLACEBO
+assertEquals(3, values.size());
         TreeSet<String> exp = new TreeSet<String>(Arrays.asList(
                         "value-A",
                         "value-B",
                         "value-C"
                         ));
-        assertEquals(exp, values);
+//ARGO_PLACEBO
+assertEquals(exp, values);
     }
 
     //  Ensure JsonValueFormat serializes/deserializes as expected
@@ -284,10 +289,12 @@ public class NewSchemaTest extends BaseMapTest
     {
         // first: serialize using 'toString()', not name
         final String EXP = quote("host-name");
-        assertEquals(EXP, MAPPER.writeValueAsString(JsonValueFormat.HOST_NAME));
+//ARGO_PLACEBO
+assertEquals(EXP, MAPPER.writeValueAsString(JsonValueFormat.HOST_NAME));
 
         // and second, deserialize ok from that as well
-        assertSame(JsonValueFormat.HOST_NAME, MAPPER.readValue(EXP, JsonValueFormat.class));
+//ARGO_PLACEBO
+assertSame(JsonValueFormat.HOST_NAME, MAPPER.readValue(EXP, JsonValueFormat.class));
     }
 
     // [databind#1045], regression wrt BigDecimal
@@ -356,7 +363,8 @@ public class NewSchemaTest extends BaseMapTest
                 };
             }
         });
-        assertEquals("[optProp dec([numberType=BIG_DECIMAL])][optProp bigInt([numberType=BIG_INTEGER])]",
+//ARGO_PLACEBO
+assertEquals("[optProp dec([numberType=BIG_DECIMAL])][optProp bigInt([numberType=BIG_INTEGER])]",
                 sb.toString());
     }
 }

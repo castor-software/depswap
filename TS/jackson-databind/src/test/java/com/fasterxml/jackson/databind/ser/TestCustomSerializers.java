@@ -200,7 +200,8 @@ public class TestCustomSerializers extends BaseMapTest
         Element element = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument().createElement("el");
         StringWriter sw = new StringWriter();
         objectMapper.writeValue(sw, element);
-        assertEquals(sw.toString(), "\"element\"");
+//ARGO_PLACEBO
+assertEquals(sw.toString(), "\"element\"");
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
@@ -224,7 +225,8 @@ public class TestCustomSerializers extends BaseMapTest
             }
         });
         mapper.registerModule(module);
-        assertEquals("null", mapper.writeValueAsString(new ArrayList<Object>()));
+//ARGO_PLACEBO
+assertEquals("null", mapper.writeValueAsString(new ArrayList<Object>()));
     }
 
     // [databind#87]: delegating serializer
@@ -244,25 +246,29 @@ public class TestCustomSerializers extends BaseMapTest
                     }
         }));
         mapper.registerModule(module);
-        assertEquals("{\"x\":3,\"y\":7}", mapper.writeValueAsString(new Immutable()));
+//ARGO_PLACEBO
+assertEquals("{\"x\":3,\"y\":7}", mapper.writeValueAsString(new Immutable()));
     }
 
     // [databind#215]: Allow registering CharacterEscapes via ObjectWriter
     public void testCustomEscapes() throws Exception
     {
-        assertEquals(quote("foo\\u0062\\Ar"),
+//ARGO_PLACEBO
+assertEquals(quote("foo\\u0062\\Ar"),
                 MAPPER.writer(new CustomEscapes()).writeValueAsString("foobar"));
     }
     
     public void testNumberSubclass() throws Exception
     {
-        assertEquals(aposToQuotes("{'x':42}"),
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'x':42}"),
                 MAPPER.writeValueAsString(new LikeNumber(42)));
     }
 
     public void testWithCurrentValue() throws Exception
     {
-        assertEquals(aposToQuotes("{'prop':'Issue631Bean/42'}"),
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'prop':'Issue631Bean/42'}"),
                 MAPPER.writeValueAsString(new Issue631Bean(42)));
     }
 
@@ -270,7 +276,8 @@ public class TestCustomSerializers extends BaseMapTest
     {
         // First variant that uses per-property override
         StringListWrapper wr = new StringListWrapper("a", null, "b");
-        assertEquals(aposToQuotes("{'list':['A',null,'B']}"),
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'list':['A',null,'B']}"),
                 MAPPER.writeValueAsString(wr));
 
         // and then per-type registration
@@ -280,15 +287,19 @@ public class TestCustomSerializers extends BaseMapTest
         ObjectMapper mapper = new ObjectMapper()
                 .registerModule(module);
 
-        assertEquals(quote("FOOBAR"), mapper.writeValueAsString("foobar"));
-        assertEquals(aposToQuotes("['FOO',null]"),
+//ARGO_PLACEBO
+assertEquals(quote("FOOBAR"), mapper.writeValueAsString("foobar"));
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("['FOO',null]"),
                 mapper.writeValueAsString(new String[] { "foo", null }));
 
         List<String> list = Arrays.asList("foo", null);
-        assertEquals(aposToQuotes("['FOO',null]"), mapper.writeValueAsString(list));
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("['FOO',null]"), mapper.writeValueAsString(list));
 
         Set<String> set = new LinkedHashSet<String>(Arrays.asList("foo", null));
-        assertEquals(aposToQuotes("['FOO',null]"), mapper.writeValueAsString(set));
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("['FOO',null]"), mapper.writeValueAsString(set));
     }
 
     // [databind#2475]
@@ -298,10 +309,12 @@ public class TestCustomSerializers extends BaseMapTest
 
         // contents don't really matter that much as verification within filter but... let's
         // check anyway
-        assertEquals(aposToQuotes("{'id':'ID-1','set':[]}"),
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'id':'ID-1','set':[]}"),
                 writer.writeValueAsString(new Item2475(new ArrayList<String>(), "ID-1")));
 
-        assertEquals(aposToQuotes("{'id':'ID-2','set':[]}"),
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'id':'ID-2','set':[]}"),
                 writer.writeValueAsString(new Item2475(new HashSet<String>(), "ID-2")));
     }    
 

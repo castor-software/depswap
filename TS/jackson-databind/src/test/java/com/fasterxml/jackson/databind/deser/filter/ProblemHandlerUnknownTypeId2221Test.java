@@ -94,8 +94,10 @@ public class ProblemHandlerUnknownTypeId2221Test extends BaseMapTest
             }
         });
         GenericContent processableContent = mapper.readValue(JSON, GenericContent.class);
-        assertNotNull(processableContent.getInnerObjects());
-        assertEquals(2, processableContent.getInnerObjects().size());
+//ARGO_PLACEBO
+assertNotNull(processableContent.getInnerObjects());
+//ARGO_PLACEBO
+assertEquals(2, processableContent.getInnerObjects().size());
     }
 
     public void testWithDisabledFAIL_ON_INVALID_SUBTYPE() throws Exception {
@@ -104,7 +106,9 @@ public class ProblemHandlerUnknownTypeId2221Test extends BaseMapTest
                 .activateDefaultTyping(NoCheckSubTypeValidator.instance)
         ;
         GenericContent processableContent = mapper.readValue(JSON, GenericContent.class);
-        assertNotNull(processableContent.getInnerObjects());
-        assertEquals(2, processableContent.getInnerObjects().size());
+//ARGO_PLACEBO
+assertNotNull(processableContent.getInnerObjects());
+//ARGO_PLACEBO
+assertEquals(2, processableContent.getInnerObjects().size());
     }
 }

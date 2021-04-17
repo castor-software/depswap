@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 
@@ -29,6 +30,7 @@ public class ExistingPropertyTest extends BaseMapTest
     }
 
     @JsonTypeName("apple")
+    @JsonPropertyOrder({ "name", "seedCount", "type" })
     static class Apple extends Fruit
     {
         public int seedCount;
@@ -43,6 +45,7 @@ public class ExistingPropertyTest extends BaseMapTest
     }
 
     @JsonTypeName("orange")
+    @JsonPropertyOrder({ "name", "color", "type" })
     static class Orange extends Fruit
     {
         public String color;
@@ -236,28 +239,40 @@ public class ExistingPropertyTest extends BaseMapTest
     public void testExistingPropertySerializationFruits() throws Exception
     {
         Map<String,Object> result = writeAndMap(MAPPER, pinguo);
-        assertEquals(3, result.size());
-        assertEquals(pinguo.name, result.get("name"));
-        assertEquals(pinguo.seedCount, result.get("seedCount"));
-        assertEquals(pinguo.type, result.get("type"));
+//ARGO_PLACEBO
+assertEquals(3, result.size());
+//ARGO_PLACEBO
+assertEquals(pinguo.name, result.get("name"));
+//ARGO_PLACEBO
+assertEquals(pinguo.seedCount, result.get("seedCount"));
+//ARGO_PLACEBO
+assertEquals(pinguo.type, result.get("type"));
         
         result = writeAndMap(MAPPER, mandarin);
-        assertEquals(3, result.size());
-        assertEquals(mandarin.name, result.get("name"));
-        assertEquals(mandarin.color, result.get("color"));
-        assertEquals(mandarin.type, result.get("type"));
+//ARGO_PLACEBO
+assertEquals(3, result.size());
+//ARGO_PLACEBO
+assertEquals(mandarin.name, result.get("name"));
+//ARGO_PLACEBO
+assertEquals(mandarin.color, result.get("color"));
+//ARGO_PLACEBO
+assertEquals(mandarin.type, result.get("type"));
         
         String pinguoSerialized = MAPPER.writeValueAsString(pinguo);
-        assertEquals(pinguoSerialized, pinguoJson);
+//ARGO_PLACEBO
+assertEquals(pinguoSerialized, pinguoJson);
 
         String mandarinSerialized = MAPPER.writeValueAsString(mandarin);
-        assertEquals(mandarinSerialized, mandarinJson);
+//ARGO_PLACEBO
+assertEquals(mandarinSerialized, mandarinJson);
 
         String fruitWrapperSerialized = MAPPER.writeValueAsString(pinguoWrapper);
-        assertEquals(fruitWrapperSerialized, pinguoWrapperJson);
+//ARGO_PLACEBO
+assertEquals(fruitWrapperSerialized, pinguoWrapperJson);
 
         String fruitListSerialized = MAPPER.writeValueAsString(fruitList);
-        assertEquals(fruitListSerialized, fruitListJson);
+//ARGO_PLACEBO
+assertEquals(fruitListSerialized, fruitListJson);
     }
 
     /**
@@ -266,33 +281,52 @@ public class ExistingPropertyTest extends BaseMapTest
     public void testSimpleClassAsExistingPropertyDeserializationFruits() throws Exception
     {
         Fruit pinguoDeserialized = MAPPER.readValue(pinguoJson, Fruit.class);
-        assertTrue(pinguoDeserialized instanceof Apple);
-        assertSame(pinguoDeserialized.getClass(), Apple.class);
-        assertEquals(pinguo.name, pinguoDeserialized.name);
-        assertEquals(pinguo.seedCount, ((Apple) pinguoDeserialized).seedCount);
-        assertEquals(pinguo.type, ((Apple) pinguoDeserialized).type);
+//ARGO_PLACEBO
+assertTrue(pinguoDeserialized instanceof Apple);
+//ARGO_PLACEBO
+assertSame(pinguoDeserialized.getClass(), Apple.class);
+//ARGO_PLACEBO
+assertEquals(pinguo.name, pinguoDeserialized.name);
+//ARGO_PLACEBO
+assertEquals(pinguo.seedCount, ((Apple) pinguoDeserialized).seedCount);
+//ARGO_PLACEBO
+assertEquals(pinguo.type, ((Apple) pinguoDeserialized).type);
 
         FruitWrapper pinguoWrapperDeserialized = MAPPER.readValue(pinguoWrapperJson, FruitWrapper.class);
         Fruit pinguoExtracted = pinguoWrapperDeserialized.fruit;
-        assertTrue(pinguoExtracted instanceof Apple);
-        assertSame(pinguoExtracted.getClass(), Apple.class);
-        assertEquals(pinguo.name, pinguoExtracted.name);
-        assertEquals(pinguo.seedCount, ((Apple) pinguoExtracted).seedCount);
-        assertEquals(pinguo.type, ((Apple) pinguoExtracted).type);
+//ARGO_PLACEBO
+assertTrue(pinguoExtracted instanceof Apple);
+//ARGO_PLACEBO
+assertSame(pinguoExtracted.getClass(), Apple.class);
+//ARGO_PLACEBO
+assertEquals(pinguo.name, pinguoExtracted.name);
+//ARGO_PLACEBO
+assertEquals(pinguo.seedCount, ((Apple) pinguoExtracted).seedCount);
+//ARGO_PLACEBO
+assertEquals(pinguo.type, ((Apple) pinguoExtracted).type);
 
         Fruit[] fruits = MAPPER.readValue(fruitListJson, Fruit[].class);
-        assertEquals(2, fruits.length);
-        assertEquals(Apple.class, fruits[0].getClass());
-        assertEquals("apple", ((Apple) fruits[0]).type);
-        assertEquals(Orange.class, fruits[1].getClass());
-        assertEquals("orange", ((Orange) fruits[1]).type);
+//ARGO_PLACEBO
+assertEquals(2, fruits.length);
+//ARGO_PLACEBO
+assertEquals(Apple.class, fruits[0].getClass());
+//ARGO_PLACEBO
+assertEquals("apple", ((Apple) fruits[0]).type);
+//ARGO_PLACEBO
+assertEquals(Orange.class, fruits[1].getClass());
+//ARGO_PLACEBO
+assertEquals("orange", ((Orange) fruits[1]).type);
         
         List<Fruit> f2 = MAPPER.readValue(fruitListJson,
                 new TypeReference<List<Fruit>>() { });
-        assertNotNull(f2);
-        assertTrue(f2.size() == 2);
-        assertEquals(Apple.class, f2.get(0).getClass());
-        assertEquals(Orange.class, f2.get(1).getClass());
+//ARGO_PLACEBO
+assertNotNull(f2);
+//ARGO_PLACEBO
+assertTrue(f2.size() == 2);
+//ARGO_PLACEBO
+assertEquals(Apple.class, f2.get(0).getClass());
+//ARGO_PLACEBO
+assertEquals(Orange.class, f2.get(1).getClass());
     }
 
     /**
@@ -301,28 +335,40 @@ public class ExistingPropertyTest extends BaseMapTest
     public void testExistingPropertySerializationAnimals() throws Exception
     {
         Map<String,Object> result = writeAndMap(MAPPER, beelzebub);
-        assertEquals(3, result.size());
-        assertEquals(beelzebub.name, result.get("name"));
-        assertEquals(beelzebub.furColor, result.get("furColor"));
-        assertEquals(beelzebub.getType(), result.get("type"));
+//ARGO_PLACEBO
+assertEquals(3, result.size());
+//ARGO_PLACEBO
+assertEquals(beelzebub.name, result.get("name"));
+//ARGO_PLACEBO
+assertEquals(beelzebub.furColor, result.get("furColor"));
+//ARGO_PLACEBO
+assertEquals(beelzebub.getType(), result.get("type"));
 
         result = writeAndMap(MAPPER, rover);
-        assertEquals(3, result.size());
-        assertEquals(rover.name, result.get("name"));
-        assertEquals(rover.boneCount, result.get("boneCount"));
-        assertEquals(rover.getType(), result.get("type"));
+//ARGO_PLACEBO
+assertEquals(3, result.size());
+//ARGO_PLACEBO
+assertEquals(rover.name, result.get("name"));
+//ARGO_PLACEBO
+assertEquals(rover.boneCount, result.get("boneCount"));
+//ARGO_PLACEBO
+assertEquals(rover.getType(), result.get("type"));
         
         String beelzebubSerialized = MAPPER.writeValueAsString(beelzebub);
-        assertEquals(beelzebubSerialized, beelzebubJson);
+//ARGO_PLACEBO
+assertEquals(beelzebubSerialized, beelzebubJson);
         
         String roverSerialized = MAPPER.writeValueAsString(rover);
-        assertEquals(roverSerialized, roverJson);
+//ARGO_PLACEBO
+assertEquals(roverSerialized, roverJson);
         
         String animalWrapperSerialized = MAPPER.writeValueAsString(beelzebubWrapper);
-        assertEquals(animalWrapperSerialized, beelzebubWrapperJson);
+//ARGO_PLACEBO
+assertEquals(animalWrapperSerialized, beelzebubWrapperJson);
 
         String animalListSerialized = MAPPER.writeValueAsString(animalList);
-        assertEquals(animalListSerialized, animalListJson);
+//ARGO_PLACEBO
+assertEquals(animalListSerialized, animalListJson);
     }
 
     /**
@@ -331,30 +377,46 @@ public class ExistingPropertyTest extends BaseMapTest
     public void testSimpleClassAsExistingPropertyDeserializationAnimals() throws Exception
     {
         Animal beelzebubDeserialized = MAPPER.readValue(beelzebubJson, Animal.class);
-        assertTrue(beelzebubDeserialized instanceof Cat);
-        assertSame(beelzebubDeserialized.getClass(), Cat.class);
-        assertEquals(beelzebub.name, beelzebubDeserialized.name);
-        assertEquals(beelzebub.furColor, ((Cat) beelzebubDeserialized).furColor);
-        assertEquals(beelzebub.getType(), beelzebubDeserialized.getType());
+//ARGO_PLACEBO
+assertTrue(beelzebubDeserialized instanceof Cat);
+//ARGO_PLACEBO
+assertSame(beelzebubDeserialized.getClass(), Cat.class);
+//ARGO_PLACEBO
+assertEquals(beelzebub.name, beelzebubDeserialized.name);
+//ARGO_PLACEBO
+assertEquals(beelzebub.furColor, ((Cat) beelzebubDeserialized).furColor);
+//ARGO_PLACEBO
+assertEquals(beelzebub.getType(), beelzebubDeserialized.getType());
 
         AnimalWrapper beelzebubWrapperDeserialized = MAPPER.readValue(beelzebubWrapperJson, AnimalWrapper.class);
         Animal beelzebubExtracted = beelzebubWrapperDeserialized.animal;
-        assertTrue(beelzebubExtracted instanceof Cat);
-        assertSame(beelzebubExtracted.getClass(), Cat.class);
-        assertEquals(beelzebub.name, beelzebubExtracted.name);
-        assertEquals(beelzebub.furColor, ((Cat) beelzebubExtracted).furColor);
-        assertEquals(beelzebub.getType(), beelzebubExtracted.getType());
+//ARGO_PLACEBO
+assertTrue(beelzebubExtracted instanceof Cat);
+//ARGO_PLACEBO
+assertSame(beelzebubExtracted.getClass(), Cat.class);
+//ARGO_PLACEBO
+assertEquals(beelzebub.name, beelzebubExtracted.name);
+//ARGO_PLACEBO
+assertEquals(beelzebub.furColor, ((Cat) beelzebubExtracted).furColor);
+//ARGO_PLACEBO
+assertEquals(beelzebub.getType(), beelzebubExtracted.getType());
     	
         @SuppressWarnings("unchecked")
         List<Animal> animalListDeserialized = MAPPER.readValue(animalListJson, List.class);
-        assertNotNull(animalListDeserialized);
-        assertTrue(animalListDeserialized.size() == 2);
+//ARGO_PLACEBO
+assertNotNull(animalListDeserialized);
+//ARGO_PLACEBO
+assertTrue(animalListDeserialized.size() == 2);
         Animal cat = MAPPER.convertValue(animalListDeserialized.get(0), Animal.class);
-        assertTrue(cat instanceof Cat);
-        assertSame(cat.getClass(), Cat.class);
+//ARGO_PLACEBO
+assertTrue(cat instanceof Cat);
+//ARGO_PLACEBO
+assertSame(cat.getClass(), Cat.class);
         Animal dog = MAPPER.convertValue(animalListDeserialized.get(1), Animal.class);
-        assertTrue(dog instanceof Dog);
-        assertSame(dog.getClass(), Dog.class);
+//ARGO_PLACEBO
+assertTrue(dog instanceof Dog);
+//ARGO_PLACEBO
+assertSame(dog.getClass(), Dog.class);
     }
 
     /**
@@ -363,28 +425,40 @@ public class ExistingPropertyTest extends BaseMapTest
     public void testExistingPropertySerializationCars() throws Exception
     {
         Map<String,Object> result = writeAndMap(MAPPER, camry);
-        assertEquals(3, result.size());
-        assertEquals(camry.name, result.get("name"));
-        assertEquals(camry.exteriorColor, result.get("exteriorColor"));
-        assertEquals(camry.getType(), result.get("type"));
+//ARGO_PLACEBO
+assertEquals(3, result.size());
+//ARGO_PLACEBO
+assertEquals(camry.name, result.get("name"));
+//ARGO_PLACEBO
+assertEquals(camry.exteriorColor, result.get("exteriorColor"));
+//ARGO_PLACEBO
+assertEquals(camry.getType(), result.get("type"));
 
         result = writeAndMap(MAPPER, accord);
-        assertEquals(3, result.size());
-        assertEquals(accord.name, result.get("name"));
-        assertEquals(accord.speakerCount, result.get("speakerCount"));
-        assertEquals(accord.getType(), result.get("type"));
+//ARGO_PLACEBO
+assertEquals(3, result.size());
+//ARGO_PLACEBO
+assertEquals(accord.name, result.get("name"));
+//ARGO_PLACEBO
+assertEquals(accord.speakerCount, result.get("speakerCount"));
+//ARGO_PLACEBO
+assertEquals(accord.getType(), result.get("type"));
 
         String camrySerialized = MAPPER.writeValueAsString(camry);
-        assertEquals(camrySerialized, camryJson);
+//ARGO_PLACEBO
+assertEquals(camrySerialized, camryJson);
 
         String accordSerialized = MAPPER.writeValueAsString(accord);
-        assertEquals(accordSerialized, accordJson);
+//ARGO_PLACEBO
+assertEquals(accordSerialized, accordJson);
         
         String carWrapperSerialized = MAPPER.writeValueAsString(camryWrapper);
-        assertEquals(carWrapperSerialized, camryWrapperJson);
+//ARGO_PLACEBO
+assertEquals(carWrapperSerialized, camryWrapperJson);
 
         String carListSerialized = MAPPER.writeValueAsString(carList);
-        assertEquals(carListSerialized, carListJson);
+//ARGO_PLACEBO
+assertEquals(carListSerialized, carListJson);
     }
 
     /**
@@ -393,31 +467,47 @@ public class ExistingPropertyTest extends BaseMapTest
     public void testSimpleClassAsExistingPropertyDeserializationCars() throws Exception
     {
         Car camryDeserialized = MAPPER.readValue(camryJson, Camry.class);
-        assertTrue(camryDeserialized instanceof Camry);
-        assertSame(camryDeserialized.getClass(), Camry.class);
-        assertEquals(camry.name, camryDeserialized.name);
-        assertEquals(camry.exteriorColor, ((Camry) camryDeserialized).exteriorColor);
-        assertEquals(camry.getType(), ((Camry) camryDeserialized).getType());
+//ARGO_PLACEBO
+assertTrue(camryDeserialized instanceof Camry);
+//ARGO_PLACEBO
+assertSame(camryDeserialized.getClass(), Camry.class);
+//ARGO_PLACEBO
+assertEquals(camry.name, camryDeserialized.name);
+//ARGO_PLACEBO
+assertEquals(camry.exteriorColor, ((Camry) camryDeserialized).exteriorColor);
+//ARGO_PLACEBO
+assertEquals(camry.getType(), ((Camry) camryDeserialized).getType());
 
         CarWrapper camryWrapperDeserialized = MAPPER.readValue(camryWrapperJson, CarWrapper.class);
         Car camryExtracted = camryWrapperDeserialized.car;
-        assertTrue(camryExtracted instanceof Camry);
-        assertSame(camryExtracted.getClass(), Camry.class);
-        assertEquals(camry.name, camryExtracted.name);
-        assertEquals(camry.exteriorColor, ((Camry) camryExtracted).exteriorColor);
-        assertEquals(camry.getType(), ((Camry) camryExtracted).getType());
+//ARGO_PLACEBO
+assertTrue(camryExtracted instanceof Camry);
+//ARGO_PLACEBO
+assertSame(camryExtracted.getClass(), Camry.class);
+//ARGO_PLACEBO
+assertEquals(camry.name, camryExtracted.name);
+//ARGO_PLACEBO
+assertEquals(camry.exteriorColor, ((Camry) camryExtracted).exteriorColor);
+//ARGO_PLACEBO
+assertEquals(camry.getType(), ((Camry) camryExtracted).getType());
 
         @SuppressWarnings("unchecked")
         List<Car> carListDeserialized = MAPPER.readValue(carListJson, List.class);
-        assertNotNull(carListDeserialized);
-        assertTrue(carListDeserialized.size() == 2);
+//ARGO_PLACEBO
+assertNotNull(carListDeserialized);
+//ARGO_PLACEBO
+assertTrue(carListDeserialized.size() == 2);
         Car result = MAPPER.convertValue(carListDeserialized.get(0), Car.class);
-        assertTrue(result instanceof Camry);
-        assertSame(result.getClass(), Camry.class);
+//ARGO_PLACEBO
+assertTrue(result instanceof Camry);
+//ARGO_PLACEBO
+assertSame(result.getClass(), Camry.class);
 
         result = MAPPER.convertValue(carListDeserialized.get(1), Car.class);
-        assertTrue(result instanceof Accord);
-        assertSame(result.getClass(), Accord.class);
+//ARGO_PLACEBO
+assertTrue(result instanceof Accord);
+//ARGO_PLACEBO
+assertSame(result.getClass(), Accord.class);
     }
 
     // for [databind#1635]: simple usage
@@ -425,10 +515,13 @@ public class ExistingPropertyTest extends BaseMapTest
     {
         Bean1635 result = MAPPER.readValue(aposToQuotes("{'value':3, 'type':'A'}"),
                 Bean1635.class);
-        assertEquals(Bean1635A.class, result.getClass());
+//ARGO_PLACEBO
+assertEquals(Bean1635A.class, result.getClass());
         Bean1635A bean = (Bean1635A) result;
-        assertEquals(3, bean.value);
-        assertEquals(ABC.A, bean.type);
+//ARGO_PLACEBO
+assertEquals(3, bean.value);
+//ARGO_PLACEBO
+assertEquals(ABC.A, bean.type);
     }
 
     // for [databind#1635]: verify that `defaultImpl` does not block assignment of
@@ -437,7 +530,9 @@ public class ExistingPropertyTest extends BaseMapTest
     {
         Bean1635 result = MAPPER.readValue(aposToQuotes("{'type':'C'}"),
                 Bean1635.class);
-        assertEquals(Bean1635Default.class, result.getClass());
-        assertEquals(ABC.C, result.type);
+//ARGO_PLACEBO
+assertEquals(Bean1635Default.class, result.getClass());
+//ARGO_PLACEBO
+assertEquals(ABC.C, result.type);
     }
 }

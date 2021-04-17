@@ -6,21 +6,13 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 
 import com.fasterxml.jackson.databind.*;
+import com.fasterxml.jackson.databind.exc.MismatchedInputException;
 
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
 
 // for [databind#1341]
-public class TestSubtypesExternalPropertyMissingProperty
+public class TestSubtypesExternalPropertyMissingProperty extends BaseMapTest
 {
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
-
     /**
      * Base class - external property for Fruit subclasses.
      */
@@ -95,7 +87,7 @@ public class TestSubtypesExternalPropertyMissingProperty
         }
     }
 
-    private final ObjectMapper MAPPER = new ObjectMapper();
+    private final ObjectMapper MAPPER = newJsonMapper();
 
     /*
     /**********************************************************
@@ -195,65 +187,93 @@ public class TestSubtypesExternalPropertyMissingProperty
 
     private void checkOrangeBox() throws Exception {
         Box deserOrangeBox = MAPPER.readValue(orangeBoxJson, Box.class);
-        assertEquals(orangeBox.type, deserOrangeBox.type);
+//ARGO_PLACEBO
+assertEquals(orangeBox.type, deserOrangeBox.type);
 
         Fruit deserOrange = deserOrangeBox.fruit;
-        assertSame(Orange.class, deserOrange.getClass());
-        assertEquals(orange.name, deserOrange.name);
-        assertEquals(orange.color, ((Orange) deserOrange).color);
+//ARGO_PLACEBO
+assertSame(Orange.class, deserOrange.getClass());
+//ARGO_PLACEBO
+assertEquals(orange.name, deserOrange.name);
+//ARGO_PLACEBO
+assertEquals(orange.color, ((Orange) deserOrange).color);
     }
 
     private void checkAppleBox() throws Exception {
         Box deserAppleBox = MAPPER.readValue(appleBoxJson, Box.class);
-        assertEquals(appleBox.type, deserAppleBox.type);
+//ARGO_PLACEBO
+assertEquals(appleBox.type, deserAppleBox.type);
 
         Fruit deserApple = deserAppleBox.fruit;
-        assertSame(Apple.class, deserApple.getClass());
-        assertEquals(apple.name, deserApple.name);
-        assertEquals(apple.seedCount, ((Apple) deserApple).seedCount);
+//ARGO_PLACEBO
+assertSame(Apple.class, deserApple.getClass());
+//ARGO_PLACEBO
+assertEquals(apple.name, deserApple.name);
+//ARGO_PLACEBO
+assertEquals(apple.seedCount, ((Apple) deserApple).seedCount);
     }
 
     private void checkOrangeBoxEmpty(String json) throws Exception {
         Box deserOrangeBox = MAPPER.readValue(json, Box.class);
-        assertEquals(orangeBox.type, deserOrangeBox.type);
+//ARGO_PLACEBO
+assertEquals(orangeBox.type, deserOrangeBox.type);
 
         Fruit deserOrange = deserOrangeBox.fruit;
-        assertSame(Orange.class, deserOrange.getClass());
-        assertNull(deserOrange.name);
-        assertNull(((Orange) deserOrange).color);
+//ARGO_PLACEBO
+assertSame(Orange.class, deserOrange.getClass());
+//ARGO_PLACEBO
+assertNull(deserOrange.name);
+//ARGO_PLACEBO
+assertNull(((Orange) deserOrange).color);
     }
 
     private void checkAppleBoxEmpty(String json) throws Exception {
         Box deserAppleBox = MAPPER.readValue(json, Box.class);
-        assertEquals(appleBox.type, deserAppleBox.type);
+//ARGO_PLACEBO
+assertEquals(appleBox.type, deserAppleBox.type);
 
         Fruit deserApple = deserAppleBox.fruit;
-        assertSame(Apple.class, deserApple.getClass());
-        assertNull(deserApple.name);
-        assertEquals(0, ((Apple) deserApple).seedCount);
+//ARGO_PLACEBO
+assertSame(Apple.class, deserApple.getClass());
+//ARGO_PLACEBO
+assertNull(deserApple.name);
+//ARGO_PLACEBO
+assertEquals(0, ((Apple) deserApple).seedCount);
     }
 
     private void checkOrangeBoxNull(String json) throws Exception {
         Box deserOrangeBox = MAPPER.readValue(json, Box.class);
-        assertEquals(orangeBox.type, deserOrangeBox.type);
-        assertNull(deserOrangeBox.fruit);
+//ARGO_PLACEBO
+assertEquals(orangeBox.type, deserOrangeBox.type);
+//ARGO_PLACEBO
+assertNull(deserOrangeBox.fruit);
     }
 
     private void checkAppleBoxNull(String json) throws Exception {
         Box deserAppleBox = MAPPER.readValue(json, Box.class);
-        assertEquals(appleBox.type, deserAppleBox.type);
-        assertNull(deserAppleBox.fruit);
+//ARGO_PLACEBO
+assertEquals(appleBox.type, deserAppleBox.type);
+//ARGO_PLACEBO
+assertNull(deserAppleBox.fruit);
     }
 
     private void checkBoxJsonMappingException(String json) throws Exception {
-        thrown.expect(JsonMappingException.class);
-        thrown.expectMessage("Missing property 'fruit' for external type id 'type'");
-        MAPPER.readValue(json, Box.class);
+        try {
+            MAPPER.readValue(json, Box.class);
+//ARGO_PLACEBO
+fail("Should not pass");
+        } catch (MismatchedInputException e) {
+            BaseMapTest.verifyException(e, "Missing property 'fruit' for external type id 'type'");
+        }
     }
 
     private void checkReqBoxJsonMappingException(String json) throws Exception {
-        thrown.expect(JsonMappingException.class);
-        thrown.expectMessage("Missing property 'fruit' for external type id 'type'");
-        MAPPER.readValue(json, ReqBox.class);
+        try {
+            MAPPER.readValue(json, ReqBox.class);
+//ARGO_PLACEBO
+fail("Should not pass");
+        } catch (MismatchedInputException e) {
+            BaseMapTest.verifyException(e, "Missing property 'fruit' for external type id 'type'");
+        }
     }
 }    

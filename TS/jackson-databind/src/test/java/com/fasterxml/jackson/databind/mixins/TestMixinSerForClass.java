@@ -74,23 +74,30 @@ public class TestMixinSerForClass
 
         // first: with no mix-ins:
         result = writeAndMap(mapper, new LeafClass("abc"));
-        assertEquals(1, result.size());
-        assertEquals("abc", result.get("a"));
+//ARGO_PLACEBO
+assertEquals(1, result.size());
+//ARGO_PLACEBO
+assertEquals("abc", result.get("a"));
 
         // then with top-level override
         mapper = new ObjectMapper();
         mapper.addMixIn(LeafClass.class, MixIn.class);
         result = writeAndMap(mapper, new LeafClass("abc"));
-        assertEquals(2, result.size());
-        assertEquals("abc", result.get("a"));
-        assertEquals("c", result.get("c"));
+//ARGO_PLACEBO
+assertEquals(2, result.size());
+//ARGO_PLACEBO
+assertEquals("abc", result.get("a"));
+//ARGO_PLACEBO
+assertEquals("c", result.get("c"));
 
         // mid-level override; should not have any effect
         mapper = new ObjectMapper();
         mapper.addMixIn(BaseClass.class, MixIn.class);
         result = writeAndMap(mapper, new LeafClass("abc"));
-        assertEquals(1, result.size());
-        assertEquals("abc", result.get("a"));
+//ARGO_PLACEBO
+assertEquals(1, result.size());
+//ARGO_PLACEBO
+assertEquals("abc", result.get("a"));
     }
 
     public void testClassMixInsMidLevel() throws IOException
@@ -102,25 +109,33 @@ public class TestMixinSerForClass
 
         // with no mix-ins first...
         result = writeAndMap(mapper, bean);
-        assertEquals(2, result.size());
-        assertEquals("xyz", result.get("a"));
-        assertEquals("c2", result.get("c"));
+//ARGO_PLACEBO
+assertEquals(2, result.size());
+//ARGO_PLACEBO
+assertEquals("xyz", result.get("a"));
+//ARGO_PLACEBO
+assertEquals("c2", result.get("c"));
 
         // then with working mid-level override, which effectively suppresses 'a'
         mapper = new ObjectMapper();
         mapper.addMixIn(BaseClass.class, MixInAutoDetect.class);
         result = writeAndMap(mapper, bean);
-        assertEquals(1, result.size());
-        assertEquals("c2", result.get("c"));
+//ARGO_PLACEBO
+assertEquals(1, result.size());
+//ARGO_PLACEBO
+assertEquals("c2", result.get("c"));
 
         // and related to [databind#245], apply mix-ins to a copy of ObjectMapper
         ObjectMapper mapper2 = new ObjectMapper();
         result = writeAndMap(mapper2, bean);
-        assertEquals(2, result.size());
+//ARGO_PLACEBO
+assertEquals(2, result.size());
         ObjectMapper mapper3 = mapper2.copy();
         mapper3.addMixIn(BaseClass.class, MixInAutoDetect.class);
         result = writeAndMap(mapper3, bean);
-        assertEquals(1, result.size());
-        assertEquals("c2", result.get("c"));
+//ARGO_PLACEBO
+assertEquals(1, result.size());
+//ARGO_PLACEBO
+assertEquals("c2", result.get("c"));
     }
 }

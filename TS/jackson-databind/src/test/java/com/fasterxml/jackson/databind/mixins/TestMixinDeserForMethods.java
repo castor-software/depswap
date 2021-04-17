@@ -47,9 +47,13 @@ public class TestMixinDeserForMethods
         ObjectMapper m = new ObjectMapper();
         m.addMixIn(BaseClass.class, MixIn.class);
         BaseClass result = m.readValue("{ \"a\" : 3, \"b\" : true }", BaseClass.class);
-        assertNotNull(result);
-        assertEquals(2, result.values.size());
-        assertEquals(Integer.valueOf(3), result.values.get("a"));
-        assertEquals(Boolean.TRUE, result.values.get("b"));
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertEquals(2, result.values.size());
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(3), result.values.get("a"));
+//ARGO_PLACEBO
+assertEquals(Boolean.TRUE, result.values.get("b"));
     }
 }

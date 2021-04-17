@@ -65,7 +65,8 @@ public class TestTreeWithType extends BaseMapTest
         String json = MAPPER.writeValueAsString(foo);
 
         JsonNode jsonNode = MAPPER.readTree(json);
-        assertEquals(jsonNode.get("bar").textValue(), foo.bar);
+//ARGO_ORIGINAL
+assertEquals(jsonNode.get("bar").textValue(), foo.bar);
     }
 
     public void testValueAsStringWithDefaultTyping() throws Exception {
@@ -78,7 +79,8 @@ public class TestTreeWithType extends BaseMapTest
         String json = mapper.writeValueAsString(foo);
 
         JsonNode jsonNode = mapper.readTree(json);
-        assertEquals(jsonNode.get("bar").textValue(), foo.bar);
+//ARGO_ORIGINAL
+assertEquals(jsonNode.get("bar").textValue(), foo.bar);
     }
 
     public void testReadTreeWithDefaultTyping() throws Exception
@@ -92,14 +94,16 @@ public class TestTreeWithType extends BaseMapTest
                 .build();
         String json = "{\"@class\":\""+CLASS+"\",\"bar\":\"baz\"}";
         JsonNode jsonNode = mapper.readTree(json);
-        assertEquals(jsonNode.get("bar").textValue(), "baz");
+//ARGO_ORIGINAL
+assertEquals(jsonNode.get("bar").textValue(), "baz");
     }
 
     public void testValueToTreeWithoutDefaultTyping() throws Exception {
 
         Foo foo = new Foo("baz");
         JsonNode jsonNode = MAPPER.valueToTree(foo);
-        assertEquals(jsonNode.get("bar").textValue(), foo.bar);
+//ARGO_ORIGINAL
+assertEquals(jsonNode.get("bar").textValue(), foo.bar);
     }
 
     public void testValueToTreeWithDefaultTyping() throws Exception {
@@ -110,7 +114,8 @@ public class TestTreeWithType extends BaseMapTest
 
         Foo foo = new Foo("baz");
         JsonNode jsonNode = mapper.valueToTree(foo);
-        assertEquals(jsonNode.get("bar").textValue(), foo.bar);
+//ARGO_ORIGINAL
+assertEquals(jsonNode.get("bar").textValue(), foo.bar);
     }
 
     public void testIssue353() throws Exception
@@ -128,7 +133,9 @@ public class TestTreeWithType extends BaseMapTest
          String json = mapper.writeValueAsString(savedCookie);
          SavedCookie out = mapper.readerFor(SavedCookie.class).readValue(json);
 
-         assertEquals("key", out.name);
-         assertEquals("v", out.value);
+//ARGO_ORIGINAL
+assertEquals("key", out.name);
+//ARGO_ORIGINAL
+assertEquals("v", out.value);
     }
 }

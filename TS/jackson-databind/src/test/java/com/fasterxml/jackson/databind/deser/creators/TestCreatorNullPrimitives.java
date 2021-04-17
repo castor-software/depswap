@@ -48,11 +48,14 @@ public class TestCreatorNullPrimitives extends BaseMapTest {
         String json = aposToQuotes("{'x': 2}");
         try {
             r.readValue(json);
-            fail("Should not have succeeded");
+//ARGO_PLACEBO
+fail("Should not have succeeded");
         } catch (JsonMappingException e) {
             verifyException(e, "Cannot map `null` into type int");
-            assertEquals(1, e.getPath().size());
-            assertEquals("y", e.getPath().get(0).getFieldName());
+//ARGO_PLACEBO
+assertEquals(1, e.getPath().size());
+//ARGO_PLACEBO
+assertEquals("y", e.getPath().get(0).getFieldName());
         }
     }
 
@@ -62,12 +65,16 @@ public class TestCreatorNullPrimitives extends BaseMapTest {
         String json = aposToQuotes("{ 'entity': {'x': 2}}");
         try {
             r.readValue(json);
-            fail("Should not have succeeded");
+//ARGO_PLACEBO
+fail("Should not have succeeded");
         } catch (JsonMappingException e) {
             verifyException(e, "Cannot map `null` into type int");
-            assertEquals(2, e.getPath().size());
-            assertEquals("y", e.getPath().get(1).getFieldName());
-            assertEquals("entity", e.getPath().get(0).getFieldName());
+//ARGO_PLACEBO
+assertEquals(2, e.getPath().size());
+//ARGO_PLACEBO
+assertEquals("y", e.getPath().get(1).getFieldName());
+//ARGO_PLACEBO
+assertEquals("entity", e.getPath().get(0).getFieldName());
         }
     }
 }

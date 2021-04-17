@@ -166,10 +166,13 @@ public class SimpleModuleTest extends BaseMapTest
         public void setupModule(SetupContext context)
         {
             ObjectCodec c = context.getOwner();
-            assertNotNull(c);
-            assertTrue(c instanceof ObjectMapper);
+//ARGO_PLACEBO
+assertNotNull(c);
+//ARGO_PLACEBO
+assertTrue(c instanceof ObjectMapper);
             ObjectMapper m = context.getOwner();
-            assertNotNull(m);
+//ARGO_PLACEBO
+assertNotNull(m);
         }
     }
 
@@ -203,7 +206,8 @@ public class SimpleModuleTest extends BaseMapTest
         // first: serialization failure:
         try {
             mapper.writeValueAsString(new CustomBean("foo", 3));
-            fail("Should have caused an exception");
+//ARGO_PLACEBO
+fail("Should have caused an exception");
         } catch (IOException e) {
             verifyException(e, "No serializer found");
         }
@@ -211,7 +215,8 @@ public class SimpleModuleTest extends BaseMapTest
         // then deserialization
         try {
             mapper.readValue("{\"str\":\"ab\",\"num\":2}", CustomBean.class);
-            fail("Should have caused an exception");
+//ARGO_PLACEBO
+fail("Should have caused an exception");
         } catch (IOException e) {
             verifyException(e, "Cannot construct");
             verifyException(e, "no creators");
@@ -230,7 +235,8 @@ public class SimpleModuleTest extends BaseMapTest
         SimpleModule mod = new SimpleModule("test", Version.unknownVersion());
         mod.addSerializer(new CustomBeanSerializer());
         mapper.registerModule(mod);
-        assertEquals(quote("abcde|5"), mapper.writeValueAsString(new CustomBean("abcde", 5)));
+//ARGO_PLACEBO
+assertEquals(quote("abcde|5"), mapper.writeValueAsString(new CustomBean("abcde", 5)));
     }
 
     public void testSimpleEnumSerializer() throws Exception
@@ -240,7 +246,8 @@ public class SimpleModuleTest extends BaseMapTest
         mod.addSerializer(new SimpleEnumSerializer());
         // for fun, call "multi-module" registration
         mapper.registerModules(mod);
-        assertEquals(quote("b"), mapper.writeValueAsString(SimpleEnum.B));
+//ARGO_PLACEBO
+assertEquals(quote("b"), mapper.writeValueAsString(SimpleEnum.B));
     }
 
     public void testSimpleInterfaceSerializer() throws Exception
@@ -251,8 +258,10 @@ public class SimpleModuleTest extends BaseMapTest
         // and another variant here too
         List<SimpleModule> mods = Arrays.asList(mod);
         mapper.registerModules(mods);
-        assertEquals(quote("Base:1"), mapper.writeValueAsString(new Impl1()));
-        assertEquals(quote("Base:2"), mapper.writeValueAsString(new Impl2()));
+//ARGO_PLACEBO
+assertEquals(quote("Base:1"), mapper.writeValueAsString(new Impl1()));
+//ARGO_PLACEBO
+assertEquals(quote("Base:2"), mapper.writeValueAsString(new Impl2()));
     }
     
     /*
@@ -268,8 +277,10 @@ public class SimpleModuleTest extends BaseMapTest
         mod.addDeserializer(CustomBean.class, new CustomBeanDeserializer());
         mapper.registerModule(mod);
         CustomBean bean = mapper.readValue(quote("xyz|3"), CustomBean.class);
-        assertEquals("xyz", bean.str);
-        assertEquals(3, bean.num);
+//ARGO_PLACEBO
+assertEquals("xyz", bean.str);
+//ARGO_PLACEBO
+assertEquals(3, bean.num);
     }
 
     public void testSimpleEnumDeserializer() throws Exception
@@ -279,7 +290,8 @@ public class SimpleModuleTest extends BaseMapTest
         mod.addDeserializer(SimpleEnum.class, new SimpleEnumDeserializer());
         mapper.registerModule(mod);
         SimpleEnum result = mapper.readValue(quote("a"), SimpleEnum.class);
-        assertSame(SimpleEnum.A, result);
+//ARGO_PLACEBO
+assertSame(SimpleEnum.A, result);
     }
 
     public void testMultipleModules() throws Exception
@@ -297,17 +309,21 @@ public class SimpleModuleTest extends BaseMapTest
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(mod1);
         mapper.registerModule(mod2);
-        assertEquals(quote("b"), mapper.writeValueAsString(SimpleEnum.B));
+//ARGO_PLACEBO
+assertEquals(quote("b"), mapper.writeValueAsString(SimpleEnum.B));
         SimpleEnum result = mapper.readValue(quote("a"), SimpleEnum.class);
-        assertSame(SimpleEnum.A, result);
+//ARGO_PLACEBO
+assertSame(SimpleEnum.A, result);
 
         // also let's try it with different order of registration, just in case
         mapper = new ObjectMapper();
         mapper.registerModule(mod2);
         mapper.registerModule(mod1);
-        assertEquals(quote("b"), mapper.writeValueAsString(SimpleEnum.B));
+//ARGO_PLACEBO
+assertEquals(quote("b"), mapper.writeValueAsString(SimpleEnum.B));
         result = mapper.readValue(quote("a"), SimpleEnum.class);
-        assertSame(SimpleEnum.A, result);
+//ARGO_PLACEBO
+assertSame(SimpleEnum.A, result);
     }
 
     public void testGetRegisteredModules()
@@ -321,13 +337,17 @@ public class SimpleModuleTest extends BaseMapTest
         mapper.registerModule(mod2);
 
         Set<Object> registeredModuleIds = mapper.getRegisteredModuleIds();
-        assertEquals(2, registeredModuleIds.size());
-        assertTrue(registeredModuleIds.contains(mod1.getTypeId()));
-        assertTrue(registeredModuleIds.contains(mod2.getTypeId()));
+//ARGO_PLACEBO
+assertEquals(2, registeredModuleIds.size());
+//ARGO_PLACEBO
+assertTrue(registeredModuleIds.contains(mod1.getTypeId()));
+//ARGO_PLACEBO
+assertTrue(registeredModuleIds.contains(mod2.getTypeId()));
 
         // 01-Jul-2019, [databind#2374]: verify empty list is fine
         mapper = new ObjectMapper();
-        assertEquals(0, mapper.getRegisteredModuleIds().size());
+//ARGO_PLACEBO
+assertEquals(0, mapper.getRegisteredModuleIds().size());
     }
 
     /*
@@ -343,10 +363,14 @@ public class SimpleModuleTest extends BaseMapTest
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(module);
         Map<String,Object> props = this.writeAndMap(mapper, new MixableBean());
-        assertEquals(3, props.size());
-        assertEquals(Integer.valueOf(3), props.get("c"));
-        assertEquals(Integer.valueOf(1), props.get("a"));
-        assertEquals(Integer.valueOf(2), props.get("b"));
+//ARGO_PLACEBO
+assertEquals(3, props.size());
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(3), props.get("c"));
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(1), props.get("a"));
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(2), props.get("b"));
     }
 
     public void testAccessToMapper() throws Exception
@@ -363,12 +387,14 @@ public class SimpleModuleTest extends BaseMapTest
         // no real annotations, but nominally add ones from 'String' to 'Object', just for testing
         mapper.registerModule(new TestModule626(Object.class, String.class));
         Class<?> found = mapper.findMixInClassFor(Object.class);
-        assertEquals(String.class, found);
+//ARGO_PLACEBO
+assertEquals(String.class, found);
     }
 
     public void testAutoDiscovery() throws Exception
     {
         List<?> mods = ObjectMapper.findModules();
-        assertEquals(0, mods.size());
+//ARGO_PLACEBO
+assertEquals(0, mods.size());
     }
 }

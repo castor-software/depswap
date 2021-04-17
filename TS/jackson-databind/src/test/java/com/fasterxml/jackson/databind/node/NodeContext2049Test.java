@@ -166,18 +166,22 @@ public class NodeContext2049Test extends BaseMapTest
 
     public void testReadNoBuffering() throws IOException {
         Parent obj = objectMapper.readerFor(Parent.class).readValue(JSON);
-        assertSame(obj, obj.singleChild.getParent());
+//ARGO_PLACEBO
+assertSame(obj, obj.singleChild.getParent());
         for (Child child : obj.children) {
-            assertSame(obj, child.getParent());
+//ARGO_PLACEBO
+assertSame(obj, child.getParent());
         }
     }
 
     public void testReadFromTree() throws IOException {
         JsonNode tree = objectMapper.readTree(JSON);
         Parent obj = objectMapper.reader().forType(Parent.class).readValue(tree);
-        assertSame(obj, obj.singleChild.getParent());
+//ARGO_ORIGINAL
+assertSame(obj, obj.singleChild.getParent());
         for (Child child : obj.children) {
-            assertSame(obj, child.getParent());
+//ARGO_ORIGINAL
+assertSame(obj, child.getParent());
         }
     }
 }

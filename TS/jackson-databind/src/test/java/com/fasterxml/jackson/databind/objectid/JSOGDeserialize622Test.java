@@ -206,8 +206,10 @@ public class JSOGDeserialize622Test extends BaseMapTest
     {
         IdentifiableExampleJSOG result = MAPPER.readValue(EXP_EXAMPLE_JSOG,
                 IdentifiableExampleJSOG.class);
-        assertEquals(66, result.foo);
-        assertSame(result, result.next);
+//ARGO_ORIGINAL
+assertEquals(66, result.foo);
+//ARGO_ORIGINAL
+assertSame(result, result.next);
     }
 
     // polymorphic alternative for [databind#622]
@@ -222,12 +224,17 @@ public class JSOGDeserialize622Test extends BaseMapTest
         String json = MAPPER.writeValueAsString(w);
 
         JSOGWrapper out = MAPPER.readValue(json, JSOGWrapper.class);
-        assertNotNull(out);
-        assertEquals(15, out.value);
-        assertTrue(out.jsog instanceof IdentifiableExampleJSOG);
+//ARGO_ORIGINAL
+assertNotNull(out);
+//ARGO_ORIGINAL
+assertEquals(15, out.value);
+//ARGO_ORIGINAL
+assertTrue(out.jsog instanceof IdentifiableExampleJSOG);
         IdentifiableExampleJSOG jsog = (IdentifiableExampleJSOG) out.jsog;
-        assertEquals(123, jsog.foo);
-        assertSame(jsog, jsog.next);
+//ARGO_ORIGINAL
+assertEquals(123, jsog.foo);
+//ARGO_ORIGINAL
+assertSame(jsog, jsog.next);
     }
 
     // polymorphic alternative for [databind#669]
@@ -241,6 +248,7 @@ public class JSOGDeserialize622Test extends BaseMapTest
         
         Outer back = MAPPER.readValue(jsog, Outer.class);
 
-        assertSame(back.inner1, back.inner2);
+//ARGO_ORIGINAL
+assertSame(back.inner1, back.inner2);
     }
 }

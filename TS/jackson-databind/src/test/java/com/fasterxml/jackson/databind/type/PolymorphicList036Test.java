@@ -104,6 +104,7 @@ public class PolymorphicList036Test extends BaseMapTest
         StringyList<String> deserialized = MAPPER.readValue(serialized, type);
 //        System.out.println(deserialized);
         
-        assertNotNull(deserialized);
+//ARGO_PLACEBO
+assertNotNull(deserialized);
     }
 }

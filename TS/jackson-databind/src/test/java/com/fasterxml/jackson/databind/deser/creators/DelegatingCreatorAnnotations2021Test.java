@@ -53,6 +53,7 @@ public class DelegatingCreatorAnnotations2021Test extends BaseMapTest
     public void testCustomDeserForDelegating() throws Exception
     {
         DelegatingWithCustomDeser2021 actual = MAPPER.readValue(" true ", DelegatingWithCustomDeser2021.class);
-        assertEquals(DelegatingWithCustomDeser2021.DEFAULT, actual.value);
+//ARGO_PLACEBO
+assertEquals(DelegatingWithCustomDeser2021.DEFAULT, actual.value);
     }
 }

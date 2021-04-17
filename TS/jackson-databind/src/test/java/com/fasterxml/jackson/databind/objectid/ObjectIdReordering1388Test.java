@@ -53,9 +53,11 @@ public class ObjectIdReordering1388Test extends BaseMapTest
         {
             final String jsog = mapper.writeValueAsString(Arrays.asList(thing, thing, thing));
             final List<NamedThing> list = mapper.readValue(jsog, namedThingListType);
-            _assertAllSame(list);
+            //ARGO_PLACEBO
+_assertAllSame(list);
             // this is the jsog representation of the list of 3 of the same item
-            assertTrue(jsog.equals("[{\"@id\":1,\"id\":\"a59aa02c-fe3c-43f8-9b5a-5fe01878a818\",\"name\":\"Hello\"},1,1]"));
+//ARGO_PLACEBO
+assertTrue(jsog.equals("[{\"@id\":1,\"id\":\"a59aa02c-fe3c-43f8-9b5a-5fe01878a818\",\"name\":\"Hello\"},1,1]"));
         }
 
         // now move it around it have forward references
@@ -63,21 +65,24 @@ public class ObjectIdReordering1388Test extends BaseMapTest
         {
             final String json = "[1,1,{\"@id\":1,\"id\":\"a59aa02c-fe3c-43f8-9b5a-5fe01878a818\",\"name\":\"Hello\"}]";
             final List<NamedThing> forward = mapper.readValue(json, namedThingListType);
-            _assertAllSame(forward);
+            //ARGO_PLACEBO
+_assertAllSame(forward);
         }
 
         // next, move @id to between properties
         {
             final String json = aposToQuotes("[{'id':'a59aa02c-fe3c-43f8-9b5a-5fe01878a818','@id':1,'name':'Hello'}, 1, 1]");
             final List<NamedThing> forward = mapper.readValue(json, namedThingListType);
-            _assertAllSame(forward);
+            //ARGO_PLACEBO
+_assertAllSame(forward);
         }
 
         // and last, move @id to be not the first key in the object
         {
             final String json = aposToQuotes("[{'id':'a59aa02c-fe3c-43f8-9b5a-5fe01878a818','name':'Hello','@id':1}, 1, 1]");
             final List<NamedThing> forward = mapper.readValue(json, namedThingListType);
-            _assertAllSame(forward);
+            //ARGO_PLACEBO
+_assertAllSame(forward);
         }
     }
 
@@ -85,7 +90,8 @@ public class ObjectIdReordering1388Test extends BaseMapTest
         Object first = entries.get(0);
         for (int i = 0, end = entries.size(); i < end; ++i) {
             if (first != entries.get(i)) {
-                fail("Mismatch: entry #"+i+" not same as #0");
+//ARGO_PLACEBO
+fail("Mismatch: entry #"+i+" not same as #0");
             }
         }
     }

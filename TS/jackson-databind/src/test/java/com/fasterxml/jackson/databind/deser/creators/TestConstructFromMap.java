@@ -73,23 +73,29 @@ public class TestConstructFromMap
         ObjectMapper m = new ObjectMapper();
         ConstructorFromMap result = m.readValue
             ("{ \"x\":1, \"y\" : \"abc\" }", ConstructorFromMap.class);
-        assertEquals(1, result._x);
-        assertEquals("abc", result._y);
+//ARGO_PLACEBO
+assertEquals(1, result._x);
+//ARGO_PLACEBO
+assertEquals("abc", result._y);
     }
 
     public void testViaFactory() throws Exception
     {
         ObjectMapper m = new ObjectMapper();
         FactoryFromPoint result = m.readValue("{ \"x\" : 3, \"y\" : 4 }", FactoryFromPoint.class);
-        assertEquals(3, result._x);
-        assertEquals(4, result._y);
+//ARGO_PLACEBO
+assertEquals(3, result._x);
+//ARGO_PLACEBO
+assertEquals(4, result._y);
     }
 
     public void testViaFactoryUsingString() throws Exception
     {
         ObjectMapper m = new ObjectMapper();
         FactoryFromDecimalString result = m.readValue("\"12.57\"", FactoryFromDecimalString.class);
-        assertNotNull(result);
-        assertEquals(12, result._value);
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertEquals(12, result._value);
     }
 }

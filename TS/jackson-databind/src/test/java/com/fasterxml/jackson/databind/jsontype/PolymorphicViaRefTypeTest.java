@@ -53,11 +53,15 @@ public class PolymorphicViaRefTypeTest extends BaseMapTest
         data.value = new AtomicReference<BaseForAtomic>(new ImplForAtomic(42));
         String json = MAPPER.writeValueAsString(data);
         TypeInfoAtomic result = MAPPER.readValue(json, TypeInfoAtomic.class);
-        assertNotNull(result);
+//ARGO_PLACEBO
+assertNotNull(result);
         BaseForAtomic value = result.value.get();
-        assertNotNull(value);
-        assertEquals(ImplForAtomic.class, value.getClass());
-        assertEquals(42, ((ImplForAtomic) value).x);
+//ARGO_PLACEBO
+assertNotNull(value);
+//ARGO_PLACEBO
+assertEquals(ImplForAtomic.class, value.getClass());
+//ARGO_PLACEBO
+assertEquals(42, ((ImplForAtomic) value).x);
     }
 
     public void testAtomicRefViaDefaultTyping() throws Exception
@@ -69,10 +73,14 @@ public class PolymorphicViaRefTypeTest extends BaseMapTest
         AtomicStringWrapper data = new AtomicStringWrapper("foo");
         String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(data);
         AtomicStringWrapper result = mapper.readValue(json, AtomicStringWrapper.class);
-        assertNotNull(result);
-        assertNotNull(result.wrapper);
-        assertEquals(AtomicReference.class, result.wrapper.getClass());
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertNotNull(result.wrapper);
+//ARGO_PLACEBO
+assertEquals(AtomicReference.class, result.wrapper.getClass());
         StringWrapper w = result.wrapper.get();
-        assertEquals("foo", w.str);
+//ARGO_PLACEBO
+assertEquals("foo", w.str);
     }
 }

@@ -100,31 +100,41 @@ public class TestPolymorphicCreators
     {
         // first, a dog, start with type
         Animal animal = MAPPER.readValue("{ \"type\":\"dog\", \"name\":\"Fido\", \"barkVolume\" : 95.0 }", Animal.class);
-        assertEquals(Dog.class, animal.getClass());
-        assertEquals("Fido", animal.name);
-        assertEquals(95.0, ((Dog) animal).barkVolume);
+//ARGO_PLACEBO
+assertEquals(Dog.class, animal.getClass());
+//ARGO_PLACEBO
+assertEquals("Fido", animal.name);
+//ARGO_PLACEBO
+assertEquals(95.0, ((Dog) animal).barkVolume);
     }
 
     public void testManualPolymorphicCatBasic() throws Exception
     {
         // and finally, lactose-intolerant, but otherwise robust super-cat:
         Animal animal = MAPPER.readValue("{ \"name\" : \"Macavity\", \"type\":\"cat\", \"lives\":18, \"likesCream\":false }", Animal.class);
-        assertEquals(Cat.class, animal.getClass());
-        assertEquals("Macavity", animal.name); // ... there's no one like Macavity!
+//ARGO_PLACEBO
+assertEquals(Cat.class, animal.getClass());
+//ARGO_PLACEBO
+assertEquals("Macavity", animal.name); // ... there's no one like Macavity!
         Cat cat = (Cat) animal;
-        assertEquals(18, cat.lives);
+//ARGO_PLACEBO
+assertEquals(18, cat.lives);
         // ok, he can't drink dairy products. Let's verify:
-        assertEquals(false, cat.likesCream);
+//ARGO_PLACEBO
+assertEquals(false, cat.likesCream);
     }
 
     public void testManualPolymorphicCatWithReorder() throws Exception
     {
         // Then cat; shuffle order to mandate buffering
         Animal animal = MAPPER.readValue("{ \"likesCream\":true, \"name\" : \"Venla\", \"type\":\"cat\" }", Animal.class);
-        assertEquals(Cat.class, animal.getClass());
-        assertEquals("Venla", animal.name);
+//ARGO_PLACEBO
+assertEquals(Cat.class, animal.getClass());
+//ARGO_PLACEBO
+assertEquals("Venla", animal.name);
         // bah, of course cats like cream. But let's ensure Jackson won't mess with laws of nature!
-        assertTrue(((Cat) animal).likesCream);
+//ARGO_PLACEBO
+assertTrue(((Cat) animal).likesCream);
     }
 
     public void testManualPolymorphicWithNumbered() throws Exception
@@ -135,7 +145,9 @@ public class TestPolymorphicCreators
          AbstractRoot input = AbstractRoot.make(1, "oh hai!");
          String json = w.writeValueAsString(input);
          AbstractRoot result = r.readValue(json);
-         assertNotNull(result);
-         assertEquals("oh hai!", result.getOpt());
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertEquals("oh hai!", result.getOpt());
     }
 }

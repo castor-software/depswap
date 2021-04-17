@@ -130,7 +130,8 @@ public class TestAnnotationUsing
     {
         ObjectMapper m = new ObjectMapper();
         ValueClass result = m.readValue("  123  ", ValueClass.class);
-        assertEquals(123, result._a);
+//ARGO_PLACEBO
+assertEquals(123, result._a);
     }
 
     // Unit test to verify that {@link JsonDeserialize#using} annotation works
@@ -140,11 +141,15 @@ public class TestAnnotationUsing
         ObjectMapper m = new ObjectMapper();
         // note: since it's part of method, must parse from Object struct
         MethodBean result = m.readValue(" { \"ints\" : 3 } ", MethodBean.class);
-        assertNotNull(result);
+//ARGO_PLACEBO
+assertNotNull(result);
         int[] ints = result._ints;
-        assertNotNull(ints);
-        assertEquals(1, ints.length);
-        assertEquals(3, ints[0]);
+//ARGO_PLACEBO
+assertNotNull(ints);
+//ARGO_PLACEBO
+assertEquals(1, ints.length);
+//ARGO_PLACEBO
+assertEquals(3, ints[0]);
     }
 
     /*
@@ -157,59 +162,89 @@ public class TestAnnotationUsing
     {
         ObjectMapper m = new ObjectMapper();
         ArrayBean result = m.readValue(" { \"values\" : [ 1, 2, 3 ] } ", ArrayBean.class);
-        assertNotNull(result);
+//ARGO_PLACEBO
+assertNotNull(result);
         Object[] obs = result.values;
-        assertNotNull(obs);
-        assertEquals(3, obs.length);
-        assertEquals(ValueClass.class, obs[0].getClass());
-        assertEquals(1, ((ValueClass) obs[0])._a);
-        assertEquals(ValueClass.class, obs[1].getClass());
-        assertEquals(2, ((ValueClass) obs[1])._a);
-        assertEquals(ValueClass.class, obs[2].getClass());
-        assertEquals(3, ((ValueClass) obs[2])._a);
+//ARGO_PLACEBO
+assertNotNull(obs);
+//ARGO_PLACEBO
+assertEquals(3, obs.length);
+//ARGO_PLACEBO
+assertEquals(ValueClass.class, obs[0].getClass());
+//ARGO_PLACEBO
+assertEquals(1, ((ValueClass) obs[0])._a);
+//ARGO_PLACEBO
+assertEquals(ValueClass.class, obs[1].getClass());
+//ARGO_PLACEBO
+assertEquals(2, ((ValueClass) obs[1])._a);
+//ARGO_PLACEBO
+assertEquals(ValueClass.class, obs[2].getClass());
+//ARGO_PLACEBO
+assertEquals(3, ((ValueClass) obs[2])._a);
     }
 
     public void testListContentUsing() throws Exception
     {
         ObjectMapper m = new ObjectMapper();
         ListBean result = m.readValue(" { \"values\" : [ 1, 2, 3 ] } ", ListBean.class);
-        assertNotNull(result);
+//ARGO_PLACEBO
+assertNotNull(result);
         List<Object> obs = result.values;
-        assertNotNull(obs);
-        assertEquals(3, obs.size());
-        assertEquals(ValueClass.class, obs.get(0).getClass());
-        assertEquals(1, ((ValueClass) obs.get(0))._a);
-        assertEquals(ValueClass.class, obs.get(1).getClass());
-        assertEquals(2, ((ValueClass) obs.get(1))._a);
-        assertEquals(ValueClass.class, obs.get(2).getClass());
-        assertEquals(3, ((ValueClass) obs.get(2))._a);
+//ARGO_PLACEBO
+assertNotNull(obs);
+//ARGO_PLACEBO
+assertEquals(3, obs.size());
+//ARGO_PLACEBO
+assertEquals(ValueClass.class, obs.get(0).getClass());
+//ARGO_PLACEBO
+assertEquals(1, ((ValueClass) obs.get(0))._a);
+//ARGO_PLACEBO
+assertEquals(ValueClass.class, obs.get(1).getClass());
+//ARGO_PLACEBO
+assertEquals(2, ((ValueClass) obs.get(1))._a);
+//ARGO_PLACEBO
+assertEquals(ValueClass.class, obs.get(2).getClass());
+//ARGO_PLACEBO
+assertEquals(3, ((ValueClass) obs.get(2))._a);
     }
 
     public void testMapContentUsing() throws Exception
     {
         ObjectMapper m = new ObjectMapper();
         MapBean result = m.readValue(" { \"values\" : { \"a\": 1, \"b\":2 } } ", MapBean.class);
-        assertNotNull(result);
+//ARGO_PLACEBO
+assertNotNull(result);
         Map<String,Object> map = result.values;
-        assertNotNull(map);
-        assertEquals(2, map.size());
-        assertEquals(ValueClass.class, map.get("a").getClass());
-        assertEquals(1, ((ValueClass) map.get("a"))._a);
-        assertEquals(ValueClass.class, map.get("b").getClass());
-        assertEquals(2, ((ValueClass) map.get("b"))._a);
+//ARGO_PLACEBO
+assertNotNull(map);
+//ARGO_PLACEBO
+assertEquals(2, map.size());
+//ARGO_PLACEBO
+assertEquals(ValueClass.class, map.get("a").getClass());
+//ARGO_PLACEBO
+assertEquals(1, ((ValueClass) map.get("a"))._a);
+//ARGO_PLACEBO
+assertEquals(ValueClass.class, map.get("b").getClass());
+//ARGO_PLACEBO
+assertEquals(2, ((ValueClass) map.get("b"))._a);
     }
 
     public void testMapKeyUsing() throws Exception
     {
         ObjectMapper m = new ObjectMapper();
         MapKeyBean result = m.readValue(" { \"values\" : { \"a\": true } } ", MapKeyBean.class);
-        assertNotNull(result);
+//ARGO_PLACEBO
+assertNotNull(result);
         Map<Object,Object> map = result.values;
-        assertNotNull(map);
-        assertEquals(1, map.size());
+//ARGO_PLACEBO
+assertNotNull(map);
+//ARGO_PLACEBO
+assertEquals(1, map.size());
         Map.Entry<Object,Object> en = map.entrySet().iterator().next();
-        assertEquals(String[].class, en.getKey().getClass());
-        assertEquals(Boolean.TRUE, en.getValue());
+//ARGO_PLACEBO
+assertEquals(String[].class, en.getKey().getClass());
+//ARGO_PLACEBO
+assertEquals(Boolean.TRUE, en.getValue());
     }
     
     // @since 1.8
@@ -217,13 +252,19 @@ public class TestAnnotationUsing
     {
         ObjectMapper m = new ObjectMapper();
         MapKeyMap result = m.readValue(" { \"a\": 13 } ", MapKeyMap.class);
-        assertNotNull(result);
-        assertNotNull(result);
-        assertEquals(1, result.size());
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertEquals(1, result.size());
         Map.Entry<Object,Object> en = result.entrySet().iterator().next();
-        assertEquals(ValueClass.class, en.getValue().getClass());
-        assertEquals(13, ((ValueClass) en.getValue())._a);
-        assertEquals(String[].class, en.getKey().getClass());
+//ARGO_PLACEBO
+assertEquals(ValueClass.class, en.getValue().getClass());
+//ARGO_PLACEBO
+assertEquals(13, ((ValueClass) en.getValue())._a);
+//ARGO_PLACEBO
+assertEquals(String[].class, en.getKey().getClass());
     }
 
 }

@@ -96,9 +96,12 @@ public class BuilderAdvancedTest extends BaseMapTest
             );
         InjectableXY bean = mapper.readValue(aposToQuotes("{'y':3,'x':7}"),
                 InjectableXY.class);
-        assertEquals(8, bean._x);
-        assertEquals(4, bean._y);
-        assertEquals("stuffValue", bean._stuff);
+//ARGO_PLACEBO
+assertEquals(8, bean._x);
+//ARGO_PLACEBO
+assertEquals(4, bean._y);
+//ARGO_PLACEBO
+assertEquals("stuffValue", bean._stuff);
     }
 
     public void testWithExternalTypeId() throws Exception
@@ -107,8 +110,11 @@ public class BuilderAdvancedTest extends BaseMapTest
         final ExternalBean input = new ExternalBean(new ValueBean(13));
         String json = mapper.writeValueAsString(input);
         ExternalBean result = mapper.readValue(json, ExternalBean.class);
-        assertNotNull(result.value);
-        assertEquals(ValueBean.class, result.value.getClass());
-        assertEquals(13, ((ValueBean) result.value).value);
+//ARGO_PLACEBO
+assertNotNull(result.value);
+//ARGO_PLACEBO
+assertEquals(ValueBean.class, result.value.getClass());
+//ARGO_PLACEBO
+assertEquals(13, ((ValueBean) result.value).value);
     }
 }

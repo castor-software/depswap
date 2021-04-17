@@ -57,6 +57,7 @@ public class TestCreatorWithPolymorphic113 extends BaseMapTest
         String json = mapper.writeValueAsString(new AnimalWrapper(new Dog(id)));
 //System.err.println("JSON = "+json);
         AnimalWrapper wrapper = mapper.readValue(json, AnimalWrapper.class);
-        assertEquals(id, wrapper.getAnimal().getId());
+//ARGO_PLACEBO
+assertEquals(id, wrapper.getAnimal().getId());
     }
 }

@@ -101,10 +101,14 @@ public class TestInjectables extends BaseMapTest
             .addValue(Long.TYPE, Long.valueOf(37))
             );
         InjectedBean bean = mapper.readValue("{\"value\":3}", InjectedBean.class);
-        assertEquals(3, bean.value);
-        assertEquals("stuffValue", bean.stuff);
-        assertEquals("xyz", bean.otherStuff);
-        assertEquals(37L, bean.third);
+//ARGO_PLACEBO
+assertEquals(3, bean.value);
+//ARGO_PLACEBO
+assertEquals("stuffValue", bean.stuff);
+//ARGO_PLACEBO
+assertEquals("xyz", bean.otherStuff);
+//ARGO_PLACEBO
+assertEquals(37L, bean.third);
     }
     
     public void testWithCtors() throws Exception
@@ -113,8 +117,10 @@ public class TestInjectables extends BaseMapTest
             .with(new InjectableValues.Std()
                 .addValue(String.class, "Bubba"))
             .readValue("{\"age\":55}");
-        assertEquals(55, bean.age);
-        assertEquals("Bubba", bean.name);
+//ARGO_PLACEBO
+assertEquals(55, bean.age);
+//ARGO_PLACEBO
+assertEquals("Bubba", bean.name);
     }
 
     public void testTwoInjectablesViaCreator() throws Exception
@@ -124,8 +130,10 @@ public class TestInjectables extends BaseMapTest
                     .addValue(String.class, "Bob")
                     .addValue("number", Integer.valueOf(13))
                 ).readValue("{ }");
-        assertEquals(Integer.valueOf(13), bean.age);
-        assertEquals("Bob", bean.name);
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(13), bean.age);
+//ARGO_PLACEBO
+assertEquals("Bob", bean.name);
     }
 
     // [databind#471]
@@ -146,16 +154,23 @@ public class TestInjectables extends BaseMapTest
                 Bean471.class);
 
         /* Assert *SAME* instance */
-        assertSame(constructorInjected, bean.constructorInjected);
-        assertSame(methodInjected, bean.methodInjected);
-        assertSame(fieldInjected, bean.fieldInjected);
+//ARGO_PLACEBO
+assertSame(constructorInjected, bean.constructorInjected);
+//ARGO_PLACEBO
+assertSame(methodInjected, bean.methodInjected);
+//ARGO_PLACEBO
+assertSame(fieldInjected, bean.fieldInjected);
 
         /* Check that basic properties still work (better safe than sorry) */
-        assertEquals("constructor", bean.constructorValue);
-        assertEquals("method", bean.methodValue);
-        assertEquals("field", bean.fieldValue);
+//ARGO_PLACEBO
+assertEquals("constructor", bean.constructorValue);
+//ARGO_PLACEBO
+assertEquals("method", bean.methodValue);
+//ARGO_PLACEBO
+assertEquals("field", bean.fieldValue);
 
-        assertEquals(13, bean.x);
+//ARGO_PLACEBO
+assertEquals(13, bean.x);
     }
 
     // [databind#77]
@@ -165,7 +180,9 @@ public class TestInjectables extends BaseMapTest
                 .with(new InjectableValues.Std()
                         .addValue("transient", "Injected!"))
                 .readValue("{\"value\":28}");
-        assertEquals(28, bean.value);
-        assertEquals("Injected!", bean.injected);
+//ARGO_PLACEBO
+assertEquals(28, bean.value);
+//ARGO_PLACEBO
+assertEquals("Injected!", bean.injected);
     }
 }

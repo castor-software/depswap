@@ -7,9 +7,11 @@ import java.util.*;
 import javax.xml.namespace.QName;
 
 import com.fasterxml.jackson.annotation.*;
+
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
+
 import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.annotation.*;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
@@ -172,11 +174,16 @@ public class TestJacksonAnnotationIntrospector
         String json = writer.toString();
         JacksonExample readEx = mapper.readValue(json, JacksonExample.class);
 
-        assertEquals(ex.qname, readEx.qname);
-        assertEquals(ex.attributeProperty, readEx.attributeProperty);
-        assertEquals(ex.elementProperty, readEx.elementProperty);
-        assertEquals(ex.wrappedElementProperty, readEx.wrappedElementProperty);
-        assertEquals(ex.enumProperty, readEx.enumProperty);
+//ARGO_PLACEBO
+assertEquals(ex.qname, readEx.qname);
+//ARGO_PLACEBO
+assertEquals(ex.attributeProperty, readEx.attributeProperty);
+//ARGO_PLACEBO
+assertEquals(ex.elementProperty, readEx.elementProperty);
+//ARGO_PLACEBO
+assertEquals(ex.wrappedElementProperty, readEx.wrappedElementProperty);
+//ARGO_PLACEBO
+assertEquals(ex.enumProperty, readEx.enumProperty);
     }
 
     public void testJsonTypeResolver() throws Exception
@@ -187,16 +194,20 @@ public class TestJacksonAnnotationIntrospector
                 TypeResolverBean.class);
         JavaType baseType = TypeFactory.defaultInstance().constructType(TypeResolverBean.class);
         TypeResolverBuilder<?> rb = ai.findTypeResolver(mapper.getDeserializationConfig(), ac, baseType);
-        assertNotNull(rb);
-        assertSame(DummyBuilder.class, rb.getClass());
+//ARGO_PLACEBO
+assertNotNull(rb);
+//ARGO_PLACEBO
+assertSame(DummyBuilder.class, rb.getClass());
     }
 
     public void testEnumHandling() throws Exception
     {
         ObjectMapper mapper = new ObjectMapper();
         mapper.setAnnotationIntrospector(new LcEnumIntrospector());
-        assertEquals("\"value1\"", mapper.writeValueAsString(EnumExample.VALUE1));
+//ARGO_PLACEBO
+assertEquals("\"value1\"", mapper.writeValueAsString(EnumExample.VALUE1));
         EnumExample result = mapper.readValue(quote("value1"), EnumExample.class);
-        assertEquals(EnumExample.VALUE1, result);
+//ARGO_PLACEBO
+assertEquals(EnumExample.VALUE1, result);
     }
 }

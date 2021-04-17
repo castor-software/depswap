@@ -9,32 +9,51 @@ public class PropertyMetadataTest extends BaseMapTest
     {
         PropertyName name = PropertyName.NO_NAME;
         
-        assertFalse(name.hasSimpleName());
-        assertFalse(name.hasNamespace());
-        assertSame(name, name.internSimpleName());
-        assertSame(name, name.withSimpleName(null));
-        assertSame(name, name.withSimpleName(""));
-        assertSame(name, name.withNamespace(null));
-        assertEquals("", name.toString());
-        assertTrue(name.isEmpty());
-        assertFalse(name.hasSimpleName("foo"));
+//ARGO_PLACEBO
+assertFalse(name.hasSimpleName());
+//ARGO_PLACEBO
+assertFalse(name.hasNamespace());
+//ARGO_PLACEBO
+assertSame(name, name.internSimpleName());
+//ARGO_PLACEBO
+assertSame(name, name.withSimpleName(null));
+//ARGO_PLACEBO
+assertSame(name, name.withSimpleName(""));
+//ARGO_PLACEBO
+assertSame(name, name.withNamespace(null));
+//ARGO_PLACEBO
+assertEquals("", name.toString());
+//ARGO_PLACEBO
+assertTrue(name.isEmpty());
+//ARGO_PLACEBO
+assertFalse(name.hasSimpleName("foo"));
         // just to trigger it, ensure to exception
         name.hashCode();
 
         PropertyName newName = name.withNamespace("");
-        assertNotSame(name, newName);
-        assertTrue(name.equals(name));
-        assertFalse(name.equals(newName));
-        assertFalse(newName.equals(name));
+//ARGO_PLACEBO
+assertNotSame(name, newName);
+//ARGO_PLACEBO
+assertTrue(name.equals(name));
+//ARGO_PLACEBO
+assertFalse(name.equals(newName));
+//ARGO_PLACEBO
+assertFalse(newName.equals(name));
 
         name = name.withSimpleName("foo");
-        assertEquals("foo", name.toString());
-        assertTrue(name.hasSimpleName("foo"));
-        assertFalse(name.isEmpty());
+//ARGO_PLACEBO
+assertEquals("foo", name.toString());
+//ARGO_PLACEBO
+assertTrue(name.hasSimpleName("foo"));
+//ARGO_PLACEBO
+assertFalse(name.isEmpty());
         newName = name.withNamespace("ns");
-        assertEquals("{ns}foo", newName.toString());
-        assertFalse(newName.equals(name));
-        assertFalse(name.equals(newName));
+//ARGO_PLACEBO
+assertEquals("{ns}foo", newName.toString());
+//ARGO_PLACEBO
+assertFalse(newName.equals(name));
+//ARGO_PLACEBO
+assertFalse(name.equals(newName));
 
         // just to trigger it, ensure to exception
         name.hashCode();
@@ -43,40 +62,63 @@ public class PropertyMetadataTest extends BaseMapTest
     public void testPropertyMetadata()
     {
         PropertyMetadata md = PropertyMetadata.STD_OPTIONAL;
-        assertNull(md.getValueNulls());
-        assertNull(md.getContentNulls());
-        assertNull(md.getDefaultValue());
-        assertEquals(Boolean.FALSE, md.getRequired());
+//ARGO_PLACEBO
+assertNull(md.getValueNulls());
+//ARGO_PLACEBO
+assertNull(md.getContentNulls());
+//ARGO_PLACEBO
+assertNull(md.getDefaultValue());
+//ARGO_PLACEBO
+assertEquals(Boolean.FALSE, md.getRequired());
 
         md = md.withNulls(Nulls.AS_EMPTY,
                 Nulls.FAIL);
-        assertEquals(Nulls.AS_EMPTY, md.getValueNulls());
-        assertEquals(Nulls.FAIL, md.getContentNulls());
+//ARGO_PLACEBO
+assertEquals(Nulls.AS_EMPTY, md.getValueNulls());
+//ARGO_PLACEBO
+assertEquals(Nulls.FAIL, md.getContentNulls());
 
-        assertFalse(md.hasDefaultValue());
-        assertSame(md, md.withDefaultValue(null));
-        assertSame(md, md.withDefaultValue(""));
+//ARGO_PLACEBO
+assertFalse(md.hasDefaultValue());
+//ARGO_PLACEBO
+assertSame(md, md.withDefaultValue(null));
+//ARGO_PLACEBO
+assertSame(md, md.withDefaultValue(""));
         md = md.withDefaultValue("foo");
-        assertEquals("foo", md.getDefaultValue());
-        assertTrue(md.hasDefaultValue());
-        assertSame(md, md.withDefaultValue("foo"));
+//ARGO_PLACEBO
+assertEquals("foo", md.getDefaultValue());
+//ARGO_PLACEBO
+assertTrue(md.hasDefaultValue());
+//ARGO_PLACEBO
+assertSame(md, md.withDefaultValue("foo"));
         md = md.withDefaultValue(null);
-        assertFalse(md.hasDefaultValue());
-        assertNull(md.getDefaultValue());
+//ARGO_PLACEBO
+assertFalse(md.hasDefaultValue());
+//ARGO_PLACEBO
+assertNull(md.getDefaultValue());
 
         md = md.withRequired(null);
-        assertNull(md.getRequired());
-        assertFalse(md.isRequired());
+//ARGO_PLACEBO
+assertNull(md.getRequired());
+//ARGO_PLACEBO
+assertFalse(md.isRequired());
         md = md.withRequired(Boolean.TRUE);
-        assertTrue(md.isRequired());
-        assertSame(md, md.withRequired(Boolean.TRUE));
+//ARGO_PLACEBO
+assertTrue(md.isRequired());
+//ARGO_PLACEBO
+assertSame(md, md.withRequired(Boolean.TRUE));
         md = md.withRequired(null);
-        assertNull(md.getRequired());
-        assertFalse(md.isRequired());
+//ARGO_PLACEBO
+assertNull(md.getRequired());
+//ARGO_PLACEBO
+assertFalse(md.isRequired());
  
-        assertFalse(md.hasIndex());
+//ARGO_PLACEBO
+assertFalse(md.hasIndex());
         md = md.withIndex(Integer.valueOf(3));
-        assertTrue(md.hasIndex());
-        assertEquals(Integer.valueOf(3), md.getIndex());
+//ARGO_PLACEBO
+assertTrue(md.hasIndex());
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(3), md.getIndex());
     }
 }

@@ -64,16 +64,21 @@ public class TestMixinSerForFields
 
         // first: with no mix-ins:
         result = writeAndMap(mapper, bean);
-        assertEquals(1, result.size());
-        assertEquals("1", result.get("a"));
+//ARGO_PLACEBO
+assertEquals(1, result.size());
+//ARGO_PLACEBO
+assertEquals("1", result.get("a"));
 
         // and then with simple mix-in
         mapper = new ObjectMapper();
         mapper.addMixIn(BaseClass.class, MixIn.class);
         result = writeAndMap(mapper, bean);
-        assertEquals(2, result.size());
-        assertEquals("1", result.get("a"));
-        assertEquals("2", result.get("banana"));
+//ARGO_PLACEBO
+assertEquals(2, result.size());
+//ARGO_PLACEBO
+assertEquals("1", result.get("a"));
+//ARGO_PLACEBO
+assertEquals("2", result.get("banana"));
     }
 
     public void testMultipleFieldMixIns() throws IOException
@@ -87,8 +92,10 @@ public class TestMixinSerForFields
 
         Map<String,Object> result;
         result = writeAndMap(mapper, new SubClass("1", "2"));
-        assertEquals(1, result.size());
+//ARGO_PLACEBO
+assertEquals(1, result.size());
         // 'a' should be suppressed; 'b' mapped to 'banana'
-        assertEquals("2", result.get("banana"));
+//ARGO_PLACEBO
+assertEquals("2", result.get("banana"));
     }
 }

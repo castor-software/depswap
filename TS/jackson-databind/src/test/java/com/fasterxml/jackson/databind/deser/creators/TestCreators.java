@@ -1,5 +1,7 @@
 package com.fasterxml.jackson.databind.deser.creators;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.*;
 
 import com.fasterxml.jackson.annotation.*;
@@ -302,89 +304,125 @@ public class TestCreators
     public void testSimpleConstructor() throws Exception
     {
         ConstructorBean bean = MAPPER.readValue("{ \"x\" : 42 }", ConstructorBean.class);
-        assertEquals(42, bean.x);
+//ARGO_PLACEBO
+assertEquals(42, bean.x);
     }
 
     // [JACKSON-850]
     public void testNoArgsFactory() throws Exception
     {
         NoArgFactoryBean value = MAPPER.readValue("{\"y\":13}", NoArgFactoryBean.class);
-        assertEquals(13, value.y);
-        assertEquals(123, value.x);
+//ARGO_PLACEBO
+assertEquals(13, value.y);
+//ARGO_PLACEBO
+assertEquals(123, value.x);
     }
     
     public void testSimpleDoubleConstructor() throws Exception
     {
         Double exp = Double.valueOf("0.25");
         DoubleConstructorBean bean = MAPPER.readValue(exp.toString(), DoubleConstructorBean.class);
-        assertEquals(exp, bean.d);
+//ARGO_PLACEBO
+assertEquals(exp, bean.d);
     }
 
     public void testSimpleBooleanConstructor() throws Exception
     {
         BooleanConstructorBean bean = MAPPER.readValue(" true ", BooleanConstructorBean.class);
-        assertEquals(Boolean.TRUE, bean.b);
+//ARGO_PLACEBO
+assertEquals(Boolean.TRUE, bean.b);
 
         BooleanConstructorBean2 bean2 = MAPPER.readValue(" true ", BooleanConstructorBean2.class);
-        assertTrue(bean2.b);
+//ARGO_PLACEBO
+assertTrue(bean2.b);
+    }
+
+    public void testSimpleBigIntegerConstructor() throws Exception
+    {
+        final BigIntegerWrapper result = MAPPER.readValue("17", BigIntegerWrapper.class);
+//ARGO_PLACEBO
+assertEquals(new BigInteger("17"), result.i);
+    }
+
+    public void testSimpleBigDecimalConstructor() throws Exception
+    {
+        final BigDecimalWrapper result = MAPPER.readValue("42.5", BigDecimalWrapper.class);
+//ARGO_PLACEBO
+assertEquals(new BigDecimal("42.5"), result.d);
     }
 
     public void testSimpleFactory() throws Exception
     {
         FactoryBean bean = MAPPER.readValue("{ \"f\" : 0.25 }", FactoryBean.class);
-        assertEquals(0.25, bean.d);
+//ARGO_PLACEBO
+assertEquals(0.25, bean.d);
     }
 
     public void testLongFactory() throws Exception
     {
         long VALUE = 123456789000L;
         LongFactoryBean bean = MAPPER.readValue(String.valueOf(VALUE), LongFactoryBean.class);
-        assertEquals(VALUE, bean.value);
+//ARGO_PLACEBO
+assertEquals(VALUE, bean.value);
     }
 
     public void testStringFactory() throws Exception
     {
         String str = "abc";
         StringFactoryBean bean = MAPPER.readValue(quote(str), StringFactoryBean.class);
-        assertEquals(str, bean.value);
+//ARGO_PLACEBO
+assertEquals(str, bean.value);
     }
 
     public void testStringFactoryAlt() throws Exception
     {
         String str = "xyz";
         FromStringBean bean = MAPPER.readValue(quote(str), FromStringBean.class);
-        assertEquals(str, bean.value);
+//ARGO_PLACEBO
+assertEquals(str, bean.value);
     }
         
     public void testConstructorCreator() throws Exception
     {
         CreatorBean bean = MAPPER.readValue
             ("{ \"a\" : \"xyz\", \"x\" : 12 }", CreatorBean.class);
-        assertEquals(13, bean.x);
-        assertEquals("ctor:xyz", bean.a);
+//ARGO_PLACEBO
+assertEquals(13, bean.x);
+//ARGO_PLACEBO
+assertEquals("ctor:xyz", bean.a);
     }
 
     public void testConstructorAndProps() throws Exception
     {
         ConstructorAndPropsBean bean = MAPPER.readValue
             ("{ \"a\" : \"1\", \"b\": 2, \"c\" : true }", ConstructorAndPropsBean.class);
-        assertEquals(1, bean.a);
-        assertEquals(2, bean.b);
-        assertEquals(true, bean.c);
+//ARGO_PLACEBO
+assertEquals(1, bean.a);
+//ARGO_PLACEBO
+assertEquals(2, bean.b);
+//ARGO_PLACEBO
+assertEquals(true, bean.c);
     }
 
     public void testFactoryAndProps() throws Exception
     {
         FactoryAndPropsBean bean = MAPPER.readValue
             ("{ \"a\" : [ false, true, false ], \"b\": 2, \"c\" : -1 }", FactoryAndPropsBean.class);
-        assertEquals(2, bean.arg2);
-        assertEquals(-1, bean.arg3);
+//ARGO_PLACEBO
+assertEquals(2, bean.arg2);
+//ARGO_PLACEBO
+assertEquals(-1, bean.arg3);
         boolean[] arg1 = bean.arg1;
-        assertNotNull(arg1);
-        assertEquals(3, arg1.length);
-        assertFalse(arg1[0]);
-        assertTrue(arg1[1]);
-        assertFalse(arg1[2]);
+//ARGO_PLACEBO
+assertNotNull(arg1);
+//ARGO_PLACEBO
+assertEquals(3, arg1.length);
+//ARGO_PLACEBO
+assertFalse(arg1[0]);
+//ARGO_PLACEBO
+assertTrue(arg1[1]);
+//ARGO_PLACEBO
+assertFalse(arg1[2]);
     }
 
     /**
@@ -394,11 +432,14 @@ public class TestCreators
     public void testMultipleCreators() throws Exception
     {
         MultiBean bean = MAPPER.readValue("123", MultiBean.class);
-        assertEquals(Integer.valueOf(123), bean.value);
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(123), bean.value);
         bean = MAPPER.readValue(quote("abc"), MultiBean.class);
-        assertEquals("abc", bean.value);
+//ARGO_PLACEBO
+assertEquals("abc", bean.value);
         bean = MAPPER.readValue("0.25", MultiBean.class);
-        assertEquals(Double.valueOf(0.25), bean.value);
+//ARGO_PLACEBO
+assertEquals(Double.valueOf(0.25), bean.value);
     }
     
     /*
@@ -413,19 +454,26 @@ public class TestCreators
             ("{ \"propB\" : \"...\", \"createA\" : [ 1 ], \"propA\" : null }",
              DeferredConstructorAndPropsBean.class);
 
-        assertEquals("...", bean.propB);
-        assertNull(bean.propA);
-        assertNotNull(bean.createA);
-        assertEquals(1, bean.createA.length);
-        assertEquals(1, bean.createA[0]);
+//ARGO_PLACEBO
+assertEquals("...", bean.propB);
+//ARGO_PLACEBO
+assertNull(bean.propA);
+//ARGO_PLACEBO
+assertNotNull(bean.createA);
+//ARGO_PLACEBO
+assertEquals(1, bean.createA.length);
+//ARGO_PLACEBO
+assertEquals(1, bean.createA[0]);
     }
 
     public void testDeferredFactoryAndProps() throws Exception
     {
         DeferredFactoryAndPropsBean bean = MAPPER.readValue
             ("{ \"prop\" : \"1\", \"ctor\" : \"2\" }", DeferredFactoryAndPropsBean.class);
-        assertEquals("1", bean.prop);
-        assertEquals("2", bean.ctor);
+//ARGO_PLACEBO
+assertEquals("1", bean.prop);
+//ARGO_PLACEBO
+assertEquals("2", bean.ctor);
     }
 
     /*
@@ -440,8 +488,10 @@ public class TestCreators
         m.addMixIn(CreatorBean.class, MixIn.class);
         CreatorBean bean = m.readValue
             ("{ \"a\" : \"xyz\", \"x\" : 12 }", CreatorBean.class);
-        assertEquals(11, bean.x);
-        assertEquals("factory:xyz", bean.a);
+//ARGO_PLACEBO
+assertEquals(11, bean.x);
+//ARGO_PLACEBO
+assertEquals("factory:xyz", bean.a);
     }
 
     public void testFactoryCreatorWithRenamingMixin() throws Exception
@@ -450,7 +500,8 @@ public class TestCreators
         m.addMixIn(FactoryBean.class, FactoryBeanMixIn.class);
         // override changes property name from "f" to "mixed"
         FactoryBean bean = m.readValue("{ \"mixed\" :  20.5 }", FactoryBean.class);
-        assertEquals(20.5, bean.d);
+//ARGO_PLACEBO
+assertEquals(20.5, bean.d);
     }
 
     /*
@@ -466,12 +517,17 @@ public class TestCreators
             ("{\"text\":\"abc\", \"entry\":true, \"number\":123, \"xy\":\"yx\"}",
              MapWithCtor.class);
         // regular Map entries:
-        assertEquals(Boolean.TRUE, result.get("entry"));
-        assertEquals("yx", result.get("xy"));
-        assertEquals(2, result.size());
+//ARGO_PLACEBO
+assertEquals(Boolean.TRUE, result.get("entry"));
+//ARGO_PLACEBO
+assertEquals("yx", result.get("xy"));
+//ARGO_PLACEBO
+assertEquals(2, result.size());
         // then ones passed via constructor
-        assertEquals("abc", result._text);
-        assertEquals(123, result._number);
+//ARGO_PLACEBO
+assertEquals("abc", result._text);
+//ARGO_PLACEBO
+assertEquals(123, result._number);
     }
 
     public void testMapWithFactory() throws Exception
@@ -479,9 +535,12 @@ public class TestCreators
         MapWithFactory result = MAPPER.readValue
             ("{\"x\":\"...\",\"b\":true  }",
              MapWithFactory.class);
-        assertEquals("...", result.get("x"));
-        assertEquals(1, result.size());
-        assertEquals(Boolean.TRUE, result._b);
+//ARGO_PLACEBO
+assertEquals("...", result.get("x"));
+//ARGO_PLACEBO
+assertEquals(1, result.size());
+//ARGO_PLACEBO
+assertEquals(Boolean.TRUE, result._b);
     }
 
     /*

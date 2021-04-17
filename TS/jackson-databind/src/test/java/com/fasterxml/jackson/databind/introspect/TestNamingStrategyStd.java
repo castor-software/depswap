@@ -77,7 +77,7 @@ public class TestNamingStrategyStd extends BaseMapTest
     }
 
     @JsonPropertyOrder({ "firstName", "lastName" })
-    @JsonNaming(PropertyNamingStrategy.LowerCaseStrategy.class)
+    @JsonNaming(PropertyNamingStrategies.LowerCaseStrategy.class)
     static class BoringBean {
         public String firstName = "Bob";
         public String lastName = "Burger";
@@ -179,7 +179,7 @@ public class TestNamingStrategyStd extends BaseMapTest
     {
         super.setUp();
         _lcWithUndescoreMapper = new ObjectMapper();
-        _lcWithUndescoreMapper.setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE);
+        _lcWithUndescoreMapper.setPropertyNamingStrategy(PropertyNamingStrategies.SNAKE_CASE);
     }
     
     /*
@@ -190,15 +190,16 @@ public class TestNamingStrategyStd extends BaseMapTest
 
     /**
      * Unit test to verify translations of 
-     * {@link PropertyNamingStrategy#SNAKE_CASE} 
+     * {@link PropertyNamingStrategies#SNAKE_CASE} 
      * outside the context of an ObjectMapper.
      */
     public void testLowerCaseStrategyStandAlone()
     {
         for (Object[] pair : SNAKE_CASE_NAME_TRANSLATIONS) {
-            String translatedJavaName = PropertyNamingStrategy.SNAKE_CASE.nameForField(null, null,
+            String translatedJavaName = PropertyNamingStrategies.SNAKE_CASE.nameForField(null, null,
                     (String) pair[0]);
-            assertEquals((String) pair[1], translatedJavaName);
+//ARGO_PLACEBO
+assertEquals((String) pair[1], translatedJavaName);
         }
     }
 
@@ -206,55 +207,74 @@ public class TestNamingStrategyStd extends BaseMapTest
     {
         // First serialize
         String json = _lcWithUndescoreMapper.writeValueAsString(new PersonBean("Joe", "Sixpack", 42));
-        assertEquals("{\"first_name\":\"Joe\",\"last_name\":\"Sixpack\",\"age\":42}", json);
+//ARGO_PLACEBO
+assertEquals("{\"first_name\":\"Joe\",\"last_name\":\"Sixpack\",\"age\":42}", json);
         
         // then deserialize
         PersonBean result = _lcWithUndescoreMapper.readValue(json, PersonBean.class);
-        assertEquals("Joe", result.firstName);
-        assertEquals("Sixpack", result.lastName);
-        assertEquals(42, result.age);
+//ARGO_PLACEBO
+assertEquals("Joe", result.firstName);
+//ARGO_PLACEBO
+assertEquals("Sixpack", result.lastName);
+//ARGO_PLACEBO
+assertEquals(42, result.age);
     }
     
     public void testLowerCaseAcronymsTranslations() throws Exception
     {
         // First serialize
         String json = _lcWithUndescoreMapper.writeValueAsString(new Acronyms("world wide web", "http://jackson.codehaus.org", "/path1/,/path2/"));
-        assertEquals("{\"www\":\"world wide web\",\"some_url\":\"http://jackson.codehaus.org\",\"some_uris\":\"/path1/,/path2/\"}", json);
+//ARGO_PLACEBO
+assertEquals("{\"www\":\"world wide web\",\"some_url\":\"http://jackson.codehaus.org\",\"some_uris\":\"/path1/,/path2/\"}", json);
         
         // then deserialize
         Acronyms result = _lcWithUndescoreMapper.readValue(json, Acronyms.class);
-        assertEquals("world wide web", result.WWW);
-        assertEquals("http://jackson.codehaus.org", result.someURL);
-        assertEquals("/path1/,/path2/", result.someURIs);
+//ARGO_PLACEBO
+assertEquals("world wide web", result.WWW);
+//ARGO_PLACEBO
+assertEquals("http://jackson.codehaus.org", result.someURL);
+//ARGO_PLACEBO
+assertEquals("/path1/,/path2/", result.someURIs);
     }
 
     public void testLowerCaseOtherNonStandardNamesTranslations() throws Exception
     {
         // First serialize
         String json = _lcWithUndescoreMapper.writeValueAsString(new OtherNonStandardNames("Results", "_User", "___", "$User"));
-        assertEquals("{\"results\":\"Results\",\"user\":\"_User\",\"__\":\"___\",\"$_user\":\"$User\"}", json);
+//ARGO_PLACEBO
+assertEquals("{\"results\":\"Results\",\"user\":\"_User\",\"__\":\"___\",\"$_user\":\"$User\"}", json);
         
         // then deserialize
         OtherNonStandardNames result = _lcWithUndescoreMapper.readValue(json, OtherNonStandardNames.class);
-        assertEquals("Results", result.Results);
-        assertEquals("_User", result._User);
-        assertEquals("___", result.___);
-        assertEquals("$User", result.$User);
+//ARGO_PLACEBO
+assertEquals("Results", result.Results);
+//ARGO_PLACEBO
+assertEquals("_User", result._User);
+//ARGO_PLACEBO
+assertEquals("___", result.___);
+//ARGO_PLACEBO
+assertEquals("$User", result.$User);
     }
 
     public void testLowerCaseUnchangedNames() throws Exception
     {
         // First serialize
         String json = _lcWithUndescoreMapper.writeValueAsString(new UnchangedNames("from_user", "_user", "from$user", "from7user", "_x"));
-        assertEquals("{\"from_user\":\"from_user\",\"user\":\"_user\",\"from$user\":\"from$user\",\"from7user\":\"from7user\",\"x\":\"_x\"}", json);
+//ARGO_PLACEBO
+assertEquals("{\"from_user\":\"from_user\",\"user\":\"_user\",\"from$user\":\"from$user\",\"from7user\":\"from7user\",\"x\":\"_x\"}", json);
         
         // then deserialize
         UnchangedNames result = _lcWithUndescoreMapper.readValue(json, UnchangedNames.class);
-        assertEquals("from_user", result.from_user);
-        assertEquals("_user", result._user);
-        assertEquals("from$user", result.from$user);
-        assertEquals("from7user", result.from7user);
-        assertEquals("_x", result._x);
+//ARGO_PLACEBO
+assertEquals("from_user", result.from_user);
+//ARGO_PLACEBO
+assertEquals("_user", result._user);
+//ARGO_PLACEBO
+assertEquals("from$user", result.from$user);
+//ARGO_PLACEBO
+assertEquals("from7user", result.from7user);
+//ARGO_PLACEBO
+assertEquals("_x", result._x);
     }
 
     /*
@@ -265,28 +285,35 @@ public class TestNamingStrategyStd extends BaseMapTest
 
     /**
      * Unit test to verify translations of 
-     * {@link PropertyNamingStrategy#UPPER_CAMEL_CASE } 
+     * {@link PropertyNamingStrategies#UPPER_CAMEL_CASE } 
      * outside the context of an ObjectMapper.
      */
     public void testPascalCaseStandAlone()
     {
-        assertEquals("UserName", PropertyNamingStrategy.UPPER_CAMEL_CASE.nameForField(null, null, "userName"));
-        assertEquals("User", PropertyNamingStrategy.UPPER_CAMEL_CASE.nameForField(null, null, "User"));
-        assertEquals("User", PropertyNamingStrategy.UPPER_CAMEL_CASE.nameForField(null, null, "user"));
-        assertEquals("X", PropertyNamingStrategy.UPPER_CAMEL_CASE.nameForField(null, null, "x"));
+//ARGO_PLACEBO
+assertEquals("UserName", PropertyNamingStrategies.UPPER_CAMEL_CASE.nameForField(null, null, "userName"));
+//ARGO_PLACEBO
+assertEquals("User", PropertyNamingStrategies.UPPER_CAMEL_CASE.nameForField(null, null, "User"));
+//ARGO_PLACEBO
+assertEquals("User", PropertyNamingStrategies.UPPER_CAMEL_CASE.nameForField(null, null, "user"));
+//ARGO_PLACEBO
+assertEquals("X", PropertyNamingStrategies.UPPER_CAMEL_CASE.nameForField(null, null, "x"));
 
-        assertEquals("BADPublicName", PropertyNamingStrategy.UPPER_CAMEL_CASE.nameForField(null, null, "bADPublicName"));
-        assertEquals("BADPublicName", PropertyNamingStrategy.UPPER_CAMEL_CASE.nameForGetterMethod(null, null, "bADPublicName"));
+//ARGO_PLACEBO
+assertEquals("BADPublicName", PropertyNamingStrategies.UPPER_CAMEL_CASE.nameForField(null, null, "bADPublicName"));
+//ARGO_PLACEBO
+assertEquals("BADPublicName", PropertyNamingStrategies.UPPER_CAMEL_CASE.nameForGetterMethod(null, null, "bADPublicName"));
     }
 
     // [databind#428]
     public void testIssue428PascalWithOverrides() throws Exception
     {
         String json = new ObjectMapper()
-                .setPropertyNamingStrategy(PropertyNamingStrategy.UPPER_CAMEL_CASE)
+                .setPropertyNamingStrategy(PropertyNamingStrategies.UPPER_CAMEL_CASE)
                 .writeValueAsString(new Bean428());
         if (!json.contains(quote("fooBar"))) {
-            fail("Should use name 'fooBar', does not: "+json);
+//ARGO_PLACEBO
+fail("Should use name 'fooBar', does not: "+json);
         }
     }
 
@@ -302,7 +329,8 @@ public class TestNamingStrategyStd extends BaseMapTest
         final BoringBean input = new BoringBean();
         ObjectMapper m = objectMapper();
 
-        assertEquals(aposToQuotes("{'firstname':'Bob','lastname':'Burger'}"),
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'firstname':'Bob','lastname':'Burger'}"),
                 m.writeValueAsString(input));
     }
 
@@ -314,29 +342,36 @@ public class TestNamingStrategyStd extends BaseMapTest
     
     public void testKebabCaseStrategyStandAlone()
     {
-        assertEquals("some-value",
-                PropertyNamingStrategy.KEBAB_CASE.nameForField(null, null, "someValue"));
-        assertEquals("some-value",
-                PropertyNamingStrategy.KEBAB_CASE.nameForField(null, null, "SomeValue"));
-        assertEquals("url",
-                PropertyNamingStrategy.KEBAB_CASE.nameForField(null, null, "URL"));
-        assertEquals("url-stuff",
-                PropertyNamingStrategy.KEBAB_CASE.nameForField(null, null, "URLStuff"));
-        assertEquals("some-url-stuff",
-                PropertyNamingStrategy.KEBAB_CASE.nameForField(null, null, "SomeURLStuff"));
+//ARGO_PLACEBO
+assertEquals("some-value",
+                PropertyNamingStrategies.KEBAB_CASE.nameForField(null, null, "someValue"));
+//ARGO_PLACEBO
+assertEquals("some-value",
+                PropertyNamingStrategies.KEBAB_CASE.nameForField(null, null, "SomeValue"));
+//ARGO_PLACEBO
+assertEquals("url",
+                PropertyNamingStrategies.KEBAB_CASE.nameForField(null, null, "URL"));
+//ARGO_PLACEBO
+assertEquals("url-stuff",
+                PropertyNamingStrategies.KEBAB_CASE.nameForField(null, null, "URLStuff"));
+//ARGO_PLACEBO
+assertEquals("some-url-stuff",
+                PropertyNamingStrategies.KEBAB_CASE.nameForField(null, null, "SomeURLStuff"));
     }
     
     public void testSimpleKebabCase() throws Exception
     {
         final FirstNameBean input = new FirstNameBean("Bob");
         ObjectMapper m = new ObjectMapper()
-                .setPropertyNamingStrategy(PropertyNamingStrategy.KEBAB_CASE);
+                .setPropertyNamingStrategy(PropertyNamingStrategies.KEBAB_CASE);
 
-        assertEquals(aposToQuotes("{'first-name':'Bob'}"), m.writeValueAsString(input));
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'first-name':'Bob'}"), m.writeValueAsString(input));
 
         FirstNameBean result = m.readValue(aposToQuotes("{'first-name':'Billy'}"),
                 FirstNameBean.class);
-        assertEquals("Billy", result.firstName);
+//ARGO_PLACEBO
+assertEquals("Billy", result.firstName);
     }
     /*
     /**********************************************************
@@ -346,30 +381,37 @@ public class TestNamingStrategyStd extends BaseMapTest
 
     public void testLowerCaseWithDotsStrategyStandAlone()
     {
-        assertEquals("some.value",
-            PropertyNamingStrategy.LOWER_DOT_CASE.nameForField(null, null, "someValue"));
-        assertEquals("some.value",
-            PropertyNamingStrategy.LOWER_DOT_CASE.nameForField(null, null, "SomeValue"));
-        assertEquals("url",
-            PropertyNamingStrategy.LOWER_DOT_CASE.nameForField(null, null, "URL"));
-        assertEquals("url.stuff",
-            PropertyNamingStrategy.LOWER_DOT_CASE.nameForField(null, null, "URLStuff"));
-        assertEquals("some.url.stuff",
-            PropertyNamingStrategy.LOWER_DOT_CASE.nameForField(null, null, "SomeURLStuff"));
+//ARGO_PLACEBO
+assertEquals("some.value",
+                PropertyNamingStrategies.LOWER_DOT_CASE.nameForField(null, null, "someValue"));
+//ARGO_PLACEBO
+assertEquals("some.value",
+                PropertyNamingStrategies.LOWER_DOT_CASE.nameForField(null, null, "SomeValue"));
+//ARGO_PLACEBO
+assertEquals("url",
+                PropertyNamingStrategies.LOWER_DOT_CASE.nameForField(null, null, "URL"));
+//ARGO_PLACEBO
+assertEquals("url.stuff",
+                PropertyNamingStrategies.LOWER_DOT_CASE.nameForField(null, null, "URLStuff"));
+//ARGO_PLACEBO
+assertEquals("some.url.stuff",
+                PropertyNamingStrategies.LOWER_DOT_CASE.nameForField(null, null, "SomeURLStuff"));
     }
 
     public void testSimpleLowerCaseWithDots() throws Exception
     {
         final ObjectMapper m = jsonMapperBuilder()
-            .propertyNamingStrategy(PropertyNamingStrategy.LOWER_DOT_CASE)
+            .propertyNamingStrategy(PropertyNamingStrategies.LOWER_DOT_CASE)
             .build();
 
         final FirstNameBean input = new FirstNameBean("Bob");
-        assertEquals(aposToQuotes("{'first.name':'Bob'}"), m.writeValueAsString(input));
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'first.name':'Bob'}"), m.writeValueAsString(input));
 
         FirstNameBean result = m.readValue(aposToQuotes("{'first.name':'Billy'}"),
                 FirstNameBean.class);
-        assertEquals("Billy", result.firstName);
+//ARGO_PLACEBO
+assertEquals("Billy", result.firstName);
     }
 
     /*
@@ -384,35 +426,42 @@ public class TestNamingStrategyStd extends BaseMapTest
     public void testNamingWithObjectNode() throws Exception
     {
         ObjectMapper m = new ObjectMapper()
-            .setPropertyNamingStrategy(PropertyNamingStrategy.LOWER_CASE);
+            .setPropertyNamingStrategy(PropertyNamingStrategies.LOWER_CASE);
         ClassWithObjectNodeField result =
             m.readValue(
                 "{ \"id\": \"1\", \"json\": { \"foo\": \"bar\", \"baz\": \"bing\" } }",
                 ClassWithObjectNodeField.class);
-        assertNotNull(result);
-        assertEquals("1", result.id);
-        assertNotNull(result.json);
-        assertEquals(2, result.json.size());
-        assertEquals("bing", result.json.path("baz").asText());
+//ARGO_ORIGINAL
+assertNotNull(result);
+//ARGO_ORIGINAL
+assertEquals("1", result.id);
+//ARGO_ORIGINAL
+assertNotNull(result.json);
+//ARGO_ORIGINAL
+assertEquals(2, result.json.size());
+//ARGO_ORIGINAL
+assertEquals("bing", result.json.path("baz").asText());
     }
 
     public void testExplicitRename() throws Exception
     {
         ObjectMapper m = jsonMapperBuilder()
-                .propertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE)
+                .propertyNamingStrategy(PropertyNamingStrategies.SNAKE_CASE)
                 .enable(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY)
                 .build();
         // by default, renaming will not take place on explicitly named fields
-        assertEquals(aposToQuotes("{'firstName':'Peter','lastName':'Venkman','user_age':'35'}"),
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'firstName':'Peter','lastName':'Venkman','user_age':'35'}"),
                 m.writeValueAsString(new ExplicitBean()));
 
         m = jsonMapperBuilder()
-                .propertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE)
+                .propertyNamingStrategy(PropertyNamingStrategies.SNAKE_CASE)
                 .enable(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY)
                 .enable(MapperFeature.ALLOW_EXPLICIT_PROPERTY_RENAMING)
                 .build();
         // w/ feature enabled, ALL property names should get re-written
-        assertEquals(aposToQuotes("{'first_name':'Peter','last_name':'Venkman','user_age':'35'}"),
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'first_name':'Peter','last_name':'Venkman','user_age':'35'}"),
                 m.writeValueAsString(new ExplicitBean()));
 
         // test deserialization as well
@@ -420,10 +469,14 @@ public class TestNamingStrategyStd extends BaseMapTest
                 m.readValue(aposToQuotes("{'first_name':'Egon','last_name':'Spengler','user_age':'32'}"),
                         ExplicitBean.class);
 
-        assertNotNull(bean);
-        assertEquals("Egon", bean.userFirstName);
-        assertEquals("Spengler", bean.userLastName);
-        assertEquals("32", bean.userAge);
+//ARGO_PLACEBO
+assertNotNull(bean);
+//ARGO_PLACEBO
+assertEquals("Egon", bean.userFirstName);
+//ARGO_PLACEBO
+assertEquals("Spengler", bean.userLastName);
+//ARGO_PLACEBO
+assertEquals("32", bean.userAge);
     }
 
     // Also verify that "no naming strategy" should be ok
@@ -431,6 +484,7 @@ public class TestNamingStrategyStd extends BaseMapTest
     {
         ObjectMapper mapper = objectMapper();
         String json = mapper.writeValueAsString(new DefaultNaming());
-        assertEquals(aposToQuotes("{'someValue':3}"), json);
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'someValue':3}"), json);
     }
 }

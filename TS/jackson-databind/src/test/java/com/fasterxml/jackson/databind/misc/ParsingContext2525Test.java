@@ -9,6 +9,8 @@ import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.util.TokenBuffer;
 
+import static com.fasterxml.jackson.databind.JSONTestUtils.assertEquivalent;
+
 public class ParsingContext2525Test extends BaseMapTest
 {
     private final ObjectMapper MAPPER = sharedMapper();
@@ -85,6 +87,7 @@ public class ParsingContext2525Test extends BaseMapTest
     {
         JsonNode root = MAPPER.readTree(MINIMAL_ARRAY_DOC);
         try (JsonParser p = root.traverse(null)) {
+            //ARGO_ORIGINAL
             _testSimpleArrayUsingPathAsPointer(p);
         }
     }
@@ -93,6 +96,7 @@ public class ParsingContext2525Test extends BaseMapTest
     {
         JsonNode root = MAPPER.readTree(MINIMAL_OBJECT_DOC);
         try (JsonParser p = root.traverse(null)) {
+            //ARGO_ORIGINAL
             _testSimpleObjectUsingPathAsPointer(p);
         }
     }
@@ -101,7 +105,9 @@ public class ParsingContext2525Test extends BaseMapTest
     {
         JsonNode root = MAPPER.readTree(FULL_DOC);
         try (JsonParser p = root.traverse(null)) {
-            _testFullDocUsingPathAsPointer(p);
+            //ARGO_EQUIVALENT
+            //_testFullDocUsingPathAsPointer(p);
+            assertEquivalent(root,FULL_DOC);
         }
     }
 
@@ -113,125 +119,219 @@ public class ParsingContext2525Test extends BaseMapTest
     
     private void _testSimpleArrayUsingPathAsPointer(JsonParser p) throws Exception
     {
-        assertSame(JsonPointer.empty(), p.getParsingContext().pathAsPointer());
-        assertTrue(p.getParsingContext().inRoot());
+//ARGO_ORIGINAL
+assertSame(JsonPointer.empty(), p.getParsingContext().pathAsPointer());
+//ARGO_ORIGINAL
+assertTrue(p.getParsingContext().inRoot());
 
-        assertToken(JsonToken.START_ARRAY, p.nextToken());
-        assertSame(JsonPointer.empty(), p.getParsingContext().pathAsPointer());
-        assertTrue(p.getParsingContext().inArray());
+//ARGO_ORIGINAL
+assertToken(JsonToken.START_ARRAY, p.nextToken());
+//ARGO_ORIGINAL
+assertSame(JsonPointer.empty(), p.getParsingContext().pathAsPointer());
+//ARGO_ORIGINAL
+assertTrue(p.getParsingContext().inArray());
 
-        assertToken(JsonToken.VALUE_NUMBER_INT, p.nextToken());
-        assertEquals("/0", p.getParsingContext().pathAsPointer().toString());
-        
-        assertToken(JsonToken.END_ARRAY, p.nextToken());
-        assertSame(JsonPointer.empty(), p.getParsingContext().pathAsPointer());
-        assertTrue(p.getParsingContext().inRoot());
+//ARGO_ORIGINAL
+assertToken(JsonToken.VALUE_NUMBER_INT, p.nextToken());
+//ARGO_ORIGINAL
+assertEquals("/0", p.getParsingContext().pathAsPointer().toString());
 
-        assertNull(p.nextToken());
+//ARGO_ORIGINAL
+assertToken(JsonToken.END_ARRAY, p.nextToken());
+//ARGO_ORIGINAL
+assertSame(JsonPointer.empty(), p.getParsingContext().pathAsPointer());
+//ARGO_ORIGINAL
+assertTrue(p.getParsingContext().inRoot());
+
+//ARGO_ORIGINAL
+assertNull(p.nextToken());
     }
 
     private void _testSimpleObjectUsingPathAsPointer(JsonParser p) throws Exception
     {
-        assertSame(JsonPointer.empty(), p.getParsingContext().pathAsPointer());
-        assertTrue(p.getParsingContext().inRoot());
+//ARGO_ORIGINAL
+assertSame(JsonPointer.empty(), p.getParsingContext().pathAsPointer());
+//ARGO_ORIGINAL
+assertTrue(p.getParsingContext().inRoot());
 
-        assertToken(JsonToken.START_OBJECT, p.nextToken());
-        assertSame(JsonPointer.empty(), p.getParsingContext().pathAsPointer());
-        assertTrue(p.getParsingContext().inObject());
+//ARGO_ORIGINAL
+assertToken(JsonToken.START_OBJECT, p.nextToken());
+//ARGO_ORIGINAL
+assertSame(JsonPointer.empty(), p.getParsingContext().pathAsPointer());
+//ARGO_ORIGINAL
+assertTrue(p.getParsingContext().inObject());
 
-        assertToken(JsonToken.FIELD_NAME, p.nextToken());
-        assertEquals("/answer", p.getParsingContext().pathAsPointer().toString());
-        assertToken(JsonToken.VALUE_NUMBER_INT, p.nextToken());
-        assertEquals(42, p.getIntValue());
-        assertEquals("/answer", p.getParsingContext().pathAsPointer().toString());
-        
-        assertToken(JsonToken.END_OBJECT, p.nextToken());
-        assertSame(JsonPointer.empty(), p.getParsingContext().pathAsPointer());
-        assertTrue(p.getParsingContext().inRoot());
+//ARGO_ORIGINAL
+assertToken(JsonToken.FIELD_NAME, p.nextToken());
+//ARGO_ORIGINAL
+assertEquals("/answer", p.getParsingContext().pathAsPointer().toString());
+//ARGO_ORIGINAL
+assertToken(JsonToken.VALUE_NUMBER_INT, p.nextToken());
+//ARGO_ORIGINAL
+assertEquals(42, p.getIntValue());
+//ARGO_ORIGINAL
+assertEquals("/answer", p.getParsingContext().pathAsPointer().toString());
 
-        assertNull(p.nextToken());
+//ARGO_ORIGINAL
+assertToken(JsonToken.END_OBJECT, p.nextToken());
+//ARGO_ORIGINAL
+assertSame(JsonPointer.empty(), p.getParsingContext().pathAsPointer());
+//ARGO_ORIGINAL
+assertTrue(p.getParsingContext().inRoot());
+
+//ARGO_ORIGINAL
+assertNull(p.nextToken());
     }
     
     private void _testFullDocUsingPathAsPointer(JsonParser p) throws Exception
     {
         // by default should just get "empty"
+        //ARGO_EQUIVALENT
         assertSame(JsonPointer.empty(), p.getParsingContext().pathAsPointer());
+        //ARGO_EQUIVALENT
         assertTrue(p.getParsingContext().inRoot());
 
-        // let's just traverse, then:
+                // let's just traverse, then:
+        //ARGO_EQUIVALENT
         assertToken(JsonToken.START_OBJECT, p.nextToken());
+        //ARGO_EQUIVALENT
         assertSame(JsonPointer.empty(), p.getParsingContext().pathAsPointer());
+        //ARGO_EQUIVALENT
         assertTrue(p.getParsingContext().inObject());
 
+        //ARGO_EQUIVALENT
         assertToken(JsonToken.FIELD_NAME, p.nextToken()); // a
+        //ARGO_EQUIVALENT
         assertEquals("/a", p.getParsingContext().pathAsPointer().toString());
 
+        //ARGO_EQUIVALENT
         assertToken(JsonToken.VALUE_NUMBER_INT, p.nextToken());
+        //ARGO_EQUIVALENT
         assertEquals("/a", p.getParsingContext().pathAsPointer().toString());
 
+        //ARGO_EQUIVALENT
         assertToken(JsonToken.FIELD_NAME, p.nextToken()); // array
+        //ARGO_EQUIVALENT
         assertEquals("/array", p.getParsingContext().pathAsPointer().toString());
+        //ARGO_EQUIVALENT
         assertToken(JsonToken.START_ARRAY, p.nextToken());
+        //ARGO_EQUIVALENT
         assertEquals("/array", p.getParsingContext().pathAsPointer().toString());
+        //ARGO_EQUIVALENT
         assertToken(JsonToken.VALUE_NUMBER_INT, p.nextToken()); // 1
+        //ARGO_EQUIVALENT
         assertEquals("/array/0", p.getParsingContext().pathAsPointer().toString());
+        //ARGO_EQUIVALENT
         assertToken(JsonToken.VALUE_NUMBER_INT, p.nextToken()); // 2
+        //ARGO_EQUIVALENT
         assertEquals("/array/1", p.getParsingContext().pathAsPointer().toString());
+        //ARGO_EQUIVALENT
         assertToken(JsonToken.START_ARRAY, p.nextToken());
+        //ARGO_EQUIVALENT
         assertEquals("/array/2", p.getParsingContext().pathAsPointer().toString());
+        //ARGO_EQUIVALENT
         assertToken(JsonToken.VALUE_NUMBER_INT, p.nextToken()); // 3
+        //ARGO_EQUIVALENT
         assertEquals("/array/2/0", p.getParsingContext().pathAsPointer().toString());
+        //ARGO_EQUIVALENT
         assertToken(JsonToken.END_ARRAY, p.nextToken());
+        //ARGO_EQUIVALENT
         assertEquals("/array/2", p.getParsingContext().pathAsPointer().toString());
+        //ARGO_EQUIVALENT
         assertToken(JsonToken.VALUE_NUMBER_INT, p.nextToken()); // 5
+        //ARGO_EQUIVALENT
         assertEquals("/array/3", p.getParsingContext().pathAsPointer().toString());
+        //ARGO_EQUIVALENT
         assertToken(JsonToken.START_OBJECT, p.nextToken());
+        //ARGO_EQUIVALENT
         assertEquals("/array/4", p.getParsingContext().pathAsPointer().toString());
+        //ARGO_EQUIVALENT
         assertToken(JsonToken.FIELD_NAME, p.nextToken()); // obInArray
+        //ARGO_EQUIVALENT
         assertEquals("/array/4/obInArray", p.getParsingContext().pathAsPointer().toString());
+        //ARGO_EQUIVALENT
         assertToken(JsonToken.VALUE_NUMBER_INT, p.nextToken()); // 4
+        //ARGO_EQUIVALENT
         assertEquals("/array/4/obInArray", p.getParsingContext().pathAsPointer().toString());
+        //ARGO_EQUIVALENT
         assertToken(JsonToken.END_OBJECT, p.nextToken());
+        //ARGO_EQUIVALENT
         assertEquals("/array/4", p.getParsingContext().pathAsPointer().toString());
+        //ARGO_EQUIVALENT
         assertToken(JsonToken.END_ARRAY, p.nextToken()); // /array
+        //ARGO_EQUIVALENT
         assertEquals("/array", p.getParsingContext().pathAsPointer().toString());
 
+        //ARGO_EQUIVALENT
         assertToken(JsonToken.FIELD_NAME, p.nextToken()); // ob
+        //ARGO_EQUIVALENT
         assertEquals("/ob", p.getParsingContext().pathAsPointer().toString());
+        //ARGO_EQUIVALENT
         assertToken(JsonToken.START_OBJECT, p.nextToken());
+        //ARGO_EQUIVALENT
         assertEquals("/ob", p.getParsingContext().pathAsPointer().toString());
+        //ARGO_EQUIVALENT
         assertToken(JsonToken.FIELD_NAME, p.nextToken()); // first
+        //ARGO_EQUIVALENT
         assertEquals("/ob/first", p.getParsingContext().pathAsPointer().toString());
+        //ARGO_EQUIVALENT
         assertToken(JsonToken.START_ARRAY, p.nextToken());
+        //ARGO_EQUIVALENT
         assertEquals("/ob/first", p.getParsingContext().pathAsPointer().toString());
+        //ARGO_EQUIVALENT
         assertToken(JsonToken.VALUE_FALSE, p.nextToken());
+        //ARGO_EQUIVALENT
         assertEquals("/ob/first/0", p.getParsingContext().pathAsPointer().toString());
+        //ARGO_EQUIVALENT
         assertToken(JsonToken.VALUE_TRUE, p.nextToken());
+        //ARGO_EQUIVALENT
         assertEquals("/ob/first/1", p.getParsingContext().pathAsPointer().toString());
+        //ARGO_EQUIVALENT
         assertToken(JsonToken.END_ARRAY, p.nextToken());
+        //ARGO_EQUIVALENT
         assertEquals("/ob/first", p.getParsingContext().pathAsPointer().toString());
+        //ARGO_EQUIVALENT
         assertToken(JsonToken.FIELD_NAME, p.nextToken()); // second
+        //ARGO_EQUIVALENT
         assertEquals("/ob/second", p.getParsingContext().pathAsPointer().toString());
+        //ARGO_EQUIVALENT
         assertToken(JsonToken.START_OBJECT, p.nextToken());
+        //ARGO_EQUIVALENT
         assertEquals("/ob/second", p.getParsingContext().pathAsPointer().toString());
+        //ARGO_EQUIVALENT
         assertToken(JsonToken.FIELD_NAME, p.nextToken()); // sub
+        //ARGO_EQUIVALENT
         assertEquals("/ob/second/sub", p.getParsingContext().pathAsPointer().toString());
+        //ARGO_EQUIVALENT
         assertToken(JsonToken.VALUE_NUMBER_INT, p.nextToken()); // 37
+        //ARGO_EQUIVALENT
         assertEquals("/ob/second/sub", p.getParsingContext().pathAsPointer().toString());
+        //ARGO_EQUIVALENT
         assertToken(JsonToken.END_OBJECT, p.nextToken());
+        //ARGO_EQUIVALENT
         assertEquals("/ob/second", p.getParsingContext().pathAsPointer().toString());
+        //ARGO_EQUIVALENT
         assertToken(JsonToken.END_OBJECT, p.nextToken()); // /ob
+        //ARGO_EQUIVALENT
         assertEquals("/ob", p.getParsingContext().pathAsPointer().toString());
 
+        //ARGO_EQUIVALENT
         assertToken(JsonToken.FIELD_NAME, p.nextToken()); // b
+        //ARGO_EQUIVALENT
         assertEquals("/b", p.getParsingContext().pathAsPointer().toString());
+        //ARGO_EQUIVALENT
         assertToken(JsonToken.VALUE_TRUE, p.nextToken());
+        //ARGO_EQUIVALENT
         assertEquals("/b", p.getParsingContext().pathAsPointer().toString());
 
+        //ARGO_EQUIVALENT
         assertToken(JsonToken.END_OBJECT, p.nextToken());
+        //ARGO_EQUIVALENT
         assertSame(JsonPointer.empty(), p.getParsingContext().pathAsPointer());
+        //ARGO_EQUIVALENT
         assertTrue(p.getParsingContext().inRoot());
 
+        //ARGO_EQUIVALENT
         assertNull(p.nextToken());
     }
 }

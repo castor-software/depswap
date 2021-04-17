@@ -86,6 +86,7 @@ public class ExternalTypeIdWithEnum1328Test extends BaseMapTest
                 .writeValueAsString(Arrays.asList(new AnimalAndType(AnimalType.Dog, new Dog())));
         List<AnimalAndType> list = mapper.readerFor(new TypeReference<List<AnimalAndType>>() { })
             .readValue(json);
-        assertNotNull(list);
+//ARGO_PLACEBO
+assertNotNull(list);
     }
 }

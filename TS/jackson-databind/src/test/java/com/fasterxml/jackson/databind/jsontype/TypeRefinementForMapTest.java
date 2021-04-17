@@ -108,12 +108,17 @@ public class TypeRefinementForMapTest extends BaseMapTest
         ObjectMapper m = new ObjectMapper();
         Data data = m.readValue(json, Data.class);
 
-        assertEquals(ID1, data.id);
-        assertNotNull(data.items);
-        assertEquals(1, data.items.size());
+//ARGO_PLACEBO
+assertEquals(ID1, data.id);
+//ARGO_PLACEBO
+assertNotNull(data.items);
+//ARGO_PLACEBO
+assertEquals(1, data.items.size());
         Item value = data.items.get(ID2);
-        assertNotNull(value);
-        assertEquals("value", value.property);
+//ARGO_PLACEBO
+assertNotNull(value);
+//ARGO_PLACEBO
+assertEquals("value", value.property);
     }
 
     // for [databind#1384]
@@ -127,10 +132,13 @@ public class TypeRefinementForMapTest extends BaseMapTest
                 .build();
 
         TestClass testInstance = mapper.readValue(TEST_INSTANCE_SERIALIZED, TestClass.class);
-        assertEquals(1, testInstance.mapProperty.size());
+//ARGO_PLACEBO
+assertEquals(1, testInstance.mapProperty.size());
         Object key = testInstance.mapProperty.keySet().iterator().next();
-        assertEquals(CompoundKey.class, key.getClass());
+//ARGO_PLACEBO
+assertEquals(CompoundKey.class, key.getClass());
         String testInstanceSerialized = mapper.writeValueAsString(testInstance);
-        assertEquals(TEST_INSTANCE_SERIALIZED, testInstanceSerialized);
+//ARGO_PLACEBO
+assertEquals(TEST_INSTANCE_SERIALIZED, testInstanceSerialized);
     }
 }

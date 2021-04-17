@@ -94,16 +94,23 @@ public class CollectionDeserTest
         // Not a guaranteed cast theoretically, but will work:
         // (since we know that Jackson will construct an ArrayList here...)
         Object value = MAPPER.readValue(JSON, Object.class);
-        assertNotNull(value);
-        assertTrue(value instanceof ArrayList<?>);
+//ARGO_PLACEBO
+assertNotNull(value);
+//ARGO_PLACEBO
+assertTrue(value instanceof ArrayList<?>);
         List<?> result = (List<?>) value;
 
-        assertEquals(4, result.size());
+//ARGO_PLACEBO
+assertEquals(4, result.size());
 
-        assertEquals("text!", result.get(0));
-        assertEquals(Boolean.TRUE, result.get(1));
-        assertNull(result.get(2));
-        assertEquals(Integer.valueOf(23), result.get(3));
+//ARGO_PLACEBO
+assertEquals("text!", result.get(0));
+//ARGO_PLACEBO
+assertEquals(Boolean.TRUE, result.get(1));
+//ARGO_PLACEBO
+assertNull(result.get(2));
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(23), result.get(3));
     }
 
     public void testExactStringCollection() throws Exception
@@ -112,12 +119,17 @@ public class CollectionDeserTest
         String JSON = "[ \"a\", \"b\" ]";
         List<String> result = MAPPER.readValue(JSON, new TypeReference<ArrayList<String>>() { });
 
-        assertNotNull(result);
-        assertEquals(ArrayList.class, result.getClass());
-        assertEquals(2, result.size());
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertEquals(ArrayList.class, result.getClass());
+//ARGO_PLACEBO
+assertEquals(2, result.size());
 
-        assertEquals("a", result.get(0));
-        assertEquals("b", result.get(1));
+//ARGO_PLACEBO
+assertEquals("a", result.get(0));
+//ARGO_PLACEBO
+assertEquals("b", result.get(1));
     }
 
     public void testHashSet() throws Exception
@@ -125,21 +137,29 @@ public class CollectionDeserTest
         String JSON = "[ \"KEY1\", \"KEY2\" ]";
 
         EnumSet<Key> result = MAPPER.readValue(JSON, new TypeReference<EnumSet<Key>>() { });
-        assertNotNull(result);
-        assertTrue(EnumSet.class.isAssignableFrom(result.getClass()));
-        assertEquals(2, result.size());
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertTrue(EnumSet.class.isAssignableFrom(result.getClass()));
+//ARGO_PLACEBO
+assertEquals(2, result.size());
 
-        assertTrue(result.contains(Key.KEY1));
-        assertTrue(result.contains(Key.KEY2));
-        assertFalse(result.contains(Key.WHATEVER));
+//ARGO_PLACEBO
+assertTrue(result.contains(Key.KEY1));
+//ARGO_PLACEBO
+assertTrue(result.contains(Key.KEY2));
+//ARGO_PLACEBO
+assertFalse(result.contains(Key.WHATEVER));
     }
 
     /// Test to verify that @JsonDeserialize.using works as expected
     public void testCustomDeserializer() throws IOException
     {
         CustomList result = MAPPER.readValue(quote("abc"), CustomList.class);
-        assertEquals(1, result.size());
-        assertEquals("abc", result.get(0));
+//ARGO_PLACEBO
+assertEquals(1, result.size());
+//ARGO_PLACEBO
+assertEquals("abc", result.get(0));
     }
 
     // Testing "implicit JSON array" for single-element arrays,
@@ -153,28 +173,40 @@ public class CollectionDeserTest
 
         // first with simple scalar types (numbers), with collections
         List<Integer> ints = mapper.readValue("4", List.class);
-        assertEquals(1, ints.size());
-        assertEquals(Integer.valueOf(4), ints.get(0));
+//ARGO_PLACEBO
+assertEquals(1, ints.size());
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(4), ints.get(0));
         List<String> strings = mapper.readValue(quote("abc"), new TypeReference<ArrayList<String>>() { });
-        assertEquals(1, strings.size());
-        assertEquals("abc", strings.get(0));
+//ARGO_PLACEBO
+assertEquals(1, strings.size());
+//ARGO_PLACEBO
+assertEquals("abc", strings.get(0));
         // and arrays:
         int[] intArray = mapper.readValue("-7", int[].class);
-        assertEquals(1, intArray.length);
-        assertEquals(-7, intArray[0]);
+//ARGO_PLACEBO
+assertEquals(1, intArray.length);
+//ARGO_PLACEBO
+assertEquals(-7, intArray[0]);
         String[] stringArray = mapper.readValue(quote("xyz"), String[].class);
-        assertEquals(1, stringArray.length);
-        assertEquals("xyz", stringArray[0]);
+//ARGO_PLACEBO
+assertEquals(1, stringArray.length);
+//ARGO_PLACEBO
+assertEquals("xyz", stringArray[0]);
 
         // and then with Beans:
         List<XBean> xbeanList = mapper.readValue("{\"x\":4}", new TypeReference<List<XBean>>() { });
-        assertEquals(1, xbeanList.size());
-        assertEquals(XBean.class, xbeanList.get(0).getClass());
+//ARGO_PLACEBO
+assertEquals(1, xbeanList.size());
+//ARGO_PLACEBO
+assertEquals(XBean.class, xbeanList.get(0).getClass());
 
         Object ob = mapper.readValue("{\"x\":29}", XBean[].class);
         XBean[] xbeanArray = (XBean[]) ob;
-        assertEquals(1, xbeanArray.length);
-        assertEquals(XBean.class, xbeanArray[0].getClass());
+//ARGO_PLACEBO
+assertEquals(1, xbeanArray.length);
+//ARGO_PLACEBO
+assertEquals(XBean.class, xbeanArray[0].getClass());
     }
 
     // [JACKSON-620]: allow "" to mean 'null' for Maps
@@ -182,7 +214,8 @@ public class CollectionDeserTest
     {
         ObjectReader r = MAPPER.reader(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT);
         List<?> result = r.forType(List.class).readValue(quote(""));
-        assertNull(result);
+//ARGO_PLACEBO
+assertNull(result);
     }
 
     // [databind#161]
@@ -190,11 +223,16 @@ public class CollectionDeserTest
     {
         // ok to skip polymorphic type to get Object
         ArrayBlockingQueue<?> q = MAPPER.readValue("[1, 2, 3]", ArrayBlockingQueue.class);
-        assertNotNull(q);
-        assertEquals(3, q.size());
-        assertEquals(Integer.valueOf(1), q.take());
-        assertEquals(Integer.valueOf(2), q.take());
-        assertEquals(Integer.valueOf(3), q.take());
+//ARGO_PLACEBO
+assertNotNull(q);
+//ARGO_PLACEBO
+assertEquals(3, q.size());
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(1), q.take());
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(2), q.take());
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(3), q.take());
     }
 
     // [databind#199]
@@ -202,29 +240,42 @@ public class CollectionDeserTest
     {
         String JSON = "{ \"values\":[\"a\",\"b\"]}";
         ListAsIterable w = MAPPER.readValue(JSON, ListAsIterable.class);
-        assertNotNull(w);
-        assertNotNull(w.values);
+//ARGO_PLACEBO
+assertNotNull(w);
+//ARGO_PLACEBO
+assertNotNull(w.values);
         Iterator<String> it = w.values.iterator();
-        assertTrue(it.hasNext());
-        assertEquals("a", it.next());
-        assertEquals("b", it.next());
-        assertFalse(it.hasNext());
+//ARGO_PLACEBO
+assertTrue(it.hasNext());
+//ARGO_PLACEBO
+assertEquals("a", it.next());
+//ARGO_PLACEBO
+assertEquals("b", it.next());
+//ARGO_PLACEBO
+assertFalse(it.hasNext());
     }
 
     public void testIterableWithBeans() throws Exception
     {
         String JSON = "{ \"nums\":[{\"x\":1},{\"x\":2}]}";
         ListAsIterableX w = MAPPER.readValue(JSON, ListAsIterableX.class);
-        assertNotNull(w);
-        assertNotNull(w.nums);
+//ARGO_PLACEBO
+assertNotNull(w);
+//ARGO_PLACEBO
+assertNotNull(w.nums);
         Iterator<XBean> it = w.nums.iterator();
-        assertTrue(it.hasNext());
+//ARGO_PLACEBO
+assertTrue(it.hasNext());
         XBean xb = it.next();
-        assertNotNull(xb);
-        assertEquals(1, xb.x);
+//ARGO_PLACEBO
+assertNotNull(xb);
+//ARGO_PLACEBO
+assertEquals(1, xb.x);
         xb = it.next();
-        assertEquals(2, xb.x);
-        assertFalse(it.hasNext());
+//ARGO_PLACEBO
+assertEquals(2, xb.x);
+//ARGO_PLACEBO
+assertFalse(it.hasNext());
     }
 
     // for [databind#506]
@@ -233,38 +284,50 @@ public class CollectionDeserTest
         final String OBJECTS_JSON = "[ \"KEY2\", false ]";
         try {
             MAPPER.readValue(OBJECTS_JSON, Key[].class);
-            fail("Should not pass");
+//ARGO_PLACEBO
+fail("Should not pass");
         } catch (JsonMappingException e) {
             verifyException(e, "Cannot deserialize");
             List<JsonMappingException.Reference> refs = e.getPath();
-            assertEquals(1, refs.size());
-            assertEquals(1, refs.get(0).getIndex());
+//ARGO_PLACEBO
+assertEquals(1, refs.size());
+//ARGO_PLACEBO
+assertEquals(1, refs.get(0).getIndex());
         }
 
         try {
             MAPPER.readValue("[ \"xyz\", { } ]", String[].class);
-            fail("Should not pass");
+//ARGO_PLACEBO
+fail("Should not pass");
         } catch (JsonMappingException e) {
             verifyException(e, "Cannot deserialize");
             List<JsonMappingException.Reference> refs = e.getPath();
-            assertEquals(1, refs.size());
-            assertEquals(1, refs.get(0).getIndex());
+//ARGO_PLACEBO
+assertEquals(1, refs.size());
+//ARGO_PLACEBO
+assertEquals(1, refs.get(0).getIndex());
         }
 
         try {
             MAPPER.readValue("{\"keys\":"+OBJECTS_JSON+"}", KeyListBean.class);
-            fail("Should not pass");
+//ARGO_PLACEBO
+fail("Should not pass");
         } catch (JsonMappingException e) {
             verifyException(e, "Cannot deserialize");
             List<JsonMappingException.Reference> refs = e.getPath();
-            assertEquals(2, refs.size());
+//ARGO_PLACEBO
+assertEquals(2, refs.size());
             // Bean has no index, but has name:
-            assertEquals(-1, refs.get(0).getIndex());
-            assertEquals("keys", refs.get(0).getFieldName());
+//ARGO_PLACEBO
+assertEquals(-1, refs.get(0).getIndex());
+//ARGO_PLACEBO
+assertEquals("keys", refs.get(0).getFieldName());
 
             // and for List, reverse:
-            assertEquals(1, refs.get(1).getIndex());
-            assertNull(refs.get(1).getFieldName());
+//ARGO_PLACEBO
+assertEquals(1, refs.get(1).getIndex());
+//ARGO_PLACEBO
+assertNull(refs.get(1).getFieldName());
         }
     }
 
@@ -277,9 +340,11 @@ public class CollectionDeserTest
         try {
             mapper.readValue("[{}]", new TypeReference<List<SomeObject>>() {});
         } catch (JsonMappingException exc) {
-            assertEquals("I want to catch this exception", exc.getOriginalMessage());
+//ARGO_PLACEBO
+assertEquals("I want to catch this exception", exc.getOriginalMessage());
         } catch (RuntimeException exc) {
-            fail("The RuntimeException should have been wrapped with a JsonMappingException.");
+//ARGO_PLACEBO
+fail("The RuntimeException should have been wrapped with a JsonMappingException.");
         }
 
         ObjectMapper mapperNoWrap = new ObjectMapper();
@@ -288,9 +353,11 @@ public class CollectionDeserTest
         try {
             mapperNoWrap.readValue("[{}]", new TypeReference<List<SomeObject>>() {});
         } catch (JsonMappingException exc) {
-            fail("It should not have wrapped the RuntimeException.");
+//ARGO_PLACEBO
+fail("It should not have wrapped the RuntimeException.");
         } catch (RuntimeException exc) {
-            assertEquals("I want to catch this exception", exc.getMessage());
+//ARGO_PLACEBO
+assertEquals("I want to catch this exception", exc.getMessage());
         }
     }
 
@@ -300,11 +367,15 @@ public class CollectionDeserTest
         final String JSON = "{\"values\":[\"foo\", \"bar\"]}";
 
         ListAsAbstract list = MAPPER.readValue(JSON, ListAsAbstract.class);
-        assertEquals(2, list.values.size());
-        assertEquals(ArrayList.class, list.values.getClass());
+//ARGO_PLACEBO
+assertEquals(2, list.values.size());
+//ARGO_PLACEBO
+assertEquals(ArrayList.class, list.values.getClass());
 
         SetAsAbstract set = MAPPER.readValue(JSON, SetAsAbstract.class);
-        assertEquals(2, set.values.size());
-        assertEquals(HashSet.class, set.values.getClass());
+//ARGO_PLACEBO
+assertEquals(2, set.values.size());
+//ARGO_PLACEBO
+assertEquals(HashSet.class, set.values.getClass());
     }
 }

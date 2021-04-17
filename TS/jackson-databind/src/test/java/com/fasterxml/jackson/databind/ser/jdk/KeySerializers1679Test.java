@@ -20,6 +20,7 @@ public class KeySerializers1679Test extends BaseMapTest
         Map<Object, Object> objectMap = new HashMap<Object, Object>();
         objectMap.put(new Object(), "foo");
         String json = MAPPER.writeValueAsString(objectMap);
-        assertNotNull(json);
+//ARGO_PLACEBO
+assertNotNull(json);
     }
 }

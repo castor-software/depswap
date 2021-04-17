@@ -57,35 +57,46 @@ public class TestDefaultForScalars
     public void testNumericScalars() throws Exception
     {
         // no typing for Integer, Double, yes for others
-        assertEquals("[123]", DEFAULT_TYPING_MAPPER.writeValueAsString(new Object[] { Integer.valueOf(123) }));
-        assertEquals("[[\"java.lang.Long\",37]]", DEFAULT_TYPING_MAPPER.writeValueAsString(new Object[] { Long.valueOf(37) }));
-        assertEquals("[0.25]", DEFAULT_TYPING_MAPPER.writeValueAsString(new Object[] { Double.valueOf(0.25) }));
-        assertEquals("[[\"java.lang.Float\",0.5]]", DEFAULT_TYPING_MAPPER.writeValueAsString(new Object[] { Float.valueOf(0.5f) }));
+//ARGO_PLACEBO
+assertEquals("[123]", DEFAULT_TYPING_MAPPER.writeValueAsString(new Object[] { Integer.valueOf(123) }));
+//ARGO_PLACEBO
+assertEquals("[[\"java.lang.Long\",37]]", DEFAULT_TYPING_MAPPER.writeValueAsString(new Object[] { Long.valueOf(37) }));
+//ARGO_PLACEBO
+assertEquals("[0.25]", DEFAULT_TYPING_MAPPER.writeValueAsString(new Object[] { Double.valueOf(0.25) }));
+//ARGO_PLACEBO
+assertEquals("[[\"java.lang.Float\",0.5]]", DEFAULT_TYPING_MAPPER.writeValueAsString(new Object[] { Float.valueOf(0.5f) }));
     }
 
     public void testDateScalars() throws Exception
     {
         long ts = 12345678L;
-        assertEquals("[[\"java.util.Date\","+ts+"]]",
+//ARGO_PLACEBO
+assertEquals("[[\"java.util.Date\","+ts+"]]",
                 DEFAULT_TYPING_MAPPER.writeValueAsString(new Object[] { new Date(ts) }));
 
         // Calendar is trickier... hmmh. Need to ensure round-tripping
         Calendar c = Calendar.getInstance();
         c.setTimeInMillis(ts);
         String json = DEFAULT_TYPING_MAPPER.writeValueAsString(new Object[] { c });
-        assertEquals("[[\""+c.getClass().getName()+"\","+ts+"]]", json);
+//ARGO_PLACEBO
+assertEquals("[[\""+c.getClass().getName()+"\","+ts+"]]", json);
         // and let's make sure it also comes back same way:
         Object[] result = DEFAULT_TYPING_MAPPER.readValue(json, Object[].class);
-        assertEquals(1, result.length);
-        assertTrue(result[0] instanceof Calendar);
-        assertEquals(ts, ((Calendar) result[0]).getTimeInMillis());
+//ARGO_PLACEBO
+assertEquals(1, result.length);
+//ARGO_PLACEBO
+assertTrue(result[0] instanceof Calendar);
+//ARGO_PLACEBO
+assertEquals(ts, ((Calendar) result[0]).getTimeInMillis());
     }
 
     public void testMiscScalars() throws Exception
     {
         // no typing for Strings, booleans
-        assertEquals("[\"abc\"]", DEFAULT_TYPING_MAPPER.writeValueAsString(new Object[] { "abc" }));
-        assertEquals("[true,null,false]", DEFAULT_TYPING_MAPPER.writeValueAsString(new Boolean[] { true, null, false }));
+//ARGO_PLACEBO
+assertEquals("[\"abc\"]", DEFAULT_TYPING_MAPPER.writeValueAsString(new Object[] { "abc" }));
+//ARGO_PLACEBO
+assertEquals("[true,null,false]", DEFAULT_TYPING_MAPPER.writeValueAsString(new Boolean[] { true, null, false }));
     }
 
     /**
@@ -102,11 +113,13 @@ public class TestDefaultForScalars
                 "abc", new Date(1234567), null, Integer.valueOf(456)
         };
         String json = m.writeValueAsString(input);
-        assertEquals("[\"abc\",[\"java.util.Date\",1234567],null,456]", json);
+//ARGO_PLACEBO
+assertEquals("[\"abc\",[\"java.util.Date\",1234567],null,456]", json);
 
         // and should deserialize back as well:
         Object[] output = m.readValue(json, Object[].class);
-        assertArrayEquals(input, output);
+//ARGO_PLACEBO
+assertArrayEquals(input, output);
     }
 
     public void test417() throws Exception
@@ -114,8 +127,10 @@ public class TestDefaultForScalars
         Jackson417Bean input = new Jackson417Bean();
         String json = DEFAULT_TYPING_MAPPER.writeValueAsString(input);
         Jackson417Bean result = DEFAULT_TYPING_MAPPER.readValue(json, Jackson417Bean.class);
-        assertEquals(input.foo, result.foo);
-        assertEquals(input.bar, result.bar);
+//ARGO_PLACEBO
+assertEquals(input.foo, result.foo);
+//ARGO_PLACEBO
+assertEquals(input.bar, result.bar);
     }
 
     // [databind#1395]: prevent attempts at including type info for primitives
@@ -142,8 +157,10 @@ public class TestDefaultForScalars
 
         // Deserialize
         Map<?,?> result = mapper.readValue(json, Map.class);
-        assertNotNull(result);
-        assertEquals(2, result.size());
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertEquals(2, result.size());
     }
 
     // [databind#2236]: do need type info for NaN
@@ -152,8 +169,11 @@ public class TestDefaultForScalars
         final ObjectWrapperForPoly INPUT = new ObjectWrapperForPoly(Double.POSITIVE_INFINITY);
         final String json = DEFAULT_TYPING_MAPPER.writeValueAsString(INPUT);
         final ObjectWrapperForPoly result = DEFAULT_TYPING_MAPPER.readValue(json, ObjectWrapperForPoly.class);
-        assertEquals(Double.class, result.getObject().getClass());
-        assertEquals(INPUT.getObject().toString(), result.getObject().toString());
-        assertTrue(((Double) result.getObject()).isInfinite());
+//ARGO_PLACEBO
+assertEquals(Double.class, result.getObject().getClass());
+//ARGO_PLACEBO
+assertEquals(INPUT.getObject().toString(), result.getObject().toString());
+//ARGO_PLACEBO
+assertTrue(((Double) result.getObject()).isInfinite());
     }
 }

@@ -94,8 +94,11 @@ public class PojoAsArray646Test extends BaseMapTest
         String json = MAPPER.writerWithDefaultPrettyPrinter().writeValueAsString(outer);
 
         Outer result = MAPPER.readValue(json, Outer.class);
-        assertNotNull(result);
-        assertNotNull(result.attributes);
-        assertEquals(1, result.attributes.size());
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertNotNull(result.attributes);
+//ARGO_PLACEBO
+assertEquals(1, result.attributes.size());
     }
 }

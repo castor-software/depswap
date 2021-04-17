@@ -74,11 +74,13 @@ public class IsGetterRenaming2527Test extends BaseMapTest
         final String json = MAPPER.writeValueAsString(input);
 
         Map<?, ?> props = MAPPER.readValue(json, Map.class);
-        assertEquals(Collections.singletonMap("isEnabled", Boolean.TRUE),
+//ARGO_PLACEBO
+assertEquals(Collections.singletonMap("isEnabled", Boolean.TRUE),
                 props);
         
         POJO2527 output = MAPPER.readValue(json, POJO2527.class);
-        assertEquals(input.isEnabled, output.isEnabled);
+//ARGO_PLACEBO
+assertEquals(input.isEnabled, output.isEnabled);
     }
 
     public void testIsPropertiesWithPublicField() throws Exception
@@ -87,11 +89,13 @@ public class IsGetterRenaming2527Test extends BaseMapTest
         final String json = MAPPER.writeValueAsString(input);
 
         Map<?, ?> props = MAPPER.readValue(json, Map.class);
-        assertEquals(Collections.singletonMap("isEnabled", Boolean.TRUE),
+//ARGO_PLACEBO
+assertEquals(Collections.singletonMap("isEnabled", Boolean.TRUE),
                 props);
         
         POJO2527PublicField output = MAPPER.readValue(json, POJO2527PublicField.class);
-        assertEquals(input.isEnabled, output.isEnabled);
+//ARGO_PLACEBO
+assertEquals(input.isEnabled, output.isEnabled);
     }
 
     public void testIsPropertiesViaCreator() throws Exception
@@ -100,10 +104,12 @@ public class IsGetterRenaming2527Test extends BaseMapTest
         final String json = MAPPER.writeValueAsString(input);
 
         Map<?, ?> props = MAPPER.readValue(json, Map.class);
-        assertEquals(Collections.singletonMap("isEnabled", Boolean.TRUE),
+//ARGO_PLACEBO
+assertEquals(Collections.singletonMap("isEnabled", Boolean.TRUE),
                 props);
         
         POJO2527Creator output = MAPPER.readValue(json, POJO2527Creator.class);
-        assertEquals(input.isEnabled, output.isEnabled);
+//ARGO_PLACEBO
+assertEquals(input.isEnabled, output.isEnabled);
     }
 }

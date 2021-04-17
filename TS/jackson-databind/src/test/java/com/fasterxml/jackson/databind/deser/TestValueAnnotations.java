@@ -249,9 +249,12 @@ public class TestValueAnnotations
             ("{ \"strings\" : [ \"test\" ] }", CollectionHolder.class);
 
         Collection<String> strs = result._strings;
-        assertEquals(1, strs.size());
-        assertEquals(TreeSet.class, strs.getClass());
-        assertEquals("test", strs.iterator().next());
+//ARGO_PLACEBO
+assertEquals(1, strs.size());
+//ARGO_PLACEBO
+assertEquals(TreeSet.class, strs.getClass());
+//ARGO_PLACEBO
+assertEquals("test", strs.iterator().next());
     }
 
     public void testOverrideMapValid() throws Exception
@@ -261,10 +264,13 @@ public class TestValueAnnotations
             ("{ \"strings\" :  { \"a\" : 3 } }", MapHolder.class);
 
         Map<String,String> strs = result._data;
-        assertEquals(1, strs.size());
-        assertEquals(TreeMap.class, strs.getClass());
+//ARGO_PLACEBO
+assertEquals(1, strs.size());
+//ARGO_PLACEBO
+assertEquals(TreeMap.class, strs.getClass());
         String value = strs.get("a");
-        assertEquals("3", value);
+//ARGO_PLACEBO
+assertEquals("3", value);
     }
 
     public void testOverrideArrayClass() throws Exception
@@ -273,9 +279,12 @@ public class TestValueAnnotations
             ("{ \"strings\" : [ \"test\" ] }", ArrayHolder.class);
 
         String[] strs = result._strings;
-        assertEquals(1, strs.length);
-        assertEquals(String[].class, strs.getClass());
-        assertEquals("test", strs[0]);
+//ARGO_PLACEBO
+assertEquals(1, strs.length);
+//ARGO_PLACEBO
+assertEquals(String[].class, strs.getClass());
+//ARGO_PLACEBO
+assertEquals("test", strs[0]);
     }
 
     public void testOverrideClassInvalid() throws Exception
@@ -284,7 +293,8 @@ public class TestValueAnnotations
         try {
             BrokenCollectionHolder result = MAPPER.readValue
                 ("{ \"strings\" : [ ] }", BrokenCollectionHolder.class);
-            fail("Expected a failure, but got results: "+result);
+//ARGO_PLACEBO
+fail("Expected a failure, but got results: "+result);
         } catch (JsonMappingException jme) {
             verifyException(jme, "not subtype of");
         }
@@ -299,33 +309,43 @@ public class TestValueAnnotations
     public void testRootInterfaceAs() throws Exception
     {
         RootInterface value = MAPPER.readValue("{\"a\":\"abc\" }", RootInterface.class);
-        assertTrue(value instanceof RootInterfaceImpl);
-        assertEquals("abc", value.getA());
+//ARGO_PLACEBO
+assertTrue(value instanceof RootInterfaceImpl);
+//ARGO_PLACEBO
+assertEquals("abc", value.getA());
     }
 
     public void testRootInterfaceUsing() throws Exception
     {
         RootString value = MAPPER.readValue("\"xxx\"", RootString.class);
-        assertTrue(value instanceof RootString);
-        assertEquals("xxx", value.contents());
+//ARGO_PLACEBO
+assertTrue(value instanceof RootString);
+//ARGO_PLACEBO
+assertEquals("xxx", value.contents());
     }
 
     public void testRootListAs() throws Exception
     {
         RootMap value = MAPPER.readValue("{\"a\":\"b\"}", RootMap.class);
-        assertEquals(1, value.size());
+//ARGO_PLACEBO
+assertEquals(1, value.size());
         Object v2 = value.get("a");
-        assertEquals(RootStringImpl.class, v2.getClass());
-        assertEquals("b", ((RootString) v2).contents());
+//ARGO_PLACEBO
+assertEquals(RootStringImpl.class, v2.getClass());
+//ARGO_PLACEBO
+assertEquals("b", ((RootString) v2).contents());
     }
 
     public void testRootMapAs() throws Exception
     {
         RootList value = MAPPER.readValue("[ \"c\" ]", RootList.class);
-        assertEquals(1, value.size());
+//ARGO_PLACEBO
+assertEquals(1, value.size());
         Object v2 = value.get(0);
-        assertEquals(RootStringImpl.class, v2.getClass());
-        assertEquals("c", ((RootString) v2).contents());
+//ARGO_PLACEBO
+assertEquals(RootStringImpl.class, v2.getClass());
+//ARGO_PLACEBO
+assertEquals("c", ((RootString) v2).contents());
     }
 
     /*
@@ -339,13 +359,17 @@ public class TestValueAnnotations
     {
         MapKeyHolder result = MAPPER.readValue("{ \"map\" : { \"xxx\" : \"yyy\" } }", MapKeyHolder.class);
         Map<StringWrapper, String> map = (Map<StringWrapper,String>)(Map<?,?>)result._map;
-        assertEquals(1, map.size());
+//ARGO_PLACEBO
+assertEquals(1, map.size());
         Map.Entry<StringWrapper, String> en = map.entrySet().iterator().next();
 
         StringWrapper key = en.getKey();
-        assertEquals(StringWrapper.class, key.getClass());
-        assertEquals("xxx", key._string);
-        assertEquals("yyy", en.getValue());
+//ARGO_PLACEBO
+assertEquals(StringWrapper.class, key.getClass());
+//ARGO_PLACEBO
+assertEquals("xxx", key._string);
+//ARGO_PLACEBO
+assertEquals("yyy", en.getValue());
     }
 
     public void testOverrideKeyClassInvalid() throws Exception
@@ -354,7 +378,8 @@ public class TestValueAnnotations
         try {
             BrokenMapKeyHolder result = MAPPER.readValue
                 ("{ \"123\" : \"xxx\" }", BrokenMapKeyHolder.class);
-            fail("Expected a failure, but got results: "+result);
+//ARGO_PLACEBO
+fail("Expected a failure, but got results: "+result);
         } catch (JsonMappingException jme) {
             verifyException(jme, "not subtype of");
         }
@@ -371,10 +396,13 @@ public class TestValueAnnotations
     {
         ListContentHolder result = MAPPER.readValue("{ \"list\" : [ \"abc\" ] }", ListContentHolder.class);
         List<StringWrapper> list = (List<StringWrapper>)result._list;
-        assertEquals(1, list.size());
+//ARGO_PLACEBO
+assertEquals(1, list.size());
         Object value = list.get(0);
-        assertEquals(StringWrapper.class, value.getClass());
-        assertEquals("abc", ((StringWrapper) value)._string);
+//ARGO_PLACEBO
+assertEquals(StringWrapper.class, value.getClass());
+//ARGO_PLACEBO
+assertEquals("abc", ((StringWrapper) value)._string);
     }
 
     public void testOverrideArrayContents() throws Exception
@@ -382,11 +410,16 @@ public class TestValueAnnotations
         ArrayContentHolder result = MAPPER.readValue("{ \"data\" : [ 1, 2, 3 ] }",
                                                 ArrayContentHolder.class);
         Object[] data = result._data;
-        assertEquals(3, data.length);
-        assertEquals(Long[].class, data.getClass());
-        assertEquals(1L, data[0]);
-        assertEquals(2L, data[1]);
-        assertEquals(3L, data[2]);
+//ARGO_PLACEBO
+assertEquals(3, data.length);
+//ARGO_PLACEBO
+assertEquals(Long[].class, data.getClass());
+//ARGO_PLACEBO
+assertEquals(1L, data[0]);
+//ARGO_PLACEBO
+assertEquals(2L, data[1]);
+//ARGO_PLACEBO
+assertEquals(3L, data[2]);
     }
 
     public void testOverrideMapContents() throws Exception
@@ -394,19 +427,25 @@ public class TestValueAnnotations
         MapContentHolder result = MAPPER.readValue("{ \"map\" : { \"a\" : 9 } }",
                                                 MapContentHolder.class);
         Map<Object,Object> map = result._map;
-        assertEquals(1, map.size());
+//ARGO_PLACEBO
+assertEquals(1, map.size());
         Object ob = map.values().iterator().next();
-        assertEquals(Integer.class, ob.getClass());
-        assertEquals(Integer.valueOf(9), ob);
+//ARGO_PLACEBO
+assertEquals(Integer.class, ob.getClass());
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(9), ob);
     }
 
     // [databind#2553]
     public void testRawListTypeContentAs() throws Exception
     {
         List2553 list =  MAPPER.readValue("{\"items\": [{\"name\":\"item1\"}]}", List2553.class);
-        assertEquals(1, list.items.size());
+//ARGO_PLACEBO
+assertEquals(1, list.items.size());
         Object value = list.items.get(0);
-        assertEquals(Item2553.class, value.getClass());
-        assertEquals("item1", ((Item2553) value).name);
+//ARGO_PLACEBO
+assertEquals(Item2553.class, value.getClass());
+//ARGO_PLACEBO
+assertEquals("item1", ((Item2553) value).name);
     }
 }

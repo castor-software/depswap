@@ -90,23 +90,32 @@ public class PropertyAliasTest extends BaseMapTest
         // first, one indicated by field annotation, set via field
         bean = MAPPER.readValue(aposToQuotes("{'Name':'Foobar','a':3,'xyz':37}"),
                 AliasBean.class);
-        assertEquals("Foobar", bean.name);
-        assertEquals(3, bean._a);
-        assertEquals(37, bean._xyz);
+//ARGO_PLACEBO
+assertEquals("Foobar", bean.name);
+//ARGO_PLACEBO
+assertEquals(3, bean._a);
+//ARGO_PLACEBO
+assertEquals(37, bean._xyz);
 
         // then method-bound one
         bean = MAPPER.readValue(aposToQuotes("{'name':'Foobar','a':3,'Xyz':37}"),
                 AliasBean.class);
-        assertEquals("Foobar", bean.name);
-        assertEquals(3, bean._a);
-        assertEquals(37, bean._xyz);
+//ARGO_PLACEBO
+assertEquals("Foobar", bean.name);
+//ARGO_PLACEBO
+assertEquals(3, bean._a);
+//ARGO_PLACEBO
+assertEquals(37, bean._xyz);
         
         // and finally, constructor-backed one
         bean = MAPPER.readValue(aposToQuotes("{'name':'Foobar','A':3,'xyz':37}"),
                 AliasBean.class);
-        assertEquals("Foobar", bean.name);
-        assertEquals(3, bean._a);
-        assertEquals(37, bean._xyz);
+//ARGO_PLACEBO
+assertEquals("Foobar", bean.name);
+//ARGO_PLACEBO
+assertEquals(3, bean._a);
+//ARGO_PLACEBO
+assertEquals(37, bean._xyz);
     }
 
     public void testAliasWithPolymorphic() throws Exception
@@ -114,10 +123,13 @@ public class PropertyAliasTest extends BaseMapTest
         PolyWrapperForAlias value = MAPPER.readValue(aposToQuotes(
                 "{'value': ['ab', {'nm' : 'Bob', 'A' : 17} ] }"
                 ), PolyWrapperForAlias.class);
-        assertNotNull(value.value);
+//ARGO_PLACEBO
+assertNotNull(value.value);
         AliasBean bean = (AliasBean) value.value;
-        assertEquals("Bob", bean.name);
-        assertEquals(17, bean._a);
+//ARGO_PLACEBO
+assertEquals("Bob", bean.name);
+//ARGO_PLACEBO
+assertEquals(17, bean._a);
     }
 
     // [databind#2378]
@@ -126,8 +138,10 @@ public class PropertyAliasTest extends BaseMapTest
         AliasBean2378 bean = MAPPER.readValue(aposToQuotes(
                 "{'partitionId' : 'a', 'userId' : '123'}"
                 ), AliasBean2378.class);
-        assertEquals("a", bean.partitionId);
-        assertEquals("123", bean._id);
+//ARGO_PLACEBO
+assertEquals("a", bean.partitionId);
+//ARGO_PLACEBO
+assertEquals("123", bean._id);
     }
 
     // [databind#2669]
@@ -139,7 +153,9 @@ public class PropertyAliasTest extends BaseMapTest
 
         String text = "{\"name\":\"test\"}";
         Pojo2669 pojo = mapper.readValue(text, Pojo2669.class);
-        assertNotNull(pojo);
-        assertEquals("test", pojo.getName());
+//ARGO_PLACEBO
+assertNotNull(pojo);
+//ARGO_PLACEBO
+assertEquals("test", pojo.getName());
     }
 }

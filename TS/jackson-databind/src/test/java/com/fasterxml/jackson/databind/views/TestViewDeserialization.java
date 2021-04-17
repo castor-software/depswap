@@ -66,33 +66,45 @@ public class TestViewDeserialization extends BaseMapTest
         // by default, should have it all...
         Bean bean = mapper
                 .readValue("{\"a\":3, \"aa\":\"foo\", \"b\": 9 }", Bean.class);
-        assertEquals(3, bean.a);
-        assertEquals("foo", bean.aa);
-        assertEquals(9, bean.b);
+//ARGO_PLACEBO
+assertEquals(3, bean.a);
+//ARGO_PLACEBO
+assertEquals("foo", bean.aa);
+//ARGO_PLACEBO
+assertEquals(9, bean.b);
         
         // but with different views, different contents
         bean = mapper.readerWithView(ViewAA.class)
                 .forType(Bean.class)
                 .readValue("{\"a\":3, \"aa\":\"foo\", \"b\": 9 }");
         // should include 'a' and 'aa' (as per view)
-        assertEquals(3, bean.a);
-        assertEquals("foo", bean.aa);
+//ARGO_PLACEBO
+assertEquals(3, bean.a);
+//ARGO_PLACEBO
+assertEquals("foo", bean.aa);
         // but not 'b'
-        assertEquals(0, bean.b);
+//ARGO_PLACEBO
+assertEquals(0, bean.b);
 
         bean = mapper.readerWithView(ViewA.class)
                 .forType(Bean.class)
                 .readValue("{\"a\":1, \"aa\":\"x\", \"b\": 3 }");
-        assertEquals(1, bean.a);
-        assertNull(bean.aa);
-        assertEquals(0, bean.b);
+//ARGO_PLACEBO
+assertEquals(1, bean.a);
+//ARGO_PLACEBO
+assertNull(bean.aa);
+//ARGO_PLACEBO
+assertEquals(0, bean.b);
         
         bean = mapper.readerFor(Bean.class)
                 .withView(ViewB.class)
                 .readValue("{\"a\":-3, \"aa\":\"y\", \"b\": 2 }");
-        assertEquals(0, bean.a);
-        assertEquals("y", bean.aa);
-        assertEquals(2, bean.b);
+//ARGO_PLACEBO
+assertEquals(0, bean.a);
+//ARGO_PLACEBO
+assertEquals("y", bean.aa);
+//ARGO_PLACEBO
+assertEquals(2, bean.b);
     }
 
     public void testWithoutDefaultInclusion() throws Exception
@@ -100,8 +112,10 @@ public class TestViewDeserialization extends BaseMapTest
         // without active view, all included still:
         DefaultsBean bean = mapper
                 .readValue("{\"a\":3, \"b\": 9 }", DefaultsBean.class);
-        assertEquals(3, bean.a);
-        assertEquals(9, bean.b);
+//ARGO_PLACEBO
+assertEquals(3, bean.a);
+//ARGO_PLACEBO
+assertEquals(9, bean.b);
 
         ObjectMapper myMapper = jsonMapperBuilder()
                 .disable(MapperFeature.DEFAULT_VIEW_INCLUSION)
@@ -112,8 +126,10 @@ public class TestViewDeserialization extends BaseMapTest
                 .forType(DefaultsBean.class)
                 .readValue("{\"a\":1, \"b\": 2 }");
         // 'a' not there any more
-        assertEquals(0, bean.a);
-        assertEquals(2, bean.b);
+//ARGO_PLACEBO
+assertEquals(0, bean.a);
+//ARGO_PLACEBO
+assertEquals(2, bean.b);
     }
 
     public void testWithCreatorAndViews() throws Exception
@@ -123,20 +139,26 @@ public class TestViewDeserialization extends BaseMapTest
         result = mapper.readerFor(ViewsAndCreatorBean.class)
                 .withView(ViewA.class)
                 .readValue(aposToQuotes("{'a':1,'b':2}"));
-        assertEquals(1, result.a);
-        assertEquals(0, result.b);
+//ARGO_PLACEBO
+assertEquals(1, result.a);
+//ARGO_PLACEBO
+assertEquals(0, result.b);
 
         result = mapper.readerFor(ViewsAndCreatorBean.class)
                 .withView(ViewB.class)
                 .readValue(aposToQuotes("{'a':1,'b':2}"));
-        assertEquals(0, result.a);
-        assertEquals(2, result.b);
+//ARGO_PLACEBO
+assertEquals(0, result.a);
+//ARGO_PLACEBO
+assertEquals(2, result.b);
 
         // and actually... fine to skip incompatible stuff too
         result = mapper.readerFor(ViewsAndCreatorBean.class)
                 .withView(ViewB.class)
                 .readValue(aposToQuotes("{'a':[ 1, 23, { } ],'b':2}"));
-        assertEquals(0, result.a);
-        assertEquals(2, result.b);
+//ARGO_PLACEBO
+assertEquals(0, result.a);
+//ARGO_PLACEBO
+assertEquals(2, result.b);
     }
 }

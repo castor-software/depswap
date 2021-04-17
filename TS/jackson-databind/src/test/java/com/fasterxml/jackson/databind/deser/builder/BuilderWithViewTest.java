@@ -86,14 +86,18 @@ public class BuilderWithViewTest extends BaseMapTest
         ValueClassXY resultX = MAPPER.readerFor(ValueClassXY.class)
                 .withView(ViewX.class)
                 .readValue(json);
-        assertEquals(6, resultX._x);
-        assertEquals(1, resultX._y);
+//ARGO_PLACEBO
+assertEquals(6, resultX._x);
+//ARGO_PLACEBO
+assertEquals(1, resultX._y);
 
         ValueClassXY resultY = MAPPER.readerFor(ValueClassXY.class)
                 .withView(ViewY.class)
                 .readValue(json);
-        assertEquals(1, resultY._x);
-        assertEquals(11, resultY._y);
+//ARGO_PLACEBO
+assertEquals(1, resultY._x);
+//ARGO_PLACEBO
+assertEquals(11, resultY._y);
     }
 
     public void testCreatorViews() throws Exception
@@ -102,13 +106,17 @@ public class BuilderWithViewTest extends BaseMapTest
         CreatorValueXY resultX = MAPPER.readerFor(CreatorValueXY.class)
                 .withView(ViewX.class)
                 .readValue(json);
-        assertEquals(5, resultX._x);
-        assertEquals(0, resultX._y);
+//ARGO_PLACEBO
+assertEquals(5, resultX._x);
+//ARGO_PLACEBO
+assertEquals(0, resultX._y);
 
         CreatorValueXY resultY = MAPPER.readerFor(CreatorValueXY.class)
                 .withView(ViewY.class)
                 .readValue(json);
-        assertEquals(0, resultY._x);
-        assertEquals(10, resultY._y);
+//ARGO_PLACEBO
+assertEquals(0, resultY._x);
+//ARGO_PLACEBO
+assertEquals(10, resultY._y);
     }
 }

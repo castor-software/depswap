@@ -17,14 +17,18 @@ public class TestSimpleTypes
     
     public void testBoolean() throws Exception
     {
-        assertEquals("true", serializeAsString(MAPPER, Boolean.TRUE));
-        assertEquals("false", serializeAsString(MAPPER, Boolean.FALSE));
+//ARGO_PLACEBO
+assertEquals("true", serializeAsString(MAPPER, Boolean.TRUE));
+//ARGO_PLACEBO
+assertEquals("false", serializeAsString(MAPPER, Boolean.FALSE));
     }
 
     public void testBooleanArray() throws Exception
     {
-        assertEquals("[true,false]", serializeAsString(MAPPER, new boolean[] { true, false} ));
-        assertEquals("[true,false]", serializeAsString(MAPPER, new Boolean[] { Boolean.TRUE, Boolean.FALSE} ));
+//ARGO_PLACEBO
+assertEquals("[true,false]", serializeAsString(MAPPER, new boolean[] { true, false} ));
+//ARGO_PLACEBO
+assertEquals("[true,false]", serializeAsString(MAPPER, new Boolean[] { Boolean.TRUE, Boolean.FALSE} ));
     }
 
     public void testByteArray() throws Exception
@@ -37,8 +41,10 @@ public class TestSimpleTypes
         // For this we need to deserialize, to get base64 codec
         String str1 = serializeAsString(MAPPER, data);
         String str2 = serializeAsString(MAPPER, data2);
-        assertArrayEquals(data, MAPPER.readValue(str1, byte[].class));
-        assertArrayEquals(data2, MAPPER.readValue(str2, Byte[].class));
+//ARGO_PLACEBO
+assertArrayEquals(data, MAPPER.readValue(str1, byte[].class));
+//ARGO_PLACEBO
+assertArrayEquals(data2, MAPPER.readValue(str2, Byte[].class));
     }
 
     // as per [Issue#42], allow Base64 variant use as well
@@ -47,30 +53,39 @@ public class TestSimpleTypes
         final byte[] INPUT = "abcdefghijklmnopqrstuvwxyz1234567890abcdefghijklmnopqrstuvwxyz1234567890X".getBytes("UTF-8");
         
         // default encoding is "MIME, no linefeeds", so:
-        assertEquals(quote("YWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXoxMjM0NTY3ODkwYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXoxMjM0NTY3ODkwWA=="), MAPPER.writeValueAsString(INPUT));
-        assertEquals(quote("YWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXoxMjM0NTY3ODkwYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXoxMjM0NTY3ODkwWA=="),
+//ARGO_PLACEBO
+assertEquals(quote("YWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXoxMjM0NTY3ODkwYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXoxMjM0NTY3ODkwWA=="), MAPPER.writeValueAsString(INPUT));
+//ARGO_PLACEBO
+assertEquals(quote("YWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXoxMjM0NTY3ODkwYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXoxMjM0NTY3ODkwWA=="),
                 MAPPER.writer(Base64Variants.MIME_NO_LINEFEEDS).writeValueAsString(INPUT));
 
         // but others should be slightly different
-        assertEquals(quote("YWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXoxMjM0NTY3ODkwYWJjZGVmZ2hpamtsbW5vcHFyc3R1\\ndnd4eXoxMjM0NTY3ODkwWA=="),
+//ARGO_PLACEBO
+assertEquals(quote("YWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXoxMjM0NTY3ODkwYWJjZGVmZ2hpamtsbW5vcHFyc3R1\\ndnd4eXoxMjM0NTY3ODkwWA=="),
                 MAPPER.writer(Base64Variants.MIME).writeValueAsString(INPUT));
-        assertEquals(quote("YWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXoxMjM0NTY3ODkwYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXoxMjM0NTY3ODkwWA"), // no padding or LF
+//ARGO_PLACEBO
+assertEquals(quote("YWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXoxMjM0NTY3ODkwYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXoxMjM0NTY3ODkwWA"), // no padding or LF
                 MAPPER.writer(Base64Variants.MODIFIED_FOR_URL).writeValueAsString(INPUT));
         // PEM mandates 64 char lines:
-        assertEquals(quote("YWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXoxMjM0NTY3ODkwYWJjZGVmZ2hpamts\\nbW5vcHFyc3R1dnd4eXoxMjM0NTY3ODkwWA=="),
+//ARGO_PLACEBO
+assertEquals(quote("YWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXoxMjM0NTY3ODkwYWJjZGVmZ2hpamts\\nbW5vcHFyc3R1dnd4eXoxMjM0NTY3ODkwWA=="),
                 MAPPER.writer(Base64Variants.PEM).writeValueAsString(INPUT));
     }
     
     public void testShortArray() throws Exception
     {
-        assertEquals("[0,1]", serializeAsString(MAPPER, new short[] { 0, 1 }));
-        assertEquals("[2,3]", serializeAsString(MAPPER, new Short[] { 2, 3 }));
+//ARGO_PLACEBO
+assertEquals("[0,1]", serializeAsString(MAPPER, new short[] { 0, 1 }));
+//ARGO_PLACEBO
+assertEquals("[2,3]", serializeAsString(MAPPER, new Short[] { 2, 3 }));
     }
 
     public void testIntArray() throws Exception
     {
-        assertEquals("[0,-3]", serializeAsString(MAPPER, new int[] { 0, -3 }));
-        assertEquals("[13,9]", serializeAsString(MAPPER, new Integer[] { 13, 9 }));
+//ARGO_PLACEBO
+assertEquals("[0,-3]", serializeAsString(MAPPER, new int[] { 0, -3 }));
+//ARGO_PLACEBO
+assertEquals("[13,9]", serializeAsString(MAPPER, new Integer[] { 13, 9 }));
     }
 
     /* Note: dealing with floating-point values is tricky; not sure if
@@ -89,13 +104,15 @@ public class TestSimpleTypes
            if (Float.isNaN(f) || Float.isInfinite(f)) {
                expected = "\""+expected+"\"";
        	   }
-           assertEquals(expected,serializeAsString(MAPPER, Float.valueOf(f)));
+//ARGO_PLACEBO
+assertEquals(expected,serializeAsString(MAPPER, Float.valueOf(f)));
         }
     }
 
     public void testClass() throws Exception
     {
         String result = MAPPER.writeValueAsString(java.util.List.class);
-        assertEquals("\"java.util.List\"", result);
+//ARGO_PLACEBO
+assertEquals("\"java.util.List\"", result);
     }
 }

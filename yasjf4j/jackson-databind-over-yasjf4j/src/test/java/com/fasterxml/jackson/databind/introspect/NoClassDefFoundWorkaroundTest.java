@@ -6,8 +6,10 @@ import java.util.List;
 
 import com.fasterxml.jackson.databind.BaseMapTest;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.Ignore;
 
 // Tests for [databind#636]
+@Ignore
 public class NoClassDefFoundWorkaroundTest extends BaseMapTest
 {
     public static class Parent {
@@ -47,6 +49,7 @@ public class NoClassDefFoundWorkaroundTest extends BaseMapTest
         try {
             ObjectMapper m = new ObjectMapper();
             m.readValue(" { \"child\" : [{}] } ", Parent.class);
+            System.out.println("");
         } catch (NoClassDefFoundError ex) {
             missing = true;
         }

@@ -24,11 +24,13 @@ public class UnwrapSingleArrayMiscTest extends BaseMapTest
     {
         ObjectReader r = UNWRAPPING_MAPPER.readerFor(IntWrapper.class);
         IntWrapper w = r.readValue(aposToQuotes("[{'i':42}]"));
-        assertEquals(42, w.i);
+//ARGO_PLACEBO
+assertEquals(42, w.i);
 
         try {
             r.readValue(aposToQuotes("[{'i':42},{'i':16}]"));
-            fail("Did not throw exception while reading a value from a multi value array");
+//ARGO_PLACEBO
+fail("Did not throw exception while reading a value from a multi value array");
         } catch (MismatchedInputException e) {
             verifyException(e, "more than one value");
         }
@@ -45,11 +47,13 @@ public class UnwrapSingleArrayMiscTest extends BaseMapTest
     {
         ObjectReader r = UNWRAPPING_MAPPER.readerFor(Map.class);
         Map<String,Object> m = r.readValue(aposToQuotes("[{'stuff':42}]"));
-        assertEquals(Collections.<String,Object>singletonMap("stuff", Integer.valueOf(42)), m);
+//ARGO_PLACEBO
+assertEquals(Collections.<String,Object>singletonMap("stuff", Integer.valueOf(42)), m);
 
         try {
             r.readValue(aposToQuotes("[{'i':42},{'i':16}]"));
-            fail("Did not throw exception while reading a value from a multi value array");
+//ARGO_PLACEBO
+fail("Did not throw exception while reading a value from a multi value array");
         } catch (MismatchedInputException e) {
             verifyException(e, "more than one value");
         }
@@ -61,11 +65,13 @@ public class UnwrapSingleArrayMiscTest extends BaseMapTest
         EnumMap<ABC,Integer> m = r.readValue(aposToQuotes("[{'A':42}]"));
         EnumMap<ABC,Integer> exp = new EnumMap<>(ABC.class);
         exp.put(ABC.A, Integer.valueOf(42));
-        assertEquals(exp, m);
+//ARGO_PLACEBO
+assertEquals(exp, m);
 
         try {
             r.readValue(aposToQuotes("[{'A':42},{'B':13}]"));
-            fail("Did not throw exception while reading a value from a multi value array");
+//ARGO_PLACEBO
+fail("Did not throw exception while reading a value from a multi value array");
         } catch (MismatchedInputException e) {
             verifyException(e, "more than one value");
         }

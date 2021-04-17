@@ -5,6 +5,8 @@ import java.util.*;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
 import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.fasterxml.jackson.databind.util.LRUMap;
 
@@ -16,6 +18,7 @@ import com.fasterxml.jackson.databind.util.LRUMap;
  */
 public class TestJDKSerialization extends BaseMapTest
 {
+    @JsonPropertyOrder({ "x", "y" })
     static class MyPojo {
         public int x;
         protected int y;
@@ -31,6 +34,7 @@ public class TestJDKSerialization extends BaseMapTest
     }
 
     // for [databind#899]
+    @JsonPropertyOrder({ "abc", "stuff" })
     static class EnumPOJO {
         public ABC abc = ABC.B;
 
@@ -71,7 +75,8 @@ public class TestJDKSerialization extends BaseMapTest
     public void testConfigs() throws IOException
     {
         byte[] base = jdkSerialize(MAPPER.getDeserializationConfig().getBaseSettings());
-        assertNotNull(jdkDeserialize(base));
+//ARGO_PLACEBO
+assertNotNull(jdkDeserialize(base));
 
         // first things first: underlying BaseSettings
         
@@ -81,11 +86,15 @@ public class TestJDKSerialization extends BaseMapTest
         byte[] scBytes = jdkSerialize(origSC);
 
         DeserializationConfig dc = jdkDeserialize(dcBytes);
-        assertNotNull(dc);
-        assertEquals(dc._deserFeatures, origDC._deserFeatures);
+//ARGO_PLACEBO
+assertNotNull(dc);
+//ARGO_PLACEBO
+assertEquals(dc._deserFeatures, origDC._deserFeatures);
         SerializationConfig sc = jdkDeserialize(scBytes);
-        assertNotNull(sc);
-        assertEquals(sc._serFeatures, origSC._serFeatures);
+//ARGO_PLACEBO
+assertNotNull(sc);
+//ARGO_PLACEBO
+assertEquals(sc._serFeatures, origSC._serFeatures);
     }
 
     // for [databind#899]
@@ -97,29 +106,35 @@ public class TestJDKSerialization extends BaseMapTest
                 .writeValueAsString(new EnumPOJO());
         EnumPOJO result = mapper.readerFor(EnumPOJO.class)
                 .readValue(json);
-        assertNotNull(result);
+//ARGO_PLACEBO
+assertNotNull(result);
 
         // and then use JDK serialization to freeze/thaw objects
         byte[] bytes = jdkSerialize(mapper);
         ObjectMapper mapper2 = jdkDeserialize(bytes);
-        assertNotNull(mapper2);
+//ARGO_PLACEBO
+assertNotNull(mapper2);
 
         bytes = jdkSerialize(mapper.readerFor(EnumPOJO.class));
         ObjectReader r = jdkDeserialize(bytes);
-        assertNotNull(r);
+//ARGO_PLACEBO
+assertNotNull(r);
 
         /* 14-Aug-2015, tatu: Looks like pre-loading JsonSerializer is problematic
          *    at this point; comment out for now. Try to fix later on.
          */
         bytes = jdkSerialize(mapper.writerFor(EnumPOJO.class));
         ObjectWriter w = jdkDeserialize(bytes);
-        assertNotNull(w);
+//ARGO_PLACEBO
+assertNotNull(w);
 
         // plus, ensure objects are usable:
         String json2 = w.writeValueAsString(new EnumPOJO());
-        assertEquals(json, json2);
+//ARGO_PLACEBO
+assertEquals(json, json2);
         EnumPOJO result2 = r.readValue(json2);
-        assertNotNull(result2);
+//ARGO_PLACEBO
+assertNotNull(result2);
     }
 
     public void testObjectWriter() throws IOException
@@ -127,13 +142,16 @@ public class TestJDKSerialization extends BaseMapTest
         ObjectWriter origWriter = MAPPER.writer();
         final String EXP_JSON = "{\"x\":2,\"y\":3}";
         final MyPojo p = new MyPojo(2, 3);
-        assertEquals(EXP_JSON, origWriter.writeValueAsString(p));
+//ARGO_PLACEBO
+assertEquals(EXP_JSON, origWriter.writeValueAsString(p));
         String json = origWriter.writeValueAsString(new AnyBean()
                 .addEntry("a", "b"));
-        assertNotNull(json);
+//ARGO_PLACEBO
+assertNotNull(json);
         byte[] bytes = jdkSerialize(origWriter);
         ObjectWriter writer2 = jdkDeserialize(bytes);
-        assertEquals(EXP_JSON, writer2.writeValueAsString(p));
+//ARGO_PLACEBO
+assertEquals(EXP_JSON, writer2.writeValueAsString(p));
     }
     
     public void testObjectReader() throws IOException
@@ -141,52 +159,67 @@ public class TestJDKSerialization extends BaseMapTest
         ObjectReader origReader = MAPPER.readerFor(MyPojo.class);
         String JSON = "{\"x\":1,\"y\":2}";
         MyPojo p1 = origReader.readValue(JSON);
-        assertEquals(2, p1.y);
+//ARGO_PLACEBO
+assertEquals(2, p1.y);
         ObjectReader anyReader = MAPPER.readerFor(AnyBean.class);
         AnyBean any = anyReader.readValue(JSON);
-        assertEquals(Integer.valueOf(2), any.properties().get("y"));
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(2), any.properties().get("y"));
         
         byte[] readerBytes = jdkSerialize(origReader);
         ObjectReader reader2 = jdkDeserialize(readerBytes);
         MyPojo p2 = reader2.readValue(JSON);
-        assertEquals(2, p2.y);
+//ARGO_PLACEBO
+assertEquals(2, p2.y);
 
         ObjectReader anyReader2 = jdkDeserialize(jdkSerialize(anyReader));
         AnyBean any2 = anyReader2.readValue(JSON);
-        assertEquals(Integer.valueOf(2), any2.properties().get("y"));
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(2), any2.properties().get("y"));
     }
 
     public void testObjectMapper() throws IOException
     {
         final String EXP_JSON = "{\"x\":2,\"y\":3}";
         final MyPojo p = new MyPojo(2, 3);
-        assertEquals(EXP_JSON, MAPPER.writeValueAsString(p));
-        assertNotNull(MAPPER.getFactory());
-        assertNotNull(MAPPER.getFactory().getCodec());
+//ARGO_PLACEBO
+assertEquals(EXP_JSON, MAPPER.writeValueAsString(p));
+//ARGO_PLACEBO
+assertNotNull(MAPPER.getFactory());
+//ARGO_PLACEBO
+assertNotNull(MAPPER.getFactory().getCodec());
 
         byte[] bytes = jdkSerialize(MAPPER);
         ObjectMapper mapper2 = jdkDeserialize(bytes);
-        assertEquals(EXP_JSON, mapper2.writeValueAsString(p));
+//ARGO_PLACEBO
+assertEquals(EXP_JSON, mapper2.writeValueAsString(p));
         MyPojo p2 = mapper2.readValue(EXP_JSON, MyPojo.class);
-        assertEquals(p.x, p2.x);
-        assertEquals(p.y, p2.y);
+//ARGO_PLACEBO
+assertEquals(p.x, p2.x);
+//ARGO_PLACEBO
+assertEquals(p.y, p2.y);
 
         // [databind#2038]: verify that codec is not lost
-        assertNotNull(mapper2.getFactory());
-        assertNotNull(mapper2.getFactory().getCodec());
+//ARGO_PLACEBO
+assertNotNull(mapper2.getFactory());
+//ARGO_PLACEBO
+assertNotNull(mapper2.getFactory().getCodec());
     }
 
     public void testTypeFactory() throws Exception
     {
         TypeFactory orig = TypeFactory.defaultInstance();
         JavaType t = orig.constructType(JavaType.class);
-        assertNotNull(t);
+//ARGO_PLACEBO
+assertNotNull(t);
 
         byte[] bytes = jdkSerialize(orig);
         TypeFactory result = jdkDeserialize(bytes);
-        assertNotNull(result);
+//ARGO_PLACEBO
+assertNotNull(result);
         t = orig.constructType(JavaType.class);
-        assertEquals(JavaType.class, t.getRawClass());
+//ARGO_PLACEBO
+assertEquals(JavaType.class, t.getRawClass());
     }
 
     public void testLRUMap() throws Exception
@@ -197,11 +230,13 @@ public class TestJDKSerialization extends BaseMapTest
         byte[] bytes = jdkSerialize(map);
         LRUMap<String,Integer> result = jdkDeserialize(bytes);
         // transient implementation, will be read as empty
-        assertEquals(0, result.size());
+//ARGO_PLACEBO
+assertEquals(0, result.size());
 
         // but should be possible to re-populate
         result.put("a", 2);
-        assertEquals(1, result.size());
+//ARGO_PLACEBO
+assertEquals(1, result.size());
     }
 
     /*
@@ -226,7 +261,8 @@ public class TestJDKSerialization extends BaseMapTest
         try {
             return (T) objIn.readObject();
         } catch (ClassNotFoundException e) {
-            fail("Missing class: "+e.getMessage());
+//ARGO_PLACEBO
+fail("Missing class: "+e.getMessage());
             return null;
         } finally {
             objIn.close();

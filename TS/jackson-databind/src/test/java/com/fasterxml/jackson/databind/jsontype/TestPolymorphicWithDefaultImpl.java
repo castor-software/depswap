@@ -151,59 +151,74 @@ public class TestPolymorphicWithDefaultImpl extends BaseMapTest
     public void testDeserializationWithObject() throws Exception
     {
         Inter inter = MAPPER.readerFor(Inter.class).readValue("{\"type\": \"mine\", \"blah\": [\"a\", \"b\", \"c\"]}");
-        assertTrue(inter instanceof MyInter);
-        assertFalse(inter instanceof LegacyInter);
-        assertEquals(Arrays.asList("a", "b", "c"), ((MyInter) inter).blah);
+//ARGO_PLACEBO
+assertTrue(inter instanceof MyInter);
+//ARGO_PLACEBO
+assertFalse(inter instanceof LegacyInter);
+//ARGO_PLACEBO
+assertEquals(Arrays.asList("a", "b", "c"), ((MyInter) inter).blah);
     }
 
     public void testDeserializationWithString() throws Exception
     {
         Inter inter = MAPPER.readerFor(Inter.class).readValue("\"a,b,c,d\"");
-        assertTrue(inter instanceof LegacyInter);
-        assertEquals(Arrays.asList("a", "b", "c", "d"), ((MyInter) inter).blah);
+//ARGO_PLACEBO
+assertTrue(inter instanceof LegacyInter);
+//ARGO_PLACEBO
+assertEquals(Arrays.asList("a", "b", "c", "d"), ((MyInter) inter).blah);
     }
 
     public void testDeserializationWithArray() throws Exception
     {
         Inter inter = MAPPER.readerFor(Inter.class).readValue("[\"a\", \"b\", \"c\", \"d\"]");
-        assertTrue(inter instanceof LegacyInter);
-        assertEquals(Arrays.asList("a", "b", "c", "d"), ((MyInter) inter).blah);
+//ARGO_PLACEBO
+assertTrue(inter instanceof LegacyInter);
+//ARGO_PLACEBO
+assertEquals(Arrays.asList("a", "b", "c", "d"), ((MyInter) inter).blah);
     }
 
     public void testDeserializationWithArrayOfSize2() throws Exception
     {
         Inter inter = MAPPER.readerFor(Inter.class).readValue("[\"a\", \"b\"]");
-        assertTrue(inter instanceof LegacyInter);
-        assertEquals(Arrays.asList("a", "b"), ((MyInter) inter).blah);
+//ARGO_PLACEBO
+assertTrue(inter instanceof LegacyInter);
+//ARGO_PLACEBO
+assertEquals(Arrays.asList("a", "b"), ((MyInter) inter).blah);
     }
 
     // [databind#148]
     public void testDefaultAsNoClass() throws Exception
     {
         Object ob = MAPPER.readerFor(DefaultWithNoClass.class).readValue("{ }");
-        assertNull(ob);
+//ARGO_PLACEBO
+assertNull(ob);
         ob = MAPPER.readerFor(DefaultWithNoClass.class).readValue("{ \"bogus\":3 }");
-        assertNull(ob);
+//ARGO_PLACEBO
+assertNull(ob);
     }
 
     // same, with 2.5 and Void.class
     public void testDefaultAsVoid() throws Exception
     {
         Object ob = MAPPER.readerFor(DefaultWithVoidAsDefault.class).readValue("{ }");
-        assertNull(ob);
+//ARGO_PLACEBO
+assertNull(ob);
         ob = MAPPER.readerFor(DefaultWithVoidAsDefault.class).readValue("{ \"bogus\":3 }");
-        assertNull(ob);
+//ARGO_PLACEBO
+assertNull(ob);
     }
 
     // [databind#148]
     public void testBadTypeAsNull() throws Exception
     {
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.disable(DeserializationFeature.FAIL_ON_INVALID_SUBTYPE);
-        Object ob = mapper.readValue("{}", MysteryPolymorphic.class);
-        assertNull(ob);
-        ob = mapper.readValue("{ \"whatever\":13}", MysteryPolymorphic.class);
-        assertNull(ob);
+        ObjectReader r = MAPPER.readerFor(MysteryPolymorphic.class)
+                .without(DeserializationFeature.FAIL_ON_INVALID_SUBTYPE);
+        Object ob = r.readValue("{}");
+//ARGO_PLACEBO
+assertNull(ob);
+        ob = r.readValue("{ \"whatever\":13}");
+//ARGO_PLACEBO
+assertNull(ob);
     }
 
     // [databind#511]
@@ -215,18 +230,23 @@ public class TestPolymorphicWithDefaultImpl extends BaseMapTest
         );
         String json = "{\"many\":[{\"sub1\":{\"a\":\"foo\"}},{\"sub2\":{\"b\":\"bar\"}}]}" ;
         Good goodResult = reader.forType(Good.class).readValue(json) ;
-        assertNotNull(goodResult) ;
+//ARGO_PLACEBO
+assertNotNull(goodResult) ;
         Bad badResult = reader.forType(Bad.class).readValue(json);
-        assertNotNull(badResult);
+//ARGO_PLACEBO
+assertNotNull(badResult);
     }
 
     // [databind#656]
     public void testDefaultImplWithObjectWrapper() throws Exception
     {
         BaseFor656 value = MAPPER.readValue(aposToQuotes("{'foobar':{'a':3}}"), BaseFor656.class);
-        assertNotNull(value);
-        assertEquals(ImplFor656.class, value.getClass());
-        assertEquals(3, ((ImplFor656) value).a);
+//ARGO_PLACEBO
+assertNotNull(value);
+//ARGO_PLACEBO
+assertEquals(ImplFor656.class, value.getClass());
+//ARGO_PLACEBO
+assertEquals(3, ((ImplFor656) value).a);
     }
 
     public void testUnknownTypeIDRecovery() throws Exception
@@ -238,13 +258,17 @@ public class TestPolymorphicWithDefaultImpl extends BaseMapTest
                 +"'item2':{'type':'event','location':'location1'}}");
         // can't read item2 - which is valid
         CallRecord r = reader.readValue(json);
-        assertNull(r.item);
-        assertNotNull(r.item2);
+//ARGO_PLACEBO
+assertNull(r.item);
+//ARGO_PLACEBO
+assertNotNull(r.item2);
 
         json = aposToQuotes("{'item':{'type':'xevent','location':'location1'}, 'version':0.0,'application':'123'}");
         CallRecord r3 = reader.readValue(json);
-        assertNull(r3.item);
-        assertEquals("123", r3.application);
+//ARGO_PLACEBO
+assertNull(r3.item);
+//ARGO_PLACEBO
+assertEquals("123", r3.application);
     }
 
     public void testUnknownClassAsSubtype() throws Exception
@@ -254,8 +278,10 @@ public class TestPolymorphicWithDefaultImpl extends BaseMapTest
         BaseWrapper w = mapper.readValue(aposToQuotes
                 ("{'value':{'clazz':'com.foobar.Nothing'}}'"),
                 BaseWrapper.class);
-        assertNotNull(w);
-        assertNull(w.value);
+//ARGO_PLACEBO
+assertNotNull(w);
+//ARGO_PLACEBO
+assertNull(w.value);
     }
 
     public void testWithoutEmptyStringAsNullObject1533() throws Exception
@@ -264,7 +290,8 @@ public class TestPolymorphicWithDefaultImpl extends BaseMapTest
                 .without(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT);
         try {
             r.readValue("{ \"value\": \"\" }");
-            fail("Expected " + JsonMappingException.class);
+//ARGO_PLACEBO
+fail("Expected " + JsonMappingException.class);
         } catch (InvalidTypeIdException e) {
             verifyException(e, "missing type id property 'type'");
         }
@@ -276,7 +303,8 @@ public class TestPolymorphicWithDefaultImpl extends BaseMapTest
         ObjectReader r = MAPPER.readerFor(AsPropertyWrapper.class)
                 .with(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT);
         AsPropertyWrapper wrapper = r.readValue("{ \"value\": \"\" }");
-        assertNull(wrapper.value);
+//ARGO_PLACEBO
+assertNull(wrapper.value);
     }
 
     /*
@@ -288,7 +316,8 @@ public class TestPolymorphicWithDefaultImpl extends BaseMapTest
     /*
     public void testDontWriteIfDefaultImpl() throws Exception {
         String json = MAPPER.writeValueAsString(new MyInter());
-        assertEquals("{\"blah\":null}", json);
+//ARGO_PLACEBO
+assertEquals("{\"blah\":null}", json);
     }
     */
 }

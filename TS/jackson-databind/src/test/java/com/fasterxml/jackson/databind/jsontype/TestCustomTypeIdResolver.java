@@ -180,18 +180,26 @@ public class TestCustomTypeIdResolver extends BaseMapTest
         List<JavaType> types = new ArrayList<JavaType>();
         CustomResolver.initTypes = types;
         String json = MAPPER.writeValueAsString(new CustomBean[] { new CustomBeanImpl(28) });
-        assertEquals("[{\"*\":{\"x\":28}}]", json);
-        assertEquals(1, types.size());
-        assertEquals(CustomBean.class, types.get(0).getRawClass());
+//ARGO_PLACEBO
+assertEquals("[{\"*\":{\"x\":28}}]", json);
+//ARGO_PLACEBO
+assertEquals(1, types.size());
+//ARGO_PLACEBO
+assertEquals(CustomBean.class, types.get(0).getRawClass());
 
         types = new ArrayList<JavaType>();
         CustomResolver.initTypes = types;
         CustomBean[] result = MAPPER.readValue(json, CustomBean[].class);
-        assertNotNull(result);
-        assertEquals(1, result.length);
-        assertEquals(28, ((CustomBeanImpl) result[0]).x);
-        assertEquals(1, types.size());
-        assertEquals(CustomBean.class, types.get(0).getRawClass());
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertEquals(1, result.length);
+//ARGO_PLACEBO
+assertEquals(28, ((CustomBeanImpl) result[0]).x);
+//ARGO_PLACEBO
+assertEquals(1, types.size());
+//ARGO_PLACEBO
+assertEquals(CustomBean.class, types.get(0).getRawClass());
     }
 
     public void testCustomWithExternal() throws Exception
@@ -202,9 +210,11 @@ public class TestCustomTypeIdResolver extends BaseMapTest
         String json = MAPPER.writeValueAsString(w);
 
         ExtBeanWrapper out = MAPPER.readValue(json, ExtBeanWrapper.class);
-        assertNotNull(out);
+//ARGO_PLACEBO
+assertNotNull(out);
         
-        assertEquals(12, ((ExtBeanImpl) out.value).y);
+//ARGO_PLACEBO
+assertEquals(12, ((ExtBeanImpl) out.value).y);
     }
 
     // for [databind#1270]
@@ -218,13 +228,18 @@ public class TestCustomTypeIdResolver extends BaseMapTest
         top.b = req;
         String json = MAPPER.writeValueAsString(top);
         JsonNode tree = MAPPER.readTree(json);
-        assertNotNull(tree.get("b"));
-        assertNotNull(tree.get("b").get("options"));
-        assertNotNull(tree.get("b").get("options").get("val"));
+//ARGO_ORIGINAL
+assertNotNull(tree.get("b"));
+//ARGO_ORIGINAL
+assertNotNull(tree.get("b").get("options"));
+//ARGO_ORIGINAL
+assertNotNull(tree.get("b").get("options").get("val"));
 
         // Can we reverse the process? I have some doubts
         Top1270 itemRead = MAPPER.readValue(json, Top1270.class);
-        assertNotNull(itemRead);
-        assertNotNull(itemRead.b);
+//ARGO_ORIGINAL
+assertNotNull(itemRead);
+//ARGO_ORIGINAL
+assertNotNull(itemRead.b);
     }
 }

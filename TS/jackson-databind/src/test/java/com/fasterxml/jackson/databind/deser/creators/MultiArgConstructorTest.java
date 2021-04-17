@@ -69,10 +69,14 @@ public class MultiArgConstructorTest extends BaseMapTest
         mapper.setAnnotationIntrospector(new MyParamIntrospector());
         MultiArgCtorBean bean = mapper.readValue(aposToQuotes("{'b':13, 'c':2, 'a':-99}"),
                 MultiArgCtorBean.class);
-        assertNotNull(bean);
-        assertEquals(13, bean._b);
-        assertEquals(-99, bean._a);
-        assertEquals(2, bean.c);
+//ARGO_PLACEBO
+assertNotNull(bean);
+//ARGO_PLACEBO
+assertEquals(13, bean._b);
+//ARGO_PLACEBO
+assertEquals(-99, bean._a);
+//ARGO_PLACEBO
+assertEquals(2, bean.c);
     }
 
     // But besides visibility, also allow overrides
@@ -82,10 +86,14 @@ public class MultiArgConstructorTest extends BaseMapTest
         mapper.setAnnotationIntrospector(new MyParamIntrospector());
         MultiArgCtorBeanWithAnnotations bean = mapper.readValue(aposToQuotes("{'b2':7, 'c':222, 'a':-99}"),
                 MultiArgCtorBeanWithAnnotations.class);
-        assertNotNull(bean);
-        assertEquals(7, bean._b);
-        assertEquals(-99, bean._a);
-        assertEquals(222, bean.c);
+//ARGO_PLACEBO
+assertNotNull(bean);
+//ARGO_PLACEBO
+assertEquals(7, bean._b);
+//ARGO_PLACEBO
+assertEquals(-99, bean._a);
+//ARGO_PLACEBO
+assertEquals(222, bean.c);
     }
     
     // but let's also ensure that it is possible to prevent use of that constructor
@@ -100,7 +108,8 @@ public class MultiArgConstructorTest extends BaseMapTest
         try {
             /*MultiArgCtorBean bean =*/ mapper.readValue(aposToQuotes("{'b':13,  'a':-99}"),
                 MultiArgCtorBean.class);
-            fail("Should not have passed");
+//ARGO_PLACEBO
+fail("Should not have passed");
         } catch (InvalidDefinitionException e) {
             verifyException(e, "no Creators");
         }

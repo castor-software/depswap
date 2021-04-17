@@ -1,8 +1,13 @@
 package com.fasterxml.jackson.databind.deser;
 
 import java.beans.ConstructorProperties;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
 import com.fasterxml.jackson.databind.*;
 
 public class ReadOrWriteOnlyTest extends BaseMapTest
@@ -66,6 +71,59 @@ public class ReadOrWriteOnlyTest extends BaseMapTest
         protected Foo1345() { }
     }
 
+    // [databind#1382]
+    static class Foo1382 {
+        @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+        private List<Long> list = new ArrayList<>();
+
+        List<Long> getList() {
+            return list;
+        }
+
+        public Foo1382 setList(List<Long> list) {
+            this.list = list;
+            return this;
+        }
+    }
+
+    // [databind#1805]
+    static class UserWithReadOnly1805 {
+        public String name;
+
+        @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+        public List<String> getRoles() {
+            return Arrays.asList("admin", "monitor");
+        }
+    }
+
+    // [databind#1805]
+    @JsonIgnoreProperties(value={ "roles" }, allowGetters=true)
+    static class UserAllowGetters1805 {
+        public String name;
+
+        public List<String> getRoles() {
+            return Arrays.asList("admin", "monitor");
+        }
+    }
+
+    // [databind#2779]: ignorable property renaming
+    static class Bean2779 {
+        String works;
+
+        @JsonProperty(value = "t", access = JsonProperty.Access.READ_ONLY)
+        public String getDoesntWork() {
+            return "pleaseFixThisBug";
+        }
+
+        public String getWorks() {
+            return works;
+        }
+
+        public void setWorks(String works) {
+            this.works = works;
+        }
+    }
+
     /*
     /**********************************************************
     /* Test methods
@@ -78,26 +136,78 @@ public class ReadOrWriteOnlyTest extends BaseMapTest
     public void testReadOnlyAndWriteOnly() throws Exception
     {
         String json = MAPPER.writeValueAsString(new ReadXWriteY());
-        assertEquals("{\"x\":1}", json);
+//ARGO_PLACEBO
+assertEquals("{\"x\":1}", json);
 
         ReadXWriteY result = MAPPER.readValue("{\"x\":5, \"y\":6}", ReadXWriteY.class);
-        assertNotNull(result);
-        assertEquals(1, result.x);
-        assertEquals(6, result.y);
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertEquals(1, result.x);
+//ARGO_PLACEBO
+assertEquals(6, result.y);
     }
 
     public void testReadOnly935() throws Exception
     {
         String json = MAPPER.writeValueAsString(new Pojo935());
         Pojo935 result = MAPPER.readValue(json, Pojo935.class);
-        assertNotNull(result);
+//ARGO_PLACEBO
+assertNotNull(result);
     }
 
+    // [databind#1345]
     public void testReadOnly1345() throws Exception
     {
         Foo1345 result = MAPPER.readValue("{\"name\":\"test\"}", Foo1345.class);
-        assertNotNull(result);
-        assertEquals("test", result.name);
-        assertNull(result.id);
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertEquals("test", result.name);
+//ARGO_PLACEBO
+assertNull(result.id);
+    }
+
+    // [databind#1382]
+    public void testReadOnly1382() throws Exception
+    {
+        String payload = "{\"list\":[1,2,3,4]}";
+        Foo1382 foo = MAPPER.readValue(payload, Foo1382.class);
+//ARGO_PLACEBO
+assertTrue("List should be empty", foo.getList().isEmpty());
+    }
+
+    // [databind#1805]
+    public void testViaReadOnly() throws Exception {
+        UserWithReadOnly1805 user = new UserWithReadOnly1805();
+        user.name = "foo";
+        String json = MAPPER.writeValueAsString(user);
+        UserWithReadOnly1805 result = MAPPER.readValue(json, UserWithReadOnly1805.class);
+//ARGO_PLACEBO
+assertNotNull(result);
+    }
+
+    // [databind#1805]
+    public void testUsingAllowGetters() throws Exception {
+        UserAllowGetters1805 user = new UserAllowGetters1805();
+        user.name = "foo";
+        String json = MAPPER.writeValueAsString(user);
+//ARGO_PLACEBO
+assertTrue(json.contains("roles"));
+        UserAllowGetters1805 result = MAPPER.readValue(json, UserAllowGetters1805.class);
+//ARGO_PLACEBO
+assertNotNull(result);
+    }
+
+    // [databind#2779]: ignorable property renaming
+    public void testIssue2779() throws Exception
+    {
+        Bean2779 bean = new Bean2779();
+        bean.setWorks("works");
+
+        String json = MAPPER.writeValueAsString(bean);
+        Bean2779 newBean = MAPPER.readValue(json, Bean2779.class);
+//ARGO_PLACEBO
+assertNotNull(newBean);
     }
 }

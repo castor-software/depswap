@@ -36,15 +36,21 @@ public class JDKCollectionsDeserTest extends BaseMapTest
 
         String json = MAPPER.writeValueAsString(Collections.singleton(new XBean(3)));
         Collection<XBean> result = MAPPER.readValue(json, xbeanListType);
-        assertNotNull(result);
-        assertEquals(1, result.size());
-        assertEquals(3, result.iterator().next().x);
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertEquals(1, result.size());
+//ARGO_PLACEBO
+assertEquals(3, result.iterator().next().x);
 
         json = MAPPER.writeValueAsString(Collections.singletonList(new XBean(28)));
         result = MAPPER.readValue(json, xbeanListType);
-        assertNotNull(result);
-        assertEquals(1, result.size());
-        assertEquals(28, result.iterator().next().x);
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertEquals(1, result.size());
+//ARGO_PLACEBO
+assertEquals(28, result.iterator().next().x);
     }
 
     // [databind#1868]: Verify class name serialized as is
@@ -58,7 +64,8 @@ public class JDKCollectionsDeserTest extends BaseMapTest
         Set<String> theSet = Collections.unmodifiableSet(Collections.singleton("a"));
         String json = mapper.writeValueAsString(theSet);
 
-        assertEquals("[\"java.util.Collections$UnmodifiableSet\",[\"a\"]]", json);
+//ARGO_PLACEBO
+assertEquals("[\"java.util.Collections$UnmodifiableSet\",[\"a\"]]", json);
 
         // 04-Jan-2018, tatu: Alas, no way to make this actually work well, at this point.
          //   In theory could jiggle things back on deser, using one of two ways:
@@ -67,8 +74,10 @@ public class JDKCollectionsDeserTest extends BaseMapTest
          //   2) Have actually separate deserializer OR ValueInstantiator
         /*
         Set<String> result = mapper.readValue(json, Set.class);
-        assertNotNull(result);
-        assertEquals(1, result.size());
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertEquals(1, result.size());
         */
     }
 }

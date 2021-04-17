@@ -47,9 +47,11 @@ public class POJONodeTest extends NodeTestBase
       final String EXP = "{\"data\":{\"aStr\":\"The value is: Hello!\"}}";
       
       String mapOut = MAPPER.writer().withAttribute("myAttr", "Hello!").writeValueAsString(mapTest);
-      assertEquals(EXP, mapOut);
+//ARGO_ORIGINAL
+assertEquals(EXP, mapOut);
 
       String treeOut = MAPPER.writer().withAttribute("myAttr", "Hello!").writeValueAsString(treeTest);
-      assertEquals(EXP, treeOut);
+//ARGO_ORIGINAL
+assertEquals(EXP, treeOut);
     }
 }

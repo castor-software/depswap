@@ -71,8 +71,10 @@ public class CreatorPropertiesTest extends BaseMapTest
     {
         Issue905Bean b = MAPPER.readValue(aposToQuotes("{'y':3,'x':2}"),
                 Issue905Bean.class);
-        assertEquals(2, b._x);
-        assertEquals(3, b._y);
+//ARGO_PLACEBO
+assertEquals(2, b._x);
+//ARGO_PLACEBO
+assertEquals(3, b._y);
     }
 
     // [databind#1122]
@@ -80,8 +82,10 @@ public class CreatorPropertiesTest extends BaseMapTest
     {
         String json = "{\"bar\":3}";
         Ambiguity amb = MAPPER.readValue(json, Ambiguity.class);
-        assertNotNull(amb);
-        assertEquals(3, amb.getFoo());
+//ARGO_PLACEBO
+assertNotNull(amb);
+//ARGO_PLACEBO
+assertEquals(3, amb.getFoo());
     }
 
     // [databind#1371]: MapperFeature.INFER_CREATOR_FROM_CONSTRUCTOR_PROPERTIES
@@ -90,10 +94,13 @@ public class CreatorPropertiesTest extends BaseMapTest
         final String JSON = aposToQuotes("{'x':3,'y':5}");
 
         // by default, should detect and use arguments-taking constructor as creator
-        assertTrue(MAPPER.isEnabled(MapperFeature.INFER_CREATOR_FROM_CONSTRUCTOR_PROPERTIES));
+//ARGO_PLACEBO
+assertTrue(MAPPER.isEnabled(MapperFeature.INFER_CREATOR_FROM_CONSTRUCTOR_PROPERTIES));
         Lombok1371Bean result = MAPPER.readValue(JSON, Lombok1371Bean.class);
-        assertEquals(4, result.x);
-        assertEquals(6, result.y);
+//ARGO_PLACEBO
+assertEquals(4, result.x);
+//ARGO_PLACEBO
+assertEquals(6, result.y);
 
         // but change if configuration changed
         ObjectMapper mapper = jsonMapperBuilder()
@@ -101,7 +108,9 @@ public class CreatorPropertiesTest extends BaseMapTest
                 .build();
         // in which case fields are set directly:
         result = mapper.readValue(JSON, Lombok1371Bean.class);
-        assertEquals(3, result.x);
-        assertEquals(5, result.y);
+//ARGO_PLACEBO
+assertEquals(3, result.x);
+//ARGO_PLACEBO
+assertEquals(5, result.y);
     }
 }

@@ -34,32 +34,49 @@ public class UntypedSerializationTest
             String str = mapper.writeValueAsString(doc);
             
             JsonParser jp = f.createParser(str);
-            assertEquals(JsonToken.START_ARRAY, jp.nextToken());
+//ARGO_PLACEBO
+assertEquals(JsonToken.START_ARRAY, jp.nextToken());
             
-            assertEquals(JsonToken.VALUE_STRING, jp.nextToken());
-            assertEquals("Elem1", getAndVerifyText(jp));
+//ARGO_PLACEBO
+assertEquals(JsonToken.VALUE_STRING, jp.nextToken());
+//ARGO_PLACEBO
+assertEquals("Elem1", getAndVerifyText(jp));
             
-            assertEquals(JsonToken.VALUE_NUMBER_INT, jp.nextToken());
-            assertEquals(3, jp.getIntValue());
+//ARGO_PLACEBO
+assertEquals(JsonToken.VALUE_NUMBER_INT, jp.nextToken());
+//ARGO_PLACEBO
+assertEquals(3, jp.getIntValue());
             
-            assertEquals(JsonToken.START_OBJECT, jp.nextToken());
-            assertEquals(JsonToken.FIELD_NAME, jp.nextToken());
-            assertEquals("first", getAndVerifyText(jp));
+//ARGO_PLACEBO
+assertEquals(JsonToken.START_OBJECT, jp.nextToken());
+//ARGO_PLACEBO
+assertEquals(JsonToken.FIELD_NAME, jp.nextToken());
+//ARGO_PLACEBO
+assertEquals("first", getAndVerifyText(jp));
             
-            assertEquals(JsonToken.VALUE_TRUE, jp.nextToken());
-            assertEquals(JsonToken.FIELD_NAME, jp.nextToken());
-            assertEquals("Second", getAndVerifyText(jp));
+//ARGO_PLACEBO
+assertEquals(JsonToken.VALUE_TRUE, jp.nextToken());
+//ARGO_PLACEBO
+assertEquals(JsonToken.FIELD_NAME, jp.nextToken());
+//ARGO_PLACEBO
+assertEquals("Second", getAndVerifyText(jp));
             
             if (jp.nextToken() != JsonToken.START_ARRAY) {
-                fail("Expected START_ARRAY: JSON == '"+str+"'");
+//ARGO_PLACEBO
+fail("Expected START_ARRAY: JSON == '"+str+"'");
             }
-            assertEquals(JsonToken.END_ARRAY, jp.nextToken());
-            assertEquals(JsonToken.END_OBJECT, jp.nextToken());
+//ARGO_PLACEBO
+assertEquals(JsonToken.END_ARRAY, jp.nextToken());
+//ARGO_PLACEBO
+assertEquals(JsonToken.END_OBJECT, jp.nextToken());
             
-            assertEquals(JsonToken.VALUE_FALSE, jp.nextToken());
+//ARGO_PLACEBO
+assertEquals(JsonToken.VALUE_FALSE, jp.nextToken());
             
-            assertEquals(JsonToken.END_ARRAY, jp.nextToken());
-            assertNull(jp.nextToken());
+//ARGO_PLACEBO
+assertEquals(JsonToken.END_ARRAY, jp.nextToken());
+//ARGO_PLACEBO
+assertNull(jp.nextToken());
             jp.close();
         }
     }
@@ -79,26 +96,41 @@ public class UntypedSerializationTest
             String str = mapper.writeValueAsString(doc);
             JsonParser jp = f.createParser(str);
             
-            assertEquals(JsonToken.START_OBJECT, jp.nextToken());
+//ARGO_PLACEBO
+assertEquals(JsonToken.START_OBJECT, jp.nextToken());
             
-            assertEquals(JsonToken.FIELD_NAME, jp.nextToken());
-            assertEquals("a1", getAndVerifyText(jp));
-            assertEquals(JsonToken.VALUE_STRING, jp.nextToken());
-            assertEquals("\"text\"", getAndVerifyText(jp));
+//ARGO_PLACEBO
+assertEquals(JsonToken.FIELD_NAME, jp.nextToken());
+//ARGO_PLACEBO
+assertEquals("a1", getAndVerifyText(jp));
+//ARGO_PLACEBO
+assertEquals(JsonToken.VALUE_STRING, jp.nextToken());
+//ARGO_PLACEBO
+assertEquals("\"text\"", getAndVerifyText(jp));
             
-            assertEquals(JsonToken.FIELD_NAME, jp.nextToken());
-            assertEquals("int", getAndVerifyText(jp));
-            assertEquals(JsonToken.VALUE_NUMBER_INT, jp.nextToken());
-            assertEquals(137, jp.getIntValue());
+//ARGO_PLACEBO
+assertEquals(JsonToken.FIELD_NAME, jp.nextToken());
+//ARGO_PLACEBO
+assertEquals("int", getAndVerifyText(jp));
+//ARGO_PLACEBO
+assertEquals(JsonToken.VALUE_NUMBER_INT, jp.nextToken());
+//ARGO_PLACEBO
+assertEquals(137, jp.getIntValue());
             
-            assertEquals(JsonToken.FIELD_NAME, jp.nextToken());
-            assertEquals("foo bar", getAndVerifyText(jp));
-            assertEquals(JsonToken.VALUE_NUMBER_INT, jp.nextToken());
-            assertEquals(1234567890L, jp.getLongValue());
+//ARGO_PLACEBO
+assertEquals(JsonToken.FIELD_NAME, jp.nextToken());
+//ARGO_PLACEBO
+assertEquals("foo bar", getAndVerifyText(jp));
+//ARGO_PLACEBO
+assertEquals(JsonToken.VALUE_NUMBER_INT, jp.nextToken());
+//ARGO_PLACEBO
+assertEquals(1234567890L, jp.getLongValue());
             
-            assertEquals(JsonToken.END_OBJECT, jp.nextToken());
+//ARGO_PLACEBO
+assertEquals(JsonToken.END_OBJECT, jp.nextToken());
 
-            assertNull(jp.nextToken());
+//ARGO_PLACEBO
+assertNull(jp.nextToken());
             jp.close();
         }
     }

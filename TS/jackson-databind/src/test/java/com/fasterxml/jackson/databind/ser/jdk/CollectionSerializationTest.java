@@ -125,12 +125,16 @@ public class CollectionSerializationTest
             
             // and then need to verify:
             JsonParser jp = new JsonFactory().createParser(json);
-            assertToken(JsonToken.START_ARRAY, jp.nextToken());
+//ARGO_PLACEBO
+assertToken(JsonToken.START_ARRAY, jp.nextToken());
             for (int i = 0; i < entryLen; ++i) {
-                assertToken(JsonToken.VALUE_NUMBER_INT, jp.nextToken());
-                assertEquals(i, jp.getIntValue());
+//ARGO_PLACEBO
+assertToken(JsonToken.VALUE_NUMBER_INT, jp.nextToken());
+//ARGO_PLACEBO
+assertEquals(i, jp.getIntValue());
             }
-            assertToken(JsonToken.END_ARRAY, jp.nextToken());
+//ARGO_PLACEBO
+assertToken(JsonToken.END_ARRAY, jp.nextToken());
             jp.close();
         }
     }
@@ -169,12 +173,16 @@ public class CollectionSerializationTest
             }
 
             // and verify
-            assertToken(JsonToken.START_ARRAY, jp.nextToken());
+//ARGO_PLACEBO
+assertToken(JsonToken.START_ARRAY, jp.nextToken());
             for (int i = 0; i <= COUNT; ++i) {
-                assertEquals(JsonToken.VALUE_NUMBER_INT, jp.nextToken());
-                assertEquals(i, jp.getIntValue());
+//ARGO_PLACEBO
+assertEquals(JsonToken.VALUE_NUMBER_INT, jp.nextToken());
+//ARGO_PLACEBO
+assertEquals(i, jp.getIntValue());
             }
-            assertToken(JsonToken.END_ARRAY, jp.nextToken());
+//ARGO_PLACEBO
+assertToken(JsonToken.END_ARRAY, jp.nextToken());
             jp.close();
         }
     }
@@ -186,7 +194,8 @@ public class CollectionSerializationTest
         map.put(Key.C, "abc");
         // assuming EnumMap uses enum entry order, which I think is true...
         String json = MAPPER.writeValueAsString(map);
-        assertEquals("{\"B\":\"xyz\",\"C\":\"abc\"}",json.trim());
+//ARGO_PLACEBO
+assertEquals("{\"B\":\"xyz\",\"C\":\"abc\"}",json.trim());
     }
 
     // Test that checks that empty collections are properly serialized
@@ -198,11 +207,15 @@ public class CollectionSerializationTest
         x.add("foobar");
         CollectionBean cb = new CollectionBean(x);
         Map<String,Object> result = writeAndMap(MAPPER, cb);
-        assertEquals(1, result.size());
-        assertTrue(result.containsKey("values"));
+//ARGO_PLACEBO
+assertEquals(1, result.size());
+//ARGO_PLACEBO
+assertTrue(result.containsKey("values"));
         Collection<Object> x2 = (Collection<Object>) result.get("values");
-        assertNotNull(x2);
-        assertEquals(x, x2);
+//ARGO_PLACEBO
+assertNotNull(x2);
+//ARGO_PLACEBO
+assertEquals(x, x2);
     }
 
     public void testNullBeanCollection()
@@ -210,9 +223,12 @@ public class CollectionSerializationTest
     {
         CollectionBean cb = new CollectionBean(null);
         Map<String,Object> result = writeAndMap(MAPPER, cb);
-        assertEquals(1, result.size());
-        assertTrue(result.containsKey("values"));
-        assertNull(result.get("values"));
+//ARGO_PLACEBO
+assertEquals(1, result.size());
+//ARGO_PLACEBO
+assertTrue(result.containsKey("values"));
+//ARGO_PLACEBO
+assertNull(result.get("values"));
     }
 
     @SuppressWarnings("unchecked")
@@ -222,12 +238,16 @@ public class CollectionSerializationTest
         EnumMapBean b = new EnumMapBean(map);
         Map<String,Object> result = writeAndMap(MAPPER, b);
 
-        assertEquals(1, result.size());
-        assertTrue(result.containsKey("map"));
+//ARGO_PLACEBO
+assertEquals(1, result.size());
+//ARGO_PLACEBO
+assertTrue(result.containsKey("map"));
         // we deserialized to untyped, not back to bean, so:
         Map<Object,Object> map2 = (Map<Object,Object>) result.get("map");
-        assertNotNull(map2);
-        assertEquals(0, map2.size());
+//ARGO_PLACEBO
+assertNotNull(map2);
+//ARGO_PLACEBO
+assertEquals(0, map2.size());
     }
 
     // Should also be able to serialize null EnumMaps as expected
@@ -236,16 +256,21 @@ public class CollectionSerializationTest
         EnumMapBean b = new EnumMapBean(null);
         Map<String,Object> result = writeAndMap(MAPPER, b);
 
-        assertEquals(1, result.size());
-        assertTrue(result.containsKey("map"));
-        assertNull(result.get("map"));
+//ARGO_PLACEBO
+assertEquals(1, result.size());
+//ARGO_PLACEBO
+assertTrue(result.containsKey("map"));
+//ARGO_PLACEBO
+assertNull(result.get("map"));
     }
 
     public void testListSerializer() throws IOException
     {
-        assertEquals(quote("[ab, cd, ef]"),
+//ARGO_PLACEBO
+assertEquals(quote("[ab, cd, ef]"),
                 MAPPER.writeValueAsString(new PseudoList("ab", "cd", "ef")));
-        assertEquals(quote("[]"),
+//ARGO_PLACEBO
+assertEquals(quote("[]"),
                 MAPPER.writeValueAsString(new PseudoList()));
     }
 
@@ -255,15 +280,20 @@ public class CollectionSerializationTest
         // by default, empty lists serialized normally
         EmptyListBean list = new EmptyListBean();
         EmptyArrayBean array = new EmptyArrayBean();
-        assertTrue(MAPPER.isEnabled(SerializationFeature.WRITE_EMPTY_JSON_ARRAYS));
-        assertEquals("{\"empty\":[]}", MAPPER.writeValueAsString(list));
-        assertEquals("{\"empty\":[]}", MAPPER.writeValueAsString(array));
+//ARGO_PLACEBO
+assertTrue(MAPPER.isEnabled(SerializationFeature.WRITE_EMPTY_JSON_ARRAYS));
+//ARGO_PLACEBO
+assertEquals("{\"empty\":[]}", MAPPER.writeValueAsString(list));
+//ARGO_PLACEBO
+assertEquals("{\"empty\":[]}", MAPPER.writeValueAsString(array));
 
         // note: value of setting may be cached when constructing serializer, need a new instance
         ObjectMapper m = new ObjectMapper();
         m.configure(SerializationFeature.WRITE_EMPTY_JSON_ARRAYS, false);
-        assertEquals("{}", m.writeValueAsString(list));
-        assertEquals("{}", m.writeValueAsString(array));
+//ARGO_PLACEBO
+assertEquals("{}", m.writeValueAsString(list));
+//ARGO_PLACEBO
+assertEquals("{}", m.writeValueAsString(array));
     }
 
     public void testStaticList() throws IOException
@@ -271,14 +301,16 @@ public class CollectionSerializationTest
         // First: au naturel
         StaticListWrapper w = new StaticListWrapper("a", "b", "c");
         String json = MAPPER.writeValueAsString(w);
-        assertEquals(aposToQuotes("{'list':['a','b','c']}"), json);
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'list':['a','b','c']}"), json);
 
         // but then with default typing
         ObjectMapper mapper = jsonMapperBuilder()
                 .activateDefaultTyping(NoCheckSubTypeValidator.instance, DefaultTyping.NON_FINAL)
                 .build();
         json = mapper.writeValueAsString(w);
-        assertEquals(aposToQuotes(String.format("['%s',{'list':['%s',['a','b','c']]}]",
+//ARGO_PLACEBO
+assertEquals(aposToQuotes(String.format("['%s',{'list':['%s',['a','b','c']]}]",
                 w.getClass().getName(), w.list.getClass().getName())), json);
     }
 }

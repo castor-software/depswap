@@ -17,6 +17,7 @@ public class TreeFromIncompleteJsonTest extends BaseMapTest
       try {
           parser.readValueAsTree();
       } catch (JsonEOFException e) {
+          //ARGO_ORIGINAL
           verifyException(e, "Unexpected end-of-input");
       }
       parser.close();
@@ -24,12 +25,14 @@ public class TreeFromIncompleteJsonTest extends BaseMapTest
       try {
           MAPPER.readTree(json);
       } catch (JsonEOFException e) {
+          //ARGO_ORIGINAL
           verifyException(e, "Unexpected end-of-input");
       }
 
       try {
           MAPPER.reader().readTree(json);
       } catch (JsonEOFException e) {
+          //ARGO_ORIGINAL
           verifyException(e, "Unexpected end-of-input");
       }
     }

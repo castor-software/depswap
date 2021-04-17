@@ -20,18 +20,23 @@ public class BeanNamingTest extends BaseMapTest
     public void testSimple() throws Exception
     {
         ObjectMapper mapper = new ObjectMapper();
-        assertFalse(mapper.isEnabled(MapperFeature.USE_STD_BEAN_NAMING));
-        assertEquals(aposToQuotes("{'url':'http://foo'}"),
+//ARGO_PLACEBO
+assertFalse(mapper.isEnabled(MapperFeature.USE_STD_BEAN_NAMING));
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'url':'http://foo'}"),
                 mapper.writeValueAsString(new URLBean()));
-        assertEquals(aposToQuotes("{'a':3}"),
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'a':3}"),
                 mapper.writeValueAsString(new ABean()));
 
         mapper = jsonMapperBuilder()
                 .enable(MapperFeature.USE_STD_BEAN_NAMING)
                 .build();
-        assertEquals(aposToQuotes("{'URL':'http://foo'}"),
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'URL':'http://foo'}"),
                 mapper.writeValueAsString(new URLBean()));
-        assertEquals(aposToQuotes("{'a':3}"),
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'a':3}"),
                 mapper.writeValueAsString(new ABean()));
     }
 }

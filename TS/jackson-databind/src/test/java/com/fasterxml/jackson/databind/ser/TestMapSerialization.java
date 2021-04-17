@@ -106,12 +106,14 @@ public class TestMapSerialization extends BaseMapTest
         Map<String,Object> map = new LinkedHashMap<String,Object>();
         map.put("a", 1);
         String json = w.writeValueAsString(map);
-        assertEquals(aposToQuotes("{'a':1}"), json);
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'a':1}"), json);
     }
 
     public void testMapSerializer() throws IOException
     {
-        assertEquals("\"{a=b, c=d}\"", MAPPER.writeValueAsString(new PseudoMap("a", "b", "c", "d")));
+//ARGO_PLACEBO
+assertEquals("\"{a=b, c=d}\"", MAPPER.writeValueAsString(new PseudoMap("a", "b", "c", "d")));
     }
 
     // problems with map entries, values
@@ -119,35 +121,44 @@ public class TestMapSerialization extends BaseMapTest
     {
         Map<String,String> map = new HashMap<String,String>();
         map.put("a", "b");
-        assertEquals("[\"a\"]", MAPPER.writeValueAsString(map.keySet()));
-        assertEquals("[\"b\"]", MAPPER.writeValueAsString(map.values()));
+//ARGO_PLACEBO
+assertEquals("[\"a\"]", MAPPER.writeValueAsString(map.keySet()));
+//ARGO_PLACEBO
+assertEquals("[\"b\"]", MAPPER.writeValueAsString(map.values()));
 
         // TreeMap has similar inner class(es):
         map = new TreeMap<String,String>();
         map.put("c", "d");
-        assertEquals("[\"c\"]", MAPPER.writeValueAsString(map.keySet()));
-        assertEquals("[\"d\"]", MAPPER.writeValueAsString(map.values()));
+//ARGO_PLACEBO
+assertEquals("[\"c\"]", MAPPER.writeValueAsString(map.keySet()));
+//ARGO_PLACEBO
+assertEquals("[\"d\"]", MAPPER.writeValueAsString(map.values()));
 
         // and for [JACKSON-533], same for concurrent maps
         map = new ConcurrentHashMap<String,String>();
         map.put("e", "f");
-        assertEquals("[\"e\"]", MAPPER.writeValueAsString(map.keySet()));
-        assertEquals("[\"f\"]", MAPPER.writeValueAsString(map.values()));
+//ARGO_PLACEBO
+assertEquals("[\"e\"]", MAPPER.writeValueAsString(map.keySet()));
+//ARGO_PLACEBO
+assertEquals("[\"f\"]", MAPPER.writeValueAsString(map.values()));
     }
 
     // sort Map entries by key
     public void testOrderByKey() throws IOException
     {
         ObjectMapper m = new ObjectMapper();
-        assertFalse(m.isEnabled(SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS));
+//ARGO_PLACEBO
+assertFalse(m.isEnabled(SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS));
         LinkedHashMap<String,Integer> map = new LinkedHashMap<String,Integer>();
         map.put("b", 3);
         map.put("a", 6);
         // by default, no (re)ordering:
-        assertEquals("{\"b\":3,\"a\":6}", m.writeValueAsString(map));
+//ARGO_PLACEBO
+assertEquals("{\"b\":3,\"a\":6}", m.writeValueAsString(map));
         // but can be changed
         ObjectWriter sortingW =  m.writer(SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS);
-        assertEquals("{\"a\":6,\"b\":3}", sortingW.writeValueAsString(map));
+//ARGO_PLACEBO
+assertEquals("{\"a\":6,\"b\":3}", sortingW.writeValueAsString(map));
     }
 
     // related to [databind#1411]
@@ -172,7 +183,8 @@ public class TestMapSerialization extends BaseMapTest
     {
         MapOrderingBean input = new MapOrderingBean("c", "b", "a");
         String json = MAPPER.writeValueAsString(input);
-        assertEquals(aposToQuotes("{'map':{'a':3,'b':2,'c':1}}"), json);
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'map':{'a':3,'b':2,'c':1}}"), json);
     }        
 
     // [Databind#565]
@@ -180,17 +192,20 @@ public class TestMapSerialization extends BaseMapTest
     {
         StringIntMapEntry input = new StringIntMapEntry("answer", 42);
         String json = MAPPER.writeValueAsString(input);
-        assertEquals(aposToQuotes("{'answer':42}"), json);
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'answer':42}"), json);
 
         StringIntMapEntry[] array = new StringIntMapEntry[] { input };
         json = MAPPER.writeValueAsString(array);
-        assertEquals(aposToQuotes("[{'answer':42}]"), json);
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("[{'answer':42}]"), json);
 
         // and maybe with bit of extra typing?
         ObjectMapper mapper = new ObjectMapper().activateDefaultTyping(NoCheckSubTypeValidator.instance,
                 DefaultTyping.NON_FINAL);
         json = mapper.writeValueAsString(input);
-        assertEquals(aposToQuotes("['"+StringIntMapEntry.class.getName()+"',{'answer':42}]"),
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("['"+StringIntMapEntry.class.getName()+"',{'answer':42}]"),
                 json);
     }        
 
@@ -198,7 +213,8 @@ public class TestMapSerialization extends BaseMapTest
     {
         StringIntMapEntryWrapper input = new StringIntMapEntryWrapper("answer", 42);
         String json = MAPPER.writeValueAsString(input);
-        assertEquals(aposToQuotes("{'value':{'answer':42}}"), json);
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'value':{'answer':42}}"), json);
     }
 
     // [databind#691]
@@ -210,7 +226,8 @@ public class TestMapSerialization extends BaseMapTest
 
         String json = MAPPER.writeValueAsString(input);
 
-        assertEquals(aposToQuotes("{'@type':'mymap','id':'Test','NULL':null}"),
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'@type':'mymap','id':'Test','NULL':null}"),
                 json);
     }    
 
@@ -222,7 +239,8 @@ public class TestMapSerialization extends BaseMapTest
         ObjectMapper mapper = new ObjectMapper();
         mapper.addMixIn(Object.class, Mixin691.class);
         String json = mapper.writeValueAsString(map);
-        assertEquals("{\"@class\":\"java.util.HashMap\",\"NULL\":null}", json);
+//ARGO_PLACEBO
+assertEquals("{\"@class\":\"java.util.HashMap\",\"NULL\":null}", json);
     }
 
     // [databind#1513]
@@ -234,19 +252,22 @@ public class TestMapSerialization extends BaseMapTest
         input.put("x", "y");
         input.put("a", "b");
         String json = w.writeValueAsString(input);
-        assertEquals(aposToQuotes("{'a':'b','x':'y'}"), json);
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'a':'b','x':'y'}"), json);
 
         input = new ConcurrentHashMap<String,String>();
         input.put("x", "y");
         input.put("a", "b");
         json = w.writeValueAsString(input);
-        assertEquals(aposToQuotes("{'a':'b','x':'y'}"), json);
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'a':'b','x':'y'}"), json);
 
         // One more: while not technically concurrent map at all, exhibits same issue
         input = new Hashtable<String,String>();
         input.put("x", "y");
         input.put("a", "b");
         json = w.writeValueAsString(input);
-        assertEquals(aposToQuotes("{'a':'b','x':'y'}"), json);
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'a':'b','x':'y'}"), json);
     }
 }

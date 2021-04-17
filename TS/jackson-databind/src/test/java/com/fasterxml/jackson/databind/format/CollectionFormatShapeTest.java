@@ -49,11 +49,13 @@ public class CollectionFormatShapeTest extends BaseMapTest
         list.add("a");
         list.add("b");
         String json = MAPPER.writeValueAsString(list);
-        assertEquals("{\"size\":2,\"values\":[\"a\",\"b\"]}", json);
+//ARGO_PLACEBO
+assertEquals("{\"size\":2,\"values\":[\"a\",\"b\"]}", json);
 
         // and then bring it back!
         CollectionAsPOJO result = MAPPER.readValue(json, CollectionAsPOJO.class);
-        assertEquals(2, result.size());
+//ARGO_PLACEBO
+assertEquals(2, result.size());
     }
 
 }

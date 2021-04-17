@@ -10,6 +10,8 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.util.StdConverter;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
 public class TestConvertingSerializer
     extends com.fasterxml.jackson.databind.BaseMapTest
 {
@@ -140,6 +142,7 @@ public class TestConvertingSerializer
     }
 
     // [databind#731]
+    @JsonPropertyOrder({ "a", "b" })
     public static class DummyBean {
         public final int a, b;
         public DummyBean(int v1, int v2) {
@@ -174,47 +177,55 @@ public class TestConvertingSerializer
     public void testClassAnnotationSimple() throws Exception
     {
         String json = objectWriter().writeValueAsString(new ConvertingBean(1, 2));
-        assertEquals("[1,2]", json);
+//ARGO_PLACEBO
+assertEquals("[1,2]", json);
     }
 
     public void testClassAnnotationForLists() throws Exception
     {
         String json = objectWriter().writeValueAsString(new ConvertingBeanContainer(
                 new ConvertingBean(1, 2), new ConvertingBean(3, 4)));
-        assertEquals("{\"values\":[[1,2],[3,4]]}", json);
+//ARGO_PLACEBO
+assertEquals("{\"values\":[[1,2],[3,4]]}", json);
     }
 
     public void testPropertyAnnotationSimple() throws Exception
     {
         String json = objectWriter().writeValueAsString(new PointWrapper(3, 4));
-        assertEquals("{\"value\":[3,4]}", json);
+//ARGO_PLACEBO
+assertEquals("{\"value\":[3,4]}", json);
     }
 
     public void testPropertyAnnotationForArrays() throws Exception {
         String json = objectWriter().writeValueAsString(new PointListWrapperArray(4, 5));
-        assertEquals("{\"values\":[[4,5],[5,4]]}", json);
+//ARGO_PLACEBO
+assertEquals("{\"values\":[[4,5],[5,4]]}", json);
     }
 
     public void testPropertyAnnotationForLists() throws Exception {
         String json = objectWriter().writeValueAsString(new PointListWrapperList(7, 8));
-        assertEquals("{\"values\":[[7,8],[8,7]]}", json);
+//ARGO_PLACEBO
+assertEquals("{\"values\":[[7,8],[8,7]]}", json);
     }
 
     public void testPropertyAnnotationForMaps() throws Exception {
         String json = objectWriter().writeValueAsString(new PointListWrapperMap("a", 1, 2));
-        assertEquals("{\"values\":{\"a\":[1,2]}}", json);
+//ARGO_PLACEBO
+assertEquals("{\"values\":{\"a\":[1,2]}}", json);
     }
 
     // [databind#357]
     public void testConverterForList357() throws Exception {
         String json = objectWriter().writeValueAsString(new ListWrapper());
-        assertEquals("{\"list\":[[\"Hello world!\"]]}", json);
+//ARGO_PLACEBO
+assertEquals("{\"list\":[[\"Hello world!\"]]}", json);
     }
     
     // [databind#359]
     public void testIssue359() throws Exception {
         String json = objectWriter().writeValueAsString(new Bean359());
-        assertEquals("{\"stuff\":[\"Target\"]}", json);
+//ARGO_PLACEBO
+assertEquals("{\"stuff\":[\"Target\"]}", json);
     }
 
     // [databind#731]: Problems converting from java.lang.Object ("unknown")
@@ -222,6 +233,7 @@ public class TestConvertingSerializer
     {
         String json = objectWriter().writeValueAsString(new ConvertingBeanWithUntypedConverter(1, 2));
         // must be  {"a":2,"b":4}
-        assertEquals("{\"a\":2,\"b\":4}", json);
+//ARGO_PLACEBO
+assertEquals("{\"a\":2,\"b\":4}", json);
     }
 }

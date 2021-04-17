@@ -72,13 +72,15 @@ public class AlwaysAsReferenceFirstTest extends BaseMapTest
         String json = MAPPER.writeValueAsString(mo);
 
         Foo result = MAPPER.readValue(json, Foo.class);
-        assertNotNull(result);
+//ARGO_PLACEBO
+assertNotNull(result);
     }
 
     // [databind#1607]
     public void testIssue1607() throws Exception
     {
         String json = MAPPER.writeValueAsString(new ReallyAlwaysContainer());
-        assertEquals(aposToQuotes("{'alwaysClass':1,'alwaysProp':2}"), json);
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'alwaysClass':1,'alwaysProp':2}"), json);
     }
 }

@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import com.fasterxml.jackson.databind.*;
+import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
 
 public class CaseInsensitiveDeserTest extends BaseMapTest
 {
@@ -93,13 +94,31 @@ public class CaseInsensitiveDeserTest extends BaseMapTest
         }
     }
 
+    // [databind#1886]: allow case-insensitivity by default on a class
+    @JsonFormat(with={ JsonFormat.Feature.ACCEPT_CASE_INSENSITIVE_PROPERTIES })
+    static class CaseInsensitiveRole {
+        public String ID;
+        public String Name;
+    }
+
+    // [databind#1886]: allow case-insensitivity by default on a class
+    static class CaseInsensitiveRoleContainer {
+        public CaseInsensitiveRole role;
+    }
+
+    // [databind#1886]: ... but also overrides
+    static class CaseSensitiveRoleContainer {
+        @JsonFormat(without={ JsonFormat.Feature.ACCEPT_CASE_INSENSITIVE_PROPERTIES })
+        public CaseInsensitiveRole role;
+    }
+
     /*
     /********************************************************
     /* Test methods
     /********************************************************
      */
 
-    private final ObjectMapper MAPPER = new ObjectMapper();
+    private final ObjectMapper MAPPER = newJsonMapper();
     private final ObjectMapper INSENSITIVE_MAPPER = jsonMapperBuilder()
             .enable(MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES)
             .build();
@@ -111,21 +130,26 @@ public class CaseInsensitiveDeserTest extends BaseMapTest
         
         // first, verify default settings which do not accept improper case
         ObjectMapper mapper = new ObjectMapper();
-        assertFalse(mapper.isEnabled(MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES));
+//ARGO_PLACEBO
+assertFalse(mapper.isEnabled(MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES));
         try {
             mapper.readValue(JSON, Issue476Bean.class);
             
-            fail("Should not accept improper case properties by default");
+//ARGO_PLACEBO
+fail("Should not accept improper case properties by default");
         } catch (JsonProcessingException e) {
             verifyException(e, "Unrecognized field");
-            assertValidLocation(e.getLocation());
+//ARGO_PLACEBO
+assertValidLocation(e.getLocation());
         }
 
         // Definitely not OK to enable dynamically - the BeanPropertyMap (which is the consumer of this particular feature) gets cached.
         ObjectReader r = INSENSITIVE_MAPPER.readerFor(Issue476Bean.class);
         Issue476Bean result = r.readValue(JSON);
-        assertEquals(result.value1.name, "fruit");
-        assertEquals(result.value1.value, "apple");
+//ARGO_PLACEBO
+assertEquals(result.value1.name, "fruit");
+//ARGO_PLACEBO
+assertEquals(result.value1.value, "apple");
     }
 
     // [databind#1036]
@@ -135,8 +159,10 @@ public class CaseInsensitiveDeserTest extends BaseMapTest
 //        final String json = "{\"errorCode\":2,\"debugMessage\":\"Signature not valid!\"}";
 
         BaseResponse response = INSENSITIVE_MAPPER.readValue(json, BaseResponse.class);
-        assertEquals(2, response.errorCode);
-        assertEquals("Signature not valid!", response.debugMessage);
+//ARGO_PLACEBO
+assertEquals(2, response.errorCode);
+//ARGO_PLACEBO
+assertEquals("Signature not valid!", response.debugMessage);
     }
 
     // [databind#1232]: allow per-property case-insensitivity
@@ -144,9 +170,12 @@ public class CaseInsensitiveDeserTest extends BaseMapTest
         CaseInsensitiveRoleWrapper w = MAPPER.readValue
                 (aposToQuotes("{'role':{'id':'12','name':'Foo'}}"),
                         CaseInsensitiveRoleWrapper.class);
-        assertNotNull(w);
-        assertEquals("12", w.role.ID);
-        assertEquals("Foo", w.role.Name);
+//ARGO_PLACEBO
+assertNotNull(w);
+//ARGO_PLACEBO
+assertEquals("12", w.role.ID);
+//ARGO_PLACEBO
+assertEquals("Foo", w.role.Name);
     }
     
     // [databind#1438]
@@ -154,11 +183,12 @@ public class CaseInsensitiveDeserTest extends BaseMapTest
     {
         final String json = aposToQuotes("{'VALUE':3}");
         InsensitiveCreator bean = INSENSITIVE_MAPPER.readValue(json, InsensitiveCreator.class);
-        assertEquals(3, bean.v);
+//ARGO_PLACEBO
+assertEquals(3, bean.v);
     }
 
     // And allow config overrides too
-    public void testCaseInsensitiveWithClassFormat() throws Exception
+    public void testCaseInsensitiveViaConfigOverride() throws Exception
     {
         ObjectMapper mapper = new ObjectMapper();
         mapper.configOverride(Role.class)
@@ -167,18 +197,60 @@ public class CaseInsensitiveDeserTest extends BaseMapTest
         Role role = mapper.readValue
                 (aposToQuotes("{'id':'12','name':'Foo'}"),
                         Role.class);
-        assertNotNull(role);
-        assertEquals("12", role.ID);
-        assertEquals("Foo", role.Name);
+//ARGO_PLACEBO
+assertNotNull(role);
+//ARGO_PLACEBO
+assertEquals("12", role.ID);
+//ARGO_PLACEBO
+assertEquals("Foo", role.Name);
     }
 
     public void testIssue1854() throws Exception
     {
         final String DOC = aposToQuotes("{'ID': 1, 'Items': [ { 'ChildID': 10 } ]}");
         Obj1854 result = INSENSITIVE_MAPPER.readValue(DOC, Obj1854.class);
-        assertNotNull(result);
-        assertEquals(1, result.getId());
-        assertNotNull(result.getItems());
-        assertEquals(1, result.getItems().size());
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertEquals(1, result.getId());
+//ARGO_PLACEBO
+assertNotNull(result.getItems());
+//ARGO_PLACEBO
+assertEquals(1, result.getItems().size());
+    }
+
+
+    // [databind#1886]: allow case-insensitivity by default on a class
+    public void testCaseInsensitiveViaClassAnnotation() throws Exception
+    {
+        final String CONTAINED = aposToQuotes("{'role': {'id':'3','name':'Bob'}}");
+
+        // First: via wrapper/container:
+        CaseInsensitiveRoleContainer cont = MAPPER.readValue(CONTAINED,
+                        CaseInsensitiveRoleContainer.class);
+//ARGO_PLACEBO
+assertEquals("3", cont.role.ID);
+//ARGO_PLACEBO
+assertEquals("Bob", cont.role.Name);
+
+        // second: directly as root value
+        CaseInsensitiveRole role = MAPPER.readValue
+                (aposToQuotes("{'id':'12','name':'Billy'}"),
+                        CaseInsensitiveRole.class);
+//ARGO_PLACEBO
+assertEquals("12", role.ID);
+//ARGO_PLACEBO
+assertEquals("Billy", role.Name);
+
+        // and finally, more complicated; should be possible to force sensitivity:
+        try {
+            /*CaseSensitiveRoleContainer r =*/ MAPPER.readValue(CONTAINED,
+                    CaseSensitiveRoleContainer.class);
+//ARGO_PLACEBO
+fail("Should not pass");
+        } catch (UnrecognizedPropertyException e) {
+            verifyException(e, "Unrecognized ");
+            verifyException(e, "\"id\"");
+        }
     }
 }

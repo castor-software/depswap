@@ -56,14 +56,22 @@ public class MapMerge1844Test extends BaseMapTest
         TestMap1844 testMap = mapper.readerFor(TestMap1844.class).readValue(f1);
         testMap = mapper.readerForUpdating(testMap).readValue(f2);
 
-        assertEquals(Integer.valueOf(2), testMap.getMapStringInteger().get("1"));
-        assertEquals(Integer.valueOf(3), testMap.getMapStringInteger().get("2"));
-        assertEquals(Integer.valueOf(3), testMap.getMapStringInteger().get("3"));
-        assertEquals(Integer.valueOf(5), testMap.getMapStringInteger().get("4"));
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(2), testMap.getMapStringInteger().get("1"));
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(3), testMap.getMapStringInteger().get("2"));
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(3), testMap.getMapStringInteger().get("3"));
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(5), testMap.getMapStringInteger().get("4"));
 
-        assertEquals(Integer.valueOf(2), testMap.getMapIntegerInteger().get(1));
-        assertEquals(Integer.valueOf(3), testMap.getMapIntegerInteger().get(2));
-        assertEquals(Integer.valueOf(3), testMap.getMapIntegerInteger().get(3));
-        assertEquals(Integer.valueOf(5), testMap.getMapIntegerInteger().get(4));
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(2), testMap.getMapIntegerInteger().get(1));
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(3), testMap.getMapIntegerInteger().get(2));
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(3), testMap.getMapIntegerInteger().get(3));
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(5), testMap.getMapIntegerInteger().get(4));
     }
 }

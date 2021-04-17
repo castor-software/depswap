@@ -30,7 +30,7 @@ public class ImplicitParamsForCreatorTest extends BaseMapTest
             this.y = y;
         }
     }
-    
+
     /*
     /**********************************************************
     /* Test methods
@@ -42,8 +42,11 @@ public class ImplicitParamsForCreatorTest extends BaseMapTest
         ObjectMapper mapper = new ObjectMapper();
         mapper.setAnnotationIntrospector(new MyParamIntrospector());
         XY value = mapper.readValue(aposToQuotes("{'paramName0':1,'paramName1':2}"), XY.class);
-        assertNotNull(value);
-        assertEquals(1, value.x);
-        assertEquals(2, value.y);
+//ARGO_PLACEBO
+assertNotNull(value);
+//ARGO_PLACEBO
+assertEquals(1, value.x);
+//ARGO_PLACEBO
+assertEquals(2, value.y);
     }
 }

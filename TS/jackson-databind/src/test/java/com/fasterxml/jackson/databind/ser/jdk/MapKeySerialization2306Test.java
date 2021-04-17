@@ -29,7 +29,8 @@ public class MapKeySerialization2306Test extends BaseMapTest
     {
         final Map<JsonValue2306Key, String> map = Collections.singletonMap(
                 new JsonValue2306Key("myId"), "value");
-        assertEquals(aposToQuotes("{'myId':'value'}"),
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'myId':'value'}"),
                 MAPPER.writeValueAsString(map));
     }
 }

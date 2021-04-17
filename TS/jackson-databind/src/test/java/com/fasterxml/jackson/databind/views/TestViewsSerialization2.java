@@ -125,14 +125,16 @@ public class TestViewsSerialization2 extends BaseMapTest
     {
         ObjectMapper mapper = createMapper();
         String result = serializeWithObjectMapper(new ComplexTestData( ), Views.View.class, mapper);
-        assertEquals(-1, result.indexOf( "nameHidden" ));
+//ARGO_PLACEBO
+assertEquals(-1, result.indexOf( "nameHidden" ));
     }
 
     public void testDataBindingUsageWithoutView( ) throws Exception
     {
         ObjectMapper mapper = createMapper();
         String json = serializeWithObjectMapper(new ComplexTestData( ), null, mapper);
-        assertTrue(json.indexOf( "nameHidden" ) > 0);
+//ARGO_PLACEBO
+assertTrue(json.indexOf( "nameHidden" ) > 0);
     }
 
     /*

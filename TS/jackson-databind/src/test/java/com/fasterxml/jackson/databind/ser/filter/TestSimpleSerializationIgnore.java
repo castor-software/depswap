@@ -76,18 +76,24 @@ public class TestSimpleSerializationIgnore
     {
         // Should see "x", not "y"
         Map<String,Object> result = writeAndMap(MAPPER, new SizeClassEnabledIgnore());
-        assertEquals(1, result.size());
-        assertEquals(Integer.valueOf(1), result.get("x"));
-        assertNull(result.get("y"));
+//ARGO_PLACEBO
+assertEquals(1, result.size());
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(1), result.get("x"));
+//ARGO_PLACEBO
+assertNull(result.get("y"));
     }
 
     public void testDisabledIgnore() throws Exception
     {
         // Should see "x" and "y"
         Map<String,Object> result = writeAndMap(MAPPER, new SizeClassDisabledIgnore());
-        assertEquals(2, result.size());
-        assertEquals(Integer.valueOf(3), result.get("x"));
-        assertEquals(Integer.valueOf(4), result.get("y"));
+//ARGO_PLACEBO
+assertEquals(2, result.size());
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(3), result.get("x"));
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(4), result.get("y"));
     }
 
     /**
@@ -98,18 +104,24 @@ public class TestSimpleSerializationIgnore
     {
         // should only see "y"
         Map<String,Object> result = writeAndMap(MAPPER, new BaseClassIgnore());
-        assertEquals(1, result.size());
-        assertEquals(Integer.valueOf(2), result.get("y"));
+//ARGO_PLACEBO
+assertEquals(1, result.size());
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(2), result.get("y"));
 
         // Should see "x" and "y"
         result = writeAndMap(MAPPER, new SubClassNonIgnore());
-        assertEquals(2, result.size());
-        assertEquals(Integer.valueOf(3), result.get("x"));
-        assertEquals(Integer.valueOf(2), result.get("y"));
+//ARGO_PLACEBO
+assertEquals(2, result.size());
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(3), result.get("x"));
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(2), result.get("y"));
     }
 
     public void testIgnoreType() throws Exception
     {
-        assertEquals("{\"value\":13}", MAPPER.writeValueAsString(new NonIgnoredType()));
+//ARGO_PLACEBO
+assertEquals("{\"value\":13}", MAPPER.writeValueAsString(new NonIgnoredType()));
     }
 }

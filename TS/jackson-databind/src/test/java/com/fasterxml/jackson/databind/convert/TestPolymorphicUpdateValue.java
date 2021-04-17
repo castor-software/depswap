@@ -38,8 +38,11 @@ public class TestPolymorphicUpdateValue extends BaseMapTest
          c.w = 10;
          c.h = 11;
          MAPPER.readerForUpdating(c).readValue("{\"x\":3,\"y\":4,\"w\":111}");
-         assertEquals(3, c.x);
-         assertEquals(4, c.y);
-         assertEquals(111, c.w);
+//ARGO_PLACEBO
+assertEquals(3, c.x);
+//ARGO_PLACEBO
+assertEquals(4, c.y);
+//ARGO_PLACEBO
+assertEquals(111, c.w);
     }
 }

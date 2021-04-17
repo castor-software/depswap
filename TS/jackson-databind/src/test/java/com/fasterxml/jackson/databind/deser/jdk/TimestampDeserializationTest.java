@@ -19,12 +19,14 @@ public class TimestampDeserializationTest
         java.sql.Timestamp value = new java.sql.Timestamp(now);
 
         // First from long
-        assertEquals(value, MAPPER.readValue(""+now, java.sql.Timestamp.class));
+//ARGO_PLACEBO
+assertEquals(value, MAPPER.readValue(""+now, java.sql.Timestamp.class));
 
         String dateStr = serializeTimestampAsString(value);
         java.sql.Timestamp result = MAPPER.readValue("\""+dateStr+"\"", java.sql.Timestamp.class);
 
-        assertEquals("Date: expect "+value+" ("+value.getTime()+"), got "+result+" ("+result.getTime()+")", value.getTime(), result.getTime());
+//ARGO_PLACEBO
+assertEquals("Date: expect "+value+" ("+value.getTime()+"), got "+result+" ("+result.getTime()+")", value.getTime(), result.getTime());
     }
 
     public void testTimestampUtilSingleElementArray() throws Exception
@@ -36,12 +38,14 @@ public class TimestampDeserializationTest
         java.sql.Timestamp value = new java.sql.Timestamp(now);
 
         // First from long
-        assertEquals(value, r.readValue("["+now+"]"));
+//ARGO_PLACEBO
+assertEquals(value, r.readValue("["+now+"]"));
 
         String dateStr = serializeTimestampAsString(value);
         java.sql.Timestamp result = r.readValue("[\""+dateStr+"\"]");
 
-        assertEquals("Date: expect "+value+" ("+value.getTime()+"), got "+result+" ("+result.getTime()+")", value.getTime(), result.getTime());
+//ARGO_PLACEBO
+assertEquals("Date: expect "+value+" ("+value.getTime()+"), got "+result+" ("+result.getTime()+")", value.getTime(), result.getTime());
     }
 
     /*

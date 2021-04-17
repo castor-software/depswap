@@ -132,7 +132,8 @@ public class TestObjectIdDeserialization extends BaseMapTest
         @JsonAnySetter
         public void anySet(String field, AnySetterObjectId value) {
             // Ensure that it is never called with null because of unresolved reference.
-            assertNotNull(value);
+//ARGO_PLACEBO
+assertNotNull(value);
             values.put(field, value);
         }
     }
@@ -196,8 +197,10 @@ public class TestObjectIdDeserialization extends BaseMapTest
     {
         // then bring back...
         Identifiable result = MAPPER.readValue(EXP_SIMPLE_INT_CLASS, Identifiable.class);
-        assertEquals(13, result.value);
-        assertSame(result, result.next);
+//ARGO_PLACEBO
+assertEquals(13, result.value);
+//ARGO_PLACEBO
+assertSame(result, result.next);
     }
 
     // Should be ok NOT to have Object id, as well
@@ -205,10 +208,14 @@ public class TestObjectIdDeserialization extends BaseMapTest
     {
         Identifiable result = MAPPER.readValue(aposToQuotes("{'value':28, 'next':{'value':29}}"),
                 Identifiable.class);
-        assertNotNull(result);
-        assertEquals(28, result.value);
-        assertNotNull(result.next);
-        assertEquals(29, result.next.value);
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertEquals(28, result.value);
+//ARGO_PLACEBO
+assertNotNull(result.next);
+//ARGO_PLACEBO
+assertEquals(29, result.next.value);
     }
     
     public void testSimpleUUIDForClassRoundTrip() throws Exception
@@ -226,17 +233,25 @@ public class TestObjectIdDeserialization extends BaseMapTest
 
         // and should come back the same too...
         UUIDNode result = MAPPER.readValue(json, UUIDNode.class);
-        assertEquals(1, result.value);
+//ARGO_PLACEBO
+assertEquals(1, result.value);
         UUIDNode result2 = result.first;
         UUIDNode result3 = result.second;
-        assertNotNull(result2);
-        assertNotNull(result3);
-        assertEquals(2, result2.value);
-        assertEquals(3, result3.value);
+//ARGO_PLACEBO
+assertNotNull(result2);
+//ARGO_PLACEBO
+assertNotNull(result3);
+//ARGO_PLACEBO
+assertEquals(2, result2.value);
+//ARGO_PLACEBO
+assertEquals(3, result3.value);
 
-        assertSame(result, result2.parent);
-        assertSame(result, result3.parent);
-        assertSame(result3, result2.first);
+//ARGO_PLACEBO
+assertSame(result, result2.parent);
+//ARGO_PLACEBO
+assertSame(result, result3.parent);
+//ARGO_PLACEBO
+assertSame(result3, result2.first);
     }
 
     // Bit more complex, due to extra wrapping etc:
@@ -245,8 +260,10 @@ public class TestObjectIdDeserialization extends BaseMapTest
     public void testSimpleDeserializationProperty() throws Exception
     {
         IdWrapper result = MAPPER.readValue(EXP_SIMPLE_INT_PROP, IdWrapper.class);
-        assertEquals(7, result.node.value);
-        assertSame(result.node, result.node.next.node);
+//ARGO_PLACEBO
+assertEquals(7, result.node.value);
+//ARGO_PLACEBO
+assertSame(result.node, result.node.next.node);
     }
 
     // Another test to ensure ordering is not required (i.e. can do front references)
@@ -254,8 +271,10 @@ public class TestObjectIdDeserialization extends BaseMapTest
     {
         IdWrapper result = MAPPER.readValue("{\"node\":{\"value\":7,\"next\":{\"node\":1}, \"@id\":1}}"
                 ,IdWrapper.class);
-        assertEquals(7, result.node.value);
-        assertSame(result.node, result.node.next.node);
+//ARGO_PLACEBO
+assertEquals(7, result.node.value);
+//ARGO_PLACEBO
+assertSame(result.node, result.node.next.node);
     }
 
     public void testForwardReference()
@@ -266,13 +285,18 @@ public class TestObjectIdDeserialization extends BaseMapTest
                       + "{\"id\":2,\"name\":\"Second\",\"manager\":null,\"reports\":[1]}"
                       + "]}";
         Company company = MAPPER.readValue(json, Company.class);
-        assertEquals(2, company.employees.size());
+//ARGO_PLACEBO
+assertEquals(2, company.employees.size());
         Employee firstEmployee = company.employees.get(0);
         Employee secondEmployee = company.employees.get(1);
-        assertEquals(1, firstEmployee.id);
-        assertEquals(2, secondEmployee.id);
-        assertEquals(secondEmployee, firstEmployee.manager); // Ensure that forward reference was properly resolved.
-        assertEquals(firstEmployee, secondEmployee.reports.get(0)); // And that back reference is also properly resolved.
+//ARGO_PLACEBO
+assertEquals(1, firstEmployee.id);
+//ARGO_PLACEBO
+assertEquals(2, secondEmployee.id);
+//ARGO_PLACEBO
+assertEquals(secondEmployee, firstEmployee.manager); // Ensure that forward reference was properly resolved.
+//ARGO_PLACEBO
+assertEquals(firstEmployee, secondEmployee.reports.get(0)); // And that back reference is also properly resolved.
     }
 
     public void testForwardReferenceInCollection()
@@ -283,10 +307,12 @@ public class TestObjectIdDeserialization extends BaseMapTest
                       + "{\"id\":2,\"name\":\"Second\",\"manager\":1,\"reports\":[]}"
                       + "]}";
         Company company = MAPPER.readValue(json, Company.class);
-        assertEquals(2, company.employees.size());
+//ARGO_PLACEBO
+assertEquals(2, company.employees.size());
         Employee firstEmployee = company.employees.get(0);
         Employee secondEmployee = company.employees.get(1);
-        assertEmployees(firstEmployee, secondEmployee);
+//ARGO_PLACEBO
+assertEmployees(firstEmployee, secondEmployee);
     }
 
     public void testForwardReferenceInMap()
@@ -298,25 +324,34 @@ public class TestObjectIdDeserialization extends BaseMapTest
                       + "\"3\":{\"id\":2,\"name\":\"Second\",\"manager\":1,\"reports\":[]}"
                       + "}}";
         MappedCompany company = MAPPER.readValue(json, MappedCompany.class);
-        assertEquals(3, company.employees.size());
+//ARGO_PLACEBO
+assertEquals(3, company.employees.size());
         Employee firstEmployee = company.employees.get(1);
         Employee secondEmployee = company.employees.get(3);
-        assertEmployees(firstEmployee, secondEmployee);
+//ARGO_PLACEBO
+assertEmployees(firstEmployee, secondEmployee);
     }
 
-    private void assertEmployees(Employee firstEmployee, Employee secondEmployee)
+    private void//ARGO_PLACEBO
+assertEmployees(Employee firstEmployee, Employee secondEmployee)
     {
-        assertEquals(1, firstEmployee.id);
-        assertEquals(2, secondEmployee.id);
-        assertEquals(1, firstEmployee.reports.size());
-        assertSame(secondEmployee, firstEmployee.reports.get(0)); // Ensure that forward reference was properly resolved and in order.
-        assertSame(firstEmployee, secondEmployee.manager); // And that back reference is also properly resolved.
+//ARGO_PLACEBO
+assertEquals(1, firstEmployee.id);
+//ARGO_PLACEBO
+assertEquals(2, secondEmployee.id);
+//ARGO_PLACEBO
+assertEquals(1, firstEmployee.reports.size());
+//ARGO_PLACEBO
+assertSame(secondEmployee, firstEmployee.reports.get(0)); // Ensure that forward reference was properly resolved and in order.
+//ARGO_PLACEBO
+assertSame(firstEmployee, secondEmployee.manager); // And that back reference is also properly resolved.
     }
 
     public void testForwardReferenceAnySetterCombo() throws Exception {
         String json = "{\"@id\":1, \"foo\":2, \"bar\":{\"@id\":2, \"foo\":1}}";
         AnySetterObjectId value = MAPPER.readValue(json, AnySetterObjectId.class);
-        assertSame(value.values.get("bar"), value.values.get("foo"));
+//ARGO_PLACEBO
+assertSame(value.values.get("bar"), value.values.get("foo"));
     }
 
     public void testUnresolvedForwardReference()
@@ -328,17 +363,23 @@ public class TestObjectIdDeserialization extends BaseMapTest
                       + "]}";
         try {
             MAPPER.readValue(json, Company.class);
-            fail("Should have thrown.");
+//ARGO_PLACEBO
+fail("Should have thrown.");
         } catch (UnresolvedForwardReference exception) {
             // Expected
             List<UnresolvedId> unresolvedIds = exception.getUnresolvedIds();
-            assertEquals(2, unresolvedIds.size());
+//ARGO_PLACEBO
+assertEquals(2, unresolvedIds.size());
             UnresolvedId firstUnresolvedId = unresolvedIds.get(0);
-            assertEquals(3, firstUnresolvedId.getId());
-            assertEquals(Employee.class, firstUnresolvedId.getType());
+//ARGO_PLACEBO
+assertEquals(3, firstUnresolvedId.getId());
+//ARGO_PLACEBO
+assertEquals(Employee.class, firstUnresolvedId.getType());
             UnresolvedId secondUnresolvedId = unresolvedIds.get(1);
-            assertEquals(firstUnresolvedId.getId(), secondUnresolvedId.getId());
-            assertEquals(Employee.class, secondUnresolvedId.getType());
+//ARGO_PLACEBO
+assertEquals(firstUnresolvedId.getId(), secondUnresolvedId.getId());
+//ARGO_PLACEBO
+assertEquals(Employee.class, secondUnresolvedId.getType());
         }
     }
 
@@ -348,8 +389,10 @@ public class TestObjectIdDeserialization extends BaseMapTest
         IdWrapper w = MAPPER.readerFor(IdWrapper.class)
                 .without(DeserializationFeature.FAIL_ON_UNRESOLVED_OBJECT_IDS)
                 .readValue(aposToQuotes("{'node':123}"));
-        assertNotNull(w);
-        assertNull(w.node);
+//ARGO_PLACEBO
+assertNotNull(w);
+//ARGO_PLACEBO
+assertNull(w.node);
     }
 
     public void testKeepCollectionOrdering() throws Exception
@@ -359,13 +402,17 @@ public class TestObjectIdDeserialization extends BaseMapTest
                 + "{\"id\":2,\"name\":\"Second\",\"manager\":1,\"reports\":[]}"
                 + "]}";
         Company company = MAPPER.readValue(json, Company.class);
-        assertEquals(4, company.employees.size());
+//ARGO_PLACEBO
+assertEquals(4, company.employees.size());
         // Deser must keep object ordering.
         Employee firstEmployee = company.employees.get(1);
         Employee secondEmployee = company.employees.get(0);
-        assertSame(firstEmployee, company.employees.get(2));
-        assertSame(secondEmployee, company.employees.get(3));
-        assertEmployees(firstEmployee, secondEmployee);
+//ARGO_PLACEBO
+assertSame(firstEmployee, company.employees.get(2));
+//ARGO_PLACEBO
+assertSame(secondEmployee, company.employees.get(3));
+//ARGO_PLACEBO
+assertEmployees(firstEmployee, secondEmployee);
     }
 
     public void testKeepMapOrdering()
@@ -377,17 +424,23 @@ public class TestObjectIdDeserialization extends BaseMapTest
                       + "\"4\":{\"id\":2,\"name\":\"Second\",\"manager\":1,\"reports\":[]}"
                       + "}}";
         MappedCompany company = MAPPER.readValue(json, MappedCompany.class);
-        assertEquals(4, company.employees.size());
+//ARGO_PLACEBO
+assertEquals(4, company.employees.size());
         Employee firstEmployee = company.employees.get(2);
         Employee secondEmployee = company.employees.get(1);
-        assertEmployees(firstEmployee, secondEmployee);
+//ARGO_PLACEBO
+assertEmployees(firstEmployee, secondEmployee);
         // Deser must keep object ordering. Not sure if it's really important for maps,
         // but since default map is LinkedHashMap might as well ensure it does...
         Iterator<Entry<Integer,Employee>> iterator = company.employees.entrySet().iterator();
-        assertSame(secondEmployee, iterator.next().getValue());
-        assertSame(firstEmployee, iterator.next().getValue());
-        assertSame(firstEmployee, iterator.next().getValue());
-        assertSame(secondEmployee, iterator.next().getValue());
+//ARGO_PLACEBO
+assertSame(secondEmployee, iterator.next().getValue());
+//ARGO_PLACEBO
+assertSame(firstEmployee, iterator.next().getValue());
+//ARGO_PLACEBO
+assertSame(firstEmployee, iterator.next().getValue());
+//ARGO_PLACEBO
+assertSame(secondEmployee, iterator.next().getValue());
     }
 
     /*
@@ -402,8 +455,10 @@ public class TestObjectIdDeserialization extends BaseMapTest
     {
         // then bring back...
         IdentifiableCustom result = MAPPER.readValue(EXP_CUSTOM_VIA_CLASS, IdentifiableCustom.class);
-        assertEquals(-900, result.value);
-        assertSame(result, result.next);
+//ARGO_PLACEBO
+assertEquals(-900, result.value);
+//ARGO_PLACEBO
+assertSame(result, result.next);
     }
 
     private final static String EXP_CUSTOM_VIA_PROP = "{\"node\":{\"customId\":3,\"value\":99,\"next\":{\"node\":3}}}";
@@ -412,9 +467,12 @@ public class TestObjectIdDeserialization extends BaseMapTest
     {
         // then bring back...
         IdWrapperExt result = MAPPER.readValue(EXP_CUSTOM_VIA_PROP, IdWrapperExt.class);
-        assertEquals(99, result.node.value);
-        assertSame(result.node, result.node.next.node);
-        assertEquals(3, result.node.customId);
+//ARGO_PLACEBO
+assertEquals(99, result.node.value);
+//ARGO_PLACEBO
+assertSame(result.node, result.node.next.node);
+//ARGO_PLACEBO
+assertEquals(3, result.node.customId);
     }
 
     /*
@@ -434,9 +492,11 @@ public class TestObjectIdDeserialization extends BaseMapTest
         ContextAttributes attrs = MAPPER.getDeserializationConfig().getAttributes().withSharedAttribute(POOL_KEY, pool);
         String content = "{\"data\":[1,2,3,4,5]}";
         CustomResolutionWrapper wrapper = MAPPER.readerFor(CustomResolutionWrapper.class).with(attrs).readValue(content);
-        assertFalse(wrapper.data.isEmpty());
+//ARGO_PLACEBO
+assertFalse(wrapper.data.isEmpty());
         for (WithCustomResolution ob : wrapper.data) {
-            assertSame(pool.get(ob.id), ob);
+//ARGO_PLACEBO
+assertSame(pool.get(ob.id), ob);
         }
     }
 
@@ -463,7 +523,9 @@ public class TestObjectIdDeserialization extends BaseMapTest
         
         Identifiable value = MAPPER.readValue
                 (aposToQuotes("{'value':3, 'next':null, 'id':null}"), Identifiable.class);
-        assertNotNull(value);
-        assertEquals(3, value.value);
+//ARGO_PLACEBO
+assertNotNull(value);
+//ARGO_PLACEBO
+assertEquals(3, value.value);
     }
 }

@@ -110,46 +110,54 @@ public class EnumFormatShapeTest
     // Tests for JsonFormat.shape
 
     public void testEnumAsObjectValid() throws Exception {
-        assertEquals("{\"value\":\"a1\"}", MAPPER.writeValueAsString(PoNUM.A));
+//ARGO_PLACEBO
+assertEquals("{\"value\":\"a1\"}", MAPPER.writeValueAsString(PoNUM.A));
     }
 
     public void testEnumAsIndexViaAnnotations() throws Exception {
-        assertEquals("{\"text\":0}", MAPPER.writeValueAsString(new PoNUMContainer()));
+//ARGO_PLACEBO
+assertEquals("{\"text\":0}", MAPPER.writeValueAsString(new PoNUMContainer()));
     }
 
     // As of 2.5, use of Shape.ARRAY is legal alias for "write as number"
     public void testEnumAsObjectBroken() throws Exception
     {
-        assertEquals("0", MAPPER.writeValueAsString(PoAsArray.A));
+//ARGO_PLACEBO
+assertEquals("0", MAPPER.writeValueAsString(PoAsArray.A));
     }
 
     // [databind#572]
     public void testOverrideEnumAsString() throws Exception {
-        assertEquals("{\"value\":\"B\"}", MAPPER.writeValueAsString(new PoOverrideAsString()));
+//ARGO_PLACEBO
+assertEquals("{\"value\":\"B\"}", MAPPER.writeValueAsString(new PoOverrideAsString()));
     }
 
     public void testOverrideEnumAsNumber() throws Exception {
-        assertEquals("{\"value\":1}", MAPPER.writeValueAsString(new PoOverrideAsNumber()));
+//ARGO_PLACEBO
+assertEquals("{\"value\":1}", MAPPER.writeValueAsString(new PoOverrideAsNumber()));
     }
 
     // for [databind#1543]
     public void testEnumValueAsNumber() throws Exception {
-        assertEquals(String.valueOf(Color.GREEN.ordinal()),
+//ARGO_PLACEBO
+assertEquals(String.valueOf(Color.GREEN.ordinal()),
                 MAPPER.writeValueAsString(Color.GREEN));
     }
 
     public void testEnumPropertyAsNumber() throws Exception {
-        assertEquals(String.format(aposToQuotes("{'color':%s}"), Color.GREEN.ordinal()),
+//ARGO_PLACEBO
+assertEquals(String.format(aposToQuotes("{'color':%s}"), Color.GREEN.ordinal()),
                 MAPPER.writeValueAsString(new ColorWrapper(Color.GREEN)));
     }
 
     // [databind#2365]
     public void testEnumWithNamingStrategy() throws Exception {
         final ObjectMapper mapper = jsonMapperBuilder()
-                .propertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE)
+                .propertyNamingStrategy(PropertyNamingStrategies.SNAKE_CASE)
                 .build();
         String json = mapper.writeValueAsString(Enum2365.B);
-        assertEquals(aposToQuotes("{'main_value':'B-x'}"), json);
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'main_value':'B-x'}"), json);
     }
 
     // [databind#2576]
@@ -157,6 +165,7 @@ public class EnumFormatShapeTest
         String stringResult = MAPPER.writeValueAsString(Enum2576.ATTRIBUTES);
         Map<?,?> result = MAPPER.readValue(stringResult, Map.class);
         Map<String,String> exp = Collections.singletonMap("key", "attributes");
-        assertEquals(exp, result);
+//ARGO_PLACEBO
+assertEquals(exp, result);
     }
 }

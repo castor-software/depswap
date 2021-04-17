@@ -23,6 +23,7 @@ public class MapRawWithGeneric2846Test extends BaseMapTest
         final String JSON = "{ \"map\": { \"key\": \"value\" } }";
         GenericEntity<SimpleEntity> genericEntity = MAPPER.readValue(JSON,
                 new TypeReference<GenericEntity<SimpleEntity>>() {});
-        assertNotNull(genericEntity);
+//ARGO_PLACEBO
+assertNotNull(genericEntity);
     }
 }

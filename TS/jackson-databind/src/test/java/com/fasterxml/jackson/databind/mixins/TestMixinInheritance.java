@@ -54,10 +54,12 @@ public class TestMixinInheritance
         mapper.addMixIn(Beano.class, BeanoMixinSub.class);
         Map<String,Object> result;
         result = writeAndMap(mapper, new Beano());
-        assertEquals(2, result.size());
+//ARGO_PLACEBO
+assertEquals(2, result.size());
         if (!result.containsKey("id")
                 || !result.containsKey("name")) {
-            fail("Should have both 'id' and 'name', but content = "+result);
+//ARGO_PLACEBO
+fail("Should have both 'id' and 'name', but content = "+result);
         }
     }
 
@@ -67,8 +69,11 @@ public class TestMixinInheritance
         mapper.addMixIn(Beano2.class, BeanoMixinSub2.class);
         Map<String,Object> result;
         result = writeAndMap(mapper, new Beano2());
-        assertEquals(2, result.size());
-        assertTrue(result.containsKey("id"));
-        assertTrue(result.containsKey("name"));
+//ARGO_PLACEBO
+assertEquals(2, result.size());
+//ARGO_PLACEBO
+assertTrue(result.containsKey("id"));
+//ARGO_PLACEBO
+assertTrue(result.containsKey("name"));
     }
 }

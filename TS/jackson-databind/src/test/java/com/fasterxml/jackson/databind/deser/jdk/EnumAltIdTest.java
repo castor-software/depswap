@@ -87,7 +87,8 @@ public class EnumAltIdTest extends BaseMapTest
     public void testFailWhenCaseSensitiveAndNameIsNotUpperCase() throws IOException {
         try {
             READER_DEFAULT.forType(TestEnum.class).readValue("\"Jackson\"");
-            fail("InvalidFormatException expected");
+//ARGO_PLACEBO
+fail("InvalidFormatException expected");
         } catch (InvalidFormatException e) {
             verifyException(e, "not one of the values accepted for Enum class");
             verifyException(e, "[JACKSON, OK, RULES]");
@@ -99,7 +100,8 @@ public class EnumAltIdTest extends BaseMapTest
                 .with(DeserializationFeature.READ_ENUMS_USING_TO_STRING);
         try {
             r.readValue("\"A\"");
-            fail("InvalidFormatException expected");
+//ARGO_PLACEBO
+fail("InvalidFormatException expected");
         } catch (InvalidFormatException e) {
             verifyException(e, "not one of the values accepted for Enum class");
             verifyException(e,"[a, b, c]");
@@ -107,14 +109,16 @@ public class EnumAltIdTest extends BaseMapTest
     }
 
     public void testEnumDesIgnoringCaseWithLowerCaseContent() throws IOException {
-        assertEquals(TestEnum.JACKSON,
+//ARGO_PLACEBO
+assertEquals(TestEnum.JACKSON,
                 READER_IGNORE_CASE.forType(TestEnum.class).readValue(quote("jackson")));
     }
 
     public void testEnumDesIgnoringCaseWithUpperCaseToString() throws IOException {
         ObjectReader r = MAPPER_IGNORE_CASE.readerFor(LowerCaseEnum.class)
                 .with(DeserializationFeature.READ_ENUMS_USING_TO_STRING);
-        assertEquals(LowerCaseEnum.A, r.readValue("\"A\""));
+//ARGO_PLACEBO
+assertEquals(LowerCaseEnum.A, r.readValue("\"A\""));
     }
 
     /*
@@ -127,16 +131,21 @@ public class EnumAltIdTest extends BaseMapTest
         TestEnum[] enums = READER_IGNORE_CASE.forType(TestEnum[].class)
             .readValue("[\"jacksON\", \"ruLes\"]");
 
-        assertEquals(2, enums.length);
-        assertEquals(TestEnum.JACKSON, enums[0]);
-        assertEquals(TestEnum.RULES, enums[1]);
+//ARGO_PLACEBO
+assertEquals(2, enums.length);
+//ARGO_PLACEBO
+assertEquals(TestEnum.JACKSON, enums[0]);
+//ARGO_PLACEBO
+assertEquals(TestEnum.RULES, enums[1]);
     }
 
     public void testIgnoreCaseInEnumSet() throws IOException {
         ObjectReader r = READER_IGNORE_CASE.forType(new TypeReference<EnumSet<TestEnum>>() { });
         EnumSet<TestEnum> set = r.readValue("[\"jackson\"]");
-        assertEquals(1, set.size());
-        assertTrue(set.contains(TestEnum.JACKSON));
+//ARGO_PLACEBO
+assertEquals(1, set.size());
+//ARGO_PLACEBO
+assertTrue(set.contains(TestEnum.JACKSON));
     }
 
     /*
@@ -152,13 +161,15 @@ public class EnumAltIdTest extends BaseMapTest
         // should be able to allow on per-case basis:
         EnumBean pojo = READER_DEFAULT.forType(EnumBean.class)
             .readValue(JSON);
-        assertEquals(TestEnum.OK, pojo.value);
+//ARGO_PLACEBO
+assertEquals(TestEnum.OK, pojo.value);
 
         // including disabling acceptance
         try {
             READER_DEFAULT.forType(StrictCaseBean.class)
                     .readValue(JSON);
-            fail("Should not pass");
+//ARGO_PLACEBO
+fail("Should not pass");
         } catch (InvalidFormatException e) {
             verifyException(e, "not one of the values accepted for Enum class");
             verifyException(e, "[JACKSON, OK, RULES]");
@@ -175,13 +186,17 @@ public class EnumAltIdTest extends BaseMapTest
     public void testEnumWithAlias() throws Exception {
         ObjectReader reader = MAPPER.readerFor(MyEnum2352_1.class);
         MyEnum2352_1 nonAliased = reader.readValue(quote("A"));
-        assertEquals(MyEnum2352_1.A, nonAliased);
+//ARGO_PLACEBO
+assertEquals(MyEnum2352_1.A, nonAliased);
         MyEnum2352_1 singleAlias = reader.readValue(quote("singleAlias"));
-        assertEquals(MyEnum2352_1.B, singleAlias);
+//ARGO_PLACEBO
+assertEquals(MyEnum2352_1.B, singleAlias);
         MyEnum2352_1 multipleAliases1 = reader.readValue(quote("multipleAliases1"));
-        assertEquals(MyEnum2352_1.C, multipleAliases1);
+//ARGO_PLACEBO
+assertEquals(MyEnum2352_1.C, multipleAliases1);
         MyEnum2352_1 multipleAliases2 = reader.readValue(quote("multipleAliases2"));
-        assertEquals(MyEnum2352_1.C, multipleAliases2);
+//ARGO_PLACEBO
+assertEquals(MyEnum2352_1.C, multipleAliases2);
     }
 
     // for [databind#2352]
@@ -189,13 +204,17 @@ public class EnumAltIdTest extends BaseMapTest
         ObjectReader reader = MAPPER.readerFor(MyEnum2352_2.class)
                 .with(DeserializationFeature.READ_ENUMS_USING_TO_STRING);
         MyEnum2352_2 nonAliased = reader.readValue(quote("a"));
-        assertEquals(MyEnum2352_2.A, nonAliased);
+//ARGO_PLACEBO
+assertEquals(MyEnum2352_2.A, nonAliased);
         MyEnum2352_2 singleAlias = reader.readValue(quote("singleAlias"));
-        assertEquals(MyEnum2352_2.B, singleAlias);
+//ARGO_PLACEBO
+assertEquals(MyEnum2352_2.B, singleAlias);
         MyEnum2352_2 multipleAliases1 = reader.readValue(quote("multipleAliases1"));
-        assertEquals(MyEnum2352_2.C, multipleAliases1);
+//ARGO_PLACEBO
+assertEquals(MyEnum2352_2.C, multipleAliases1);
         MyEnum2352_2 multipleAliases2 = reader.readValue(quote("multipleAliases2"));
-        assertEquals(MyEnum2352_2.C, multipleAliases2);
+//ARGO_PLACEBO
+assertEquals(MyEnum2352_2.C, multipleAliases2);
     }
 
     // for [databind#2352]
@@ -203,14 +222,19 @@ public class EnumAltIdTest extends BaseMapTest
         ObjectReader reader = MAPPER.readerFor(MyEnum2352_3.class)
                 .with(DeserializationFeature.READ_UNKNOWN_ENUM_VALUES_USING_DEFAULT_VALUE);
         MyEnum2352_3 nonAliased = reader.readValue(quote("A"));
-        assertEquals(MyEnum2352_3.A, nonAliased);
+//ARGO_PLACEBO
+assertEquals(MyEnum2352_3.A, nonAliased);
         MyEnum2352_3 singleAlias = reader.readValue(quote("singleAlias"));
-        assertEquals(MyEnum2352_3.B, singleAlias);
+//ARGO_PLACEBO
+assertEquals(MyEnum2352_3.B, singleAlias);
         MyEnum2352_3 defaulted = reader.readValue(quote("unknownValue"));
-        assertEquals(MyEnum2352_3.B, defaulted);
+//ARGO_PLACEBO
+assertEquals(MyEnum2352_3.B, defaulted);
         MyEnum2352_3 multipleAliases1 = reader.readValue(quote("multipleAliases1"));
-        assertEquals(MyEnum2352_3.C, multipleAliases1);
+//ARGO_PLACEBO
+assertEquals(MyEnum2352_3.C, multipleAliases1);
         MyEnum2352_3 multipleAliases2 = reader.readValue(quote("multipleAliases2"));
-        assertEquals(MyEnum2352_3.C, multipleAliases2);
+//ARGO_PLACEBO
+assertEquals(MyEnum2352_3.C, multipleAliases2);
     }
 }

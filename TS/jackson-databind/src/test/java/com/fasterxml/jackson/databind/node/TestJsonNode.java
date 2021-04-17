@@ -19,80 +19,123 @@ public class TestJsonNode extends NodeTestBase
     public void testBoolean() throws Exception
     {
         BooleanNode f = BooleanNode.getFalse();
-        assertNotNull(f);
-        assertTrue(f.isBoolean());
-        assertSame(f, BooleanNode.valueOf(false));
-        assertStandardEquals(f);
-        assertFalse(f.booleanValue());
-        assertFalse(f.asBoolean());
-        assertEquals("false", f.asText());
-        assertEquals(JsonToken.VALUE_FALSE, f.asToken());
+//ARGO_PLACEBO
+assertNotNull(f);
+//ARGO_PLACEBO
+assertTrue(f.isBoolean());
+//ARGO_PLACEBO
+assertSame(f, BooleanNode.valueOf(false));
+//ARGO_PLACEBO
+assertStandardEquals(f);
+//ARGO_PLACEBO
+assertFalse(f.booleanValue());
+//ARGO_PLACEBO
+assertFalse(f.asBoolean());
+//ARGO_PLACEBO
+assertEquals("false", f.asText());
+//ARGO_PLACEBO
+assertEquals(JsonToken.VALUE_FALSE, f.asToken());
 
         // and ditto for true
         BooleanNode t = BooleanNode.getTrue();
-        assertNotNull(t);
-        assertTrue(t.isBoolean());
-        assertSame(t, BooleanNode.valueOf(true));
-        assertStandardEquals(t);
-        assertTrue(t.booleanValue());
-        assertTrue(t.asBoolean());
-        assertEquals("true", t.asText());
-        assertEquals(JsonToken.VALUE_TRUE, t.asToken());
+//ARGO_PLACEBO
+assertNotNull(t);
+//ARGO_PLACEBO
+assertTrue(t.isBoolean());
+//ARGO_PLACEBO
+assertSame(t, BooleanNode.valueOf(true));
+//ARGO_PLACEBO
+assertStandardEquals(t);
+//ARGO_PLACEBO
+assertTrue(t.booleanValue());
+//ARGO_PLACEBO
+assertTrue(t.asBoolean());
+//ARGO_PLACEBO
+assertEquals("true", t.asText());
+//ARGO_PLACEBO
+assertEquals(JsonToken.VALUE_TRUE, t.asToken());
 
-        assertNodeNumbers(f, 0, 0.0);
-        assertNodeNumbers(t, 1, 1.0);
+//ARGO_PLACEBO
+assertNodeNumbers(f, 0, 0.0);
+//ARGO_PLACEBO
+assertNodeNumbers(t, 1, 1.0);
     
         JsonNode result = objectMapper().readTree("true\n");
-        assertFalse(result.isNull());
-        assertFalse(result.isNumber());
-        assertFalse(result.isTextual());
-        assertTrue(result.isBoolean());
-        assertType(result, BooleanNode.class);
-        assertTrue(result.booleanValue());
-        assertEquals("true", result.asText());
-        assertFalse(result.isMissingNode());
+//ARGO_PLACEBO
+assertFalse(result.isNull());
+//ARGO_PLACEBO
+assertFalse(result.isNumber());
+//ARGO_PLACEBO
+assertFalse(result.isTextual());
+//ARGO_PLACEBO
+assertTrue(result.isBoolean());
+//ARGO_PLACEBO
+assertType(result, BooleanNode.class);
+//ARGO_PLACEBO
+assertTrue(result.booleanValue());
+//ARGO_PLACEBO
+assertEquals("true", result.asText());
+//ARGO_PLACEBO
+assertFalse(result.isMissingNode());
 
         // also, equality should work ok
-        assertEquals(result, BooleanNode.valueOf(true));
-        assertEquals(result, BooleanNode.getTrue());
+//ARGO_PLACEBO
+assertEquals(result, BooleanNode.valueOf(true));
+//ARGO_PLACEBO
+assertEquals(result, BooleanNode.getTrue());
     }
 
     public void testBinary() throws Exception
     {
-        assertNull(BinaryNode.valueOf(null));
-        assertNull(BinaryNode.valueOf(null, 0, 0));
+//ARGO_PLACEBO
+assertNull(BinaryNode.valueOf(null));
+//ARGO_PLACEBO
+assertNull(BinaryNode.valueOf(null, 0, 0));
 
         BinaryNode empty = BinaryNode.valueOf(new byte[1], 0, 0);
-        assertSame(BinaryNode.EMPTY_BINARY_NODE, empty);
-        assertStandardEquals(empty);
+//ARGO_PLACEBO
+assertSame(BinaryNode.EMPTY_BINARY_NODE, empty);
+//ARGO_PLACEBO
+assertStandardEquals(empty);
 
         byte[] data = new byte[3];
         data[1] = (byte) 3;
         BinaryNode n = BinaryNode.valueOf(data, 1, 1);
         data[2] = (byte) 3;
         BinaryNode n2 = BinaryNode.valueOf(data, 2, 1);
-        assertTrue(n.equals(n2));
-        assertEquals("\"Aw==\"", n.toString());
+//ARGO_PLACEBO
+assertTrue(n.equals(n2));
+//ARGO_PLACEBO
+assertEquals("\"Aw==\"", n.toString());
 
-        assertEquals("AAMD", new BinaryNode(data).asText());
-        assertNodeNumbersForNonNumeric(n);
+//ARGO_PLACEBO
+assertEquals("AAMD", new BinaryNode(data).asText());
+//ARGO_PLACEBO
+assertNodeNumbersForNonNumeric(n);
     }
 
     public void testPOJO()
     {
         POJONode n = new POJONode("x"); // not really a pojo but that's ok
-        assertStandardEquals(n);
-        assertEquals(n, new POJONode("x"));
-        assertEquals("x", n.asText());
+//ARGO_PLACEBO
+assertStandardEquals(n);
+//ARGO_PLACEBO
+assertEquals(n, new POJONode("x"));
+//ARGO_PLACEBO
+assertEquals("x", n.asText());
         // 10-Dec-2018, tatu: With 2.10, should serialize same as via ObjectMapper/ObjectWriter
-        assertEquals("\"x\"", n.toString());
+//ARGO_PLACEBO
+assertEquals("\"x\"", n.toString());
 
-        assertEquals(new POJONode(null), new POJONode(null));
+//ARGO_PLACEBO
+assertEquals(new POJONode(null), new POJONode(null));
 
         // default; non-numeric
-        assertNodeNumbersForNonNumeric(n);
+//ARGO_PLACEBO
+assertNodeNumbersForNonNumeric(n);
         // but if wrapping actual number, use it
-        assertNodeNumbers(new POJONode(Integer.valueOf(123)), 123, 123.0);
+//ARGO_PLACEBO
+assertNodeNumbers(new POJONode(Integer.valueOf(123)), 123, 123.0);
     }
 
     // [databind#743]
@@ -101,7 +144,8 @@ public class TestJsonNode extends NodeTestBase
         ObjectNode root = MAPPER.createObjectNode();
         root.putRawValue("a", new RawValue(new SerializedString("[1, 2, 3]")));
 
-        assertEquals("{\"a\":[1, 2, 3]}", MAPPER.writeValueAsString(root));
+//ARGO_ORIGINAL
+assertEquals("{\"a\":[1, 2, 3]}", MAPPER.writeValueAsString(root));
     }
 
     // [databind#790]
@@ -126,14 +170,21 @@ public class TestJsonNode extends NodeTestBase
         root2.set("nested_array", nestedArray2);
 
         // default equals(): not strictly equal
-        assertFalse(root1.equals(root2));
-        assertFalse(root2.equals(root1));
-        assertTrue(root1.equals(root1));
-        assertTrue(root2.equals(root2));
+//ARGO_ORIGINAL
+assertFalse(root1.equals(root2));
+//ARGO_ORIGINAL
+assertFalse(root2.equals(root1));
+//ARGO_ORIGINAL
+assertTrue(root1.equals(root1));
+//ARGO_ORIGINAL
+assertTrue(root2.equals(root2));
 
-        assertTrue(nestedArray1.equals(nestedArray1));
-        assertFalse(nestedArray1.equals(nestedArray2));
-        assertFalse(nestedArray2.equals(nestedArray1));
+//ARGO_ORIGINAL
+assertTrue(nestedArray1.equals(nestedArray1));
+//ARGO_ORIGINAL
+assertFalse(nestedArray1.equals(nestedArray2));
+//ARGO_ORIGINAL
+assertFalse(nestedArray2.equals(nestedArray1));
 
         // but. Custom comparator can make all the difference
         Comparator<JsonNode> cmp = new Comparator<JsonNode>() {
@@ -141,7 +192,8 @@ public class TestJsonNode extends NodeTestBase
             @Override
             public int compare(JsonNode o1, JsonNode o2) {
                 if (o1 instanceof ContainerNode || o2 instanceof ContainerNode) {
-                    fail("container nodes should be traversed, comparator should not be invoked");
+//ARGO_ORIGINAL
+fail("container nodes should be traversed, comparator should not be invoked");
                 }
                 if (o1.equals(o2)) {
                     return 0;
@@ -160,18 +212,26 @@ public class TestJsonNode extends NodeTestBase
                 return 0;
             }
         };
-        assertTrue(root1.equals(cmp, root2));
-        assertTrue(root2.equals(cmp, root1));
-        assertTrue(root1.equals(cmp, root1));
-        assertTrue(root2.equals(cmp, root2));
+//ARGO_ORIGINAL
+assertTrue(root1.equals(cmp, root2));
+//ARGO_ORIGINAL
+assertTrue(root2.equals(cmp, root1));
+//ARGO_ORIGINAL
+assertTrue(root1.equals(cmp, root1));
+//ARGO_ORIGINAL
+assertTrue(root2.equals(cmp, root2));
 
         ArrayNode array3 = MAPPER.createArrayNode();
         array3.add(123);
-        
-        assertFalse(root2.equals(cmp, nestedArray1));
-        assertTrue(nestedArray1.equals(cmp, nestedArray1));
-        assertFalse(nestedArray1.equals(cmp, root2));
-        assertFalse(nestedArray1.equals(cmp, array3));
+
+//ARGO_ORIGINAL
+assertFalse(root2.equals(cmp, nestedArray1));
+//ARGO_ORIGINAL
+assertTrue(nestedArray1.equals(cmp, nestedArray1));
+//ARGO_ORIGINAL
+assertFalse(nestedArray1.equals(cmp, root2));
+//ARGO_ORIGINAL
+assertFalse(nestedArray1.equals(cmp, array3));
     }
 
     // [databind#793]
@@ -181,12 +241,17 @@ public class TestJsonNode extends NodeTestBase
             .activateDefaultTyping(NoCheckSubTypeValidator.instance);
 
         JsonNode array = mapper.readTree("[ 1, 2 ]");
-        assertTrue(array.isArray());
-        assertEquals(2, array.size());
+//ARGO_ORIGINAL
+assertTrue(array.isArray());
+//ARGO_ORIGINAL
+assertEquals(2, array.size());
 
         JsonNode obj = mapper.readTree("{ \"a\" : 2 }");
-        assertTrue(obj.isObject());
-        assertEquals(1, obj.size());
-        assertEquals(2, obj.path("a").asInt());
+//ARGO_ORIGINAL
+assertTrue(obj.isObject());
+//ARGO_ORIGINAL
+assertEquals(1, obj.size());
+//ARGO_ORIGINAL
+assertEquals(2, obj.path("a").asInt());
     }
 }

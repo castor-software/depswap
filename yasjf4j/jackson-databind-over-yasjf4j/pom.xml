@@ -11,7 +11,7 @@
   <artifactId>jackson-databind-over-yasjf4j</artifactId>
   <version>1.0-SNAPSHOT</version>
   <packaging>bundle</packaging>
-  <name>jackson-databind</name>
+  <name>jackson-databind-over-yasjf4j</name>
   <description>General data-binding functionality for Jackson: works on core streaming API</description>
   <url>http://github.com/FasterXML/jackson</url>
   <inceptionYear>2008</inceptionYear>
@@ -39,6 +39,12 @@
   </properties>
   <dependencies>
     <dependency>
+      <groupId>se.kth.castor</groupId>
+      <artifactId>yasjf4j-json</artifactId>
+      <version>1.0-SNAPSHOT</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-annotations</artifactId>
       <version>${jackson.version.annotations}</version>
@@ -57,12 +63,6 @@
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-lang3</artifactId>
       <version>3.7</version>
-    </dependency>
-    <dependency>
-      <groupId>se.kth.castor</groupId>
-      <artifactId>yasjf4j-jackson-databind</artifactId>
-      <version>1.0-SNAPSHOT</version>
-      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.powermock</groupId>

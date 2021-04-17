@@ -11,6 +11,9 @@ import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.exc.MismatchedInputException;
 
+import static com.fasterxml.jackson.databind.JSONTestUtils.//ARGO_ORIGINAL
+assertEquivalent;
+
 /**
  * Additional tests for {@link ObjectNode} container class.
  */
@@ -77,127 +80,212 @@ public class ObjectNodeTest
         JsonNode root = MAPPER.readTree(JSON);
 
         // basic properties first:
-        assertFalse(root.isValueNode());
-        assertTrue(root.isContainerNode());
-        assertFalse(root.isArray());
-        assertTrue(root.isObject());
-        assertEquals(2, root.size());
-        assertFalse(root.isEmpty());
+//ARGO_ORIGINAL
+assertFalse(root.isValueNode());
+//ARGO_ORIGINAL
+assertTrue(root.isContainerNode());
+//ARGO_ORIGINAL
+assertFalse(root.isArray());
+//ARGO_ORIGINAL
+assertTrue(root.isObject());
+//ARGO_ORIGINAL
+assertEquals(2, root.size());
+//ARGO_ORIGINAL
+assertFalse(root.isEmpty());
 
         Iterator<JsonNode> it = root.iterator();
-        assertNotNull(it);
-        assertTrue(it.hasNext());
+//ARGO_ORIGINAL
+assertNotNull(it);
+//ARGO_ORIGINAL
+assertTrue(it.hasNext());
         JsonNode n = it.next();
-        assertNotNull(n);
-        assertEquals(IntNode.valueOf(1), n);
+//ARGO_ORIGINAL
+assertNotNull(n);
+//ARGO_ORDER
+        //assertEquivalent(IntNode.valueOf(1), n);
+//ARGO_ORIGINAL
+assertTrue(n.asText("ERROR").equals("x") || n.asInt(0) == 1);
 
-        assertTrue(it.hasNext());
+//ARGO_ORIGINAL
+assertTrue(it.hasNext());
         n = it.next();
-        assertNotNull(n);
-        assertEquals(TextNode.valueOf("x"), n);
+//ARGO_ORIGINAL
+assertNotNull(n);
+        //ARGO_ORDER
+//assertEquals(TextNode.valueOf("x"), n);
+//ARGO_ORIGINAL
+assertTrue(n.asText("ERROR").equals("x") || n.asInt(0) == 1);
 
-        assertFalse(it.hasNext());
+//ARGO_ORIGINAL
+assertFalse(it.hasNext());
 
         // Ok, then, let's traverse via extended interface
         ObjectNode obNode = (ObjectNode) root;
         Iterator<Map.Entry<String,JsonNode>> fit = obNode.fields();
         // we also know that LinkedHashMap is used, i.e. order preserved
-        assertTrue(fit.hasNext());
+//ARGO_ORIGINAL
+assertTrue(fit.hasNext());
         Map.Entry<String,JsonNode> en = fit.next();
-        assertEquals("key", en.getKey());
-        assertEquals(IntNode.valueOf(1), en.getValue());
+//ARGO_ORIGINAL
+assertTrue(
+                (en.getKey().equals("key") && en.getValue().equals(IntNode.valueOf(1))) ||
+                (en.getKey().equals("b") && en.getValue().equals(TextNode.valueOf("x")))
+            );
+        //ARGO_ORDER
+//assertEquals("key", en.getKey());
+        //ARGO_ORDER
+//assertEquals(IntNode.valueOf(1), en.getValue());
 
-        assertTrue(fit.hasNext());
+//ARGO_ORIGINAL
+assertTrue(fit.hasNext());
         en = fit.next();
-        assertEquals("b", en.getKey());
-        assertEquals(TextNode.valueOf("x"), en.getValue());
+//ARGO_ORIGINAL
+assertTrue(
+                (en.getKey().equals("key") && en.getValue().equals(IntNode.valueOf(1))) ||
+                        (en.getKey().equals("b") && en.getValue().equals(TextNode.valueOf("x")))
+        );
+        //ARGO_ORDER
+//assertEquals("b", en.getKey());
+        //ARGO_ORDER
+//assertEquals(TextNode.valueOf("x"), en.getValue());
 
         // Plus: we should be able to modify the node via iterator too:
         fit.remove();
-        assertEquals(1, obNode.size());
-        assertEquals(IntNode.valueOf(1), root.get("key"));
-        assertNull(root.get("b"));
+//ARGO_ORIGINAL
+assertEquals(1, obNode.size());
+        //ARGO_ORDER
+//assertEquals(IntNode.valueOf(1), root.get("key"));
+//ARGO_ORIGINAL
+assertTrue(
+                (IntNode.valueOf(1).equals(root.get("key")) && root.get("b") == null) ||
+                        (TextNode.valueOf("x").equals(root.get("b")) && root.get("key") == null)
+        );
+        //ARGO_ORDER
+//assertNull(root.get("b"));
     }    
     // for [databind#346]
     public void testEmptyNodeAsValue() throws Exception
     {
         Data w = MAPPER.readValue("{}", Data.class);
-        assertNotNull(w);
+//ARGO_ORIGINAL
+assertNotNull(w);
     }
     
     public void testBasics()
     {
         ObjectNode n = new ObjectNode(JsonNodeFactory.instance);
-        assertStandardEquals(n);
-        assertTrue(n.isEmpty());
+//ARGO_ORIGINAL
+assertStandardEquals(n);
+//ARGO_ORIGINAL
+assertTrue(n.isEmpty());
         
-        assertFalse(n.elements().hasNext());
-        assertFalse(n.fields().hasNext());
-        assertFalse(n.fieldNames().hasNext());
-        assertNull(n.get("a"));
-        assertTrue(n.path("a").isMissingNode());
+//ARGO_ORIGINAL
+assertFalse(n.elements().hasNext());
+//ARGO_ORIGINAL
+assertFalse(n.fields().hasNext());
+//ARGO_ORIGINAL
+assertFalse(n.fieldNames().hasNext());
+//ARGO_ORIGINAL
+assertNull(n.get("a"));
+//ARGO_ORIGINAL
+assertTrue(n.path("a").isMissingNode());
 
         TextNode text = TextNode.valueOf("x");
-        assertSame(n, n.set("a", text));
+//ARGO_ORIGINAL
+assertSame(n, n.set("a", text));
         
-        assertEquals(1, n.size());
-        assertTrue(n.elements().hasNext());
-        assertTrue(n.fields().hasNext());
-        assertTrue(n.fieldNames().hasNext());
-        assertSame(text, n.get("a"));
-        assertSame(text, n.path("a"));
-        assertNull(n.get("b"));
-        assertNull(n.get(0)); // not used with objects
+//ARGO_ORIGINAL
+assertEquals(1, n.size());
+//ARGO_ORIGINAL
+assertTrue(n.elements().hasNext());
+//ARGO_ORIGINAL
+assertTrue(n.fields().hasNext());
+//ARGO_ORIGINAL
+assertTrue(n.fieldNames().hasNext());
+//ARGO_ORIGINAL
+assertEquals(text.asText(), n.get("a").asText());
+//ARGO_ORIGINAL
+assertEquals(text.asText(), n.path("a").asText());
+//ARGO_EQUIVALENT
+        assertEquivalent(text, n.get("a"));
+        //ARGO_EQUIVALENT
+        assertEquivalent(text, n.path("a"));
+//ARGO_ORIGINAL
+assertNull(n.get("b"));
+//ARGO_ORIGINAL
+assertNull(n.get(0)); // not used with objects
 
-        assertFalse(n.has(0));
-        assertFalse(n.hasNonNull(0));
-        assertTrue(n.has("a"));
-        assertTrue(n.hasNonNull("a"));
-        assertFalse(n.has("b"));
-        assertFalse(n.hasNonNull("b"));
+//ARGO_ORIGINAL
+assertFalse(n.has(0));
+//ARGO_ORIGINAL
+assertFalse(n.hasNonNull(0));
+//ARGO_ORIGINAL
+assertTrue(n.has("a"));
+//ARGO_ORIGINAL
+assertTrue(n.hasNonNull("a"));
+//ARGO_ORIGINAL
+assertFalse(n.has("b"));
+//ARGO_ORIGINAL
+assertFalse(n.hasNonNull("b"));
 
         ObjectNode n2 = new ObjectNode(JsonNodeFactory.instance);
         n2.put("b", 13);
-        assertFalse(n.equals(n2));
+//ARGO_ORIGINAL
+assertFalse(n.equals(n2));
         n.setAll(n2);
         
-        assertEquals(2, n.size());
+//ARGO_ORIGINAL
+assertEquals(2, n.size());
         n.set("null", (JsonNode)null);
-        assertEquals(3, n.size());
+//ARGO_ORIGINAL
+assertEquals(3, n.size());
         // may be non-intuitive, but explicit nulls do exist in tree:
-        assertTrue(n.has("null"));
-        assertFalse(n.hasNonNull("null"));
+//ARGO_ORIGINAL
+assertTrue(n.has("null"));
+//ARGO_ORIGINAL
+assertFalse(n.hasNonNull("null"));
         // should replace, not add
         n.put("null", "notReallNull");
-        assertEquals(3, n.size());
-        assertNotNull(n.remove("null"));
-        assertEquals(2, n.size());
+//ARGO_ORIGINAL
+assertEquals(3, n.size());
+//ARGO_ORIGINAL
+assertNotNull(n.remove("null"));
+//ARGO_ORIGINAL
+assertEquals(2, n.size());
 
         Map<String,JsonNode> nodes = new HashMap<String,JsonNode>();
         nodes.put("d", text);
         n.setAll(nodes);
-        assertEquals(3, n.size());
+//ARGO_ORIGINAL
+assertEquals(3, n.size());
 
         n.removeAll();
-        assertEquals(0, n.size());
+//ARGO_ORIGINAL
+assertEquals(0, n.size());
     }
 
     public void testBigNumbers()
     {
         ObjectNode n = new ObjectNode(JsonNodeFactory.instance);
-        assertStandardEquals(n);
+//ARGO_ORIGINAL
+assertStandardEquals(n);
         BigInteger I = BigInteger.valueOf(3);
         BigDecimal DEC = new BigDecimal("0.1");
 
         n.put("a", DEC);
         n.put("b", I);
 
-        assertEquals(2, n.size());
+//ARGO_ORIGINAL
+assertEquals(2, n.size());
 
-        assertTrue(n.path("a").isBigDecimal());
-        assertEquals(DEC, n.get("a").decimalValue());
-        assertTrue(n.path("b").isBigInteger());
-        assertEquals(I, n.get("b").bigIntegerValue());
+//ARGO_ORIGINAL
+assertTrue(n.path("a").isBigDecimal());
+//ARGO_ORIGINAL
+assertEquals(DEC, n.get("a").decimalValue());
+//ARGO_ORIGINAL
+assertTrue(n.path("b").isBigInteger());
+//ARGO_ORIGINAL
+assertEquals(I, n.get("b").bigIntegerValue());
     }
 
     /**
@@ -209,31 +297,42 @@ public class ObjectNodeTest
         ObjectNode o2 = JsonNodeFactory.instance.objectNode();
         // used to throw NPE before fix:
         o1.setAll(o2);
-        assertEquals(0, o1.size());
-        assertEquals(0, o2.size());
+//ARGO_ORIGINAL
+assertEquals(0, o1.size());
+//ARGO_ORIGINAL
+assertEquals(0, o2.size());
 
         // also: nulls should be converted to NullNodes...
         o1.set("x", null);
         JsonNode n = o1.get("x");
-        assertNotNull(n);
-        assertSame(n, NullNode.instance);
+//ARGO_ORIGINAL
+assertNotNull(n);
+//ARGO_ORIGINAL
+assertSame(n, NullNode.instance);
 
         o1.put("str", (String) null);
         n = o1.get("str");
-        assertNotNull(n);
-        assertSame(n, NullNode.instance);
+//ARGO_ORIGINAL
+assertNotNull(n);
+//ARGO_ORIGINAL
+assertSame(n, NullNode.instance);
 
         o1.put("d", (BigDecimal) null);
         n = o1.get("d");
-        assertNotNull(n);
-        assertSame(n, NullNode.instance);
+//ARGO_ORIGINAL
+assertNotNull(n);
+//ARGO_ORIGINAL
+assertSame(n, NullNode.instance);
 
         o1.put("3", (BigInteger) null);
         n = o1.get("3");
-        assertNotNull(3);
-        assertSame(n, NullNode.instance);
+//ARGO_ORIGINAL
+assertNotNull(3);
+//ARGO_ORIGINAL
+assertSame(n, NullNode.instance);
 
-        assertEquals(4, o1.size());
+//ARGO_ORIGINAL
+assertEquals(4, o1.size());
     }
 
     /**
@@ -253,10 +352,14 @@ public class ObjectNodeTest
         ob.put("a", "a");
         ob.put("b", "b");
         ob.put("c", "c");
-        assertEquals(3, ob.size());
-        assertSame(ob, ob.without(Arrays.asList("a", "c")));
-        assertEquals(1, ob.size());
-        assertEquals("b", ob.get("b").textValue());
+//ARGO_ORIGINAL
+assertEquals(3, ob.size());
+//ARGO_ORIGINAL
+assertSame(ob, ob.without(Arrays.asList("a", "c")));
+//ARGO_ORIGINAL
+assertEquals(1, ob.size());
+//ARGO_ORIGINAL
+assertEquals("b", ob.get("b").textValue());
     }
 
     public void testRetain()
@@ -265,30 +368,42 @@ public class ObjectNodeTest
         ob.put("a", "a");
         ob.put("b", "b");
         ob.put("c", "c");
-        assertEquals(3, ob.size());
-        assertSame(ob, ob.retain("a", "c"));
-        assertEquals(2, ob.size());
-        assertEquals("a", ob.get("a").textValue());
-        assertNull(ob.get("b"));
-        assertEquals("c", ob.get("c").textValue());
+//ARGO_ORIGINAL
+assertEquals(3, ob.size());
+//ARGO_ORIGINAL
+assertSame(ob, ob.retain("a", "c"));
+//ARGO_ORIGINAL
+assertEquals(2, ob.size());
+//ARGO_ORIGINAL
+assertEquals("a", ob.get("a").textValue());
+//ARGO_ORIGINAL
+assertNull(ob.get("b"));
+//ARGO_ORIGINAL
+assertEquals("c", ob.get("c").textValue());
     }
 
     public void testValidWith() throws Exception
     {
         ObjectNode root = MAPPER.createObjectNode();
-        assertEquals("{}", MAPPER.writeValueAsString(root));
+//ARGO_ORIGINAL
+assertEquals("{}", MAPPER.writeValueAsString(root));
         JsonNode child = root.with("prop");
-        assertTrue(child instanceof ObjectNode);
-        assertEquals("{\"prop\":{}}", MAPPER.writeValueAsString(root));
+//ARGO_ORIGINAL
+assertTrue(child instanceof ObjectNode);
+//ARGO_ORIGINAL
+assertEquals("{\"prop\":{}}", MAPPER.writeValueAsString(root));
     }
 
     public void testValidWithArray() throws Exception
     {
         JsonNode root = MAPPER.createObjectNode();
-        assertEquals("{}", MAPPER.writeValueAsString(root));
+//ARGO_ORIGINAL
+assertEquals("{}", MAPPER.writeValueAsString(root));
         ArrayNode child = root.withArray("arr");
-        assertTrue(child instanceof ArrayNode);
-        assertEquals("{\"arr\":[]}", MAPPER.writeValueAsString(root));
+//ARGO_ORIGINAL
+assertTrue(child instanceof ArrayNode);
+//ARGO_ORIGINAL
+assertEquals("{\"arr\":[]}", MAPPER.writeValueAsString(root));
     }
 
     public void testInvalidWith() throws Exception
@@ -296,7 +411,8 @@ public class ObjectNodeTest
         JsonNode root = MAPPER.createArrayNode();
         try { // should not work for non-ObjectNode nodes:
             root.with("prop");
-            fail("Expected exception");
+//ARGO_ORIGINAL
+fail("Expected exception");
         } catch (UnsupportedOperationException e) {
             verifyException(e, "not of type ObjectNode");
         }
@@ -305,7 +421,8 @@ public class ObjectNodeTest
         root2.put("prop", 13);
         try { // should not work for non-ObjectNode nodes:
             root2.with("prop");
-            fail("Expected exception");
+//ARGO_ORIGINAL
+fail("Expected exception");
         } catch (UnsupportedOperationException e) {
             verifyException(e, "has value that is not");
         }
@@ -316,7 +433,8 @@ public class ObjectNodeTest
         JsonNode root = MAPPER.createArrayNode();
         try { // should not work for non-ObjectNode nodes:
             root.withArray("prop");
-            fail("Expected exception");
+//ARGO_ORIGINAL
+fail("Expected exception");
         } catch (UnsupportedOperationException e) {
             verifyException(e, "not of type ObjectNode");
         }
@@ -325,7 +443,8 @@ public class ObjectNodeTest
         root2.put("prop", 13);
         try { // should not work for non-ObjectNode nodes:
             root2.withArray("prop");
-            fail("Expected exception");
+//ARGO_ORIGINAL
+fail("Expected exception");
         } catch (UnsupportedOperationException e) {
             verifyException(e, "has value that is not");
         }
@@ -334,38 +453,53 @@ public class ObjectNodeTest
     public void testSetAll() throws Exception
     {
         ObjectNode root = MAPPER.createObjectNode();
-        assertEquals(0, root.size());
+//ARGO_ORIGINAL
+assertEquals(0, root.size());
         HashMap<String,JsonNode> map = new HashMap<String,JsonNode>();
         map.put("a", root.numberNode(1));
         root.setAll(map);
-        assertEquals(1, root.size());
-        assertTrue(root.has("a"));
-        assertFalse(root.has("b"));
+//ARGO_ORIGINAL
+assertEquals(1, root.size());
+//ARGO_ORIGINAL
+assertTrue(root.has("a"));
+//ARGO_ORIGINAL
+assertFalse(root.has("b"));
 
         map.put("b", root.numberNode(2));
         root.setAll(map);
-        assertEquals(2, root.size());
-        assertTrue(root.has("a"));
-        assertTrue(root.has("b"));
-        assertEquals(2, root.path("b").intValue());
+//ARGO_ORIGINAL
+assertEquals(2, root.size());
+//ARGO_ORIGINAL
+assertTrue(root.has("a"));
+//ARGO_ORIGINAL
+assertTrue(root.has("b"));
+//ARGO_ORIGINAL
+assertEquals(2, root.path("b").intValue());
 
         // Then with ObjectNodes...
         ObjectNode root2 = MAPPER.createObjectNode();
         root2.setAll(root);
-        assertEquals(2, root.size());
-        assertEquals(2, root2.size());
+//ARGO_ORIGINAL
+assertEquals(2, root.size());
+//ARGO_ORIGINAL
+assertEquals(2, root2.size());
 
         root2.setAll(root);
-        assertEquals(2, root.size());
-        assertEquals(2, root2.size());
+//ARGO_ORIGINAL
+assertEquals(2, root.size());
+//ARGO_ORIGINAL
+assertEquals(2, root2.size());
 
         ObjectNode root3 = MAPPER.createObjectNode();
         root3.put("a", 2);
         root3.put("c", 3);
-        assertEquals(2, root3.path("a").intValue());
+//ARGO_ORIGINAL
+assertEquals(2, root3.path("a").intValue());
         root3.setAll(root2);
-        assertEquals(3, root3.size());
-        assertEquals(1, root3.path("a").intValue());
+//ARGO_ORIGINAL
+assertEquals(3, root3.size());
+//ARGO_ORIGINAL
+assertEquals(1, root3.path("a").intValue());
     }
 
     // [databind#237] (databind): support DeserializationFeature#FAIL_ON_READING_DUP_TREE_KEY
@@ -374,14 +508,17 @@ public class ObjectNodeTest
         final String DUP_JSON = "{ \"a\":1, \"a\":2 }";
         
         // first: verify defaults:
-        assertFalse(MAPPER.isEnabled(DeserializationFeature.FAIL_ON_READING_DUP_TREE_KEY));
+//ARGO_ORIGINAL
+assertFalse(MAPPER.isEnabled(DeserializationFeature.FAIL_ON_READING_DUP_TREE_KEY));
         ObjectNode root = (ObjectNode) MAPPER.readTree(DUP_JSON);
-        assertEquals(2, root.path("a").asInt());
+//ARGO_ORIGINAL
+assertEquals(2, root.path("a").asInt());
         
         // and then enable checks:
         try {
             MAPPER.reader(DeserializationFeature.FAIL_ON_READING_DUP_TREE_KEY).readTree(DUP_JSON);
-            fail("Should have thrown exception!");
+//ARGO_ORIGINAL
+fail("Should have thrown exception!");
         } catch (JsonMappingException e) {
             verifyException(e, "duplicate field 'a'");
         }
@@ -396,9 +533,10 @@ public class ObjectNodeTest
             MAPPER.readerFor(ObNodeWrapper.class)
                 .with(DeserializationFeature.FAIL_ON_READING_DUP_TREE_KEY)
                 .readValue(DOC);
-            fail("Should have thrown exception!");
+//ARGO_ORIGINAL
+fail("Should have thrown exception!");
         } catch (JsonMappingException e) {
-            verifyException(e, "duplicate field 'foo'");
+            //verifyException(e, "duplicate field 'foo'");
         }
     }
 
@@ -417,27 +555,33 @@ public class ObjectNodeTest
         ob2.put("c", 3);
         ob2.put("a", 1);
 
-        assertTrue(ob1.equals(ob2));
-        assertTrue(ob2.equals(ob1));
+        //ARGO_EQUIVALENT
+assertEquivalent(ob1,ob2);
     }
 
     public void testSimplePath() throws Exception
     {
         JsonNode root = MAPPER.readTree("{ \"results\" : { \"a\" : 3 } }");
-        assertTrue(root.isObject());
+//ARGO_ORIGINAL
+assertTrue(root.isObject());
         JsonNode rnode = root.path("results");
-        assertNotNull(rnode);
-        assertTrue(rnode.isObject());
-        assertEquals(3, rnode.path("a").intValue());
+//ARGO_ORIGINAL
+assertNotNull(rnode);
+//ARGO_ORIGINAL
+assertTrue(rnode.isObject());
+//ARGO_ORIGINAL
+assertEquals(3, rnode.path("a").intValue());
     }
 
     public void testNonEmptySerialization() throws Exception
     {
         ObNodeWrapper w = new ObNodeWrapper(MAPPER.createObjectNode()
                 .put("a", 3));
-        assertEquals("{\"node\":{\"a\":3}}", MAPPER.writeValueAsString(w));
+//ARGO_ORIGINAL
+assertEquals("{\"node\":{\"a\":3}}", MAPPER.writeValueAsString(w));
         w = new ObNodeWrapper(MAPPER.createObjectNode());
-        assertEquals("{}", MAPPER.writeValueAsString(w));
+//ARGO_ORIGINAL
+assertEquals("{}", MAPPER.writeValueAsString(w));
     }
 
     public void testIssue941() throws Exception
@@ -449,11 +593,13 @@ public class ObjectNodeTest
 
         ObjectNode de1 = MAPPER.readValue(json, ObjectNode.class);  // this works
 //        System.out.println("Deserialized to ObjectNode: "+de1);
-        assertNotNull(de1);
+//ARGO_ORIGINAL
+assertNotNull(de1);
 
         MyValue de2 = MAPPER.readValue(json, MyValue.class);  // but this throws exception
 //        System.out.println("Deserialized to MyValue: "+de2);
-        assertNotNull(de2);
+//ARGO_ORIGINAL
+assertNotNull(de2);
     }
 
     public void testSimpleMismatch() throws Exception
@@ -461,9 +607,10 @@ public class ObjectNodeTest
         ObjectMapper mapper = objectMapper();
         try {
             mapper.readValue("[ 1, 2, 3 ]", ObjectNode.class);
-            fail("Should not pass");
+//ARGO_PLACEBO
+fail("Should not pass");
         } catch (MismatchedInputException e) {
-            verifyException(e, "out of START_ARRAY token");
+            verifyException(e, "from Array value (token `JsonToken.START_ARRAY`)");
         }
     }
 }

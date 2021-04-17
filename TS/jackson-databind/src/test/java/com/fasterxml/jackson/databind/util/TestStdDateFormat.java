@@ -14,8 +14,10 @@ public class TestStdDateFormat
     public void testFactories() {
         TimeZone tz = TimeZone.getTimeZone("GMT");
         Locale loc = Locale.US;
-        assertNotNull(StdDateFormat.getISO8601Format(tz, loc));
-        assertNotNull(StdDateFormat.getRFC1123Format(tz, loc));
+//ARGO_PLACEBO
+assertNotNull(StdDateFormat.getISO8601Format(tz, loc));
+//ARGO_PLACEBO
+assertNotNull(StdDateFormat.getRFC1123Format(tz, loc));
     }
 
     // [databind#803]
@@ -24,29 +26,36 @@ public class TestStdDateFormat
         StdDateFormat f = StdDateFormat.instance;
 
         // default should be lenient
-        assertTrue(f.isLenient());
+//ARGO_PLACEBO
+assertTrue(f.isLenient());
 
         StdDateFormat f2 = f.clone();
-        assertTrue(f2.isLenient());
+//ARGO_PLACEBO
+assertTrue(f2.isLenient());
 
         f2.setLenient(false);
-        assertFalse(f2.isLenient());
+//ARGO_PLACEBO
+assertFalse(f2.isLenient());
 
         f2.setLenient(true);
-        assertTrue(f2.isLenient());
+//ARGO_PLACEBO
+assertTrue(f2.isLenient());
 
         // and for testing, finally, leave as non-lenient
         f2.setLenient(false);
-        assertFalse(f2.isLenient());
+//ARGO_PLACEBO
+assertFalse(f2.isLenient());
         StdDateFormat f3 = f2.clone();
-        assertFalse(f3.isLenient());
+//ARGO_PLACEBO
+assertFalse(f3.isLenient());
     }
 
     public void testISO8601RegexpDateOnly() throws Exception
     {
         Pattern p = StdDateFormat.PATTERN_PLAIN;
         Matcher m = p.matcher("1997-07-16");
-        assertTrue(m.matches());
+//ARGO_PLACEBO
+assertTrue(m.matches());
         // no matching groups...
     }
 
@@ -66,45 +75,68 @@ public class TestStdDateFormat
 
         // First simple full representation (except no millisecs)
         m = p.matcher("1997-07-16T19:20:00+01:00");
-        assertTrue(m.matches());
-        assertEquals(2, m.groupCount());
-        assertNull(m.group(1)); // no match (why not empty String)
-        assertEquals("+01:00", m.group(2));
+//ARGO_PLACEBO
+assertTrue(m.matches());
+//ARGO_PLACEBO
+assertEquals(2, m.groupCount());
+//ARGO_PLACEBO
+assertNull(m.group(1)); // no match (why not empty String)
+//ARGO_PLACEBO
+assertEquals("+01:00", m.group(2));
 
         // Then with 'Z' instead
         m = p.matcher("1997-07-16T19:20:00Z");
-        assertTrue(m.matches());
-        assertNull(m.group(1));
-        assertEquals("Z", m.group(2));
+//ARGO_PLACEBO
+assertTrue(m.matches());
+//ARGO_PLACEBO
+assertNull(m.group(1));
+//ARGO_PLACEBO
+assertEquals("Z", m.group(2));
 
         // Then drop seconds too
         m = p.matcher("1997-07-16T19:20+01:00");
-        assertTrue(m.matches());
-        assertNull(m.group(1));
-        assertEquals("+01:00", m.group(2));
+//ARGO_PLACEBO
+assertTrue(m.matches());
+//ARGO_PLACEBO
+assertNull(m.group(1));
+//ARGO_PLACEBO
+assertEquals("+01:00", m.group(2));
 
         // Full with milliseconds:
         m = p.matcher("1997-07-16T19:20:00.2+03:00");
-        assertTrue(m.matches());
-        assertEquals(2, m.groupCount());
-        assertEquals(".2", m.group(1));
-        assertEquals("+03:00", m.group(2));
+//ARGO_PLACEBO
+assertTrue(m.matches());
+//ARGO_PLACEBO
+assertEquals(2, m.groupCount());
+//ARGO_PLACEBO
+assertEquals(".2", m.group(1));
+//ARGO_PLACEBO
+assertEquals("+03:00", m.group(2));
         
         m = p.matcher("1972-12-28T00:00:00.01-0300");
-        assertTrue(m.matches());
-        assertEquals(".01", m.group(1));
-        assertEquals("-0300", m.group(2));
+//ARGO_PLACEBO
+assertTrue(m.matches());
+//ARGO_PLACEBO
+assertEquals(".01", m.group(1));
+//ARGO_PLACEBO
+assertEquals("-0300", m.group(2));
 
         m = p.matcher("1972-12-28T00:00:00.400+00");
-        assertTrue(m.matches());
-        assertEquals(".400", m.group(1));
-        assertEquals("+00", m.group(2));
+//ARGO_PLACEBO
+assertTrue(m.matches());
+//ARGO_PLACEBO
+assertEquals(".400", m.group(1));
+//ARGO_PLACEBO
+assertEquals("+00", m.group(2));
 
         // and then drop time offset AND seconds
         m = p.matcher("1972-12-28T04:15");
-        assertTrue(m.matches());
-        assertNull(m.group(1));
-        assertNull(m.group(2));
+//ARGO_PLACEBO
+assertTrue(m.matches());
+//ARGO_PLACEBO
+assertNull(m.group(1));
+//ARGO_PLACEBO
+assertNull(m.group(2));
     }
 
     public void testLenientParsing() throws Exception
@@ -114,12 +146,14 @@ public class TestStdDateFormat
 
         // first, legal dates are... legal
         Date dt = f.parse("2015-11-30");
-        assertNotNull(dt);
+//ARGO_PLACEBO
+assertNotNull(dt);
 
         // but as importantly, when not lenient, do not allow
         try {
             f.parse("2015-11-32");
-            fail("Should not pass");
+//ARGO_PLACEBO
+fail("Should not pass");
         } catch (ParseException e) {
             verifyException(e, "Cannot parse date");
         }
@@ -127,7 +161,8 @@ public class TestStdDateFormat
         // ... yet, with lenient, do allow
         f.setLenient(true);
         dt = f.parse("2015-11-32");
-        assertNotNull(dt);
+//ARGO_PLACEBO
+assertNotNull(dt);
     }
     
     public void testInvalid() {

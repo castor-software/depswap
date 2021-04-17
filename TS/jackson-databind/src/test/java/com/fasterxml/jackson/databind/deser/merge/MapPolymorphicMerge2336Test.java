@@ -100,20 +100,26 @@ public class MapPolymorphicMerge2336Test extends BaseMapTest
         toBeMerged.addValue("SOMEKEY", new SomeClassA("jim", null, 2));
         String jsonForMerging = MAPPER.writeValueAsString(toBeMerged);
 
-        assertEquals("fred", baseValue.data.get("SOMEKEY").getName());
+//ARGO_PLACEBO
+assertEquals("fred", baseValue.data.get("SOMEKEY").getName());
         
         // now try to do the merge and it blows up
         SomeOtherClass mergedResult = reader.readValue(jsonForMerging);
 
         // First of all, should update main POJO (since it's "value to update")
-        assertSame(baseValue, mergedResult);
+//ARGO_PLACEBO
+assertSame(baseValue, mergedResult);
         // as well as Map within
-        assertSame(baseValue.data, mergedResult.data);
+//ARGO_PLACEBO
+assertSame(baseValue.data, mergedResult.data);
 
-        assertEquals(1, mergedResult.data.size());
+//ARGO_PLACEBO
+assertEquals(1, mergedResult.data.size());
         // but entry value has changed by necessity
-        assertEquals(SomeClassA.class, mergedResult.data.get("SOMEKEY").getClass());
+//ARGO_PLACEBO
+assertEquals(SomeClassA.class, mergedResult.data.get("SOMEKEY").getClass());
 
-        assertEquals("jim", mergedResult.data.get("SOMEKEY").getName());
+//ARGO_PLACEBO
+assertEquals("jim", mergedResult.data.get("SOMEKEY").getName());
     }
 }

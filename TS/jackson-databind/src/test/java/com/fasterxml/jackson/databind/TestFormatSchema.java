@@ -245,9 +245,11 @@ public class TestFormatSchema extends BaseMapTest
         //  bit ugly, but can't think of cleaner simple way to check this...
         try {
             mapper.reader(s).forType(Object.class).readValue(r);
-            fail("Excpected exception");
+//ARGO_PLACEBO
+fail("Excpected exception");
         } catch (SchemaException e) {
-            assertSame(s, e._schema);
+//ARGO_PLACEBO
+assertSame(s, e._schema);
         }
     }
 
@@ -259,9 +261,11 @@ public class TestFormatSchema extends BaseMapTest
         //  bit ugly, but can't think of cleaner simple way to check this...
         try {
             mapper.writer(s).writeValue(sw, "Foobar");
-            fail("Excpected exception");
+//ARGO_PLACEBO
+fail("Excpected exception");
         } catch (SchemaException e) {
-            assertSame(s, e._schema);
+//ARGO_PLACEBO
+assertSame(s, e._schema);
         }
     }
 

@@ -5,6 +5,8 @@ git:
   submodules: false
 
 # Since Jackson 2.10 build requires JDK 8 even if only JDK 7 runtime
+# But we also want to test against newer LTS versions
+# 08-Jul-2020, tatu: can not yet enable JDK14 due to new Record tests failing
 jdk:
   - openjdk8
   - openjdk11
@@ -17,14 +19,13 @@ cache:
 # Below this line is configuration for deploying to the Sonatype OSS repo
 # https://knowm.org/configure-travis-ci-to-deploy-snapshots/
 before_install: "git clone -b travis `git config --get remote.origin.url` target/travis"
-after_success:
-  - "mvn -B source:jar javadoc:jar deploy --settings target/travis/settings.xml"
+script: "[ ${TRAVIS_PULL_REQUEST} = 'false' ] && mvn -B source:jar deploy --settings target/travis/settings.xml || mvn clean verify --settings target/travis/settings.xml"
 
 # whitelist
 branches:
   only:
     - master
-    - "2.11"
+    - "2.12"
 
 env:
   global:

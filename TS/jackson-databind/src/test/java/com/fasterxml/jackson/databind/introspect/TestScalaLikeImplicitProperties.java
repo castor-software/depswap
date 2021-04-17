@@ -136,14 +136,16 @@ public class TestScalaLikeImplicitProperties extends BaseMapTest
     {
         ObjectMapper m = manglingMapper();
 
-        assertEquals("{\"prop\":\"val\"}", m.writeValueAsString(new ValProperty("val")));
+//ARGO_PLACEBO
+assertEquals("{\"prop\":\"val\"}", m.writeValueAsString(new ValProperty("val")));
     }
 
     public void testValWithBeanProperty() throws Exception
     {
         ObjectMapper m = manglingMapper();
 
-        assertEquals("{\"prop\":\"val\"}", m.writeValueAsString(new ValWithBeanProperty("val")));
+//ARGO_PLACEBO
+assertEquals("{\"prop\":\"val\"}", m.writeValueAsString(new ValWithBeanProperty("val")));
     }
 
 
@@ -151,9 +153,11 @@ public class TestScalaLikeImplicitProperties extends BaseMapTest
     {
         ObjectMapper m = manglingMapper();
 
-        assertEquals("{\"prop\":\"var\"}", m.writeValueAsString(new VarProperty("var")));
+//ARGO_PLACEBO
+assertEquals("{\"prop\":\"var\"}", m.writeValueAsString(new VarProperty("var")));
         VarProperty result = m.readValue("{\"prop\":\"read\"}", VarProperty.class);
-        assertEquals("read", result.prop());
+//ARGO_PLACEBO
+assertEquals("read", result.prop());
     }
 
 
@@ -161,9 +165,11 @@ public class TestScalaLikeImplicitProperties extends BaseMapTest
     {
         ObjectMapper m = manglingMapper();
 
-        assertEquals("{\"prop\":\"var\"}", m.writeValueAsString(new VarWithBeanProperty("var")));
+//ARGO_PLACEBO
+assertEquals("{\"prop\":\"var\"}", m.writeValueAsString(new VarWithBeanProperty("var")));
         VarWithBeanProperty result = m.readValue("{\"prop\":\"read\"}", VarWithBeanProperty.class);
-        assertEquals("read", result.prop());
+//ARGO_PLACEBO
+assertEquals("read", result.prop());
     }
 
 
@@ -171,9 +177,11 @@ public class TestScalaLikeImplicitProperties extends BaseMapTest
     {
         ObjectMapper m = manglingMapper();
 
-        assertEquals("{\"prop\":\"get/set\"}", m.writeValueAsString(new GetterSetterProperty()));
+//ARGO_PLACEBO
+assertEquals("{\"prop\":\"get/set\"}", m.writeValueAsString(new GetterSetterProperty()));
         GetterSetterProperty result = m.readValue("{\"prop\":\"read\"}", GetterSetterProperty.class);
-        assertEquals("read", result.prop());
+//ARGO_PLACEBO
+assertEquals("read", result.prop());
     }
 
     /*

@@ -25,7 +25,8 @@ public class HugeIntegerCoerceTest extends BaseMapTest
         
         try {
             /*ABC value =*/ MAPPER.readValue(BIG_POS_INTEGER, ABC.class);
-            fail("Should not pass");
+//ARGO_PLACEBO
+fail("Should not pass");
         } catch (InputCoercionException e) {
             verifyException(e, "out of range of int");
             verifyException(e, "Integer with "+BIG_NUM_LEN+" digits");

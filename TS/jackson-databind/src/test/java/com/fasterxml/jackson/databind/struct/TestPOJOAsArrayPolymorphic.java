@@ -33,6 +33,7 @@ public class TestPOJOAsArrayPolymorphic extends BaseMapTest
         String json = MAPPER.writeValueAsString(new DirectLayout());
 
         Layout instance = MAPPER.readValue(json, Layout.class);
-        assertNotNull(instance);
+//ARGO_PLACEBO
+assertNotNull(instance);
     }
 }

@@ -91,7 +91,8 @@ public class NumberSerTest extends BaseMapTest
             if (Double.isNaN(d) || Double.isInfinite(d)) {
                 expected = "\""+d+"\"";
             }
-            assertEquals(expected, MAPPER.writeValueAsString(Double.valueOf(d)));
+//ARGO_PLACEBO
+assertEquals(expected, MAPPER.writeValueAsString(Double.valueOf(d)));
         }
     }
 
@@ -106,26 +107,37 @@ public class NumberSerTest extends BaseMapTest
 
         for (BigInteger value : values) {
             String expected = value.toString();
-            assertEquals(expected, MAPPER.writeValueAsString(value));
+//ARGO_PLACEBO
+assertEquals(expected, MAPPER.writeValueAsString(value));
         }
     }
 
     public void testNumbersAsString() throws Exception
     {
-        assertEquals(aposToQuotes("{'value':'3'}"), MAPPER.writeValueAsString(new IntAsString()));
-        assertEquals(aposToQuotes("{'value':'4'}"), MAPPER.writeValueAsString(new LongAsString()));
-        assertEquals(aposToQuotes("{'value':'-0.5'}"), MAPPER.writeValueAsString(new DoubleAsString()));
-        assertEquals(aposToQuotes("{'value':'0.25'}"), MAPPER.writeValueAsString(new BigDecimalAsString()));
-        assertEquals(aposToQuotes("{'value':'123456'}"), MAPPER.writeValueAsString(new BigIntegerAsString()));
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'value':'3'}"), MAPPER.writeValueAsString(new IntAsString()));
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'value':'4'}"), MAPPER.writeValueAsString(new LongAsString()));
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'value':'-0.5'}"), MAPPER.writeValueAsString(new DoubleAsString()));
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'value':'0.25'}"), MAPPER.writeValueAsString(new BigDecimalAsString()));
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'value':'123456'}"), MAPPER.writeValueAsString(new BigIntegerAsString()));
     }
 
     public void testNumbersAsStringNonEmpty() throws Exception
     {
-        assertEquals(aposToQuotes("{'value':'3'}"), NON_EMPTY_MAPPER.writeValueAsString(new IntAsString()));
-        assertEquals(aposToQuotes("{'value':'4'}"), NON_EMPTY_MAPPER.writeValueAsString(new LongAsString()));
-        assertEquals(aposToQuotes("{'value':'-0.5'}"), NON_EMPTY_MAPPER.writeValueAsString(new DoubleAsString()));
-        assertEquals(aposToQuotes("{'value':'0.25'}"), NON_EMPTY_MAPPER.writeValueAsString(new BigDecimalAsString()));
-        assertEquals(aposToQuotes("{'value':'123456'}"), NON_EMPTY_MAPPER.writeValueAsString(new BigIntegerAsString()));
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'value':'3'}"), NON_EMPTY_MAPPER.writeValueAsString(new IntAsString()));
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'value':'4'}"), NON_EMPTY_MAPPER.writeValueAsString(new LongAsString()));
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'value':'-0.5'}"), NON_EMPTY_MAPPER.writeValueAsString(new DoubleAsString()));
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'value':'0.25'}"), NON_EMPTY_MAPPER.writeValueAsString(new BigDecimalAsString()));
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'value':'123456'}"), NON_EMPTY_MAPPER.writeValueAsString(new BigIntegerAsString()));
     }
 
     public void testConfigOverridesForNumbers() throws Exception
@@ -138,23 +150,34 @@ public class NumberSerTest extends BaseMapTest
         mapper.configOverride(BigDecimal.class)
             .setFormat(JsonFormat.Value.forShape(JsonFormat.Shape.STRING));
 
-        assertEquals(aposToQuotes("{'i':'3'}"),
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'i':'3'}"),
                 mapper.writeValueAsString(new IntWrapper(3)));
-        assertEquals(aposToQuotes("{'value':'0.75'}"),
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'value':'0.75'}"),
                 mapper.writeValueAsString(new DoubleWrapper(0.75)));
-        assertEquals(aposToQuotes("{'value':'-0.5'}"),
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'value':'-0.5'}"),
                 mapper.writeValueAsString(new BigDecimalWrapper(BigDecimal.valueOf(-0.5))));
     }
 
     public void testNumberType() throws Exception
     {
-        assertEquals(aposToQuotes("{'value':1}"), MAPPER.writeValueAsString(new NumberWrapper(Byte.valueOf((byte) 1))));
-        assertEquals(aposToQuotes("{'value':2}"), MAPPER.writeValueAsString(new NumberWrapper(Short.valueOf((short) 2))));
-        assertEquals(aposToQuotes("{'value':3}"), MAPPER.writeValueAsString(new NumberWrapper(Integer.valueOf(3))));
-        assertEquals(aposToQuotes("{'value':4}"), MAPPER.writeValueAsString(new NumberWrapper(Long.valueOf(4L))));
-        assertEquals(aposToQuotes("{'value':0.5}"), MAPPER.writeValueAsString(new NumberWrapper(Float.valueOf(0.5f))));
-        assertEquals(aposToQuotes("{'value':0.05}"), MAPPER.writeValueAsString(new NumberWrapper(Double.valueOf(0.05))));
-        assertEquals(aposToQuotes("{'value':123}"), MAPPER.writeValueAsString(new NumberWrapper(BigInteger.valueOf(123))));
-        assertEquals(aposToQuotes("{'value':0.025}"), MAPPER.writeValueAsString(new NumberWrapper(BigDecimal.valueOf(0.025))));
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'value':1}"), MAPPER.writeValueAsString(new NumberWrapper(Byte.valueOf((byte) 1))));
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'value':2}"), MAPPER.writeValueAsString(new NumberWrapper(Short.valueOf((short) 2))));
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'value':3}"), MAPPER.writeValueAsString(new NumberWrapper(Integer.valueOf(3))));
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'value':4}"), MAPPER.writeValueAsString(new NumberWrapper(Long.valueOf(4L))));
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'value':0.5}"), MAPPER.writeValueAsString(new NumberWrapper(Float.valueOf(0.5f))));
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'value':0.05}"), MAPPER.writeValueAsString(new NumberWrapper(Double.valueOf(0.05))));
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'value':123}"), MAPPER.writeValueAsString(new NumberWrapper(BigInteger.valueOf(123))));
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'value':0.025}"), MAPPER.writeValueAsString(new NumberWrapper(BigDecimal.valueOf(0.025))));
     }
 }

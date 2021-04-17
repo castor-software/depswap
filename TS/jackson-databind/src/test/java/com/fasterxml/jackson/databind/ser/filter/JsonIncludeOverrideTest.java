@@ -58,20 +58,23 @@ public class JsonIncludeOverrideTest
         ObjectMapper mapper = new ObjectMapper();
         // First, with defaults, both included:
         JsonIncludeOverrideTest.EmptyListMapBean empty = new JsonIncludeOverrideTest.EmptyListMapBean();
-        assertEquals(aposToQuotes("{'list':[],'map':{}}"),
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'list':[],'map':{}}"),
                 mapper.writeValueAsString(empty));
 
         // and then change inclusion criteria for either
         mapper = new ObjectMapper();
         mapper.configOverride(Map.class)
             .setInclude(JsonInclude.Value.construct(JsonInclude.Include.NON_EMPTY, null));
-        assertEquals(aposToQuotes("{'list':[]}"),
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'list':[]}"),
                 mapper.writeValueAsString(empty));
 
         mapper = new ObjectMapper();
         mapper.configOverride(List.class)
             .setInclude(JsonInclude.Value.construct(JsonInclude.Include.NON_EMPTY, null));
-        assertEquals(aposToQuotes("{'map':{}}"),
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'map':{}}"),
                 mapper.writeValueAsString(empty));
     }
 
@@ -80,7 +83,8 @@ public class JsonIncludeOverrideTest
         ObjectMapper mapper = new ObjectMapper();
         // First, with defaults, all but NON_NULL annotated included
         JsonIncludeOverrideTest.MixedTypeAlwaysBean nullValues = new JsonIncludeOverrideTest.MixedTypeAlwaysBean();
-        assertEquals(aposToQuotes("{'num':null,'plain':null}"),
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'num':null,'plain':null}"),
                 mapper.writeValueAsString(nullValues));
 
         // and then change inclusion as property criteria for either
@@ -88,14 +92,16 @@ public class JsonIncludeOverrideTest
         mapper.configOverride(String.class)
                 .setIncludeAsProperty(JsonInclude.Value
                         .construct(JsonInclude.Include.NON_NULL, null));
-        assertEquals("{\"num\":null}",
+//ARGO_PLACEBO
+assertEquals("{\"num\":null}",
                 mapper.writeValueAsString(nullValues));
 
         mapper = new ObjectMapper();
         mapper.configOverride(Integer.class)
                 .setIncludeAsProperty(JsonInclude.Value
                         .construct(JsonInclude.Include.NON_NULL, null));
-        assertEquals("{\"plain\":null}",
+//ARGO_PLACEBO
+assertEquals("{\"plain\":null}",
                 mapper.writeValueAsString(nullValues));
     }
 
@@ -104,7 +110,8 @@ public class JsonIncludeOverrideTest
         ObjectMapper mapper = new ObjectMapper();
         // First, with defaults, only ALWAYS annotated included
         JsonIncludeOverrideTest.MixedTypeNonNullBean nullValues = new JsonIncludeOverrideTest.MixedTypeNonNullBean();
-        assertEquals("{\"annotated\":null}",
+//ARGO_PLACEBO
+assertEquals("{\"annotated\":null}",
                 mapper.writeValueAsString(nullValues));
 
         // and then change inclusion as property criteria for either
@@ -112,14 +119,16 @@ public class JsonIncludeOverrideTest
         mapper.configOverride(String.class)
                 .setIncludeAsProperty(JsonInclude.Value
                         .construct(JsonInclude.Include.ALWAYS, null));
-        assertEquals(aposToQuotes("{'annotated':null,'plain':null}"),
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'annotated':null,'plain':null}"),
                 mapper.writeValueAsString(nullValues));
 
         mapper = new ObjectMapper();
         mapper.configOverride(Integer.class)
                 .setIncludeAsProperty(JsonInclude.Value
                         .construct(JsonInclude.Include.ALWAYS, null));
-        assertEquals(aposToQuotes("{'num':null,'annotated':null}"),
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'num':null,'annotated':null}"),
                 mapper.writeValueAsString(nullValues));
     }
 
@@ -131,7 +140,8 @@ public class JsonIncludeOverrideTest
         mapper.configOverride(JsonIncludeOverrideTest.MixedTypeNonNullBean.class)
                 .setInclude(JsonInclude.Value
                         .construct(JsonInclude.Include.ALWAYS, null));
-        assertEquals(aposToQuotes("{'num':null,'annotated':null,'plain':null}"),
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'num':null,'annotated':null,'plain':null}"),
                 mapper.writeValueAsString(nullValues));
 
         // and then change inclusion as property criteria for either
@@ -142,7 +152,8 @@ public class JsonIncludeOverrideTest
         mapper.configOverride(String.class)
                 .setIncludeAsProperty(JsonInclude.Value
                         .construct(JsonInclude.Include.NON_NULL, null));
-        assertEquals(aposToQuotes("{'num':null,'annotated':null}"),
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'num':null,'annotated':null}"),
                 mapper.writeValueAsString(nullValues));
 
         mapper = new ObjectMapper();
@@ -152,7 +163,8 @@ public class JsonIncludeOverrideTest
         mapper.configOverride(Integer.class)
                 .setIncludeAsProperty(JsonInclude.Value
                         .construct(JsonInclude.Include.NON_NULL, null));
-        assertEquals(aposToQuotes("{'annotated':null,'plain':null}"),
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'annotated':null,'plain':null}"),
                 mapper.writeValueAsString(nullValues));
     }
 
@@ -164,7 +176,8 @@ public class JsonIncludeOverrideTest
         mapper.configOverride(JsonIncludeOverrideTest.MixedTypeAlwaysBean.class)
                 .setInclude(JsonInclude.Value
                         .construct(JsonInclude.Include.NON_NULL, null));
-        assertEquals("{}",
+//ARGO_PLACEBO
+assertEquals("{}",
                 mapper.writeValueAsString(nullValues));
 
         // and then change inclusion as property criteria for either
@@ -175,7 +188,8 @@ public class JsonIncludeOverrideTest
         mapper.configOverride(String.class)
                 .setIncludeAsProperty(JsonInclude.Value
                         .construct(JsonInclude.Include.ALWAYS, null));
-        assertEquals("{\"plain\":null}",
+//ARGO_PLACEBO
+assertEquals("{\"plain\":null}",
                 mapper.writeValueAsString(nullValues));
 
         mapper = new ObjectMapper();
@@ -185,7 +199,8 @@ public class JsonIncludeOverrideTest
         mapper.configOverride(Integer.class)
                 .setIncludeAsProperty(JsonInclude.Value
                         .construct(JsonInclude.Include.ALWAYS, null));
-        assertEquals("{\"num\":null}",
+//ARGO_PLACEBO
+assertEquals("{\"num\":null}",
                 mapper.writeValueAsString(nullValues));
     }
 }

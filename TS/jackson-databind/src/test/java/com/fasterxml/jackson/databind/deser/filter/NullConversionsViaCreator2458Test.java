@@ -38,16 +38,22 @@ public class NullConversionsViaCreator2458Test extends BaseMapTest
     // [databind#2458]
     public void testMissingToEmptyViaCreator() throws Exception {
         Pojo pojo = MAPPER_WITH_AS_EMPTY.readValue("{}", Pojo.class);
-        assertNotNull(pojo);
-        assertNotNull(pojo.value());
-        assertEquals(0, pojo.value().size());
+//ARGO_PLACEBO
+assertNotNull(pojo);
+//ARGO_PLACEBO
+assertNotNull(pojo.value());
+//ARGO_PLACEBO
+assertEquals(0, pojo.value().size());
     }
 
     // [databind#2458]
     public void testNullToEmptyViaCreator() throws Exception {
         Pojo pojo = MAPPER_WITH_AS_EMPTY.readValue("{\"value\":null}", Pojo.class);
-        assertNotNull(pojo);
-        assertNotNull(pojo.value());
-        assertEquals(0, pojo.value().size());
+//ARGO_PLACEBO
+assertNotNull(pojo);
+//ARGO_PLACEBO
+assertNotNull(pojo.value());
+//ARGO_PLACEBO
+assertEquals(0, pojo.value().size());
     }
 }

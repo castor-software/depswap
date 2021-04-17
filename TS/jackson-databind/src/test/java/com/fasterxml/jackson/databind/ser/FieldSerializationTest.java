@@ -139,9 +139,12 @@ public class FieldSerializationTest
         // let's set x, leave y as is
         bean.x = 13;
         Map<String,Object> result = writeAndMap(MAPPER, bean);
-        assertEquals(2, result.size());
-        assertEquals(Integer.valueOf(13), result.get("x"));
-        assertEquals(Integer.valueOf(0), result.get("y"));
+//ARGO_PLACEBO
+assertEquals(2, result.size());
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(13), result.get("x"));
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(0), result.get("y"));
     }
 
     @SuppressWarnings("unchecked")
@@ -150,19 +153,25 @@ public class FieldSerializationTest
         SimpleFieldBean2 bean = new SimpleFieldBean2();
         bean.values = new String[] { "a", "b" };
         Map<String,Object> result = writeAndMap(MAPPER, bean);
-        assertEquals(1, result.size());
+//ARGO_PLACEBO
+assertEquals(1, result.size());
         List<String> values = (List<String>) result.get("values");
-        assertEquals(2, values.size());
-        assertEquals("a", values.get(0));
-        assertEquals("b", values.get(1));
+//ARGO_PLACEBO
+assertEquals(2, values.size());
+//ARGO_PLACEBO
+assertEquals("a", values.get(0));
+//ARGO_PLACEBO
+assertEquals("b", values.get(1));
     }
 
     public void testTransientAndStatic() throws Exception
     {
         TransientBean bean = new TransientBean();
         Map<String,Object> result = writeAndMap(MAPPER, bean);
-        assertEquals(1, result.size());
-        assertEquals(Integer.valueOf(0), result.get("a"));
+//ARGO_PLACEBO
+assertEquals(1, result.size());
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(0), result.get("a"));
     }
 
     public void testNoAutoDetect() throws Exception
@@ -170,8 +179,10 @@ public class FieldSerializationTest
         NoAutoDetectBean bean = new NoAutoDetectBean();
         bean._z = -4;
         Map<String,Object> result = writeAndMap(MAPPER, bean);
-        assertEquals(1, result.size());
-        assertEquals(Integer.valueOf(-4), result.get("z"));
+//ARGO_PLACEBO
+assertEquals(1, result.size());
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(-4), result.get("z"));
     }
 
     /**
@@ -183,8 +194,10 @@ public class FieldSerializationTest
     {
         FieldAndMethodBean bean = new FieldAndMethodBean();
         bean.z = 9;
-        assertEquals(10, bean.getZ());
-        assertEquals("{\"z\":10}", MAPPER.writeValueAsString(bean));
+//ARGO_PLACEBO
+assertEquals(10, bean.getZ());
+//ARGO_PLACEBO
+assertEquals("{\"z\":10}", MAPPER.writeValueAsString(bean));
     }
 
     /**
@@ -195,15 +208,19 @@ public class FieldSerializationTest
     {
         OkDupFieldBean bean = new OkDupFieldBean(1, 2);
         Map<String,Object> json = writeAndMap(MAPPER, bean);
-        assertEquals(2, json.size());
-        assertEquals(Integer.valueOf(1), json.get("x"));
-        assertEquals(Integer.valueOf(2), json.get("y"));
+//ARGO_PLACEBO
+assertEquals(2, json.size());
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(1), json.get("x"));
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(2), json.get("y"));
     }
 
     public void testIssue240() throws Exception
     {
         Item240 bean = new Item240("a12", null);
-        assertEquals(MAPPER.writeValueAsString(bean), "{\"id\":\"a12\"}");
+//ARGO_PLACEBO
+assertEquals(MAPPER.writeValueAsString(bean), "{\"id\":\"a12\"}");
     }
     
     /*

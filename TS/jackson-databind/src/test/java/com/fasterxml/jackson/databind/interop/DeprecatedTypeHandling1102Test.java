@@ -35,9 +35,12 @@ public class DeprecatedTypeHandling1102Test extends BaseMapTest
         JavaType elem = SimpleType.construct(Point.class);
 
         Point p = MAPPER.readValue(aposToQuotes("{'x':1,'y':2}"), elem);
-        assertNotNull(p);
-        assertEquals(1, p.x);
-        assertEquals(2, p.getY());
+//ARGO_PLACEBO
+assertNotNull(p);
+//ARGO_PLACEBO
+assertEquals(1, p.x);
+//ARGO_PLACEBO
+assertEquals(2, p.getY());
     }
 
     @SuppressWarnings("deprecation")
@@ -46,10 +49,14 @@ public class DeprecatedTypeHandling1102Test extends BaseMapTest
         JavaType elem = SimpleType.construct(Point3D.class);
 
         Point3D p = MAPPER.readValue(aposToQuotes("{'x':1,'z':3,'y':2}"), elem);
-        assertNotNull(p);
-        assertEquals(1, p.x);
-        assertEquals(2, p.getY());
-        assertEquals(3, p.z);
+//ARGO_PLACEBO
+assertNotNull(p);
+//ARGO_PLACEBO
+assertEquals(1, p.x);
+//ARGO_PLACEBO
+assertEquals(2, p.getY());
+//ARGO_PLACEBO
+assertEquals(3, p.z);
     }
     
     @SuppressWarnings("deprecation")
@@ -61,13 +68,18 @@ public class DeprecatedTypeHandling1102Test extends BaseMapTest
         final String json = aposToQuotes("[ {'x':1,'y':2}, {'x':3,'y':6 }]");        
 
         List<Point> l = MAPPER.readValue(json, t);
-        assertNotNull(l);
-        assertEquals(2, l.size());
+//ARGO_PLACEBO
+assertNotNull(l);
+//ARGO_PLACEBO
+assertEquals(2, l.size());
         Object ob = l.get(0);
-        assertEquals(Point.class, ob.getClass());
+//ARGO_PLACEBO
+assertEquals(Point.class, ob.getClass());
         Point p = (Point) ob;
-        assertEquals(1, p.x);
-        assertEquals(2, p.getY());
+//ARGO_PLACEBO
+assertEquals(1, p.x);
+//ARGO_PLACEBO
+assertEquals(2, p.getY());
     }
 
     @SuppressWarnings("deprecation")
@@ -80,13 +92,18 @@ public class DeprecatedTypeHandling1102Test extends BaseMapTest
         final String json = aposToQuotes("{'x':{'x':3,'y':5}}");        
 
         Map<String,Point> m = MAPPER.readValue(json, t);
-        assertNotNull(m);
-        assertEquals(1, m.size());
+//ARGO_PLACEBO
+assertNotNull(m);
+//ARGO_PLACEBO
+assertEquals(1, m.size());
         Object ob = m.values().iterator().next();
-        assertEquals(Point.class, ob.getClass());
+//ARGO_PLACEBO
+assertEquals(Point.class, ob.getClass());
         Point p = (Point) ob;
-        assertEquals(3, p.x);
-        assertEquals(5, p.getY());
+//ARGO_PLACEBO
+assertEquals(3, p.x);
+//ARGO_PLACEBO
+assertEquals(5, p.getY());
     }
 
     @SuppressWarnings("deprecation")
@@ -96,14 +113,17 @@ public class DeprecatedTypeHandling1102Test extends BaseMapTest
 
         // first, with real (if irrelevant) context
         JavaType t = tf.constructType(Point.class, getClass());
-        assertEquals(Point.class, t.getRawClass());
+//ARGO_PLACEBO
+assertEquals(Point.class, t.getRawClass());
 
         // and then missing context
         JavaType t2 = tf.constructType(Point.class, (Class<?>) null);
-        assertEquals(Point.class, t2.getRawClass());
+//ARGO_PLACEBO
+assertEquals(Point.class, t2.getRawClass());
 
         JavaType ctxt = tf.constructType(getClass());
         JavaType t3 = tf.constructType(Point.class, ctxt);
-        assertEquals(Point.class, t3.getRawClass());
+//ARGO_PLACEBO
+assertEquals(Point.class, t3.getRawClass());
     }
 }

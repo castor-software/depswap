@@ -47,47 +47,56 @@ public class TestBaseTypeAsDefault extends BaseMapTest
     
     public void testPositiveForParent() throws IOException {
         Object o = MAPPER_WITH_BASE.readerFor(Parent.class).readValue("{}");
-        assertEquals(o.getClass(), Parent.class);
+//ARGO_PLACEBO
+assertEquals(o.getClass(), Parent.class);
     }
 
     public void testPositiveForChild() throws IOException {
         Object o = MAPPER_WITH_BASE.readerFor(Child.class).readValue("{}");
-        assertEquals(o.getClass(), Child.class);
+//ARGO_PLACEBO
+assertEquals(o.getClass(), Child.class);
     }
 
     public void testNegativeForParent() throws IOException {
         try {
             /*Object o =*/ MAPPER_WITHOUT_BASE.readerFor(Parent.class).readValue("{}");
-            fail("Should not pass");
+//ARGO_PLACEBO
+fail("Should not pass");
         } catch (JsonMappingException ex) {
-            assertTrue(ex.getMessage().contains("missing type id property '@class'"));
+//ARGO_PLACEBO
+assertTrue(ex.getMessage().contains("missing type id property '@class'"));
         }
     }
 
     public void testNegativeForChild() throws IOException {
         try {
             /*Object o =*/ MAPPER_WITHOUT_BASE.readerFor(Child.class).readValue("{}");
-            fail("Should not pass");
+//ARGO_PLACEBO
+fail("Should not pass");
         } catch (JsonMappingException ex) {
-            assertTrue(ex.getMessage().contains("missing type id property '@class'"));
+//ARGO_PLACEBO
+assertTrue(ex.getMessage().contains("missing type id property '@class'"));
         }
     }
 
     public void testConversionForAbstractWithDefault() throws IOException {
         // should pass shouldn't it?
         Object o = MAPPER_WITH_BASE.readerFor(AbstractParentWithDefault.class).readValue("{}");
-        assertEquals(o.getClass(), ChildOfChild.class);
+//ARGO_PLACEBO
+assertEquals(o.getClass(), ChildOfChild.class);
     }
 
     public void testPositiveWithTypeSpecification() throws IOException {
         Object o = MAPPER_WITH_BASE.readerFor(Parent.class)
                 .readValue("{\"@class\":\""+Child.class.getName()+"\"}");
-        assertEquals(o.getClass(), Child.class);
+//ARGO_PLACEBO
+assertEquals(o.getClass(), Child.class);
     }
 
     public void testPositiveWithManualDefault() throws IOException {
         Object o = MAPPER_WITH_BASE.readerFor(ChildOfAbstract.class).readValue("{}");
 
-        assertEquals(o.getClass(), ChildOfChild.class);
+//ARGO_PLACEBO
+assertEquals(o.getClass(), ChildOfChild.class);
     }
 }

@@ -91,13 +91,15 @@ public class TestAnyGetterFiltering extends BaseMapTest
     {
         FilterProvider prov = new SimpleFilterProvider().addFilter("anyFilter",
                 SimpleBeanPropertyFilter.filterOutAllExcept("b"));
-        assertEquals("{\"b\":\"2\"}", MAPPER.writer(prov).writeValueAsString(new AnyBean()));
+//ARGO_PLACEBO
+assertEquals("{\"b\":\"2\"}", MAPPER.writer(prov).writeValueAsString(new AnyBean()));
     }
 
     // for [databind#1142]
     public void testAnyGetterIgnore() throws Exception
     {
-        assertEquals(aposToQuotes("{'a':'1','b':'3'}"),
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'a':'1','b':'3'}"),
                 MAPPER.writeValueAsString(new AnyBeanWithIgnores()));
     }
 
@@ -108,7 +110,8 @@ public class TestAnyGetterFiltering extends BaseMapTest
         String json = MAPPER.writer(filters).writeValueAsString(new OuterObject());
         Map<?,?> stuff = MAPPER.readValue(json, Map.class);
         if (stuff.size() != 2) {
-            fail("Should have 2 properties, got: "+stuff);
+//ARGO_PLACEBO
+fail("Should have 2 properties, got: "+stuff);
         }
    }
 }

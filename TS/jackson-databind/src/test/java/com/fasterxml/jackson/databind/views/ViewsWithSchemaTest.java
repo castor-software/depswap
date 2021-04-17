@@ -57,18 +57,21 @@ public class ViewsWithSchemaTest extends BaseMapTest
         ListingVisitor v = new ListingVisitor();
         MAPPER.writerWithView(ViewBC.class)
             .acceptJsonFormatVisitor(POJO.class, v);
-        assertEquals(Arrays.asList("b", "c"), v.names);
+//ARGO_PLACEBO
+assertEquals(Arrays.asList("b", "c"), v.names);
 
         v = new ListingVisitor();
         MAPPER.writerWithView(ViewAB.class)
             .acceptJsonFormatVisitor(POJO.class, v);
-        assertEquals(Arrays.asList("a", "b"), v.names);
+//ARGO_PLACEBO
+assertEquals(Arrays.asList("a", "b"), v.names);
     }
 
     public void testSchemaWithoutViews() throws Exception
     {
         ListingVisitor v = new ListingVisitor();
         MAPPER.acceptJsonFormatVisitor(POJO.class, v);
-        assertEquals(Arrays.asList("a", "b", "c"), v.names);
+//ARGO_PLACEBO
+assertEquals(Arrays.asList("a", "b", "c"), v.names);
     }
 }

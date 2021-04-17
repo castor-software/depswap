@@ -26,9 +26,13 @@ public class TestUnwrappedRecursive383 extends BaseMapTest
     {
         final String JSON = "{ 'name': 'Bob', 'age': 45, 'gender': 0, 'child.name': 'Bob jr', 'child.age': 15 }";
         RecursivePerson p = MAPPER.readValue(aposToQuotes(JSON), RecursivePerson.class);
-        assertNotNull(p);
-        assertEquals("Bob", p.name);
-        assertNotNull(p.child);
-        assertEquals("Bob jr", p.child.name);
+//ARGO_PLACEBO
+assertNotNull(p);
+//ARGO_PLACEBO
+assertEquals("Bob", p.name);
+//ARGO_PLACEBO
+assertNotNull(p.child);
+//ARGO_PLACEBO
+assertEquals("Bob jr", p.child.name);
     }
 }

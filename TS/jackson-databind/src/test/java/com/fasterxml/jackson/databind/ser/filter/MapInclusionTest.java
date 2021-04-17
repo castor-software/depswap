@@ -55,7 +55,8 @@ public class MapInclusionTest extends BaseMapTest
         String json = MAPPER.writeValueAsString(new NoEmptiesMapContainer()
             .add("a", null)
             .add("b", ""));
-        assertEquals(aposToQuotes("{}"), json);
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{}"), json);
     }
 
     public void testNoNullsMap() throws IOException
@@ -64,7 +65,8 @@ public class MapInclusionTest extends BaseMapTest
                 .add("a", null)
                 .add("b", "");
         String json = MAPPER.writeValueAsString(input);
-        assertEquals(aposToQuotes("{'stuff':{'b':''}}"), json);
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'stuff':{'b':''}}"), json);
     }
 
     public void testNonEmptyNoNullsMap() throws IOException
@@ -73,11 +75,13 @@ public class MapInclusionTest extends BaseMapTest
                 .add("a", null)
                 .add("b", "");
         String json = MAPPER.writeValueAsString(input);
-        assertEquals(aposToQuotes("{'stuff':{'b':''}}"), json);
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'stuff':{'b':''}}"), json);
 
         json = MAPPER.writeValueAsString(new NoNullsNotEmptyMapContainer()
                 .add("a", null)
                 .add("b", null));
-        assertEquals(aposToQuotes("{}"), json);
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{}"), json);
     }
 }

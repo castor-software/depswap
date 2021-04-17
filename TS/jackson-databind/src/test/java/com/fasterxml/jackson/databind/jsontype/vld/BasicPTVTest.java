@@ -90,13 +90,15 @@ public class BasicPTVTest extends BaseMapTest
         // First, test accepted case
         final String json = mapper.writeValueAsString(BaseValueWrapper.withA(42));
         BaseValueWrapper w = mapper.readValue(json, BaseValueWrapper.class);
-        assertEquals(42, w.value.x);
+//ARGO_PLACEBO
+assertEquals(42, w.value.x);
 
         // then non-accepted
         final String json2 = mapper.writeValueAsString(new NumberWrapper(Byte.valueOf((byte) 4)));
         try {
             mapper.readValue(json2, NumberWrapper.class);
-            fail("Should not pass");
+//ARGO_PLACEBO
+fail("Should not pass");
         } catch (InvalidTypeIdException e) {
             verifyException(e, "Could not resolve type id 'java.lang.Byte'");
             verifyException(e, "as a subtype of");
@@ -109,8 +111,10 @@ public class BasicPTVTest extends BaseMapTest
                         .build(), DefaultTyping.NON_FINAL)
                 .build();
         NumberWrapper nw = mapper2.readValue(json2, NumberWrapper.class);
-        assertNotNull(nw);
-        assertEquals(Byte.valueOf((byte) 4), nw.value);
+//ARGO_PLACEBO
+assertNotNull(nw);
+//ARGO_PLACEBO
+assertEquals(Byte.valueOf((byte) 4), nw.value);
     }
 
     // Then subtype-prefix
@@ -125,13 +129,15 @@ public class BasicPTVTest extends BaseMapTest
         // First, test accepted case
         final String json = mapper.writeValueAsString(BaseValueWrapper.withA(42));
         BaseValueWrapper w = mapper.readValue(json, BaseValueWrapper.class);
-        assertEquals(42, w.value.x);
+//ARGO_PLACEBO
+assertEquals(42, w.value.x);
 
         // then non-accepted
         final String json2 = mapper.writeValueAsString(new NumberWrapper(Byte.valueOf((byte) 4)));
         try {
             mapper.readValue(json2, NumberWrapper.class);
-            fail("Should not pass");
+//ARGO_PLACEBO
+fail("Should not pass");
         } catch (InvalidTypeIdException e) {
             verifyException(e, "Could not resolve type id 'java.lang.Byte'");
             verifyException(e, "as a subtype of");
@@ -150,13 +156,15 @@ public class BasicPTVTest extends BaseMapTest
         // First, test accepted case
         final String json = mapper.writeValueAsString(BaseValueWrapper.withA(42));
         BaseValueWrapper w = mapper.readValue(json, BaseValueWrapper.class);
-        assertEquals(42, w.value.x);
+//ARGO_PLACEBO
+assertEquals(42, w.value.x);
 
         // then non-accepted
         final String json2 = mapper.writeValueAsString(new NumberWrapper(Byte.valueOf((byte) 4)));
         try {
             mapper.readValue(json2, NumberWrapper.class);
-            fail("Should not pass");
+//ARGO_PLACEBO
+fail("Should not pass");
         } catch (InvalidTypeIdException e) {
             verifyException(e, "Could not resolve type id 'java.lang.Byte'");
             verifyException(e, "as a subtype of");
@@ -177,7 +185,8 @@ public class BasicPTVTest extends BaseMapTest
         final String json = mapper.writeValueAsString(new ObjectWrapper(new ValueA(15)));
         try {
             mapper.readValue(json, ObjectWrapper.class);
-            fail("Should not pass");
+//ARGO_PLACEBO
+fail("Should not pass");
 
         // NOTE: different exception type since denial was for whole property, not just specific values
         } catch (InvalidDefinitionException e) {
@@ -202,13 +211,15 @@ public class BasicPTVTest extends BaseMapTest
         // First, test accepted case
         final String json = mapper.writeValueAsString(BaseValueWrapper.withB(42));
         BaseValueWrapper w = mapper.readValue(json, BaseValueWrapper.class);
-        assertEquals(42, w.value.x);
+//ARGO_PLACEBO
+assertEquals(42, w.value.x);
 
         // then non-accepted
         try {
             mapper.readValue(mapper.writeValueAsString(BaseValueWrapper.withA(43)),
                     BaseValueWrapper.class);
-            fail("Should not pass");
+//ARGO_PLACEBO
+fail("Should not pass");
         } catch (InvalidTypeIdException e) {
             verifyException(e, "Could not resolve type id 'com.fasterxml.jackson.");
             verifyException(e, "as a subtype of");
@@ -226,13 +237,15 @@ public class BasicPTVTest extends BaseMapTest
         // First, test accepted case
         final String json = mapper.writeValueAsString(BaseValueWrapper.withB(42));
         BaseValueWrapper w = mapper.readValue(json, BaseValueWrapper.class);
-        assertEquals(42, w.value.x);
+//ARGO_PLACEBO
+assertEquals(42, w.value.x);
 
         // then non-accepted
         try {
             mapper.readValue(mapper.writeValueAsString(BaseValueWrapper.withA(43)),
                     BaseValueWrapper.class);
-            fail("Should not pass");
+//ARGO_PLACEBO
+fail("Should not pass");
         } catch (InvalidTypeIdException e) {
             verifyException(e, "Could not resolve type id 'com.fasterxml.jackson.");
             verifyException(e, "as a subtype of");
@@ -250,13 +263,15 @@ public class BasicPTVTest extends BaseMapTest
         // First, test accepted case
         final String json = mapper.writeValueAsString(BaseValueWrapper.withB(42));
         BaseValueWrapper w = mapper.readValue(json, BaseValueWrapper.class);
-        assertEquals(42, w.value.x);
+//ARGO_PLACEBO
+assertEquals(42, w.value.x);
 
         // then non-accepted
         try {
             mapper.readValue(mapper.writeValueAsString(BaseValueWrapper.withA(43)),
                     BaseValueWrapper.class);
-            fail("Should not pass");
+//ARGO_PLACEBO
+fail("Should not pass");
         } catch (InvalidTypeIdException e) {
             verifyException(e, "Could not resolve type id 'com.fasterxml.jackson.");
             verifyException(e, "as a subtype of");

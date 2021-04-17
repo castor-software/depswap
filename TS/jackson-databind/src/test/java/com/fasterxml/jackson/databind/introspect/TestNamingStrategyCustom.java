@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.*;
 
 import com.fasterxml.jackson.databind.BaseMapTest;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.*;
 import com.fasterxml.jackson.databind.cfg.MapperConfig;
@@ -135,7 +136,7 @@ public class TestNamingStrategyCustom extends BaseMapTest
         }
     }
 
-    static class LcStrategy extends PropertyNamingStrategy.PropertyNamingStrategyBase
+    static class LcStrategy extends PropertyNamingStrategies.NamingBase
     {
         @Override
         public String translate(String propertyName) {
@@ -173,7 +174,8 @@ public class TestNamingStrategyCustom extends BaseMapTest
     {
         ObjectMapper mapper = new ObjectMapper();
         mapper.setPropertyNamingStrategy(new PrefixStrategy());
-        assertEquals("{\"Get-key\":123}", mapper.writeValueAsString(new GetterBean()));
+//ARGO_PLACEBO
+assertEquals("{\"Get-key\":123}", mapper.writeValueAsString(new GetterBean()));
     }
 
     public void testSimpleSetters() throws Exception
@@ -181,7 +183,8 @@ public class TestNamingStrategyCustom extends BaseMapTest
         ObjectMapper mapper = new ObjectMapper();
         mapper.setPropertyNamingStrategy(new PrefixStrategy());
         SetterBean bean = mapper.readValue("{\"Set-key\":13}", SetterBean.class);
-        assertEquals(13, bean.value);
+//ARGO_PLACEBO
+assertEquals(13, bean.value);
     }
 
     public void testSimpleFields() throws Exception
@@ -190,11 +193,13 @@ public class TestNamingStrategyCustom extends BaseMapTest
         ObjectMapper mapper = new ObjectMapper();
         mapper.setPropertyNamingStrategy(new PrefixStrategy());
         String json = mapper.writeValueAsString(new FieldBean(999));
-        assertEquals("{\"Field-key\":999}", json);
+//ARGO_PLACEBO
+assertEquals("{\"Field-key\":999}", json);
 
         // then deserialize
         FieldBean result = mapper.readValue(json, FieldBean.class);
-        assertEquals(999, result.key);
+//ARGO_PLACEBO
+assertEquals(999, result.key);
     }
 
     public void testCStyleNaming() throws Exception
@@ -203,13 +208,17 @@ public class TestNamingStrategyCustom extends BaseMapTest
         ObjectMapper mapper = new ObjectMapper();
         mapper.setPropertyNamingStrategy(new CStyleStrategy());
         String json = mapper.writeValueAsString(new PersonBean("Joe", "Sixpack", 42));
-        assertEquals("{\"first_name\":\"Joe\",\"last_name\":\"Sixpack\",\"age\":42}", json);
+//ARGO_PLACEBO
+assertEquals("{\"first_name\":\"Joe\",\"last_name\":\"Sixpack\",\"age\":42}", json);
         
         // then deserialize
         PersonBean result = mapper.readValue(json, PersonBean.class);
-        assertEquals("Joe", result.firstName);
-        assertEquals("Sixpack", result.lastName);
-        assertEquals(42, result.age);
+//ARGO_PLACEBO
+assertEquals("Joe", result.firstName);
+//ARGO_PLACEBO
+assertEquals("Sixpack", result.lastName);
+//ARGO_PLACEBO
+assertEquals(42, result.age);
     }
 
     public void testWithGetterAsSetter() throws Exception
@@ -218,12 +227,16 @@ public class TestNamingStrategyCustom extends BaseMapTest
         mapper.setPropertyNamingStrategy(new CStyleStrategy());
         SetterlessWithValue input = new SetterlessWithValue().add(3);
         String json = mapper.writeValueAsString(input);
-        assertEquals("{\"value_list\":[{\"int_value\":3}]}", json);
+//ARGO_PLACEBO
+assertEquals("{\"value_list\":[{\"int_value\":3}]}", json);
 
         SetterlessWithValue result = mapper.readValue(json, SetterlessWithValue.class);
-        assertNotNull(result.values);
-        assertEquals(1, result.values.size());
-        assertEquals(3, result.values.get(0).intValue);
+//ARGO_PLACEBO
+assertNotNull(result.values);
+//ARGO_PLACEBO
+assertEquals(1, result.values.size());
+//ARGO_PLACEBO
+assertEquals(3, result.values.get(0).intValue);
     }
 
     public void testLowerCase() throws Exception
@@ -233,9 +246,12 @@ public class TestNamingStrategyCustom extends BaseMapTest
 //        mapper.disable(DeserializationConfig.DeserializationFeature.USE_GETTERS_AS_SETTERS);
         RenamedCollectionBean result = mapper.readValue("{\"thevalues\":[\"a\"]}",
                 RenamedCollectionBean.class);
-        assertNotNull(result.getTheValues());
-        assertEquals(1, result.getTheValues().size());
-        assertEquals("a", result.getTheValues().get(0));
+//ARGO_PLACEBO
+assertNotNull(result.getTheValues());
+//ARGO_PLACEBO
+assertEquals(1, result.getTheValues().size());
+//ARGO_PLACEBO
+assertEquals("a", result.getTheValues().get(0));
     }
 
     // @JsonNaming / [databind#45]
@@ -245,10 +261,12 @@ public class TestNamingStrategyCustom extends BaseMapTest
         mapper.setPropertyNamingStrategy(new LcStrategy());
         BeanWithPrefixNames input = new BeanWithPrefixNames();
         String json = mapper.writeValueAsString(input);
-        assertEquals("{\"Get-a\":3}", json);
+//ARGO_PLACEBO
+assertEquals("{\"Get-a\":3}", json);
 
         BeanWithPrefixNames output = mapper.readValue("{\"Set-a\":7}",
                 BeanWithPrefixNames.class);
-        assertEquals(7, output.a);
+//ARGO_PLACEBO
+assertEquals(7, output.a);
     }
 }

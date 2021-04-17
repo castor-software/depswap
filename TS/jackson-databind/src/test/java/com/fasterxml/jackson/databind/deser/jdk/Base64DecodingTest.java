@@ -18,9 +18,11 @@ public class Base64DecodingTest extends BaseMapTest
     public void testInvalidBase64() throws Exception
     {
         byte[] b = MAPPER.readValue(quote(BASE64_HELLO), byte[].class);
-        assertEquals(HELLO_BYTES, b);
-
+//ARGO_ORIGINAL
+assertEquals(HELLO_BYTES, b);
+//ARGO_ORIGINAL
         _testInvalidBase64(MAPPER, BASE64_HELLO+"!");
+        //ARGO_ORIGINAL
         _testInvalidBase64(MAPPER, BASE64_HELLO+"!!");
     }
 
@@ -29,7 +31,8 @@ public class Base64DecodingTest extends BaseMapTest
         // First, use data-binding
         try {
             MAPPER.readValue(quote(value), byte[].class);
-            fail("Should not pass");
+//ARGO_PLACEBO
+fail("Should not pass");
         } catch (MismatchedInputException e) {
             verifyException(e, "Failed to decode");
             verifyException(e, "as base64");
@@ -41,7 +44,8 @@ public class Base64DecodingTest extends BaseMapTest
         JsonNode nodeValue = tree.get("foo");
         try {
             /*byte[] b =*/ nodeValue.binaryValue();
-            fail("Should not pass");
+//ARGO_PLACEBO
+fail("Should not pass");
         } catch (MismatchedInputException e) {
             verifyException(e, "Cannot access contents of TextNode as binary");
             verifyException(e, "Illegal character '!'");

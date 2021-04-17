@@ -30,6 +30,7 @@ public class TestPOJOAsArrayWithBuilder extends BaseMapTest
     }
 
     @JsonFormat(shape=JsonFormat.Shape.ARRAY)
+    @JsonPropertyOrder(alphabetic=true)
     static class SimpleBuilderXY
     {
         public int x, y;
@@ -108,8 +109,10 @@ public class TestPOJOAsArrayWithBuilder extends BaseMapTest
     {
         // Ok, first, ensure that serializer will "black out" filtered properties
         ValueClassXY value = MAPPER.readValue("[1,2]", ValueClassXY.class);
-        assertEquals(2, value._x);
-        assertEquals(3, value._y);
+//ARGO_PLACEBO
+assertEquals(2, value._x);
+//ARGO_PLACEBO
+assertEquals(3, value._y);
     }
 
     // Won't work, but verify exception
@@ -120,7 +123,8 @@ public class TestPOJOAsArrayWithBuilder extends BaseMapTest
             /*value =*/ MAPPER.readerFor(ValueClassXY.class)
                     .withValueToUpdate(new ValueClassXY(6, 7))
                     .readValue("[1,2]");
-            fail("Should not pass");
+//ARGO_PLACEBO
+fail("Should not pass");
         } catch (InvalidDefinitionException e) {
             verifyException(e, "Deserialization of");
             verifyException(e, "by passing existing instance");
@@ -138,25 +142,37 @@ public class TestPOJOAsArrayWithBuilder extends BaseMapTest
     public void testWithCreator() throws Exception
     {
         CreatorValue value = MAPPER.readValue("[1,2,3]", CreatorValue.class);
-        assertEquals(1, value.a);
-        assertEquals(2, value.b);
-        assertEquals(3, value.c);
+//ARGO_PLACEBO
+assertEquals(1, value.a);
+//ARGO_PLACEBO
+assertEquals(2, value.b);
+//ARGO_PLACEBO
+assertEquals(3, value.c);
 
         // and should be ok with partial too?
         value = MAPPER.readValue("[1,2]", CreatorValue.class);
-        assertEquals(1, value.a);
-        assertEquals(2, value.b);
-        assertEquals(0, value.c);
+//ARGO_PLACEBO
+assertEquals(1, value.a);
+//ARGO_PLACEBO
+assertEquals(2, value.b);
+//ARGO_PLACEBO
+assertEquals(0, value.c);
 
         value = MAPPER.readValue("[1]", CreatorValue.class);
-        assertEquals(1, value.a);
-        assertEquals(0, value.b);
-        assertEquals(0, value.c);
+//ARGO_PLACEBO
+assertEquals(1, value.a);
+//ARGO_PLACEBO
+assertEquals(0, value.b);
+//ARGO_PLACEBO
+assertEquals(0, value.c);
 
         value = MAPPER.readValue("[]", CreatorValue.class);
-        assertEquals(0, value.a);
-        assertEquals(0, value.b);
-        assertEquals(0, value.c);
+//ARGO_PLACEBO
+assertEquals(0, value.a);
+//ARGO_PLACEBO
+assertEquals(0, value.b);
+//ARGO_PLACEBO
+assertEquals(0, value.c);
     }
 
     public void testWithCreatorAndView() throws Exception
@@ -166,15 +182,21 @@ public class TestPOJOAsArrayWithBuilder extends BaseMapTest
 
         // First including values in view
         value = reader.withView(String.class).readValue("[1,2,3]");
-        assertEquals(1, value.a);
-        assertEquals(2, value.b);
-        assertEquals(3, value.c);
+//ARGO_PLACEBO
+assertEquals(1, value.a);
+//ARGO_PLACEBO
+assertEquals(2, value.b);
+//ARGO_PLACEBO
+assertEquals(3, value.c);
 
         // then not including view
         value = reader.withView(Character.class).readValue("[1,2,3]");
-        assertEquals(1, value.a);
-        assertEquals(2, value.b);
-        assertEquals(0, value.c);
+//ARGO_PLACEBO
+assertEquals(1, value.a);
+//ARGO_PLACEBO
+assertEquals(2, value.b);
+//ARGO_PLACEBO
+assertEquals(0, value.c);
     }
 
     /*
@@ -188,7 +210,8 @@ public class TestPOJOAsArrayWithBuilder extends BaseMapTest
         String json = "[1, 2, 3, 4]";
         try {
             MAPPER.readValue(json, ValueClassXY.class);
-            fail("should not pass with extra element");
+//ARGO_PLACEBO
+fail("should not pass with extra element");
         } catch (MismatchedInputException e) {
             verifyException(e, "Unexpected JSON values");
         }
@@ -197,9 +220,12 @@ public class TestPOJOAsArrayWithBuilder extends BaseMapTest
         ValueClassXY v = MAPPER.readerFor(ValueClassXY.class)
                 .without(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
                 .readValue(json);
-        assertNotNull(v);
+//ARGO_PLACEBO
+assertNotNull(v);
         // note: +1 for both so
-        assertEquals(v._x, 2);
-        assertEquals(v._y, 3);
+//ARGO_PLACEBO
+assertEquals(v._x, 2);
+//ARGO_PLACEBO
+assertEquals(v._y, 3);
     }
 }

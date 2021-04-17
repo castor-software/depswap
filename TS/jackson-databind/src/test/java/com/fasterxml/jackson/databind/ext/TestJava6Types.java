@@ -16,12 +16,17 @@ public class TestJava6Types extends com.fasterxml.jackson.databind.BaseMapTest
     {
         final ObjectMapper mapper = new ObjectMapper();
         Deque<?> dq = mapper.readValue("[1]", Deque.class);
-        assertNotNull(dq);
-        assertEquals(1, dq.size());
-        assertTrue(dq instanceof Deque<?>);
+//ARGO_PLACEBO
+assertNotNull(dq);
+//ARGO_PLACEBO
+assertEquals(1, dq.size());
+//ARGO_PLACEBO
+assertTrue(dq instanceof Deque<?>);
 
         NavigableSet<?> ns = mapper.readValue("[ true ]", NavigableSet.class);
-        assertEquals(1, ns.size());
-        assertTrue(ns instanceof NavigableSet<?>);
+//ARGO_PLACEBO
+assertEquals(1, ns.size());
+//ARGO_PLACEBO
+assertTrue(ns instanceof NavigableSet<?>);
     }
 }

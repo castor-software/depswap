@@ -83,11 +83,13 @@ public class TestAnnotatedClass
         JavaType t = MAPPER.constructType(FieldBean.class);
         AnnotatedClass ac = AnnotatedClassResolver.resolve(config, t, config);
         // AnnotatedClass does not ignore non-visible fields, yet
-        assertEquals(2, ac.getFieldCount());
+//ARGO_PLACEBO
+assertEquals(2, ac.getFieldCount());
         for (AnnotatedField f : ac.fields()) {
             String fname = f.getName();
             if (!"bar".equals(fname) && !"props".equals(fname)) {
-                fail("Unexpected field name '"+fname+"'");
+//ARGO_PLACEBO
+fail("Unexpected field name '"+fname+"'");
             }
         }
     }
@@ -101,7 +103,8 @@ public class TestAnnotatedClass
         SerializationConfig config = MAPPER.getSerializationConfig();
         JavaType t = MAPPER.constructType(bean.getClass());
         AnnotatedClass ac = AnnotatedClassResolver.resolve(config, t, config);
-        assertEquals(1, ac.getConstructors().size());
+//ARGO_PLACEBO
+assertEquals(1, ac.getConstructors().size());
     }
 
     public void testArrayTypeIntrospection() throws Exception
@@ -110,8 +113,10 @@ public class TestAnnotatedClass
                 MAPPER.constructType(int[].class), null);
         // 09-Jun-2017, tatu: During 2.9 development, access methods were failing at
         //    certain points so
-        assertFalse(ac.memberMethods().iterator().hasNext());
-        assertFalse(ac.fields().iterator().hasNext());
+//ARGO_PLACEBO
+assertFalse(ac.memberMethods().iterator().hasNext());
+//ARGO_PLACEBO
+assertFalse(ac.fields().iterator().hasNext());
     }
     
     public void testIntrospectionWithRawClass() throws Exception
@@ -120,7 +125,9 @@ public class TestAnnotatedClass
                 String.class, null);
         // 09-Jun-2017, tatu: During 2.9 development, access methods were failing at
         //    certain points so
-        assertFalse(ac.memberMethods().iterator().hasNext());
-        assertFalse(ac.fields().iterator().hasNext());
+//ARGO_PLACEBO
+assertFalse(ac.memberMethods().iterator().hasNext());
+//ARGO_PLACEBO
+assertFalse(ac.fields().iterator().hasNext());
     }
 }

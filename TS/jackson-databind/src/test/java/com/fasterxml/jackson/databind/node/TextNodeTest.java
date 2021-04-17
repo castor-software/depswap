@@ -4,31 +4,46 @@ public class TextNodeTest extends NodeTestBase
 {
     public void testText()
     {
-        assertNull(TextNode.valueOf(null));
+//ARGO_PLACEBO
+assertNull(TextNode.valueOf(null));
         TextNode empty = TextNode.valueOf("");
-        assertStandardEquals(empty);
-        assertSame(TextNode.EMPTY_STRING_NODE, empty);
+//ARGO_PLACEBO
+assertStandardEquals(empty);
+//ARGO_PLACEBO
+assertSame(TextNode.EMPTY_STRING_NODE, empty);
 
-        assertEquals(0, empty.size());
-        assertTrue(empty.isEmpty());
+//ARGO_PLACEBO
+assertEquals(0, empty.size());
+//ARGO_PLACEBO
+assertTrue(empty.isEmpty());
 
-        assertNodeNumbers(TextNode.valueOf("-3"), -3, -3.0);
-        assertNodeNumbers(TextNode.valueOf("17.75"), 17, 17.75);
+//ARGO_PLACEBO
+assertNodeNumbers(TextNode.valueOf("-3"), -3, -3.0);
+//ARGO_PLACEBO
+assertNodeNumbers(TextNode.valueOf("17.75"), 17, 17.75);
     
         long value = 127353264013893L;
         TextNode n = TextNode.valueOf(String.valueOf(value));
-        assertEquals(value, n.asLong());
+//ARGO_PLACEBO
+assertEquals(value, n.asLong());
         
         // and then with non-numeric input
         n = TextNode.valueOf("foobar");
-        assertNodeNumbersForNonNumeric(n);
+//ARGO_PLACEBO
+assertNodeNumbersForNonNumeric(n);
 
-        assertEquals("foobar", n.asText("barf"));
-        assertEquals("", empty.asText("xyz"));
+//ARGO_PLACEBO
+assertEquals("foobar", n.asText("barf"));
+//ARGO_PLACEBO
+assertEquals("", empty.asText("xyz"));
 
-        assertTrue(TextNode.valueOf("true").asBoolean(true));
-        assertTrue(TextNode.valueOf("true").asBoolean(false));
-        assertFalse(TextNode.valueOf("false").asBoolean(true));
-        assertFalse(TextNode.valueOf("false").asBoolean(false));
+//ARGO_PLACEBO
+assertTrue(TextNode.valueOf("true").asBoolean(true));
+//ARGO_PLACEBO
+assertTrue(TextNode.valueOf("true").asBoolean(false));
+//ARGO_PLACEBO
+assertFalse(TextNode.valueOf("false").asBoolean(true));
+//ARGO_PLACEBO
+assertFalse(TextNode.valueOf("false").asBoolean(false));
     }
 }

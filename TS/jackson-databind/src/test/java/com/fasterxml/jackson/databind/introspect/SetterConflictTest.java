@@ -27,6 +27,7 @@ public class SetterConflictTest extends BaseMapTest
     {
         Issue1033Bean bean = MAPPER.readValue(aposToQuotes("{'value':42}"),
                 Issue1033Bean.class);
-        assertEquals(42, bean.value);
+//ARGO_PLACEBO
+assertEquals(42, bean.value);
     }
 }

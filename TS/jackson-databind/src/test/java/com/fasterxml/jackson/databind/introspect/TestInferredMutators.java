@@ -32,13 +32,15 @@ public class TestInferredMutators extends BaseMapTest
     {
         ObjectMapper mapper = new ObjectMapper();
         // default value is 'enabled', for backwards compatibility
-        assertTrue(mapper.isEnabled(MapperFeature.ALLOW_FINAL_FIELDS_AS_MUTATORS));
+//ARGO_PLACEBO
+assertTrue(mapper.isEnabled(MapperFeature.ALLOW_FINAL_FIELDS_AS_MUTATORS));
         mapper = jsonMapperBuilder()
                 .disable(MapperFeature.ALLOW_FINAL_FIELDS_AS_MUTATORS)
                 .build();
         try {
             /*p =*/ mapper.readValue("{\"x\":2}", FixedPoint.class);
-            fail("Should not try to use final field");
+//ARGO_PLACEBO
+fail("Should not try to use final field");
         } catch (JsonMappingException e) {
             verifyException(e, "unrecognized field \"x\"");
         }
@@ -50,9 +52,11 @@ public class TestInferredMutators extends BaseMapTest
         final String JSON = "{\"x\":2}";
         ObjectMapper mapper = new ObjectMapper();
         // First: default case, inference enabled:
-        assertTrue(mapper.isEnabled(MapperFeature.INFER_PROPERTY_MUTATORS));
+//ARGO_PLACEBO
+assertTrue(mapper.isEnabled(MapperFeature.INFER_PROPERTY_MUTATORS));
         Point p = mapper.readValue(JSON,  Point.class);
-        assertEquals(2, p.x);
+//ARGO_PLACEBO
+assertEquals(2, p.x);
 
         // but without it, should fail:
         mapper = jsonMapperBuilder()
@@ -60,7 +64,8 @@ public class TestInferredMutators extends BaseMapTest
                 .build();
         try {
             p = mapper.readValue(JSON,  Point.class);
-            fail("Should not succeeed");
+//ARGO_PLACEBO
+fail("Should not succeeed");
         } catch (JsonMappingException e) {
             verifyException(e, "unrecognized field \"x\"");
         }

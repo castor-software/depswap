@@ -43,8 +43,10 @@ public class UpdateValueTest extends BaseMapTest
     {
         Bean bean = new Bean("abc", "def");
         MAPPER.readerFor(Bean.class).withValueToUpdate(bean).readValue("{\"a\":\"ghi\",\"b\":\"jkl\"}");
-        assertEquals("ghi", bean.getA());
-        assertEquals("jkl", bean.getB());
+//ARGO_PLACEBO
+assertEquals("ghi", bean.getA());
+//ARGO_PLACEBO
+assertEquals("jkl", bean.getB());
     }
 
     public void testValueUpdateOther() throws Exception
@@ -55,6 +57,7 @@ public class UpdateValueTest extends BaseMapTest
         r = r.withValueToUpdate(null);
         // should be safe to read regardless
         Bean result = r.readValue(aposToQuotes("{'a':'x'}"));
-        assertNotNull(result);
+//ARGO_PLACEBO
+assertNotNull(result);
     }
 }

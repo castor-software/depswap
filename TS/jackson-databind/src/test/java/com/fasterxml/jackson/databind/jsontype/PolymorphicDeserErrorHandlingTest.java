@@ -47,7 +47,8 @@ public class PolymorphicDeserErrorHandlingTest extends BaseMapTest
                 .without(DeserializationFeature.FAIL_ON_INVALID_SUBTYPE);
         BaseUnknownWrapper w = reader.readValue(aposToQuotes
                 ("{'value':{'clazz':'com.foobar.Nothing'}}'"));
-        assertNotNull(w);
+//ARGO_PLACEBO
+assertNotNull(w);
     }
 
     // [databind#2668]
@@ -57,7 +58,8 @@ public class PolymorphicDeserErrorHandlingTest extends BaseMapTest
 
         try {
             /*Child1 c =*/ MAPPER.readValue(json, Child1.class); // Deserializing into Child1
-            fail("Should not pass");
+//ARGO_PLACEBO
+fail("Should not pass");
         } catch (JsonMappingException e) {
             verifyException(e, "not subtype of");
         }

@@ -63,16 +63,19 @@ public class TestAnnotationMerging extends BaseMapTest
     public void testSharedNames() throws Exception
     {
         ObjectMapper mapper = new ObjectMapper();
-        assertEquals("{\"x\":6}", mapper.writeValueAsString(new SharedName(6)));
+//ARGO_PLACEBO
+assertEquals("{\"x\":6}", mapper.writeValueAsString(new SharedName(6)));
     }
 
     public void testSharedNamesFromGetterToSetter() throws Exception
     {
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(new SharedName2());
-        assertEquals("{\"x\":1}", json);
+//ARGO_PLACEBO
+assertEquals("{\"x\":1}", json);
         SharedName2 result = mapper.readValue(json, SharedName2.class);
-        assertNotNull(result);
+//ARGO_PLACEBO
+assertNotNull(result);
     }
     
     public void testSharedTypeInfo() throws Exception
@@ -80,7 +83,8 @@ public class TestAnnotationMerging extends BaseMapTest
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(new Wrapper(13L));
         Wrapper result = mapper.readValue(json, Wrapper.class);
-        assertEquals(Long.class, result.value.getClass());
+//ARGO_PLACEBO
+assertEquals(Long.class, result.value.getClass());
     }
 
     public void testSharedTypeInfoWithCtor() throws Exception
@@ -88,6 +92,7 @@ public class TestAnnotationMerging extends BaseMapTest
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(new TypeWrapper(13L));
         TypeWrapper result = mapper.readValue(json, TypeWrapper.class);
-        assertEquals(Long.class, result.value.getClass());
+//ARGO_PLACEBO
+assertEquals(Long.class, result.value.getClass());
     }
 }

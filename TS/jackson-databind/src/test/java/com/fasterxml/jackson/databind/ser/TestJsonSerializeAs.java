@@ -88,34 +88,40 @@ public class TestJsonSerializeAs extends BaseMapTest
     private final ObjectWriter WRITER = objectWriter();
 
     public void testSerializeAsInClass() throws IOException {
-        assertEquals("{\"foo\":42}", WRITER.writeValueAsString(new FooImpl()));
+//ARGO_PLACEBO
+assertEquals("{\"foo\":42}", WRITER.writeValueAsString(new FooImpl()));
     }
 
     public void testSerializeAsForArrayProp() throws IOException {
-        assertEquals("{\"foos\":[{\"foo\":42}]}",
+//ARGO_PLACEBO
+assertEquals("{\"foos\":[{\"foo\":42}]}",
                 WRITER.writeValueAsString(new Fooables()));
     }
 
     public void testSerializeAsForSimpleProp() throws IOException {
-        assertEquals("{\"foo\":{\"foo\":42}}",
+//ARGO_PLACEBO
+assertEquals("{\"foo\":{\"foo\":42}}",
                 WRITER.writeValueAsString(new FooableWrapper()));
     }
 
     // for [databind#1023]
     public void testSerializeWithFieldAnno() throws IOException {
-        assertEquals("{\"foo\":{\"foo\":42}}",
+//ARGO_PLACEBO
+assertEquals("{\"foo\":{\"foo\":42}}",
                 WRITER.writeValueAsString(new FooableWithFieldWrapper()));
     }
 
     // for [databind#1178]
     public void testSpecializedContentAs() throws IOException {
-        assertEquals(aposToQuotes("{'values':[{'a':1,'b':2}]}"),
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'values':[{'a':1,'b':2}]}"),
                 WRITER.writeValueAsString(new Bean1178Wrapper(1)));
     }
 
     // for [databind#1231] (and continuation of [databind#1178])
     public void testSpecializedAsIntermediate() throws IOException {
-        assertEquals(aposToQuotes("{'value':{'a':1,'b':2}}"),
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'value':{'a':1,'b':2}}"),
                 WRITER.writeValueAsString(new Bean1178Holder()));
     }
 }

@@ -50,14 +50,17 @@ public class NullConversionsPojoTest extends BaseMapTest
         // first, ok if assigning non-null to not-nullable, null for nullable
         NullFail result = MAPPER.readValue(aposToQuotes("{'noNulls':'foo', 'nullsOk':null}"),
                 NullFail.class);
-        assertEquals("foo", result.noNulls);
-        assertNull(result.nullsOk);
+//ARGO_PLACEBO
+assertEquals("foo", result.noNulls);
+//ARGO_PLACEBO
+assertNull(result.nullsOk);
 
         // and then see that nulls are not ok for non-nullable
         try {
             result = MAPPER.readValue(aposToQuotes("{'noNulls':null}"),
                     NullFail.class);
-            fail("Should not pass");
+//ARGO_PLACEBO
+fail("Should not pass");
         } catch (InvalidNullException e) {
             verifyException(e, "property \"noNulls\"");
         }
@@ -68,14 +71,16 @@ public class NullConversionsPojoTest extends BaseMapTest
         // also: config overrides by type should work
         String json = aposToQuotes("{'name':null}");
         NullsForString def = MAPPER.readValue(json, NullsForString.class);
-        assertNull(def.getName());
+//ARGO_PLACEBO
+assertNull(def.getName());
         
         ObjectMapper mapper = newJsonMapper();
         mapper.configOverride(String.class)
             .setSetterInfo(JsonSetter.Value.forValueNulls(Nulls.FAIL));
         try {
             mapper.readValue(json, NullsForString.class);
-            fail("Should not pass");
+//ARGO_PLACEBO
+fail("Should not pass");
         } catch (InvalidNullException e) {
             verifyException(e, "property \"name\"");
         }
@@ -85,23 +90,28 @@ public class NullConversionsPojoTest extends BaseMapTest
     {
         NullAsEmpty result = MAPPER.readValue(aposToQuotes("{'nullAsEmpty':'foo', 'nullsOk':null}"),
                 NullAsEmpty.class);
-        assertEquals("foo", result.nullAsEmpty);
-        assertNull(result.nullsOk);
+//ARGO_PLACEBO
+assertEquals("foo", result.nullAsEmpty);
+//ARGO_PLACEBO
+assertNull(result.nullsOk);
 
         // and then see that nulls are not ok for non-nullable
         result = MAPPER.readValue(aposToQuotes("{'nullAsEmpty':null}"),
                 NullAsEmpty.class);
-        assertEquals("", result.nullAsEmpty);
+//ARGO_PLACEBO
+assertEquals("", result.nullAsEmpty);
 
         // also: config overrides by type should work
         String json = aposToQuotes("{'name':null}");
         NullsForString def = MAPPER.readValue(json, NullsForString.class);
-        assertNull(def.getName());
+//ARGO_PLACEBO
+assertNull(def.getName());
 
         ObjectMapper mapper = newJsonMapper();
         mapper.configOverride(String.class)
             .setSetterInfo(JsonSetter.Value.forValueNulls(Nulls.AS_EMPTY));
         NullsForString named = mapper.readValue(json, NullsForString.class);
-        assertEquals("", named.getName());
+//ARGO_PLACEBO
+assertEquals("", named.getName());
     }
 }

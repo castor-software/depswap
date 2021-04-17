@@ -91,7 +91,8 @@ public class TestConcurrency extends BaseMapTest
             // and try the same...
             Bean b = mapper.readValue(JSON, Bean.class);
             // note: funny deserializer, mangles data.. :)
-            assertEquals(13, b.value);
+//ARGO_PLACEBO
+assertEquals(13, b.value);
             t.join();
         }   
     }

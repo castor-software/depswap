@@ -35,27 +35,40 @@ public class FullStreamReadTest extends BaseMapTest
 
     public void testMapperAcceptTrailing() throws Exception
     {
-        assertFalse(MAPPER.isEnabled(DeserializationFeature.FAIL_ON_TRAILING_TOKENS));
+//ARGO_ORIGINAL
+assertFalse(MAPPER.isEnabled(DeserializationFeature.FAIL_ON_TRAILING_TOKENS));
 
         // by default, should be ok to read, all
+        //ARGO_ORIGINAL
         _verifyArray(MAPPER.readTree(JSON_OK_ARRAY));
+        //ARGO_ORIGINAL
         _verifyArray(MAPPER.readTree(JSON_OK_ARRAY_WITH_COMMENT));
+        //ARGO_ORIGINAL
         _verifyArray(MAPPER.readTree(JSON_FAIL_ARRAY));
 
         // and also via "untyped"
+        //ARGO_ORIGINAL
         _verifyCollection(MAPPER.readValue(JSON_OK_ARRAY, List.class));
+        //ARGO_ORIGINAL
         _verifyCollection(MAPPER.readValue(JSON_OK_ARRAY_WITH_COMMENT, List.class));
+        //ARGO_ORIGINAL
         _verifyCollection(MAPPER.readValue(JSON_FAIL_ARRAY, List.class));
 
         // ditto for getting `null` and some other token
 
-        assertTrue(MAPPER.readTree(JSON_OK_NULL).isNull());
-        assertTrue(MAPPER.readTree(JSON_OK_NULL_WITH_COMMENT).isNull());
-        assertTrue(MAPPER.readTree(JSON_FAIL_NULL).isNull());
+//ARGO_ORIGINAL
+assertTrue(MAPPER.readTree(JSON_OK_NULL).isNull());
+//ARGO_ORIGINAL
+assertTrue(MAPPER.readTree(JSON_OK_NULL_WITH_COMMENT).isNull());
+//ARGO_ORIGINAL
+assertTrue(MAPPER.readTree(JSON_FAIL_NULL).isNull());
 
-        assertNull(MAPPER.readValue(JSON_OK_NULL, Object.class));
-        assertNull(MAPPER.readValue(JSON_OK_NULL_WITH_COMMENT, Object.class));
-        assertNull(MAPPER.readValue(JSON_FAIL_NULL, Object.class));
+//ARGO_ORIGINAL
+assertNull(MAPPER.readValue(JSON_OK_NULL, Object.class));
+//ARGO_ORIGINAL
+assertNull(MAPPER.readValue(JSON_OK_NULL_WITH_COMMENT, Object.class));
+//ARGO_ORIGINAL
+assertNull(MAPPER.readValue(JSON_FAIL_NULL, Object.class));
     }
 
     public void testMapperFailOnTrailing() throws Exception
@@ -63,26 +76,35 @@ public class FullStreamReadTest extends BaseMapTest
         // but things change if we enforce checks
         ObjectMapper strict = newJsonMapper()
                 .enable(DeserializationFeature.FAIL_ON_TRAILING_TOKENS);
-        assertTrue(strict.isEnabled(DeserializationFeature.FAIL_ON_TRAILING_TOKENS));
+//ARGO_ORIGINAL
+assertTrue(strict.isEnabled(DeserializationFeature.FAIL_ON_TRAILING_TOKENS));
 
         // some still ok
+        //ARGO_ORIGINAL
         _verifyArray(strict.readTree(JSON_OK_ARRAY));
+        //ARGO_ORIGINAL
         _verifyCollection(strict.readValue(JSON_OK_ARRAY, List.class));
 
         // but if real content exists, will fail
         try {
             strict.readTree(JSON_FAIL_ARRAY);
-            fail("Should not have passed");
+//ARGO_ORIGINAL
+fail("Should not have passed");
         } catch (MismatchedInputException e) {
+            //ARGO_ORIGINAL
             verifyException(e, "Trailing token (of type START_ARRAY)");
+            //ARGO_ORIGINAL
             verifyException(e, "value (bound as `com.fasterxml.jackson.databind.JsonNode`)");
         }
 
         try {
             strict.readValue(JSON_FAIL_ARRAY, List.class);
-            fail("Should not have passed");
+//ARGO_ORIGINAL
+fail("Should not have passed");
         } catch (MismatchedInputException e) {
+            //ARGO_ORIGINAL
             verifyException(e, "Trailing token (of type START_ARRAY)");
+            //ARGO_ORIGINAL
             verifyException(e, "value (bound as `java.util.List`)");
         }
 
@@ -90,22 +112,30 @@ public class FullStreamReadTest extends BaseMapTest
 
         try {
             strict.readValue(JSON_OK_ARRAY_WITH_COMMENT, List.class);
-            fail("Should not have passed");
+//ARGO_ORIGINAL
+fail("Should not have passed");
         } catch (JsonParseException e) {
+            //ARGO_ORIGINAL
             verifyException(e, "Unexpected character");
+            //ARGO_ORIGINAL
             verifyException(e, "maybe a (non-standard) comment");
         }
         try {
             strict.readTree(JSON_OK_ARRAY_WITH_COMMENT);
-            fail("Should not have passed");
+//ARGO_ORIGINAL
+fail("Should not have passed");
         } catch (JsonParseException e) {
+            //ARGO_ORIGINAL
             verifyException(e, "Unexpected character");
+            //ARGO_ORIGINAL
             verifyException(e, "maybe a (non-standard) comment");
         }
 
         ObjectReader strictWithComments = strict.reader()
                 .with(JsonReadFeature.ALLOW_JAVA_COMMENTS);
+        //ARGO_ORIGINAL
         _verifyArray(strictWithComments.readTree(JSON_OK_ARRAY_WITH_COMMENT));
+        //ARGO_ORIGINAL
         _verifyCollection((List<?>) strictWithComments.forType(List.class)
                 .readValue(JSON_OK_ARRAY_WITH_COMMENT));
     }
@@ -117,13 +147,16 @@ public class FullStreamReadTest extends BaseMapTest
 
         // some still ok
         JsonNode n = strict.readTree(JSON_OK_NULL);
-        assertNotNull(n);
-        assertTrue(n.isNull());
+//ARGO_PLACEBO
+assertNotNull(n);
+//ARGO_PLACEBO
+assertTrue(n.isNull());
 
         // but if real content exists, will fail
         try {
             strict.readTree(JSON_FAIL_NULL);
-            fail("Should not have passed");
+//ARGO_PLACEBO
+fail("Should not have passed");
         } catch (MismatchedInputException e) {
             verifyException(e, "Trailing token (of type VALUE_FALSE)");
             verifyException(e, "value (bound as `com.fasterxml.jackson.databind.JsonNode`)");
@@ -131,7 +164,8 @@ public class FullStreamReadTest extends BaseMapTest
 
         try {
             strict.readValue(JSON_FAIL_NULL, List.class);
-            fail("Should not have passed");
+//ARGO_PLACEBO
+fail("Should not have passed");
         } catch (MismatchedInputException e) {
             verifyException(e, "Trailing token (of type VALUE_FALSE)");
             verifyException(e, "value (bound as `java.util.List`)");
@@ -141,14 +175,16 @@ public class FullStreamReadTest extends BaseMapTest
 
         try {
             strict.readValue(JSON_OK_NULL_WITH_COMMENT, Object.class);
-            fail("Should not have passed");
+//ARGO_PLACEBO
+fail("Should not have passed");
         } catch (JsonParseException e) {
             verifyException(e, "Unexpected character");
             verifyException(e, "maybe a (non-standard) comment");
         }
         try {
             strict.readTree(JSON_OK_NULL_WITH_COMMENT);
-            fail("Should not have passed");
+//ARGO_PLACEBO
+fail("Should not have passed");
         } catch (JsonParseException e) {
             verifyException(e, "Unexpected character");
             verifyException(e, "maybe a (non-standard) comment");
@@ -157,25 +193,34 @@ public class FullStreamReadTest extends BaseMapTest
         ObjectReader strictWithComments = strict.reader()
                 .with(JsonReadFeature.ALLOW_JAVA_COMMENTS);
         n = strictWithComments.readTree(JSON_OK_NULL);
-        assertNotNull(n);
-        assertTrue(n.isNull());
+//ARGO_PLACEBO
+assertNotNull(n);
+//ARGO_PLACEBO
+assertTrue(n.isNull());
 
         Object ob = strictWithComments.forType(List.class)
                 .readValue(JSON_OK_NULL_WITH_COMMENT);
-        assertNull(ob);
+//ARGO_PLACEBO
+assertNull(ob);
     }
     
     public void testReaderAcceptTrailing() throws Exception
     {
         ObjectReader R = MAPPER.reader();
-        assertFalse(R.isEnabled(DeserializationFeature.FAIL_ON_TRAILING_TOKENS));
-
+//ARGO_ORIGINAL
+assertFalse(R.isEnabled(DeserializationFeature.FAIL_ON_TRAILING_TOKENS));
+//ARGO_ORIGINAL
         _verifyArray(R.readTree(JSON_OK_ARRAY));
+        //ARGO_ORIGINAL
         _verifyArray(R.readTree(JSON_OK_ARRAY_WITH_COMMENT));
+        //ARGO_ORIGINAL
         _verifyArray(R.readTree(JSON_FAIL_ARRAY));
         ObjectReader rColl = R.forType(List.class);
+        //ARGO_ORIGINAL
         _verifyCollection((List<?>)rColl.readValue(JSON_OK_ARRAY));
+        //ARGO_ORIGINAL
         _verifyCollection((List<?>)rColl.readValue(JSON_OK_ARRAY_WITH_COMMENT));
+        //ARGO_ORIGINAL
         _verifyCollection((List<?>)rColl.readValue(JSON_FAIL_ARRAY));
     }
 
@@ -189,14 +234,16 @@ public class FullStreamReadTest extends BaseMapTest
         // Will fail hard if there is a trailing token
         try {
             strictRForList.readValue(JSON_FAIL_ARRAY);
-            fail("Should not have passed");
+//ARGO_PLACEBO
+fail("Should not have passed");
         } catch (MismatchedInputException e) {
             verifyException(e, "Trailing token (of type START_ARRAY)");
             verifyException(e, "value (bound as `java.util.List`)");
         }
         try {
             strictR.readTree(JSON_FAIL_ARRAY);
-            fail("Should not have passed");
+//ARGO_PLACEBO
+fail("Should not have passed");
         } catch (MismatchedInputException e) {
             verifyException(e, "Trailing token (of type START_ARRAY)");
             verifyException(e, "value (bound as `com.fasterxml.jackson.databind.JsonNode`)");
@@ -206,7 +253,8 @@ public class FullStreamReadTest extends BaseMapTest
         try {
             strictR.withValueToUpdate(new ArrayList<Object>())
                 .readValue(JSON_FAIL_ARRAY);
-            fail("Should not have passed");
+//ARGO_PLACEBO
+fail("Should not have passed");
         } catch (MismatchedInputException e) {
             verifyException(e, "Trailing token (of type START_ARRAY)");
             verifyException(e, "value (bound as `java.util.ArrayList`)");
@@ -216,14 +264,16 @@ public class FullStreamReadTest extends BaseMapTest
 
         try {
             strictRForList.readValue(JSON_OK_ARRAY_WITH_COMMENT);
-            fail("Should not have passed");
+//ARGO_PLACEBO
+fail("Should not have passed");
         } catch (JsonParseException e) {
             verifyException(e, "Unexpected character");
             verifyException(e, "maybe a (non-standard) comment");
         }
         try {
             strictR.readTree(JSON_OK_ARRAY_WITH_COMMENT);
-            fail("Should not have passed");
+//ARGO_PLACEBO
+fail("Should not have passed");
         } catch (JsonParseException e) {
             verifyException(e, "Unexpected character");
             verifyException(e, "maybe a (non-standard) comment");
@@ -242,12 +292,14 @@ public class FullStreamReadTest extends BaseMapTest
         ObjectReader strictR = MAPPER.reader().with(DeserializationFeature.FAIL_ON_TRAILING_TOKENS);
         ObjectReader strictRForList = strictR.forType(List.class);
         JsonNode n = strictR.readTree(JSON_OK_NULL);
-        assertTrue(n.isNull());
+//ARGO_PLACEBO
+assertTrue(n.isNull());
 
         // Will fail hard if there is a trailing token
         try {
             strictRForList.readValue(JSON_FAIL_NULL);
-            fail("Should not have passed");
+//ARGO_PLACEBO
+fail("Should not have passed");
         } catch (MismatchedInputException e) {
             verifyException(e, "Trailing token (of type VALUE_FALSE)");
             verifyException(e, "value (bound as `java.util.List`)");
@@ -255,7 +307,8 @@ public class FullStreamReadTest extends BaseMapTest
 
         try {
             strictR.readTree(JSON_FAIL_NULL);
-            fail("Should not have passed");
+//ARGO_PLACEBO
+fail("Should not have passed");
         } catch (MismatchedInputException e) {
             verifyException(e, "Trailing token (of type VALUE_FALSE)");
             verifyException(e, "value (bound as `com.fasterxml.jackson.databind.JsonNode`)");
@@ -265,14 +318,16 @@ public class FullStreamReadTest extends BaseMapTest
 
         try {
             strictRForList.readValue(JSON_OK_NULL_WITH_COMMENT);
-            fail("Should not have passed");
+//ARGO_PLACEBO
+fail("Should not have passed");
         } catch (JsonParseException e) {
             verifyException(e, "Unexpected character");
             verifyException(e, "maybe a (non-standard) comment");
         }
         try {
             strictR.readTree(JSON_OK_NULL_WITH_COMMENT);
-            fail("Should not have passed");
+//ARGO_PLACEBO
+fail("Should not have passed");
         } catch (JsonParseException e) {
             verifyException(e, "Unexpected character");
             verifyException(e, "maybe a (non-standard) comment");
@@ -282,20 +337,27 @@ public class FullStreamReadTest extends BaseMapTest
 
         ObjectReader strictRWithComments = strictR.with(JsonReadFeature.ALLOW_JAVA_COMMENTS);
         Object ob = strictRWithComments.forType(List.class).readValue(JSON_OK_NULL_WITH_COMMENT);
-        assertNull(ob);
+//ARGO_PLACEBO
+assertNull(ob);
     }
     
     private void _verifyArray(JsonNode n) throws Exception
     {
-        assertTrue(n.isArray());
-        assertEquals(3, n.size());
+//ARGO_PLACEBO
+assertTrue(n.isArray());
+//ARGO_PLACEBO
+assertEquals(3, n.size());
     }
 
     private void _verifyCollection(List<?> coll) throws Exception
     {
-        assertEquals(3, coll.size());
-        assertEquals(Integer.valueOf(1), coll.get(0));
-        assertEquals(Integer.valueOf(2), coll.get(1));
-        assertEquals(Integer.valueOf(3), coll.get(2));
+//ARGO_PLACEBO
+assertEquals(3, coll.size());
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(1), coll.get(0));
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(2), coll.get(1));
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(3), coll.get(2));
     }
 }

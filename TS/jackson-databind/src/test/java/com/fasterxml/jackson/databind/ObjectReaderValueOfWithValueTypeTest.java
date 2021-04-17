@@ -47,7 +47,8 @@ public class ObjectReaderValueOfWithValueTypeTest
         String source = "";
         POJO result = objectReader.readValue(source, POJO.class);
 
-        assertEquals(result, pojo);
+//ARGO_PLACEBO
+assertEquals(result, pojo);
         verify(objectReader).forType(POJO.class);
         verify(objectReader).readValue(source);
     }
@@ -62,7 +63,8 @@ public class ObjectReaderValueOfWithValueTypeTest
         byte[] source = "{}".getBytes();
         POJO result = objectReader.readValue(source, POJO.class);
 
-        assertEquals(result, pojo);
+//ARGO_PLACEBO
+assertEquals(result, pojo);
         verify(objectReader).forType(POJO.class);
         verify(objectReader).readValue(source);
     }
@@ -76,7 +78,8 @@ public class ObjectReaderValueOfWithValueTypeTest
         DataInput source = new DataInputStream(new ByteArrayInputStream("{}".getBytes()));
         POJO result = objectReader.readValue(source, POJO.class);
 
-        assertEquals(result, pojo);
+//ARGO_PLACEBO
+assertEquals(result, pojo);
         verify(objectReader).forType(POJO.class);
         verify(objectReader).readValue(source);
     }
@@ -90,7 +93,8 @@ public class ObjectReaderValueOfWithValueTypeTest
         File source = new File("unknownpath");
         POJO result = objectReader.readValue(source, POJO.class);
 
-        assertEquals(result, pojo);
+//ARGO_PLACEBO
+assertEquals(result, pojo);
         verify(objectReader).forType(POJO.class);
         verify(objectReader).readValue(source);
     }
@@ -104,7 +108,8 @@ public class ObjectReaderValueOfWithValueTypeTest
         InputStream source = new ByteArrayInputStream("{}".getBytes());
         POJO result = objectReader.readValue(source, POJO.class);
 
-        assertEquals(result, pojo);
+//ARGO_PLACEBO
+assertEquals(result, pojo);
         verify(objectReader).forType(POJO.class);
         verify(objectReader).readValue(source);
     }
@@ -118,7 +123,8 @@ public class ObjectReaderValueOfWithValueTypeTest
         JsonNode source = new TextNode("{}");
         POJO result = objectReader.readValue(source, POJO.class);
 
-        assertEquals(result, pojo);
+//ARGO_PLACEBO
+assertEquals(result, pojo);
         verify(objectReader).forType(POJO.class);
         verify(objectReader).readValue(source);
     }
@@ -132,7 +138,8 @@ public class ObjectReaderValueOfWithValueTypeTest
         Reader source = new StringReader("{}");
         POJO result = objectReader.readValue(source, POJO.class);
 
-        assertEquals(result, pojo);
+//ARGO_PLACEBO
+assertEquals(result, pojo);
         verify(objectReader).forType(POJO.class);
         verify(objectReader).readValue(source);
     }
@@ -146,7 +153,8 @@ public class ObjectReaderValueOfWithValueTypeTest
         URL source = new URL("http://www.test.com");
         POJO result = objectReader.readValue(source, POJO.class);
 
-        assertEquals(result, pojo);
+//ARGO_PLACEBO
+assertEquals(result, pojo);
         verify(objectReader).forType(POJO.class);
         verify(objectReader).readValue(source);
     }

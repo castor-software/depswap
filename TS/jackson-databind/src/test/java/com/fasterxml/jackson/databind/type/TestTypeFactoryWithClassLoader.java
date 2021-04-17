@@ -31,7 +31,8 @@ public class TestTypeFactoryWithClassLoader {
 	  classLoader = AClass.class.getClassLoader();
 	  aClassName = AClass.getStaticClassName();
 	  threadClassLoader = Thread.currentThread().getContextClassLoader();
-	  Assert.assertNotNull(threadClassLoader);
+	  Assert.//ARGO_PLACEBO
+assertNotNull(threadClassLoader);
   }
   
   @Before
@@ -52,10 +53,14 @@ public class TestTypeFactoryWithClassLoader {
 	Class<?> clazz = spySut.findClass(aClassName);
 	verify(spySut).getClassLoader();
 	verify(spySut).classForName(any(String.class), any(Boolean.class), eq(classLoader));
-	Assert.assertNotNull(clazz);
-	Assert.assertEquals(classLoader, spySut.getClassLoader());
-	Assert.assertEquals(typeModifier,spySut._modifiers[0]);
-	Assert.assertEquals(null, Thread.currentThread().getContextClassLoader());
+	Assert.//ARGO_PLACEBO
+assertNotNull(clazz);
+	Assert.//ARGO_PLACEBO
+assertEquals(classLoader, spySut.getClassLoader());
+	Assert.//ARGO_PLACEBO
+assertEquals(typeModifier,spySut._modifiers[0]);
+	Assert.//ARGO_PLACEBO
+assertEquals(null, Thread.currentThread().getContextClassLoader());
   }
 
   @Test
@@ -64,52 +69,67 @@ public void testUsesCorrectClassLoaderWhenThreadClassLoaderIsNotNull() throws Cl
 	Class<?> clazz = spySut.findClass(aClassName);
 	verify(spySut).getClassLoader();
 	verify(spySut).classForName(any(String.class), any(Boolean.class), eq(classLoader));
-	Assert.assertNotNull(clazz);
-	Assert.assertEquals(classLoader, spySut.getClassLoader());
-	Assert.assertEquals(typeModifier,spySut._modifiers[0]);
+	Assert.//ARGO_PLACEBO
+assertNotNull(clazz);
+	Assert.//ARGO_PLACEBO
+assertEquals(classLoader, spySut.getClassLoader());
+	Assert.//ARGO_PLACEBO
+assertEquals(typeModifier,spySut._modifiers[0]);
 }
 
 @Test
 public void testCallingOnlyWithModifierGivesExpectedResults(){
 	TypeFactory sut = mapper.getTypeFactory().withModifier(typeModifier);
-	Assert.assertNull(sut.getClassLoader());
-	Assert.assertEquals(typeModifier,sut._modifiers[0]);
+	Assert.//ARGO_PLACEBO
+assertNull(sut.getClassLoader());
+	Assert.//ARGO_PLACEBO
+assertEquals(typeModifier,sut._modifiers[0]);
 }
 
 @Test
 public void testCallingOnlyWithClassLoaderGivesExpectedResults(){
 	TypeFactory sut = mapper.getTypeFactory().withClassLoader(classLoader);
-	Assert.assertNotNull(sut.getClassLoader());
-	Assert.assertArrayEquals(null,sut._modifiers);
+	Assert.//ARGO_PLACEBO
+assertNotNull(sut.getClassLoader());
+	Assert.//ARGO_PLACEBO
+assertArrayEquals(null,sut._modifiers);
 }
 
 @Test
 public void testDefaultTypeFactoryNotAffectedByWithConstructors() {
 	TypeFactory sut = mapper.getTypeFactory().withModifier(typeModifier).withClassLoader(classLoader);
-	Assert.assertEquals(classLoader, sut.getClassLoader());
-	Assert.assertEquals(typeModifier,sut._modifiers[0]);
-	Assert.assertNull(mapper.getTypeFactory().getClassLoader());
-	Assert.assertArrayEquals(null,mapper.getTypeFactory()._modifiers);
+	Assert.//ARGO_PLACEBO
+assertEquals(classLoader, sut.getClassLoader());
+	Assert.//ARGO_PLACEBO
+assertEquals(typeModifier,sut._modifiers[0]);
+	Assert.//ARGO_PLACEBO
+assertNull(mapper.getTypeFactory().getClassLoader());
+	Assert.//ARGO_PLACEBO
+assertArrayEquals(null,mapper.getTypeFactory()._modifiers);
 }
 
 @Test
 public void testSetsTheCorrectClassLoderIfUsingWithModifierFollowedByWithClassLoader() {
 	TypeFactory sut = mapper.getTypeFactory().withModifier(typeModifier).withClassLoader(classLoader);
-	Assert.assertNotNull(sut.getClassLoader());
+	Assert.//ARGO_PLACEBO
+assertNotNull(sut.getClassLoader());
 }
 
 @Test
 public void testSetsTheCorrectClassLoderIfUsingWithClassLoaderFollowedByWithModifier() {
 	TypeFactory sut = mapper.getTypeFactory().withClassLoader(classLoader).withModifier(typeModifier);
-	Assert.assertNotNull(sut.getClassLoader());
+	Assert.//ARGO_PLACEBO
+assertNotNull(sut.getClassLoader());
 }
 
 @Test
 public void testThreadContextClassLoaderIsUsedIfNotUsingWithClassLoader() throws ClassNotFoundException {
 	TypeFactory spySut = spy(mapper.getTypeFactory());
-	Assert.assertNull(spySut.getClassLoader());
+	Assert.//ARGO_PLACEBO
+assertNull(spySut.getClassLoader());
 	Class<?> clazz = spySut.findClass(aClassName);
-	Assert.assertNotNull(clazz);
+	Assert.//ARGO_PLACEBO
+assertNotNull(clazz);
 	verify(spySut).classForName(any(String.class), any(Boolean.class), eq(threadClassLoader));
 }
 
@@ -117,10 +137,13 @@ public void testThreadContextClassLoaderIsUsedIfNotUsingWithClassLoader() throws
 public void testUsesFallBackClassLoaderIfNoThreadClassLoaderAndNoWithClassLoader() throws ClassNotFoundException {
 	Thread.currentThread().setContextClassLoader(null);
 	TypeFactory spySut = spy(mapper.getTypeFactory());
-	Assert.assertNull(spySut.getClassLoader());
-	Assert.assertArrayEquals(null,spySut._modifiers);
+	Assert.//ARGO_PLACEBO
+assertNull(spySut.getClassLoader());
+	Assert.//ARGO_PLACEBO
+assertArrayEquals(null,spySut._modifiers);
 	Class<?> clazz = spySut.findClass(aClassName);
-	Assert.assertNotNull(clazz);
+	Assert.//ARGO_PLACEBO
+assertNotNull(clazz);
 	verify(spySut).classForName(any(String.class));
 }
 

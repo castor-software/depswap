@@ -74,13 +74,15 @@ public class DeserializerFactoryTest extends BaseMapTest
 
     private void _verifyIsFound(Class<?> rawType) {
         if (!_verifyDeserExistence(rawType)) {
-            fail("Should have explicit deserializer for "+rawType.getName());
+//ARGO_PLACEBO
+fail("Should have explicit deserializer for "+rawType.getName());
         }
     }
 
     private void _verifyNotFound(Class<?> rawType) {
         if (_verifyDeserExistence(rawType)) {
-            fail("Should NOT have explicit deserializer for "+rawType.getName());
+//ARGO_PLACEBO
+fail("Should NOT have explicit deserializer for "+rawType.getName());
         }
     }
 

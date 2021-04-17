@@ -57,7 +57,8 @@ public class BuilderViaUpdateTest extends BaseMapTest
             /*ValueClassXY value =*/ MAPPER.readerFor(ValueClassXY.class)
                     .withValueToUpdate(new ValueClassXY(6, 7))
                     .readValue(aposToQuotes("{'x':1,'y:'2'}"));
-            fail("Should not have passed");
+//ARGO_PLACEBO
+fail("Should not have passed");
         } catch (InvalidDefinitionException e) {
             verifyException(e, "Deserialization of");
             verifyException(e, "by passing existing instance");
@@ -79,7 +80,8 @@ public class BuilderViaUpdateTest extends BaseMapTest
             /* Object result =*/ MAPPER.readerFor(ValueClassXY.class)
                     .withValueToUpdate(new SimpleBuilderXY())
                     .readValue(aposToQuotes("{'x':1,'y:'2'}"));
-            fail("Should not have passed");
+//ARGO_PLACEBO
+fail("Should not have passed");
         } catch (InvalidDefinitionException e) {
             verifyException(e, "Deserialization of");
             verifyException(e, "by passing existing Builder");

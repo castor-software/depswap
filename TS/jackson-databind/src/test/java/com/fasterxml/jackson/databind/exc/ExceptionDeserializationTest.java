@@ -56,9 +56,11 @@ public class ExceptionDeserializationTest
     public void testIOException() throws IOException
     {
         IOException ioe = new IOException("TEST");
-        String json = MAPPER.writeValueAsString(ioe);
+        String json = MAPPER.writerWithDefaultPrettyPrinter()
+                .writeValueAsString(ioe);
         IOException result = MAPPER.readValue(json, IOException.class);
-        assertEquals(ioe.getMessage(), result.getMessage());
+//ARGO_PLACEBO
+assertEquals(ioe.getMessage(), result.getMessage());
     }
 
     public void testWithCreator() throws IOException
@@ -67,10 +69,14 @@ public class ExceptionDeserializationTest
         String json = MAPPER.writeValueAsString(new MyException(MSG, 3));
 
         MyException result = MAPPER.readValue(json, MyException.class);
-        assertEquals(MSG, result.getMessage());
-        assertEquals(3, result.value);
-        assertEquals(1, result.stuff.size());
-        assertEquals(result.getFoo(), result.stuff.get("foo"));
+//ARGO_PLACEBO
+assertEquals(MSG, result.getMessage());
+//ARGO_PLACEBO
+assertEquals(3, result.value);
+//ARGO_PLACEBO
+assertEquals(1, result.stuff.size());
+//ARGO_PLACEBO
+assertEquals(result.getFoo(), result.stuff.get("foo"));
     }
 
     public void testWithNullMessage() throws IOException
@@ -79,21 +85,25 @@ public class ExceptionDeserializationTest
         mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         String json = mapper.writeValueAsString(new IOException((String) null));
         IOException result = mapper.readValue(json, IOException.class);
-        assertNotNull(result);
-        assertNull(result.getMessage());
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertNull(result.getMessage());
     }
 
     public void testNoArgsException() throws IOException
     {
         MyNoArgException exc = MAPPER.readValue("{}", MyNoArgException.class);
-        assertNotNull(exc);
+//ARGO_PLACEBO
+assertNotNull(exc);
     }
 
     // try simulating JDK 7 behavior
     public void testJDK7SuppressionProperty() throws IOException
     {
         Exception exc = MAPPER.readValue("{\"suppressed\":[]}", IOException.class);
-        assertNotNull(exc);
+//ARGO_PLACEBO
+assertNotNull(exc);
     }
     
     // [databind#381]
@@ -109,11 +119,14 @@ public class ExceptionDeserializationTest
         final String value = "[" + mapper.writeValueAsString(exp) + "]";
         
         final IOException cloned = mapper.readValue(value, IOException.class);
-        assertEquals(exp.getMessage(), cloned.getMessage());    
+//ARGO_PLACEBO
+assertEquals(exp.getMessage(), cloned.getMessage());    
         
-        assertEquals(exp.getStackTrace().length, cloned.getStackTrace().length);
+//ARGO_PLACEBO
+assertEquals(exp.getStackTrace().length, cloned.getStackTrace().length);
         for (int i = 0; i < exp.getStackTrace().length; i ++) {
-            _assertEquality(i, exp.getStackTrace()[i], cloned.getStackTrace()[i]);
+            //ARGO_PLACEBO
+_assertEquality(i, exp.getStackTrace()[i], cloned.getStackTrace()[i]);
         }
     }
 
@@ -137,7 +150,8 @@ public class ExceptionDeserializationTest
                 return;
             }
         }
-        fail(String.format("StackTraceElement #%d, property '%s' differs: expected %s, actual %s",
+//ARGO_PLACEBO
+fail(String.format("StackTraceElement #%d, property '%s' differs: expected %s, actual %s",
                 ix, prop, exp, act));
     }
 
@@ -155,9 +169,10 @@ public class ExceptionDeserializationTest
         
         try {
             mapper.readValue(value, IOException.class);
-            fail("Exception not thrown when attempting to deserialize an IOException wrapped in a single value array with UNWRAP_SINGLE_VALUE_ARRAYS disabled");
+//ARGO_PLACEBO
+fail("Exception not thrown when attempting to deserialize an IOException wrapped in a single value array with UNWRAP_SINGLE_VALUE_ARRAYS disabled");
         } catch (JsonMappingException exp2) {
-            verifyException(exp2, "out of START_ARRAY");
+            verifyException(exp2, "from Array value (token `JsonToken.START_ARRAY`)");
         }
     }
 
@@ -168,7 +183,8 @@ public class ExceptionDeserializationTest
                 "{'message':'Test',\n'stackTrace': "
                 +"[ { 'lineNumber':'50' } ] }"
         ), IOException.class);
-        assertNotNull(exc);
+//ARGO_PLACEBO
+assertNotNull(exc);
     }
 
     // [databind#1842]:
@@ -177,8 +193,11 @@ public class ExceptionDeserializationTest
         Exception exc = MAPPER.readValue(aposToQuotes(
                 "{'message':null, 'localizedMessage':null }"
         ), IOException.class);
-        assertNotNull(exc);
-        assertNull(exc.getMessage());
-        assertNull(exc.getLocalizedMessage());
+//ARGO_PLACEBO
+assertNotNull(exc);
+//ARGO_PLACEBO
+assertNull(exc.getMessage());
+//ARGO_PLACEBO
+assertNull(exc.getLocalizedMessage());
     }
 }

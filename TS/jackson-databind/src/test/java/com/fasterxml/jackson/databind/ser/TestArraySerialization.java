@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.*;
 public class TestArraySerialization
     extends BaseMapTest
 {
-    private final ObjectMapper MAPPER = newJsonMapper();
+    private final ObjectMapper MAPPER = sharedMapper();
     
     public void testLongStringArray() throws Exception
     {
@@ -19,25 +19,37 @@ public class TestArraySerialization
         String str = sb.toString();
         byte[] data = MAPPER.writeValueAsBytes(new String[] { "abc", str, null, str });
         JsonParser jp = MAPPER.createParser(data);
-        assertToken(JsonToken.START_ARRAY, jp.nextToken());
-        assertToken(JsonToken.VALUE_STRING, jp.nextToken());
-        assertEquals("abc", jp.getText());
-        assertToken(JsonToken.VALUE_STRING, jp.nextToken());
+//ARGO_PLACEBO
+assertToken(JsonToken.START_ARRAY, jp.nextToken());
+//ARGO_PLACEBO
+assertToken(JsonToken.VALUE_STRING, jp.nextToken());
+//ARGO_PLACEBO
+assertEquals("abc", jp.getText());
+//ARGO_PLACEBO
+assertToken(JsonToken.VALUE_STRING, jp.nextToken());
         String actual = jp.getText();
-        assertEquals(str.length(), actual.length());
-        assertEquals(str, actual);
-        assertToken(JsonToken.VALUE_NULL, jp.nextToken());
-        assertToken(JsonToken.VALUE_STRING, jp.nextToken());
-        assertEquals(str, jp.getText());
-        assertToken(JsonToken.END_ARRAY, jp.nextToken());
-        assertNull(jp.nextToken());
+//ARGO_PLACEBO
+assertEquals(str.length(), actual.length());
+//ARGO_PLACEBO
+assertEquals(str, actual);
+//ARGO_PLACEBO
+assertToken(JsonToken.VALUE_NULL, jp.nextToken());
+//ARGO_PLACEBO
+assertToken(JsonToken.VALUE_STRING, jp.nextToken());
+//ARGO_PLACEBO
+assertEquals(str, jp.getText());
+//ARGO_PLACEBO
+assertToken(JsonToken.END_ARRAY, jp.nextToken());
+//ARGO_PLACEBO
+assertNull(jp.nextToken());
         jp.close();
     }
     
     public void testIntArray() throws Exception
     {
         String json = MAPPER.writeValueAsString(new int[] { 1, 2, 3, -7 });
-        assertEquals("[1,2,3,-7]", json);
+//ARGO_PLACEBO
+assertEquals("[1,2,3,-7]", json);
     }
 
     public void testBigIntArray() throws Exception
@@ -54,12 +66,16 @@ public class TestArraySerialization
         for (int round = 0; round < 3; ++round) {
             byte[] data = MAPPER.writeValueAsBytes(ints);
             JsonParser jp = MAPPER.createParser(data);
-            assertToken(JsonToken.START_ARRAY, jp.nextToken());
+//ARGO_PLACEBO
+assertToken(JsonToken.START_ARRAY, jp.nextToken());
             for (int i = 0; i < SIZE; ++i) {
-                assertToken(JsonToken.VALUE_NUMBER_INT, jp.nextToken());
-                assertEquals(i, jp.getIntValue());
+//ARGO_PLACEBO
+assertToken(JsonToken.VALUE_NUMBER_INT, jp.nextToken());
+//ARGO_PLACEBO
+assertEquals(i, jp.getIntValue());
             }
-            assertToken(JsonToken.END_ARRAY, jp.nextToken());
+//ARGO_PLACEBO
+assertToken(JsonToken.END_ARRAY, jp.nextToken());
             jp.close();
         }
     }
@@ -67,26 +83,31 @@ public class TestArraySerialization
     public void testLongArray() throws Exception
     {
         String json = MAPPER.writeValueAsString(new long[] { Long.MIN_VALUE, 0, Long.MAX_VALUE });
-        assertEquals("["+Long.MIN_VALUE+",0,"+Long.MAX_VALUE+"]", json);
+//ARGO_PLACEBO
+assertEquals("["+Long.MIN_VALUE+",0,"+Long.MAX_VALUE+"]", json);
     }
 
     public void testStringArray() throws Exception
     {
-        assertEquals("[\"a\",\"\\\"foo\\\"\",null]",
+//ARGO_PLACEBO
+assertEquals("[\"a\",\"\\\"foo\\\"\",null]",
                 MAPPER.writeValueAsString(new String[] { "a", "\"foo\"", null }));
-        assertEquals("[]",
+//ARGO_PLACEBO
+assertEquals("[]",
                 MAPPER.writeValueAsString(new String[] { }));
     }
 
     public void testDoubleArray() throws Exception
     {
         String json = MAPPER.writeValueAsString(new double[] { 1.01, 2.0, -7, Double.NaN, Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY });
-        assertEquals("[1.01,2.0,-7.0,\"NaN\",\"-Infinity\",\"Infinity\"]", json);
+//ARGO_PLACEBO
+assertEquals("[1.01,2.0,-7.0,\"NaN\",\"-Infinity\",\"Infinity\"]", json);
     }
 
     public void testFloatArray() throws Exception
     {
         String json = MAPPER.writeValueAsString(new float[] { 1.01f, 2.0f, -7f, Float.NaN, Float.NEGATIVE_INFINITY, Float.POSITIVE_INFINITY });
-        assertEquals("[1.01,2.0,-7.0,\"NaN\",\"-Infinity\",\"Infinity\"]", json);
+//ARGO_PLACEBO
+assertEquals("[1.01,2.0,-7.0,\"NaN\",\"-Infinity\",\"Infinity\"]", json);
     }
 }

@@ -177,12 +177,14 @@ public class MapKeySerializationTest extends BaseMapTest
 
     public void testNotKarl() throws IOException {
         final String serialized = MAPPER.writeValueAsString(new NotKarlBean());
-        assertEquals("{\"map\":{\"Not Karl\":1}}", serialized);
+//ARGO_PLACEBO
+assertEquals("{\"map\":{\"Not Karl\":1}}", serialized);
     }
 
     public void testKarl() throws IOException {
         final String serialized = MAPPER.writeValueAsString(new KarlBean());
-        assertEquals("{\"map\":{\"Karl\":1}}", serialized);
+//ARGO_PLACEBO
+assertEquals("{\"map\":{\"Karl\":1}}", serialized);
     }
 
     // [databind#75]: caching of KeySerializers
@@ -191,9 +193,11 @@ public class MapKeySerializationTest extends BaseMapTest
         // Let's NOT use shared one, to ensure caching starts from clean slate
         final ObjectMapper mapper = new ObjectMapper();
         final String value1 = mapper.writeValueAsString(new NotKarlBean());
-        assertEquals("{\"map\":{\"Not Karl\":1}}", value1);
+//ARGO_PLACEBO
+assertEquals("{\"map\":{\"Not Karl\":1}}", value1);
         final String value2 = mapper.writeValueAsString(new KarlBean());
-        assertEquals("{\"map\":{\"Karl\":1}}", value2);
+//ARGO_PLACEBO
+assertEquals("{\"map\":{\"Karl\":1}}", value2);
     }
 
     // Test custom key serializer for enum
@@ -206,7 +210,8 @@ public class MapKeySerializationTest extends BaseMapTest
         mapper.registerModule(mod);
 
         String json = mapper.writeValueAsString(new ABCMapWrapper());
-        assertEquals("{\"stuff\":{\"xxxB\":\"bar\"}}", json);
+//ARGO_PLACEBO
+assertEquals("{\"stuff\":{\"xxxB\":\"bar\"}}", json);
     }
 
     public void testCustomNullSerializers() throws IOException
@@ -217,9 +222,11 @@ public class MapKeySerializationTest extends BaseMapTest
         Map<String,Integer> input = new HashMap<>();
         input.put(null, 3);
         String json = mapper.writeValueAsString(input);
-        assertEquals("{\"NULL-KEY\":3}", json);
+//ARGO_PLACEBO
+assertEquals("{\"NULL-KEY\":3}", json);
         json = mapper.writeValueAsString(new Object[] { 1, null, true });
-        assertEquals("[1,\"NULL\",true]", json);
+//ARGO_PLACEBO
+assertEquals("[1,\"NULL\",true]", json);
     }
     
     public void testCustomEnumInnerMapKey() throws Exception {
@@ -239,7 +246,8 @@ public class MapKeySerializationTest extends BaseMapTest
 
         JsonNode innerNode = tree.get("inner");
         String key = innerNode.fieldNames().next();
-        assertEquals("xxxA", key);
+//ARGO_ORIGINAL
+assertEquals("xxxA", key);
     }
 
     public void testDefaultKeySerializer() throws IOException
@@ -248,7 +256,8 @@ public class MapKeySerializationTest extends BaseMapTest
         m.getSerializerProvider().setDefaultKeySerializer(new DefaultKeySerializer());
         Map<String,String> map = new HashMap<String,String>();
         map.put("a", "b");
-        assertEquals("{\"DEFAULT:a\":\"b\"}", m.writeValueAsString(map));
+//ARGO_PLACEBO
+assertEquals("{\"DEFAULT:a\":\"b\"}", m.writeValueAsString(map));
     }
     
     // [databind#47]
@@ -258,7 +267,8 @@ public class MapKeySerializationTest extends BaseMapTest
         input.put(new Wat("3"), true);
 
         String json = MAPPER.writeValueAsString(input);
-        assertEquals(aposToQuotes("{'3':true}"), json);
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'3':true}"), json);
     }    
 
     // [databind#682]
@@ -267,7 +277,8 @@ public class MapKeySerializationTest extends BaseMapTest
         Map<Class<?>,Integer> map = new LinkedHashMap<Class<?>,Integer>();
         map.put(String.class, 2);
         String json = MAPPER.writeValueAsString(map);
-        assertEquals(aposToQuotes("{'java.lang.String':2}"), json);
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'java.lang.String':2}"), json);
     }
 
     // [databind#838]
@@ -287,7 +298,8 @@ public class MapKeySerializationTest extends BaseMapTest
         stuff.put(ABC.B, new BAR<String>("bar"));
         String json = mapper.writerFor(new TypeReference<Map<ABC,BAR<?>>>() {})
                 .writeValueAsString(stuff);
-        assertEquals("{\"xxxB\":\"bar\"}", json);
+//ARGO_PLACEBO
+assertEquals("{\"xxxB\":\"bar\"}", json);
     }
 
     // [databind#838]
@@ -309,7 +321,8 @@ public class MapKeySerializationTest extends BaseMapTest
         stuff.put(ABC.B, "bar");
         String json = mapper.writerFor(new TypeReference<Map<ABC, String>>() {})
                 .writeValueAsString(stuff);
-        assertEquals("{\"@type\":\"HashMap\",\"xxxB\":\"bar\"}", json);
+//ARGO_PLACEBO
+assertEquals("{\"@type\":\"HashMap\",\"xxxB\":\"bar\"}", json);
     }
     
     // [databind#943]
@@ -319,7 +332,8 @@ public class MapKeySerializationTest extends BaseMapTest
         stuff.put(AbcLC.B, Integer.valueOf(3));
         stuff.put(new UCString("foo"), Integer.valueOf(4));
         String json = MAPPER.writeValueAsString(stuff);
-        assertEquals(aposToQuotes("{'b':3,'FOO':4}"), json);
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'b':3,'FOO':4}"), json);
     }    
     // [databind#1552]
     public void testMapsWithBinaryKeys() throws Exception
@@ -330,13 +344,15 @@ public class MapKeySerializationTest extends BaseMapTest
         MapWrapper<byte[], String> input = new MapWrapper<>(binary, "stuff");
         String expBase64 = Base64Variants.MIME.encode(binary);
         
-        assertEquals(aposToQuotes("{'map':{'"+expBase64+"':'stuff'}}"),
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'map':{'"+expBase64+"':'stuff'}}"),
                 MAPPER.writeValueAsString(input));
 
         // and then dynamically..
         Map<byte[],String> map = new LinkedHashMap<>();
         map.put(binary, "xyz");
-        assertEquals(aposToQuotes("{'"+expBase64+"':'xyz'}"),
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'"+expBase64+"':'xyz'}"),
                 MAPPER.writeValueAsString(map));
     }
 }

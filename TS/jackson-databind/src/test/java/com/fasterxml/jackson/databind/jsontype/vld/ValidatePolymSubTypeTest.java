@@ -142,7 +142,8 @@ public class ValidatePolymSubTypeTest extends BaseMapTest
     {
         final BaseValue inputValue = new GoodValue();
         DefTypeWrapper result = _roundTripDefault(MAPPER_DEF_TYPING_NAME_CHECK, inputValue);
-        assertEquals(inputValue, result.value);
+//ARGO_PLACEBO
+assertEquals(inputValue, result.value);
     }
 
     public void testWithDefaultTypingNameDenyExplicit() throws Exception
@@ -161,7 +162,8 @@ public class ValidatePolymSubTypeTest extends BaseMapTest
     {
         final BaseValue inputValue = new GoodValue();
         DefTypeWrapper result = _roundTripDefault(MAPPER_DEF_TYPING_CLASS_CHECK, inputValue);
-        assertEquals(inputValue, result.value);
+//ARGO_PLACEBO
+assertEquals(inputValue, result.value);
     }
 
     public void testWithDefaultTypingClassDenyExplicit() throws Exception
@@ -186,7 +188,8 @@ public class ValidatePolymSubTypeTest extends BaseMapTest
     {
         final BaseValue inputValue = new GoodValue();
         AnnotatedWrapper result = _roundTripAnnotated(MAPPER_EXPLICIT_NAME_CHECK, inputValue);
-        assertEquals(inputValue, result.value);
+//ARGO_PLACEBO
+assertEquals(inputValue, result.value);
     }
 
     public void testWithAnnotationNameDenyExplicit() throws Exception
@@ -205,7 +208,8 @@ public class ValidatePolymSubTypeTest extends BaseMapTest
     {
         final BaseValue inputValue = new GoodValue();
         AnnotatedWrapper result = _roundTripAnnotated(MAPPER_EXPLICIT_CLASS_CHECK, inputValue);
-        assertEquals(inputValue, result.value);
+//ARGO_PLACEBO
+assertEquals(inputValue, result.value);
     }
 
     public void testWithAnnotationClassDenyExplicit() throws Exception
@@ -230,7 +234,8 @@ public class ValidatePolymSubTypeTest extends BaseMapTest
     {
         final BaseValue inputValue = new GoodValue();
         AnnotatedMinimalWrapper result = _roundTripAnnotatedMinimal(MAPPER_EXPLICIT_NAME_CHECK, inputValue);
-        assertEquals(inputValue, result.value);
+//ARGO_PLACEBO
+assertEquals(inputValue, result.value);
     }
 
     public void testWithAnnotationMinClassNameDenyExplicit() throws Exception
@@ -249,7 +254,8 @@ public class ValidatePolymSubTypeTest extends BaseMapTest
     {
         final BaseValue inputValue = new GoodValue();
         AnnotatedMinimalWrapper result = _roundTripAnnotatedMinimal(MAPPER_EXPLICIT_CLASS_CHECK, inputValue);
-        assertEquals(inputValue, result.value);
+//ARGO_PLACEBO
+assertEquals(inputValue, result.value);
     }
 
     public void testWithAnnotationMinClassClassDenyExplicit() throws Exception
@@ -322,7 +328,8 @@ public class ValidatePolymSubTypeTest extends BaseMapTest
     private void _verifyBadValue(ObjectMapper mapper, String json, Class<?> type) throws Exception {
         try {
             mapper.readValue(json, type);
-            fail("Should not pass");
+//ARGO_PLACEBO
+fail("Should not pass");
         } catch (InvalidTypeIdException e) {
             verifyException(e, "Could not resolve type id");
             verifyException(e, "`PolymorphicTypeValidator`");
@@ -333,7 +340,8 @@ public class ValidatePolymSubTypeTest extends BaseMapTest
     private void _verifyMehValue(ObjectMapper mapper, String json, Class<?> type) throws Exception {
         try {
             mapper.readValue(json, type);
-            fail("Should not pass");
+//ARGO_PLACEBO
+fail("Should not pass");
         } catch (InvalidTypeIdException e) {
             verifyException(e, "Could not resolve type id");
             verifyException(e, "`PolymorphicTypeValidator`");

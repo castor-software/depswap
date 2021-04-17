@@ -119,8 +119,8 @@ public class IntrospectorPairTest extends BaseMapTest
         }
 
         @Override
-        public JsonIgnoreProperties.Value findPropertyIgnorals(Annotated a) {
-            return (JsonIgnoreProperties.Value) values.get("findPropertyIgnorals");
+        public JsonIgnoreProperties.Value findPropertyIgnoralByName(MapperConfig<?> config, Annotated a) {
+            return (JsonIgnoreProperties.Value) values.get("findPropertyIgnoralByName");
         }
 
         @Override
@@ -234,10 +234,12 @@ public class IntrospectorPairTest extends BaseMapTest
                 "com.fasterxml", "IntrospectorPairTest");
         IntrospectorWithMap withVersion = new IntrospectorWithMap()
                 .version(v);
-        assertEquals(v,
+//ARGO_PLACEBO
+assertEquals(v,
                 new AnnotationIntrospectorPair(withVersion, NO_ANNOTATIONS).version());
         IntrospectorWithMap noVersion = new IntrospectorWithMap();
-        assertEquals(Version.unknownVersion(),
+//ARGO_PLACEBO
+assertEquals(Version.unknownVersion(),
                 new AnnotationIntrospectorPair(noVersion, withVersion).version());
     }
 
@@ -247,21 +249,27 @@ public class IntrospectorPairTest extends BaseMapTest
         AnnotationIntrospectorPair pair = new AnnotationIntrospectorPair(intr1,
                 NO_ANNOTATIONS);
         Collection<AnnotationIntrospector> intrs = pair.allIntrospectors();
-        assertEquals(2, intrs.size());
+//ARGO_PLACEBO
+assertEquals(2, intrs.size());
         Iterator<AnnotationIntrospector> it = intrs.iterator();
-        assertSame(intr1, it.next());
-        assertSame(NO_ANNOTATIONS, it.next());
+//ARGO_PLACEBO
+assertSame(intr1, it.next());
+//ARGO_PLACEBO
+assertSame(NO_ANNOTATIONS, it.next());
     }
 
     public void testAnnotationBundle() throws Exception
     {
         IntrospectorWithMap isBundle = new IntrospectorWithMap()
                 .add("isAnnotationBundle", true);
-        assertTrue(new AnnotationIntrospectorPair(NO_ANNOTATIONS, isBundle)
+//ARGO_PLACEBO
+assertTrue(new AnnotationIntrospectorPair(NO_ANNOTATIONS, isBundle)
                 .isAnnotationBundle(null));
-        assertTrue(new AnnotationIntrospectorPair(isBundle, NO_ANNOTATIONS)
+//ARGO_PLACEBO
+assertTrue(new AnnotationIntrospectorPair(isBundle, NO_ANNOTATIONS)
                 .isAnnotationBundle(null));
-        assertFalse(new AnnotationIntrospectorPair(NO_ANNOTATIONS, NO_ANNOTATIONS)
+//ARGO_PLACEBO
+assertFalse(new AnnotationIntrospectorPair(NO_ANNOTATIONS, NO_ANNOTATIONS)
                 .isAnnotationBundle(null));
     }
 
@@ -276,23 +284,29 @@ public class IntrospectorPairTest extends BaseMapTest
         PropertyName name = new PropertyName("test");
         IntrospectorWithMap intr = new IntrospectorWithMap()
                 .add("findRootName", name);
-        assertNull(new AnnotationIntrospectorPair(NO_ANNOTATIONS, NO_ANNOTATIONS).findRootName(null));
-        assertEquals(name, new AnnotationIntrospectorPair(NO_ANNOTATIONS, intr).findRootName(null));
-        assertEquals(name, new AnnotationIntrospectorPair(intr, NO_ANNOTATIONS).findRootName(null));
+//ARGO_PLACEBO
+assertNull(new AnnotationIntrospectorPair(NO_ANNOTATIONS, NO_ANNOTATIONS).findRootName(null));
+//ARGO_PLACEBO
+assertEquals(name, new AnnotationIntrospectorPair(NO_ANNOTATIONS, intr).findRootName(null));
+//ARGO_PLACEBO
+assertEquals(name, new AnnotationIntrospectorPair(intr, NO_ANNOTATIONS).findRootName(null));
     }
 
     public void testPropertyIgnorals() throws Exception
     {
         JsonIgnoreProperties.Value incl = JsonIgnoreProperties.Value.forIgnoredProperties("foo");
         IntrospectorWithMap intr = new IntrospectorWithMap()
-                .add("findPropertyIgnorals", incl);
+                .add("findPropertyIgnoralByName", incl);
         IntrospectorWithMap intrEmpty = new IntrospectorWithMap()
-                .add("findPropertyIgnorals", JsonIgnoreProperties.Value.empty());
-        assertEquals(JsonIgnoreProperties.Value.empty(),
-                new AnnotationIntrospectorPair(intrEmpty, intrEmpty).findPropertyIgnorals(null));
+                .add("findPropertyIgnoralByName", JsonIgnoreProperties.Value.empty());
+//ARGO_PLACEBO
+assertEquals(JsonIgnoreProperties.Value.empty(),
+                new AnnotationIntrospectorPair(intrEmpty, intrEmpty).findPropertyIgnoralByName(null, null));
         // should actually verify inclusion combining, but there are separate tests for that
-        assertEquals(incl, new AnnotationIntrospectorPair(intrEmpty, intr).findPropertyIgnorals(null));
-        assertEquals(incl, new AnnotationIntrospectorPair(intr, intrEmpty).findPropertyIgnorals(null));
+//ARGO_PLACEBO
+assertEquals(incl, new AnnotationIntrospectorPair(intrEmpty, intr).findPropertyIgnoralByName(null, null));
+//ARGO_PLACEBO
+assertEquals(incl, new AnnotationIntrospectorPair(intr, intrEmpty).findPropertyIgnoralByName(null, null));
     }
 
     public void testIsIgnorableType() throws Exception
@@ -301,9 +315,12 @@ public class IntrospectorPairTest extends BaseMapTest
                 .add("isIgnorableType", Boolean.TRUE);
         IntrospectorWithMap intr2 = new IntrospectorWithMap()
                 .add("isIgnorableType", Boolean.FALSE);
-        assertNull(new AnnotationIntrospectorPair(NO_ANNOTATIONS, NO_ANNOTATIONS).isIgnorableType(null));
-        assertEquals(Boolean.TRUE, new AnnotationIntrospectorPair(intr1, intr2).isIgnorableType(null));
-        assertEquals(Boolean.FALSE, new AnnotationIntrospectorPair(intr2, intr1).isIgnorableType(null));
+//ARGO_PLACEBO
+assertNull(new AnnotationIntrospectorPair(NO_ANNOTATIONS, NO_ANNOTATIONS).isIgnorableType(null));
+//ARGO_PLACEBO
+assertEquals(Boolean.TRUE, new AnnotationIntrospectorPair(intr1, intr2).isIgnorableType(null));
+//ARGO_PLACEBO
+assertEquals(Boolean.FALSE, new AnnotationIntrospectorPair(intr2, intr1).isIgnorableType(null));
     }
 
     public void testFindFilterId() throws Exception
@@ -312,9 +329,12 @@ public class IntrospectorPairTest extends BaseMapTest
                 .add("findFilterId", "a");
         IntrospectorWithMap intr2 = new IntrospectorWithMap()
                 .add("findFilterId", "b");
-        assertNull(new AnnotationIntrospectorPair(NO_ANNOTATIONS, NO_ANNOTATIONS).findFilterId(null));
-        assertEquals("a", new AnnotationIntrospectorPair(intr1, intr2).findFilterId(null));
-        assertEquals("b", new AnnotationIntrospectorPair(intr2, intr1).findFilterId(null));
+//ARGO_PLACEBO
+assertNull(new AnnotationIntrospectorPair(NO_ANNOTATIONS, NO_ANNOTATIONS).findFilterId(null));
+//ARGO_PLACEBO
+assertEquals("a", new AnnotationIntrospectorPair(intr1, intr2).findFilterId(null));
+//ARGO_PLACEBO
+assertEquals("b", new AnnotationIntrospectorPair(intr2, intr1).findFilterId(null));
     }
 
     public void testFindNamingStrategy() throws Exception
@@ -324,10 +344,13 @@ public class IntrospectorPairTest extends BaseMapTest
                 .add("findNamingStrategy", Integer.class);
         IntrospectorWithMap intr2 = new IntrospectorWithMap()
                 .add("findNamingStrategy", String.class);
-        assertNull(new AnnotationIntrospectorPair(NO_ANNOTATIONS, NO_ANNOTATIONS).findNamingStrategy(null));
-        assertEquals(Integer.class,
+//ARGO_PLACEBO
+assertNull(new AnnotationIntrospectorPair(NO_ANNOTATIONS, NO_ANNOTATIONS).findNamingStrategy(null));
+//ARGO_PLACEBO
+assertEquals(Integer.class,
                 new AnnotationIntrospectorPair(intr1, intr2).findNamingStrategy(null));
-        assertEquals(String.class,
+//ARGO_PLACEBO
+assertEquals(String.class,
                 new AnnotationIntrospectorPair(intr2, intr1).findNamingStrategy(null));
     }
 
@@ -337,10 +360,13 @@ public class IntrospectorPairTest extends BaseMapTest
                 .add("findClassDescription", "Desc1");
         IntrospectorWithMap intr2 = new IntrospectorWithMap()
                 .add("findClassDescription", "Desc2");
-        assertNull(new AnnotationIntrospectorPair(NO_ANNOTATIONS, NO_ANNOTATIONS).findClassDescription(null));
-        assertEquals("Desc1",
+//ARGO_PLACEBO
+assertNull(new AnnotationIntrospectorPair(NO_ANNOTATIONS, NO_ANNOTATIONS).findClassDescription(null));
+//ARGO_PLACEBO
+assertEquals("Desc1",
                 new AnnotationIntrospectorPair(intr1, intr2).findClassDescription(null));
-        assertEquals("Desc2",
+//ARGO_PLACEBO
+assertEquals("Desc2",
                 new AnnotationIntrospectorPair(intr2, intr1).findClassDescription(null));
     }
 
@@ -362,20 +388,26 @@ public class IntrospectorPairTest extends BaseMapTest
         AnnotationIntrospector nop = AnnotationIntrospector.nopInstance();
         AnnotationIntrospector nop2 = new IntrospectorWithHandlers(null, JsonSerializer.None.class);
 
-        assertSame(serString,
+//ARGO_PLACEBO
+assertSame(serString,
                 new AnnotationIntrospectorPair(intr1, intr2).findSerializer(null));
-        assertSame(serToString,
+//ARGO_PLACEBO
+assertSame(serToString,
                 new AnnotationIntrospectorPair(intr2, intr1).findSerializer(null));
 
         // also: no-op instance should not block real one, regardless
-        assertSame(serString,
+//ARGO_PLACEBO
+assertSame(serString,
                 new AnnotationIntrospectorPair(nop, intr1).findSerializer(null));
-        assertSame(serString,
+//ARGO_PLACEBO
+assertSame(serString,
                 new AnnotationIntrospectorPair(nop2, intr1).findSerializer(null));
 
         // nor should no-op result in non-null result
-        assertNull(new AnnotationIntrospectorPair(nop, nop2).findSerializer(null));
-        assertNull(new AnnotationIntrospectorPair(nop2, nop).findSerializer(null));
+//ARGO_PLACEBO
+assertNull(new AnnotationIntrospectorPair(nop, nop2).findSerializer(null));
+//ARGO_PLACEBO
+assertNull(new AnnotationIntrospectorPair(nop2, nop).findSerializer(null));
     }
 
     public void testFindDeserializer() throws Exception
@@ -388,19 +420,25 @@ public class IntrospectorPairTest extends BaseMapTest
         AnnotationIntrospector nop = AnnotationIntrospector.nopInstance();
         AnnotationIntrospector nop2 = new IntrospectorWithHandlers(JsonDeserializer.None.class, null);
 
-        assertSame(deserString,
+//ARGO_PLACEBO
+assertSame(deserString,
                 new AnnotationIntrospectorPair(intr1, intr2).findDeserializer(null));
-        assertSame(deserObject,
+//ARGO_PLACEBO
+assertSame(deserObject,
                 new AnnotationIntrospectorPair(intr2, intr1).findDeserializer(null));
         // also: no-op instance should not block real one, regardless
-        assertSame(deserString,
+//ARGO_PLACEBO
+assertSame(deserString,
                 new AnnotationIntrospectorPair(nop, intr1).findDeserializer(null));
-        assertSame(deserString,
+//ARGO_PLACEBO
+assertSame(deserString,
                 new AnnotationIntrospectorPair(nop2, intr1).findDeserializer(null));
 
         // nor should no-op result in non-null result
-        assertNull(new AnnotationIntrospectorPair(nop, nop2).findDeserializer(null));
-        assertNull(new AnnotationIntrospectorPair(nop2, nop).findDeserializer(null));
+//ARGO_PLACEBO
+assertNull(new AnnotationIntrospectorPair(nop, nop2).findDeserializer(null));
+//ARGO_PLACEBO
+assertNull(new AnnotationIntrospectorPair(nop2, nop).findDeserializer(null));
     }
 
     /*
@@ -414,11 +452,14 @@ public class IntrospectorPairTest extends BaseMapTest
         VisibilityChecker<?> vc = VisibilityChecker.Std.defaultInstance();
         IntrospectorWithMap intr1 = new IntrospectorWithMap()
                 .add("findAutoDetectVisibility", vc);
-        assertNull(new AnnotationIntrospectorPair(NO_ANNOTATIONS, NO_ANNOTATIONS)
+//ARGO_PLACEBO
+assertNull(new AnnotationIntrospectorPair(NO_ANNOTATIONS, NO_ANNOTATIONS)
                 .findAutoDetectVisibility(null, null));
-        assertSame(vc, new AnnotationIntrospectorPair(intr1, NO_ANNOTATIONS)
+//ARGO_PLACEBO
+assertSame(vc, new AnnotationIntrospectorPair(intr1, NO_ANNOTATIONS)
                 .findAutoDetectVisibility(null, null));
-        assertSame(vc, new AnnotationIntrospectorPair(NO_ANNOTATIONS, intr1)
+//ARGO_PLACEBO
+assertSame(vc, new AnnotationIntrospectorPair(NO_ANNOTATIONS, intr1)
                 .findAutoDetectVisibility(null, null));
     }
 
@@ -450,10 +491,13 @@ public class IntrospectorPairTest extends BaseMapTest
                 .add("findTypeName", "type1");
         IntrospectorWithMap intr2 = new IntrospectorWithMap()
                 .add("findTypeName", "type2");
-        assertNull(new AnnotationIntrospectorPair(NO_ANNOTATIONS, NO_ANNOTATIONS).findTypeName(null));
-        assertEquals("type1",
+//ARGO_PLACEBO
+assertNull(new AnnotationIntrospectorPair(NO_ANNOTATIONS, NO_ANNOTATIONS).findTypeName(null));
+//ARGO_PLACEBO
+assertEquals("type1",
                 new AnnotationIntrospectorPair(intr1, intr2).findTypeName(null));
-        assertEquals("type2",
+//ARGO_PLACEBO
+assertEquals("type2",
                 new AnnotationIntrospectorPair(intr2, intr1).findTypeName(null));
     }
 
@@ -469,14 +513,19 @@ public class IntrospectorPairTest extends BaseMapTest
                 .add("hasAnySetter", Boolean.TRUE);
         IntrospectorWithMap intr2 = new IntrospectorWithMap()
                 .add("hasAnySetter", Boolean.FALSE);
-        assertNull(new AnnotationIntrospectorPair(NO_ANNOTATIONS, NO_ANNOTATIONS).hasAnySetter(null));
-        assertEquals(Boolean.TRUE,
+//ARGO_PLACEBO
+assertNull(new AnnotationIntrospectorPair(NO_ANNOTATIONS, NO_ANNOTATIONS).hasAnySetter(null));
+//ARGO_PLACEBO
+assertEquals(Boolean.TRUE,
                 new AnnotationIntrospectorPair(intr1, intr2).hasAnySetter(null));
-        assertEquals(Boolean.TRUE,
+//ARGO_PLACEBO
+assertEquals(Boolean.TRUE,
                 new AnnotationIntrospectorPair(NO_ANNOTATIONS, intr1).hasAnySetter(null));
-        assertEquals(Boolean.FALSE,
+//ARGO_PLACEBO
+assertEquals(Boolean.FALSE,
                 new AnnotationIntrospectorPair(intr2, intr1).hasAnySetter(null));
-        assertEquals(Boolean.FALSE,
+//ARGO_PLACEBO
+assertEquals(Boolean.FALSE,
                 new AnnotationIntrospectorPair(NO_ANNOTATIONS, intr2).hasAnySetter(null));
     }
 
@@ -499,10 +548,14 @@ public class IntrospectorPairTest extends BaseMapTest
         JsonInclude.Value v12 = introPair12.findPropertyInclusion(null);
         JsonInclude.Value v21 = introPair21.findPropertyInclusion(null);
 
-        assertEquals(JsonInclude.Include.ALWAYS, v12.getContentInclusion());
-        assertEquals(JsonInclude.Include.NON_ABSENT, v12.getValueInclusion());
+//ARGO_PLACEBO
+assertEquals(JsonInclude.Include.ALWAYS, v12.getContentInclusion());
+//ARGO_PLACEBO
+assertEquals(JsonInclude.Include.NON_ABSENT, v12.getValueInclusion());
 
-        assertEquals(JsonInclude.Include.NON_EMPTY, v21.getContentInclusion());
-        assertEquals(JsonInclude.Include.NON_ABSENT, v21.getValueInclusion());
+//ARGO_PLACEBO
+assertEquals(JsonInclude.Include.NON_EMPTY, v21.getContentInclusion());
+//ARGO_PLACEBO
+assertEquals(JsonInclude.Include.NON_ABSENT, v21.getValueInclusion());
     }
 }

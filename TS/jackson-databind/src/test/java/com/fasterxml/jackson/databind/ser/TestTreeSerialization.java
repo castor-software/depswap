@@ -38,13 +38,18 @@ public class TestTreeSerialization
 
         Map<String,Object> result = (Map<String,Object>) mapper.readValue(sw.toString(), Map.class);
 
-        assertEquals(3, result.size());
-        assertEquals("abc", result.get("string"));
-        assertEquals(Integer.valueOf(15), result.get("number"));
+//ARGO_ORIGINAL
+assertEquals(3, result.size());
+//ARGO_ORIGINAL
+assertEquals("abc", result.get("string"));
+//ARGO_ORIGINAL
+assertEquals(Integer.valueOf(15), result.get("number"));
         Map<String,Object> ob = (Map<String,Object>) result.get("ob");
-        assertEquals(1, ob.size());
+//ARGO_ORIGINAL
+assertEquals(1, ob.size());
         List<Object> list = (List<Object>) ob.get("arr");
-        assertEquals(0, list.size());
+//ARGO_ORIGINAL
+assertEquals(0, list.size());
         jg.close();
     }
 
@@ -64,8 +69,10 @@ public class TestTreeSerialization
         JsonGenerator jg = mapper.createGenerator(sw);
         mapper.writeTree(jg, n);
         Map<String,Object> result = (Map<String,Object>) mapper.readValue(sw.toString(), Map.class);
-        assertEquals(1, result.size());
-        assertEquals("abc", result.get("pojo"));
+//ARGO_ORIGINAL
+assertEquals(1, result.size());
+//ARGO_ORIGINAL
+assertEquals("abc", result.get("pojo"));
         jg.close();
     }
 
@@ -82,12 +89,15 @@ public class TestTreeSerialization
 
         Map<String,Object> result = (Map<String,Object>) mapper.readValue(sw.toString(), Map.class);
 
-        assertEquals(1, result.size());
+//ARGO_ORIGINAL
+assertEquals(1, result.size());
         // int array becomes a list when mapped to general Object:
         List<Object> list = (List<Object>) result.get("pojo");
-        assertEquals(3, list.size());
+//ARGO_ORIGINAL
+assertEquals(3, list.size());
         for (int i = 0; i < 3; ++i) {
-            assertEquals(Integer.valueOf(i+1), list.get(i));
+//ARGO_ORIGINAL
+assertEquals(Integer.valueOf(i+1), list.get(i));
         }
         jg.close();
     }
@@ -106,11 +116,15 @@ public class TestTreeSerialization
 
         Map<String,Object> result = (Map<String,Object>) mapper.readValue(sw.toString(), Map.class);
 
-        assertEquals(1, result.size());
+//ARGO_ORIGINAL
+assertEquals(1, result.size());
         Map<String,Object> bean = (Map<String,Object>) result.get("pojo");
-        assertEquals(2, bean.size());
-        assertEquals("y", bean.get("x"));
-        assertEquals(Integer.valueOf(13), bean.get("y"));
+//ARGO_ORIGINAL
+assertEquals(2, bean.size());
+//ARGO_ORIGINAL
+assertEquals("y", bean.get("x"));
+//ARGO_ORIGINAL
+assertEquals(Integer.valueOf(13), bean.get("y"));
         jg.close();
     }
 }

@@ -97,18 +97,25 @@ public class TestDefaultForMaps
         deserMapper.setDefaultTyping(deserializerTyper);
 
         MapHolder result = deserMapper.readValue(json, MapHolder.class);
-        assertNotNull(result);
+//ARGO_PLACEBO
+assertNotNull(result);
         Map<?,?> map = result.map;
-        assertEquals(1, map.size());
+//ARGO_PLACEBO
+assertEquals(1, map.size());
         Map.Entry<?,?> entry = map.entrySet().iterator().next();
         Object key = entry.getKey();
-        assertEquals(MapKey.class, key.getClass());
+//ARGO_PLACEBO
+assertEquals(MapKey.class, key.getClass());
         Object value = entry.getValue();
-        assertTrue(value instanceof List<?>);
+//ARGO_PLACEBO
+assertTrue(value instanceof List<?>);
         List<?> list = (List<?>) value;
-        assertEquals(1, list.size());
-        assertEquals(Integer.class, list.get(0).getClass());
-        assertEquals(Integer.valueOf(3), list.get(0));
+//ARGO_PLACEBO
+assertEquals(1, list.size());
+//ARGO_PLACEBO
+assertEquals(Integer.class, list.get(0).getClass());
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(3), list.get(0));
     }
 
     protected TypeNameIdResolver createTypeNameIdResolver(boolean forSerialization)
@@ -136,7 +143,8 @@ public class TestDefaultForMaps
         String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(parent);
 
         Object o = mapper.readValue(json, ItemList.class);
-        assertNotNull(o);
+//ARGO_PLACEBO
+assertNotNull(o);
     }
 
     public void testMap() throws Exception
@@ -153,7 +161,8 @@ public class TestDefaultForMaps
 
         String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(parent);
         Object o = mapper.readValue(json, ItemMap.class);
-        assertNotNull(o);
+//ARGO_PLACEBO
+assertNotNull(o);
     }
 
 }

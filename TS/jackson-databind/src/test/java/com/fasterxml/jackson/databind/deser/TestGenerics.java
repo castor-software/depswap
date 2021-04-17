@@ -56,7 +56,8 @@ public class TestGenerics
     {
         ObjectMapper mapper = new ObjectMapper();
         NumberBean result = mapper.readValue("{\"number\":17}", NumberBean.class);
-        assertEquals(17, result._number);
+//ARGO_PLACEBO
+assertEquals(17, result._number);
     }
 
     /**
@@ -68,13 +69,18 @@ public class TestGenerics
         Wrapper<SimpleBean> result = mapper.readValue
             ("{\"value\": { \"x\" : 13 } }",
              new TypeReference<Wrapper<SimpleBean>>() { });
-        assertNotNull(result);
-        assertEquals(Wrapper.class, result.getClass());
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertEquals(Wrapper.class, result.getClass());
         Object contents = result.value;
-        assertNotNull(contents);
-        assertEquals(SimpleBean.class, contents.getClass());
+//ARGO_PLACEBO
+assertNotNull(contents);
+//ARGO_PLACEBO
+assertEquals(SimpleBean.class, contents.getClass());
         SimpleBean bean = (SimpleBean) contents;
-        assertEquals(13, bean.x);
+//ARGO_PLACEBO
+assertEquals(13, bean.x);
     }
     
     public void testGenericWrapperWithSingleElementArray() throws Exception
@@ -85,13 +91,18 @@ public class TestGenerics
         Wrapper<SimpleBean> result = mapper.readValue
             ("[{\"value\": [{ \"x\" : 13 }] }]",
              new TypeReference<Wrapper<SimpleBean>>() { });
-        assertNotNull(result);
-        assertEquals(Wrapper.class, result.getClass());
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertEquals(Wrapper.class, result.getClass());
         Object contents = result.value;
-        assertNotNull(contents);
-        assertEquals(SimpleBean.class, contents.getClass());
+//ARGO_PLACEBO
+assertNotNull(contents);
+//ARGO_PLACEBO
+assertEquals(SimpleBean.class, contents.getClass());
         SimpleBean bean = (SimpleBean) contents;
-        assertEquals(13, bean.x);
+//ARGO_PLACEBO
+assertEquals(13, bean.x);
     }
 
     // Test for verifying that we can use different
@@ -103,17 +114,20 @@ public class TestGenerics
         // First, numeric wrapper
         Wrapper<Boolean> result = mapper.readValue
             ("{\"value\": true}", new TypeReference<Wrapper<Boolean>>() { });
-        assertEquals(new Wrapper<Boolean>(Boolean.TRUE), result);
+//ARGO_PLACEBO
+assertEquals(new Wrapper<Boolean>(Boolean.TRUE), result);
 
         // Then string one
         Wrapper<String> result2 = mapper.readValue
             ("{\"value\": \"abc\"}", new TypeReference<Wrapper<String>>() { });
-        assertEquals(new Wrapper<String>("abc"), result2);
+//ARGO_PLACEBO
+assertEquals(new Wrapper<String>("abc"), result2);
 
         // And then number
         Wrapper<Long> result3 = mapper.readValue
             ("{\"value\": 7}", new TypeReference<Wrapper<Long>>() { });
-        assertEquals(new Wrapper<Long>(7L), result3);
+//ARGO_PLACEBO
+assertEquals(new Wrapper<Long>(7L), result3);
     }
     
     //[databind#381]
@@ -125,17 +139,20 @@ public class TestGenerics
         // First, numeric wrapper
         Wrapper<Boolean> result = mapper.readValue
             ("[{\"value\": [true]}]", new TypeReference<Wrapper<Boolean>>() { });
-        assertEquals(new Wrapper<Boolean>(Boolean.TRUE), result);
+//ARGO_PLACEBO
+assertEquals(new Wrapper<Boolean>(Boolean.TRUE), result);
 
         // Then string one
         Wrapper<String> result2 = mapper.readValue
             ("[{\"value\": [\"abc\"]}]", new TypeReference<Wrapper<String>>() { });
-        assertEquals(new Wrapper<String>("abc"), result2);
+//ARGO_PLACEBO
+assertEquals(new Wrapper<String>("abc"), result2);
 
         // And then number
         Wrapper<Long> result3 = mapper.readValue
             ("[{\"value\": [7]}]", new TypeReference<Wrapper<Long>>() { });
-        assertEquals(new Wrapper<Long>(7L), result3);
+//ARGO_PLACEBO
+assertEquals(new Wrapper<Long>(7L), result3);
     }
 
     /**
@@ -147,15 +164,21 @@ public class TestGenerics
         Wrapper<SimpleBean>[] result = mapper.readValue
             ("[ {\"value\": { \"x\" : 9 } } ]",
              new TypeReference<Wrapper<SimpleBean>[]>() { });
-        assertNotNull(result);
-        assertEquals(Wrapper[].class, result.getClass());
-        assertEquals(1, result.length);
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertEquals(Wrapper[].class, result.getClass());
+//ARGO_PLACEBO
+assertEquals(1, result.length);
         Wrapper<SimpleBean> elem = result[0];
         Object contents = elem.value;
-        assertNotNull(contents);
-        assertEquals(SimpleBean.class, contents.getClass());
+//ARGO_PLACEBO
+assertNotNull(contents);
+//ARGO_PLACEBO
+assertEquals(SimpleBean.class, contents.getClass());
         SimpleBean bean = (SimpleBean) contents;
-        assertEquals(9, bean.x);
+//ARGO_PLACEBO
+assertEquals(9, bean.x);
     }
     
     // [Issue#381]
@@ -167,14 +190,20 @@ public class TestGenerics
         Wrapper<SimpleBean>[] result = mapper.readValue
             ("[ {\"value\": [ { \"x\" : [ 9 ] } ] } ]",
              new TypeReference<Wrapper<SimpleBean>[]>() { });
-        assertNotNull(result);
-        assertEquals(Wrapper[].class, result.getClass());
-        assertEquals(1, result.length);
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertEquals(Wrapper[].class, result.getClass());
+//ARGO_PLACEBO
+assertEquals(1, result.length);
         Wrapper<SimpleBean> elem = result[0];
         Object contents = elem.value;
-        assertNotNull(contents);
-        assertEquals(SimpleBean.class, contents.getClass());
+//ARGO_PLACEBO
+assertNotNull(contents);
+//ARGO_PLACEBO
+assertEquals(SimpleBean.class, contents.getClass());
         SimpleBean bean = (SimpleBean) contents;
-        assertEquals(9, bean.x);
+//ARGO_PLACEBO
+assertEquals(9, bean.x);
     }
 }

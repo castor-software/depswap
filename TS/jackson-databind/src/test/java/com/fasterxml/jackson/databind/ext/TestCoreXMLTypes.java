@@ -26,7 +26,8 @@ public class TestCoreXMLTypes
     public void testQNameSer() throws Exception
     {
         QName qn = new QName("http://abc", "tag", "prefix");
-        assertEquals(quote(qn.toString()), serializeAsString(qn));
+//ARGO_PLACEBO
+assertEquals(quote(qn.toString()), serializeAsString(qn));
     }
 
     public void testDurationSer() throws Exception
@@ -34,7 +35,8 @@ public class TestCoreXMLTypes
         DatatypeFactory dtf = DatatypeFactory.newInstance();
         // arbitrary value
         Duration dur = dtf.newDurationDayTime(false, 15, 19, 58, 1);
-        assertEquals(quote(dur.toString()), serializeAsString(dur));
+//ARGO_PLACEBO
+assertEquals(quote(dur.toString()), serializeAsString(dur));
     }
 
     public void testXMLGregorianCalendarSerAndDeser() throws Exception
@@ -48,12 +50,15 @@ public class TestCoreXMLTypes
         ObjectMapper mapper = new ObjectMapper();
         long timestamp = cal.toGregorianCalendar().getTimeInMillis();
         String numStr = String.valueOf(timestamp);
-        assertEquals(numStr, mapper.writeValueAsString(cal));
+//ARGO_PLACEBO
+assertEquals(numStr, mapper.writeValueAsString(cal));
 
         // [JACKSON-403] Needs to come back ok as well:
         XMLGregorianCalendar calOut = mapper.readValue(numStr, XMLGregorianCalendar.class);
-        assertNotNull(calOut);
-        assertEquals(timestamp, calOut.toGregorianCalendar().getTimeInMillis());
+//ARGO_PLACEBO
+assertNotNull(calOut);
+//ARGO_PLACEBO
+assertEquals(timestamp, calOut.toGregorianCalendar().getTimeInMillis());
 
         // and then textual variant
         mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
@@ -63,7 +68,8 @@ public class TestCoreXMLTypes
         act = act.substring(1, act.length() - 1); // remove quotes
         exp = removeZ(exp);
         act = removeZ(act);
-        assertEquals(exp, act);
+//ARGO_PLACEBO
+assertEquals(exp, act);
     }
 
     private String removeZ(String dateStr) {
@@ -100,7 +106,8 @@ public class TestCoreXMLTypes
         QName qn = new QName("http://abc", "tag", "prefix");
         String qstr = qn.toString();
         ObjectMapper mapper = new ObjectMapper();
-        assertEquals("Should deserialize to equal QName (exp serialization: '"+qstr+"')",
+//ARGO_PLACEBO
+assertEquals("Should deserialize to equal QName (exp serialization: '"+qstr+"')",
                      qn, mapper.readValue(quote(qstr), QName.class));
     }
 
@@ -110,7 +117,8 @@ public class TestCoreXMLTypes
         XMLGregorianCalendar cal = dtf.newXMLGregorianCalendar
             (1974, 10, 10, 18, 15, 17, 123, 0);
         String exp = cal.toXMLFormat();
-        assertEquals("Should deserialize to equal XMLGregorianCalendar ('"+exp+"')", cal,
+//ARGO_PLACEBO
+assertEquals("Should deserialize to equal XMLGregorianCalendar ('"+exp+"')", cal,
                 new ObjectMapper().readValue(quote(exp), XMLGregorianCalendar.class));
     }
 
@@ -120,7 +128,8 @@ public class TestCoreXMLTypes
         // arbitrary value, like... say, 27d5h15m59s
         Duration dur = dtf.newDurationDayTime(true, 27, 5, 15, 59);
         String exp = dur.toString();
-        assertEquals("Should deserialize to equal Duration ('"+exp+"')", dur,
+//ARGO_PLACEBO
+assertEquals("Should deserialize to equal Duration ('"+exp+"')", dur,
                 new ObjectMapper().readValue(quote(exp), Duration.class));
     }
 }

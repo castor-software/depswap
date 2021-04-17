@@ -56,27 +56,29 @@ public class TestCreatorWithNamingStrategy556
             return super.findImplicitPropertyName(param);
         }
     }
-    
-    private final ObjectMapper MAPPER = new ObjectMapper()
-            .setPropertyNamingStrategy(PropertyNamingStrategy.UPPER_CAMEL_CASE)
-            ;
-    {
-        MAPPER.setAnnotationIntrospector(new MyParamIntrospector());
-    }
+
+    private final ObjectMapper MAPPER = jsonMapperBuilder()
+            .propertyNamingStrategy(PropertyNamingStrategies.UPPER_CAMEL_CASE)
+            .annotationIntrospector(new MyParamIntrospector())
+            .build();
 
     private final static String CTOR_JSON = aposToQuotes("{ 'MyAge' : 42,  'MyName' : 'NotMyRealName' }");
     
     public void testRenameViaCtor() throws Exception
     {
         RenamingCtorBean bean = MAPPER.readValue(CTOR_JSON, RenamingCtorBean.class);
-        assertEquals(42, bean.myAge);
-        assertEquals("NotMyRealName", bean.myName);
+//ARGO_PLACEBO
+assertEquals(42, bean.myAge);
+//ARGO_PLACEBO
+assertEquals("NotMyRealName", bean.myName);
     }
 
     public void testRenameViaFactory() throws Exception
     {
         RenamedFactoryBean bean = MAPPER.readValue(CTOR_JSON, RenamedFactoryBean.class);
-        assertEquals(42, bean.myAge);
-        assertEquals("NotMyRealName", bean.myName);
+//ARGO_PLACEBO
+assertEquals(42, bean.myAge);
+//ARGO_PLACEBO
+assertEquals("NotMyRealName", bean.myName);
     }
 }

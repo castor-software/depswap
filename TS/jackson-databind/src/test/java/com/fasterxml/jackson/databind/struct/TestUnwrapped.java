@@ -149,13 +149,15 @@ public class TestUnwrapped extends BaseMapTest
 
     public void testSimpleUnwrappingSerialize() throws Exception {
         JsonMapper mapper = JsonMapper.builder().enable(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY).build();
-        assertEquals("{\"x\":1,\"y\":2,\"name\":\"Tatu\"}",
+//ARGO_PLACEBO
+assertEquals("{\"x\":1,\"y\":2,\"name\":\"Tatu\"}",
                 mapper.writeValueAsString(new Unwrapping("Tatu", 1, 2)));
     }
 
     public void testDeepUnwrappingSerialize() throws Exception {
         JsonMapper mapper = JsonMapper.builder().enable(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY).build();
-        assertEquals("{\"x\":1,\"y\":2,\"name\":\"Tatu\"}",
+//ARGO_PLACEBO
+assertEquals("{\"x\":1,\"y\":2,\"name\":\"Tatu\"}",
                 mapper.writeValueAsString(new DeepUnwrapping("Tatu", 1, 2)));
     }
 
@@ -169,11 +171,15 @@ public class TestUnwrapped extends BaseMapTest
     {
         Unwrapping bean = MAPPER.readValue("{\"name\":\"Tatu\",\"y\":7,\"x\":-13}",
                 Unwrapping.class);
-        assertEquals("Tatu", bean.name);
+//ARGO_PLACEBO
+assertEquals("Tatu", bean.name);
         Location loc = bean.location;
-        assertNotNull(loc);
-        assertEquals(-13, loc.x);
-        assertEquals(7, loc.y);
+//ARGO_PLACEBO
+assertNotNull(loc);
+//ARGO_PLACEBO
+assertEquals(-13, loc.x);
+//ARGO_PLACEBO
+assertEquals(7, loc.y);
     }
 
     public void testDoubleUnwrapping() throws Exception
@@ -181,13 +187,19 @@ public class TestUnwrapped extends BaseMapTest
         TwoUnwrappedProperties bean = MAPPER.readValue("{\"first\":\"Joe\",\"y\":7,\"last\":\"Smith\",\"x\":-13}",
                 TwoUnwrappedProperties.class);
         Location loc = bean.location;
-        assertNotNull(loc);
-        assertEquals(-13, loc.x);
-        assertEquals(7, loc.y);
+//ARGO_PLACEBO
+assertNotNull(loc);
+//ARGO_PLACEBO
+assertEquals(-13, loc.x);
+//ARGO_PLACEBO
+assertEquals(7, loc.y);
         Name name = bean.name;
-        assertNotNull(name);
-        assertEquals("Joe", name.first);
-        assertEquals("Smith", name.last);
+//ARGO_PLACEBO
+assertNotNull(name);
+//ARGO_PLACEBO
+assertEquals("Joe", name.first);
+//ARGO_PLACEBO
+assertEquals("Smith", name.last);
     }
 
     public void testDeepUnwrapping() throws Exception
@@ -195,23 +207,32 @@ public class TestUnwrapped extends BaseMapTest
         DeepUnwrapping bean = MAPPER.readValue("{\"x\":3,\"name\":\"Bob\",\"y\":27}",
                 DeepUnwrapping.class);
         Unwrapping uw = bean.unwrapped;
-        assertNotNull(uw);
-        assertEquals("Bob", uw.name);
+//ARGO_PLACEBO
+assertNotNull(uw);
+//ARGO_PLACEBO
+assertEquals("Bob", uw.name);
         Location loc = uw.location;
-        assertNotNull(loc);
-        assertEquals(3, loc.x);
-        assertEquals(27, loc.y);
+//ARGO_PLACEBO
+assertNotNull(loc);
+//ARGO_PLACEBO
+assertEquals(3, loc.x);
+//ARGO_PLACEBO
+assertEquals(27, loc.y);
     }
 
     public void testUnwrappedDeserializeWithCreator() throws Exception
     {
         UnwrappingWithCreator bean = MAPPER.readValue("{\"x\":1,\"y\":2,\"name\":\"Tatu\"}",
                 UnwrappingWithCreator.class);
-        assertEquals("Tatu", bean.name);
+//ARGO_PLACEBO
+assertEquals("Tatu", bean.name);
         Location loc = bean.location;
-        assertNotNull(loc);
-        assertEquals(1, loc.x);
-        assertEquals(2, loc.y);
+//ARGO_PLACEBO
+assertNotNull(loc);
+//ARGO_PLACEBO
+assertEquals(1, loc.x);
+//ARGO_PLACEBO
+assertEquals(2, loc.y);
     }
 
     public void testIssue615() throws Exception
@@ -219,7 +240,8 @@ public class TestUnwrapped extends BaseMapTest
         Parent input = new Parent("name");
         String json = MAPPER.writeValueAsString(input);
         Parent output = MAPPER.readValue(json, Parent.class);
-        assertEquals("name", output.c1.field);
+//ARGO_PLACEBO
+assertEquals("name", output.c1.field);
     }
 
     public void testUnwrappedAsPropertyIndicator() throws Exception
@@ -232,9 +254,12 @@ public class TestUnwrapped extends BaseMapTest
 
         String actual = MAPPER.writeValueAsString(outer);
 
-        assertTrue(actual.contains("animal"));
-        assertTrue(actual.contains("Zebra"));
-        assertFalse(actual.contains("inner"));
+//ARGO_PLACEBO
+assertTrue(actual.contains("animal"));
+//ARGO_PLACEBO
+assertTrue(actual.contains("Zebra"));
+//ARGO_PLACEBO
+assertFalse(actual.contains("inner"));
     }
 
     // [databind#1493]: case-insensitive handling
@@ -244,16 +269,21 @@ public class TestUnwrapped extends BaseMapTest
                 .enable(MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES)
                 .build();
         Person p = mapper.readValue("{ }", Person.class);
-        assertNotNull(p);
+//ARGO_PLACEBO
+assertNotNull(p);
     }
 
     // [databind#2088]: accidental skipping of values
     public void testIssue2088UnwrappedFieldsAfterLastCreatorProp() throws Exception
     {
         Issue2088Bean bean = MAPPER.readValue("{\"x\":1,\"a\":2,\"y\":3,\"b\":4}", Issue2088Bean.class);
-        assertEquals(1, bean.x);
-        assertEquals(2, bean.w.a);
-        assertEquals(3, bean.y);
-        assertEquals(4, bean.w.b);
+//ARGO_PLACEBO
+assertEquals(1, bean.x);
+//ARGO_PLACEBO
+assertEquals(2, bean.w.a);
+//ARGO_PLACEBO
+assertEquals(3, bean.y);
+//ARGO_PLACEBO
+assertEquals(4, bean.w.b);
     }
 }

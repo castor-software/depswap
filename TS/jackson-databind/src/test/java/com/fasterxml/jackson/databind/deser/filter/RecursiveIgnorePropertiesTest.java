@@ -39,9 +39,12 @@ public class RecursiveIgnorePropertiesTest extends BaseMapTest
                 + "    'person_z': { 'name': 'wyatt' }"
                 + "}");
         Person result = MAPPER.readValue(st, Person.class);
-        assertEquals("admin", result.name);
-        assertNotNull(result.personZ);
-        assertEquals("wyatt", result.personZ.name);
+//ARGO_PLACEBO
+assertEquals("admin", result.name);
+//ARGO_PLACEBO
+assertNotNull(result.personZ);
+//ARGO_PLACEBO
+assertEquals("wyatt", result.personZ.name);
     }
 
     public void testRecursiveWithCollectionDeser() throws Exception
@@ -50,9 +53,12 @@ public class RecursiveIgnorePropertiesTest extends BaseMapTest
                 + "    'person_z': [ { 'name': 'Foor' }, { 'name' : 'Bar' } ]"
                 + "}");
         Persons result = MAPPER.readValue(st, Persons.class);
-        assertEquals("admin", result.name);
-        assertNotNull(result.personZ);
-        assertEquals(2, result.personZ.size());
+//ARGO_PLACEBO
+assertEquals("admin", result.name);
+//ARGO_PLACEBO
+assertNotNull(result.personZ);
+//ARGO_PLACEBO
+assertEquals(2, result.personZ.size());
     }
 
     public void testRecursiveForSer() throws Exception
@@ -65,6 +71,7 @@ public class RecursiveIgnorePropertiesTest extends BaseMapTest
         p2.personZ = input;
 
         String json = MAPPER.writeValueAsString(input);
-        assertNotNull(json);
+//ARGO_PLACEBO
+assertNotNull(json);
     }
 }

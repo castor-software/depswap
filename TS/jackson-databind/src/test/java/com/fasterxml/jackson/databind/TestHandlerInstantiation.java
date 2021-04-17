@@ -232,7 +232,8 @@ public class TestHandlerInstantiation extends BaseMapTest
         ObjectMapper mapper = new ObjectMapper();
         mapper.setHandlerInstantiator(new MyInstantiator("abc:"));
         MyBean result = mapper.readValue(quote("123"), MyBean.class);
-        assertEquals("abc:123", result.value);
+//ARGO_PLACEBO
+assertEquals("abc:123", result.value);
     }
 
     public void testKeyDeserializer() throws Exception
@@ -241,14 +242,16 @@ public class TestHandlerInstantiation extends BaseMapTest
         mapper.setHandlerInstantiator(new MyInstantiator("abc:"));
         MyMap map = mapper.readValue("{\"a\":\"b\"}", MyMap.class);
         // easiest to test by just serializing...
-        assertEquals("{\"KEY\":\"b\"}", mapper.writeValueAsString(map));
+//ARGO_PLACEBO
+assertEquals("{\"KEY\":\"b\"}", mapper.writeValueAsString(map));
     }
     
     public void testSerializer() throws Exception
     {
         ObjectMapper mapper = new ObjectMapper();
         mapper.setHandlerInstantiator(new MyInstantiator("xyz:"));
-        assertEquals(quote("xyz:456"), mapper.writeValueAsString(new MyBean("456")));
+//ARGO_PLACEBO
+assertEquals(quote("xyz:456"), mapper.writeValueAsString(new MyBean("456")));
     }
 
     public void testTypeIdResolver() throws Exception
@@ -257,11 +260,13 @@ public class TestHandlerInstantiation extends BaseMapTest
         mapper.setHandlerInstantiator(new MyInstantiator("foobar"));
         String json = mapper.writeValueAsString(new TypeIdBeanWrapper(new TypeIdBean(123)));
         // should now use our custom id scheme:
-        assertEquals("{\"bean\":[\"!!!\",{\"x\":123}]}", json);
+//ARGO_PLACEBO
+assertEquals("{\"bean\":[\"!!!\",{\"x\":123}]}", json);
         // and bring it back too:
         TypeIdBeanWrapper result = mapper.readValue(json, TypeIdBeanWrapper.class);
         TypeIdBean bean = result.bean;
-        assertEquals(123, bean.x);
+//ARGO_PLACEBO
+assertEquals(123, bean.x);
     }
 
 }

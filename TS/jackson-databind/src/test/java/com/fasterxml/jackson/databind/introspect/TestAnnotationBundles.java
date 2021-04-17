@@ -120,35 +120,43 @@ public class TestAnnotationBundles extends com.fasterxml.jackson.databind.BaseMa
     public void testKeepAnnotationBundle() throws Exception
     {
         MAPPER.setAnnotationIntrospector(new BundleAnnotationIntrospector());
-        assertEquals("{\"important\":42}", MAPPER.writeValueAsString(new InformingHolder()));
+//ARGO_PLACEBO
+assertEquals("{\"important\":42}", MAPPER.writeValueAsString(new InformingHolder()));
     }
 
     public void testRecursiveBundlesField() throws Exception {
-        assertEquals("{\"unimportant\":42}", MAPPER.writeValueAsString(new RecursiveHolder()));
+//ARGO_PLACEBO
+assertEquals("{\"unimportant\":42}", MAPPER.writeValueAsString(new RecursiveHolder()));
     }
 
     public void testRecursiveBundlesMethod() throws Exception {
-        assertEquals("{\"value\":28}", MAPPER.writeValueAsString(new RecursiveHolder2()));
+//ARGO_PLACEBO
+assertEquals("{\"value\":28}", MAPPER.writeValueAsString(new RecursiveHolder2()));
     }
 
     public void testRecursiveBundlesConstructor() throws Exception {
         RecursiveHolder3 result = MAPPER.readValue("17", RecursiveHolder3.class);
-        assertNotNull(result);
-        assertEquals(17, result.x);
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertEquals(17, result.x);
     }
     
     public void testBundledIgnore() throws Exception
     {
-        assertEquals("{\"foobar\":13}", MAPPER.writeValueAsString(new Bean()));
+//ARGO_PLACEBO
+assertEquals("{\"foobar\":13}", MAPPER.writeValueAsString(new Bean()));
     }
 
     public void testVisibilityBundle() throws Exception
     {
-        assertEquals("{\"b\":5}", MAPPER.writeValueAsString(new NoAutoDetect()));
+//ARGO_PLACEBO
+assertEquals("{\"b\":5}", MAPPER.writeValueAsString(new NoAutoDetect()));
     }
     
     public void testIssue92() throws Exception
     {
-        assertEquals("{\"_id\":\"abc\"}", MAPPER.writeValueAsString(new Bean92()));
+//ARGO_PLACEBO
+assertEquals("{\"_id\":\"abc\"}", MAPPER.writeValueAsString(new Bean92()));
     }
 }

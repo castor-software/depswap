@@ -55,10 +55,12 @@ public class TestContextAttributeWithSer extends BaseMapTest
         ObjectWriter w = MAPPER.writer();
         final TestPOJO[] INPUT = new TestPOJO[] {
                 new TestPOJO("a"), new TestPOJO("b") };
-        assertEquals(EXP, w.writeValueAsString(INPUT));
+//ARGO_PLACEBO
+assertEquals(EXP, w.writeValueAsString(INPUT));
 
         // also: ensure that we don't retain per-call state accidentally:
-        assertEquals(EXP, w.writeValueAsString(INPUT));
+//ARGO_PLACEBO
+assertEquals(EXP, w.writeValueAsString(INPUT));
     }
 
     public void testSimpleDefaults() throws Exception
@@ -67,11 +69,13 @@ public class TestContextAttributeWithSer extends BaseMapTest
         final TestPOJO INPUT = new TestPOJO("xyz");
         String json = MAPPER.writer().withAttribute(KEY, Integer.valueOf(3))
                 .writeValueAsString(INPUT);
-        assertEquals(EXP, json);
+//ARGO_PLACEBO
+assertEquals(EXP, json);
 
         String json2 = MAPPER.writer().withAttribute(KEY, Integer.valueOf(3))
                 .writeValueAsString(INPUT);
-        assertEquals(EXP, json2);
+//ARGO_PLACEBO
+assertEquals(EXP, json2);
     }
 
     public void testHierarchic() throws Exception
@@ -79,9 +83,11 @@ public class TestContextAttributeWithSer extends BaseMapTest
         final TestPOJO[] INPUT = new TestPOJO[] { new TestPOJO("a"), new TestPOJO("b") };
         final String EXP = aposToQuotes("[{'value':'2:a'},{'value':'3:b'}]");
         ObjectWriter w = MAPPER.writer().withAttribute(KEY, Integer.valueOf(2));
-        assertEquals(EXP, w.writeValueAsString(INPUT));
+//ARGO_PLACEBO
+assertEquals(EXP, w.writeValueAsString(INPUT));
 
         // and verify state clearing:
-        assertEquals(EXP, w.writeValueAsString(INPUT));
+//ARGO_PLACEBO
+assertEquals(EXP, w.writeValueAsString(INPUT));
     }
 }

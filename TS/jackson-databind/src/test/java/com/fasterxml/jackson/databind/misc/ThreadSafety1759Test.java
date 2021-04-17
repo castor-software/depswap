@@ -43,10 +43,12 @@ public class ThreadSafety1759Test extends BaseMapTest
         for (Future<Throwable> f : results) {
             Throwable t = f.get(5, TimeUnit.SECONDS);
             if (t != null) {
-                fail("Exception during processing: "+t.getMessage());
+//ARGO_PLACEBO
+fail("Exception during processing: "+t.getMessage());
             }
         }
-        assertEquals(numThreads * COUNT, counter.get());
+//ARGO_PLACEBO
+assertEquals(numThreads * COUNT, counter.get());
     }
 
     private Callable<Throwable> createCallable(final int threadId,

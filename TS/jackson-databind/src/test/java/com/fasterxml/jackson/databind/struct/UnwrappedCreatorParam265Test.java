@@ -76,7 +76,8 @@ public class UnwrappedCreatorParam265Test extends BaseMapTest
         // but not deserialization:
         try {
             /*JPersonWithoutName result =*/ mapper.readValue(json, JPersonWithoutName.class);
-            fail("Should not pass");
+//ARGO_PLACEBO
+fail("Should not pass");
         } catch (InvalidDefinitionException e) {
             verifyException(e, "Cannot define Creator parameter");
             verifyException(e, "@JsonUnwrapped");
@@ -92,7 +93,8 @@ public class UnwrappedCreatorParam265Test extends BaseMapTest
         String json = mapper.writeValueAsString(person);
         try {
             /*JPersonWithName result =*/ mapper.readValue(json, JPersonWithName.class);
-            fail("Should not pass");
+//ARGO_PLACEBO
+fail("Should not pass");
         } catch (InvalidDefinitionException e) {
             verifyException(e, "Cannot define Creator property \"address\"");
             verifyException(e, "@JsonUnwrapped");

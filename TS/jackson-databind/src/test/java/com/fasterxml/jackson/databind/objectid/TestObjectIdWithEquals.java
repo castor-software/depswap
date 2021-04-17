@@ -82,7 +82,8 @@ public class TestObjectIdWithEquals extends BaseMapTest
     {
         ObjectMapper mapper = new ObjectMapper();
         // Verify default state too
-        assertFalse(mapper.isEnabled(SerializationFeature.USE_EQUALITY_FOR_OBJECT_ID));
+//ARGO_PLACEBO
+assertFalse(mapper.isEnabled(SerializationFeature.USE_EQUALITY_FOR_OBJECT_ID));
         mapper.enable(SerializationFeature.USE_EQUALITY_FOR_OBJECT_ID);
 
         Foo foo = new Foo(1);
@@ -101,11 +102,14 @@ public class TestObjectIdWithEquals extends BaseMapTest
         foo.otherBars.add(bar2);
 
         String json = mapper.writeValueAsString(foo);
-        assertEquals("{\"id\":1,\"bars\":[{\"id\":1},{\"id\":2}],\"otherBars\":[1,2]}", json);
+//ARGO_PLACEBO
+assertEquals("{\"id\":1,\"bars\":[{\"id\":1},{\"id\":2}],\"otherBars\":[1,2]}", json);
 
         Foo foo2 = mapper.readValue(json, Foo.class);       
-        assertNotNull(foo2);
-        assertEquals(foo.id, foo2.id);
+//ARGO_PLACEBO
+assertNotNull(foo2);
+//ARGO_PLACEBO
+assertEquals(foo.id, foo2.id);
     }
 
     public void testEqualObjectIdsExternal() throws Exception
@@ -131,7 +135,9 @@ public class TestObjectIdWithEquals extends BaseMapTest
                 .writeValueAsString(input);
 
         Element[] output = mapper.readValue(json, Element[].class);
-        assertNotNull(output);
-        assertEquals(2, output.length);
+//ARGO_PLACEBO
+assertNotNull(output);
+//ARGO_PLACEBO
+assertEquals(2, output.length);
     }
 }

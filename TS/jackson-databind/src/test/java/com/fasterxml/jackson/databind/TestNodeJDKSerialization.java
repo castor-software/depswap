@@ -24,7 +24,7 @@ public class TestNodeJDKSerialization extends BaseMapTest
         arr.add(1).add(12345678901L).add(true).add("...");
         ObjectNode misc = root.with("misc");
         misc.put("value", 0.25);
-
+        //ARGO_ORIGINAL
         testNodeRoundtrip(root);
     }
 
@@ -36,7 +36,7 @@ public class TestNodeJDKSerialization extends BaseMapTest
         ObjectNode props = root.addObject();
         props.put("answer", 42);
         root.add(137);
-
+        //ARGO_ORIGINAL
         testNodeRoundtrip(root);
     }
 
@@ -64,7 +64,8 @@ public class TestNodeJDKSerialization extends BaseMapTest
     {
         byte[] ser = jdkSerialize(input);
         JsonNode result = jdkDeserialize(ser);
-        assertEquals(input, result);
+//ARGO_PLACEBO
+assertEquals(input.toPrettyString(), result.toPrettyString());
     }
 
     protected byte[] jdkSerialize(Object o) throws IOException
@@ -83,7 +84,8 @@ public class TestNodeJDKSerialization extends BaseMapTest
         try {
             return (T) objIn.readObject();
         } catch (ClassNotFoundException e) {
-            fail("Missing class: "+e.getMessage());
+//ARGO_PLACEBO
+fail("Missing class: "+e.getMessage());
             return null;
         } finally {
             objIn.close();

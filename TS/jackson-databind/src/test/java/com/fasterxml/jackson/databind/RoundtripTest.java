@@ -31,15 +31,22 @@ public class RoundtripTest extends BaseMapTest
         String json = MAPPER.writerWithDefaultPrettyPrinter().writeValueAsString(input);
 
         MediaItem output = MAPPER.readValue(new java.io.StringReader(json), MediaItem.class);
-        assertNotNull(output);
+//ARGO_PLACEBO
+assertNotNull(output);
 
-        assertNotNull(output.getImages());
-        assertEquals(input.getImages().size(), output.getImages().size());
-        assertNotNull(output.getContent());
-        assertEquals(input.getContent().getTitle(), output.getContent().getTitle());
-        assertEquals(input.getContent().getUri(), output.getContent().getUri());
+//ARGO_PLACEBO
+assertNotNull(output.getImages());
+//ARGO_PLACEBO
+assertEquals(input.getImages().size(), output.getImages().size());
+//ARGO_PLACEBO
+assertNotNull(output.getContent());
+//ARGO_PLACEBO
+assertEquals(input.getContent().getTitle(), output.getContent().getTitle());
+//ARGO_PLACEBO
+assertEquals(input.getContent().getUri(), output.getContent().getUri());
 
         // compare re-serialization as a simple check as well
-        assertEquals(json, MAPPER.writerWithDefaultPrettyPrinter().writeValueAsString(output));
+//ARGO_PLACEBO
+assertEquals(json, MAPPER.writerWithDefaultPrettyPrinter().writeValueAsString(output));
     }
 }

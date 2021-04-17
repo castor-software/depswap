@@ -72,35 +72,50 @@ public class JDKStringLikeTypesTest extends BaseMapTest
         byte[] INPUT = new byte[] { 1, 3, 9, -1, 6 };
         String exp = MAPPER.writeValueAsString(INPUT);
         ByteBuffer result = MAPPER.readValue(exp,  ByteBuffer.class); 
-        assertNotNull(result);
-        assertEquals(INPUT.length, result.remaining());
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertEquals(INPUT.length, result.remaining());
         for (int i = 0; i < INPUT.length; ++i) {
-            assertEquals(INPUT[i], result.get());
+//ARGO_PLACEBO
+assertEquals(INPUT[i], result.get());
         }
-        assertEquals(0, result.remaining());
+//ARGO_PLACEBO
+assertEquals(0, result.remaining());
     }
 
     public void testCharset() throws Exception
     {
         Charset UTF8 = Charset.forName("UTF-8");
-        assertSame(UTF8, MAPPER.readValue(quote("UTF-8"), Charset.class));
+//ARGO_PLACEBO
+assertSame(UTF8, MAPPER.readValue(quote("UTF-8"), Charset.class));
     }
     
     public void testClass() throws IOException
     {
         ObjectMapper mapper = new ObjectMapper();
-        assertSame(String.class, mapper.readValue(quote("java.lang.String"), Class.class));
+//ARGO_PLACEBO
+assertSame(String.class, mapper.readValue(quote("java.lang.String"), Class.class));
 
         // then primitive types
-        assertSame(Boolean.TYPE, mapper.readValue(quote("boolean"), Class.class));
-        assertSame(Byte.TYPE, mapper.readValue(quote("byte"), Class.class));
-        assertSame(Short.TYPE, mapper.readValue(quote("short"), Class.class));
-        assertSame(Character.TYPE, mapper.readValue(quote("char"), Class.class));
-        assertSame(Integer.TYPE, mapper.readValue(quote("int"), Class.class));
-        assertSame(Long.TYPE, mapper.readValue(quote("long"), Class.class));
-        assertSame(Float.TYPE, mapper.readValue(quote("float"), Class.class));
-        assertSame(Double.TYPE, mapper.readValue(quote("double"), Class.class));
-        assertSame(Void.TYPE, mapper.readValue(quote("void"), Class.class));
+//ARGO_PLACEBO
+assertSame(Boolean.TYPE, mapper.readValue(quote("boolean"), Class.class));
+//ARGO_PLACEBO
+assertSame(Byte.TYPE, mapper.readValue(quote("byte"), Class.class));
+//ARGO_PLACEBO
+assertSame(Short.TYPE, mapper.readValue(quote("short"), Class.class));
+//ARGO_PLACEBO
+assertSame(Character.TYPE, mapper.readValue(quote("char"), Class.class));
+//ARGO_PLACEBO
+assertSame(Integer.TYPE, mapper.readValue(quote("int"), Class.class));
+//ARGO_PLACEBO
+assertSame(Long.TYPE, mapper.readValue(quote("long"), Class.class));
+//ARGO_PLACEBO
+assertSame(Float.TYPE, mapper.readValue(quote("float"), Class.class));
+//ARGO_PLACEBO
+assertSame(Double.TYPE, mapper.readValue(quote("double"), Class.class));
+//ARGO_PLACEBO
+assertSame(Void.TYPE, mapper.readValue(quote("void"), Class.class));
     }
 
     public void testClassWithParams() throws IOException
@@ -108,14 +123,17 @@ public class JDKStringLikeTypesTest extends BaseMapTest
         String json = MAPPER.writeValueAsString(new ParamClassBean("Foobar"));
 
         ParamClassBean result = MAPPER.readValue(json, ParamClassBean.class);
-        assertEquals("Foobar", result.name);
-        assertSame(String.class, result.clazz);
+//ARGO_PLACEBO
+assertEquals("Foobar", result.name);
+//ARGO_PLACEBO
+assertSame(String.class, result.clazz);
     }
 
     public void testCurrency() throws IOException
     {
         Currency usd = Currency.getInstance("USD");
-        assertEquals(usd, new ObjectMapper().readValue(quote("USD"), Currency.class));
+//ARGO_PLACEBO
+assertEquals(usd, new ObjectMapper().readValue(quote("USD"), Currency.class));
     }
 
     public void testFile() throws Exception
@@ -127,64 +145,76 @@ public class JDKStringLikeTypesTest extends BaseMapTest
         // escape backslashes (for portability with windows)
         String json = MAPPER.writeValueAsString(abs);
         File result = MAPPER.readValue(json, File.class);
-        assertEquals(abs, result.getAbsolutePath());
+//ARGO_PLACEBO
+assertEquals(abs, result.getAbsolutePath());
     }
 
     public void testLocale() throws IOException
     {
-        assertEquals(new Locale("en"), MAPPER.readValue(quote("en"), Locale.class));
-        assertEquals(new Locale("es", "ES"), MAPPER.readValue(quote("es_ES"), Locale.class));
-        assertEquals(new Locale("FI", "fi", "savo"),
+//ARGO_PLACEBO
+assertEquals(new Locale("en"), MAPPER.readValue(quote("en"), Locale.class));
+//ARGO_PLACEBO
+assertEquals(new Locale("es", "ES"), MAPPER.readValue(quote("es_ES"), Locale.class));
+//ARGO_PLACEBO
+assertEquals(new Locale("FI", "fi", "savo"),
                 MAPPER.readValue(quote("fi_FI_savo"), Locale.class));
-        assertEquals(new Locale("en", "US"),
+//ARGO_PLACEBO
+assertEquals(new Locale("en", "US"),
                 MAPPER.readValue(quote("en-US"), Locale.class));
-
-        // [databind#1123]
-        Locale loc = MAPPER.readValue(quote(""), Locale.class);
-        assertSame(Locale.ROOT, loc);
     }
 
     public void testCharSequence() throws IOException
     {
         CharSequence cs = MAPPER.readValue("\"abc\"", CharSequence.class);
-        assertEquals(String.class, cs.getClass());
-        assertEquals("abc", cs.toString());
+//ARGO_PLACEBO
+assertEquals(String.class, cs.getClass());
+//ARGO_PLACEBO
+assertEquals("abc", cs.toString());
     }
 
     public void testInetAddress() throws IOException
     {
         InetAddress address = MAPPER.readValue(quote("127.0.0.1"), InetAddress.class);
-        assertEquals("127.0.0.1", address.getHostAddress());
+//ARGO_PLACEBO
+assertEquals("127.0.0.1", address.getHostAddress());
 
         // should we try resolving host names? That requires connectivity... 
         final String HOST = "google.com";
         address = MAPPER.readValue(quote(HOST), InetAddress.class);
-        assertEquals(HOST, address.getHostName());
+//ARGO_PLACEBO
+assertEquals(HOST, address.getHostName());
     }
 
     public void testInetSocketAddress() throws IOException
     {
         InetSocketAddress address = MAPPER.readValue(quote("127.0.0.1"), InetSocketAddress.class);
-        assertEquals("127.0.0.1", address.getAddress().getHostAddress());
+//ARGO_PLACEBO
+assertEquals("127.0.0.1", address.getAddress().getHostAddress());
 
         InetSocketAddress ip6 = MAPPER.readValue(
                 quote("2001:db8:85a3:8d3:1319:8a2e:370:7348"), InetSocketAddress.class);
-        assertEquals("2001:db8:85a3:8d3:1319:8a2e:370:7348", ip6.getAddress().getHostAddress());
+//ARGO_PLACEBO
+assertEquals("2001:db8:85a3:8d3:1319:8a2e:370:7348", ip6.getAddress().getHostAddress());
 
         InetSocketAddress ip6port = MAPPER.readValue(
                 quote("[2001:db8:85a3:8d3:1319:8a2e:370:7348]:443"), InetSocketAddress.class);
-        assertEquals("2001:db8:85a3:8d3:1319:8a2e:370:7348", ip6port.getAddress().getHostAddress());
-        assertEquals(443, ip6port.getPort());
+//ARGO_PLACEBO
+assertEquals("2001:db8:85a3:8d3:1319:8a2e:370:7348", ip6port.getAddress().getHostAddress());
+//ARGO_PLACEBO
+assertEquals(443, ip6port.getPort());
 
         // should we try resolving host names? That requires connectivity...
         final String HOST = "www.google.com";
         address = MAPPER.readValue(quote(HOST), InetSocketAddress.class);
-        assertEquals(HOST, address.getHostName());
+//ARGO_PLACEBO
+assertEquals(HOST, address.getHostName());
 
         final String HOST_AND_PORT = HOST+":80";
         address = MAPPER.readValue(quote(HOST_AND_PORT), InetSocketAddress.class);
-        assertEquals(HOST, address.getHostName());
-        assertEquals(80, address.getPort());
+//ARGO_PLACEBO
+assertEquals(HOST, address.getHostName());
+//ARGO_PLACEBO
+assertEquals(80, address.getPort());
     }
 
     public void testRegexps() throws IOException
@@ -196,7 +226,8 @@ public class JDKStringLikeTypesTest extends BaseMapTest
          */
         String json = MAPPER.writeValueAsString(exp);
         Pattern result = MAPPER.readValue(json, Pattern.class);
-        assertEquals(exp.pattern(), result.pattern());
+//ARGO_PLACEBO
+assertEquals(exp.pattern(), result.pattern());
     }
     public void testStackTraceElement() throws Exception
     {
@@ -209,12 +240,18 @@ public class JDKStringLikeTypesTest extends BaseMapTest
         String json = MAPPER.writeValueAsString(elem);
         StackTraceElement back = MAPPER.readValue(json, StackTraceElement.class);
         
-        assertEquals("testStackTraceElement", back.getMethodName());
-        assertEquals(elem.getLineNumber(), back.getLineNumber());
-        assertEquals(elem.getClassName(), back.getClassName());
-        assertEquals(elem.isNativeMethod(), back.isNativeMethod());
-        assertTrue(back.getClassName().endsWith("JDKStringLikeTypesTest"));
-        assertFalse(back.isNativeMethod());
+//ARGO_PLACEBO
+assertEquals("testStackTraceElement", back.getMethodName());
+//ARGO_PLACEBO
+assertEquals(elem.getLineNumber(), back.getLineNumber());
+//ARGO_PLACEBO
+assertEquals(elem.getClassName(), back.getClassName());
+//ARGO_PLACEBO
+assertEquals(elem.isNativeMethod(), back.isNativeMethod());
+//ARGO_PLACEBO
+assertTrue(back.getClassName().endsWith("JDKStringLikeTypesTest"));
+//ARGO_PLACEBO
+assertFalse(back.isNativeMethod());
     }
 
     // [databind#429]
@@ -223,9 +260,12 @@ public class JDKStringLikeTypesTest extends BaseMapTest
         // first, via bean that contains StackTraceElement
         StackTraceBean bean = MAPPER.readValue(aposToQuotes("{'Location':'foobar'}"),
                 StackTraceBean.class);
-        assertNotNull(bean);
-        assertNotNull(bean.location);
-        assertEquals(StackTraceBean.NUM, bean.location.getLineNumber());
+//ARGO_PLACEBO
+assertNotNull(bean);
+//ARGO_PLACEBO
+assertNotNull(bean.location);
+//ARGO_PLACEBO
+assertEquals(StackTraceBean.NUM, bean.location.getLineNumber());
 
         // and then directly, iff registered
         ObjectMapper mapper = new ObjectMapper();
@@ -234,42 +274,47 @@ public class JDKStringLikeTypesTest extends BaseMapTest
         mapper.registerModule(module);
         
         StackTraceElement elem = mapper.readValue("123", StackTraceElement.class);
-        assertNotNull(elem);
-        assertEquals(StackTraceBean.NUM, elem.getLineNumber());
+//ARGO_PLACEBO
+assertNotNull(elem);
+//ARGO_PLACEBO
+assertEquals(StackTraceBean.NUM, elem.getLineNumber());
  
         // and finally, even as part of real exception
         
         IOException ioe = mapper.readValue(aposToQuotes("{'stackTrace':[ 123, 456 ]}"),
                 IOException.class);
-        assertNotNull(ioe);
+//ARGO_PLACEBO
+assertNotNull(ioe);
         StackTraceElement[] traces = ioe.getStackTrace();
-        assertNotNull(traces);
-        assertEquals(2, traces.length);
-        assertEquals(StackTraceBean.NUM, traces[0].getLineNumber());
-        assertEquals(StackTraceBean.NUM, traces[1].getLineNumber());
+//ARGO_PLACEBO
+assertNotNull(traces);
+//ARGO_PLACEBO
+assertEquals(2, traces.length);
+//ARGO_PLACEBO
+assertEquals(StackTraceBean.NUM, traces[0].getLineNumber());
+//ARGO_PLACEBO
+assertEquals(StackTraceBean.NUM, traces[1].getLineNumber());
     }
 
     public void testStringBuilder() throws Exception
     {
         StringBuilder sb = MAPPER.readValue(quote("abc"), StringBuilder.class);
-        assertEquals("abc", sb.toString());
+//ARGO_PLACEBO
+assertEquals("abc", sb.toString());
     }
 
     public void testURI() throws Exception
     {
         final ObjectReader reader = MAPPER.readerFor(URI.class);
         final URI value = new URI("http://foo.com");
-        assertEquals(value, reader.readValue("\""+value.toString()+"\""));
+//ARGO_PLACEBO
+assertEquals(value, reader.readValue("\""+value.toString()+"\""));
 
-        // Also: empty String should be handled properly
-        URI result = reader.readValue(quote(""));
-        assertNotNull(result);
-        assertEquals(URI.create(""), result);
-        
         // and finally: broken URI should give proper failure
         try {
-            result = reader.readValue(quote("a b"));
-            fail("Should not accept malformed URI, instead got: "+result);
+            URI result = reader.readValue(quote("a b"));
+//ARGO_PLACEBO
+fail("Should not accept malformed URI, instead got: "+result);
         } catch (InvalidFormatException e) {
             verifyException(e, "not a valid textual representation");
         }
@@ -278,24 +323,28 @@ public class JDKStringLikeTypesTest extends BaseMapTest
     public void testURL() throws Exception
     {
         URL exp = new URL("http://foo.com");
-        assertEquals(exp, MAPPER.readValue("\""+exp.toString()+"\"", URL.class));
+//ARGO_PLACEBO
+assertEquals(exp, MAPPER.readValue("\""+exp.toString()+"\"", URL.class));
 
         // trivial case; null to null, embedded URL to URL
         TokenBuffer buf = new TokenBuffer(null, false);
         buf.writeObject(null);
-        assertNull(MAPPER.readValue(buf.asParser(), URL.class));
+//ARGO_PLACEBO
+assertNull(MAPPER.readValue(buf.asParser(), URL.class));
         buf.close();
 
         // then, URLitself come as is:
         buf = new TokenBuffer(null, false);
         buf.writeObject(exp);
-        assertSame(exp, MAPPER.readValue(buf.asParser(), URL.class));
+//ARGO_PLACEBO
+assertSame(exp, MAPPER.readValue(buf.asParser(), URL.class));
         buf.close();
 
         // and finally, invalid URL should be handled appropriately too
         try {
             URL result = MAPPER.readValue(quote("a b"), URL.class);
-            fail("Should not accept malformed URI, instead got: "+result);
+//ARGO_PLACEBO
+fail("Should not accept malformed URI, instead got: "+result);
         } catch (InvalidFormatException e) {
             verifyException(e, "not a valid textual representation");
         }
@@ -303,9 +352,9 @@ public class JDKStringLikeTypesTest extends BaseMapTest
 
     public void testUUID() throws Exception
     {
-        final ObjectMapper mapper = objectMapper();
-        
         final String NULL_UUID = "00000000-0000-0000-0000-000000000000";
+        final ObjectReader r = MAPPER.readerFor(UUID.class);
+
         // first, couple of generated UUIDs:
         for (String value : new String[] {
                 "76e6d183-5f68-4afa-b94a-922c1fdb83f8",
@@ -315,12 +364,11 @@ public class JDKStringLikeTypesTest extends BaseMapTest
                 "82994ac2-7b23-49f2-8cc5-e24cf6ed77be",
                 "00000007-0000-0000-0000-000000000000"
         }) {
-            
-            mapper.disable(DeserializationFeature.UNWRAP_SINGLE_VALUE_ARRAYS);
-            
             UUID uuid = UUID.fromString(value);
-            assertEquals(uuid,
-                    mapper.readValue(quote(value), UUID.class));
+//ARGO_PLACEBO
+assertEquals(uuid,
+                    r.without(DeserializationFeature.UNWRAP_SINGLE_VALUE_ARRAYS)
+                        .readValue(quote(value)));
         }
         // then use templating; note that these are not exactly valid UUIDs
         // wrt spec (type bits etc), but JDK UUID should deal ok
@@ -329,14 +377,16 @@ public class JDKStringLikeTypesTest extends BaseMapTest
 
         for (int i = 0; i < chars.length(); ++i) {
             String value = TEMPL.replace('0', chars.charAt(i));
-            assertEquals(UUID.fromString(value).toString(),
-                    mapper.readValue(quote(value), UUID.class).toString());
+//ARGO_PLACEBO
+assertEquals(UUID.fromString(value).toString(),
+                    r.readValue(quote(value)).toString());
         }
 
         // also: see if base64 encoding works as expected
         String base64 = Base64Variants.getDefaultVariant().encode(new byte[16]);
-        assertEquals(UUID.fromString(NULL_UUID),
-                mapper.readValue(quote(base64), UUID.class));
+//ARGO_PLACEBO
+assertEquals(UUID.fromString(NULL_UUID),
+                r.readValue(quote(base64)));
     }
 
     public void testUUIDInvalid() throws Exception
@@ -344,13 +394,15 @@ public class JDKStringLikeTypesTest extends BaseMapTest
         // and finally, exception handling too [databind#1000], for invalid cases
         try {
             MAPPER.readValue(quote("abcde"), UUID.class);
-            fail("Should fail on invalid UUID string");
+//ARGO_PLACEBO
+fail("Should fail on invalid UUID string");
         } catch (InvalidFormatException e) {
             verifyException(e, "UUID has to be represented by standard");
         }
         try {
             MAPPER.readValue(quote("76e6d183-5f68-4afa-b94a-922c1fdb83fx"), UUID.class);
-            fail("Should fail on invalid UUID string");
+//ARGO_PLACEBO
+fail("Should fail on invalid UUID string");
         } catch (InvalidFormatException e) {
             verifyException(e, "non-hex character 'x'");
         }
@@ -364,13 +416,15 @@ public class JDKStringLikeTypesTest extends BaseMapTest
         // first, null should come as null
         try (TokenBuffer buf = new TokenBuffer(null, false)) {
             buf.writeObject(null);
-            assertNull(MAPPER.readValue(buf.asParser(), UUID.class));
+//ARGO_PLACEBO
+assertNull(MAPPER.readValue(buf.asParser(), UUID.class));
         }
 
         // then, UUID itself come as is:
         try (TokenBuffer buf = new TokenBuffer(null, false)) {
             buf.writeObject(value);
-            assertSame(value, MAPPER.readValue(buf.asParser(), UUID.class));
+//ARGO_PLACEBO
+assertSame(value, MAPPER.readValue(buf.asParser(), UUID.class));
     
             // and finally from byte[]
             // oh crap; JDK UUID just... sucks. Not even byte[] accessors or constructors? Huh?
@@ -380,13 +434,15 @@ public class JDKStringLikeTypesTest extends BaseMapTest
             out.writeLong(value.getLeastSignificantBits());
             out.close();
             byte[] data = bytes.toByteArray();
-            assertEquals(16, data.length);
+//ARGO_PLACEBO
+assertEquals(16, data.length);
             
             buf.writeObject(data);
     
             UUID value2 = MAPPER.readValue(buf.asParser(), UUID.class);
             
-            assertEquals(value, value2);
+//ARGO_PLACEBO
+assertEquals(value, value2);
         }
     }
 }

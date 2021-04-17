@@ -11,14 +11,20 @@ public class RawValueTest extends BaseMapTest
         RawValue raw1b = new RawValue("foo");
         RawValue raw2 = new RawValue("bar");
 
-        assertTrue(raw1.equals(raw1));
-        assertTrue(raw1.equals(raw1b));
+//ARGO_PLACEBO
+assertTrue(raw1.equals(raw1));
+//ARGO_PLACEBO
+assertTrue(raw1.equals(raw1b));
 
-        assertFalse(raw1.equals(raw2));
-        assertFalse(raw1.equals(null));
+//ARGO_PLACEBO
+assertFalse(raw1.equals(raw2));
+//ARGO_PLACEBO
+assertFalse(raw1.equals(null));
 
-        assertFalse(new RawValue((JsonSerializable) null).equals(raw1));
+//ARGO_PLACEBO
+assertFalse(new RawValue((JsonSerializable) null).equals(raw1));
 
-        assertNotNull(raw1.toString());
+//ARGO_PLACEBO
+assertNotNull(raw1.toString());
     }
 }

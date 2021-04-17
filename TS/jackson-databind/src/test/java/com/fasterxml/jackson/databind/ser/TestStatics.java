@@ -48,15 +48,19 @@ public class TestStatics
     {
         ObjectMapper m = new ObjectMapper();
         Map<String,Object> result = writeAndMap(m, new FieldBean());
-        assertEquals(1, result.size());
-        assertEquals(Integer.valueOf(1), result.get("x"));
+//ARGO_PLACEBO
+assertEquals(1, result.size());
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(1), result.get("x"));
     }
 
     public void testStaticMethods() throws Exception
     {
         ObjectMapper m = new ObjectMapper();
         Map<String,Object> result = writeAndMap(m, new GetterBean());
-        assertEquals(1, result.size());
-        assertEquals(Integer.valueOf(3), result.get("x"));
+//ARGO_PLACEBO
+assertEquals(1, result.size());
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(3), result.get("x"));
     }
 }

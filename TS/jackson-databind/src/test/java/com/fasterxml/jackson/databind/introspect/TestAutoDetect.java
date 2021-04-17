@@ -122,7 +122,8 @@ public class TestAutoDetect
         // first, default settings, with which construction works ok
         ObjectMapper m = new ObjectMapper();
         PrivateBean bean = m.readValue("\"abc\"", PrivateBean.class);
-        assertEquals("abc", bean.a);
+//ARGO_PLACEBO
+assertEquals("abc", bean.a);
 
         // then by increasing visibility requirement:
         m = new ObjectMapper();
@@ -131,7 +132,8 @@ public class TestAutoDetect
         m.setVisibility(vc);
         try {
             m.readValue("\"abc\"", PrivateBean.class);
-            fail("Expected exception for missing constructor");
+//ARGO_PLACEBO
+fail("Expected exception for missing constructor");
         } catch (JsonProcessingException e) {
             verifyException(e, "no String-argument constructor/factory");
         }
@@ -142,14 +144,16 @@ public class TestAutoDetect
     {
         // first, by default, both field/method should be visible
         final Feature1347SerBean input = new Feature1347SerBean();
-        assertEquals(aposToQuotes("{'field':2,'value':3}"),
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'field':2,'value':3}"),
                 MAPPER.writeValueAsString(input));
 
         ObjectMapper mapper = new ObjectMapper();
         mapper.configOverride(Feature1347SerBean.class)
             .setVisibility(JsonAutoDetect.Value.construct(PropertyAccessor.GETTER,
                             Visibility.NONE));
-        assertEquals(aposToQuotes("{'field':2}"),
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'field':2}"),
                 mapper.writeValueAsString(input));
     }
 
@@ -162,7 +166,8 @@ public class TestAutoDetect
         try {
             /*Feature1347DeserBean bean =*/
             MAPPER.readValue(JSON, Feature1347DeserBean.class);
-            fail("Should not pass");
+//ARGO_PLACEBO
+fail("Should not pass");
         } catch (JsonMappingException e) {
             verifyException(e, "Should NOT get called");
         }
@@ -173,7 +178,8 @@ public class TestAutoDetect
             .setVisibility(JsonAutoDetect.Value.construct(PropertyAccessor.SETTER,
                         Visibility.NONE));
         Feature1347DeserBean result = mapper.readValue(JSON, Feature1347DeserBean.class);
-        assertEquals(3, result.value);
+//ARGO_PLACEBO
+assertEquals(3, result.value);
     }
 
     // [databind#1947]
@@ -188,15 +194,19 @@ public class TestAutoDetect
                 .build();
         String json = mapper.writeValueAsString(new Entity1947());
         JsonNode n = mapper.readTree(json);
-        assertEquals(1, n.size());
-        assertTrue(n.has("shouldBeDetected"));
-        assertFalse(n.has("shouldNotBeDetected"));
+//ARGO_ORIGINAL
+assertEquals(1, n.size());
+//ARGO_ORIGINAL
+assertTrue(n.has("shouldBeDetected"));
+//ARGO_ORIGINAL
+assertFalse(n.has("shouldNotBeDetected"));
     }
 
     // [databind#2789]
     public void testAnnotatedFieldIssue2789() throws Exception {
         final String json = MAPPER.writeValueAsString(new DataClassA());
         final DataParent2789 copy = MAPPER.readValue(json, DataParent2789.class);
-        assertEquals(DataType2789.CLASS_A, copy.getType());
+//ARGO_PLACEBO
+assertEquals(DataType2789.CLASS_A, copy.getType());
     }
 }

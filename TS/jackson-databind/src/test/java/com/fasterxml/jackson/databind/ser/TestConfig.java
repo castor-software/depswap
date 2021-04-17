@@ -62,7 +62,8 @@ public class TestConfig
             max = Math.max(max, f.ordinal());
         }
         if (max >= 31) { // 31 is actually ok; 32 not
-            fail("Max number of SerializationFeature enums reached: "+max);
+//ARGO_PLACEBO
+fail("Max number of SerializationFeature enums reached: "+max);
         }
     }
     
@@ -71,22 +72,31 @@ public class TestConfig
         SerializationConfig cfg = MAPPER.getSerializationConfig();
 
         // First, defaults:
-        assertTrue(cfg.isEnabled(MapperFeature.USE_ANNOTATIONS));
-        assertTrue(cfg.isEnabled(MapperFeature.AUTO_DETECT_GETTERS));
-        assertTrue(cfg.isEnabled(MapperFeature.CAN_OVERRIDE_ACCESS_MODIFIERS));
+//ARGO_PLACEBO
+assertTrue(cfg.isEnabled(MapperFeature.USE_ANNOTATIONS));
+//ARGO_PLACEBO
+assertTrue(cfg.isEnabled(MapperFeature.AUTO_DETECT_GETTERS));
+//ARGO_PLACEBO
+assertTrue(cfg.isEnabled(MapperFeature.CAN_OVERRIDE_ACCESS_MODIFIERS));
 
-        assertTrue(cfg.isEnabled(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS));
+//ARGO_PLACEBO
+assertTrue(cfg.isEnabled(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS));
 
-        assertFalse(cfg.isEnabled(SerializationFeature.INDENT_OUTPUT));
-        assertFalse(cfg.isEnabled(MapperFeature.USE_STATIC_TYPING));
+//ARGO_PLACEBO
+assertFalse(cfg.isEnabled(SerializationFeature.INDENT_OUTPUT));
+//ARGO_PLACEBO
+assertFalse(cfg.isEnabled(MapperFeature.USE_STATIC_TYPING));
 
         // since 1.3:
-        assertTrue(cfg.isEnabled(MapperFeature.AUTO_DETECT_IS_GETTERS));
+//ARGO_PLACEBO
+assertTrue(cfg.isEnabled(MapperFeature.AUTO_DETECT_IS_GETTERS));
         // since 1.4
         
-        assertTrue(cfg.isEnabled(SerializationFeature.FAIL_ON_EMPTY_BEANS));
+//ARGO_PLACEBO
+assertTrue(cfg.isEnabled(SerializationFeature.FAIL_ON_EMPTY_BEANS));
         // since 1.5
-        assertTrue(cfg.isEnabled(MapperFeature.DEFAULT_VIEW_INCLUSION));
+//ARGO_PLACEBO
+assertTrue(cfg.isEnabled(MapperFeature.DEFAULT_VIEW_INCLUSION));
 
     }
 
@@ -96,14 +106,16 @@ public class TestConfig
         // and finally, ensure we could override introspectors
         cfg = cfg.with((ClassIntrospector) null); // no way to verify tho
         cfg = cfg.with((AnnotationIntrospector) null);
-        assertNull(cfg.getAnnotationIntrospector());
+//ARGO_PLACEBO
+assertNull(cfg.getAnnotationIntrospector());
     }
 
     public void testMisc()
     {
         ObjectMapper m = new ObjectMapper();
         m.setDateFormat(null); // just to execute the code path
-        assertNotNull(m.getSerializationConfig().toString()); // ditto
+//ARGO_PLACEBO
+assertNotNull(m.getSerializationConfig().toString()); // ditto
     }
 
     public void testIndentation() throws Exception
@@ -114,21 +126,25 @@ public class TestConfig
                 .writeValueAsString(map);
         // 02-Jun-2009, tatu: not really a clean way but...
         String lf = getLF();
-        assertEquals("{"+lf+"  \"a\" : 2"+lf+"}", result);
+//ARGO_PLACEBO
+assertEquals("{"+lf+"  \"a\" : 2"+lf+"}", result);
     }
 
     public void testAnnotationsDisabled() throws Exception
     {
         // first: verify that annotation introspection is enabled by default
-        assertTrue(MAPPER.isEnabled(MapperFeature.USE_ANNOTATIONS));
+//ARGO_PLACEBO
+assertTrue(MAPPER.isEnabled(MapperFeature.USE_ANNOTATIONS));
         Map<String,Object> result = writeAndMap(MAPPER, new AnnoBean());
-        assertEquals(2, result.size());
+//ARGO_PLACEBO
+assertEquals(2, result.size());
 
         ObjectMapper m2 = jsonMapperBuilder()
                 .configure(MapperFeature.USE_ANNOTATIONS, false)
                 .build();
         result = writeAndMap(m2, new AnnoBean());
-        assertEquals(1, result.size());
+//ARGO_PLACEBO
+assertEquals(1, result.size());
     }
 
     /**
@@ -138,12 +154,16 @@ public class TestConfig
     {
         ObjectMapper mapper = new ObjectMapper();
         DefaultSerializerProvider prov = (DefaultSerializerProvider) mapper.getSerializerProvider();
-        assertEquals(0, prov.cachedSerializersCount());
+//ARGO_PLACEBO
+assertEquals(0, prov.cachedSerializersCount());
         // and then should get one constructed for:
         Map<String,Object> result = this.writeAndMap(mapper, new AnnoBean());
-        assertEquals(2, result.size());
-        assertEquals(Integer.valueOf(1), result.get("x"));
-        assertEquals(Integer.valueOf(2), result.get("y"));
+//ARGO_PLACEBO
+assertEquals(2, result.size());
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(1), result.get("x"));
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(2), result.get("y"));
 
         /* Note: it is 2 because we'll also get serializer for basic 'int', not
          * just AnnoBean
@@ -153,28 +173,33 @@ public class TestConfig
          */
         int count = prov.cachedSerializersCount();
         if (count < 2) {
-            fail("Should have at least 2 cached serializers, got "+count);
+//ARGO_PLACEBO
+fail("Should have at least 2 cached serializers, got "+count);
         }
         prov.flushCachedSerializers();
-        assertEquals(0, prov.cachedSerializersCount());
+//ARGO_PLACEBO
+assertEquals(0, prov.cachedSerializersCount());
     }
 
     // Test for [Issue#12]
     public void testIndentWithPassedGenerator() throws Exception
     {
         Indentable input = new Indentable();
-        assertEquals("{\"a\":3}", MAPPER.writeValueAsString(input));
+//ARGO_PLACEBO
+assertEquals("{\"a\":3}", MAPPER.writeValueAsString(input));
         String LF = getLF();
         String INDENTED = "{"+LF+"  \"a\" : 3"+LF+"}";
         final ObjectWriter indentWriter = MAPPER.writer().with(SerializationFeature.INDENT_OUTPUT);
-        assertEquals(INDENTED, indentWriter.writeValueAsString(input));
+//ARGO_PLACEBO
+assertEquals(INDENTED, indentWriter.writeValueAsString(input));
 
         // [Issue#12]
         StringWriter sw = new StringWriter();
         JsonGenerator jgen = MAPPER.createGenerator(sw);
         indentWriter.writeValue(jgen, input);
         jgen.close();
-        assertEquals(INDENTED, sw.toString());
+//ARGO_PLACEBO
+assertEquals(INDENTED, sw.toString());
 
         // and also with ObjectMapper itself
         sw = new StringWriter();
@@ -183,7 +208,8 @@ public class TestConfig
         jgen = m2.createGenerator(sw);
         m2.writeValue(jgen, input);
         jgen.close();
-        assertEquals(INDENTED, sw.toString());
+//ARGO_PLACEBO
+assertEquals(INDENTED, sw.toString());
     }
 
     public void testNoAccessOverrides() throws Exception
@@ -191,7 +217,8 @@ public class TestConfig
         ObjectMapper m = jsonMapperBuilder()
             .disable(MapperFeature.CAN_OVERRIDE_ACCESS_MODIFIERS)
             .build();
-        assertEquals("{\"x\":1}", m.writeValueAsString(new SimpleBean()));
+//ARGO_PLACEBO
+assertEquals("{\"x\":1}", m.writeValueAsString(new SimpleBean()));
     }
 
     public void testDateFormatConfig() throws Exception
@@ -201,29 +228,40 @@ public class TestConfig
         TimeZone tz2 = TimeZone.getTimeZone("Central Standard Time");
 
         // sanity checks
-        assertEquals(tz1, tz1);
-        assertEquals(tz2, tz2);
+//ARGO_PLACEBO
+assertEquals(tz1, tz1);
+//ARGO_PLACEBO
+assertEquals(tz2, tz2);
         if (tz1.equals(tz2)) {
-            fail();
+//ARGO_PLACEBO
+fail();
         }
 
         mapper.setTimeZone(tz1);
-        assertEquals(tz1, mapper.getSerializationConfig().getTimeZone());
-        assertEquals(tz1, mapper.getDeserializationConfig().getTimeZone());
+//ARGO_PLACEBO
+assertEquals(tz1, mapper.getSerializationConfig().getTimeZone());
+//ARGO_PLACEBO
+assertEquals(tz1, mapper.getDeserializationConfig().getTimeZone());
 
         // also better stick via reader/writer as well
-        assertEquals(tz1, mapper.writer().getConfig().getTimeZone());
-        assertEquals(tz1, mapper.reader().getConfig().getTimeZone());
+//ARGO_PLACEBO
+assertEquals(tz1, mapper.writer().getConfig().getTimeZone());
+//ARGO_PLACEBO
+assertEquals(tz1, mapper.reader().getConfig().getTimeZone());
         
         SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         f.setTimeZone(tz2);
         mapper.setDateFormat(f);
 
         // should not change the timezone tho
-        assertEquals(tz1, mapper.getSerializationConfig().getTimeZone());
-        assertEquals(tz1, mapper.getDeserializationConfig().getTimeZone());
-        assertEquals(tz1, mapper.writer().getConfig().getTimeZone());
-        assertEquals(tz1, mapper.reader().getConfig().getTimeZone());
+//ARGO_PLACEBO
+assertEquals(tz1, mapper.getSerializationConfig().getTimeZone());
+//ARGO_PLACEBO
+assertEquals(tz1, mapper.getDeserializationConfig().getTimeZone());
+//ARGO_PLACEBO
+assertEquals(tz1, mapper.writer().getConfig().getTimeZone());
+//ARGO_PLACEBO
+assertEquals(tz1, mapper.reader().getConfig().getTimeZone());
     }
     
     private final static String getLF() {

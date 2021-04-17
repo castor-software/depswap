@@ -28,11 +28,13 @@ public class UnwrappedWithView1559Test extends BaseMapTest
         String json = jsonMapperBuilder().configure(MapperFeature.DEFAULT_VIEW_INCLUSION, false)
                 .build()
                 .writeValueAsString(new Health());
-        assertEquals(aposToQuotes("{}"), json);
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{}"), json);
         // and just in case this, although won't matter wrt output
         json = jsonMapperBuilder().configure(MapperFeature.DEFAULT_VIEW_INCLUSION, true)
                 .build()
                 .writeValueAsString(new Health());
-        assertEquals(aposToQuotes("{}"), json);
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{}"), json);
     }
 }

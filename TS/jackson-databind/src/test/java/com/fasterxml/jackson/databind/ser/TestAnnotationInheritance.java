@@ -76,9 +76,12 @@ public class TestAnnotationInheritance
     {
         ObjectMapper m = new ObjectMapper();
         Map<String,Object> result = writeAndMap(m, new PojoSubclass());
-        assertEquals(2, result.size());
-        assertEquals(Integer.valueOf(7), result.get("length"));
-        assertEquals(Integer.valueOf(9), result.get("width"));
+//ARGO_PLACEBO
+assertEquals(2, result.size());
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(7), result.get("length"));
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(9), result.get("width"));
     }
 
     public void testSimpleGetterInterfaceImpl() throws Exception
@@ -86,9 +89,13 @@ public class TestAnnotationInheritance
         ObjectMapper m = new ObjectMapper();
         Map<String,Object> result = writeAndMap(m, new PojoImpl());
         // should get 2 from interface, and one more from impl itself
-        assertEquals(3, result.size());
-        assertEquals(Integer.valueOf(5), result.get("foobar"));
-        assertEquals(Integer.valueOf(1), result.get("width"));
-        assertEquals(Integer.valueOf(2), result.get("length"));
+//ARGO_PLACEBO
+assertEquals(3, result.size());
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(5), result.get("foobar"));
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(1), result.get("width"));
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(2), result.get("length"));
     }
 }

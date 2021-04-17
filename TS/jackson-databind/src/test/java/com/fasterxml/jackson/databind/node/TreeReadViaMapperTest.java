@@ -29,48 +29,72 @@ public class TreeReadViaMapperTest extends BaseMapTest
                 result = MAPPER.readTree(JSON);
             }
 
-            assertType(result, ObjectNode.class);
-            assertEquals(1, result.size());
-            assertTrue(result.isObject());
+//ARGO_ORIGINAL
+assertType(result, ObjectNode.class);
+//ARGO_ORIGINAL
+assertEquals(1, result.size());
+//ARGO_ORIGINAL
+assertTrue(result.isObject());
             
             ObjectNode main = (ObjectNode) result;
-            assertEquals("Image", main.fieldNames().next());
+//ARGO_ORIGINAL
+assertEquals("Image", main.fieldNames().next());
             JsonNode ob = main.elements().next();
-            assertType(ob, ObjectNode.class);
+//ARGO_ORIGINAL
+assertType(ob, ObjectNode.class);
             ObjectNode imageMap = (ObjectNode) ob;
             
-            assertEquals(5, imageMap.size());
+//ARGO_ORIGINAL
+assertEquals(5, imageMap.size());
             ob = imageMap.get("Width");
-            assertTrue(ob.isIntegralNumber());
-            assertFalse(ob.isFloatingPointNumber());
-            assertEquals(SAMPLE_SPEC_VALUE_WIDTH, ob.intValue());
+//ARGO_ORIGINAL
+assertTrue(ob.isIntegralNumber());
+//ARGO_ORIGINAL
+assertFalse(ob.isFloatingPointNumber());
+//ARGO_ORIGINAL
+assertEquals(SAMPLE_SPEC_VALUE_WIDTH, ob.intValue());
             ob = imageMap.get("Height");
-            assertTrue(ob.isIntegralNumber());
-            assertEquals(SAMPLE_SPEC_VALUE_HEIGHT, ob.intValue());
+//ARGO_ORIGINAL
+assertTrue(ob.isIntegralNumber());
+//ARGO_ORIGINAL
+assertEquals(SAMPLE_SPEC_VALUE_HEIGHT, ob.intValue());
             
             ob = imageMap.get("Title");
-            assertTrue(ob.isTextual());
-            assertEquals(SAMPLE_SPEC_VALUE_TITLE, ob.textValue());
+//ARGO_ORIGINAL
+assertTrue(ob.isTextual());
+//ARGO_ORIGINAL
+assertEquals(SAMPLE_SPEC_VALUE_TITLE, ob.textValue());
             
             ob = imageMap.get("Thumbnail");
-            assertType(ob, ObjectNode.class);
+//ARGO_ORIGINAL
+assertType(ob, ObjectNode.class);
             ObjectNode tn = (ObjectNode) ob;
             ob = tn.get("Url");
-            assertTrue(ob.isTextual());
-            assertEquals(SAMPLE_SPEC_VALUE_TN_URL, ob.textValue());
+//ARGO_ORIGINAL
+assertTrue(ob.isTextual());
+//ARGO_ORIGINAL
+assertEquals(SAMPLE_SPEC_VALUE_TN_URL, ob.textValue());
             ob = tn.get("Height");
-            assertTrue(ob.isIntegralNumber());
-            assertEquals(SAMPLE_SPEC_VALUE_TN_HEIGHT, ob.intValue());
+//ARGO_ORIGINAL
+assertTrue(ob.isIntegralNumber());
+//ARGO_ORIGINAL
+assertEquals(SAMPLE_SPEC_VALUE_TN_HEIGHT, ob.intValue());
             ob = tn.get("Width");
-            assertTrue(ob.isTextual());
-            assertEquals(SAMPLE_SPEC_VALUE_TN_WIDTH, ob.textValue());
+//ARGO_ORIGINAL
+assertTrue(ob.isTextual());
+//ARGO_ORIGINAL
+assertEquals(SAMPLE_SPEC_VALUE_TN_WIDTH, ob.textValue());
             
             ob = imageMap.get("IDs");
-            assertTrue(ob.isArray());
+//ARGO_ORIGINAL
+assertTrue(ob.isArray());
             ArrayNode idList = (ArrayNode) ob;
-            assertEquals(4, idList.size());
-            assertEquals(4, calcLength(idList.elements()));
-            assertEquals(4, calcLength(idList.iterator()));
+//ARGO_ORIGINAL
+assertEquals(4, idList.size());
+//ARGO_ORIGINAL
+assertEquals(4, calcLength(idList.elements()));
+//ARGO_ORIGINAL
+assertEquals(4, calcLength(idList.iterator()));
             {
                 int[] values = new int[] {
                     SAMPLE_SPEC_VALUE_TN_ID1,
@@ -79,11 +103,13 @@ public class TreeReadViaMapperTest extends BaseMapTest
                     SAMPLE_SPEC_VALUE_TN_ID4
                 };
                 for (int i = 0; i < values.length; ++i) {
-                    assertEquals(values[i], idList.get(i).intValue());
+//ARGO_ORIGINAL
+assertEquals(values[i], idList.get(i).intValue());
                 }
                 int i = 0;
                 for (JsonNode n : idList) {
-                    assertEquals(values[i], n.intValue());
+//ARGO_ORIGINAL
+assertEquals(values[i], n.intValue());
                     ++i;
                 }
             }
@@ -95,12 +121,16 @@ public class TreeReadViaMapperTest extends BaseMapTest
         String JSON = "{\"node\" : { \"a\" : 3 }, \"x\" : 9 }";
         Bean bean = MAPPER.readValue(JSON, Bean.class);
 
-        assertEquals(9, bean._x);
+//ARGO_ORIGINAL
+assertEquals(9, bean._x);
         JsonNode n = bean._node;
-        assertNotNull(n);
-        assertEquals(1, n.size());
+//ARGO_ORIGINAL
+assertNotNull(n);
+//ARGO_ORIGINAL
+assertEquals(1, n.size());
         ObjectNode on = (ObjectNode) n;
-        assertEquals(3, on.get("a").intValue());
+//ARGO_ORIGINAL
+assertEquals(3, on.get("a").intValue());
     }
 
     /**
@@ -118,10 +148,13 @@ public class TreeReadViaMapperTest extends BaseMapTest
         JsonParser p = jf.createParser(new StringReader(JSON));
         JsonNode result = MAPPER.readTree(p);
 
-        assertTrue(result.isObject());
-        assertEquals(4, result.size());
+//ARGO_ORIGINAL
+assertTrue(result.isObject());
+//ARGO_ORIGINAL
+assertEquals(4, result.size());
 
-        assertNull(MAPPER.readTree(p));
+//ARGO_ORIGINAL
+assertNull(MAPPER.readTree(p));
         p.close();
     }
 
@@ -132,7 +165,8 @@ public class TreeReadViaMapperTest extends BaseMapTest
 
         try (JsonParser p = jf.createParser(new StringReader(JSON))) {
             final JsonNode result = MAPPER.readTree(p);
-            assertTrue(result.isNull());
+//ARGO_PLACEBO
+assertTrue(result.isNull());
         }
     }
 
@@ -144,22 +178,33 @@ public class TreeReadViaMapperTest extends BaseMapTest
         final ObjectMapper mapper = objectMapper();
         JsonNode result = mapper.readTree(p);
 
-        assertTrue(result.isIntegralNumber());
-        assertTrue(result.isInt());
-        assertFalse(result.isTextual());
-        assertEquals(12, result.intValue());
+//ARGO_ORIGINAL
+assertTrue(result.isIntegralNumber());
+//ARGO_ORIGINAL
+assertTrue(result.isInt());
+//ARGO_ORIGINAL
+assertFalse(result.isTextual());
+//ARGO_ORIGINAL
+assertEquals(12, result.intValue());
 
         result = mapper.readTree(p);
-        assertTrue(result.isTextual());
-        assertFalse(result.isIntegralNumber());
-        assertFalse(result.isInt());
-        assertEquals("string", result.textValue());
+//ARGO_ORIGINAL
+assertTrue(result.isTextual());
+//ARGO_ORIGINAL
+assertFalse(result.isIntegralNumber());
+//ARGO_ORIGINAL
+assertFalse(result.isInt());
+//ARGO_ORIGINAL
+assertEquals("string", result.textValue());
 
         result = mapper.readTree(p);
-        assertTrue(result.isArray());
-        assertEquals(3, result.size());
+//ARGO_ORIGINAL
+assertTrue(result.isArray());
+//ARGO_ORIGINAL
+assertEquals(3, result.size());
 
-        assertNull(mapper.readTree(p));
+//ARGO_ORIGINAL
+assertNull(mapper.readTree(p));
         p.close();
     }
 

@@ -40,14 +40,18 @@ public class PolymorphicList1451SerTest extends BaseMapTest
 
         String result = writer.writeValueAsString(input);
 
-        assertEquals(aposToQuotes(
+//ARGO_PLACEBO
+assertEquals(aposToQuotes(
 "[{'@class':'."+CLASS_NAME+"$A','a':'a1'},{'@class':'."+CLASS_NAME+"$B','a':'a2','b':'b'}]"
 ), result);
 
         List<A> output = mapper.readerFor(typeRef)
                 .readValue(result);
-        assertEquals(2, output.size());
-        assertEquals(A.class, output.get(0).getClass());
-        assertEquals(B.class, output.get(1).getClass());
+//ARGO_PLACEBO
+assertEquals(2, output.size());
+//ARGO_PLACEBO
+assertEquals(A.class, output.get(0).getClass());
+//ARGO_PLACEBO
+assertEquals(B.class, output.get(1).getClass());
     }
 }

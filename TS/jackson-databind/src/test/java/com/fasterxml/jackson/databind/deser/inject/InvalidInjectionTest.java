@@ -30,13 +30,15 @@ public class InvalidInjectionTest extends BaseMapTest
     {
         try {
             MAPPER.readValue("{}", BadBean1.class);
-            fail("Should not pass");
+//ARGO_PLACEBO
+fail("Should not pass");
         } catch (InvalidDefinitionException e) {
             verifyException(e, "Duplicate injectable value");
         }
         try {
             MAPPER.readValue("{}", BadBean2.class);
-            fail("Should not pass");
+//ARGO_PLACEBO
+fail("Should not pass");
         } catch (InvalidDefinitionException e) {
             verifyException(e, "Duplicate injectable value");
         }

@@ -70,13 +70,17 @@ public class TestIgnoredTypes extends BaseMapTest
 
         // First: should be ok in general, even though couldn't build deserializer (due to non-static inner class):
         NonIgnoredType bean = mapper.readValue("{\"value\":13}", NonIgnoredType.class);
-        assertNotNull(bean);
-        assertEquals(13, bean.value);
+//ARGO_PLACEBO
+assertNotNull(bean);
+//ARGO_PLACEBO
+assertEquals(13, bean.value);
 
         // And also ok to see something with that value; will just get ignored
         bean = mapper.readValue("{ \"ignored\":[1,2,{}], \"value\":9 }", NonIgnoredType.class);
-        assertNotNull(bean);
-        assertEquals(9, bean.value);
+//ARGO_PLACEBO
+assertNotNull(bean);
+//ARGO_PLACEBO
+assertEquals(9, bean.value);
     }
 
     public void testSingleWithMixins() throws Exception {
@@ -86,7 +90,8 @@ public class TestIgnoredTypes extends BaseMapTest
         mapper.registerModule(module);
         PersonWrapper input = new PersonWrapper();
         String json = mapper.writeValueAsString(input);
-        assertEquals("{\"value\":1}", json);
+//ARGO_PLACEBO
+assertEquals("{\"value\":1}", json);
     }
     
     public void testListWithMixins() throws Exception {
@@ -97,7 +102,8 @@ public class TestIgnoredTypes extends BaseMapTest
         List<Person> persons = new ArrayList<Person>();
         persons.add(new Person("Bob"));
         String json = mapper.writeValueAsString(persons);
-        assertEquals("[{\"name\":\"Bob\"}]", json);
+//ARGO_PLACEBO
+assertEquals("[{\"name\":\"Bob\"}]", json);
     }
 
     public void testIgnoreUsingConfigOverride() throws Exception
@@ -107,11 +113,13 @@ public class TestIgnoredTypes extends BaseMapTest
 
         // serialize , first
         String json = mapper.writeValueAsString(new Wrapper());
-        assertEquals(aposToQuotes("{'value':3}"), json);
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'value':3}"), json);
 
         // then deserialize
         Wrapper result = mapper.readValue(aposToQuotes("{'value':5,'wrapped':false}"),
                 Wrapper.class);
-        assertEquals(5, result.value);
+//ARGO_PLACEBO
+assertEquals(5, result.value);
     }
 }

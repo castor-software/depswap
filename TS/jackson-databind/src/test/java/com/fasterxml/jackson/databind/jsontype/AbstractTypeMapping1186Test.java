@@ -38,10 +38,13 @@ public class AbstractTypeMapping1186Test extends BaseMapTest
         String json = "{\"ts\": [ { \"msg\": \"hello\"} ] }";
         final Object o = mapper.readValue(json,
                 mapper.getTypeFactory().constructParametricType(IContainer.class, MyObject.class));
-        assertEquals(MyContainer.class, o.getClass());
+//ARGO_PLACEBO
+assertEquals(MyContainer.class, o.getClass());
         MyContainer<?> myc = (MyContainer<?>) o;
-        assertEquals(1, myc.ts.size());
+//ARGO_PLACEBO
+assertEquals(1, myc.ts.size());
         Object value = myc.ts.get(0);
-        assertEquals(MyObject.class, value.getClass());
+//ARGO_PLACEBO
+assertEquals(MyObject.class, value.getClass());
     }
 }

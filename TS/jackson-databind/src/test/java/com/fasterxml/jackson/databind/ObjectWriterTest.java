@@ -66,26 +66,31 @@ public class ObjectWriterTest
         data.put("a", 1);
         
         // default: no indentation
-        assertEquals("{\"a\":1}", writer.writeValueAsString(data));
+//ARGO_PLACEBO
+assertEquals("{\"a\":1}", writer.writeValueAsString(data));
 
         // and then with standard
         writer = writer.withDefaultPrettyPrinter();
 
         // pretty printer uses system-specific line feeds, so we do that as well.
         String lf = System.getProperty("line.separator");
-        assertEquals("{" + lf + "  \"a\" : 1" + lf + "}", writer.writeValueAsString(data));
+//ARGO_PLACEBO
+assertEquals("{" + lf + "  \"a\" : 1" + lf + "}", writer.writeValueAsString(data));
 
         // and finally, again without indentation
         writer = writer.with((PrettyPrinter) null);
-        assertEquals("{\"a\":1}", writer.writeValueAsString(data));
+//ARGO_PLACEBO
+assertEquals("{\"a\":1}", writer.writeValueAsString(data));
     }
 
     public void testPrefetch() throws Exception
     {
         ObjectWriter writer = MAPPER.writer();
-        assertFalse(writer.hasPrefetchedSerializer());
+//ARGO_PLACEBO
+assertFalse(writer.hasPrefetchedSerializer());
         writer = writer.forType(String.class);
-        assertTrue(writer.hasPrefetchedSerializer());
+//ARGO_PLACEBO
+assertTrue(writer.hasPrefetchedSerializer());
     }
 
     public void testObjectWriterFeatures() throws Exception
@@ -94,9 +99,11 @@ public class ObjectWriterTest
                 .without(JsonWriteFeature.QUOTE_FIELD_NAMES);                
         Map<String,Integer> map = new HashMap<String,Integer>();
         map.put("a", 1);
-        assertEquals("{a:1}", writer.writeValueAsString(map));
+//ARGO_PLACEBO
+assertEquals("{a:1}", writer.writeValueAsString(map));
         // but can also reconfigure
-        assertEquals("{\"a\":1}", writer.with(JsonWriteFeature.QUOTE_FIELD_NAMES)
+//ARGO_PLACEBO
+assertEquals("{\"a\":1}", writer.with(JsonWriteFeature.QUOTE_FIELD_NAMES)
                 .writeValueAsString(map));
     }
 
@@ -106,7 +113,8 @@ public class ObjectWriterTest
         stuff.put("a", 5);
         ObjectWriter writer = MAPPER.writerFor(JsonNode.class);
         String json = writer.writeValueAsString(stuff);
-        assertEquals("{\"a\":5}", json);
+//ARGO_ORIGINAL
+assertEquals("{\"a\":5}", json);
     }
 
     public void testPolymorphicWithTyping() throws Exception
@@ -115,15 +123,19 @@ public class ObjectWriterTest
         String json;
 
         json = writer.writeValueAsString(new ImplA(3));
-        assertEquals(aposToQuotes("{'type':'A','value':3}"), json);
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'type':'A','value':3}"), json);
         json = writer.writeValueAsString(new ImplB(-5));
-        assertEquals(aposToQuotes("{'type':'B','b':-5}"), json);
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'type':'B','b':-5}"), json);
     }
 
     public void testCanSerialize() throws Exception
     {
-        assertTrue(MAPPER.writer().canSerialize(String.class));
-        assertTrue(MAPPER.writer().canSerialize(String.class, null));
+//ARGO_PLACEBO
+assertTrue(MAPPER.writer().canSerialize(String.class));
+//ARGO_PLACEBO
+assertTrue(MAPPER.writer().canSerialize(String.class, null));
     }
 
     public void testNoPrefetch() throws Exception
@@ -133,27 +145,34 @@ public class ObjectWriterTest
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         w.writeValue(out, Integer.valueOf(3));
         out.close();
-        assertEquals("3", out.toString("UTF-8"));
+//ARGO_PLACEBO
+assertEquals("3", out.toString("UTF-8"));
     }
 
     public void testWithCloseCloseable() throws Exception
     {
         ObjectWriter w = MAPPER.writer()
                 .with(SerializationFeature.CLOSE_CLOSEABLE);
-        assertTrue(w.isEnabled(SerializationFeature.CLOSE_CLOSEABLE));
+//ARGO_PLACEBO
+assertTrue(w.isEnabled(SerializationFeature.CLOSE_CLOSEABLE));
         CloseableValue input = new CloseableValue();
-        assertFalse(input.closed);
+//ARGO_PLACEBO
+assertFalse(input.closed);
         byte[] json = w.writeValueAsBytes(input);
-        assertNotNull(json);
-        assertTrue(input.closed);
+//ARGO_PLACEBO
+assertNotNull(json);
+//ARGO_PLACEBO
+assertTrue(input.closed);
         input.close();
 
         // and via explicitly passed generator
         JsonGenerator g = MAPPER.createGenerator(new StringWriter());
         input = new CloseableValue();
-        assertFalse(input.closed);
+//ARGO_PLACEBO
+assertFalse(input.closed);
         w.writeValue(g, input);
-        assertTrue(input.closed);
+//ARGO_PLACEBO
+assertTrue(input.closed);
         g.close();
         input.close();
     }
@@ -162,38 +181,51 @@ public class ObjectWriterTest
     {
         ObjectWriter w = MAPPER.writer();
         ObjectWriter newW = w.withView(String.class);
-        assertNotSame(w, newW);
-        assertSame(newW, newW.withView(String.class));
+//ARGO_PLACEBO
+assertNotSame(w, newW);
+//ARGO_PLACEBO
+assertSame(newW, newW.withView(String.class));
 
         newW = w.with(Locale.CANADA);
-        assertNotSame(w, newW);
-        assertSame(newW, newW.with(Locale.CANADA));
+//ARGO_PLACEBO
+assertNotSame(w, newW);
+//ARGO_PLACEBO
+assertSame(newW, newW.with(Locale.CANADA));
     }
 
     public void testMiscSettings() throws Exception
     {
         ObjectWriter w = MAPPER.writer();
-        assertSame(MAPPER.getFactory(), w.getFactory());
-        assertFalse(w.hasPrefetchedSerializer());
-        assertNotNull(w.getTypeFactory());
+//ARGO_PLACEBO
+assertSame(MAPPER.getFactory(), w.getFactory());
+//ARGO_PLACEBO
+assertFalse(w.hasPrefetchedSerializer());
+//ARGO_PLACEBO
+assertNotNull(w.getTypeFactory());
 
         JsonFactory f = new JsonFactory();
         w = w.with(f);
-        assertSame(f, w.getFactory());
+//ARGO_PLACEBO
+assertSame(f, w.getFactory());
         ObjectWriter newW = w.with(Base64Variants.MODIFIED_FOR_URL);
-        assertNotSame(w, newW);
-        assertSame(newW, newW.with(Base64Variants.MODIFIED_FOR_URL));
+//ARGO_PLACEBO
+assertNotSame(w, newW);
+//ARGO_PLACEBO
+assertSame(newW, newW.with(Base64Variants.MODIFIED_FOR_URL));
         
         w = w.withAttributes(Collections.emptyMap());
         w = w.withAttribute("a", "b");
-        assertEquals("b", w.getAttributes().getAttribute("a"));
+//ARGO_PLACEBO
+assertEquals("b", w.getAttributes().getAttribute("a"));
         w = w.withoutAttribute("a");
-        assertNull(w.getAttributes().getAttribute("a"));
+//ARGO_PLACEBO
+assertNull(w.getAttributes().getAttribute("a"));
 
         FormatSchema schema = new BogusSchema();
         try {
             newW = w.with(schema);
-            fail("Should not pass");
+//ARGO_PLACEBO
+fail("Should not pass");
         } catch (IllegalArgumentException e) {
             verifyException(e, "Cannot use FormatSchema");
         }
@@ -205,73 +237,105 @@ public class ObjectWriterTest
         
         // First, root name:
         ObjectWriter newW = w.withRootName("foo");
-        assertNotSame(w, newW);
-        assertSame(newW, newW.withRootName(PropertyName.construct("foo")));
+//ARGO_PLACEBO
+assertNotSame(w, newW);
+//ARGO_PLACEBO
+assertSame(newW, newW.withRootName(PropertyName.construct("foo")));
         w = newW;
         newW = w.withRootName((String) null);
-        assertNotSame(w, newW);
-        assertSame(newW, newW.withRootName((PropertyName) null));
+//ARGO_PLACEBO
+assertNotSame(w, newW);
+//ARGO_PLACEBO
+assertSame(newW, newW.withRootName((PropertyName) null));
 
         // Then root value separator
 
         w = w.withRootValueSeparator(new SerializedString(","));
-        assertSame(w, w.withRootValueSeparator(new SerializedString(",")));
-        assertSame(w, w.withRootValueSeparator(","));
+//ARGO_PLACEBO
+assertSame(w, w.withRootValueSeparator(new SerializedString(",")));
+//ARGO_PLACEBO
+assertSame(w, w.withRootValueSeparator(","));
 
          newW = w.withRootValueSeparator("/");
-        assertNotSame(w, newW);
-        assertSame(newW, newW.withRootValueSeparator("/"));
+//ARGO_PLACEBO
+assertNotSame(w, newW);
+//ARGO_PLACEBO
+assertSame(newW, newW.withRootValueSeparator("/"));
 
         newW = w.withRootValueSeparator((String) null);
-        assertNotSame(w, newW);
+//ARGO_PLACEBO
+assertNotSame(w, newW);
 
         newW = w.withRootValueSeparator((SerializableString) null);
-        assertNotSame(w, newW);
+//ARGO_PLACEBO
+assertNotSame(w, newW);
     }
 
     public void testFeatureSettings() throws Exception
     {
         ObjectWriter w = MAPPER.writer();
-        assertFalse(w.isEnabled(MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES));
-        assertFalse(w.isEnabled(JsonGenerator.Feature.STRICT_DUPLICATE_DETECTION));
-        assertFalse(w.isEnabled(StreamWriteFeature.STRICT_DUPLICATE_DETECTION));
+//ARGO_PLACEBO
+assertFalse(w.isEnabled(MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES));
+//ARGO_PLACEBO
+assertFalse(w.isEnabled(JsonGenerator.Feature.STRICT_DUPLICATE_DETECTION));
+//ARGO_PLACEBO
+assertFalse(w.isEnabled(StreamWriteFeature.STRICT_DUPLICATE_DETECTION));
 
         ObjectWriter newW = w.with(SerializationFeature.FAIL_ON_UNWRAPPED_TYPE_IDENTIFIERS,
                 SerializationFeature.INDENT_OUTPUT);
-        assertNotSame(w, newW);
-        assertTrue(newW.isEnabled(SerializationFeature.FAIL_ON_UNWRAPPED_TYPE_IDENTIFIERS));
-        assertTrue(newW.isEnabled(SerializationFeature.INDENT_OUTPUT));
-        assertSame(newW, newW.with(SerializationFeature.INDENT_OUTPUT));
-        assertSame(newW, newW.withFeatures(SerializationFeature.INDENT_OUTPUT));
+//ARGO_PLACEBO
+assertNotSame(w, newW);
+//ARGO_PLACEBO
+assertTrue(newW.isEnabled(SerializationFeature.FAIL_ON_UNWRAPPED_TYPE_IDENTIFIERS));
+//ARGO_PLACEBO
+assertTrue(newW.isEnabled(SerializationFeature.INDENT_OUTPUT));
+//ARGO_PLACEBO
+assertSame(newW, newW.with(SerializationFeature.INDENT_OUTPUT));
+//ARGO_PLACEBO
+assertSame(newW, newW.withFeatures(SerializationFeature.INDENT_OUTPUT));
 
         newW = w.withFeatures(SerializationFeature.FAIL_ON_UNWRAPPED_TYPE_IDENTIFIERS,
                 SerializationFeature.INDENT_OUTPUT);
-        assertNotSame(w, newW);
+//ARGO_PLACEBO
+assertNotSame(w, newW);
 
         newW = w.without(SerializationFeature.FAIL_ON_EMPTY_BEANS,
                 SerializationFeature.EAGER_SERIALIZER_FETCH);
-        assertNotSame(w, newW);
-        assertFalse(newW.isEnabled(SerializationFeature.FAIL_ON_EMPTY_BEANS));
-        assertFalse(newW.isEnabled(SerializationFeature.EAGER_SERIALIZER_FETCH));
-        assertSame(newW, newW.without(SerializationFeature.FAIL_ON_EMPTY_BEANS));
-        assertSame(newW, newW.withoutFeatures(SerializationFeature.FAIL_ON_EMPTY_BEANS));
+//ARGO_PLACEBO
+assertNotSame(w, newW);
+//ARGO_PLACEBO
+assertFalse(newW.isEnabled(SerializationFeature.FAIL_ON_EMPTY_BEANS));
+//ARGO_PLACEBO
+assertFalse(newW.isEnabled(SerializationFeature.EAGER_SERIALIZER_FETCH));
+//ARGO_PLACEBO
+assertSame(newW, newW.without(SerializationFeature.FAIL_ON_EMPTY_BEANS));
+//ARGO_PLACEBO
+assertSame(newW, newW.withoutFeatures(SerializationFeature.FAIL_ON_EMPTY_BEANS));
 
-        assertNotSame(w, w.withoutFeatures(SerializationFeature.FAIL_ON_EMPTY_BEANS,
+//ARGO_PLACEBO
+assertNotSame(w, w.withoutFeatures(SerializationFeature.FAIL_ON_EMPTY_BEANS,
                 SerializationFeature.EAGER_SERIALIZER_FETCH));
     }
 
     public void testGeneratorFeatures() throws Exception
     {
         ObjectWriter w = MAPPER.writer();
-        assertNotSame(w, w.with(JsonWriteFeature.ESCAPE_NON_ASCII));
-        assertNotSame(w, w.withFeatures(JsonWriteFeature.ESCAPE_NON_ASCII));
+//ARGO_PLACEBO
+assertNotSame(w, w.with(JsonWriteFeature.ESCAPE_NON_ASCII));
+//ARGO_PLACEBO
+assertNotSame(w, w.withFeatures(JsonWriteFeature.ESCAPE_NON_ASCII));
 
-        assertTrue(w.isEnabled(JsonGenerator.Feature.AUTO_CLOSE_TARGET));
-        assertNotSame(w, w.without(JsonGenerator.Feature.AUTO_CLOSE_TARGET));
-        assertNotSame(w, w.withoutFeatures(JsonGenerator.Feature.AUTO_CLOSE_TARGET));
+//ARGO_PLACEBO
+assertTrue(w.isEnabled(JsonGenerator.Feature.AUTO_CLOSE_TARGET));
+//ARGO_PLACEBO
+assertNotSame(w, w.without(JsonGenerator.Feature.AUTO_CLOSE_TARGET));
+//ARGO_PLACEBO
+assertNotSame(w, w.withoutFeatures(JsonGenerator.Feature.AUTO_CLOSE_TARGET));
 
-        assertFalse(w.isEnabled(StreamWriteFeature.STRICT_DUPLICATE_DETECTION));
-        assertNotSame(w, w.with(StreamWriteFeature.STRICT_DUPLICATE_DETECTION));
+//ARGO_PLACEBO
+assertFalse(w.isEnabled(StreamWriteFeature.STRICT_DUPLICATE_DETECTION));
+//ARGO_PLACEBO
+assertNotSame(w, w.with(StreamWriteFeature.STRICT_DUPLICATE_DETECTION));
     }
 
     /*
@@ -285,7 +349,8 @@ public class ObjectWriterTest
         final ObjectWriter w = MAPPER.writer();
         try {
             w.acceptJsonFormatVisitor((JavaType) null, null);
-            fail("Should not pass");
+//ARGO_PLACEBO
+fail("Should not pass");
         } catch (IllegalArgumentException e) {
             verifyException(e, "argument \"type\" is null");
         }
@@ -297,7 +362,8 @@ public class ObjectWriterTest
             MAPPER.writerFor(String.class)
                 .with(new BogusSchema())
                 .writeValueAsBytes("foo");
-            fail("Should not pass");
+//ARGO_PLACEBO
+fail("Should not pass");
         } catch (IllegalArgumentException e) {
             verifyException(e, "Cannot use FormatSchema");
         }

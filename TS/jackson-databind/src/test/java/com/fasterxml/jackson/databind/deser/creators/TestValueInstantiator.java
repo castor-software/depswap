@@ -342,8 +342,10 @@ public class TestValueInstantiator extends BaseMapTest
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new MyModule(MyBean.class, new MyBeanInstantiator()));
         MyBean bean = mapper.readValue("{}", MyBean.class);
-        assertNotNull(bean);
-        assertEquals("secret!", bean._secret);
+//ARGO_PLACEBO
+assertNotNull(bean);
+//ARGO_PLACEBO
+assertEquals("secret!", bean._secret);
     }
 
     public void testCustomListInstantiator() throws Exception
@@ -351,9 +353,12 @@ public class TestValueInstantiator extends BaseMapTest
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new MyModule(MyList.class, new MyListInstantiator()));
         MyList result = mapper.readValue("[]", MyList.class);
-        assertNotNull(result);
-        assertEquals(MyList.class, result.getClass());
-        assertEquals(0, result.size());
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertEquals(MyList.class, result.getClass());
+//ARGO_PLACEBO
+assertEquals(0, result.size());
     }
 
     public void testCustomMapInstantiator() throws Exception
@@ -361,9 +366,12 @@ public class TestValueInstantiator extends BaseMapTest
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new MyModule(MyMap.class, new MyMapInstantiator()));
         MyMap result = mapper.readValue("{ \"a\":\"b\" }", MyMap.class);
-        assertNotNull(result);
-        assertEquals(MyMap.class, result.getClass());
-        assertEquals(1, result.size());
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertEquals(MyMap.class, result.getClass());
+//ARGO_PLACEBO
+assertEquals(1, result.size());
     }
     
     /*
@@ -377,8 +385,10 @@ public class TestValueInstantiator extends BaseMapTest
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new MyModule(MyBean.class, new MyDelegateBeanInstantiator()));
         MyBean bean = mapper.readValue("123", MyBean.class);
-        assertNotNull(bean);
-        assertEquals("123", bean._secret);
+//ARGO_PLACEBO
+assertNotNull(bean);
+//ARGO_PLACEBO
+assertEquals("123", bean._secret);
     }
 
     public void testDelegateListInstantiator() throws Exception
@@ -386,9 +396,12 @@ public class TestValueInstantiator extends BaseMapTest
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new MyModule(MyList.class, new MyDelegateListInstantiator()));
         MyList result = mapper.readValue("123", MyList.class);
-        assertNotNull(result);
-        assertEquals(1, result.size());
-        assertEquals(Integer.valueOf(123), result.get(0));
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertEquals(1, result.size());
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(123), result.get(0));
     }
     
     public void testDelegateMapInstantiator() throws Exception
@@ -396,18 +409,24 @@ public class TestValueInstantiator extends BaseMapTest
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new MyModule(MyMap.class, new MyDelegateMapInstantiator()));
         MyMap result = mapper.readValue("123", MyMap.class);
-        assertNotNull(result);
-        assertEquals(1, result.size());
-        assertEquals(Integer.valueOf(123), result.values().iterator().next());
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertEquals(1, result.size());
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(123), result.values().iterator().next());
     }
 
     public void testCustomDelegateInstantiator() throws Exception
     {
         AnnotatedBeanDelegating value = MAPPER.readValue("{\"a\":3}", AnnotatedBeanDelegating.class);
-        assertNotNull(value);
+//ARGO_PLACEBO
+assertNotNull(value);
         Object ob = value.value;
-        assertNotNull(ob);
-        assertTrue(ob instanceof Map);
+//ARGO_PLACEBO
+assertNotNull(ob);
+//ARGO_PLACEBO
+assertTrue(ob instanceof Map);
     }
 
     /*
@@ -439,8 +458,10 @@ public class TestValueInstantiator extends BaseMapTest
                     }
         }));
         CreatorBean bean = mapper.readValue("{\"secret\":123,\"value\":37}", CreatorBean.class);
-        assertNotNull(bean);
-        assertEquals("123", bean._secret);
+//ARGO_PLACEBO
+assertNotNull(bean);
+//ARGO_PLACEBO
+assertEquals("123", bean._secret);
     }
 
     public void testPropertyBasedMapInstantiator() throws Exception
@@ -448,10 +469,14 @@ public class TestValueInstantiator extends BaseMapTest
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new MyModule(MyMap.class, new CreatorMapInstantiator()));
         MyMap result = mapper.readValue("{\"name\":\"bob\", \"x\":\"y\"}", MyMap.class);
-        assertNotNull(result);
-        assertEquals(2, result.size());
-        assertEquals("bob", result.get("bob"));
-        assertEquals("y", result.get("x"));
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertEquals(2, result.size());
+//ARGO_PLACEBO
+assertEquals("bob", result.get("bob"));
+//ARGO_PLACEBO
+assertEquals("y", result.get("x"));
     }
 
     /*
@@ -474,8 +499,10 @@ public class TestValueInstantiator extends BaseMapTest
                     }
         }));
         MysteryBean result = mapper.readValue(quote("abc"), MysteryBean.class);
-        assertNotNull(result);
-        assertEquals("abc", result.value);
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertEquals("abc", result.value);
     }
 
     public void testBeanFromInt() throws Exception
@@ -492,8 +519,10 @@ public class TestValueInstantiator extends BaseMapTest
                     }
         }));
         MysteryBean result = mapper.readValue("37", MysteryBean.class);
-        assertNotNull(result);
-        assertEquals(Integer.valueOf(38), result.value);
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(38), result.value);
     }
 
     public void testBeanFromLong() throws Exception
@@ -510,8 +539,10 @@ public class TestValueInstantiator extends BaseMapTest
                     }
         }));
         MysteryBean result = mapper.readValue("9876543210", MysteryBean.class);
-        assertNotNull(result);
-        assertEquals(Long.valueOf(9876543211L), result.value);
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertEquals(Long.valueOf(9876543211L), result.value);
     }
 
     public void testBeanFromDouble() throws Exception
@@ -528,8 +559,10 @@ public class TestValueInstantiator extends BaseMapTest
                     }
         }));
         MysteryBean result = mapper.readValue("0.25", MysteryBean.class);
-        assertNotNull(result);
-        assertEquals(Double.valueOf(0.5), result.value);
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertEquals(Double.valueOf(0.5), result.value);
     }
 
     public void testBeanFromBoolean() throws Exception
@@ -546,8 +579,10 @@ public class TestValueInstantiator extends BaseMapTest
                     }
         }));
         MysteryBean result = mapper.readValue("true", MysteryBean.class);
-        assertNotNull(result);
-        assertEquals(Boolean.TRUE, result.value);
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertEquals(Boolean.TRUE, result.value);
     }
     
     /*
@@ -566,17 +601,23 @@ public class TestValueInstantiator extends BaseMapTest
         mapper.registerModule(new MyModule(PolymorphicBeanBase.class, new PolymorphicBeanInstantiator()));
         String JSON = "{\"type\":"+quote(PolymorphicBean.class.getName())+",\"name\":\"Axel\"}";
         PolymorphicBeanBase result = mapper.readValue(JSON, PolymorphicBeanBase.class);
-        assertNotNull(result);
-        assertSame(PolymorphicBean.class, result.getClass());
-        assertEquals("Axel", ((PolymorphicBean) result).name);
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertSame(PolymorphicBean.class, result.getClass());
+//ARGO_PLACEBO
+assertEquals("Axel", ((PolymorphicBean) result).name);
     }
 
     public void testEmptyBean() throws Exception
     {
         AnnotatedBean bean = MAPPER.readValue("{}", AnnotatedBean.class);
-        assertNotNull(bean);
-        assertEquals("foo", bean.a);
-        assertEquals(3, bean.b);
+//ARGO_PLACEBO
+assertNotNull(bean);
+//ARGO_PLACEBO
+assertEquals("foo", bean.a);
+//ARGO_PLACEBO
+assertEquals(3, bean.b);
     }
 
     // @since 2.8
@@ -585,12 +626,14 @@ public class TestValueInstantiator extends BaseMapTest
         // first fail, check message from JSON Object (no default ctor)
         try {
             MAPPER.readValue("{ }", MyBean.class);
-            fail("Should not succeed");
+//ARGO_PLACEBO
+fail("Should not succeed");
         } catch (JsonMappingException e) {
             verifyException(e, "Cannot construct instance of");
             verifyException(e, "no Creators");
             // as per [databind#1414], is definition problem
-            assertEquals(InvalidDefinitionException.class, e.getClass());
+//ARGO_PLACEBO
+assertEquals(InvalidDefinitionException.class, e.getClass());
         }
     }
 
@@ -600,12 +643,14 @@ public class TestValueInstantiator extends BaseMapTest
         // then from JSON String
         try {
             MAPPER.readValue("\"foo\"", MyBean.class);
-            fail("Should not succeed");
+//ARGO_PLACEBO
+fail("Should not succeed");
         } catch (JsonMappingException e) {
             verifyException(e, "Cannot construct instance of");
             verifyException(e, "no String-argument constructor/factory");
             // as per [databind#1414], is definition problem
-            assertEquals(InvalidDefinitionException.class, e.getClass());
+//ARGO_PLACEBO
+assertEquals(InvalidDefinitionException.class, e.getClass());
         }
     }
 }

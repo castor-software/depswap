@@ -50,19 +50,24 @@ public class NullConversionsForContentTest extends BaseMapTest
 
         // by default fine to get nulls
         NullContentUndefined<List<String>> result = MAPPER.readValue(JSON, listType);
-        assertNotNull(result.values);
-        assertEquals(1, result.values.size());
-        assertNull(result.values.get(0));
+//ARGO_PLACEBO
+assertNotNull(result.values);
+//ARGO_PLACEBO
+assertEquals(1, result.values.size());
+//ARGO_PLACEBO
+assertNull(result.values.get(0));
 
         // but not when overridden globally:
         ObjectMapper mapper = newJsonMapper();
         mapper.setDefaultSetterInfo(JsonSetter.Value.forContentNulls(Nulls.FAIL));
         try {
             mapper.readValue(JSON, listType);
-            fail("Should not pass");
+//ARGO_PLACEBO
+fail("Should not pass");
         } catch (InvalidNullException e) {
             verifyException(e, "property \"values\"");
-            assertEquals(String.class, e.getTargetType());
+//ARGO_PLACEBO
+assertEquals(String.class, e.getTargetType());
         }
 
         // or configured for type:
@@ -71,10 +76,12 @@ public class NullConversionsForContentTest extends BaseMapTest
                 .setSetterInfo(JsonSetter.Value.forContentNulls(Nulls.FAIL));
         try {
             mapper.readValue(JSON, listType);
-            fail("Should not pass");
+//ARGO_PLACEBO
+fail("Should not pass");
         } catch (InvalidNullException e) {
             verifyException(e, "property \"values\"");
-            assertEquals(String.class, e.getTargetType());
+//ARGO_PLACEBO
+assertEquals(String.class, e.getTargetType());
         }
     }
     
@@ -85,9 +92,12 @@ public class NullConversionsForContentTest extends BaseMapTest
         // first, ok if assigning non-null to not-nullable, null for nullable
         NullContentFail<List<Integer>> result = MAPPER.readValue(aposToQuotes("{'nullsOk':[null]}"),
                 typeRef);
-        assertNotNull(result.nullsOk);
-        assertEquals(1, result.nullsOk.size());
-        assertNull(result.nullsOk.get(0));
+//ARGO_PLACEBO
+assertNotNull(result.nullsOk);
+//ARGO_PLACEBO
+assertEquals(1, result.nullsOk.size());
+//ARGO_PLACEBO
+assertNull(result.nullsOk.get(0));
 
         // and then see that nulls are not ok for non-nullable.
         
@@ -95,19 +105,23 @@ public class NullConversionsForContentTest extends BaseMapTest
         final String JSON = aposToQuotes("{'noNulls':[null]}");
         try {
             MAPPER.readValue(JSON, typeRef);
-            fail("Should not pass");
+//ARGO_PLACEBO
+fail("Should not pass");
         } catch (InvalidNullException e) {
             verifyException(e, "property \"noNulls\"");
-            assertEquals(Integer.class, e.getTargetType());
+//ARGO_PLACEBO
+assertEquals(Integer.class, e.getTargetType());
         }
 
         // List<String>
         try {
             MAPPER.readValue(JSON, new TypeReference<NullContentFail<List<String>>>() { });
-            fail("Should not pass");
+//ARGO_PLACEBO
+fail("Should not pass");
         } catch (InvalidNullException e) {
             verifyException(e, "property \"noNulls\"");
-            assertEquals(String.class, e.getTargetType());
+//ARGO_PLACEBO
+assertEquals(String.class, e.getTargetType());
         }
     }
 
@@ -117,19 +131,23 @@ public class NullConversionsForContentTest extends BaseMapTest
         // Object[]
         try {
             MAPPER.readValue(JSON, new TypeReference<NullContentFail<Object[]>>() { });
-            fail("Should not pass");
+//ARGO_PLACEBO
+fail("Should not pass");
         } catch (InvalidNullException e) {
             verifyException(e, "property \"noNulls\"");
-            assertEquals(Object.class, e.getTargetType());
+//ARGO_PLACEBO
+assertEquals(Object.class, e.getTargetType());
         }
 
         // String[]
         try {
             MAPPER.readValue(JSON, new TypeReference<NullContentFail<String[]>>() { });
-            fail("Should not pass");
+//ARGO_PLACEBO
+fail("Should not pass");
         } catch (InvalidNullException e) {
             verifyException(e, "property \"noNulls\"");
-            assertEquals(String.class, e.getTargetType());
+//ARGO_PLACEBO
+assertEquals(String.class, e.getTargetType());
         }
     }
 
@@ -140,26 +158,32 @@ public class NullConversionsForContentTest extends BaseMapTest
         // boolean[]
         try {
             MAPPER.readValue(JSON, new TypeReference<NullContentFail<boolean[]>>() { });
-            fail("Should not pass");
+//ARGO_PLACEBO
+fail("Should not pass");
         } catch (InvalidNullException e) {
             verifyException(e, "property \"noNulls\"");
-            assertEquals(Boolean.TYPE, e.getTargetType());
+//ARGO_PLACEBO
+assertEquals(Boolean.TYPE, e.getTargetType());
         }
         // int[]
         try {
             MAPPER.readValue(JSON, new TypeReference<NullContentFail<int[]>>() { });
-            fail("Should not pass");
+//ARGO_PLACEBO
+fail("Should not pass");
         } catch (InvalidNullException e) {
             verifyException(e, "property \"noNulls\"");
-            assertEquals(Integer.TYPE, e.getTargetType());
+//ARGO_PLACEBO
+assertEquals(Integer.TYPE, e.getTargetType());
         }
         // double[]
         try {
             MAPPER.readValue(JSON, new TypeReference<NullContentFail<double[]>>() { });
-            fail("Should not pass");
+//ARGO_PLACEBO
+fail("Should not pass");
         } catch (InvalidNullException e) {
             verifyException(e, "property \"noNulls\"");
-            assertEquals(Double.TYPE, e.getTargetType());
+//ARGO_PLACEBO
+assertEquals(Double.TYPE, e.getTargetType());
         }
     }
 
@@ -169,20 +193,24 @@ public class NullConversionsForContentTest extends BaseMapTest
         try {
             final String MAP_JSON = aposToQuotes("{'noNulls':{'a':null}}");
             MAPPER.readValue(MAP_JSON, new TypeReference<NullContentFail<Map<String,String>>>() { });
-            fail("Should not pass");
+//ARGO_PLACEBO
+fail("Should not pass");
         } catch (InvalidNullException e) {
             verifyException(e, "property \"noNulls\"");
-            assertEquals(String.class, e.getTargetType());
+//ARGO_PLACEBO
+assertEquals(String.class, e.getTargetType());
         }
 
         // Then: EnumMap<Enum,String>
         try {
             final String MAP_JSON = aposToQuotes("{'noNulls':{'A':null}}");
             MAPPER.readValue(MAP_JSON, new TypeReference<NullContentFail<EnumMap<ABC,String>>>() { });
-            fail("Should not pass");
+//ARGO_PLACEBO
+fail("Should not pass");
         } catch (InvalidNullException e) {
             verifyException(e, "property \"noNulls\"");
-            assertEquals(String.class, e.getTargetType());
+//ARGO_PLACEBO
+assertEquals(String.class, e.getTargetType());
         }
     }
 
@@ -200,16 +228,20 @@ public class NullConversionsForContentTest extends BaseMapTest
         {
             NullContentAsEmpty<List<Integer>> result = MAPPER.readValue(JSON,
                     new TypeReference<NullContentAsEmpty<List<Integer>>>() { });
-            assertEquals(1, result.values.size());
-            assertEquals(Integer.valueOf(0), result.values.get(0));
+//ARGO_PLACEBO
+assertEquals(1, result.values.size());
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(0), result.values.get(0));
         }
 
         // List<String>
         {
             NullContentAsEmpty<List<String>> result = MAPPER.readValue(JSON,
                     new TypeReference<NullContentAsEmpty<List<String>>>() { });
-            assertEquals(1, result.values.size());
-            assertEquals("", result.values.get(0));
+//ARGO_PLACEBO
+assertEquals(1, result.values.size());
+//ARGO_PLACEBO
+assertEquals("", result.values.get(0));
         }
     }
 
@@ -222,16 +254,20 @@ public class NullConversionsForContentTest extends BaseMapTest
         ObjectMapper mapper = newJsonMapper();
         mapper.setDefaultSetterInfo(JsonSetter.Value.forContentNulls(Nulls.AS_EMPTY));
         NullContentUndefined<List<Integer>> result = mapper.readValue(JSON, listType);
-        assertEquals(1, result.values.size());
-        assertEquals(Integer.valueOf(0), result.values.get(0));
+//ARGO_PLACEBO
+assertEquals(1, result.values.size());
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(0), result.values.get(0));
 
         // or configured for type:
         mapper = newJsonMapper();
         mapper.configOverride(List.class)
                 .setSetterInfo(JsonSetter.Value.forContentNulls(Nulls.AS_EMPTY));
         result = mapper.readValue(JSON, listType);
-        assertEquals(1, result.values.size());
-        assertEquals(Integer.valueOf(0), result.values.get(0));
+//ARGO_PLACEBO
+assertEquals(1, result.values.size());
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(0), result.values.get(0));
     }        
     
     public void testNullsAsEmptyWithArrays() throws Exception
@@ -243,8 +279,10 @@ public class NullConversionsForContentTest extends BaseMapTest
         {
             NullContentAsEmpty<String[]> result = MAPPER.readValue(JSON,
                     new TypeReference<NullContentAsEmpty<String[]>>() { });
-            assertEquals(1, result.values.length);
-            assertEquals("", result.values[0]);
+//ARGO_PLACEBO
+assertEquals(1, result.values.length);
+//ARGO_PLACEBO
+assertEquals("", result.values[0]);
         }
     }
 
@@ -256,24 +294,30 @@ public class NullConversionsForContentTest extends BaseMapTest
         {
             NullContentAsEmpty<int[]> result = MAPPER.readValue(JSON,
                     new TypeReference<NullContentAsEmpty<int[]>>() { });
-            assertEquals(1, result.values.length);
-            assertEquals(0, result.values[0]);
+//ARGO_PLACEBO
+assertEquals(1, result.values.length);
+//ARGO_PLACEBO
+assertEquals(0, result.values[0]);
         }
 
         // long[]
         {
             NullContentAsEmpty<long[]> result = MAPPER.readValue(JSON,
                     new TypeReference<NullContentAsEmpty<long[]>>() { });
-            assertEquals(1, result.values.length);
-            assertEquals(0L, result.values[0]);
+//ARGO_PLACEBO
+assertEquals(1, result.values.length);
+//ARGO_PLACEBO
+assertEquals(0L, result.values[0]);
         }
 
         // boolean[]
         {
             NullContentAsEmpty<boolean[]> result = MAPPER.readValue(JSON,
                     new TypeReference<NullContentAsEmpty<boolean[]>>() { });
-            assertEquals(1, result.values.length);
-            assertEquals(false, result.values[0]);
+//ARGO_PLACEBO
+assertEquals(1, result.values.length);
+//ARGO_PLACEBO
+assertEquals(false, result.values[0]);
         }
 }
     
@@ -284,18 +328,24 @@ public class NullConversionsForContentTest extends BaseMapTest
         {
             NullContentAsEmpty<Map<String,String>> result 
                 = MAPPER.readValue(MAP_JSON, new TypeReference<NullContentAsEmpty<Map<String,String>>>() { });
-            assertEquals(1, result.values.size());
-            assertEquals("A", result.values.entrySet().iterator().next().getKey());
-            assertEquals("", result.values.entrySet().iterator().next().getValue());
+//ARGO_PLACEBO
+assertEquals(1, result.values.size());
+//ARGO_PLACEBO
+assertEquals("A", result.values.entrySet().iterator().next().getKey());
+//ARGO_PLACEBO
+assertEquals("", result.values.entrySet().iterator().next().getValue());
         }
 
         // Then: EnumMap<Enum,String>
         {
             NullContentAsEmpty<EnumMap<ABC,String>> result 
                 = MAPPER.readValue(MAP_JSON, new TypeReference<NullContentAsEmpty<EnumMap<ABC,String>>>() { });
-            assertEquals(1, result.values.size());
-            assertEquals(ABC.A, result.values.entrySet().iterator().next().getKey());
-            assertEquals("", result.values.entrySet().iterator().next().getValue());
+//ARGO_PLACEBO
+assertEquals(1, result.values.size());
+//ARGO_PLACEBO
+assertEquals(ABC.A, result.values.entrySet().iterator().next().getKey());
+//ARGO_PLACEBO
+assertEquals("", result.values.entrySet().iterator().next().getValue());
         }
     }
 
@@ -314,14 +364,16 @@ public class NullConversionsForContentTest extends BaseMapTest
         ObjectMapper mapper = newJsonMapper();
         mapper.setDefaultSetterInfo(JsonSetter.Value.forContentNulls(Nulls.SKIP));
         NullContentUndefined<List<Long>> result = mapper.readValue(JSON, listType);
-        assertEquals(0, result.values.size());
+//ARGO_PLACEBO
+assertEquals(0, result.values.size());
 
         // or configured for type:
         mapper = newJsonMapper();
         mapper.configOverride(List.class)
                 .setSetterInfo(JsonSetter.Value.forContentNulls(Nulls.SKIP));
         result = mapper.readValue(JSON, listType);
-        assertEquals(0, result.values.size());
+//ARGO_PLACEBO
+assertEquals(0, result.values.size());
     }        
 
     // Test to verify that per-property setting overrides defaults:
@@ -334,14 +386,16 @@ public class NullConversionsForContentTest extends BaseMapTest
         // defaults call for fail; but POJO specifies "skip"; latter should win
         mapper.setDefaultSetterInfo(JsonSetter.Value.forContentNulls(Nulls.FAIL));
         NullContentSkip<List<Long>> result = mapper.readValue(JSON, listType);
-        assertEquals(0, result.values.size());
+//ARGO_PLACEBO
+assertEquals(0, result.values.size());
 
         // ditto for per-type defaults
         mapper = newJsonMapper();
         mapper.configOverride(List.class)
                 .setSetterInfo(JsonSetter.Value.forContentNulls(Nulls.FAIL));
         result = mapper.readValue(JSON, listType);
-        assertEquals(0, result.values.size());
+//ARGO_PLACEBO
+assertEquals(0, result.values.size());
     }        
 
     public void testNullsSkipWithCollections() throws Exception
@@ -351,9 +405,12 @@ public class NullConversionsForContentTest extends BaseMapTest
             final String JSON = aposToQuotes("{'values':[1,null,2]}");
             NullContentSkip<List<Integer>> result = MAPPER.readValue(JSON,
                     new TypeReference<NullContentSkip<List<Integer>>>() { });
-            assertEquals(2, result.values.size());
-            assertEquals(Integer.valueOf(1), result.values.get(0));
-            assertEquals(Integer.valueOf(2), result.values.get(1));
+//ARGO_PLACEBO
+assertEquals(2, result.values.size());
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(1), result.values.get(0));
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(2), result.values.get(1));
         }
 
         // List<String>
@@ -361,9 +418,12 @@ public class NullConversionsForContentTest extends BaseMapTest
             final String JSON = aposToQuotes("{'values':['ab',null,'xy']}");
             NullContentSkip<List<String>> result = MAPPER.readValue(JSON,
                     new TypeReference<NullContentSkip<List<String>>>() { });
-            assertEquals(2, result.values.size());
-            assertEquals("ab", result.values.get(0));
-            assertEquals("xy", result.values.get(1));
+//ARGO_PLACEBO
+assertEquals(2, result.values.size());
+//ARGO_PLACEBO
+assertEquals("ab", result.values.get(0));
+//ARGO_PLACEBO
+assertEquals("xy", result.values.get(1));
         }
     }
 
@@ -374,17 +434,23 @@ public class NullConversionsForContentTest extends BaseMapTest
         {
             NullContentSkip<Object[]> result = MAPPER.readValue(JSON,
                     new TypeReference<NullContentSkip<Object[]>>() { });
-            assertEquals(2, result.values.length);
-            assertEquals("a", result.values[0]);
-            assertEquals("xy", result.values[1]);
+//ARGO_PLACEBO
+assertEquals(2, result.values.length);
+//ARGO_PLACEBO
+assertEquals("a", result.values[0]);
+//ARGO_PLACEBO
+assertEquals("xy", result.values[1]);
         }
         // String[]
         {
             NullContentSkip<String[]> result = MAPPER.readValue(JSON,
                     new TypeReference<NullContentSkip<String[]>>() { });
-            assertEquals(2, result.values.length);
-            assertEquals("a", result.values[0]);
-            assertEquals("xy", result.values[1]);
+//ARGO_PLACEBO
+assertEquals(2, result.values.length);
+//ARGO_PLACEBO
+assertEquals("a", result.values[0]);
+//ARGO_PLACEBO
+assertEquals("xy", result.values[1]);
         }
     }
 
@@ -395,9 +461,12 @@ public class NullConversionsForContentTest extends BaseMapTest
             final String JSON = aposToQuotes("{'values':[3,null,7]}");
             NullContentSkip<int[]> result = MAPPER.readValue(JSON,
                     new TypeReference<NullContentSkip<int[]>>() { });
-            assertEquals(2, result.values.length);
-            assertEquals(3, result.values[0]);
-            assertEquals(7, result.values[1]);
+//ARGO_PLACEBO
+assertEquals(2, result.values.length);
+//ARGO_PLACEBO
+assertEquals(3, result.values[0]);
+//ARGO_PLACEBO
+assertEquals(7, result.values[1]);
         }
 
         // long[]
@@ -405,9 +474,12 @@ public class NullConversionsForContentTest extends BaseMapTest
             final String JSON = aposToQuotes("{'values':[-13,null,999]}");
             NullContentSkip<long[]> result = MAPPER.readValue(JSON,
                     new TypeReference<NullContentSkip<long[]>>() { });
-            assertEquals(2, result.values.length);
-            assertEquals(-13L, result.values[0]);
-            assertEquals(999L, result.values[1]);
+//ARGO_PLACEBO
+assertEquals(2, result.values.length);
+//ARGO_PLACEBO
+assertEquals(-13L, result.values[0]);
+//ARGO_PLACEBO
+assertEquals(999L, result.values[1]);
         }
 
         // boolean[]
@@ -415,9 +487,12 @@ public class NullConversionsForContentTest extends BaseMapTest
             final String JSON = aposToQuotes("{'values':[true,null,true]}");
             NullContentSkip<boolean[]> result = MAPPER.readValue(JSON,
                     new TypeReference<NullContentSkip<boolean[]>>() { });
-            assertEquals(2, result.values.length);
-            assertEquals(true, result.values[0]);
-            assertEquals(true, result.values[1]);
+//ARGO_PLACEBO
+assertEquals(2, result.values.length);
+//ARGO_PLACEBO
+assertEquals(true, result.values[0]);
+//ARGO_PLACEBO
+assertEquals(true, result.values[1]);
         }
     }
     
@@ -428,18 +503,24 @@ public class NullConversionsForContentTest extends BaseMapTest
         {
             NullContentSkip<Map<String,String>> result 
                 = MAPPER.readValue(MAP_JSON, new TypeReference<NullContentSkip<Map<String,String>>>() { });
-            assertEquals(2, result.values.size());
-            assertEquals("foo", result.values.get("A"));
-            assertEquals("bar", result.values.get("C"));
+//ARGO_PLACEBO
+assertEquals(2, result.values.size());
+//ARGO_PLACEBO
+assertEquals("foo", result.values.get("A"));
+//ARGO_PLACEBO
+assertEquals("bar", result.values.get("C"));
         }
 
         // Then: EnumMap<Enum,String>
         {
             NullContentSkip<EnumMap<ABC,String>> result 
                 = MAPPER.readValue(MAP_JSON, new TypeReference<NullContentSkip<EnumMap<ABC,String>>>() { });
-            assertEquals(2, result.values.size());
-            assertEquals("foo", result.values.get(ABC.A));
-            assertEquals("bar", result.values.get(ABC.C));
+//ARGO_PLACEBO
+assertEquals(2, result.values.size());
+//ARGO_PLACEBO
+assertEquals("foo", result.values.get(ABC.A));
+//ARGO_PLACEBO
+assertEquals("bar", result.values.get(ABC.C));
         }
     }
 }

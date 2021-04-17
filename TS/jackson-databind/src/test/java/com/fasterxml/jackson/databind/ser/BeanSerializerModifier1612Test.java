@@ -54,7 +54,8 @@ public class BeanSerializerModifier1612Test extends BaseMapTest
                 .registerModule(mod);
         try {
             objectMapper.writeValueAsString(new Bean1612(0, 1, 2d));
-            fail("Should not pass");
+//ARGO_PLACEBO
+fail("Should not pass");
         } catch (InvalidDefinitionException e) {
             verifyException(e, "Failed to construct BeanSerializer");
             verifyException(e, Bean1612.class.getName());

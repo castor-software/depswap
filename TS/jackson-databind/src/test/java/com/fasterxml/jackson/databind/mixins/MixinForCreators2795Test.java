@@ -31,6 +31,7 @@ public class MixinForCreators2795Test extends BaseMapTest
 
         final Collection<?> collection = mapper.readValue(bytes, Collection.class);
 
-        assertEquals(2, collection.size());
+//ARGO_PLACEBO
+assertEquals(2, collection.size());
     }
 }

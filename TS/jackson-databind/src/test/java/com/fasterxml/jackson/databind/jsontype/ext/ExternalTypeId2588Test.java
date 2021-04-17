@@ -83,7 +83,8 @@ public class ExternalTypeId2588Test extends BaseMapTest
 "  }"+
 "}"
                 ), Pet.class);
-        assertNotNull(pet);
+//ARGO_PLACEBO
+assertNotNull(pet);
         
         // fails:
         pet = mapper.readValue(aposToQuotes(
@@ -95,6 +96,7 @@ public class ExternalTypeId2588Test extends BaseMapTest
 "  'type': 'cat'\n" + 
 "}"
                 ), Pet.class);
-        assertNotNull(pet);
+//ARGO_PLACEBO
+assertNotNull(pet);
     }
 }

@@ -62,15 +62,18 @@ public class TestExceptionsDuringWriting
             List<Bean[]> l = new ArrayList<Bean[]>();
             l.add(b);
             mapper.writeValue(sw, l);
-            fail("Should have gotten an exception");
+//ARGO_PLACEBO
+fail("Should have gotten an exception");
         } catch (IOException e) {
             // should contain original message somewhere
             verifyException(e, "test string");
             Throwable root = e.getCause();
-            assertNotNull(root);
+//ARGO_PLACEBO
+assertNotNull(root);
 
             if (!(root instanceof IllegalArgumentException)) {
-                fail("Wrapped exception not IAE, but "+root.getClass());
+//ARGO_PLACEBO
+fail("Wrapped exception not IAE, but "+root.getClass());
             }
         }
     }
@@ -79,46 +82,42 @@ public class TestExceptionsDuringWriting
      * Unit test for verifying that regular IOExceptions are not wrapped
      * but are passed through as is.
      */
-    @SuppressWarnings("resource")
     public void testExceptionWithSimpleMapper()
         throws Exception
     {
         ObjectMapper mapper = new ObjectMapper();
-        try {
-            BrokenStringWriter sw = new BrokenStringWriter("TEST");
+        try (BrokenStringWriter sw = new BrokenStringWriter("TEST")) {
             mapper.writeValue(sw, createLongObject());
-            fail("Should have gotten an exception");
+//ARGO_PLACEBO
+fail("Should have gotten an exception");
         } catch (IOException e) {
             verifyException(e, IOException.class, "TEST");
         }
     }
 
-    @SuppressWarnings("resource")
     public void testExceptionWithMapperAndGenerator()
         throws Exception
     {
         ObjectMapper mapper = new ObjectMapper();
         JsonFactory f = new MappingJsonFactory();
         BrokenStringWriter sw = new BrokenStringWriter("TEST");
-        JsonGenerator jg = f.createGenerator(sw);
-
-        try {
+        try (JsonGenerator jg = f.createGenerator(sw)) {
             mapper.writeValue(jg, createLongObject());
-            fail("Should have gotten an exception");
+//ARGO_PLACEBO
+fail("Should have gotten an exception");
         } catch (IOException e) {
             verifyException(e, IOException.class, "TEST");
         }
     }
 
-    @SuppressWarnings("resource")
     public void testExceptionWithGeneratorMapping()
         throws Exception
     {
         JsonFactory f = new MappingJsonFactory();
-        JsonGenerator jg = f.createGenerator(new BrokenStringWriter("TEST"));
-        try {
+        try (JsonGenerator jg = f.createGenerator(new BrokenStringWriter("TEST"))) {
             jg.writeObject(createLongObject());
-            fail("Should have gotten an exception");
+//ARGO_PLACEBO
+fail("Should have gotten an exception");
         } catch (Exception e) {
             verifyException(e, IOException.class, "TEST");
         }
@@ -134,7 +133,8 @@ public class TestExceptionsDuringWriting
         throws Exception
     {
         if (e.getClass() != expType) {
-            fail("Expected exception of type "+expType.getName()+", got "+e.getClass().getName());
+//ARGO_PLACEBO
+fail("Expected exception of type "+expType.getName()+", got "+e.getClass().getName());
         }
         if (expMsg != null) {
             verifyException(e, expMsg);

@@ -81,7 +81,8 @@ public class NullSerializationTest
     
     public void testSimple() throws Exception
     {
-        assertEquals("null", MAPPER.writeValueAsString(null));
+//ARGO_PLACEBO
+assertEquals("null", MAPPER.writeValueAsString(null));
     }
 
     public void testOverriddenDefaultNulls() throws Exception
@@ -90,15 +91,18 @@ public class NullSerializationTest
         sp.setNullValueSerializer(new NullSerializer());
         ObjectMapper m = new ObjectMapper();
         m.setSerializerProvider(sp);
-        assertEquals("\"foobar\"", m.writeValueAsString(null));
+//ARGO_PLACEBO
+assertEquals("\"foobar\"", m.writeValueAsString(null));
     }
 
     public void testCustomNulls() throws Exception
     {
         ObjectMapper m = new ObjectMapper();
         m.setSerializerProvider(new MyNullProvider());
-        assertEquals("{\"name\":\"foobar\"}", m.writeValueAsString(new Bean1()));
-        assertEquals("{\"type\":null}", m.writeValueAsString(new Bean2()));
+//ARGO_PLACEBO
+assertEquals("{\"name\":\"foobar\"}", m.writeValueAsString(new Bean1()));
+//ARGO_PLACEBO
+assertEquals("{\"type\":null}", m.writeValueAsString(new Bean2()));
     }
 
     // #281
@@ -108,18 +112,21 @@ public class NullSerializationTest
         root.putNull("a");
 
         // by default, null is... well, null
-        assertEquals("{\"a\":null}", MAPPER.writeValueAsString(root));
+//ARGO_ORIGINAL
+assertEquals("{\"a\":null}", MAPPER.writeValueAsString(root));
 
         // but then we can customize it:
         DefaultSerializerProvider prov = new MyNullProvider();
         prov.setNullValueSerializer(new NullSerializer());
         ObjectMapper m = new ObjectMapper();
         m.setSerializerProvider(prov);
-        assertEquals("{\"a\":\"foobar\"}", m.writeValueAsString(root));
+//ARGO_ORIGINAL
+assertEquals("{\"a\":\"foobar\"}", m.writeValueAsString(root));
     }
 
     public void testNullSerializerForProperty() throws Exception
     {
-        assertEquals("{\"a\":\"foobar\"}", MAPPER.writeValueAsString(new BeanWithNullProps()));
+//ARGO_PLACEBO
+assertEquals("{\"a\":\"foobar\"}", MAPPER.writeValueAsString(new BeanWithNullProps()));
     }
 }

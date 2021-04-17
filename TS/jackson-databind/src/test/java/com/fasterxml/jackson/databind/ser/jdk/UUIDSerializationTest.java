@@ -39,11 +39,13 @@ public class UUIDSerializationTest extends BaseMapTest
         }) {
             UUID uuid = UUID.fromString(value);
             String json = MAPPER.writeValueAsString(uuid);
-            assertEquals(quote(uuid.toString()), json);
+//ARGO_PLACEBO
+assertEquals(quote(uuid.toString()), json);
 
             // Also, wrt [#362], should convert cleanly
             String str = MAPPER.convertValue(uuid, String.class);
-            assertEquals(value, str);
+//ARGO_PLACEBO
+assertEquals(value, str);
         }
         
         // then use templating; note that these are not exactly valid UUIDs
@@ -55,7 +57,8 @@ public class UUIDSerializationTest extends BaseMapTest
             String value = TEMPL.replace('0', chars.charAt(i));
             UUID uuid = UUID.fromString(value);
             String json = MAPPER.writeValueAsString(uuid);
-            assertEquals(quote(uuid.toString()), json);
+//ARGO_PLACEBO
+assertEquals(quote(uuid.toString()), json);
         }
     }
 
@@ -65,18 +68,21 @@ public class UUIDSerializationTest extends BaseMapTest
         final UUID nullUUID = UUID.fromString(nullUUIDStr);
 
         // First, see that Binary per-property override works:
-        assertEquals("{\"uuid\":\"AAAAAAAAAAAAAAAAAAAAAA==\"}",
+//ARGO_PLACEBO
+assertEquals("{\"uuid\":\"AAAAAAAAAAAAAAAAAAAAAA==\"}",
                 MAPPER.writeValueAsString(new UUIDWrapperBinary(nullUUID)));
 
         // but that without one we'd get String
-        assertEquals("{\"uuid\":\""+nullUUIDStr+"\"}",
+//ARGO_PLACEBO
+assertEquals("{\"uuid\":\""+nullUUIDStr+"\"}",
                 MAPPER.writeValueAsString(new UUIDWrapperVanilla(nullUUID)));
         
         // but can also override by type
         ObjectMapper m = newJsonMapper();
         m.configOverride(UUID.class)
             .setFormat(JsonFormat.Value.forShape(JsonFormat.Shape.BINARY));
-        assertEquals("{\"uuid\":\"AAAAAAAAAAAAAAAAAAAAAA==\"}",
+//ARGO_PLACEBO
+assertEquals("{\"uuid\":\"AAAAAAAAAAAAAAAAAAAAAA==\"}",
                 m.writeValueAsString(new UUIDWrapperVanilla(nullUUID)));
     }
 }

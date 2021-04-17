@@ -78,60 +78,76 @@ public class MapKeyDeserializationTest extends BaseMapTest
         TypeReference<MapWrapper<Boolean, String>> type = new TypeReference<MapWrapper<Boolean, String>>() { };
         MapWrapper<?,?> result = MAPPER.readValue(aposToQuotes("{'map':{'true':'foobar'}}"), type);
                 
-        assertEquals(1, result.map.size());
-        Assert.assertEquals(Boolean.TRUE, result.map.entrySet().iterator().next().getKey());
+//ARGO_PLACEBO
+assertEquals(1, result.map.size());
+        Assert.//ARGO_PLACEBO
+assertEquals(Boolean.TRUE, result.map.entrySet().iterator().next().getKey());
 
         result = MAPPER.readValue(aposToQuotes("{'map':{'false':'foobar'}}"), type);
-        assertEquals(1, result.map.size());
-        Assert.assertEquals(Boolean.FALSE, result.map.entrySet().iterator().next().getKey());
+//ARGO_PLACEBO
+assertEquals(1, result.map.size());
+        Assert.//ARGO_PLACEBO
+assertEquals(Boolean.FALSE, result.map.entrySet().iterator().next().getKey());
     }
 
     public void testByteMapKeyDeserialization() throws Exception
     {
         TypeReference<MapWrapper<Byte, String>> type = new TypeReference<MapWrapper<Byte, String>>() { };
         MapWrapper<?,?> result = MAPPER.readValue(aposToQuotes("{'map':{'13':'foobar'}}"), type);
-        assertEquals(1, result.map.size());
-        Assert.assertEquals(Byte.valueOf((byte) 13), result.map.entrySet().iterator().next().getKey());
+//ARGO_PLACEBO
+assertEquals(1, result.map.size());
+        Assert.//ARGO_PLACEBO
+assertEquals(Byte.valueOf((byte) 13), result.map.entrySet().iterator().next().getKey());
     }
 
     public void testShortMapKeyDeserialization() throws Exception
     {
         TypeReference<MapWrapper<Short, String>> type = new TypeReference<MapWrapper<Short, String>>() { };
         MapWrapper<?,?> result = MAPPER.readValue(aposToQuotes("{'map':{'13':'foobar'}}"), type);
-        assertEquals(1, result.map.size());
-        Assert.assertEquals(Short.valueOf((short) 13), result.map.entrySet().iterator().next().getKey());
+//ARGO_PLACEBO
+assertEquals(1, result.map.size());
+        Assert.//ARGO_PLACEBO
+assertEquals(Short.valueOf((short) 13), result.map.entrySet().iterator().next().getKey());
     }
 
     public void testIntegerMapKeyDeserialization() throws Exception
     {
         TypeReference<MapWrapper<Integer, String>> type = new TypeReference<MapWrapper<Integer, String>>() { };
         MapWrapper<?,?> result = MAPPER.readValue(aposToQuotes("{'map':{'-3':'foobar'}}"), type);
-        assertEquals(1, result.map.size());
-        Assert.assertEquals(Integer.valueOf(-3), result.map.entrySet().iterator().next().getKey());
+//ARGO_PLACEBO
+assertEquals(1, result.map.size());
+        Assert.//ARGO_PLACEBO
+assertEquals(Integer.valueOf(-3), result.map.entrySet().iterator().next().getKey());
     }
 
     public void testLongMapKeyDeserialization() throws Exception
     {
         TypeReference<MapWrapper<Long, String>> type = new TypeReference<MapWrapper<Long, String>>() { };
         MapWrapper<?,?> result = MAPPER.readValue(aposToQuotes("{'map':{'42':'foobar'}}"), type);
-        assertEquals(1, result.map.size());
-        Assert.assertEquals(Long.valueOf(42), result.map.entrySet().iterator().next().getKey());
+//ARGO_PLACEBO
+assertEquals(1, result.map.size());
+        Assert.//ARGO_PLACEBO
+assertEquals(Long.valueOf(42), result.map.entrySet().iterator().next().getKey());
     }
 
     public void testFloatMapKeyDeserialization() throws Exception
     {
         TypeReference<MapWrapper<Float, String>> type = new TypeReference<MapWrapper<Float, String>>() { };
         MapWrapper<?,?> result = MAPPER.readValue(aposToQuotes("{'map':{'3.5':'foobar'}}"), type);
-        assertEquals(1, result.map.size());
-        Assert.assertEquals(Float.valueOf(3.5f), result.map.entrySet().iterator().next().getKey());
+//ARGO_PLACEBO
+assertEquals(1, result.map.size());
+        Assert.//ARGO_PLACEBO
+assertEquals(Float.valueOf(3.5f), result.map.entrySet().iterator().next().getKey());
     }
 
     public void testDoubleMapKeyDeserialization() throws Exception
     {
         TypeReference<MapWrapper<Double, String>> type = new TypeReference<MapWrapper<Double, String>>() { };
         MapWrapper<?,?> result = MAPPER.readValue(aposToQuotes("{'map':{'0.25':'foobar'}}"), type);
-        assertEquals(1, result.map.size());
-        Assert.assertEquals(Double.valueOf(0.25), result.map.entrySet().iterator().next().getKey());
+//ARGO_PLACEBO
+assertEquals(1, result.map.size());
+        Assert.//ARGO_PLACEBO
+assertEquals(Double.valueOf(0.25), result.map.entrySet().iterator().next().getKey());
     }
 
     /*
@@ -147,9 +163,12 @@ public class MapKeyDeserializationTest extends BaseMapTest
                     new TypeReference<Map<FullName, Double>>() { });
         Map.Entry<FullName, Double> entry = map.entrySet().iterator().next();
         FullName key = entry.getKey();
-        assertEquals(key._firstname, "first");
-        assertEquals(key._lastname, "last");
-        assertEquals(entry.getValue().doubleValue(), 42, 0);
+//ARGO_PLACEBO
+assertEquals(key._firstname, "first");
+//ARGO_PLACEBO
+assertEquals(key._lastname, "last");
+//ARGO_PLACEBO
+assertEquals(entry.getValue().doubleValue(), 42, 0);
     }
 
     public void testByteArrayMapKeyDeserialization() throws Exception
@@ -160,11 +179,14 @@ public class MapKeyDeserializationTest extends BaseMapTest
         MapWrapper<byte[], String> result = MAPPER.readValue(
                 aposToQuotes("{'map':{'"+encoded+"':'foobar'}}"),
                 new TypeReference<MapWrapper<byte[], String>>() { });
-        assertEquals(1, result.map.size());
+//ARGO_PLACEBO
+assertEquals(1, result.map.size());
         Map.Entry<byte[],String> entry = result.map.entrySet().iterator().next();
-        assertEquals("foobar", entry.getValue());
+//ARGO_PLACEBO
+assertEquals("foobar", entry.getValue());
         byte[] key = entry.getKey();
-        Assert.assertArrayEquals(binary, key);
+        Assert.//ARGO_PLACEBO
+assertArrayEquals(binary, key);
     }
 
     // [databind#2725]
@@ -175,7 +197,9 @@ public class MapKeyDeserializationTest extends BaseMapTest
         final Map<TestEnum2725, String> output = MAPPER.readValue(json,
                 new TypeReference<Map<TestEnum2725, String>>() { });
 
-        assertNotNull(output);
-        assertEquals(1, output.size());
+//ARGO_PLACEBO
+assertNotNull(output);
+//ARGO_PLACEBO
+assertEquals(1, output.size());
     }
 }

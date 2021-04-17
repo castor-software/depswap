@@ -88,12 +88,16 @@ public class TestTypedSerialization
     public void testSimpleClassAsProperty() throws Exception
     {
         Map<String,Object> result = writeAndMap(MAPPER, new Cat("Beelzebub", "tabby"));
-        assertEquals(3, result.size());
-        assertEquals("Beelzebub", result.get("name"));
-        assertEquals("tabby", result.get("furColor"));
+//ARGO_PLACEBO
+assertEquals(3, result.size());
+//ARGO_PLACEBO
+assertEquals("Beelzebub", result.get("name"));
+//ARGO_PLACEBO
+assertEquals("tabby", result.get("furColor"));
         // should we try customized class name?
         String classProp = Id.CLASS.getDefaultPropertyName();
-        assertEquals(Cat.class.getName(), result.get(classProp));
+//ARGO_PLACEBO
+assertEquals(Cat.class.getName(), result.get(classProp));
     }
 
     /**
@@ -105,13 +109,18 @@ public class TestTypedSerialization
         m.addMixIn(Animal.class, TypeWithWrapper.class);
         Map<String,Object> result = writeAndMap(m, new Cat("Venla", "black"));
         // should get a wrapper; keyed by minimal class name ("Cat" here)
-        assertEquals(1, result.size());
+//ARGO_PLACEBO
+assertEquals(1, result.size());
         // minimal class name is prefixed by dot, and for inner classes it's bit longer
         Map<?,?> cat = (Map<?,?>) result.get(".TestTypedSerialization$Cat");
-        assertNotNull(cat);
-        assertEquals(2, cat.size());
-        assertEquals("Venla", cat.get("name"));
-        assertEquals("black", cat.get("furColor"));
+//ARGO_PLACEBO
+assertNotNull(cat);
+//ARGO_PLACEBO
+assertEquals(2, cat.size());
+//ARGO_PLACEBO
+assertEquals("Venla", cat.get("name"));
+//ARGO_PLACEBO
+assertEquals("black", cat.get("furColor"));
     }
 
     /**
@@ -124,16 +133,24 @@ public class TestTypedSerialization
         // hmmh. Not good idea to rely on exact output, order may change. But...
         Map<String,Object> result = writeAndMap(m, new AnimalWrapper(new Dog("Amadeus", 7)));
         // First level, wrapper
-        assertEquals(1, result.size());
+//ARGO_PLACEBO
+assertEquals(1, result.size());
         List<?> l = (List<?>) result.get("animal");
-        assertNotNull(l);
-        assertEquals(2, l.size());
-        assertEquals(Dog.class.getName(), l.get(0));
+//ARGO_PLACEBO
+assertNotNull(l);
+//ARGO_PLACEBO
+assertEquals(2, l.size());
+//ARGO_PLACEBO
+assertEquals(Dog.class.getName(), l.get(0));
         Map<?,?> doggie = (Map<?,?>) l.get(1);
-        assertNotNull(doggie);
-        assertEquals(2, doggie.size());
-        assertEquals("Amadeus", doggie.get("name"));
-        assertEquals(Integer.valueOf(7), doggie.get("boneCount"));
+//ARGO_PLACEBO
+assertNotNull(doggie);
+//ARGO_PLACEBO
+assertEquals(2, doggie.size());
+//ARGO_PLACEBO
+assertEquals("Amadeus", doggie.get("name"));
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(7), doggie.get("boneCount"));
     }
 
     /* !!! 30-Jan-2010, tatus: I am not completely sure below works as it should
@@ -158,22 +175,30 @@ public class TestTypedSerialization
         map.put("a", animals);
         String json = m.writeValueAsString(map);
         Map<String,Object> result = m.readValue(json, Map.class);
-        assertEquals(1, result.size());
+//ARGO_PLACEBO
+assertEquals(1, result.size());
         Object ob = result.get("a");
         if (!(ob instanceof List<?>)) {
             // 03-Feb-2010, tatu: Weird; seems to fail sometimes...
-            fail("Did not map to entry with 'a' as List (but as "+ob.getClass().getName()+"): JSON == '"+json+"'");
+//ARGO_PLACEBO
+fail("Did not map to entry with 'a' as List (but as "+ob.getClass().getName()+"): JSON == '"+json+"'");
         }
         List<?> l = (List<?>)ob;
-        assertNotNull(l);
-        assertEquals(2, l.size());
+//ARGO_PLACEBO
+assertNotNull(l);
+//ARGO_PLACEBO
+assertEquals(2, l.size());
         Map<?,?> a1 = (Map<?,?>) l.get(0);
-        assertEquals(3, a1.size());
+//ARGO_PLACEBO
+assertEquals(3, a1.size());
         String classProp = Id.CLASS.getDefaultPropertyName();
-        assertEquals(Cat.class.getName(), a1.get(classProp));
+//ARGO_PLACEBO
+assertEquals(Cat.class.getName(), a1.get(classProp));
         Map<?,?> a2 = (Map<?,?>) l.get(1);
-        assertEquals(3, a2.size());
-        assertEquals(Dog.class.getName(), a2.get(classProp));
+//ARGO_PLACEBO
+assertEquals(3, a2.size());
+//ARGO_PLACEBO
+assertEquals(Dog.class.getName(), a2.get(classProp));
     }
 
     /**
@@ -183,7 +208,8 @@ public class TestTypedSerialization
     {
         ObjectMapper m = new ObjectMapper();
         m.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-        assertEquals("{\"@type\":\"empty\"}", m.writeValueAsString(new Empty()));
+//ARGO_PLACEBO
+assertEquals("{\"@type\":\"empty\"}", m.writeValueAsString(new Empty()));
     }
 
     /**
@@ -198,7 +224,8 @@ public class TestTypedSerialization
         list.add(new A());
         map.put(1L, list);
         String json = mapper.writerFor(new TypeReference<Map<Long, Collection<Super>>>() {}).writeValueAsString(map);
-        assertTrue("JSON does not contain '@class': "+json, json.contains("@class"));
+//ARGO_PLACEBO
+assertTrue("JSON does not contain '@class': "+json, json.contains("@class"));
     }
 }
 

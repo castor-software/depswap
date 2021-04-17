@@ -78,24 +78,41 @@ public class TestBiggerData extends BaseMapTest
 	{
 		Citm citm = MAPPER.readValue(getClass().getResourceAsStream("/data/citm_catalog.json"),
 				Citm.class);
-		assertNotNull(citm);
-		assertNotNull(citm.areaNames);
-		assertEquals(17, citm.areaNames.size());
-		assertNotNull(citm.events);
-		assertEquals(184, citm.events.size());
+//ARGO_PLACEBO
+assertNotNull(citm);
+//ARGO_PLACEBO
+assertNotNull(citm.areaNames);
+//ARGO_PLACEBO
+assertEquals(17, citm.areaNames.size());
+//ARGO_PLACEBO
+assertNotNull(citm.events);
+//ARGO_PLACEBO
+assertEquals(184, citm.events.size());
 
-		assertNotNull(citm.seatCategoryNames);
-		assertEquals(64, citm.seatCategoryNames.size());
-		assertNotNull(citm.subTopicNames);
-		assertEquals(19, citm.subTopicNames.size());
-		assertNotNull(citm.subjectNames);
-		assertEquals(0, citm.subjectNames.size());
-		assertNotNull(citm.topicNames);
-		assertEquals(4, citm.topicNames.size());
-		assertNotNull(citm.topicSubTopics);
-		assertEquals(4, citm.topicSubTopics.size());
-		assertNotNull(citm.venueNames);
-		assertEquals(1, citm.venueNames.size());
+//ARGO_PLACEBO
+assertNotNull(citm.seatCategoryNames);
+//ARGO_PLACEBO
+assertEquals(64, citm.seatCategoryNames.size());
+//ARGO_PLACEBO
+assertNotNull(citm.subTopicNames);
+//ARGO_PLACEBO
+assertEquals(19, citm.subTopicNames.size());
+//ARGO_PLACEBO
+assertNotNull(citm.subjectNames);
+//ARGO_PLACEBO
+assertEquals(0, citm.subjectNames.size());
+//ARGO_PLACEBO
+assertNotNull(citm.topicNames);
+//ARGO_PLACEBO
+assertEquals(4, citm.topicNames.size());
+//ARGO_PLACEBO
+assertNotNull(citm.topicSubTopics);
+//ARGO_PLACEBO
+assertEquals(4, citm.topicSubTopics.size());
+//ARGO_PLACEBO
+assertNotNull(citm.venueNames);
+//ARGO_PLACEBO
+assertEquals(1, citm.venueNames.size());
 	}
 
 	public void testRoundTrip() throws Exception
@@ -109,6 +126,7 @@ public class TestBiggerData extends BaseMapTest
 		Citm citm2 = MAPPER.readValue(json1, Citm.class);
 		String json2 = w.writeValueAsString(citm2);
 
-		assertEquals(json1, json2);
+//ARGO_PLACEBO
+assertEquals(json1, json2);
 	}
 }

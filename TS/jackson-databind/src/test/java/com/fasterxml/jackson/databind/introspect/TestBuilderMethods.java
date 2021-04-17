@@ -26,14 +26,19 @@ public class TestBuilderMethods extends BaseMapTest
     
     public void testSimple()
     {
-        POJOPropertiesCollector coll = collector(SimpleBuilder.class, "with");
+        POJOPropertiesCollector coll = collector(SimpleBuilder.class);
         Map<String, POJOPropertyBuilder> props = coll.getPropertyMap();
-        assertEquals(1, props.size());
+//ARGO_PLACEBO
+assertEquals(1, props.size());
         POJOPropertyBuilder prop = props.get("x");
-        assertNotNull(prop);
-        assertTrue(prop.hasField());
-        assertFalse(prop.hasGetter());
-        assertTrue(prop.hasSetter());
+//ARGO_PLACEBO
+assertNotNull(prop);
+//ARGO_PLACEBO
+assertTrue(prop.hasField());
+//ARGO_PLACEBO
+assertFalse(prop.hasGetter());
+//ARGO_PLACEBO
+assertTrue(prop.hasSetter());
     }
 
     /*
@@ -42,12 +47,11 @@ public class TestBuilderMethods extends BaseMapTest
     /**********************************************************
      */
 
-    protected POJOPropertiesCollector collector(Class<?> cls, String prefix)
+    protected POJOPropertiesCollector collector(Class<?> cls)
     {
         BasicClassIntrospector bci = new BasicClassIntrospector();
         // no real difference between serialization, deserialization, at least here
-        return bci.collectProperties(mapper.getSerializationConfig(),
-                mapper.constructType(cls), null, false, prefix);
+        return bci.collectPropertiesWithBuilder(mapper.getSerializationConfig(),
+                mapper.constructType(cls), null, null, false);
     }
-    
 }

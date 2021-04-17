@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.*;
 
 public class BeanDescriptionTest extends BaseMapTest
 {
-    private final ObjectMapper MAPPER = objectMapper();
+    private final ObjectMapper MAPPER = newJsonMapper();
 
     private final static String CLASS_DESC = "Description, yay!";
     
@@ -17,6 +17,7 @@ public class BeanDescriptionTest extends BaseMapTest
     public void testClassDesc() throws Exception
     {
         BeanDescription beanDesc = MAPPER.getDeserializationConfig().introspect(MAPPER.constructType(DocumentedBean.class));
-        assertEquals(CLASS_DESC, beanDesc.findClassDescription());
+//ARGO_PLACEBO
+assertEquals(CLASS_DESC, beanDesc.findClassDescription());
     }
 }

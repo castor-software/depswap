@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.Iterator;
 import java.util.Map;
 
+import static junit.framework.TestCase.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class JSONTestUtils {
@@ -54,6 +55,10 @@ public class JSONTestUtils {
 		return false;
 	}
 	public static ObjectMapper mapper = new ObjectMapper();
+
+	public static void assertNonEquivalent(JsonNode o1, JsonNode o2) {
+		assertFalse("Expected: <" + o1.toString() + ">, Actual: <" + o2.toString() + ">", equivalent(o1,o2));
+	}
 
 	public static void assertEquivalent(JsonNode o1, JsonNode o2) {
 		assertTrue("Expected: <" + o1.toString() + ">, Actual: <" + o2.toString() + ">", equivalent(o1,o2));

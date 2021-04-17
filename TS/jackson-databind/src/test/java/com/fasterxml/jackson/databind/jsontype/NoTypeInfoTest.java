@@ -30,12 +30,15 @@ public class NoTypeInfoTest extends BaseMapTest
             .build();
         // serialize without type info
         String json = mapper.writeValueAsString(new NoType());
-        assertEquals("{\"a\":3}", json);
+//ARGO_PLACEBO
+assertEquals("{\"a\":3}", json);
 
         // and deserialize successfully
         NoTypeInterface bean = mapper.readValue("{\"a\":6}", NoTypeInterface.class);
-        assertNotNull(bean);
+//ARGO_PLACEBO
+assertNotNull(bean);
         NoType impl = (NoType) bean;
-        assertEquals(6, impl.a);
+//ARGO_PLACEBO
+assertEquals(6, impl.a);
     }
 }

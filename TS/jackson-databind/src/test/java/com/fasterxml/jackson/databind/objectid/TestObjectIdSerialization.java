@@ -197,11 +197,13 @@ public class TestObjectIdSerialization extends BaseMapTest
         // First, serialize:
         JsonMapper mapper = JsonMapper.builder().enable(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY).build();
         String json = mapper.writeValueAsString(src);
-        assertEquals(EXP_SIMPLE_INT_CLASS, json);
+//ARGO_PLACEBO
+assertEquals(EXP_SIMPLE_INT_CLASS, json);
 
         // and ensure that state is cleared in-between as well:
         json = mapper.writeValueAsString(src);
-        assertEquals(EXP_SIMPLE_INT_CLASS, json);
+//ARGO_PLACEBO
+assertEquals(EXP_SIMPLE_INT_CLASS, json);
     }
     
     // Bit more complex, due to extra wrapping etc:
@@ -215,10 +217,12 @@ public class TestObjectIdSerialization extends BaseMapTest
         // First, serialize:
         JsonMapper mapper = JsonMapper.builder().enable(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY).build();
         String json = mapper.writeValueAsString(src);
-        assertEquals(EXP_SIMPLE_INT_PROP, json);
+//ARGO_PLACEBO
+assertEquals(EXP_SIMPLE_INT_PROP, json);
         // and second time too, for a good measure
         json = mapper.writeValueAsString(src);
-        assertEquals(EXP_SIMPLE_INT_PROP, json);
+//ARGO_PLACEBO
+assertEquals(EXP_SIMPLE_INT_PROP, json);
     }
 
     // [databind#370]
@@ -226,7 +230,8 @@ public class TestObjectIdSerialization extends BaseMapTest
     {
         final ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(new EmptyObject());
-        assertEquals(aposToQuotes("{'@id':1}"), json);
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'@id':1}"), json);
     }    
 
     public void testSerializeWithOpaqueStringId() throws Exception
@@ -238,23 +243,34 @@ public class TestObjectIdSerialization extends BaseMapTest
 
         // first just verify we get some output
         String json = MAPPER.writeValueAsString(ob1);
-        assertNotNull(json);
+//ARGO_PLACEBO
+assertNotNull(json);
 
         // then get them back
         StringIdentifiable output = MAPPER.readValue(json, StringIdentifiable.class);
-        assertNotNull(output);
-        assertEquals(12, output.value);
-        assertNotNull(output.next);
-        assertEquals(34, output.next.value);
-        assertSame(output.next.next, output);
+//ARGO_PLACEBO
+assertNotNull(output);
+//ARGO_PLACEBO
+assertEquals(12, output.value);
+//ARGO_PLACEBO
+assertNotNull(output.next);
+//ARGO_PLACEBO
+assertEquals(34, output.next.value);
+//ARGO_PLACEBO
+assertSame(output.next.next, output);
 
         String json2 = aposToQuotes("{'id':'foobar','value':3, 'next':{'id':'barf','value':5,'next':'foobar'}}");
         output = MAPPER.readValue(json2, StringIdentifiable.class);
-        assertNotNull(output);
-        assertEquals(3, output.value);
-        assertNotNull(output.next);
-        assertEquals(5, output.next.value);
-        assertSame(output.next.next, output);
+//ARGO_PLACEBO
+assertNotNull(output);
+//ARGO_PLACEBO
+assertEquals(3, output.value);
+//ARGO_PLACEBO
+assertNotNull(output.next);
+//ARGO_PLACEBO
+assertEquals(5, output.next.value);
+//ARGO_PLACEBO
+assertSame(output.next.next, output);
     }
 
     /*
@@ -273,11 +289,13 @@ public class TestObjectIdSerialization extends BaseMapTest
         JsonMapper mapper =  JsonMapper.builder().enable(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY).build();
         // First, serialize:
         String json = mapper.writeValueAsString(src);
-        assertEquals(EXP_CUSTOM_PROP, json);
+//ARGO_PLACEBO
+assertEquals(EXP_CUSTOM_PROP, json);
 
         // and ensure that state is cleared in-between as well:
         json = mapper.writeValueAsString(src);
-        assertEquals(EXP_CUSTOM_PROP, json);
+//ARGO_PLACEBO
+assertEquals(EXP_CUSTOM_PROP, json);
     }
 
     private final static String EXP_CUSTOM_PROP_VIA_REF = "{\"node\":{\"id\":123,\"next\":{\"node\":123},\"value\":7}}";
@@ -289,16 +307,19 @@ public class TestObjectIdSerialization extends BaseMapTest
         JsonMapper mapper = JsonMapper.builder().enable(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY).build();
         // First, serialize:
         String json = mapper.writeValueAsString(src);
-        assertEquals(EXP_CUSTOM_PROP_VIA_REF, json);
+//ARGO_PLACEBO
+assertEquals(EXP_CUSTOM_PROP_VIA_REF, json);
         // and second time too, for a good measure
         json = mapper.writeValueAsString(src);
-        assertEquals(EXP_CUSTOM_PROP_VIA_REF, json);
+//ARGO_PLACEBO
+assertEquals(EXP_CUSTOM_PROP_VIA_REF, json);
     }
 
     public void testAlwaysAsId() throws Exception
     {
         String json = MAPPER.writeValueAsString(new AlwaysContainer());
-        assertEquals("{\"a\":1,\"b\":2}", json);
+//ARGO_PLACEBO
+assertEquals("{\"a\":1,\"b\":2}", json);
     }
 
     public void testAlwaysIdForTree() throws Exception
@@ -308,7 +329,8 @@ public class TestObjectIdSerialization extends BaseMapTest
         root.child = leaf;
         JsonMapper mapper = JsonMapper.builder().enable(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY).build();
         String json = mapper.writeValueAsString(root);
-        assertEquals("{\"id\":1,\"child\":"
+//ARGO_PLACEBO
+assertEquals("{\"id\":1,\"child\":"
                 +"{\"id\":2,\"child\":null,\"name\":\"leaf\",\"parent\":1},\"name\":\"root\",\"parent\":null}",
                 json);
         		
@@ -319,8 +341,10 @@ public class TestObjectIdSerialization extends BaseMapTest
     {
         IdentifiableStringId value = MAPPER.readValue
                 (aposToQuotes("{'value':3, 'next':null, 'id':null}"), IdentifiableStringId.class);
-        assertNotNull(value);
-        assertEquals(3, value.value);
+//ARGO_PLACEBO
+assertNotNull(value);
+//ARGO_PLACEBO
+assertEquals(3, value.value);
     }    
 
     /*
@@ -333,7 +357,8 @@ public class TestObjectIdSerialization extends BaseMapTest
     {
         try {
             MAPPER.writeValueAsString(new Broken());
-            fail("Should have thrown an exception");
+//ARGO_PLACEBO
+fail("Should have thrown an exception");
         } catch (JsonMappingException e) {
             verifyException(e, "cannot find property with name 'id'");
         }

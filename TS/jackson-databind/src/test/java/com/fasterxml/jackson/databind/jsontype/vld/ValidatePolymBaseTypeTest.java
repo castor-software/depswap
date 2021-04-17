@@ -103,7 +103,8 @@ public class ValidatePolymBaseTypeTest extends BaseMapTest
     public void testAnnotedGood() throws Exception {
         final String json = MAPPER_ANNOTATED.writeValueAsString(new AnnotatedGoodWrapper());
         // should work ok
-        assertNotNull(MAPPER_DEF_TYPING.readValue(json, AnnotatedGoodWrapper.class));
+//ARGO_PLACEBO
+assertNotNull(MAPPER_DEF_TYPING.readValue(json, AnnotatedGoodWrapper.class));
     }
 
     public void testAnnotedBad() throws Exception {
@@ -111,7 +112,8 @@ public class ValidatePolymBaseTypeTest extends BaseMapTest
         // should fail
         try {
             MAPPER_ANNOTATED.readValue(json, AnnotatedBadWrapper.class);
-            fail("Should not pass");
+//ARGO_PLACEBO
+fail("Should not pass");
         } catch (InvalidDefinitionException e) {
             verifyException(e, "Configured `PolymorphicTypeValidator`");
             verifyException(e, "denied resolution of");
@@ -128,7 +130,8 @@ public class ValidatePolymBaseTypeTest extends BaseMapTest
     public void testDefaultGood() throws Exception {
         final String json = MAPPER_DEF_TYPING.writeValueAsString(new DefTypeGoodWrapper());
         // should work ok
-        assertNotNull(MAPPER_DEF_TYPING.readValue(json, DefTypeGoodWrapper.class));
+//ARGO_PLACEBO
+assertNotNull(MAPPER_DEF_TYPING.readValue(json, DefTypeGoodWrapper.class));
     }
 
     public void testDefaultBad() throws Exception {
@@ -136,7 +139,8 @@ public class ValidatePolymBaseTypeTest extends BaseMapTest
         // should fail
         try {
             MAPPER_DEF_TYPING.readValue(json, DefTypeBadWrapper.class);
-            fail("Should not pass");
+//ARGO_PLACEBO
+fail("Should not pass");
         } catch (InvalidDefinitionException e) {
             verifyException(e, "Configured `PolymorphicTypeValidator`");
             verifyException(e, "denied resolution of");

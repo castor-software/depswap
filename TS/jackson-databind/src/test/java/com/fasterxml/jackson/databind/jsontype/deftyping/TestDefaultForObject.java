@@ -119,11 +119,15 @@ public class TestDefaultForObject
         
         // Ok: serialization seems to work as expected. Now deserialize:
         Object ob = m.readValue(str, Object[].class);
-        assertNotNull(ob);
+//ARGO_PLACEBO
+assertNotNull(ob);
         Object[] result = (Object[]) ob;
-        assertNotNull(result[0]);
-        assertEquals(StringBean.class, result[0].getClass());
-        assertEquals("abc", ((StringBean) result[0]).name);
+//ARGO_PLACEBO
+assertNotNull(result[0]);
+//ARGO_PLACEBO
+assertEquals(StringBean.class, result[0].getClass());
+//ARGO_PLACEBO
+assertEquals("abc", ((StringBean) result[0]).name);
     }
 
     // with 2.5, another test to check that "as-property" is valid option
@@ -139,9 +143,12 @@ public class TestDefaultForObject
         
         // Ok: serialization seems to work as expected. Now deserialize:
         Object result = m.readValue(json, Object.class);
-        assertNotNull(result);
-        assertEquals(StringBean.class, result.getClass());
-        assertEquals("abc", ((StringBean) result).name);
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertEquals(StringBean.class, result.getClass());
+//ARGO_PLACEBO
+assertEquals("abc", ((StringBean) result).name);
     }
 
     // [databind#2840]: ensure "as-property" uses PTV passed
@@ -154,7 +161,8 @@ public class TestDefaultForObject
         String json = m.writeValueAsString(new StringBean("abc"));
         try {
             /*Object result =*/ m.readValue(json, Object.class);
-            fail("Should not pass");
+//ARGO_PLACEBO
+fail("Should not pass");
         } catch (InvalidDefinitionException e) {
             verifyException(e, "Configured `PolymorphicTypeValidator`");
             verifyException(e, "denied resolution of all subtypes of ");
@@ -173,7 +181,8 @@ public class TestDefaultForObject
         String serial = m.writeValueAsString(input);
         try {
             m.readValue(serial, AbstractBean[].class);
-            fail("Should have failed");
+//ARGO_PLACEBO
+fail("Should have failed");
         } catch (JsonMappingException e) {
             // let's use whatever is currently thrown exception... may change tho
             verifyException(e, "cannot construct");
@@ -185,9 +194,12 @@ public class TestDefaultForObject
                 .build();
         serial = m.writeValueAsString(input);
         AbstractBean[] beans = m.readValue(serial, AbstractBean[].class);
-        assertEquals(1, beans.length);
-        assertEquals(StringBean.class, beans[0].getClass());
-        assertEquals("xyz", ((StringBean) beans[0]).name);
+//ARGO_PLACEBO
+assertEquals(1, beans.length);
+//ARGO_PLACEBO
+assertEquals(StringBean.class, beans[0].getClass());
+//ARGO_PLACEBO
+assertEquals("xyz", ((StringBean) beans[0]).name);
     }
 
     /**
@@ -202,13 +214,15 @@ public class TestDefaultForObject
                         ObjectMapper.DefaultTyping.OBJECT_AND_NON_CONCRETE)
                 .build();
         StringBean bean = new StringBean("x");
-        assertEquals("{\"name\":\"x\"}", m.writeValueAsString(bean));
+//ARGO_PLACEBO
+assertEquals("{\"name\":\"x\"}", m.writeValueAsString(bean));
         // then non-final, and voila:
         m = JsonMapper.builder()
                 .activateDefaultTyping(NoCheckSubTypeValidator.instance,
                         ObjectMapper.DefaultTyping.NON_FINAL)
                 .build();
-        assertEquals("[\""+StringBean.class.getName()+"\",{\"name\":\"x\"}]",
+//ARGO_PLACEBO
+assertEquals("[\""+StringBean.class.getName()+"\",{\"name\":\"x\"}]",
             m.writeValueAsString(bean));
     }
 
@@ -220,10 +234,13 @@ public class TestDefaultForObject
                 .build();
         BeanHolder h = new BeanHolder();
         String json = m.writeValueAsString(h);
-        assertNotNull(json);
+//ARGO_PLACEBO
+assertNotNull(json);
         BeanHolder result = m.readValue(json, BeanHolder.class);
-        assertNotNull(result);
-        assertNull(result.bean);
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertNull(result.bean);
     }
     
     public void testEnumAsObject() throws Exception
@@ -232,8 +249,10 @@ public class TestDefaultForObject
         Object[] input = new Object[] { Choice.YES };
         Object[] input2 = new Object[] { ComplexChoice.MAYBE};
         // first, without type info:
-        assertEquals("[\"YES\"]", serializeAsString(input));
-        assertEquals("[\"MAYBE\"]", serializeAsString(input2));
+//ARGO_PLACEBO
+assertEquals("[\"YES\"]", serializeAsString(input));
+//ARGO_PLACEBO
+assertEquals("[\"MAYBE\"]", serializeAsString(input2));
 
         // and then with it
         ObjectMapper m = JsonMapper.builder()
@@ -241,19 +260,25 @@ public class TestDefaultForObject
                 .build();
 
         String json = m.writeValueAsString(input);
-        assertEquals("[[\""+Choice.class.getName()+"\",\"YES\"]]", json);
+//ARGO_PLACEBO
+assertEquals("[[\""+Choice.class.getName()+"\",\"YES\"]]", json);
 
         // which we should get back same way
         Object[] output = m.readValue(json, Object[].class);
-        assertEquals(1, output.length);
-        assertEquals(Choice.YES, output[0]);
+//ARGO_PLACEBO
+assertEquals(1, output.length);
+//ARGO_PLACEBO
+assertEquals(Choice.YES, output[0]);
 
         // ditto for more complicated enum
         json = m.writeValueAsString(input2);
-        assertEquals("[[\""+ComplexChoice.class.getName()+"\",\"MAYBE\"]]", json);
+//ARGO_PLACEBO
+assertEquals("[[\""+ComplexChoice.class.getName()+"\",\"MAYBE\"]]", json);
         output = m.readValue(json, Object[].class);
-        assertEquals(1, output.length);
-        assertEquals(ComplexChoice.MAYBE, output[0]);
+//ARGO_PLACEBO
+assertEquals(1, output.length);
+//ARGO_PLACEBO
+assertEquals(ComplexChoice.MAYBE, output[0]);
     }
 
     @SuppressWarnings("unchecked")
@@ -266,13 +291,18 @@ public class TestDefaultForObject
                 .build();
         String json = m.writeValueAsString(input);
         Object[] output = m.readValue(json, Object[].class);
-        assertEquals(1, output.length);
+//ARGO_PLACEBO
+assertEquals(1, output.length);
         Object ob = output[0];
-        assertTrue(ob instanceof EnumSet<?>);
+//ARGO_PLACEBO
+assertTrue(ob instanceof EnumSet<?>);
         EnumSet<Choice> set2 = (EnumSet<Choice>) ob;
-        assertEquals(1, set2.size());
-        assertTrue(set2.contains(Choice.NO));
-        assertFalse(set2.contains(Choice.YES));
+//ARGO_PLACEBO
+assertEquals(1, set2.size());
+//ARGO_PLACEBO
+assertTrue(set2.contains(Choice.NO));
+//ARGO_PLACEBO
+assertFalse(set2.contains(Choice.YES));
     }
 
     @SuppressWarnings("unchecked")
@@ -286,13 +316,18 @@ public class TestDefaultForObject
                 .build();
         String json = m.writeValueAsString(input);
         Object[] output = m.readValue(json, Object[].class);
-        assertEquals(1, output.length);
+//ARGO_PLACEBO
+assertEquals(1, output.length);
         Object ob = output[0];
-        assertTrue(ob instanceof EnumMap<?,?>);
+//ARGO_PLACEBO
+assertTrue(ob instanceof EnumMap<?,?>);
         EnumMap<Choice,String> map2 = (EnumMap<Choice,String>) ob;
-        assertEquals(1, map2.size());
-        assertEquals("maybe", map2.get(Choice.NO));
-        assertNull(map2.get(Choice.YES));
+//ARGO_PLACEBO
+assertEquals(1, map2.size());
+//ARGO_PLACEBO
+assertEquals("maybe", map2.get(Choice.NO));
+//ARGO_PLACEBO
+assertNull(map2.get(Choice.YES));
     }
 
     public void testJackson311() throws Exception
@@ -303,8 +338,10 @@ public class TestDefaultForObject
                 .build();
         String json = mapper.writeValueAsString(new PolymorphicType("hello", 2));
         PolymorphicType value = mapper.readValue(json, PolymorphicType.class);
-        assertEquals("hello", value.foo);
-        assertEquals(Integer.valueOf(2), value.bar);
+//ARGO_PLACEBO
+assertEquals("hello", value.foo);
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(2), value.bar);
     }
 
     // Also, let's ensure TokenBuffer gets properly handled
@@ -322,14 +359,21 @@ public class TestDefaultForObject
         buf.writeEndObject();
         String json = mapper.writeValueAsString(new ObjectHolder(buf));
         ObjectHolder holder = mapper.readValue(json, ObjectHolder.class);
-        assertNotNull(holder.value);
-        assertSame(TokenBuffer.class, holder.value.getClass());
+//ARGO_PLACEBO
+assertNotNull(holder.value);
+//ARGO_PLACEBO
+assertSame(TokenBuffer.class, holder.value.getClass());
         JsonParser jp = ((TokenBuffer) holder.value).asParser();
-        assertToken(JsonToken.START_OBJECT, jp.nextToken());
-        assertToken(JsonToken.FIELD_NAME, jp.nextToken());
-        assertToken(JsonToken.VALUE_NUMBER_INT, jp.nextToken());
-        assertToken(JsonToken.END_OBJECT, jp.nextToken());
-        assertNull(jp.nextToken());
+//ARGO_PLACEBO
+assertToken(JsonToken.START_OBJECT, jp.nextToken());
+//ARGO_PLACEBO
+assertToken(JsonToken.FIELD_NAME, jp.nextToken());
+//ARGO_PLACEBO
+assertToken(JsonToken.VALUE_NUMBER_INT, jp.nextToken());
+//ARGO_PLACEBO
+assertToken(JsonToken.END_OBJECT, jp.nextToken());
+//ARGO_PLACEBO
+assertNull(jp.nextToken());
         jp.close();
         buf.close();
 
@@ -340,13 +384,19 @@ public class TestDefaultForObject
         buf.writeEndArray();
         json = mapper.writeValueAsString(new ObjectHolder(buf));
         holder = mapper.readValue(json, ObjectHolder.class);
-        assertNotNull(holder.value);
-        assertSame(TokenBuffer.class, holder.value.getClass());
+//ARGO_PLACEBO
+assertNotNull(holder.value);
+//ARGO_PLACEBO
+assertSame(TokenBuffer.class, holder.value.getClass());
         jp = ((TokenBuffer) holder.value).asParser();
-        assertToken(JsonToken.START_ARRAY, jp.nextToken());
-        assertToken(JsonToken.VALUE_TRUE, jp.nextToken());
-        assertToken(JsonToken.END_ARRAY, jp.nextToken());
-        assertNull(jp.nextToken());
+//ARGO_PLACEBO
+assertToken(JsonToken.START_ARRAY, jp.nextToken());
+//ARGO_PLACEBO
+assertToken(JsonToken.VALUE_TRUE, jp.nextToken());
+//ARGO_PLACEBO
+assertToken(JsonToken.END_ARRAY, jp.nextToken());
+//ARGO_PLACEBO
+assertNull(jp.nextToken());
         jp.close();
         buf.close();
 
@@ -355,12 +405,17 @@ public class TestDefaultForObject
         buf.writeNumber(321);
         json = mapper.writeValueAsString(new ObjectHolder(buf));
         holder = mapper.readValue(json, ObjectHolder.class);
-        assertNotNull(holder.value);
-        assertSame(TokenBuffer.class, holder.value.getClass());
+//ARGO_PLACEBO
+assertNotNull(holder.value);
+//ARGO_PLACEBO
+assertSame(TokenBuffer.class, holder.value.getClass());
         jp = ((TokenBuffer) holder.value).asParser();
-        assertToken(JsonToken.VALUE_NUMBER_INT, jp.nextToken());
-        assertEquals(321, jp.getIntValue());
-        assertNull(jp.nextToken());
+//ARGO_PLACEBO
+assertToken(JsonToken.VALUE_NUMBER_INT, jp.nextToken());
+//ARGO_PLACEBO
+assertEquals(321, jp.getIntValue());
+//ARGO_PLACEBO
+assertNull(jp.nextToken());
         jp.close();
         buf.close();
     }
@@ -379,9 +434,12 @@ public class TestDefaultForObject
         wrapper.myBean = d1;
         String json = mapper.writeValueAsString(wrapper);
         DomainBeanWrapper result = mapper.readValue(json, DomainBeanWrapper.class);
-        assertNotNull(result);
-        assertNotNull(wrapper.myBean);
-        assertSame(DiscussBean.class, wrapper.myBean.getClass());
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertNotNull(wrapper.myBean);
+//ARGO_PLACEBO
+assertSame(DiscussBean.class, wrapper.myBean.getClass());
     }    
 
     // Test to ensure we can also use "As.PROPERTY" inclusion and custom property name
@@ -392,7 +450,8 @@ public class TestDefaultForObject
                         ObjectMapper.DefaultTyping.OBJECT_AND_NON_CONCRETE, "*CLASS*")
                 .build();
         String json = mapper.writeValueAsString(new BeanHolder(new StringBean("punny")));
-        assertEquals("{\"bean\":{\"*CLASS*\":\"com.fasterxml.jackson.databind.jsontype.deftyping.TestDefaultForObject$StringBean\",\"name\":\"punny\"}}", json);
+//ARGO_PLACEBO
+assertEquals("{\"bean\":{\"*CLASS*\":\"com.fasterxml.jackson.databind.jsontype.deftyping.TestDefaultForObject$StringBean\",\"name\":\"punny\"}}", json);
     }
 
     public void testNoGoWithExternalProperty() throws Exception
@@ -403,7 +462,8 @@ public class TestDefaultForObject
                         ObjectMapper.DefaultTyping.JAVA_LANG_OBJECT,
                         JsonTypeInfo.As.EXTERNAL_PROPERTY)
                     .build();
-            fail("Should not have passed");
+//ARGO_PLACEBO
+fail("Should not have passed");
         } catch (IllegalArgumentException e) {
             verifyException(e, "Cannot use includeAs of EXTERNAL_PROPERTY");
         }
@@ -417,14 +477,16 @@ public class TestDefaultForObject
                 .activateDefaultTyping(NoCheckSubTypeValidator.instance,
                         ObjectMapper.DefaultTyping.NON_FINAL)
                 .build();
-        assertEquals(aposToQuotes("{'name':'abc'}"),
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'name':'abc'}"),
                 mapper.writeValueAsString(new FinalStringBean("abc")));
 
         mapper = JsonMapper.builder()
                 .activateDefaultTyping(NoCheckSubTypeValidator.instance,
                         ObjectMapper.DefaultTyping.EVERYTHING)
                 .build();
-        assertEquals(aposToQuotes("['"+FinalStringBean.class.getName()+"',{'name':'abc'}]"),
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("['"+FinalStringBean.class.getName()+"',{'name':'abc'}]"),
                 mapper.writeValueAsString(new FinalStringBean("abc")));
     }
 
@@ -444,16 +506,23 @@ public class TestDefaultForObject
         // note: must have default mapper, default typer NOT enabled (to get 'plain' map)
         ObjectMapper m = new ObjectMapper();
         List<Object> list = m.readValue(str, List.class);
-        assertEquals(1, list.size()); // no type for main List, just single entry
+//ARGO_PLACEBO
+assertEquals(1, list.size()); // no type for main List, just single entry
         Object entryOb = list.get(0);
-        assertTrue(entryOb instanceof List<?>);
+//ARGO_PLACEBO
+assertTrue(entryOb instanceof List<?>);
         // but then type wrapper for bean
         List<?> entryList = (List<?>)entryOb;
-        assertEquals(2, entryList.size());
-        assertEquals(StringBean.class.getName(), entryList.get(0));
-        assertTrue(entryList.get(1) instanceof Map);
+//ARGO_PLACEBO
+assertEquals(2, entryList.size());
+//ARGO_PLACEBO
+assertEquals(StringBean.class.getName(), entryList.get(0));
+//ARGO_PLACEBO
+assertTrue(entryList.get(1) instanceof Map);
         Map<?,?> map = (Map<?,?>) entryList.get(1);
-        assertEquals(1, map.size());
-        assertEquals("abc", map.get("name"));
+//ARGO_PLACEBO
+assertEquals(1, map.size());
+//ARGO_PLACEBO
+assertEquals("abc", map.get("name"));
     }
 }

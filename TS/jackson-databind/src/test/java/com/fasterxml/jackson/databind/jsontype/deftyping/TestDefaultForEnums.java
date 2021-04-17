@@ -41,7 +41,8 @@ public class TestDefaultForEnums
         ObjectMapper m = new ObjectMapper();
         String json = m.writeValueAsString(bean);
         TimeUnitBean result = m.readValue(json, TimeUnitBean.class);
-        assertEquals(TimeUnit.SECONDS, result.timeUnit);
+//ARGO_PLACEBO
+assertEquals(TimeUnit.SECONDS, result.timeUnit);
         
         // then with type info
         m = JsonMapper.builder()
@@ -50,7 +51,8 @@ public class TestDefaultForEnums
         json = m.writeValueAsString(bean);
         result = m.readValue(json, TimeUnitBean.class);
 
-        assertEquals(TimeUnit.SECONDS, result.timeUnit);
+//ARGO_PLACEBO
+assertEquals(TimeUnit.SECONDS, result.timeUnit);
     }
     
     public void testSimpleEnumsInObjectArray() throws Exception
@@ -60,12 +62,15 @@ public class TestDefaultForEnums
                 .build();
         // Typing is needed for enums
         String json = m.writeValueAsString(new Object[] { TestEnum.A });
-        assertEquals("[[\"com.fasterxml.jackson.databind.jsontype.deftyping.TestDefaultForEnums$TestEnum\",\"A\"]]", json);
+//ARGO_PLACEBO
+assertEquals("[[\"com.fasterxml.jackson.databind.jsontype.deftyping.TestDefaultForEnums$TestEnum\",\"A\"]]", json);
 
         // and let's verify we get it back ok as well:
         Object[] value = m.readValue(json, Object[].class);
-        assertEquals(1, value.length);
-        assertSame(TestEnum.A, value[0]);
+//ARGO_PLACEBO
+assertEquals(1, value.length);
+//ARGO_PLACEBO
+assertSame(TestEnum.A, value[0]);
     }
 
     public void testSimpleEnumsAsField() throws Exception
@@ -74,8 +79,10 @@ public class TestDefaultForEnums
                 .activateDefaultTyping(NoCheckSubTypeValidator.instance)
                 .build();
         String json = m.writeValueAsString(new EnumHolder(TestEnum.B));
-        assertEquals("{\"value\":[\"com.fasterxml.jackson.databind.jsontype.deftyping.TestDefaultForEnums$TestEnum\",\"B\"]}", json);
+//ARGO_PLACEBO
+assertEquals("{\"value\":[\"com.fasterxml.jackson.databind.jsontype.deftyping.TestDefaultForEnums$TestEnum\",\"B\"]}", json);
         EnumHolder holder = m.readValue(json, EnumHolder.class);
-        assertSame(TestEnum.B, holder.value);
+//ARGO_PLACEBO
+assertSame(TestEnum.B, holder.value);
     }
 }

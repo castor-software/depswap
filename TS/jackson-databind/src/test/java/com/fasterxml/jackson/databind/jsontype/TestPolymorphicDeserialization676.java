@@ -79,8 +79,10 @@ public class TestPolymorphicDeserialization676 extends BaseMapTest
         ObjectMapper mapper = new ObjectMapper();
 
         MapContainer deserMapBad = createDeSerMapContainer(originMap, mapper);
-        assertEquals(originMap, deserMapBad);
-        assertEquals(originMap,
+//ARGO_PLACEBO
+assertEquals(originMap, deserMapBad);
+//ARGO_PLACEBO
+assertEquals(originMap,
                 mapper.readValue(mapper.writeValueAsString(originMap), MapContainer.class));
     }
 
@@ -90,23 +92,28 @@ public class TestPolymorphicDeserialization676 extends BaseMapTest
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("1", 1);
         // commenting out the following statement will fail the test
-        assertEquals(new MapContainer(map),
+//ARGO_PLACEBO
+assertEquals(new MapContainer(map),
                 mapper.readValue(mapper.writeValueAsString(new MapContainer(map)),
                         MapContainer.class));
 
         MapContainer deserMapGood = createDeSerMapContainer(originMap, mapper);
 
-        assertEquals(originMap, deserMapGood);
-        assertEquals(new Date(TIMESTAMP), deserMapGood.map.get("DateValue"));
+//ARGO_PLACEBO
+assertEquals(originMap, deserMapGood);
+//ARGO_PLACEBO
+assertEquals(new Date(TIMESTAMP), deserMapGood.map.get("DateValue"));
 
-        assertEquals(originMap, mapper.readValue(mapper.writeValueAsString(originMap), MapContainer.class));
+//ARGO_PLACEBO
+assertEquals(originMap, mapper.readValue(mapper.writeValueAsString(originMap), MapContainer.class));
     }
 
     private MapContainer createDeSerMapContainer(MapContainer src, ObjectMapper mapper) throws IOException {
         PolymorphicValueWrapper result = new PolymorphicValueWrapper();
         result.value = src;
         String json = mapper.writeValueAsString(result);
-        assertEquals("{\"value\":{\"@class\":"
+//ARGO_PLACEBO
+assertEquals("{\"value\":{\"@class\":"
                 + "\""+getClass().getName()+"$MapContainer\","
                 + "\"map\":{\"DateValue\":[\"java.util.Date\",123456]}}}",
                 json);

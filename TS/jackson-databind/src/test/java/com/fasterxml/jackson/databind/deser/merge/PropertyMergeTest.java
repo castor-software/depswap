@@ -121,28 +121,36 @@ public class PropertyMergeTest extends BaseMapTest
     public void testBeanMergingViaProp() throws Exception
     {
         Config config = MAPPER.readValue(aposToQuotes("{'loc':{'b':3}}"), Config.class);
-        assertEquals(1, config.loc.a);
-        assertEquals(3, config.loc.b);
+//ARGO_PLACEBO
+assertEquals(1, config.loc.a);
+//ARGO_PLACEBO
+assertEquals(3, config.loc.b);
 
         config = MAPPER.readerForUpdating(new Config(5, 7))
                 .readValue(aposToQuotes("{'loc':{'b':2}}"));
-        assertEquals(5, config.loc.a);
-        assertEquals(2, config.loc.b);
+//ARGO_PLACEBO
+assertEquals(5, config.loc.a);
+//ARGO_PLACEBO
+assertEquals(2, config.loc.b);
     }
 
     public void testBeanMergingViaType() throws Exception
     {
         // by default, no merging
         NonMergeConfig config = MAPPER.readValue(aposToQuotes("{'loc':{'a':3}}"), NonMergeConfig.class);
-        assertEquals(3, config.loc.a);
-        assertEquals(0, config.loc.b); // not passed, nor merge from original
+//ARGO_PLACEBO
+assertEquals(3, config.loc.a);
+//ARGO_PLACEBO
+assertEquals(0, config.loc.b); // not passed, nor merge from original
 
         // but with type-overrides
         ObjectMapper mapper = newJsonMapper();
         mapper.configOverride(AB.class).setMergeable(true);
         config = mapper.readValue(aposToQuotes("{'loc':{'a':3}}"), NonMergeConfig.class);
-        assertEquals(3, config.loc.a);
-        assertEquals(2, config.loc.b); // original, merged
+//ARGO_PLACEBO
+assertEquals(3, config.loc.a);
+//ARGO_PLACEBO
+assertEquals(2, config.loc.b); // original, merged
     }
 
     public void testBeanMergingViaGlobal() throws Exception
@@ -151,8 +159,10 @@ public class PropertyMergeTest extends BaseMapTest
         ObjectMapper mapper = newJsonMapper()
                 .setDefaultMergeable(true);
         NonMergeConfig config = mapper.readValue(aposToQuotes("{'loc':{'a':3}}"), NonMergeConfig.class);
-        assertEquals(3, config.loc.a);
-        assertEquals(2, config.loc.b); // original, merged
+//ARGO_PLACEBO
+assertEquals(3, config.loc.a);
+//ARGO_PLACEBO
+assertEquals(2, config.loc.b); // original, merged
 
         // also, test with bigger POJO type; just as smoke test
         FiveMinuteUser user0 = new FiveMinuteUser("Bob", "Bush", true, FiveMinuteUser.Gender.MALE,
@@ -160,8 +170,10 @@ public class PropertyMergeTest extends BaseMapTest
         FiveMinuteUser user = mapper.readerFor(FiveMinuteUser.class)
                 .withValueToUpdate(user0)
                 .readValue(aposToQuotes("{'name':{'last':'Brown'}}"));
-        assertEquals("Bob", user.getName().getFirst());
-        assertEquals("Brown", user.getName().getLast());
+//ARGO_PLACEBO
+assertEquals("Bob", user.getName().getFirst());
+//ARGO_PLACEBO
+assertEquals("Brown", user.getName().getLast());
     }
 
     // should even work with no setter
@@ -169,8 +181,10 @@ public class PropertyMergeTest extends BaseMapTest
     {
         NoSetterConfig config = MAPPER.readValue(aposToQuotes("{'value':{'b':99}}"),
                 NoSetterConfig.class);
-        assertEquals(99, config._value.b);
-        assertEquals(1, config._value.a);
+//ARGO_PLACEBO
+assertEquals(99, config._value.b);
+//ARGO_PLACEBO
+assertEquals(1, config._value.a);
     }
 
     /*
@@ -187,8 +201,10 @@ public class PropertyMergeTest extends BaseMapTest
                 .readerForUpdating(input)
                 .readValue(aposToQuotes("{'mergeableBean': {'foo': 'newFoo'}}"));
 
-        assertEquals("newFoo", result.mergeableBean.foo);
-        assertEquals("bar", result.mergeableBean.bar);
+//ARGO_PLACEBO
+assertEquals("newFoo", result.mergeableBean.foo);
+//ARGO_PLACEBO
+assertEquals("bar", result.mergeableBean.bar);
     }
 
     /*
@@ -203,22 +219,29 @@ public class PropertyMergeTest extends BaseMapTest
         input.a = 4;
         input.b = 6;
 
-        assertSame(input, MAPPER.readerForUpdating(input)
+//ARGO_PLACEBO
+assertSame(input, MAPPER.readerForUpdating(input)
                 .readValue("[1, 3]"));
-        assertEquals(1, input.a);
-        assertEquals(3, input.b);
+//ARGO_PLACEBO
+assertEquals(1, input.a);
+//ARGO_PLACEBO
+assertEquals(3, input.b);
 
         // then with one too few
-        assertSame(input, MAPPER.readerForUpdating(input)
+//ARGO_PLACEBO
+assertSame(input, MAPPER.readerForUpdating(input)
                 .readValue("[9]"));
-        assertEquals(9, input.a);
-        assertEquals(3, input.b);
+//ARGO_PLACEBO
+assertEquals(9, input.a);
+//ARGO_PLACEBO
+assertEquals(3, input.b);
 
         // and finally with extra, failing
         try {
             MAPPER.readerForUpdating(input)
                 .readValue("[9, 8, 14]");
-            fail("Should not pass");
+//ARGO_PLACEBO
+fail("Should not pass");
         } catch (MismatchedInputException e) {
             verifyException(e, "expected at most 2 properties");
         }
@@ -226,7 +249,8 @@ public class PropertyMergeTest extends BaseMapTest
         try {
             MAPPER.readerForUpdating(input)
                 .readValue("\"blob\"");
-            fail("Should not pass");
+//ARGO_PLACEBO
+fail("Should not pass");
         } catch (MismatchedInputException e) {
             verifyException(e, "Cannot deserialize");
             verifyException(e, "from non-Array representation");
@@ -243,7 +267,8 @@ public class PropertyMergeTest extends BaseMapTest
     {
         MergedReference result = MAPPER.readValue(aposToQuotes("{'value':'override'}"),
                 MergedReference.class);
-        assertEquals("override", result.value.get());
+//ARGO_PLACEBO
+assertEquals("override", result.value.get());
     }
 
     /*
@@ -259,7 +284,8 @@ public class PropertyMergeTest extends BaseMapTest
                 .build();
         try {
             mapper.readValue("{\"value\":3}", CantMergeInts.class);
-            fail("Should not pass");
+//ARGO_PLACEBO
+fail("Should not pass");
         } catch (InvalidDefinitionException e) {
             verifyException(e, "cannot be merged");
         }

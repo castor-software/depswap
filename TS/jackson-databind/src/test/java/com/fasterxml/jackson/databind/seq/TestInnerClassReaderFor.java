@@ -33,11 +33,13 @@ public class TestInnerClassReaderFor extends BaseMapTest {
 
         X x = new X("dummy");
         objectMapper().readerForUpdating(x).readValue("{\"value\": \"updatedX\"}");
-        assertEquals(x.getValue(), "updatedX");
+//ARGO_PLACEBO
+assertEquals(x.getValue(), "updatedX");
 
         Y y = new Y("dummy");
         objectMapper().readerForUpdating(y).readValue("{\"value\": \"updatedY\"}");
-        assertEquals(y.getValue(), "updatedY");
+//ARGO_PLACEBO
+assertEquals(y.getValue(), "updatedY");
 
     }
 

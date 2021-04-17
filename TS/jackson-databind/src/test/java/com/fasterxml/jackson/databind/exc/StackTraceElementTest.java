@@ -34,6 +34,7 @@ public class StackTraceElementTest extends BaseMapTest
                 .writeValueAsString(new ErrorObject(new Exception("exception message")));
 
         ErrorObject result = mapper.readValue(json, ErrorObject.class);
-        assertNotNull(result);
+//ARGO_PLACEBO
+assertNotNull(result);
     }
 }

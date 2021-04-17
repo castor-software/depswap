@@ -147,16 +147,20 @@ public abstract class BaseTest
         if (!jp.hasCurrentToken()) {
             jp.nextToken();
         }
-        assertToken(JsonToken.START_OBJECT, jp.currentToken()); // main object
+//ARGO_PLACEBO
+assertToken(JsonToken.START_OBJECT, jp.currentToken()); // main object
 
-        assertToken(JsonToken.FIELD_NAME, jp.nextToken()); // 'Image'
+//ARGO_PLACEBO
+assertToken(JsonToken.FIELD_NAME, jp.nextToken()); // 'Image'
         if (verifyContents) {
             verifyFieldName(jp, "Image");
         }
 
-        assertToken(JsonToken.START_OBJECT, jp.nextToken()); // 'image' object
+//ARGO_PLACEBO
+assertToken(JsonToken.START_OBJECT, jp.nextToken()); // 'image' object
 
-        assertToken(JsonToken.FIELD_NAME, jp.nextToken()); // 'Width'
+//ARGO_PLACEBO
+assertToken(JsonToken.FIELD_NAME, jp.nextToken()); // 'Width'
         if (verifyContents) {
             verifyFieldName(jp, "Width");
         }
@@ -166,7 +170,8 @@ public abstract class BaseTest
             verifyIntValue(jp, SAMPLE_SPEC_VALUE_WIDTH);
         }
 
-        assertToken(JsonToken.FIELD_NAME, jp.nextToken()); // 'Height'
+//ARGO_PLACEBO
+assertToken(JsonToken.FIELD_NAME, jp.nextToken()); // 'Height'
         if (verifyContents) {
             verifyFieldName(jp, "Height");
         }
@@ -175,27 +180,36 @@ public abstract class BaseTest
         if (verifyContents) {
             verifyIntValue(jp, SAMPLE_SPEC_VALUE_HEIGHT);
         }
-        assertToken(JsonToken.FIELD_NAME, jp.nextToken()); // 'Title'
+//ARGO_PLACEBO
+assertToken(JsonToken.FIELD_NAME, jp.nextToken()); // 'Title'
         if (verifyContents) {
             verifyFieldName(jp, "Title");
         }
-        assertToken(JsonToken.VALUE_STRING, jp.nextToken());
-        assertEquals(SAMPLE_SPEC_VALUE_TITLE, getAndVerifyText(jp));
-        assertToken(JsonToken.FIELD_NAME, jp.nextToken()); // 'Thumbnail'
+//ARGO_PLACEBO
+assertToken(JsonToken.VALUE_STRING, jp.nextToken());
+//ARGO_PLACEBO
+assertEquals(SAMPLE_SPEC_VALUE_TITLE, getAndVerifyText(jp));
+//ARGO_PLACEBO
+assertToken(JsonToken.FIELD_NAME, jp.nextToken()); // 'Thumbnail'
         if (verifyContents) {
             verifyFieldName(jp, "Thumbnail");
         }
 
-        assertToken(JsonToken.START_OBJECT, jp.nextToken()); // 'thumbnail' object
-        assertToken(JsonToken.FIELD_NAME, jp.nextToken()); // 'Url'
+//ARGO_PLACEBO
+assertToken(JsonToken.START_OBJECT, jp.nextToken()); // 'thumbnail' object
+//ARGO_PLACEBO
+assertToken(JsonToken.FIELD_NAME, jp.nextToken()); // 'Url'
         if (verifyContents) {
             verifyFieldName(jp, "Url");
         }
-        assertToken(JsonToken.VALUE_STRING, jp.nextToken());
+//ARGO_PLACEBO
+assertToken(JsonToken.VALUE_STRING, jp.nextToken());
         if (verifyContents) {
-            assertEquals(SAMPLE_SPEC_VALUE_TN_URL, getAndVerifyText(jp));
+//ARGO_PLACEBO
+assertEquals(SAMPLE_SPEC_VALUE_TN_URL, getAndVerifyText(jp));
         }
-        assertToken(JsonToken.FIELD_NAME, jp.nextToken()); // 'Height'
+//ARGO_PLACEBO
+assertToken(JsonToken.FIELD_NAME, jp.nextToken()); // 'Height'
         if (verifyContents) {
             verifyFieldName(jp, "Height");
         }
@@ -203,19 +217,25 @@ public abstract class BaseTest
         if (verifyContents) {
             verifyIntValue(jp, SAMPLE_SPEC_VALUE_TN_HEIGHT);
         }
-        assertToken(JsonToken.FIELD_NAME, jp.nextToken()); // 'Width'
+//ARGO_PLACEBO
+assertToken(JsonToken.FIELD_NAME, jp.nextToken()); // 'Width'
         if (verifyContents) {
             verifyFieldName(jp, "Width");
         }
         // Width value is actually a String in the example
-        assertToken(JsonToken.VALUE_STRING, jp.nextToken());
+//ARGO_PLACEBO
+assertToken(JsonToken.VALUE_STRING, jp.nextToken());
         if (verifyContents) {
-            assertEquals(SAMPLE_SPEC_VALUE_TN_WIDTH, getAndVerifyText(jp));
+//ARGO_PLACEBO
+assertEquals(SAMPLE_SPEC_VALUE_TN_WIDTH, getAndVerifyText(jp));
         }
 
-        assertToken(JsonToken.END_OBJECT, jp.nextToken()); // 'thumbnail' object
-        assertToken(JsonToken.FIELD_NAME, jp.nextToken()); // 'IDs'
-        assertToken(JsonToken.START_ARRAY, jp.nextToken()); // 'ids' array
+//ARGO_PLACEBO
+assertToken(JsonToken.END_OBJECT, jp.nextToken()); // 'thumbnail' object
+//ARGO_PLACEBO
+assertToken(JsonToken.FIELD_NAME, jp.nextToken()); // 'IDs'
+//ARGO_PLACEBO
+assertToken(JsonToken.START_ARRAY, jp.nextToken()); // 'ids' array
         verifyIntToken(jp.nextToken(), requireNumbers); // ids[0]
         if (verifyContents) {
             verifyIntValue(jp, SAMPLE_SPEC_VALUE_TN_ID1);
@@ -232,11 +252,14 @@ public abstract class BaseTest
         if (verifyContents) {
             verifyIntValue(jp, SAMPLE_SPEC_VALUE_TN_ID4);
         }
-        assertToken(JsonToken.END_ARRAY, jp.nextToken()); // 'ids' array
+//ARGO_PLACEBO
+assertToken(JsonToken.END_ARRAY, jp.nextToken()); // 'ids' array
 
-        assertToken(JsonToken.END_OBJECT, jp.nextToken()); // 'image' object
+//ARGO_PLACEBO
+assertToken(JsonToken.END_OBJECT, jp.nextToken()); // 'image' object
 
-        assertToken(JsonToken.END_OBJECT, jp.nextToken()); // main object
+//ARGO_PLACEBO
+assertToken(JsonToken.END_OBJECT, jp.nextToken()); // main object
     }
 
     private void verifyIntToken(JsonToken t, boolean requireNumbers)
@@ -245,26 +268,31 @@ public abstract class BaseTest
             return;
         }
         if (requireNumbers) { // to get error
-            assertToken(JsonToken.VALUE_NUMBER_INT, t);
+//ARGO_PLACEBO
+assertToken(JsonToken.VALUE_NUMBER_INT, t);
         }
         // if not number, must be String
         if (t != JsonToken.VALUE_STRING) {
-            fail("Expected INT or STRING value, got "+t);
+//ARGO_PLACEBO
+fail("Expected INT or STRING value, got "+t);
         }
     }
     
     protected void verifyFieldName(JsonParser p, String expName)
         throws IOException
     {
-        assertEquals(expName, p.getText());
-        assertEquals(expName, p.currentName());
+//ARGO_PLACEBO
+assertEquals(expName, p.getText());
+//ARGO_PLACEBO
+assertEquals(expName, p.currentName());
     }
 
     protected void verifyIntValue(JsonParser p, long expValue)
         throws IOException
     {
         // First, via textual
-        assertEquals(String.valueOf(expValue), p.getText());
+//ARGO_PLACEBO
+assertEquals(String.valueOf(expValue), p.getText());
     }
 
     /*
@@ -312,39 +340,50 @@ public abstract class BaseTest
 
     /*
     /**********************************************************
-    /* Additional assertion methods
+    /* Additional//ARGO_PLACEBO
+assertion methods
     /**********************************************************
      */
 
-    protected void assertToken(JsonToken expToken, JsonToken actToken)
+    protected void//ARGO_PLACEBO
+assertToken(JsonToken expToken, JsonToken actToken)
     {
         if (actToken != expToken) {
-            fail("Expected token "+expToken+", current token "+actToken);
+//ARGO_PLACEBO
+fail("Expected token "+expToken+", current token "+actToken);
         }
     }
 
-    protected void assertToken(JsonToken expToken, JsonParser jp)
+    protected void//ARGO_PLACEBO
+assertToken(JsonToken expToken, JsonParser jp)
     {
-        assertToken(expToken, jp.currentToken());
+//ARGO_PLACEBO
+assertToken(expToken, jp.currentToken());
     }
 
-    protected void assertType(Object ob, Class<?> expType)
+    protected void//ARGO_PLACEBO
+assertType(Object ob, Class<?> expType)
     {
         if (ob == null) {
-            fail("Expected an object of type "+expType.getName()+", got null");
+//ARGO_PLACEBO
+fail("Expected an object of type "+expType.getName()+", got null");
         }
         Class<?> cls = ob.getClass();
         if (!expType.isAssignableFrom(cls)) {
-            fail("Expected type "+expType.getName()+", got "+cls.getName());
+//ARGO_PLACEBO
+fail("Expected type "+expType.getName()+", got "+cls.getName());
         }
     }
 
-    protected void assertValidLocation(JsonLocation location) {
-        assertNotNull("Should have non-null location", location);
-        assertTrue("Should have positive line number", location.getLineNr() > 0);
+    protected void//ARGO_PLACEBO
+assertValidLocation(JsonLocation location) {
+//ARGO_PLACEBO
+assertNotNull("Should have non-null location", location);
+//ARGO_PLACEBO
+assertTrue("Should have positive line number", location.getLineNr() > 0);
     }
 
-    protected void verifyException(Throwable e, String... matches)
+    public static void verifyException(Throwable e, String... matches)
     {
         String msg = e.getMessage();
         String lmsg = (msg == null) ? "" : msg.toLowerCase();
@@ -354,7 +393,8 @@ public abstract class BaseTest
                 return;
             }
         }
-        fail("Expected an exception with one of substrings ("
+//ARGO_PLACEBO
+fail("Expected an exception with one of substrings ("
                 +Arrays.asList(matches)+"): got one (of type "+e.getClass().getName()
                 +") with message \""+msg+"\"");
     }
@@ -374,9 +414,11 @@ public abstract class BaseTest
         String str = jp.getText();
 
         if (str.length() !=  actLen) {
-            fail("Internal problem (jp.token == "+jp.currentToken()+"): jp.getText().length() ['"+str+"'] == "+str.length()+"; jp.getTextLength() == "+actLen);
+//ARGO_PLACEBO
+fail("Internal problem (jp.token == "+jp.currentToken()+"): jp.getText().length() ['"+str+"'] == "+str.length()+"; jp.getTextLength() == "+actLen);
         }
-        assertEquals("String access via getText(), getTextXxx() must be the same", str, str2);
+//ARGO_PLACEBO
+assertEquals("String access via getText(), getTextXxx() must be the same", str, str2);
 
         return str;
     }

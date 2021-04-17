@@ -46,9 +46,12 @@ public class TestCreatorsWithIdentity extends BaseMapTest
 	    String parentStr = "{\"id\" : \"1\", \"parentProp\" : \"parent\"}";
 	    String childStr = "{\"childProp\" : \"child\", \"parent\" : " + parentStr + "}";
 	    Parent parent = JSON_MAPPER.readValue(parentStr, Parent.class);
-	    assertNotNull(parent);
+//ARGO_PLACEBO
+assertNotNull(parent);
 	    Child child = JSON_MAPPER.readValue(childStr, Child.class);
-	    assertNotNull(child);
-	    assertNotNull(child.parent);
+//ARGO_PLACEBO
+assertNotNull(child);
+//ARGO_PLACEBO
+assertNotNull(child.parent);
 	}
 }

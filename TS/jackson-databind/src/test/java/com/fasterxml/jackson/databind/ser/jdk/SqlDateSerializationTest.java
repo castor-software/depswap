@@ -47,22 +47,28 @@ public class SqlDateSerializationTest extends BaseMapTest
         // 11-Oct-2016, tatu: As per [databind#219] we really should use global
         //   defaults in 2.9, even if this changes behavior.
 
-        assertEquals(String.valueOf(date99.getTime()),
+//ARGO_PLACEBO
+assertEquals(String.valueOf(date99.getTime()),
                 MAPPER.writeValueAsString(date99));
 
-        assertEquals(aposToQuotes("{'date':0}"),
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'date':0}"),
                 MAPPER.writeValueAsString(new SqlDateAsDefaultBean(0L)));
 
         // but may explicitly force timestamp too
-        assertEquals(aposToQuotes("{'date':0}"),
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'date':0}"),
                 MAPPER.writeValueAsString(new SqlDateAsNumberBean(0L)));
 
         // And also should be able to use String output as need be:
         ObjectWriter w = MAPPER.writer().without(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
                
-        assertEquals(quote("1999-04-01"), w.writeValueAsString(date99));
-        assertEquals(quote(date0.toString()), w.writeValueAsString(date0));
-        assertEquals(aposToQuotes("{'date':'"+date0.toString()+"'}"),
+//ARGO_PLACEBO
+assertEquals(quote("1999-04-01"), w.writeValueAsString(date99));
+//ARGO_PLACEBO
+assertEquals(quote(date0.toString()), w.writeValueAsString(date0));
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'date':'"+date0.toString()+"'}"),
                 w.writeValueAsString(new SqlDateAsDefaultBean(0L)));
     }
 
@@ -71,7 +77,8 @@ public class SqlDateSerializationTest extends BaseMapTest
         java.sql.Time time = new java.sql.Time(0L);
         // not 100% sure what we should expect wrt timezone, but what serializes
         // does use is quite simple:
-        assertEquals(quote(time.toString()), MAPPER.writeValueAsString(time));
+//ARGO_PLACEBO
+assertEquals(quote(time.toString()), MAPPER.writeValueAsString(time));
     }
 
     public void testSqlTimestamp() throws IOException
@@ -79,7 +86,8 @@ public class SqlDateSerializationTest extends BaseMapTest
         java.sql.Timestamp input = new java.sql.Timestamp(0L);
         // just should produce same output as standard `java.util.Date`:
         Date altTnput = new Date(0L);
-        assertEquals(MAPPER.writeValueAsString(altTnput),
+//ARGO_PLACEBO
+assertEquals(MAPPER.writeValueAsString(altTnput),
                 MAPPER.writeValueAsString(input));
     }
     
@@ -91,7 +99,8 @@ public class SqlDateSerializationTest extends BaseMapTest
 
         Person i = new Person();
         i.dateOfBirth = java.sql.Date.valueOf("1980-04-14");
-        assertEquals(aposToQuotes("{'dateOfBirth':'1980.04.14'}"),
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'dateOfBirth':'1980.04.14'}"),
                 mapper.writeValueAsString(i));
     }
 
@@ -102,7 +111,8 @@ public class SqlDateSerializationTest extends BaseMapTest
         mapper.setTimeZone(TimeZone.getDefault());
         mapper.configOverride(java.sql.Date.class)
             .setFormat(JsonFormat.Value.forPattern("yyyy+MM+dd"));        
-        assertEquals("\"1980+04+14\"",
+//ARGO_PLACEBO
+assertEquals("\"1980+04+14\"",
             mapper.writeValueAsString(java.sql.Date.valueOf("1980-04-14")));
     }
 }

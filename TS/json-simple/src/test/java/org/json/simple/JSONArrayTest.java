@@ -375,6 +375,7 @@ public class JSONArrayTest extends TestCase {
 		for (Object child : a) {
 			i++;
 		}
+		//ARGO_ORIGINAL
 		assertEquals(3, i);
 	}
 

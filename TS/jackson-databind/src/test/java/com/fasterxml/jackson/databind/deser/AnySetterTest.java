@@ -240,28 +240,34 @@ public class AnySetterTest
     static class IdentityDTO349 {
         public int x, y;
     }
-    
+
     /*
     /**********************************************************
     /* Test methods
     /**********************************************************
      */
 
-    private final ObjectMapper MAPPER = new ObjectMapper();
+    private final ObjectMapper MAPPER = newJsonMapper();
     
     public void testSimpleMapImitation() throws Exception
     {
         MapImitator mapHolder = MAPPER.readValue
             ("{ \"a\" : 3, \"b\" : true, \"c\":[1,2,3] }", MapImitator.class);
         Map<String,Object> result = mapHolder._map;
-        assertEquals(3, result.size());
-        assertEquals(Integer.valueOf(3), result.get("a"));
-        assertEquals(Boolean.TRUE, result.get("b"));
+//ARGO_PLACEBO
+assertEquals(3, result.size());
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(3), result.get("a"));
+//ARGO_PLACEBO
+assertEquals(Boolean.TRUE, result.get("b"));
         Object ob = result.get("c");
-        assertTrue(ob instanceof List<?>);
+//ARGO_PLACEBO
+assertTrue(ob instanceof List<?>);
         List<?> l = (List<?>)ob;
-        assertEquals(3, l.size());
-        assertEquals(Integer.valueOf(3), l.get(2));
+//ARGO_PLACEBO
+assertEquals(3, l.size());
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(3), l.get(2));
     }
 
     public void testAnySetterDisable() throws Exception
@@ -269,7 +275,8 @@ public class AnySetterTest
         try {
             MAPPER.readValue(aposToQuotes("{'value':3}"),
                     MapImitatorDisabled.class);
-            fail("Should not pass");
+//ARGO_PLACEBO
+fail("Should not pass");
         } catch (JsonMappingException e) {
             verifyException(e, "Unrecognized field \"value\"");
         }
@@ -281,9 +288,12 @@ public class AnySetterTest
         MapImitatorWithValue mapHolder = MAPPER.readValue
             ("{ \"a\" : [ 3, -1 ], \"b\" : [ ] }", MapImitatorWithValue.class);
         Map<String,int[]> result = mapHolder._map;
-        assertEquals(2, result.size());
-        assertEquals(new int[] { 3, -1 }, result.get("a"));
-        assertEquals(new int[0], result.get("b"));
+//ARGO_PLACEBO
+assertEquals(2, result.size());
+//ARGO_PLACEBO
+assertEquals(new int[] { 3, -1 }, result.get("a"));
+//ARGO_PLACEBO
+assertEquals(new int[0], result.get("b"));
     }
 
     public void testBrokenWithDoubleAnnotations() throws Exception
@@ -291,7 +301,8 @@ public class AnySetterTest
         try {
             @SuppressWarnings("unused")
             Broken b = MAPPER.readValue("{ \"a\" : 3 }", Broken.class);
-            fail("Should have gotten an exception");
+//ARGO_PLACEBO
+fail("Should have gotten an exception");
         } catch (JsonMappingException e) {
             verifyException(e, "Multiple 'any-setter' methods");
         }
@@ -314,15 +325,19 @@ public class AnySetterTest
     public void testProblem744() throws Exception
     {
         Bean744 bean = MAPPER.readValue("{\"name\":\"Bob\"}", Bean744.class);
-        assertNotNull(bean.additionalProperties);
-        assertEquals(1, bean.additionalProperties.size());
-        assertEquals("Bob", bean.additionalProperties.get("name"));
+//ARGO_PLACEBO
+assertNotNull(bean.additionalProperties);
+//ARGO_PLACEBO
+assertEquals(1, bean.additionalProperties.size());
+//ARGO_PLACEBO
+assertEquals("Bob", bean.additionalProperties.get("name"));
     }
 
     public void testIssue797() throws Exception
     {
         String json = MAPPER.writeValueAsString(new Bean797BaseImpl());
-        assertEquals("{}", json);
+//ARGO_PLACEBO
+assertEquals("{}", json);
     }
 
     // [Issue#337]
@@ -336,26 +351,35 @@ public class AnySetterTest
 //        System.err.println("JSON: "+json);
 
         PolyAnyBean result = MAPPER.readValue(json, PolyAnyBean.class);
-        assertEquals(1, result.props.size());
+//ARGO_PLACEBO
+assertEquals(1, result.props.size());
         Base ob = result.props.get("a");
-        assertNotNull(ob);
-        assertTrue(ob instanceof Impl);
-        assertEquals("xyz", ((Impl) ob).value);
+//ARGO_PLACEBO
+assertNotNull(ob);
+//ARGO_PLACEBO
+assertTrue(ob instanceof Impl);
+//ARGO_PLACEBO
+assertEquals("xyz", ((Impl) ob).value);
     }
     
 	public void testJsonAnySetterOnMap() throws Exception {
 		JsonAnySetterOnMap result = MAPPER.readValue("{\"id\":2,\"name\":\"Joe\", \"city\":\"New Jersey\"}",
 		        JsonAnySetterOnMap.class);
-		assertEquals(2, result.id);
-		assertEquals("Joe", result.other.get("name"));
-		assertEquals("New Jersey", result.other.get("city"));
+//ARGO_PLACEBO
+assertEquals(2, result.id);
+//ARGO_PLACEBO
+assertEquals("Joe", result.other.get("name"));
+//ARGO_PLACEBO
+assertEquals("New Jersey", result.other.get("city"));
 	}
 
 	public void testJsonAnySetterOnNullMap() throws Exception {
 		JsonAnySetterOnNullMap result = MAPPER.readValue("{\"id\":2,\"name\":\"Joe\", \"city\":\"New Jersey\"}",
 		        JsonAnySetterOnNullMap.class);
-		assertEquals(2, result.id);
-		assertNull(result.other);
+//ARGO_PLACEBO
+assertEquals(2, result.id);
+//ARGO_PLACEBO
+assertNull(result.other);
     }
 
     final static String UNWRAPPED_JSON_349 = aposToQuotes(
@@ -372,10 +396,14 @@ public class AnySetterTest
     {
         final ObjectMapper mapper = objectMapper();
         Bean349 value = mapper.readValue(UNWRAPPED_JSON_349,  Bean349.class);
-        assertNotNull(value);
-        assertEquals(3, value.x);
-        assertEquals(4, value.y);
-        assertEquals(2, value.props.size());
+//ARGO_PLACEBO
+assertNotNull(value);
+//ARGO_PLACEBO
+assertEquals(3, value.x);
+//ARGO_PLACEBO
+assertEquals(4, value.y);
+//ARGO_PLACEBO
+assertEquals(2, value.props.size());
     }
 
     // [databind#349]
@@ -385,9 +413,12 @@ public class AnySetterTest
         Bean349 bean = mapper.readerFor(Bean349.class)
                 .withValueToUpdate(new Bean349())
                 .readValue(UNWRAPPED_JSON_349);
-        assertEquals(3, bean.x);
-        assertEquals(4, bean.y);
-        assertEquals(2, bean.props.size());
+//ARGO_PLACEBO
+assertEquals(3, bean.x);
+//ARGO_PLACEBO
+assertEquals(4, bean.y);
+//ARGO_PLACEBO
+assertEquals(2, bean.props.size());
     }
 
     // [databind#1035]
@@ -406,23 +437,33 @@ public class AnySetterTest
         MyGeneric<String> stringGeneric = deserialized.getMyStringGeneric();
         MyGeneric<Integer> integerGeneric = deserialized.getMyIntegerGeneric();
 
-        assertNotNull(stringGeneric);
-        assertEquals(stringGeneric.getStaticallyMappedProperty(), "Test");
+//ARGO_PLACEBO
+assertNotNull(stringGeneric);
+//ARGO_PLACEBO
+assertEquals(stringGeneric.getStaticallyMappedProperty(), "Test");
         for(Map.Entry<String, Integer> entry : stringGeneric.getDynamicallyMappedProperties().entrySet()) {
-            assertTrue("A key in MyGeneric<String> is not an String.", entry.getKey() instanceof String);
-            assertTrue("A value in MyGeneric<Integer> is not an Integer.", entry.getValue() instanceof Integer);
+//ARGO_PLACEBO
+assertTrue("A key in MyGeneric<String> is not an String.", entry.getKey() instanceof String);
+//ARGO_PLACEBO
+assertTrue("A value in MyGeneric<Integer> is not an Integer.", entry.getValue() instanceof Integer);
         }
-        assertEquals(stringGeneric.getDynamicallyMappedProperties(), stringGenericMap);
+//ARGO_PLACEBO
+assertEquals(stringGeneric.getDynamicallyMappedProperties(), stringGenericMap);
 
-        assertNotNull(integerGeneric);
-        assertEquals(integerGeneric.getStaticallyMappedProperty(), "Test2");
+//ARGO_PLACEBO
+assertNotNull(integerGeneric);
+//ARGO_PLACEBO
+assertEquals(integerGeneric.getStaticallyMappedProperty(), "Test2");
         for(Map.Entry<Integer, Integer> entry : integerGeneric.getDynamicallyMappedProperties().entrySet()) {
             Object key = entry.getKey();
-            assertEquals("A key in MyGeneric<Integer> is not an Integer.", Integer.class, key.getClass());
+//ARGO_PLACEBO
+assertEquals("A key in MyGeneric<Integer> is not an Integer.", Integer.class, key.getClass());
             Object value = entry.getValue();
-            assertEquals("A value in MyGeneric<Integer> is not an Integer.", Integer.class, value.getClass());
+//ARGO_PLACEBO
+assertEquals("A value in MyGeneric<Integer> is not an Integer.", Integer.class, value.getClass());
         }
-        assertEquals(integerGeneric.getDynamicallyMappedProperties(), integerGenericMap);
+//ARGO_PLACEBO
+assertEquals(integerGeneric.getDynamicallyMappedProperties(), integerGenericMap);
     }
 
     /*
@@ -435,9 +476,13 @@ public class AnySetterTest
     {
         Ignored bean = mapper.readValue("{\"name\":\"Bob\", \"bogus\": [ 1, 2, 3], \"dummy\" : 13 }", Ignored.class);
         // as of 2.0, @JsonIgnoreProperties does block; @JsonIgnore not
-        assertNull(bean.map.get("dummy"));
-        assertEquals("[1, 2, 3]", ""+bean.map.get("bogus"));
-        assertEquals("Bob", bean.map.get("name"));
-        assertEquals(2, bean.map.size());
+//ARGO_PLACEBO
+assertNull(bean.map.get("dummy"));
+//ARGO_PLACEBO
+assertEquals("[1, 2, 3]", ""+bean.map.get("bogus"));
+//ARGO_PLACEBO
+assertEquals("Bob", bean.map.get("name"));
+//ARGO_PLACEBO
+assertEquals(2, bean.map.size());
     }
 }

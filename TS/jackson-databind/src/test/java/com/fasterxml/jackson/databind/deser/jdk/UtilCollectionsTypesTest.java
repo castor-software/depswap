@@ -71,10 +71,12 @@ public class UtilCollectionsTypesTest extends BaseMapTest
        // Can't use simple "_verifyCollection" as type may change; instead use
        // bit more flexible check:
        Collection<?> act = _writeReadCollection(Collections.unmodifiableList(input));
-       assertEquals(input, act);
+//ARGO_PLACEBO
+assertEquals(input, act);
 
        // and this check may be bit fragile (may need to revisit), but is good enough for now:
-       assertEquals(Collections.unmodifiableList(new ArrayList<>(input)).getClass(), act.getClass());
+//ARGO_PLACEBO
+assertEquals(Collections.unmodifiableList(new ArrayList<>(input)).getClass(), act.getClass());
    }
 
    public void testUnmodifiableSet() throws Exception
@@ -104,7 +106,8 @@ public class UtilCollectionsTypesTest extends BaseMapTest
        List<String> input = Arrays.asList("a", "bc", "def");
        String json = DEFAULT_MAPPER.writeValueAsString(input);
        List<?> result = DEFAULT_MAPPER.readValue(json, List.class);
-       assertEquals(input, result);
+//ARGO_PLACEBO
+assertEquals(input, result);
    }
 
    /*
@@ -115,8 +118,10 @@ public class UtilCollectionsTypesTest extends BaseMapTest
 
    protected void _verifyCollection(Collection<?> exp) throws Exception {
        Collection<?> act = _writeReadCollection(exp);
-       assertEquals(exp, act);
-       assertEquals(exp.getClass(), act.getClass());
+//ARGO_PLACEBO
+assertEquals(exp, act);
+//ARGO_PLACEBO
+assertEquals(exp.getClass(), act.getClass());
    }
 
    protected Collection<?> _writeReadCollection(Collection<?> input) throws Exception {
@@ -129,7 +134,9 @@ public class UtilCollectionsTypesTest extends BaseMapTest
        String json = DEFAULT_MAPPER.writeValueAsString(exp);
        Map<?,?> act = DEFAULT_MAPPER.readValue(json, Map.class);
 
-       assertEquals(exp, act);
-       assertEquals(exp.getClass(), act.getClass());
+//ARGO_PLACEBO
+assertEquals(exp, act);
+//ARGO_PLACEBO
+assertEquals(exp.getClass(), act.getClass());
    }
 }

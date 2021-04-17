@@ -36,70 +36,96 @@ public class TestTypeFactory1604 extends BaseMapTest
     {
         TypeFactory tf = newTypeFactory();
         JavaType base = tf.constructType(new TypeReference<Data1604<List<Long>>>() { });
-        assertEquals(Data1604.class, base.getRawClass());
-        assertEquals(1, base.containedTypeCount());
-        assertEquals(List.class, base.containedType(0).getRawClass());
+//ARGO_PLACEBO
+assertEquals(Data1604.class, base.getRawClass());
+//ARGO_PLACEBO
+assertEquals(1, base.containedTypeCount());
+//ARGO_PLACEBO
+assertEquals(List.class, base.containedType(0).getRawClass());
 
         JavaType subtype = tf.constructSpecializedType(base, DataList1604.class);
-        assertEquals(DataList1604.class, subtype.getRawClass());
-        assertEquals(1, subtype.containedTypeCount());
+//ARGO_PLACEBO
+assertEquals(DataList1604.class, subtype.getRawClass());
+//ARGO_PLACEBO
+assertEquals(1, subtype.containedTypeCount());
         JavaType paramType = subtype.containedType(0);
-        assertEquals(Long.class, paramType.getRawClass());
+//ARGO_PLACEBO
+assertEquals(Long.class, paramType.getRawClass());
     }
 
     public void testCustomTypesRefinedNested()
     {
         TypeFactory tf = newTypeFactory();
         JavaType base = tf.constructType(new TypeReference<Data1604<List<Long>>>() { });
-        assertEquals(Data1604.class, base.getRawClass());
+//ARGO_PLACEBO
+assertEquals(Data1604.class, base.getRawClass());
 
         JavaType subtype = tf.constructSpecializedType(base, RefinedDataList1604.class);
-        assertEquals(RefinedDataList1604.class, subtype.getRawClass());
-        assertEquals(DataList1604.class, subtype.getSuperClass().getRawClass());
+//ARGO_PLACEBO
+assertEquals(RefinedDataList1604.class, subtype.getRawClass());
+//ARGO_PLACEBO
+assertEquals(DataList1604.class, subtype.getSuperClass().getRawClass());
 
-        assertEquals(1, subtype.containedTypeCount());
+//ARGO_PLACEBO
+assertEquals(1, subtype.containedTypeCount());
         JavaType paramType = subtype.containedType(0);
-        assertEquals(Long.class, paramType.getRawClass());
+//ARGO_PLACEBO
+assertEquals(Long.class, paramType.getRawClass());
     }
 
     public void testCustomTypesRefinedSneaky()
     {
         TypeFactory tf = newTypeFactory();
         JavaType base = tf.constructType(new TypeReference<Data1604<List<Long>>>() { });
-        assertEquals(Data1604.class, base.getRawClass());
+//ARGO_PLACEBO
+assertEquals(Data1604.class, base.getRawClass());
 
         JavaType subtype = tf.constructSpecializedType(base, SneakyDataList1604.class);
-        assertEquals(SneakyDataList1604.class, subtype.getRawClass());
-        assertEquals(2, subtype.containedTypeCount());
-        assertEquals(Long.class, subtype.containedType(1).getRawClass());
+//ARGO_PLACEBO
+assertEquals(SneakyDataList1604.class, subtype.getRawClass());
+//ARGO_PLACEBO
+assertEquals(2, subtype.containedTypeCount());
+//ARGO_PLACEBO
+assertEquals(Long.class, subtype.containedType(1).getRawClass());
         // first one, "bogus", has to be essentially "unknown"
-        assertEquals(Object.class, subtype.containedType(0).getRawClass());
+//ARGO_PLACEBO
+assertEquals(Object.class, subtype.containedType(0).getRawClass());
 
         // and have correct parent too
-        assertEquals(Data1604.class, subtype.getSuperClass().getRawClass());
+//ARGO_PLACEBO
+assertEquals(Data1604.class, subtype.getSuperClass().getRawClass());
     }
 
     public void testTwoParamSneakyCustom()
     {
         TypeFactory tf = newTypeFactory();
         JavaType type = tf.constructType(new TypeReference<TwoParam1604<String,List<Long>>>() { });
-        assertEquals(TwoParam1604.class, type.getRawClass());
-        assertEquals(String.class, type.containedType(0).getRawClass());
+//ARGO_PLACEBO
+assertEquals(TwoParam1604.class, type.getRawClass());
+//ARGO_PLACEBO
+assertEquals(String.class, type.containedType(0).getRawClass());
         JavaType ct = type.containedType(1);
-        assertEquals(List.class, ct.getRawClass());
-        assertEquals(Long.class, ct.getContentType().getRawClass());
+//ARGO_PLACEBO
+assertEquals(List.class, ct.getRawClass());
+//ARGO_PLACEBO
+assertEquals(Long.class, ct.getContentType().getRawClass());
 
         JavaType subtype = tf.constructSpecializedType(type, SneakyTwoParam1604.class);
-        assertEquals(SneakyTwoParam1604.class, subtype.getRawClass());
-        assertEquals(TwoParam1604.class, subtype.getSuperClass().getRawClass());
-        assertEquals(2, subtype.containedTypeCount());
+//ARGO_PLACEBO
+assertEquals(SneakyTwoParam1604.class, subtype.getRawClass());
+//ARGO_PLACEBO
+assertEquals(TwoParam1604.class, subtype.getSuperClass().getRawClass());
+//ARGO_PLACEBO
+assertEquals(2, subtype.containedTypeCount());
 
         // should properly resolve type parameters despite sneaky switching, including "unwounding"
         // `List` wrapper
         JavaType first = subtype.containedType(0);
-        assertEquals(Long.class, first.getRawClass());
+//ARGO_PLACEBO
+assertEquals(Long.class, first.getRawClass());
         JavaType second = subtype.containedType(1);
-        assertEquals(String.class, second.getRawClass());
+//ARGO_PLACEBO
+assertEquals(String.class, second.getRawClass());
     }
 
     // Also: let's not allow mismatching binding
@@ -111,7 +137,8 @@ public class TestTypeFactory1604 extends BaseMapTest
 
         try {
             tf.constructSpecializedType(base, DataList1604.class);
-            fail("Should not pass");
+//ARGO_PLACEBO
+fail("Should not pass");
         } catch (IllegalArgumentException e) {
             verifyException(e, "Failed to specialize");
             verifyException(e, "Data1604");
@@ -126,18 +153,26 @@ public class TestTypeFactory1604 extends BaseMapTest
         JavaType base = tf.constructType(new TypeReference<Either<Object, Object>>() { });
 
         JavaType lefty = tf.constructSpecializedType(base, Left.class);
-        assertEquals(Left.class, lefty.getRawClass());
+//ARGO_PLACEBO
+assertEquals(Left.class, lefty.getRawClass());
         JavaType[] params = tf.findTypeParameters(lefty, Either.class);
-        assertEquals(2, params.length);
-        assertEquals(Object.class, params[0].getRawClass());
-        assertEquals(Void.class, params[1].getRawClass());
+//ARGO_PLACEBO
+assertEquals(2, params.length);
+//ARGO_PLACEBO
+assertEquals(Object.class, params[0].getRawClass());
+//ARGO_PLACEBO
+assertEquals(Void.class, params[1].getRawClass());
 
         JavaType righty = tf.constructSpecializedType(base, Right.class);
-        assertEquals(Right.class, righty.getRawClass());
+//ARGO_PLACEBO
+assertEquals(Right.class, righty.getRawClass());
         
         params = tf.findTypeParameters(righty, Either.class);
-        assertEquals(2, params.length);
-        assertEquals(Void.class, params[0].getRawClass());
-        assertEquals(Object.class, params[1].getRawClass());
+//ARGO_PLACEBO
+assertEquals(2, params.length);
+//ARGO_PLACEBO
+assertEquals(Void.class, params[0].getRawClass());
+//ARGO_PLACEBO
+assertEquals(Object.class, params[1].getRawClass());
     }
 }

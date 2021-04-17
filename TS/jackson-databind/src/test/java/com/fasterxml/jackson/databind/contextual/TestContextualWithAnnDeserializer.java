@@ -72,7 +72,9 @@ public class TestContextualWithAnnDeserializer extends BaseMapTest
         AnnotatedContextualClassBean bean = mapper.readValue(
                 "{\"value\":\"a\"}",
               AnnotatedContextualClassBean.class);
-        assertNotNull(bean);
-        assertEquals("xyz=a", bean.value.value);
+//ARGO_PLACEBO
+assertNotNull(bean);
+//ARGO_PLACEBO
+assertEquals("xyz=a", bean.value.value);
     }
 }

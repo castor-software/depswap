@@ -29,11 +29,16 @@ public class UpdateValueTest extends BaseMapTest
         
         Map<String,Object> ob = MAPPER.updateValue(base, overrides);
         // first: should return first argument
-        assertSame(base, ob);
-        assertEquals(3, ob.size());
-        assertEquals(Integer.valueOf(345), ob.get("a"));
-        assertEquals("bar", ob.get("foo"));
-        assertEquals(Boolean.TRUE, ob.get("xyz"));
+//ARGO_PLACEBO
+assertSame(base, ob);
+//ARGO_PLACEBO
+assertEquals(3, ob.size());
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(345), ob.get("a"));
+//ARGO_PLACEBO
+assertEquals("bar", ob.get("foo"));
+//ARGO_PLACEBO
+assertEquals(Boolean.TRUE, ob.get("xyz"));
     }
 
     public void testListUpdate() throws Exception
@@ -45,12 +50,18 @@ public class UpdateValueTest extends BaseMapTest
 
         List<Object> ob = MAPPER.updateValue(base, overrides);
         // first: should return first argument
-        assertSame(base, ob);
-        assertEquals(4, ob.size());
-        assertEquals(Integer.valueOf(123456), ob.get(0));
-        assertEquals(Boolean.FALSE, ob.get(1));
-        assertEquals(overrides[0], ob.get(2));
-        assertEquals(overrides[1], ob.get(3));
+//ARGO_PLACEBO
+assertSame(base, ob);
+//ARGO_PLACEBO
+assertEquals(4, ob.size());
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(123456), ob.get(0));
+//ARGO_PLACEBO
+assertEquals(Boolean.FALSE, ob.get(1));
+//ARGO_PLACEBO
+assertEquals(overrides[0], ob.get(2));
+//ARGO_PLACEBO
+assertEquals(overrides[1], ob.get(3));
     }
 
     public void testArrayUpdate() throws Exception
@@ -60,11 +71,16 @@ public class UpdateValueTest extends BaseMapTest
         Object[] overrides = new Object[] { Boolean.TRUE, "zoink!" };
 
         Object[] ob = MAPPER.updateValue(base, overrides);
-        assertEquals(4, ob.length);
-        assertEquals(base[0], ob[0]);
-        assertEquals(base[1], ob[1]);
-        assertEquals(overrides[0], ob[2]);
-        assertEquals(overrides[1], ob[3]);
+//ARGO_PLACEBO
+assertEquals(4, ob.length);
+//ARGO_PLACEBO
+assertEquals(base[0], ob[0]);
+//ARGO_PLACEBO
+assertEquals(base[1], ob[1]);
+//ARGO_PLACEBO
+assertEquals(overrides[0], ob[2]);
+//ARGO_PLACEBO
+assertEquals(overrides[1], ob[3]);
     }
 
     /*
@@ -79,9 +95,12 @@ public class UpdateValueTest extends BaseMapTest
         Map<String,Object> overrides = new LinkedHashMap<>();
         overrides.put("y", 1234);
         Point result = MAPPER.updateValue(base, overrides);
-        assertSame(base, result);
-        assertEquals(42, result.x);
-        assertEquals(1234, result.y);
+//ARGO_PLACEBO
+assertSame(base, result);
+//ARGO_PLACEBO
+assertEquals(42, result.x);
+//ARGO_PLACEBO
+assertEquals(1234, result.y);
     }
 
     /*
@@ -93,9 +112,11 @@ public class UpdateValueTest extends BaseMapTest
     public void testMisc() throws Exception
     {
         // if either is `null`, should return first arg
-        assertNull(MAPPER.updateValue(null, "foo"));
+//ARGO_PLACEBO
+assertNull(MAPPER.updateValue(null, "foo"));
         List<String> input = new ArrayList<>();
-        assertSame(input, MAPPER.updateValue(input, null));
+//ARGO_PLACEBO
+assertSame(input, MAPPER.updateValue(input, null));
     }
 
 }

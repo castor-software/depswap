@@ -45,6 +45,7 @@ public class CreatorWithObjectIdTest
         ObjectMapper om = new ObjectMapper();
         String json = om.writeValueAsString(a);
         A deser = om.readValue(json, A.class);
-        assertEquals(a.name, deser.name);
+//ARGO_PLACEBO
+assertEquals(a.name, deser.name);
     }
 }

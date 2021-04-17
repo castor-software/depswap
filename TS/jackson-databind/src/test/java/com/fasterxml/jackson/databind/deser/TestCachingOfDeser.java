@@ -64,10 +64,14 @@ public class TestCachingOfDeser extends BaseMapTest
         TestMapWithCustom mapC = mapper.readValue(MAP_INPUT, TestMapWithCustom.class);
         TestMapNoCustom mapStd = mapper.readValue(MAP_INPUT, TestMapNoCustom.class);
 
-        assertNotNull(mapC.map);
-        assertNotNull(mapStd.map);
-        assertEquals(Integer.valueOf(100), mapC.map.get("a"));
-        assertEquals(Integer.valueOf(1), mapStd.map.get("a"));
+//ARGO_PLACEBO
+assertNotNull(mapC.map);
+//ARGO_PLACEBO
+assertNotNull(mapStd.map);
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(100), mapC.map.get("a"));
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(1), mapStd.map.get("a"));
     }
         
     // And then standard first, custom next
@@ -77,10 +81,14 @@ public class TestCachingOfDeser extends BaseMapTest
         TestMapNoCustom mapStd = mapper.readValue(MAP_INPUT, TestMapNoCustom.class);
         TestMapWithCustom mapC = mapper.readValue(MAP_INPUT, TestMapWithCustom.class);
 
-        assertNotNull(mapStd.map);
-        assertNotNull(mapC.map);
-        assertEquals(Integer.valueOf(1), mapStd.map.get("a"));
-        assertEquals(Integer.valueOf(100), mapC.map.get("a"));
+//ARGO_PLACEBO
+assertNotNull(mapStd.map);
+//ARGO_PLACEBO
+assertNotNull(mapC.map);
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(1), mapStd.map.get("a"));
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(100), mapC.map.get("a"));
     }
 
     // Ok: first, use custom-annotated instance first, then standard
@@ -89,10 +97,14 @@ public class TestCachingOfDeser extends BaseMapTest
         TestListWithCustom listC = mapper.readValue(LIST_INPUT, TestListWithCustom.class);
         TestListNoCustom listStd = mapper.readValue(LIST_INPUT, TestListNoCustom.class);
 
-        assertNotNull(listC.list);
-        assertNotNull(listStd.list);
-        assertEquals(Integer.valueOf(100), listC.list.get(0));
-        assertEquals(Integer.valueOf(1), listStd.list.get(0));
+//ARGO_PLACEBO
+assertNotNull(listC.list);
+//ARGO_PLACEBO
+assertNotNull(listStd.list);
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(100), listC.list.get(0));
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(1), listStd.list.get(0));
     }
 
     // First custom-annotated, then standard
@@ -101,9 +113,13 @@ public class TestCachingOfDeser extends BaseMapTest
         TestListNoCustom listStd = mapper.readValue(LIST_INPUT, TestListNoCustom.class);
         TestListWithCustom listC = mapper.readValue(LIST_INPUT, TestListWithCustom.class);
 
-        assertNotNull(listC.list);
-        assertNotNull(listStd.list);
-        assertEquals(Integer.valueOf(100), listC.list.get(0));
-        assertEquals(Integer.valueOf(1), listStd.list.get(0));
+//ARGO_PLACEBO
+assertNotNull(listC.list);
+//ARGO_PLACEBO
+assertNotNull(listStd.list);
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(100), listC.list.get(0));
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(1), listStd.list.get(0));
     }
 }

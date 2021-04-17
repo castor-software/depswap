@@ -63,7 +63,7 @@ public class ObjectId687Test extends BaseMapTest
     /*****************************************************
      */
 
-    private final ObjectMapper MAPPER = objectMapper();
+    private final ObjectMapper MAPPER = newJsonMapper();
 
     // for [databind#687]
     public void testSerializeDeserializeWithCreator() throws IOException {
@@ -78,11 +78,14 @@ public class ObjectId687Test extends BaseMapTest
 
         EnclosingForRefsWithCreator result = MAPPER.readValue(json,
                 EnclosingForRefsWithCreator.class);
-        assertNotNull(result);
-        assertEquals(result.label, e.label);
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertEquals(result.label, e.label);
 
         // also, compare by re-serializing:
-        assertEquals(json, MAPPER.writeValueAsString(result));
+//ARGO_PLACEBO
+assertEquals(json, MAPPER.writeValueAsString(result));
     }
 
     public void testSerializeDeserializeNoCreator() throws IOException {
@@ -97,10 +100,13 @@ public class ObjectId687Test extends BaseMapTest
 
         EnclosingForRefWithNoCreator result = MAPPER.readValue(json,
                 EnclosingForRefWithNoCreator.class);
-        assertNotNull(result);
-        assertEquals(result.label, e.label);
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertEquals(result.label, e.label);
 
         // also, compare by re-serializing:
-        assertEquals(json, MAPPER.writeValueAsString(result));
+//ARGO_PLACEBO
+assertEquals(json, MAPPER.writeValueAsString(result));
     }    
 }

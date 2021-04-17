@@ -26,15 +26,14 @@ public class SingleArgCreatorTest extends BaseMapTest
         protected final String value;
 
         @JsonCreator(mode=JsonCreator.Mode.DELEGATING)
-        public SingleNamedButStillDelegating(@JsonProperty("foobar") String v){
+        public SingleNamedButStillDelegating(@JsonProperty("foobar") String v) {
             value = v;
         }
 
         public String getFoobar() { return "x"; }
     }
     
-    // [databind#557]
-    
+    // For [databind#557]
     static class StringyBean
     {
         public final String value;
@@ -151,7 +150,8 @@ public class SingleArgCreatorTest extends BaseMapTest
     {
         SingleNamedStringBean bean = MAPPER.readValue(quote("foobar"),
                 SingleNamedStringBean.class);
-        assertEquals("foobar", bean._ss);
+//ARGO_PLACEBO
+assertEquals("foobar", bean._ss);
     }
 
     public void testSingleStringArgWithImplicitName() throws Exception
@@ -159,7 +159,8 @@ public class SingleArgCreatorTest extends BaseMapTest
         final ObjectMapper mapper = new ObjectMapper();
         mapper.setAnnotationIntrospector(new MyParamIntrospector("value"));
         StringyBean bean = mapper.readValue(quote("foobar"), StringyBean.class);
-        assertEquals("foobar", bean.getValue());
+//ARGO_PLACEBO
+assertEquals("foobar", bean.getValue());
     }    
 
     // [databind#714]
@@ -168,7 +169,8 @@ public class SingleArgCreatorTest extends BaseMapTest
         final ObjectMapper mapper = new ObjectMapper();
         mapper.setAnnotationIntrospector(new MyParamIntrospector("value"));
         StringyBeanWithProps bean = mapper.readValue("{\"value\":\"x\"}", StringyBeanWithProps.class);
-        assertEquals("x", bean.getValue());
+//ARGO_PLACEBO
+assertEquals("x", bean.getValue());
     }    
 
     // [databind#714]
@@ -176,23 +178,28 @@ public class SingleArgCreatorTest extends BaseMapTest
     {
         SingleNamedButStillDelegating bean = MAPPER.readValue(quote("xyz"),
                 SingleNamedButStillDelegating.class);
-        assertEquals("xyz", bean.value);
+//ARGO_PLACEBO
+assertEquals("xyz", bean.value);
     }
 
     public void testExplicitFactory660a() throws Exception
     {
         // First, explicit override for factory
         ExplicitFactoryBeanA bean = MAPPER.readValue(quote("abc"), ExplicitFactoryBeanA.class);
-        assertNotNull(bean);
-        assertEquals("abc", bean.value());
+//ARGO_PLACEBO
+assertNotNull(bean);
+//ARGO_PLACEBO
+assertEquals("abc", bean.value());
     }
 
     public void testExplicitFactory660b() throws Exception
     {
         // and then one for private constructor
         ExplicitFactoryBeanB bean2 = MAPPER.readValue(quote("def"), ExplicitFactoryBeanB.class);
-        assertNotNull(bean2);
-        assertEquals("def", bean2.value());
+//ARGO_PLACEBO
+assertNotNull(bean2);
+//ARGO_PLACEBO
+assertEquals("def", bean2.value());
     }
 
     // [databind#1383]
@@ -203,8 +210,11 @@ public class SingleArgCreatorTest extends BaseMapTest
         SingleArgWithImplicit bean = mapper.readValue(aposToQuotes("{'x':1,'y':2}"),
                 SingleArgWithImplicit.class);
         XY v = bean.getFoobar();
-        assertNotNull(v);
-        assertEquals(1, v.x);
-        assertEquals(2, v.y);
+//ARGO_PLACEBO
+assertNotNull(v);
+//ARGO_PLACEBO
+assertEquals(1, v.x);
+//ARGO_PLACEBO
+assertEquals(2, v.y);
     }
 }

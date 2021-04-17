@@ -4,6 +4,11 @@ import com.fasterxml.jackson.databind.BaseMapTest;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import static com.fasterxml.jackson.databind.JSONTestUtils.//ARGO_ORIGINAL
+assertEquivalent;
+import static com.fasterxml.jackson.databind.JSONTestUtils.//ARGO_ORIGINAL
+assertNonEquivalent;
+
 /**
  * This unit test suite tries to verify that JsonNode-based trees
  * can be deserialized as expected.
@@ -30,18 +35,18 @@ public class TestTreeDeserialization
         ObjectNode n1 = new ObjectNode(null);
         ObjectNode n2 = new ObjectNode(null);
 
-        assertTrue(n1.equals(n2));
-        assertTrue(n2.equals(n1));
+        //ARGO_EQUIVALENT
+assertEquivalent(n1,n2);
 
         n1.set("x", TextNode.valueOf("Test"));
 
-        assertFalse(n1.equals(n2));
-        assertFalse(n2.equals(n1));
+        //ARGO_EQUIVALENT
+assertNonEquivalent(n1, n2);
 
         n2.set("x", TextNode.valueOf("Test"));
 
-        assertTrue(n1.equals(n2));
-        assertTrue(n2.equals(n1));
+        //ARGO_EQUIVALENT
+assertEquivalent(n1,n2);
     }
 
     public void testReadFromString() throws Exception
@@ -52,9 +57,12 @@ public class TestTreeDeserialization
 
         String generated = mapper.writeValueAsString( jNode);  //back slashes are gone
         JsonNode out = mapper.readValue( generated, JsonNode.class );   //crashes here
-        assertTrue(out.isObject());
-        assertEquals(1, out.size());
+//ARGO_ORIGINAL
+assertTrue(out.isObject());
+//ARGO_ORIGINAL
+assertEquals(1, out.size());
         String value = out.path("field").asText();
-        assertNotNull(value);
+//ARGO_ORIGINAL
+assertNotNull(value);
     }
 }

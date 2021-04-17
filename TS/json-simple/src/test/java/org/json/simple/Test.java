@@ -356,8 +356,8 @@ public class Test extends TestCase {
 	}
 	
 	public void testEncode() throws Exception{
-		boolean checkForUnicode = false;
-		boolean checkForOrder = false;
+		boolean checkForUnicode = true;
+		boolean checkForOrder = true;
 
 		System.out.println("=======encode=======");
 		
@@ -369,24 +369,24 @@ public class Test extends TestCase {
 		System.out.println("======array1==========");
 		System.out.println(array1);
 		System.out.println();
-		//ARGO_UNICODE
-		if(checkForUnicode) assertEquivalent("[\"abc\\u0010a\\/\",123,222.123,true]",array1.toString());
+		//ARGO_EQUIVALENT
+		assertEquivalent("[\"abc\\u0010a\\/\",123,222.123,true]",array1.toString());
 		
 		JSONObject obj1=new JSONObject();
 		obj1.put("array1",array1);
 		System.out.println("======obj1 with array1===========");
 		System.out.println(obj1);
 		System.out.println();
-		//ARGO_UNICODE
-		if(checkForUnicode) assertEquivalent("{\"array1\":[\"abc\\u0010a\\/\",123,222.123,true]}",obj1.toString());
+		//ARGO_EQUIVALENT
+		assertEquivalent("{\"array1\":[\"abc\\u0010a\\/\",123,222.123,true]}",obj1.toString());
 		
 		obj1.remove("array1");
 		array1.add(obj1);
 		System.out.println("======array1 with obj1========");
 		System.out.println(array1);
 		System.out.println();
-		//ARGO_UNICODE
-		if(checkForUnicode) assertEquivalent("[\"abc\\u0010a\\/\",123,222.123,true,{}]",array1.toString());
+		//ARGO_EQUIVALENT
+		assertEquivalent("[\"abc\\u0010a\\/\",123,222.123,true,{}]",array1.toString());
 	
 		List list = new ArrayList();
 		list.add("abc\u0010a/");
@@ -397,16 +397,16 @@ public class Test extends TestCase {
 		System.out.println("======list==========");
 		System.out.println(JSONArray.toJSONString(list));
 		System.out.println();
-		//ARGO_UNICODE
-		if(checkForUnicode) assertEquivalent("[\"abc\\u0010a\\/\",123,222.123,true,null]",JSONArray.toJSONString(list));
+		//ARGO_EQUIVALENT
+		assertEquivalent("[\"abc\\u0010a\\/\",123,222.123,true,null]",JSONArray.toJSONString(list));
 
 		Map map = new HashMap();
 		map.put("array1",list);
 		System.out.println("======map with list===========");
 		System.out.println(map);
 		System.out.println();
-		//ARGO_UNICODE
-		if(checkForUnicode) assertEquivalent("{\"array1\":[\"abc\\u0010a\\/\",123,222.123,true,null]}",JSONObject.toJSONString(map));
+		//ARGO_EQUIVALENT
+		assertEquivalent("{\"array1\":[\"abc\\u0010a\\/\",123,222.123,true,null]}",JSONObject.toJSONString(map));
 		
         Map m1 = new LinkedHashMap();
         Map m2 = new LinkedHashMap();
@@ -422,45 +422,15 @@ public class Test extends TestCase {
         l1.add(m2);
         String jsonString = JSONValue.toJSONString(l1);
         System.out.println(jsonString);
-        if(checkForOrder) {
-	        //ARGO_ORDER
-	        assertEquivalent("[{\"k11\":\"v11\",\"k12\":\"v12\",\"k13\":\"v13\"},{\"k21\":\"v21\",\"k22\":\"v22\",\"k23\":\"v23\"}]", jsonString);
-        } else {
-        	assertTrue(jsonString.contains("\"k11\""));
-	        assertTrue(jsonString.contains("\"v11\""));
-	        assertTrue(jsonString.contains("\"k12\""));
-	        assertTrue(jsonString.contains("\"v12\""));
-	        assertTrue(jsonString.contains("\"k13\""));
-	        assertTrue(jsonString.contains("\"v13\""));
-	        assertTrue(jsonString.contains("\"k21\""));
-	        assertTrue(jsonString.contains("\"v21\""));
-	        assertTrue(jsonString.contains("\"k22\""));
-	        assertTrue(jsonString.contains("\"v22\""));
-	        assertTrue(jsonString.contains("\"k23\""));
-	        assertTrue(jsonString.contains("\"v23\""));
-        }
+		//ARGO_EQUIVALENT
+        assertEquivalent("[{\"k11\":\"v11\",\"k12\":\"v12\",\"k13\":\"v13\"},{\"k21\":\"v21\",\"k22\":\"v22\",\"k23\":\"v23\"}]", jsonString);
 
         StringWriter out = new StringWriter();
         JSONValue.writeJSONString(l1, out);
         jsonString = out.toString();
         System.out.println(jsonString);
-		if(checkForOrder) {
-			//ARGO_ORDER
-			assertEquivalent("[{\"k11\":\"v11\",\"k12\":\"v12\",\"k13\":\"v13\"},{\"k21\":\"v21\",\"k22\":\"v22\",\"k23\":\"v23\"}]", jsonString);
-		} else {
-			assertTrue(jsonString.contains("\"k11\""));
-			assertTrue(jsonString.contains("\"v11\""));
-			assertTrue(jsonString.contains("\"k12\""));
-			assertTrue(jsonString.contains("\"v12\""));
-			assertTrue(jsonString.contains("\"k13\""));
-			assertTrue(jsonString.contains("\"v13\""));
-			assertTrue(jsonString.contains("\"k21\""));
-			assertTrue(jsonString.contains("\"v21\""));
-			assertTrue(jsonString.contains("\"k22\""));
-			assertTrue(jsonString.contains("\"v22\""));
-			assertTrue(jsonString.contains("\"k23\""));
-			assertTrue(jsonString.contains("\"v23\""));
-		}
+		//ARGO_EQUIVALENT
+		assertEquivalent("[{\"k11\":\"v11\",\"k12\":\"v12\",\"k13\":\"v13\"},{\"k21\":\"v21\",\"k22\":\"v22\",\"k23\":\"v23\"}]", jsonString);
 
         List l2 = new LinkedList();
         Map m3 = new LinkedHashMap();
@@ -478,33 +448,7 @@ public class Test extends TestCase {
         JSONValue.writeJSONString(l1, out);
         jsonString = out.toString();
         System.out.println(jsonString);
-		if(checkForOrder) {
-			//ARGO_ORDER
-			assertEquivalent("[{\"k11\":\"v11\",\"k12\":\"v12\",\"k13\":\"v13\",\"k14\":{\"k31\":\"v3\",\"k32\":123.45,\"k33\":false,\"k34\":null,\"k35\":[\"vvv\",\"1.23456789123456789\",true,null]}},{\"k21\":\"v21\",\"k22\":\"v22\",\"k23\":\"v23\"}]",jsonString);
-		} else {
-			assertTrue(jsonString.contains("\"k11\""));
-			assertTrue(jsonString.contains("\"v11\""));
-			assertTrue(jsonString.contains("\"k12\""));
-			assertTrue(jsonString.contains("\"v12\""));
-			assertTrue(jsonString.contains("\"k13\""));
-			assertTrue(jsonString.contains("\"v13\""));
-			assertTrue(jsonString.contains("\"k21\""));
-			assertTrue(jsonString.contains("\"v21\""));
-			assertTrue(jsonString.contains("\"k22\""));
-			assertTrue(jsonString.contains("\"v22\""));
-			assertTrue(jsonString.contains("\"k23\""));
-			assertTrue(jsonString.contains("\"v23\""));
-
-
-			assertTrue(jsonString.contains("\"k32\""));
-			assertTrue(jsonString.contains("123.45"));
-			assertTrue(jsonString.contains("\"k33\""));
-			assertTrue(jsonString.contains("false"));
-			//assertTrue(jsonString.contains("\"k34\""));
-			assertTrue(jsonString.contains("null"));
-			assertTrue(jsonString.contains("vvv"));
-			assertTrue(jsonString.contains("true"));
-			assertTrue(jsonString.contains("1.23456789123456789"));
-		}
+		//ARGO_EQUIVALENT
+		assertEquivalent("[{\"k11\":\"v11\",\"k12\":\"v12\",\"k13\":\"v13\",\"k14\":{\"k31\":\"v3\",\"k32\":123.45,\"k33\":false,\"k34\":null,\"k35\":[\"vvv\",\"1.23456789123456789\",true,null]}},{\"k21\":\"v21\",\"k22\":\"v22\",\"k23\":\"v23\"}]",jsonString);
     }
 }

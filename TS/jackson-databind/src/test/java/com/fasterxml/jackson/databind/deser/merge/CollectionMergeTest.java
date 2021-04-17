@@ -60,17 +60,23 @@ public class CollectionMergeTest extends BaseMapTest
     public void testCollectionMerging() throws Exception
     {
         CollectionWrapper w = MAPPER.readValue(aposToQuotes("{'bag':['b']}"), CollectionWrapper.class);
-        assertEquals(2, w.bag.size());
-        assertTrue(w.bag.contains("a"));
-        assertTrue(w.bag.contains("b"));
+//ARGO_PLACEBO
+assertEquals(2, w.bag.size());
+//ARGO_PLACEBO
+assertTrue(w.bag.contains("a"));
+//ARGO_PLACEBO
+assertTrue(w.bag.contains("b"));
     }
 
     public void testListMerging() throws Exception
     {
         MergedList w = MAPPER.readValue(aposToQuotes("{'values':['x']}"), MergedList.class);
-        assertEquals(2, w.values.size());
-        assertTrue(w.values.contains("a"));
-        assertTrue(w.values.contains("x"));
+//ARGO_PLACEBO
+assertEquals(2, w.values.size());
+//ARGO_PLACEBO
+assertTrue(w.values.contains("a"));
+//ARGO_PLACEBO
+assertTrue(w.values.contains("x"));
     }
 
     // Test that uses generic type
@@ -84,19 +90,26 @@ public class CollectionMergeTest extends BaseMapTest
                 .readerFor(new TypeReference<MergedX<Collection<String>>>() {})
                 .withValueToUpdate(input)
                 .readValue(aposToQuotes("{'value':['bar']}"));
-        assertSame(input, result);
-        assertEquals(2, result.value.size());
+//ARGO_PLACEBO
+assertSame(input, result);
+//ARGO_PLACEBO
+assertEquals(2, result.value.size());
         Iterator<String> it = result.value.iterator();
-        assertEquals("foo", it.next());
-        assertEquals("bar", it.next());
+//ARGO_PLACEBO
+assertEquals("foo", it.next());
+//ARGO_PLACEBO
+assertEquals("bar", it.next());
     }
 
     public void testEnumSetMerging() throws Exception
     {
         MergedEnumSet result = MAPPER.readValue(aposToQuotes("{'abc':['A']}"), MergedEnumSet.class);
-        assertEquals(2, result.abc.size());
-        assertTrue(result.abc.contains(ABC.B)); // original
-        assertTrue(result.abc.contains(ABC.A)); // added
+//ARGO_PLACEBO
+assertEquals(2, result.abc.size());
+//ARGO_PLACEBO
+assertTrue(result.abc.contains(ABC.B)); // original
+//ARGO_PLACEBO
+assertTrue(result.abc.contains(ABC.A)); // added
     }
 
 }

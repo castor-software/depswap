@@ -141,11 +141,15 @@ public class TestTypedDeserialization
         ObjectMapper m = new ObjectMapper();
         Animal a = m.readValue(asJSONObjectValueString("@classy", Cat.class.getName(),
                 "furColor", "tabby", "name", "Garfield"), Animal.class);
-        assertNotNull(a);
-        assertEquals(Cat.class, a.getClass());
+//ARGO_PLACEBO
+assertNotNull(a);
+//ARGO_PLACEBO
+assertEquals(Cat.class, a.getClass());
         Cat c = (Cat) a;
-        assertEquals("Garfield", c.name);
-        assertEquals("tabby", c.furColor);
+//ARGO_PLACEBO
+assertEquals("Garfield", c.name);
+//ARGO_PLACEBO
+assertEquals("tabby", c.furColor);
     }
 
     // Test inclusion using wrapper style
@@ -156,11 +160,15 @@ public class TestTypedDeserialization
         String JSON = "{\".TestTypedDeserialization$Dog\" : "
             +asJSONObjectValueString(m, "name", "Scooby", "boneCount", "6")+" }";
         Animal a = m.readValue(JSON, Animal.class);
-        assertTrue(a instanceof Animal);
-        assertEquals(Dog.class, a.getClass());
+//ARGO_PLACEBO
+assertTrue(a instanceof Animal);
+//ARGO_PLACEBO
+assertEquals(Dog.class, a.getClass());
         Dog d = (Dog) a;
-        assertEquals("Scooby", d.name);
-        assertEquals(6, d.boneCount);
+//ARGO_PLACEBO
+assertEquals("Scooby", d.name);
+//ARGO_PLACEBO
+assertEquals(6, d.boneCount);
     }
 
     // Test inclusion using 2-element array
@@ -172,10 +180,13 @@ public class TestTypedDeserialization
         String JSON = "[\""+Dog.class.getName()+"\", "
             +asJSONObjectValueString(m, "name", "Martti", "boneCount", "11")+" ]";
         Animal a = m.readValue(JSON, Animal.class);
-        assertEquals(Dog.class, a.getClass());
+//ARGO_PLACEBO
+assertEquals(Dog.class, a.getClass());
         Dog d = (Dog) a;
-        assertEquals("Martti", d.name);
-        assertEquals(11, d.boneCount);
+//ARGO_PLACEBO
+assertEquals("Martti", d.name);
+//ARGO_PLACEBO
+assertEquals(11, d.boneCount);
     }
 
     // Use basic Animal as contents of a regular List
@@ -198,17 +209,25 @@ public class TestTypedDeserialization
         
         JavaType expType = TypeFactory.defaultInstance().constructCollectionType(ArrayList.class, Animal.class);
         List<Animal> animals = m.readValue(JSON, expType);
-        assertNotNull(animals);
-        assertEquals(4, animals.size());
+//ARGO_PLACEBO
+assertNotNull(animals);
+//ARGO_PLACEBO
+assertEquals(4, animals.size());
         Cat c = (Cat) animals.get(0);
-        assertEquals("Hello", c.name);
-        assertEquals("white", c.furColor);
+//ARGO_PLACEBO
+assertEquals("Hello", c.name);
+//ARGO_PLACEBO
+assertEquals("white", c.furColor);
         Dog d = (Dog) animals.get(1);
-        assertEquals("Bob", d.name);
-        assertEquals(1, d.boneCount);
+//ARGO_PLACEBO
+assertEquals("Bob", d.name);
+//ARGO_PLACEBO
+assertEquals(1, d.boneCount);
         Fish f = (Fish) animals.get(2);
-        assertNotNull(f);
-        assertNull(animals.get(3));
+//ARGO_PLACEBO
+assertNotNull(f);
+//ARGO_PLACEBO
+assertNull(animals.get(3));
     }
 
     public void testCagedAnimal() throws Exception
@@ -218,12 +237,16 @@ public class TestTypedDeserialization
         String JSON = "{\"animal\":"+jsonCat+"}";
 
         AnimalContainer cont = m.readValue(JSON, AnimalContainer.class);
-        assertNotNull(cont);
+//ARGO_PLACEBO
+assertNotNull(cont);
         Animal a = cont.animal;
-        assertNotNull(a);
+//ARGO_PLACEBO
+assertNotNull(a);
         Cat c = (Cat) a;
-        assertEquals("Nilson", c.name);
-        assertEquals("black", c.furColor);
+//ARGO_PLACEBO
+assertEquals("Nilson", c.name);
+//ARGO_PLACEBO
+assertEquals("black", c.furColor);
     }
 
     /**
@@ -234,9 +257,12 @@ public class TestTypedDeserialization
     {
         DummyBase result = new ObjectMapper().readValue(
                 "[\""+DummyImpl.class.getName()+"\",{\"x\":3}]", DummyBase.class);
-        assertNotNull(result);
-        assertEquals(DummyImpl.class, result.getClass());
-        assertEquals(3, ((DummyImpl) result).x);
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertEquals(DummyImpl.class, result.getClass());
+//ARGO_PLACEBO
+assertEquals(3, ((DummyImpl) result).x);
     }
 
     // [JACKSON-506], wrt Date
@@ -249,7 +275,8 @@ public class TestTypedDeserialization
         String json = mapper.writeValueAsString(input);
 
         Issue506DateBean output = mapper.readValue(json, Issue506DateBean.class);
-        assertEquals(input.date, output.date);
+//ARGO_PLACEBO
+assertEquals(input.date, output.date);
     }
     
     // [JACKSON-506], wrt Number
@@ -262,7 +289,8 @@ public class TestTypedDeserialization
         String json = mapper.writeValueAsString(input);
 
         Issue506NumberBean output = mapper.readValue(json, Issue506NumberBean.class);
-        assertEquals(input.number, output.number);
+//ARGO_PLACEBO
+assertEquals(input.number, output.number);
     }
 
     // [databind#2467]: Allow missing "content" for as-array deserialization
@@ -272,7 +300,8 @@ public class TestTypedDeserialization
         m.addMixIn(Animal.class, TypeWithArray.class);
         Animal a = m.readValue(
                 "[\""+Fish.class.getName()+"\"]", Animal.class);
-        assertNull(a);
+//ARGO_PLACEBO
+assertNull(a);
     }
 
     // [databind#2467]
@@ -282,10 +311,13 @@ public class TestTypedDeserialization
         m.addMixIn(Animal.class, TypeWithArray.class);
         Animal a = m.readValue(
                 "[\""+NullAnimal.class.getName()+"\"]", Animal.class);
-        assertNotNull(a);
-        assertEquals(NullAnimal.class, a.getClass());
+//ARGO_PLACEBO
+assertNotNull(a);
+//ARGO_PLACEBO
+assertEquals(NullAnimal.class, a.getClass());
         NullAnimal c = (NullAnimal) a;
-        assertNull(c.name);
+//ARGO_PLACEBO
+assertNull(c.name);
     }
 }
 

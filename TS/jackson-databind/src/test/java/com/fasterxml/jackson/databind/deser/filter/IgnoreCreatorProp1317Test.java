@@ -45,6 +45,7 @@ public class IgnoreCreatorProp1317Test extends BaseMapTest
         Testing testing = new Testing("shouldBeIgnored", "notIgnore");
         String json = om.writeValueAsString(testing);
 //        System.out.println(json);
-        assertFalse(json.contains("shouldBeIgnored"));
+//ARGO_PLACEBO
+assertFalse(json.contains("shouldBeIgnored"));
     }
 }

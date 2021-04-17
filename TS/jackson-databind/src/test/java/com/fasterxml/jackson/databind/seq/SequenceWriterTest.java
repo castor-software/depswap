@@ -105,7 +105,8 @@ public class SequenceWriterTest extends BaseMapTest
             .writeAll(Arrays.asList(new Bean(5), new Bean(7)))
         ;
         w.close();
-        assertEquals(aposToQuotes("{'a':13}\n{'a':-6}\n{'a':3}\n{'a':1}\n{'a':5}\n{'a':7}"),
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'a':13}\n{'a':-6}\n{'a':3}\n{'a':1}\n{'a':5}\n{'a':7}"),
                 strw.toString());
 
         strw = new StringWriter();
@@ -117,7 +118,8 @@ public class SequenceWriterTest extends BaseMapTest
             .write(new Bean(2));
         w.close();
         gen.close();
-        assertEquals(aposToQuotes("{'a':1}/{'a':2}"),
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'a':1}/{'a':2}"),
                 strw.toString());
     }
 
@@ -129,7 +131,8 @@ public class SequenceWriterTest extends BaseMapTest
             .write(new Bean(2))
             .writeAll(new Bean[] { new Bean(-7), new Bean(2) });
         w.close();
-        assertEquals(aposToQuotes("[{'a':1},{'a':2},{'a':-7},{'a':2}]"),
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("[{'a':1},{'a':2},{'a':-7},{'a':2}]"),
                 strw.toString());
 
         strw = new StringWriter();
@@ -141,7 +144,8 @@ public class SequenceWriterTest extends BaseMapTest
             .writeAll((Iterable<Bean>) bean);
         w.close();
         gen.close();
-        assertEquals(aposToQuotes("[{'a':1},null,{'a':3}]"),
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("[{'a':1},null,{'a':3}]"),
                 strw.toString());
     }
 
@@ -160,7 +164,8 @@ public class SequenceWriterTest extends BaseMapTest
         w.write(new ImplA(3))
             .write(new ImplA(4))
             .close();
-        assertEquals(aposToQuotes("{'type':'A','value':3}\n{'type':'A','value':4}"),
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'type':'A','value':3}\n{'type':'A','value':4}"),
                 strw.toString());
     }
 
@@ -173,7 +178,8 @@ public class SequenceWriterTest extends BaseMapTest
         w.write(new ImplA(-1))
             .write(new ImplA(6))
             .close();
-        assertEquals(aposToQuotes("[{'type':'A','value':-1},{'type':'A','value':6}]"),
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("[{'type':'A','value':-1},{'type':'A','value':6}]"),
                 strw.toString());
     }
 
@@ -188,7 +194,8 @@ public class SequenceWriterTest extends BaseMapTest
             .write(new ImplA(7));
         w.flush();
         w.close();
-        assertEquals(aposToQuotes("[{'type':'A','value':-1},{'type':'B','b':3},{'type':'A','value':7}]"),
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("[{'type':'A','value':-1},{'type':'B','b':3},{'type':'A','value':7}]"),
                 strw.toString());
     }
 
@@ -199,16 +206,20 @@ public class SequenceWriterTest extends BaseMapTest
         ObjectWriter w = mapper.writer()
                 .with(SerializationFeature.CLOSE_CLOSEABLE);
         CloseableValue input = new CloseableValue();
-        assertFalse(input.closed);
+//ARGO_PLACEBO
+assertFalse(input.closed);
         StringWriter out = new StringWriter();
         SequenceWriter seq = w.writeValues(out);
         input = new CloseableValue();
-        assertFalse(input.closed);
+//ARGO_PLACEBO
+assertFalse(input.closed);
         seq.write(input);
-        assertTrue(input.closed);
+//ARGO_PLACEBO
+assertTrue(input.closed);
         seq.close();
         input.close();
-        assertEquals(aposToQuotes("{'closed':false,'x':0}"), out.toString());
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'closed':false,'x':0}"), out.toString());
     }
 
     public void testWithExplicitType() throws Exception
@@ -228,11 +239,13 @@ public class SequenceWriterTest extends BaseMapTest
         // so it's fine to expect closing here
         BareBaseCloseable cl = new BareBaseCloseable();
         seq.write(cl, MAPPER.constructType(BareBase.class));
-        assertTrue(cl.closed);
+//ARGO_PLACEBO
+assertTrue(cl.closed);
         cl.close();
 
         seq.close();
         seq.flush();
-        assertEquals(aposToQuotes("{'a':1,'b':2} {'a':1} {'a':1}"), out.toString());
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'a':1,'b':2} {'a':1} {'a':1}"), out.toString());
     }
 }

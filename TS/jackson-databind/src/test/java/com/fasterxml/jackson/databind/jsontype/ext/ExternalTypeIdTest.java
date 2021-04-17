@@ -301,7 +301,8 @@ public class ExternalTypeIdTest extends BaseMapTest
         // been written out. So we'll write it after...
         // Deserializer will work either way as it cannot rely on ordering
         // anyway.
-        assertEquals("{\"bean\":{\"value\":11},\"extType\":\"vbean\"}",
+//ARGO_PLACEBO
+assertEquals("{\"bean\":{\"value\":11},\"extType\":\"vbean\"}",
                 mapper.writeValueAsString(new ExternalBean(11)));
     }
 
@@ -309,7 +310,8 @@ public class ExternalTypeIdTest extends BaseMapTest
     public void testImproperExternalIdSerialization() throws Exception
     {
         ObjectMapper mapper = new ObjectMapper();
-        assertEquals("{\"extType\":\"funk\",\"i\":3}",
+//ARGO_PLACEBO
+assertEquals("{\"extType\":\"funk\",\"i\":3}",
                 mapper.writeValueAsString(new FunkyExternalBean()));
     }
 
@@ -321,10 +323,12 @@ public class ExternalTypeIdTest extends BaseMapTest
         ExternalBean b;
         b = mapper.readValue(aposToQuotes("{'bean':null,'extType':'vbean'}"),
                 ExternalBean.class);
-        assertNotNull(b);
+//ARGO_PLACEBO
+assertNotNull(b);
         b = mapper.readValue(aposToQuotes("{'extType':'vbean','bean':null}"),
                 ExternalBean.class);
-        assertNotNull(b);
+//ARGO_PLACEBO
+assertNotNull(b);
     }
 
     /*
@@ -338,17 +342,23 @@ public class ExternalTypeIdTest extends BaseMapTest
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerSubtypes(ValueBean.class);
         ExternalBean result = mapper.readValue("{\"bean\":{\"value\":11},\"extType\":\"vbean\"}", ExternalBean.class);
-        assertNotNull(result);
-        assertNotNull(result.bean);
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertNotNull(result.bean);
         ValueBean vb = (ValueBean) result.bean;
-        assertEquals(11, vb.value);
+//ARGO_PLACEBO
+assertEquals(11, vb.value);
 
         // let's also test with order switched:
         result = mapper.readValue("{\"extType\":\"vbean\", \"bean\":{\"value\":13}}", ExternalBean.class);
-        assertNotNull(result);
-        assertNotNull(result.bean);
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertNotNull(result.bean);
         vb = (ValueBean) result.bean;
-        assertEquals(13, vb.value);
+//ARGO_PLACEBO
+assertEquals(13, vb.value);
     }
 
     // Test for verifying that it's ok to have multiple (say, 3)
@@ -359,14 +369,22 @@ public class ExternalTypeIdTest extends BaseMapTest
         mapper.registerSubtypes(ValueBean.class);
         String json = mapper.writeValueAsString(new ExternalBean3(3));
         ExternalBean3 result = mapper.readValue(json, ExternalBean3.class);
-        assertNotNull(result);
-        assertNotNull(result.value1);
-        assertNotNull(result.value2);
-        assertNotNull(result.value3);
-        assertEquals(3, ((ValueBean)result.value1).value);
-        assertEquals(4, ((ValueBean)result.value2).value);
-        assertEquals(5, ((ValueBean)result.value3).value);
-        assertEquals(3, result.foo);
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertNotNull(result.value1);
+//ARGO_PLACEBO
+assertNotNull(result.value2);
+//ARGO_PLACEBO
+assertNotNull(result.value3);
+//ARGO_PLACEBO
+assertEquals(3, ((ValueBean)result.value1).value);
+//ARGO_PLACEBO
+assertEquals(4, ((ValueBean)result.value2).value);
+//ARGO_PLACEBO
+assertEquals(5, ((ValueBean)result.value3).value);
+//ARGO_PLACEBO
+assertEquals(3, result.foo);
     }
 
     // Also, it should be ok to use @JsonCreator as well...
@@ -376,10 +394,14 @@ public class ExternalTypeIdTest extends BaseMapTest
         mapper.registerSubtypes(ValueBean.class);
         String json = mapper.writeValueAsString(new ExternalBeanWithCreator(7));
         ExternalBeanWithCreator result = mapper.readValue(json, ExternalBeanWithCreator.class);
-        assertNotNull(result);
-        assertNotNull(result.value);
-        assertEquals(7, ((ValueBean)result.value).value);
-        assertEquals(7, result.foo);
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertNotNull(result.value);
+//ARGO_PLACEBO
+assertEquals(7, ((ValueBean)result.value).value);
+//ARGO_PLACEBO
+assertEquals(7, result.foo);
     }
     
     // If trying to use with Class, should just become "PROPERTY" instead:
@@ -387,13 +409,17 @@ public class ExternalTypeIdTest extends BaseMapTest
     {
         FunkyExternalBean result = MAPPER.readValue("{\"extType\":\"funk\",\"i\":3}",
                 FunkyExternalBean.class);
-        assertNotNull(result);
-        assertEquals(3, result.i);
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertEquals(3, result.i);
 
         result = MAPPER.readValue("{\"i\":4,\"extType\":\"funk\"}",
                 FunkyExternalBean.class);
-        assertNotNull(result);
-        assertEquals(4, result.i);
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertEquals(4, result.i);
     }
 
     public void testIssue798() throws Exception
@@ -402,17 +428,22 @@ public class ExternalTypeIdTest extends BaseMapTest
         BaseContainer baseContainer = new BaseContainer("bc prop val", base);
         String generatedJson = MAPPER.writeValueAsString(baseContainer);
         BaseContainer baseContainer2 = MAPPER.readValue(generatedJson,BaseContainer.class);
-        assertEquals("bc prop val", baseContainer.getBaseContainerProperty());
+//ARGO_PLACEBO
+assertEquals("bc prop val", baseContainer.getBaseContainerProperty());
 
         Base b = baseContainer2.getBase();
-        assertNotNull(b);
+//ARGO_PLACEBO
+assertNotNull(b);
         if (b.getClass() != Derived1.class) {
-            fail("Should have type Derived1, was "+b.getClass().getName());
+//ARGO_PLACEBO
+fail("Should have type Derived1, was "+b.getClass().getName());
         }
 
         Derived1 derived1 = (Derived1) b;
-        assertEquals("base prop val", derived1.getBaseProperty());
-        assertEquals("derived1 prop val", derived1.getDerived1Property());
+//ARGO_PLACEBO
+assertEquals("base prop val", derived1.getBaseProperty());
+//ARGO_PLACEBO
+assertEquals("derived1 prop val", derived1.getDerived1Property());
     }
 
     // There seems to be some problems if type is also visible...
@@ -421,10 +452,14 @@ public class ExternalTypeIdTest extends BaseMapTest
         final String JSON = "{ \"petType\": \"dog\",\n"
                 +"\"pet\": { \"name\": \"Pluto\" }\n}";
         House831 result = MAPPER.readValue(JSON, House831.class);
-        assertNotNull(result);
-        assertNotNull(result.pet);
-        assertSame(Dog.class, result.pet.getClass());
-        assertEquals("dog", result.petType);
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertNotNull(result.pet);
+//ARGO_PLACEBO
+assertSame(Dog.class, result.pet.getClass());
+//ARGO_PLACEBO
+assertEquals("dog", result.petType);
     }
 
     // For [databind#118]
@@ -433,12 +468,15 @@ public class ExternalTypeIdTest extends BaseMapTest
     {
         ExternalTypeWithNonPOJO input = new ExternalTypeWithNonPOJO(new java.util.Date(123L));
         String json = MAPPER.writeValueAsString(input);
-        assertNotNull(json);
+//ARGO_PLACEBO
+assertNotNull(json);
 
         // and back just to be sure:
         ExternalTypeWithNonPOJO result = MAPPER.readValue(json, ExternalTypeWithNonPOJO.class);
-        assertNotNull(result.value);
-        assertTrue(result.value instanceof java.util.Date);
+//ARGO_PLACEBO
+assertNotNull(result.value);
+//ARGO_PLACEBO
+assertTrue(result.value instanceof java.util.Date);
     }
 
     // For [databind#118] using "natural" type(s)
@@ -446,27 +484,37 @@ public class ExternalTypeIdTest extends BaseMapTest
     {
         ExternalTypeWithNonPOJO input = new ExternalTypeWithNonPOJO(Integer.valueOf(13));
         String json = MAPPER.writeValueAsString(input);
-        assertNotNull(json);
+//ARGO_PLACEBO
+assertNotNull(json);
         // and back just to be sure:
         ExternalTypeWithNonPOJO result = MAPPER.readValue(json, ExternalTypeWithNonPOJO.class);
-        assertNotNull(result.value);
-        assertTrue(result.value instanceof Integer);
+//ARGO_PLACEBO
+assertNotNull(result.value);
+//ARGO_PLACEBO
+assertTrue(result.value instanceof Integer);
 
         // ditto with others types
         input = new ExternalTypeWithNonPOJO(Boolean.TRUE);
         json = MAPPER.writeValueAsString(input);
-        assertNotNull(json);
+//ARGO_PLACEBO
+assertNotNull(json);
         result = MAPPER.readValue(json, ExternalTypeWithNonPOJO.class);
-        assertNotNull(result.value);
-        assertTrue(result.value instanceof Boolean);
+//ARGO_PLACEBO
+assertNotNull(result.value);
+//ARGO_PLACEBO
+assertTrue(result.value instanceof Boolean);
 
         input = new ExternalTypeWithNonPOJO("foobar");
         json = MAPPER.writeValueAsString(input);
-        assertNotNull(json);
+//ARGO_PLACEBO
+assertNotNull(json);
         result = MAPPER.readValue(json, ExternalTypeWithNonPOJO.class);
-        assertNotNull(result.value);
-        assertTrue(result.value instanceof String);
-        assertEquals("foobar", result.value);
+//ARGO_PLACEBO
+assertNotNull(result.value);
+//ARGO_PLACEBO
+assertTrue(result.value instanceof String);
+//ARGO_PLACEBO
+assertEquals("foobar", result.value);
     }
     
     // For [databind#119]... and bit of [#167] as well
@@ -474,15 +522,21 @@ public class ExternalTypeIdTest extends BaseMapTest
     {
         ExternalTypeWithNonPOJO input = new ExternalTypeWithNonPOJO(new AsValueThingy(12345L));
         String json = MAPPER.writeValueAsString(input);
-        assertNotNull(json);
-        assertEquals("{\"value\":12345,\"type\":\"thingy\"}", json);
+//ARGO_PLACEBO
+assertNotNull(json);
+//ARGO_PLACEBO
+assertEquals("{\"value\":12345,\"type\":\"thingy\"}", json);
 
         // and get it back too:
         ExternalTypeWithNonPOJO result = MAPPER.readValue(json, ExternalTypeWithNonPOJO.class);
-        assertNotNull(result);
-        assertNotNull(result.value);
-        assertEquals(AsValueThingy.class, result.value.getClass());
-        assertEquals(12345L, ((AsValueThingy) result.value).rawDate);
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertNotNull(result.value);
+//ARGO_PLACEBO
+assertEquals(AsValueThingy.class, result.value.getClass());
+//ARGO_PLACEBO
+assertEquals(12345L, ((AsValueThingy) result.value).rawDate);
     }
 
     // for [databind#222]
@@ -491,7 +545,8 @@ public class ExternalTypeIdTest extends BaseMapTest
         JsonMapper mapper = JsonMapper.builder().enable(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY).build();
         Issue222Bean input = new Issue222Bean(13);
         String json = mapper.writeValueAsString(input);
-        assertEquals("{\"type\":\"foo\",\"value\":{\"x\":13}}", json);
+//ARGO_PLACEBO
+assertEquals("{\"type\":\"foo\",\"value\":{\"x\":13}}", json);
     }
 
     // [databind#928]
@@ -503,14 +558,18 @@ public class ExternalTypeIdTest extends BaseMapTest
 
         final String successCase = "{\"payload\":{\"something\":\"test\"},\"class\":\""+CLASS+"\"}";
         Envelope928 envelope1 = mapper.readValue(successCase, Envelope928.class);
-        assertNotNull(envelope1);
-        assertEquals(Payload928.class, envelope1._payload.getClass());
+//ARGO_PLACEBO
+assertNotNull(envelope1);
+//ARGO_PLACEBO
+assertEquals(Payload928.class, envelope1._payload.getClass());
 
         // and then re-ordered case that was problematic
         final String failCase = "{\"class\":\""+CLASS+"\",\"payload\":{\"something\":\"test\"}}";
         Envelope928 envelope2 = mapper.readValue(failCase, Envelope928.class);
-        assertNotNull(envelope2);
-        assertEquals(Payload928.class, envelope2._payload.getClass());
+//ARGO_PLACEBO
+assertNotNull(envelope2);
+//ARGO_PLACEBO
+assertEquals(Payload928.class, envelope2._payload.getClass());
     }
 
     // for [databind#965]
@@ -525,15 +584,18 @@ public class ExternalTypeIdTest extends BaseMapTest
 
         // simple sanity check so serialization is faithful
         if (!json.contains(NUM_STR)) {
-            fail("JSON content should contain value '"+NUM_STR+"', does not appear to: "+json);
+//ARGO_PLACEBO
+fail("JSON content should contain value '"+NUM_STR+"', does not appear to: "+json);
         }
         
         Wrapper965 w2 = MAPPER.readerFor(Wrapper965.class)
                 .with(DeserializationFeature.USE_BIG_DECIMAL_FOR_FLOATS)
                 .readValue(json);
 
-        assertEquals(w.typeEnum, w2.typeEnum);
-        assertTrue(String.format("Expected %s = %s; got back %s = %s",
+//ARGO_PLACEBO
+assertEquals(w.typeEnum, w2.typeEnum);
+//ARGO_PLACEBO
+assertTrue(String.format("Expected %s = %s; got back %s = %s",
             w.value.getClass().getSimpleName(), w.value.toString(), w2.value.getClass().getSimpleName(), w2.value.toString()),
             w.value.equals(w2.value));
     }

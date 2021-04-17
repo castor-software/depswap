@@ -39,18 +39,24 @@ public class TestInnerClass extends BaseMapTest
         Dog input = new Dog("Smurf", true);
         String json = mapper.writeValueAsString(input);
         Dog output = mapper.readValue(json, Dog.class);
-        assertEquals("Smurf", output.name);
-        assertNotNull(output.brain);
-        assertTrue(output.brain.isThinking);
+//ARGO_PLACEBO
+assertEquals("Smurf", output.name);
+//ARGO_PLACEBO
+assertNotNull(output.brain);
+//ARGO_PLACEBO
+assertTrue(output.brain.isThinking);
         // and verify correct binding...
-        assertEquals("Smurf", output.brain.parentName());
+//ARGO_PLACEBO
+assertEquals("Smurf", output.brain.parentName());
         output.name = "Foo";
-        assertEquals("Foo", output.brain.parentName());
+//ARGO_PLACEBO
+assertEquals("Foo", output.brain.parentName());
 
         // also, null handling
         input.brain = null;
 
         output = mapper.readValue(mapper.writeValueAsString(input), Dog.class);
-        assertNull(output.brain);
+//ARGO_PLACEBO
+assertNull(output.brain);
     }
 }

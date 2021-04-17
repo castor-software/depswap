@@ -136,15 +136,22 @@ public class TestObjectId extends BaseMapTest
         String json = MAPPER.writeValueAsString(w);
         
         Wrapper deserialized = MAPPER.readValue(json, Wrapper.class);
-        assertNotNull(deserialized);
-        assertNotNull(deserialized.a);
-        assertNotNull(deserialized.b);
+//ARGO_PLACEBO
+assertNotNull(deserialized);
+//ARGO_PLACEBO
+assertNotNull(deserialized.a);
+//ARGO_PLACEBO
+assertNotNull(deserialized.b);
         
-        assertEquals("Billy", deserialized.a.getName());
-        assertEquals("employee", deserialized.a.getType());
-        assertEquals("comment", deserialized.a.getComment());
+//ARGO_PLACEBO
+assertEquals("Billy", deserialized.a.getName());
+//ARGO_PLACEBO
+assertEquals("employee", deserialized.a.getType());
+//ARGO_PLACEBO
+assertEquals("comment", deserialized.a.getComment());
 
-        assertSame(deserialized.a, deserialized.b);
+//ARGO_PLACEBO
+assertSame(deserialized.a, deserialized.b);
     }
 
     // For [databind#188]
@@ -160,7 +167,8 @@ public class TestObjectId extends BaseMapTest
         JsonMapper mapper = JsonMapper.builder().enable(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY).build();
         String json = mapper.writeValueAsString(comp);
         
-        assertEquals("{\"employees\":["
+//ARGO_PLACEBO
+assertEquals("{\"employees\":["
                 +"{\"id\":1,\"manager\":null,\"name\":\"First\",\"reports\":[2]},"
                 +"{\"id\":2,\"manager\":1,\"name\":\"Second\",\"reports\":[]}"
                 +"]}",
@@ -180,15 +188,21 @@ public class TestObjectId extends BaseMapTest
                 .writeValueAsString(inputRoot);
         
         BaseEntity resultRoot = mapper.readValue(json, BaseEntity.class);
-        assertNotNull(resultRoot);
-        assertTrue(resultRoot instanceof Bar);
+//ARGO_PLACEBO
+assertNotNull(resultRoot);
+//ARGO_PLACEBO
+assertTrue(resultRoot instanceof Bar);
         Bar first = (Bar) resultRoot;
 
-        assertNotNull(first.next);
-        assertTrue(first.next instanceof Foo);
+//ARGO_PLACEBO
+assertNotNull(first.next);
+//ARGO_PLACEBO
+assertTrue(first.next instanceof Foo);
         Foo second = (Foo) first.next;
-        assertNotNull(second.ref);
-        assertSame(first, second.ref);
+//ARGO_PLACEBO
+assertNotNull(second.ref);
+//ARGO_PLACEBO
+assertSame(first, second.ref);
     }
 
     public static class JsonRoot {

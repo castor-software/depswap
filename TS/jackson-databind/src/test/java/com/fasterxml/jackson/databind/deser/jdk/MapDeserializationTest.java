@@ -104,7 +104,8 @@ public class MapDeserializationTest
         }
         String json = MAPPER.writeValueAsString(map);
         Object bound = MAPPER.readValue(json, Object.class);
-        assertEquals(map, bound);
+//ARGO_PLACEBO
+assertEquals(map, bound);
     }
     
     /**
@@ -118,12 +119,16 @@ public class MapDeserializationTest
 
         @SuppressWarnings("unchecked")
         HashMap<String,Object> result = /*(HashMap<String,Object>)*/ MAPPER.readValue(JSON, HashMap.class);
-        assertNotNull(result);
-        assertTrue(result instanceof Map<?,?>);
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertTrue(result instanceof Map<?,?>);
 
-        assertEquals(1, result.size());
+//ARGO_PLACEBO
+assertEquals(1, result.size());
 
-        assertEquals("x", result.get("a"));
+//ARGO_PLACEBO
+assertEquals("x", result.get("a"));
     }
 
     /**
@@ -133,12 +138,16 @@ public class MapDeserializationTest
     {
         String JSON = "{\"a\":[{\"a\":\"b\"},\"value\"]}";
         Map<?,?> result = MAPPER.readValue(JSON, Map.class);
-        assertTrue(result instanceof Map<?,?>);
-        assertEquals(1, result.size());
+//ARGO_PLACEBO
+assertTrue(result instanceof Map<?,?>);
+//ARGO_PLACEBO
+assertEquals(1, result.size());
         Object ob = result.get("a");
-        assertNotNull(ob);
+//ARGO_PLACEBO
+assertNotNull(ob);
         Collection<?> list = (Collection<?>)ob;
-        assertEquals(2, list.size());
+//ARGO_PLACEBO
+assertEquals(2, list.size());
 
         JSON = "{ \"var1\":\"val1\", \"var2\":\"val2\", "
             +"\"subvars\": ["
@@ -147,8 +156,10 @@ public class MapDeserializationTest
             +" }"
             ;
         result = MAPPER.readValue(JSON, Map.class);
-        assertTrue(result instanceof Map<?,?>);
-        assertEquals(3, result.size());
+//ARGO_PLACEBO
+assertTrue(result instanceof Map<?,?>);
+//ARGO_PLACEBO
+assertEquals(3, result.size());
     }
 
     private static final String UNTYPED_MAP_JSON =
@@ -161,7 +172,8 @@ public class MapDeserializationTest
     public void testSpecialMap() throws IOException
     {
        final ObjectWrapperMap map = MAPPER.readValue(UNTYPED_MAP_JSON, ObjectWrapperMap.class);
-       assertNotNull(map);
+//ARGO_PLACEBO
+assertNotNull(map);
        _doTestUntyped(map);
     }
 
@@ -176,14 +188,22 @@ public class MapDeserializationTest
     private void _doTestUntyped(final Map<String, ObjectWrapper> map)
     {
         ObjectWrapper w = map.get("double");
-        assertNotNull(w);
-        assertEquals(Double.valueOf(42), w.getObject());
-        assertEquals("string", map.get("string").getObject());
-        assertEquals(Boolean.TRUE, map.get("boolean").getObject());
-        assertEquals(Collections.singletonList("list0"), map.get("list").getObject());
-        assertTrue(map.containsKey("null"));
-        assertNull(map.get("null"));
-        assertEquals(5, map.size());
+//ARGO_PLACEBO
+assertNotNull(w);
+//ARGO_PLACEBO
+assertEquals(Double.valueOf(42), w.getObject());
+//ARGO_PLACEBO
+assertEquals("string", map.get("string").getObject());
+//ARGO_PLACEBO
+assertEquals(Boolean.TRUE, map.get("boolean").getObject());
+//ARGO_PLACEBO
+assertEquals(Collections.singletonList("list0"), map.get("list").getObject());
+//ARGO_PLACEBO
+assertTrue(map.containsKey("null"));
+//ARGO_PLACEBO
+assertNull(map.get("null"));
+//ARGO_PLACEBO
+assertEquals(5, map.size());
     }
     
     // [JACKSON-620]: allow "" to mean 'null' for Maps
@@ -192,7 +212,8 @@ public class MapDeserializationTest
         ObjectMapper m = new ObjectMapper();
         m.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
         Map<?,?> result = m.readValue(quote(""), Map.class);
-        assertNull(result);
+//ARGO_PLACEBO
+assertNull(result);
     }
 
     /*
@@ -208,15 +229,23 @@ public class MapDeserializationTest
         Map<String,Integer> result = MAPPER.readValue
             (JSON, new TypeReference<HashMap<String,Integer>>() { });
 
-        assertNotNull(result);
-        assertEquals(HashMap.class, result.getClass());
-        assertEquals(3, result.size());
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertEquals(HashMap.class, result.getClass());
+//ARGO_PLACEBO
+assertEquals(3, result.size());
 
-        assertEquals(Integer.valueOf(13), result.get("foo"));
-        assertEquals(Integer.valueOf(-39), result.get("bar"));
-        assertEquals(Integer.valueOf(0), result.get(""));
-        assertNull(result.get("foobar"));
-        assertNull(result.get(" "));
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(13), result.get("foo"));
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(-39), result.get("bar"));
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(0), result.get(""));
+//ARGO_PLACEBO
+assertNull(result.get("foobar"));
+//ARGO_PLACEBO
+assertNull(result.get(" "));
     }
 
     /**
@@ -230,14 +259,21 @@ public class MapDeserializationTest
         Map<?,Object> result = MAPPER.readValue
             (JSON, new TypeReference<HashMap<Integer,Object>>() { });
 
-        assertNotNull(result);
-        assertEquals(HashMap.class, result.getClass());
-        assertEquals(2, result.size());
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertEquals(HashMap.class, result.getClass());
+//ARGO_PLACEBO
+assertEquals(2, result.size());
 
-        assertEquals(Boolean.TRUE, result.get(Integer.valueOf(1)));
-        assertEquals(Boolean.FALSE, result.get(Integer.valueOf(-1)));
-        assertNull(result.get("foobar"));
-        assertNull(result.get(0));
+//ARGO_PLACEBO
+assertEquals(Boolean.TRUE, result.get(Integer.valueOf(1)));
+//ARGO_PLACEBO
+assertEquals(Boolean.FALSE, result.get(Integer.valueOf(-1)));
+//ARGO_PLACEBO
+assertNull(result.get("foobar"));
+//ARGO_PLACEBO
+assertNull(result.get(0));
     }
 
     public void testExactStringStringMap() throws Exception
@@ -247,12 +283,17 @@ public class MapDeserializationTest
         TreeMap<String,String> result = MAPPER.readValue
             (JSON, new TypeReference<TreeMap<String,String>>() { });
 
-        assertNotNull(result);
-        assertEquals(TreeMap.class, result.getClass());
-        assertEquals(1, result.size());
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertEquals(TreeMap.class, result.getClass());
+//ARGO_PLACEBO
+assertEquals(1, result.size());
 
-        assertEquals("b", result.get("a"));
-        assertNull(result.get("b"));
+//ARGO_PLACEBO
+assertEquals("b", result.get("a"));
+//ARGO_PLACEBO
+assertNull(result.get("b"));
     }
 
     /**
@@ -268,23 +309,32 @@ public class MapDeserializationTest
         String JSON = "{ \"a\" : 1, \"b\" : 2, \"c\" : -99 }";
         Map<String,Integer> result = MAPPER.readValue
             (JSON, new TypeReference<Map<String,Integer>>() { });
-        assertNotNull(result);
-        assertTrue(result instanceof Map<?,?>);
-        assertEquals(3, result.size());
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertTrue(result instanceof Map<?,?>);
+//ARGO_PLACEBO
+assertEquals(3, result.size());
 
-        assertEquals(Integer.valueOf(-99), result.get("c"));
-        assertEquals(Integer.valueOf(2), result.get("b"));
-        assertEquals(Integer.valueOf(1), result.get("a"));
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(-99), result.get("c"));
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(2), result.get("b"));
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(1), result.get("a"));
 
-        assertNull(result.get(""));
+//ARGO_PLACEBO
+assertNull(result.get(""));
     }
 
     public void testAbstractMapDefault() throws Exception
     {
         final AbstractMapWrapper result = MAPPER.readValue("{\"values\":{\"foo\":42}}",
                 AbstractMapWrapper.class);
-        assertNotNull(result);
-        assertEquals(LinkedHashMap.class, result.values.getClass());
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertEquals(LinkedHashMap.class, result.values.getClass());
     }
 
     /*
@@ -301,18 +351,26 @@ public class MapDeserializationTest
         EnumMap<Key,String> result = MAPPER.readValue
             (JSON, new TypeReference<EnumMap<Key,String>>() { });
 
-        assertNotNull(result);
-        assertEquals(EnumMap.class, result.getClass());
-        assertEquals(2, result.size());
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertEquals(EnumMap.class, result.getClass());
+//ARGO_PLACEBO
+assertEquals(2, result.size());
 
-        assertEquals("", result.get(Key.KEY1));
+//ARGO_PLACEBO
+assertEquals("", result.get(Key.KEY1));
         // null should be ok too...
-        assertTrue(result.containsKey(Key.WHATEVER));
-        assertNull(result.get(Key.WHATEVER));
+//ARGO_PLACEBO
+assertTrue(result.containsKey(Key.WHATEVER));
+//ARGO_PLACEBO
+assertNull(result.get(Key.WHATEVER));
 
         // plus we have nothing for this key
-        assertFalse(result.containsKey(Key.KEY2));
-        assertNull(result.get(Key.KEY2));
+//ARGO_PLACEBO
+assertFalse(result.containsKey(Key.KEY2));
+//ARGO_PLACEBO
+assertNull(result.get(Key.KEY2));
     }
 
     public void testMapWithEnums() throws Exception
@@ -323,13 +381,19 @@ public class MapDeserializationTest
         Map<Key,Key> result = MAPPER.readValue
             (JSON, new TypeReference<Map<Key,Key>>() { });
 
-        assertNotNull(result);
-        assertTrue(result instanceof Map<?,?>);
-        assertEquals(1, result.size());
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertTrue(result instanceof Map<?,?>);
+//ARGO_PLACEBO
+assertEquals(1, result.size());
 
-        assertEquals(Key.WHATEVER, result.get(Key.KEY2));
-        assertNull(result.get(Key.WHATEVER));
-        assertNull(result.get(Key.KEY1));
+//ARGO_PLACEBO
+assertEquals(Key.WHATEVER, result.get(Key.KEY2));
+//ARGO_PLACEBO
+assertNull(result.get(Key.WHATEVER));
+//ARGO_PLACEBO
+assertNull(result.get(Key.KEY1));
     }
 
     public void testEnumPolymorphicSerializationTest() throws Exception 
@@ -366,15 +430,22 @@ public class MapDeserializationTest
     	 HashMap<Date,String> result=  MAPPER.readValue
     	            (JSON, new TypeReference<HashMap<Date,String>>() { });
     	 
-    	 assertNotNull(result);
-    	 assertEquals(HashMap.class, result.getClass());
-    	 assertEquals(2, result.size());
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertEquals(HashMap.class, result.getClass());
+//ARGO_PLACEBO
+assertEquals(2, result.size());
     	 
-    	 assertTrue(result.containsKey(date1));
-    	 assertEquals("", result.get(new Date(123456000L)));
+//ARGO_PLACEBO
+assertTrue(result.containsKey(date1));
+//ARGO_PLACEBO
+assertEquals("", result.get(new Date(123456000L)));
 
-    	 assertTrue(result.containsKey(new Date(0)));
-    	 assertNull(result.get(new Date(0)));
+//ARGO_PLACEBO
+assertTrue(result.containsKey(new Date(0)));
+//ARGO_PLACEBO
+assertNull(result.get(new Date(0)));
     }
 
     /*
@@ -395,15 +466,22 @@ public class MapDeserializationTest
         HashMap<Calendar,String> result = MAPPER.readValue
                 (JSON, new TypeReference<HashMap<Calendar,String>>() { });
 
-        assertNotNull(result);
-        assertEquals(HashMap.class, result.getClass());
-        assertEquals(2, result.size());
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertEquals(HashMap.class, result.getClass());
+//ARGO_PLACEBO
+assertEquals(2, result.size());
 
-        assertTrue(result.containsKey(c));
-        assertEquals("", result.get(c));
+//ARGO_PLACEBO
+assertTrue(result.containsKey(c));
+//ARGO_PLACEBO
+assertEquals("", result.get(c));
         c.setTimeInMillis(0);
-        assertTrue(result.containsKey(c));
-        assertNull(result.get(c));
+//ARGO_PLACEBO
+assertTrue(result.containsKey(c));
+//ARGO_PLACEBO
+assertNull(result.get(c));
     }
 
     public void testUUIDKeyMap() throws Exception
@@ -411,12 +489,17 @@ public class MapDeserializationTest
          UUID key = UUID.nameUUIDFromBytes("foobar".getBytes("UTF-8"));
          String JSON = "{ \""+key+"\":4}";
          Map<UUID,Object> result = MAPPER.readValue(JSON, new TypeReference<Map<UUID,Object>>() { });
-         assertNotNull(result);
-         assertEquals(1, result.size());
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertEquals(1, result.size());
          Object ob = result.keySet().iterator().next();
-         assertNotNull(ob);
-         assertEquals(UUID.class, ob.getClass());
-         assertEquals(key, ob);
+//ARGO_PLACEBO
+assertNotNull(ob);
+//ARGO_PLACEBO
+assertEquals(UUID.class, ob.getClass());
+//ARGO_PLACEBO
+assertEquals(key, ob);
     }
 
     public void testLocaleKeyMap() throws Exception {
@@ -424,12 +507,17 @@ public class MapDeserializationTest
         String JSON = "{ \"" + key + "\":4}";
         Map<Locale, Object> result = MAPPER.readValue(JSON, new TypeReference<Map<Locale, Object>>() {
         });
-        assertNotNull(result);
-        assertEquals(1, result.size());
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertEquals(1, result.size());
         Object ob = result.keySet().iterator().next();
-        assertNotNull(ob);
-        assertEquals(Locale.class, ob.getClass());
-        assertEquals(key, ob);
+//ARGO_PLACEBO
+assertNotNull(ob);
+//ARGO_PLACEBO
+assertEquals(Locale.class, ob.getClass());
+//ARGO_PLACEBO
+assertEquals(key, ob);
     }
 
     public void testCurrencyKeyMap() throws Exception {
@@ -437,12 +525,17 @@ public class MapDeserializationTest
         String JSON = "{ \"" + key + "\":4}";
         Map<Currency, Object> result = MAPPER.readValue(JSON, new TypeReference<Map<Currency, Object>>() {
         });
-        assertNotNull(result);
-        assertEquals(1, result.size());
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertEquals(1, result.size());
         Object ob = result.keySet().iterator().next();
-        assertNotNull(ob);
-        assertEquals(Currency.class, ob.getClass());
-        assertEquals(key, ob);
+//ARGO_PLACEBO
+assertNotNull(ob);
+//ARGO_PLACEBO
+assertEquals(Currency.class, ob.getClass());
+//ARGO_PLACEBO
+assertEquals(key, ob);
     }
 
     // Test confirming that @JsonCreator may be used with Map Key types
@@ -450,28 +543,37 @@ public class MapDeserializationTest
     {
         // first, key should deserialize normally:
         KeyType key = MAPPER.readValue(quote("abc"), KeyType.class);
-        assertEquals("abc", key.value);
+//ARGO_PLACEBO
+assertEquals("abc", key.value);
 
         Map<KeyType,Integer> map = MAPPER.readValue("{\"foo\":3}", new TypeReference<Map<KeyType,Integer>>() {} );
-        assertEquals(1, map.size());
+//ARGO_PLACEBO
+assertEquals(1, map.size());
         key = map.keySet().iterator().next();
-        assertEquals("foo", key.value);
+//ARGO_PLACEBO
+assertEquals("foo", key.value);
     }
 
     public void testClassKeyMap() throws Exception {
         ClassStringMap map = MAPPER.readValue(aposToQuotes("{'java.lang.String':'foo'}"),
                 ClassStringMap.class);
-        assertNotNull(map);
-        assertEquals(1, map.size());
-        assertEquals("foo", map.get(String.class));
+//ARGO_PLACEBO
+assertNotNull(map);
+//ARGO_PLACEBO
+assertEquals(1, map.size());
+//ARGO_PLACEBO
+assertEquals("foo", map.get(String.class));
     }
 
     public void testcharSequenceKeyMap() throws Exception {
         String JSON = aposToQuotes("{'a':'b'}");
         Map<CharSequence,String> result = MAPPER.readValue(JSON, new TypeReference<Map<CharSequence,String>>() { });
-        assertNotNull(result);
-        assertEquals(1, result.size());
-        assertEquals("b", result.get("a"));
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertEquals(1, result.size());
+//ARGO_PLACEBO
+assertEquals("b", result.get("a"));
     }
 
     /*
@@ -487,8 +589,10 @@ public class MapDeserializationTest
     public void testMapWithDeserializer() throws Exception
     {
         CustomMap result = MAPPER.readValue(quote("xyz"), CustomMap.class);
-        assertEquals(1, result.size());
-        assertEquals("xyz", result.get("x"));
+//ARGO_PLACEBO
+assertEquals(1, result.size());
+//ARGO_PLACEBO
+assertEquals("xyz", result.get("x"));
     }
 
     /*
@@ -502,7 +606,8 @@ public class MapDeserializationTest
         try {
             Object result = MAPPER.readValue("[ 1, 2 ]", 
                     new TypeReference<Map<String,String>>() { });
-            fail("Expected an exception, but got result value: "+result);
+//ARGO_PLACEBO
+fail("Expected an exception, but got result value: "+result);
         } catch (JsonMappingException jex) {
             verifyException(jex, "START_ARRAY");
         }
@@ -513,7 +618,8 @@ public class MapDeserializationTest
         try {
             BrokenMap result = MAPPER.readValue("{ \"a\" : 3 }", BrokenMap.class);
             // should never get here; assert added to remove compiler warning
-            assertNull(result);
+//ARGO_PLACEBO
+assertNull(result);
         } catch (JsonMappingException e) {
             // instead, should get this exception:
             verifyException(e, "no default constructor found");

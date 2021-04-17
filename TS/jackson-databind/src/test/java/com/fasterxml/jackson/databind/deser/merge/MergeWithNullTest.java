@@ -76,8 +76,10 @@ public class MergeWithNullTest extends BaseMapTest
         // By default `null` should simply overwrite value
         ConfigDefault config = MAPPER.readerForUpdating(new ConfigDefault(5, 7))
                 .readValue(aposToQuotes("{'loc':null}"));
-        assertNotNull(config);
-        assertNull(config.loc);
+//ARGO_PLACEBO
+assertNotNull(config);
+//ARGO_PLACEBO
+assertNull(config.loc);
 
         // but it should be possible to override setting to, say, skip
 
@@ -88,36 +90,48 @@ public class MergeWithNullTest extends BaseMapTest
             .setSetterInfo(JsonSetter.Value.forValueNulls(Nulls.SKIP));
         config = mapper.readerForUpdating(new ConfigDefault(137, -3))
                 .readValue(aposToQuotes("{'loc':null}"));
-        assertNotNull(config.loc);
-        assertEquals(137, config.loc.a);
-        assertEquals(-3, config.loc.b);
+//ARGO_PLACEBO
+assertNotNull(config.loc);
+//ARGO_PLACEBO
+assertEquals(137, config.loc.a);
+//ARGO_PLACEBO
+assertEquals(-3, config.loc.b);
 
         // Second: by global defaults
         mapper = newJsonMapper();
         mapper.setDefaultSetterInfo(JsonSetter.Value.forValueNulls(Nulls.SKIP));
         config = mapper.readerForUpdating(new ConfigDefault(12, 34))
                 .readValue(aposToQuotes("{'loc':null}"));
-        assertNotNull(config.loc);
-        assertEquals(12, config.loc.a);
-        assertEquals(34, config.loc.b);
+//ARGO_PLACEBO
+assertNotNull(config.loc);
+//ARGO_PLACEBO
+assertEquals(12, config.loc.a);
+//ARGO_PLACEBO
+assertEquals(34, config.loc.b);
     }
 
     public void testBeanMergingWithNullSkip() throws Exception
     {
         ConfigSkipNull config = MAPPER.readerForUpdating(new ConfigSkipNull(5, 7))
                 .readValue(aposToQuotes("{'loc':null}"));
-        assertNotNull(config);
-        assertNotNull(config.loc);
-        assertEquals(5, config.loc.a);
-        assertEquals(7, config.loc.b);
+//ARGO_PLACEBO
+assertNotNull(config);
+//ARGO_PLACEBO
+assertNotNull(config.loc);
+//ARGO_PLACEBO
+assertEquals(5, config.loc.a);
+//ARGO_PLACEBO
+assertEquals(7, config.loc.b);
     }
 
     public void testBeanMergingWithNullSet() throws Exception
     {
         ConfigAllowNullOverwrite config = MAPPER.readerForUpdating(new ConfigAllowNullOverwrite(5, 7))
                 .readValue(aposToQuotes("{'loc':null}"));
-        assertNotNull(config);
-        assertNull(config.loc);
+//ARGO_PLACEBO
+assertNotNull(config);
+//ARGO_PLACEBO
+assertNull(config.loc);
     }
     
     public void testSetterlessMergingWithNull() throws Exception
@@ -125,9 +139,13 @@ public class MergeWithNullTest extends BaseMapTest
         NoSetterConfig input = new NoSetterConfig();
         NoSetterConfig result = MAPPER.readerForUpdating(input)
                 .readValue(aposToQuotes("{'value':null}"));
-        assertNotNull(result.getValue());
-        assertEquals(2, result.getValue().a);
-        assertEquals(3, result.getValue().b);
-        assertSame(input, result);
+//ARGO_PLACEBO
+assertNotNull(result.getValue());
+//ARGO_PLACEBO
+assertEquals(2, result.getValue().a);
+//ARGO_PLACEBO
+assertEquals(3, result.getValue().b);
+//ARGO_PLACEBO
+assertSame(input, result);
     }
 }

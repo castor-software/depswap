@@ -59,11 +59,13 @@ public class TestObjectBuffer
                 } else {
                     result = thisBuf.completeAndClearBuffer(chunk, ix, clz);
                 }
-                assertEquals(size, result.length);
+//ARGO_PLACEBO
+assertEquals(size, result.length);
 
                 r = new Random(size);
                 for (int i = 0; i < size; ++i) {
-                    assertEquals(r.nextInt(), ((Integer) result[i]).intValue());
+//ARGO_PLACEBO
+assertEquals(r.nextInt(), ((Integer) result[i]).intValue());
                 }
             }
         }

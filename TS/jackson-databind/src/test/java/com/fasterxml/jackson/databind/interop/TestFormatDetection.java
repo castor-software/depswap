@@ -29,8 +29,10 @@ public class TestFormatDetection extends BaseMapTest
         ObjectReader detecting = READER.forType(POJO.class);
         detecting = detecting.withFormatDetection(detecting);
         POJO pojo = detecting.readValue(utf8Bytes("{\"x\":1}"));
-        assertNotNull(pojo);
-        assertEquals(1, pojo.x);
+//ARGO_PLACEBO
+assertNotNull(pojo);
+//ARGO_PLACEBO
+assertEquals(1, pojo.x);
     }
 
     public void testSequenceWithJSON() throws Exception
@@ -40,16 +42,22 @@ public class TestFormatDetection extends BaseMapTest
         MappingIterator<POJO> it = detecting.
                 readValues(utf8Bytes(aposToQuotes("{'x':1}\n{'x':2,'y':5}")));
 
-        assertTrue(it.hasNextValue());
+//ARGO_ORIGINAL
+assertTrue(it.hasNextValue());
         POJO pojo = it.nextValue();
-        assertEquals(1, pojo.x);
+//ARGO_ORIGINAL
+assertEquals(1, pojo.x);
 
-        assertTrue(it.hasNextValue());
+//ARGO_ORIGINAL
+assertTrue(it.hasNextValue());
         pojo = it.nextValue();
-        assertEquals(2, pojo.x);
-        assertEquals(5, pojo.y);
-        
-        assertFalse(it.hasNextValue());
+//ARGO_ORIGINAL
+assertEquals(2, pojo.x);
+//ARGO_ORIGINAL
+assertEquals(5, pojo.y);
+
+//ARGO_ORIGINAL
+assertFalse(it.hasNextValue());
         it.close();
 
         // And again with nodes
@@ -58,17 +66,24 @@ public class TestFormatDetection extends BaseMapTest
         MappingIterator<JsonNode> nodes = r2.
                 readValues(utf8Bytes(aposToQuotes("{'x':1}\n{'x':2,'y':5}")));
 
-        assertTrue(nodes.hasNextValue());
+//ARGO_ORIGINAL
+assertTrue(nodes.hasNextValue());
         JsonNode n = nodes.nextValue();
-        assertEquals(1, n.size());
+//ARGO_ORIGINAL
+assertEquals(1, n.size());
 
-        assertTrue(nodes.hasNextValue());
+//ARGO_ORIGINAL
+assertTrue(nodes.hasNextValue());
         n = nodes.nextValue();
-        assertEquals(2, n.size());
-        assertEquals(2, n.path("x").asInt());
-        assertEquals(5, n.path("y").asInt());
+//ARGO_ORIGINAL
+assertEquals(2, n.size());
+//ARGO_ORIGINAL
+assertEquals(2, n.path("x").asInt());
+//ARGO_ORIGINAL
+assertEquals(5, n.path("y").asInt());
 
-        assertFalse(nodes.hasNextValue());
+//ARGO_ORIGINAL
+assertFalse(nodes.hasNextValue());
         nodes.close();
     }
 
@@ -78,7 +93,8 @@ public class TestFormatDetection extends BaseMapTest
         detecting = detecting.withFormatDetection(detecting);
         try {
             detecting.readValue(utf8Bytes("<POJO><x>1</x></POJO>"));
-            fail("Should have failed");
+//ARGO_PLACEBO
+fail("Should have failed");
         } catch (JsonProcessingException e) {
             verifyException(e, "Cannot detect format from input");
         }

@@ -242,9 +242,12 @@ public class ProblemHandlerTest extends BaseMapTest
         IntKeyMapWrapper w = mapper.readValue("{\"stuff\":{\"foo\":\"abc\"}}",
                 IntKeyMapWrapper.class);
         Map<Integer,String> map = w.stuff;
-        assertEquals(1, map.size());
-        assertEquals("abc", map.values().iterator().next());
-        assertEquals(Integer.valueOf(7), map.keySet().iterator().next());
+//ARGO_PLACEBO
+assertEquals(1, map.size());
+//ARGO_PLACEBO
+assertEquals("abc", map.values().iterator().next());
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(7), map.keySet().iterator().next());
     }
 
     public void testWeirdNumberHandling() throws Exception
@@ -253,7 +256,8 @@ public class ProblemHandlerTest extends BaseMapTest
             .addHandler(new WeirdNumberHandler(SingleValuedEnum.A))
             ;
         SingleValuedEnum result = mapper.readValue("3", SingleValuedEnum.class);
-        assertEquals(SingleValuedEnum.A, result);
+//ARGO_PLACEBO
+assertEquals(SingleValuedEnum.A, result);
     }
 
     public void testWeirdStringHandling() throws Exception
@@ -262,13 +266,15 @@ public class ProblemHandlerTest extends BaseMapTest
             .addHandler(new WeirdStringHandler(SingleValuedEnum.A))
             ;
         SingleValuedEnum result = mapper.readValue("\"B\"", SingleValuedEnum.class);
-        assertEquals(SingleValuedEnum.A, result);
+//ARGO_PLACEBO
+assertEquals(SingleValuedEnum.A, result);
 
         // also, write [databind#1629] try this
         mapper = new ObjectMapper()
                 .addHandler(new WeirdStringHandler(null));
         UUID result2 = mapper.readValue(quote("not a uuid!"), UUID.class);
-        assertNull(result2);
+//ARGO_PLACEBO
+assertNull(result2);
     }
 
     public void testInvalidTypeId() throws Exception
@@ -277,8 +283,10 @@ public class ProblemHandlerTest extends BaseMapTest
             .addHandler(new UnknownTypeIdHandler(BaseImpl.class));
         BaseWrapper w = mapper.readValue("{\"value\":{\"type\":\"foo\",\"a\":4}}",
                 BaseWrapper.class);
-        assertNotNull(w);
-        assertEquals(BaseImpl.class, w.value.getClass());
+//ARGO_PLACEBO
+assertNotNull(w);
+//ARGO_PLACEBO
+assertEquals(BaseImpl.class, w.value.getClass());
     }
 
     public void testInvalidClassAsId() throws Exception
@@ -287,8 +295,10 @@ public class ProblemHandlerTest extends BaseMapTest
             .addHandler(new UnknownTypeIdHandler(Base2Impl.class));
         Base2Wrapper w = mapper.readValue("{\"value\":{\"clazz\":\"com.fizz\",\"a\":4}}",
                 Base2Wrapper.class);
-        assertNotNull(w);
-        assertEquals(Base2Impl.class, w.value.getClass());
+//ARGO_PLACEBO
+assertNotNull(w);
+//ARGO_PLACEBO
+assertEquals(Base2Impl.class, w.value.getClass());
     }
 
     // 2.9: missing type id, distinct from unknown
@@ -299,8 +309,10 @@ public class ProblemHandlerTest extends BaseMapTest
             .addHandler(new MissingTypeIdHandler(BaseImpl.class));
         BaseWrapper w = mapper.readValue("{\"value\":{\"a\":4}}",
                 BaseWrapper.class);
-        assertNotNull(w);
-        assertEquals(BaseImpl.class, w.value.getClass());
+//ARGO_PLACEBO
+assertNotNull(w);
+//ARGO_PLACEBO
+assertEquals(BaseImpl.class, w.value.getClass());
     }
 
     public void testMissingClassAsId() throws Exception
@@ -309,8 +321,10 @@ public class ProblemHandlerTest extends BaseMapTest
             .addHandler(new MissingTypeIdHandler(Base2Impl.class));
         Base2Wrapper w = mapper.readValue("{\"value\":{\"a\":4}}",
                 Base2Wrapper.class);
-        assertNotNull(w);
-        assertEquals(Base2Impl.class, w.value.getClass());
+//ARGO_PLACEBO
+assertNotNull(w);
+//ARGO_PLACEBO
+assertEquals(Base2Impl.class, w.value.getClass());
     }
     
     // verify that by default we get special exception type
@@ -319,11 +333,14 @@ public class ProblemHandlerTest extends BaseMapTest
         try {
             MAPPER.readValue("{\"value\":{\"type\":\"foo\",\"a\":4}}",
                 BaseWrapper.class);
-            fail("Should not pass");
+//ARGO_PLACEBO
+fail("Should not pass");
         } catch (InvalidTypeIdException e) {
             verifyException(e, "Could not resolve type id 'foo'");
-            assertEquals(Base.class, e.getBaseType().getRawClass());
-            assertEquals("foo", e.getTypeId());
+//ARGO_PLACEBO
+assertEquals(Base.class, e.getBaseType().getRawClass());
+//ARGO_PLACEBO
+assertEquals("foo", e.getTypeId());
         }
     }
 
@@ -333,7 +350,8 @@ public class ProblemHandlerTest extends BaseMapTest
             .addHandler(new InstantiationProblemHandler(BustedCtor.INST));
         BustedCtor w = mapper.readValue("{ }",
                 BustedCtor.class);
-        assertNotNull(w);
+//ARGO_PLACEBO
+assertNotNull(w);
     }
 
     public void testMissingInstantiatorHandling() throws Exception
@@ -342,8 +360,10 @@ public class ProblemHandlerTest extends BaseMapTest
             .addHandler(new MissingInstantiationHandler(new NoDefaultCtor(13)))
             ;
         NoDefaultCtor w = mapper.readValue("{ \"x\" : true }", NoDefaultCtor.class);
-        assertNotNull(w);
-        assertEquals(13, w.value);
+//ARGO_PLACEBO
+assertNotNull(w);
+//ARGO_PLACEBO
+assertEquals(13, w.value);
     }
 
     public void testUnexpectedTokenHandling() throws Exception
@@ -352,7 +372,8 @@ public class ProblemHandlerTest extends BaseMapTest
             .addHandler(new WeirdTokenHandler(Integer.valueOf(13)))
         ;
         Integer v = mapper.readValue("true", Integer.class);
-        assertEquals(Integer.valueOf(13), v);
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(13), v);
 
         // Just for code coverage really...
         mapper = newJsonMapper();
@@ -360,9 +381,10 @@ public class ProblemHandlerTest extends BaseMapTest
         mapper.clearProblemHandlers();
         try {
             mapper.readValue("true", Integer.class);
-            fail("Should not pass");
+//ARGO_PLACEBO
+fail("Should not pass");
         } catch (MismatchedInputException e) {
-            verifyException(e, "out of VALUE_TRUE token");
+            verifyException(e, "from Boolean value (token `JsonToken.VALUE_TRUE`)");
         }
     }
 }

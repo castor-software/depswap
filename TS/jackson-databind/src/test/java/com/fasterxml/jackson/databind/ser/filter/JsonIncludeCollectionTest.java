@@ -33,7 +33,9 @@ public class JsonIncludeCollectionTest extends BaseMapTest
 
     public void testEnumSet() throws Exception
     {
-        assertEquals("{}", MAPPER.writeValueAsString(new NonEmptyEnumSet()));
-        assertEquals("{\"v\":[\"B\"]}", MAPPER.writeValueAsString(new NonEmptyEnumSet(ABC.B)));
+//ARGO_PLACEBO
+assertEquals("{}", MAPPER.writeValueAsString(new NonEmptyEnumSet()));
+//ARGO_PLACEBO
+assertEquals("{\"v\":[\"B\"]}", MAPPER.writeValueAsString(new NonEmptyEnumSet(ABC.B)));
     }
 }

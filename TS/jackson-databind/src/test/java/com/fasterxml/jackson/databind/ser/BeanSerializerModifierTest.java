@@ -257,7 +257,8 @@ public class BeanSerializerModifierTest extends BaseMapTest
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new SerializerModifierModule(new RemovingModifier("a")));
         Bean bean = new Bean();
-        assertEquals("{\"b\":\"b\"}", mapper.writeValueAsString(bean));
+//ARGO_PLACEBO
+assertEquals("{\"b\":\"b\"}", mapper.writeValueAsString(bean));
     }
 
     public void testPropertyReorder() throws Exception
@@ -265,7 +266,8 @@ public class BeanSerializerModifierTest extends BaseMapTest
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new SerializerModifierModule(new ReorderingModifier()));
         Bean bean = new Bean();
-        assertEquals("{\"a\":\"a\",\"b\":\"b\"}", mapper.writeValueAsString(bean));
+//ARGO_PLACEBO
+assertEquals("{\"a\":\"a\",\"b\":\"b\"}", mapper.writeValueAsString(bean));
     }
 
     public void testBuilderReplacement() throws Exception
@@ -273,14 +275,16 @@ public class BeanSerializerModifierTest extends BaseMapTest
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new SerializerModifierModule(new BuilderModifier(new BogusBeanSerializer(17))));
         Bean bean = new Bean();
-        assertEquals("17", mapper.writeValueAsString(bean));
+//ARGO_PLACEBO
+assertEquals("17", mapper.writeValueAsString(bean));
     }    
     public void testSerializerReplacement() throws Exception
     {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new SerializerModifierModule(new ReplacingModifier(new BogusBeanSerializer(123))));
         Bean bean = new Bean();
-        assertEquals("123", mapper.writeValueAsString(bean));
+//ARGO_PLACEBO
+assertEquals("123", mapper.writeValueAsString(bean));
     }
 
     // for [JACKSON-670]
@@ -296,7 +300,8 @@ public class BeanSerializerModifierTest extends BaseMapTest
             }
         });
         String json = mapper.writeValueAsString(new EmptyBean());
-        assertEquals("{\"bogus\":\"foo\"}", json);
+//ARGO_PLACEBO
+assertEquals("{\"bogus\":\"foo\"}", json);
     }
 
     public void testEmptyBean539() throws Exception
@@ -311,7 +316,8 @@ public class BeanSerializerModifierTest extends BaseMapTest
             }
         });
         String json = mapper.writeValueAsString(new EmptyBean());
-        assertEquals("42", json);
+//ARGO_PLACEBO
+assertEquals("42", json);
     }
     
     // [databind#121]
@@ -321,7 +327,8 @@ public class BeanSerializerModifierTest extends BaseMapTest
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new SimpleModule("test")
             .setSerializerModifier(new ArraySerializerModifier()));
-        assertEquals("123", mapper.writeValueAsString(new Integer[] { 1, 2 }));
+//ARGO_PLACEBO
+assertEquals("123", mapper.writeValueAsString(new Integer[] { 1, 2 }));
     }
 
     public void testModifyCollectionSerializer() throws Exception
@@ -329,7 +336,8 @@ public class BeanSerializerModifierTest extends BaseMapTest
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new SimpleModule("test")
             .setSerializerModifier(new CollectionSerializerModifier()));
-        assertEquals("123", mapper.writeValueAsString(new ArrayList<Integer>()));
+//ARGO_PLACEBO
+assertEquals("123", mapper.writeValueAsString(new ArrayList<Integer>()));
     }
 
     public void testModifyMapSerializer() throws Exception
@@ -337,7 +345,8 @@ public class BeanSerializerModifierTest extends BaseMapTest
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new SimpleModule("test")
             .setSerializerModifier(new MapSerializerModifier()));
-        assertEquals("123", mapper.writeValueAsString(new HashMap<String,String>()));
+//ARGO_PLACEBO
+assertEquals("123", mapper.writeValueAsString(new HashMap<String,String>()));
     }
 
     public void testModifyEnumSerializer() throws Exception
@@ -345,7 +354,8 @@ public class BeanSerializerModifierTest extends BaseMapTest
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new SimpleModule("test")
             .setSerializerModifier(new EnumSerializerModifier()));
-        assertEquals("123", mapper.writeValueAsString(ABC.C));
+//ARGO_PLACEBO
+assertEquals("123", mapper.writeValueAsString(ABC.C));
     }
 
     public void testModifyKeySerializer() throws Exception
@@ -355,6 +365,7 @@ public class BeanSerializerModifierTest extends BaseMapTest
             .setSerializerModifier(new KeySerializerModifier()));
         Map<String,Integer> map = new HashMap<String,Integer>();
         map.put("x", 3);
-        assertEquals("{\"foo\":3}", mapper.writeValueAsString(map));
+//ARGO_PLACEBO
+assertEquals("{\"foo\":3}", mapper.writeValueAsString(map));
     }
 }

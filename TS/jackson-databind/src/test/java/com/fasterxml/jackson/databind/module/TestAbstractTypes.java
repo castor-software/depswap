@@ -94,7 +94,8 @@ public class TestAbstractTypes extends BaseMapTest
         mod.addAbstractTypeMapping(List.class, LinkedList.class);
         mapper.registerModule(mod);
         Collection<?> result = mapper.readValue("[]", Collection.class);
-        assertEquals(LinkedList.class, result.getClass());
+//ARGO_PLACEBO
+assertEquals(LinkedList.class, result.getClass());
     }
 
     public void testMapDefaultingBasic() throws Exception
@@ -105,7 +106,8 @@ public class TestAbstractTypes extends BaseMapTest
         mod.addAbstractTypeMapping(Map.class, TreeMap.class);
         mapper.registerModule(mod);
         Map<?,?> result = mapper.readValue("{}", Map.class);
-        assertEquals(TreeMap.class, result.getClass());
+//ARGO_PLACEBO
+assertEquals(TreeMap.class, result.getClass());
     }
 
     // [databind#700]
@@ -122,19 +124,27 @@ public class TestAbstractTypes extends BaseMapTest
         Object result;
 
         result = mapper.readValue("[ {} ]", Object.class);
-        assertEquals(LinkedList.class, result.getClass());
+//ARGO_PLACEBO
+assertEquals(LinkedList.class, result.getClass());
         Object v = ((List<?>) result).get(0);
-        assertNotNull(v);
-        assertEquals(TreeMap.class, v.getClass());
+//ARGO_PLACEBO
+assertNotNull(v);
+//ARGO_PLACEBO
+assertEquals(TreeMap.class, v.getClass());
 
         result = mapper.readValue("{ \"x\": [ 3 ] }", Object.class);
-        assertEquals(TreeMap.class, result.getClass());
+//ARGO_PLACEBO
+assertEquals(TreeMap.class, result.getClass());
         Map<?,?> map = (Map<?,?>) result;
-        assertEquals(1, map.size());
+//ARGO_PLACEBO
+assertEquals(1, map.size());
         v = map.get("x");
-        assertNotNull(v);
-        assertEquals(LinkedList.class, v.getClass());
-        assertEquals(1, ((List<?>) v).size());
+//ARGO_PLACEBO
+assertNotNull(v);
+//ARGO_PLACEBO
+assertEquals(LinkedList.class, v.getClass());
+//ARGO_PLACEBO
+assertEquals(1, ((List<?>) v).size());
     }
 
     public void testInterfaceDefaulting() throws Exception
@@ -145,8 +155,10 @@ public class TestAbstractTypes extends BaseMapTest
         mod.addAbstractTypeMapping(CharSequence.class, MyString.class);
         mapper.registerModule(mod);
         Object result = mapper.readValue(quote("abc"), CharSequence.class);
-        assertEquals(MyString.class, result.getClass());
-        assertEquals("abc", ((MyString) result).value);
+//ARGO_PLACEBO
+assertEquals(MyString.class, result.getClass());
+//ARGO_PLACEBO
+assertEquals("abc", ((MyString) result).value);
 
         // and ditto for POJOs
         mod = new SimpleModule();
@@ -154,7 +166,8 @@ public class TestAbstractTypes extends BaseMapTest
         mapper = new ObjectMapper()
                 .registerModule(mod);
         Abstract a = mapper.readValue("{}", Abstract.class);
-        assertNotNull(a);
+//ARGO_PLACEBO
+assertNotNull(a);
     }
 
     // [databind#2019]: mappings from multiple modules
@@ -170,9 +183,11 @@ public class TestAbstractTypes extends BaseMapTest
 
         final String JSON_EXAMPLE = "{\"value\": \"aaa\"}";
         Datatype1 value1 = mapper.readValue(JSON_EXAMPLE, Datatype1.class);
-        assertNotNull(value1);
+//ARGO_PLACEBO
+assertNotNull(value1);
 
         Datatype2 value2 = mapper.readValue(JSON_EXAMPLE, Datatype2.class);
-        assertNotNull(value2);
+//ARGO_PLACEBO
+assertNotNull(value2);
     }
 }

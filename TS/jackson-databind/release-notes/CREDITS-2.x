@@ -175,6 +175,8 @@ Fernando Otero (zeitos@github)
 Lovro Pandžić (lpandzic@github)
   * Reported #421: @JsonCreator not used in case of multiple creators with parameter names
    (2.5.0)
+  * Requested #1498: Allow handling of single-arg constructor as property based by default
+   (2.12.0)
 
 Adam Stroud (adstro@github)
   * Contributed	#576: Add fluent API for adding mixins
@@ -1071,6 +1073,8 @@ Ville Koskela (vjkoskela@github)
   (2.11.0)
   * Reported #2486: Builder Deserialization with JsonCreator Value vs Array
   (2.11.1)
+  * Contributed fix for #792: Deserialization Not Working Right with Generic Types and Builders
+  (2.12.0)
 
 Fitz (Joongsoo.Park) (joongsoo@github)
   * Contributed #2511: Add `SerializationFeature.WRITE_SELF_REFERENCES_AS_NULL`
@@ -1159,3 +1163,69 @@ Nils Christian Ehmke (nils-christian@github)
 Daniel Wu (DanielYWoo@github)
   * Reported #2840: `ObjectMapper.activateDefaultTypingAsProperty()` is not using
   (2.11.3)
+
+Marc Carter (drekbour@github)
+  * Contributed #43 implementation: Add option to resolve type from multiple existing properties,
+   `@JsonTypeInfo(use=DEDUCTION)`
+  (2.12.0)
+ 
+Mike Gilbode (gilbode@github)
+  * Reported #792: Deserialization Not Working Right with Generic Types and Builders
+  (2.12.0)
+
+Baptiste Pernet (sp4ce@github)
+  * Contributed #1296 implementation: Add `@JsonIncludeProperties(propertyNames)` (reverse
+    of `@JsonIgnoreProperties`)
+  (2.12.0)
+
+Dominik Krebhan (dominikrebhan@github)
+  * Contributed #1458: `@JsonAnyGetter` should be allowed on a field
+  (2.12.0)
+ 
+Patrick Jungermann (pjungermann@github)
+  * Requested #1852: Allow case insensitive deserialization of String value into
+  `boolean`/`Boolean` (esp for Excel)
+  (2.12.0)
+ 
+Nate Bauernfeind (nbauernfeind@github)
+  * Reported #2091: `ReferenceType` does not expose valid containedType
+  (2.12.0)
+
+Xiang Zhang (zhangyangyu@github)
+  * Reported #2118: `JsonProperty.Access.READ_ONLY` does not work with "getter-as-setter"
+    Collections
+  (2.12.0)
+
+David Nelson (eatdrinksleepcode@github)
+  * Requested #2215: Support `BigInteger` and `BigDecimal` creators in `StdValueInstantiator`
+  (2.12.0)
+
+Tiago Martins (upsidedownsmile@github)
+  * Contributed #2215: Support `BigInteger` and `BigDecimal` creators in `StdValueInstantiator`
+  (2.12.0)
+
+Yona Appletree (Yona-Appletree@github)
+  * Reported #2283: `JsonProperty.Access.READ_ONLY` fails with collections when a
+    property name is specified
+  (2.12.0)
+
+Youri Bonnaffé (youribonnaffe@github)
+  * Contributed #2709: Support for JDK 14 record types
+  (2.12.0)
+
+David Bidorff (bidorffOL@github)
+  * Reported, contributed fix for #2719: `FAIL_ON_IGNORED_PROPERTIES` does not throw
+    on `READONLY` properties with an explicit name
+  (2.12.0)
+
+Jendrik Johannes (jjohannes@github)
+  * Contributed #2726: Add Gradle Module Metadata for version alignment with Gradle 6
+  (2.12.0)
+
+Swayam Raina (swayamraina@github)
+  * Contributed #2761: Support multiple names in `JsonSubType.Type`
+  (2.12.0)
+
+Ilya Golovin (ilgo0413@github)
+  * Contributed #2873: `MapperFeature.ACCEPT_CASE_INSENSITIVE_ENUMS` should work for enum as keys
+  (2.12.0)

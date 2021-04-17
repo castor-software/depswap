@@ -228,7 +228,8 @@ public class TestContextualSerialization extends BaseMapTest
         SimpleModule module = new SimpleModule("test", Version.unknownVersion());
         module.addSerializer(String.class, new AnnotatedContextualSerializer());
         mapper.registerModule(module);
-        assertEquals("{\"value\":\"see:foobar\"}", mapper.writeValueAsString(new ContextualBean("foobar")));
+//ARGO_PLACEBO
+assertEquals("{\"value\":\"see:foobar\"}", mapper.writeValueAsString(new ContextualBean("foobar")));
     }
 
     // Test to verify that contextual serializer can also use annotations
@@ -239,7 +240,8 @@ public class TestContextualSerialization extends BaseMapTest
         SimpleModule module = new SimpleModule("test", Version.unknownVersion());
         module.addSerializer(String.class, new AnnotatedContextualSerializer());
         mapper.registerModule(module);
-        assertEquals("{\"value\":\"Voila->xyz\"}", mapper.writeValueAsString(new BeanWithClassConfig("xyz")));
+//ARGO_PLACEBO
+assertEquals("{\"value\":\"Voila->xyz\"}", mapper.writeValueAsString(new BeanWithClassConfig("xyz")));
     }
 
     public void testWrappedBean() throws Exception
@@ -248,7 +250,8 @@ public class TestContextualSerialization extends BaseMapTest
         SimpleModule module = new SimpleModule("test", Version.unknownVersion());
         module.addSerializer(String.class, new AnnotatedContextualSerializer());
         mapper.registerModule(module);
-        assertEquals("{\"wrapped\":{\"value\":\"see:xyz\"}}", mapper.writeValueAsString(new ContextualBeanWrapper("xyz")));
+//ARGO_PLACEBO
+assertEquals("{\"wrapped\":{\"value\":\"see:xyz\"}}", mapper.writeValueAsString(new ContextualBeanWrapper("xyz")));
     }
     
     // Serializer should get passed property context even if contained in an array.
@@ -259,7 +262,8 @@ public class TestContextualSerialization extends BaseMapTest
         module.addSerializer(String.class, new AnnotatedContextualSerializer());
         mapper.registerModule(module);
         ContextualArrayBean beans = new ContextualArrayBean("123");
-        assertEquals("{\"beans\":[\"array->123\"]}", mapper.writeValueAsString(beans));
+//ARGO_PLACEBO
+assertEquals("{\"beans\":[\"array->123\"]}", mapper.writeValueAsString(beans));
     }
 
     // Serializer should get passed property context even if contained in a Collection.
@@ -270,7 +274,8 @@ public class TestContextualSerialization extends BaseMapTest
         module.addSerializer(String.class, new AnnotatedContextualSerializer());
         mapper.registerModule(module);
         ContextualListBean beans = new ContextualListBean("abc");
-        assertEquals("{\"beans\":[\"list->abc\"]}", mapper.writeValueAsString(beans));
+//ARGO_PLACEBO
+assertEquals("{\"beans\":[\"list->abc\"]}", mapper.writeValueAsString(beans));
     }
 
     // Serializer should get passed property context even if contained in a Collection.
@@ -282,14 +287,16 @@ public class TestContextualSerialization extends BaseMapTest
         mapper.registerModule(module);
         ContextualMapBean map = new ContextualMapBean();
         map.beans.put("first", "In Map");
-        assertEquals("{\"beans\":{\"first\":\"map->In Map\"}}", mapper.writeValueAsString(map));
+//ARGO_PLACEBO
+assertEquals("{\"beans\":{\"first\":\"map->In Map\"}}", mapper.writeValueAsString(map));
     }
 
     public void testContextualViaAnnotation() throws Exception
     {
         ObjectMapper mapper = new ObjectMapper();
         AnnotatedContextualBean bean = new AnnotatedContextualBean("abc");
-        assertEquals("{\"value\":\"prefix->abc\"}", mapper.writeValueAsString(bean));
+//ARGO_PLACEBO
+assertEquals("{\"value\":\"prefix->abc\"}", mapper.writeValueAsString(bean));
     }
 
     public void testResolveOnContextual() throws Exception
@@ -299,17 +306,20 @@ public class TestContextualSerialization extends BaseMapTest
         ObjectMapper mapper = jsonMapperBuilder()
                 .addModule(module)
                 .build();
-        assertEquals(quote("contextual=1,resolved=1"), mapper.writeValueAsString("abc"));
+//ARGO_PLACEBO
+assertEquals(quote("contextual=1,resolved=1"), mapper.writeValueAsString("abc"));
 
         // also: should NOT be called again
-        assertEquals(quote("contextual=1,resolved=1"), mapper.writeValueAsString("foo"));
+//ARGO_PLACEBO
+assertEquals(quote("contextual=1,resolved=1"), mapper.writeValueAsString("foo"));
     }
 
     public void testContextualArrayElement() throws Exception
     {
         ObjectMapper mapper = newJsonMapper();
         ContextualArrayElementBean beans = new ContextualArrayElementBean("456");
-        assertEquals("{\"beans\":[\"elem->456\"]}", mapper.writeValueAsString(beans));
+//ARGO_PLACEBO
+assertEquals("{\"beans\":[\"elem->456\"]}", mapper.writeValueAsString(beans));
     }
 
     // Test to verify aspects of [databind#2429]
@@ -319,8 +329,11 @@ public class TestContextualSerialization extends BaseMapTest
                 .addModule(new SimpleModule("test", Version.unknownVersion())
                         .addSerializer(String.class, new AccumulatingContextual()))
                 .build();
-        assertEquals(quote("/ROOT/foo"), mapper.writeValueAsString("foo"));
-        assertEquals(quote("/ROOT/bar"), mapper.writeValueAsString("bar"));
-        assertEquals(quote("/ROOT/3"), mapper.writeValueAsString("3"));
+//ARGO_PLACEBO
+assertEquals(quote("/ROOT/foo"), mapper.writeValueAsString("foo"));
+//ARGO_PLACEBO
+assertEquals(quote("/ROOT/bar"), mapper.writeValueAsString("bar"));
+//ARGO_PLACEBO
+assertEquals(quote("/ROOT/3"), mapper.writeValueAsString("3"));
     }
 }

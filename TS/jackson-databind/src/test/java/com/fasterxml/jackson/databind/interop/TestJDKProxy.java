@@ -39,11 +39,13 @@ public class TestJDKProxy extends BaseMapTest
     {
         IPlanet input = getProxy(IPlanet.class, new Planet("Foo"));
         String json = MAPPER.writeValueAsString(input);
-        assertEquals("{\"name\":\"Foo\"}", json);
+//ARGO_PLACEBO
+assertEquals("{\"name\":\"Foo\"}", json);
         
         // and just for good measure
         Planet output = MAPPER.readValue(json, Planet.class);
-        assertEquals("Foo", output.getName());
+//ARGO_PLACEBO
+assertEquals("Foo", output.getName());
     }
 
     /*

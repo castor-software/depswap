@@ -176,7 +176,8 @@ public class TestCustomEnumKeyDeserializer extends BaseMapTest
         // this line is might throw with Jackson 2.6.2.
         Map<TestEnum, Set<String>> map = fancyObjectMapper.convertValue(tree,
                 new TypeReference<Map<TestEnum, Set<String>>>() { } );
-        assertNotNull(map);
+//ARGO_ORIGINAL
+assertNotNull(map);
     }
 
     // and another still failing
@@ -198,7 +199,8 @@ public class TestCustomEnumKeyDeserializer extends BaseMapTest
 
         JsonNode inner = ob.get("replacements");
         String firstFieldName = inner.fieldNames().next();
-        assertEquals("green", firstFieldName);
+//ARGO_PLACEBO
+assertEquals("green", firstFieldName);
     }
 
     // [databind#1441]
@@ -218,7 +220,8 @@ public class TestCustomEnumKeyDeserializer extends BaseMapTest
 
         SuperType superType = mapper.readValue("{\"someMap\": {\"FOO\": \"bar\"}}",
                 SuperType.class);
-        assertEquals("Deserialized someMap.FOO should equal bar", "bar",
+//ARGO_PLACEBO
+assertEquals("Deserialized someMap.FOO should equal bar", "bar",
                 superType.someMap.get(SuperTypeEnum.FOO));
     }
 
@@ -266,13 +269,16 @@ public class TestCustomEnumKeyDeserializer extends BaseMapTest
         // First, enum value as is
         KeyEnum key = mapper.readValue(quote(KeyEnum.replacements.name().toUpperCase()),
                 KeyEnum.class);
-        assertSame(KeyEnum.replacements, key);
+//ARGO_PLACEBO
+assertSame(KeyEnum.replacements, key);
 
         // and then as key
         EnumMap<KeyEnum,String> map = mapper.readValue(
                 aposToQuotes("{'REPlaceMENTS':'foobar'}"),
                 new TypeReference<EnumMap<KeyEnum,String>>() { });
-        assertEquals(1, map.size());
-        assertSame(KeyEnum.replacements, map.keySet().iterator().next());
+//ARGO_PLACEBO
+assertEquals(1, map.size());
+//ARGO_PLACEBO
+assertSame(KeyEnum.replacements, map.keySet().iterator().next());
     }
 }

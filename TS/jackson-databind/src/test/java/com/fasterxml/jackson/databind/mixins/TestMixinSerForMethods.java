@@ -106,16 +106,21 @@ public class TestMixinSerForMethods
 
         // first: with no mix-ins:
         result = writeAndMap(mapper, bean);
-        assertEquals(1, result.size());
-        assertEquals("b2", result.get("b"));
+//ARGO_PLACEBO
+assertEquals(1, result.size());
+//ARGO_PLACEBO
+assertEquals("b2", result.get("b"));
 
         // then with leaf-level mix-in
         mapper = new ObjectMapper();
         mapper.addMixIn(BaseClass.class, MixIn.class);
         result = writeAndMap(mapper, bean);
-        assertEquals(2, result.size());
-        assertEquals("b2", result.get("b2"));
-        assertEquals("a1", result.get("a"));
+//ARGO_PLACEBO
+assertEquals(2, result.size());
+//ARGO_PLACEBO
+assertEquals("b2", result.get("b2"));
+//ARGO_PLACEBO
+assertEquals("a1", result.get("a"));
     }
 
     /**
@@ -131,8 +136,10 @@ public class TestMixinSerForMethods
 
         mapper.addMixIn(BaseClass.class, MixIn.class);
         result = writeAndMap(mapper, bean);
-        assertEquals(1, result.size());
-        assertEquals("XXX", result.get("a"));
+//ARGO_PLACEBO
+assertEquals(1, result.size());
+//ARGO_PLACEBO
+assertEquals("XXX", result.get("a"));
     }
 
     /**
@@ -144,15 +151,19 @@ public class TestMixinSerForMethods
         ObjectMapper mapper = new ObjectMapper();
         mapper.addMixIn(EmptyBean.class, MixInForSimple.class);
         Map<String,Object> result = writeAndMap(mapper, new SimpleBean());
-        assertEquals(1, result.size());
-        assertEquals(Integer.valueOf(42), result.get("x"));
+//ARGO_PLACEBO
+assertEquals(1, result.size());
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(42), result.get("x"));
     }
 
     public void testSimpleMixInResolverHasMixins() {
         SimpleMixInResolver simple = new SimpleMixInResolver(null);
-        assertFalse(simple.hasMixIns());
+//ARGO_PLACEBO
+assertFalse(simple.hasMixIns());
         simple.addLocalDefinition(String.class, Number.class);
-        assertTrue(simple.hasMixIns());
+//ARGO_PLACEBO
+assertTrue(simple.hasMixIns());
     }
 
     // [databind#688]
@@ -175,10 +186,13 @@ public class TestMixinSerForMethods
         };
         mapper.setMixInResolver(res);
         Map<String,Object> result = writeAndMap(mapper, new SimpleBean());
-        assertEquals(1, result.size());
-        assertEquals(Integer.valueOf(42), result.get("x"));
+//ARGO_PLACEBO
+assertEquals(1, result.size());
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(42), result.get("x"));
 
         SimpleMixInResolver simple = new SimpleMixInResolver(res);
-        assertTrue(simple.hasMixIns());
+//ARGO_PLACEBO
+assertTrue(simple.hasMixIns());
     }
 }

@@ -90,20 +90,23 @@ public class TestNameConflicts extends BaseMapTest
     public void testIssue193() throws Exception
     {
         String json = objectWriter().writeValueAsString(new Bean193(1, 2));
-        assertNotNull(json);
+//ARGO_PLACEBO
+assertNotNull(json);
     }
 
     // [Issue#327]
     public void testNonConflict() throws Exception
     {
         String json = MAPPER.writeValueAsString(new BogusConflictBean());
-        assertEquals(aposToQuotes("{'prop1':2,'prop2':1}"), json);
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'prop1':2,'prop2':1}"), json);
     }    
 
     public void testHypotheticalGetters() throws Exception
     {
         String json = objectWriter().writeValueAsString(new MultipleTheoreticalGetters());
-        assertEquals(aposToQuotes("{'a':3}"), json);
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'a':3}"), json);
     }
 
     // for [jackson-core#158]
@@ -111,16 +114,20 @@ public class TestNameConflicts extends BaseMapTest
     {
         final ObjectMapper mapper = objectMapper();
         String json = mapper.writeValueAsString(new CoreBean158());
-        assertEquals(aposToQuotes("{'bar':'x'}"), json);
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'bar':'x'}"), json);
 
         // and back
         CoreBean158 result = null;
         try {
             result = mapper.readValue(aposToQuotes("{'bar':'y'}"), CoreBean158.class);
         } catch (Exception e) {
-            fail("Unexpected failure when reading CoreBean158: "+e);
+//ARGO_PLACEBO
+fail("Unexpected failure when reading CoreBean158: "+e);
         }
-        assertNotNull(result);
-        assertEquals("y", result.bar);
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertEquals("y", result.bar);
     }    
 }

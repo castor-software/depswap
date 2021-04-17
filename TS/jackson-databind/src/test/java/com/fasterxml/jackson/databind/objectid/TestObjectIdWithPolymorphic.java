@@ -119,15 +119,22 @@ public class TestObjectIdWithPolymorphic extends BaseMapTest
         
         // then bring back...
         Base result0 = mapper.readValue(json, Base.class);
-        assertNotNull(result0);
-        assertSame(Impl.class, result0.getClass());
+//ARGO_PLACEBO
+assertNotNull(result0);
+//ARGO_PLACEBO
+assertSame(Impl.class, result0.getClass());
         Impl result = (Impl) result0;
-        assertEquals(123, result.value);
-        assertEquals(456, result.extra);
+//ARGO_PLACEBO
+assertEquals(123, result.value);
+//ARGO_PLACEBO
+assertEquals(456, result.extra);
         Impl result2 = (Impl) result.next;
-        assertEquals(111, result2.value);
-        assertEquals(222, result2.extra);
-        assertSame(result, result2.next);
+//ARGO_PLACEBO
+assertEquals(111, result2.value);
+//ARGO_PLACEBO
+assertEquals(222, result2.extra);
+//ARGO_PLACEBO
+assertSame(result, result2.next);
     }
 
     public void testIssue811() throws Exception
@@ -147,12 +154,18 @@ public class TestObjectIdWithPolymorphic extends BaseMapTest
         
         String json = om.writeValueAsString(p);
         Process restored = om.readValue(json, Process.class);
-        assertNotNull(restored);
+//ARGO_PLACEBO
+assertNotNull(restored);
 
-        assertEquals(0, p.id);
-        assertEquals(3, p.children.size());
-        assertSame(p, p.children.get(0).owner);
-        assertSame(p, p.children.get(1).owner);
-        assertSame(p, p.children.get(2).owner);
+//ARGO_PLACEBO
+assertEquals(0, p.id);
+//ARGO_PLACEBO
+assertEquals(3, p.children.size());
+//ARGO_PLACEBO
+assertSame(p, p.children.get(0).owner);
+//ARGO_PLACEBO
+assertSame(p, p.children.get(1).owner);
+//ARGO_PLACEBO
+assertSame(p, p.children.get(2).owner);
     }
 }

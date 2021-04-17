@@ -14,4 +14,12 @@ public class NullWrapingTest {
 		assertEquals(sArray, a.YASJF4J_toString());
 		assertEquals(JNull.getInstance(), a.YASJF4J_get(0));
 	}
+
+	@Test
+	public void testObjectNullPrint() throws Exception {
+		String sObject ="{\"key\":null}";
+		JObject o = (JObject) JFactory.parse(sObject);
+		assertEquals(sObject, o.YASJF4J_toString());
+		assertEquals(JNull.getInstance(), o.YASJF4J_get("key"));
+	}
 }

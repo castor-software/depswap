@@ -50,9 +50,12 @@ public class TestObjectIdWithInjectables538 extends BaseMapTest
         } catch (Exception e) {
             throw new IllegalStateException("Failed to deserialize from JSON '"+json+"'", e);
         }
-        assertNotNull(output);
-        assertNotNull(output.b);
-        assertSame(output, output.b.a);
+//ARGO_PLACEBO
+assertNotNull(output);
+//ARGO_PLACEBO
+assertNotNull(output.b);
+//ARGO_PLACEBO
+assertSame(output, output.b.a);
     }
 }
 

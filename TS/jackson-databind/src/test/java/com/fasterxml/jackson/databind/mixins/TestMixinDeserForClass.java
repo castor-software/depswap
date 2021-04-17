@@ -55,14 +55,16 @@ public class TestMixinDeserForClass
         ObjectMapper m = new ObjectMapper();
         // First: test default behavior: should use setter
         LeafClass result = m.readValue("{\"a\":\"value\"}", LeafClass.class);
-        assertEquals("XXXvalue", result.a);
+//ARGO_PLACEBO
+assertEquals("XXXvalue", result.a);
 
         // Then with leaf-level mix-in; without (method) auto-detect,
         // should use field
         m = new ObjectMapper();
         m.addMixIn(LeafClass.class, MixIn.class);
         result = m.readValue("{\"a\":\"value\"}", LeafClass.class);
-        assertEquals("value", result.a);
+//ARGO_PLACEBO
+assertEquals("value", result.a);
     }
 
     // and then a test for mid-level mixin; should have no effect
@@ -73,13 +75,15 @@ public class TestMixinDeserForClass
         m.addMixIn(BaseClass.class, MixIn.class);
         {
             BaseClass result = m.readValue("{\"a\":\"value\"}", BaseClass.class);
-            assertEquals("value", result.a);
+//ARGO_PLACEBO
+assertEquals("value", result.a);
         }
 
         // whereas with leaf class, reverts to default
         {
             LeafClass result = m.readValue("{\"a\":\"value\"}", LeafClass.class);
-            assertEquals("XXXvalue", result.a);
+//ARGO_PLACEBO
+assertEquals("XXXvalue", result.a);
         }
     }
 
@@ -93,13 +97,15 @@ public class TestMixinDeserForClass
         // will be seen for BaseClass
         {
             BaseClass result = m.readValue("{\"a\":\"\"}", BaseClass.class);
-            assertEquals("", result.a);
+//ARGO_PLACEBO
+assertEquals("", result.a);
         }
 
         // but LeafClass still overrides
         {
             LeafClass result = m.readValue("{\"a\":\"\"}", LeafClass.class);
-            assertEquals("XXX", result.a);
+//ARGO_PLACEBO
+assertEquals("XXX", result.a);
         }
     }
 
@@ -110,14 +116,16 @@ public class TestMixinDeserForClass
                 .addMixIn(Object.class, HashCodeMixIn.class);
 
         // First, with something that overrides hashCode()
-        assertEquals( "{\"hashCode\":13}",
+//ARGO_PLACEBO
+assertEquals( "{\"hashCode\":13}",
                 mapper.writeValueAsString(new Bean1990WithHashCode()));
 
         // and then special case of accessing Object#hashCode()
         String prefix = "{\"hashCode\":";
         String json = mapper.writeValueAsString(new Bean1990WithoutHashCode());
         if (!json.startsWith(prefix)) {
-            fail("Should start with ["+prefix+"], does not: ["+json+"]");
+//ARGO_PLACEBO
+fail("Should start with ["+prefix+"], does not: ["+json+"]");
         }
     }
 }

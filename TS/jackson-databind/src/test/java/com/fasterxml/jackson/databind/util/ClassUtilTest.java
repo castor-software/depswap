@@ -71,24 +71,36 @@ public class ClassUtilTest extends BaseMapTest
 
     public void testIsConcrete() throws Exception
     {
-        assertTrue(ClassUtil.isConcrete(getClass()));
-        assertFalse(ClassUtil.isConcrete(BaseClass.class));
-        assertFalse(ClassUtil.isConcrete(BaseInt.class));
+//ARGO_PLACEBO
+assertTrue(ClassUtil.isConcrete(getClass()));
+//ARGO_PLACEBO
+assertFalse(ClassUtil.isConcrete(BaseClass.class));
+//ARGO_PLACEBO
+assertFalse(ClassUtil.isConcrete(BaseInt.class));
 
-        assertFalse(ClassUtil.isConcrete(ConcreteAndAbstract.class.getDeclaredMethod("a")));
-        assertTrue(ClassUtil.isConcrete(ConcreteAndAbstract.class.getDeclaredMethod("c")));
+//ARGO_PLACEBO
+assertFalse(ClassUtil.isConcrete(ConcreteAndAbstract.class.getDeclaredMethod("a")));
+//ARGO_PLACEBO
+assertTrue(ClassUtil.isConcrete(ConcreteAndAbstract.class.getDeclaredMethod("c")));
     }
 
     public void testCanBeABeanType()
     {
-        assertEquals("annotation", ClassUtil.canBeABeanType(java.lang.annotation.Retention.class));
-        assertEquals("array", ClassUtil.canBeABeanType(String[].class));
-        assertEquals("enum", ClassUtil.canBeABeanType(TestEnum.class));
-        assertEquals("primitive", ClassUtil.canBeABeanType(Integer.TYPE));
-        assertNull(ClassUtil.canBeABeanType(Integer.class));
+//ARGO_PLACEBO
+assertEquals("annotation", ClassUtil.canBeABeanType(java.lang.annotation.Retention.class));
+//ARGO_PLACEBO
+assertEquals("array", ClassUtil.canBeABeanType(String[].class));
+//ARGO_PLACEBO
+assertEquals("enum", ClassUtil.canBeABeanType(TestEnum.class));
+//ARGO_PLACEBO
+assertEquals("primitive", ClassUtil.canBeABeanType(Integer.TYPE));
+//ARGO_PLACEBO
+assertNull(ClassUtil.canBeABeanType(Integer.class));
 
-        assertEquals("non-static member class", ClassUtil.isLocalType(InnerNonStatic.class, false));
-        assertNull(ClassUtil.isLocalType(Integer.class, false));
+//ARGO_PLACEBO
+assertEquals("non-static member class", ClassUtil.isLocalType(InnerNonStatic.class, false));
+//ARGO_PLACEBO
+assertNull(ClassUtil.isLocalType(Integer.class, false));
     }
 
     public void testExceptionHelpers()
@@ -96,28 +108,35 @@ public class ClassUtilTest extends BaseMapTest
         RuntimeException e = new RuntimeException("test");
         RuntimeException wrapper = new RuntimeException(e);
 
-        assertSame(e, ClassUtil.getRootCause(wrapper));
+//ARGO_PLACEBO
+assertSame(e, ClassUtil.getRootCause(wrapper));
 
         try {
             ClassUtil.throwAsIAE(e);
-            fail("Shouldn't get this far");
+//ARGO_PLACEBO
+fail("Shouldn't get this far");
         } catch (RuntimeException e2) {
-            assertSame(e, e2);
+//ARGO_PLACEBO
+assertSame(e, e2);
         }
 
         Error err = new Error();
         try {
             ClassUtil.throwAsIAE(err);
-            fail("Shouldn't get this far");
+//ARGO_PLACEBO
+fail("Shouldn't get this far");
         } catch (Error errAct) {
-            assertSame(err, errAct);
+//ARGO_PLACEBO
+assertSame(err, errAct);
         }
         
         try {
             ClassUtil.unwrapAndThrowAsIAE(wrapper);
-            fail("Shouldn't get this far");
+//ARGO_PLACEBO
+fail("Shouldn't get this far");
         } catch (RuntimeException e2) {
-            assertSame(e, e2);
+//ARGO_PLACEBO
+assertSame(e, e2);
         }
     }
 
@@ -146,16 +165,24 @@ public class ClassUtilTest extends BaseMapTest
 
     public void testPrimitiveDefaultValue()
     {
-        assertEquals(Integer.valueOf(0), ClassUtil.defaultValue(Integer.TYPE));
-        assertEquals(Long.valueOf(0L), ClassUtil.defaultValue(Long.TYPE));
-        assertEquals(Character.valueOf('\0'), ClassUtil.defaultValue(Character.TYPE));
-        assertEquals(Short.valueOf((short) 0), ClassUtil.defaultValue(Short.TYPE));
-        assertEquals(Byte.valueOf((byte) 0), ClassUtil.defaultValue(Byte.TYPE));
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(0), ClassUtil.defaultValue(Integer.TYPE));
+//ARGO_PLACEBO
+assertEquals(Long.valueOf(0L), ClassUtil.defaultValue(Long.TYPE));
+//ARGO_PLACEBO
+assertEquals(Character.valueOf('\0'), ClassUtil.defaultValue(Character.TYPE));
+//ARGO_PLACEBO
+assertEquals(Short.valueOf((short) 0), ClassUtil.defaultValue(Short.TYPE));
+//ARGO_PLACEBO
+assertEquals(Byte.valueOf((byte) 0), ClassUtil.defaultValue(Byte.TYPE));
 
-        assertEquals(Double.valueOf(0.0), ClassUtil.defaultValue(Double.TYPE));
-        assertEquals(Float.valueOf(0.0f), ClassUtil.defaultValue(Float.TYPE));
+//ARGO_PLACEBO
+assertEquals(Double.valueOf(0.0), ClassUtil.defaultValue(Double.TYPE));
+//ARGO_PLACEBO
+assertEquals(Float.valueOf(0.0f), ClassUtil.defaultValue(Float.TYPE));
 
-        assertEquals(Boolean.FALSE, ClassUtil.defaultValue(Boolean.TYPE));
+//ARGO_PLACEBO
+assertEquals(Boolean.FALSE, ClassUtil.defaultValue(Boolean.TYPE));
         
         try {
             ClassUtil.defaultValue(String.class);
@@ -166,20 +193,29 @@ public class ClassUtilTest extends BaseMapTest
 
     public void testPrimitiveWrapperType()
     {
-        assertEquals(Byte.class, ClassUtil.wrapperType(Byte.TYPE));
-        assertEquals(Short.class, ClassUtil.wrapperType(Short.TYPE));
-        assertEquals(Character.class, ClassUtil.wrapperType(Character.TYPE));
-        assertEquals(Integer.class, ClassUtil.wrapperType(Integer.TYPE));
-        assertEquals(Long.class, ClassUtil.wrapperType(Long.TYPE));
+//ARGO_PLACEBO
+assertEquals(Byte.class, ClassUtil.wrapperType(Byte.TYPE));
+//ARGO_PLACEBO
+assertEquals(Short.class, ClassUtil.wrapperType(Short.TYPE));
+//ARGO_PLACEBO
+assertEquals(Character.class, ClassUtil.wrapperType(Character.TYPE));
+//ARGO_PLACEBO
+assertEquals(Integer.class, ClassUtil.wrapperType(Integer.TYPE));
+//ARGO_PLACEBO
+assertEquals(Long.class, ClassUtil.wrapperType(Long.TYPE));
 
-        assertEquals(Double.class, ClassUtil.wrapperType(Double.TYPE));
-        assertEquals(Float.class, ClassUtil.wrapperType(Float.TYPE));
+//ARGO_PLACEBO
+assertEquals(Double.class, ClassUtil.wrapperType(Double.TYPE));
+//ARGO_PLACEBO
+assertEquals(Float.class, ClassUtil.wrapperType(Float.TYPE));
 
-        assertEquals(Boolean.class, ClassUtil.wrapperType(Boolean.TYPE));
+//ARGO_PLACEBO
+assertEquals(Boolean.class, ClassUtil.wrapperType(Boolean.TYPE));
         
         try {
             ClassUtil.wrapperType(String.class);
-            fail("Should not pass");
+//ARGO_PLACEBO
+fail("Should not pass");
         } catch (IllegalArgumentException e) {
             verifyException(e, "String is not a primitive type");
         }
@@ -187,38 +223,55 @@ public class ClassUtilTest extends BaseMapTest
 
     public void testWrapperToPrimitiveType()
     {
-        assertEquals(Integer.TYPE, ClassUtil.primitiveType(Integer.class));
-        assertEquals(Long.TYPE, ClassUtil.primitiveType(Long.class));
-        assertEquals(Character.TYPE, ClassUtil.primitiveType(Character.class));
-        assertEquals(Short.TYPE, ClassUtil.primitiveType(Short.class));
-        assertEquals(Byte.TYPE, ClassUtil.primitiveType(Byte.class));
-        assertEquals(Float.TYPE, ClassUtil.primitiveType(Float.class));
-        assertEquals(Double.TYPE, ClassUtil.primitiveType(Double.class));
-        assertEquals(Boolean.TYPE, ClassUtil.primitiveType(Boolean.class));
+//ARGO_PLACEBO
+assertEquals(Integer.TYPE, ClassUtil.primitiveType(Integer.class));
+//ARGO_PLACEBO
+assertEquals(Long.TYPE, ClassUtil.primitiveType(Long.class));
+//ARGO_PLACEBO
+assertEquals(Character.TYPE, ClassUtil.primitiveType(Character.class));
+//ARGO_PLACEBO
+assertEquals(Short.TYPE, ClassUtil.primitiveType(Short.class));
+//ARGO_PLACEBO
+assertEquals(Byte.TYPE, ClassUtil.primitiveType(Byte.class));
+//ARGO_PLACEBO
+assertEquals(Float.TYPE, ClassUtil.primitiveType(Float.class));
+//ARGO_PLACEBO
+assertEquals(Double.TYPE, ClassUtil.primitiveType(Double.class));
+//ARGO_PLACEBO
+assertEquals(Boolean.TYPE, ClassUtil.primitiveType(Boolean.class));
         
-        assertNull(ClassUtil.primitiveType(String.class));
+//ARGO_PLACEBO
+assertNull(ClassUtil.primitiveType(String.class));
     }
 
     public void testFindEnumType()
     {
-        assertEquals(TestEnum.class, ClassUtil.findEnumType(TestEnum.A));
+//ARGO_PLACEBO
+assertEquals(TestEnum.class, ClassUtil.findEnumType(TestEnum.A));
         // different codepaths for empty and non-empty EnumSets...
-        assertEquals(TestEnum.class, ClassUtil.findEnumType(EnumSet.allOf(TestEnum.class)));
-        assertEquals(TestEnum.class, ClassUtil.findEnumType(EnumSet.noneOf(TestEnum.class)));
+//ARGO_PLACEBO
+assertEquals(TestEnum.class, ClassUtil.findEnumType(EnumSet.allOf(TestEnum.class)));
+//ARGO_PLACEBO
+assertEquals(TestEnum.class, ClassUtil.findEnumType(EnumSet.noneOf(TestEnum.class)));
 
-        assertEquals(TestEnum.class, ClassUtil.findEnumType(new EnumMap<TestEnum,Integer>(TestEnum.class)));
+//ARGO_PLACEBO
+assertEquals(TestEnum.class, ClassUtil.findEnumType(new EnumMap<TestEnum,Integer>(TestEnum.class)));
     }
 
     public void testDescs()
     {
         final String stringExp = "`java.lang.String`";
-        assertEquals(stringExp, ClassUtil.getClassDescription("foo"));
-        assertEquals(stringExp, ClassUtil.getClassDescription(String.class));
+//ARGO_PLACEBO
+assertEquals(stringExp, ClassUtil.getClassDescription("foo"));
+//ARGO_PLACEBO
+assertEquals(stringExp, ClassUtil.getClassDescription(String.class));
         final JavaType stringType = TypeFactory.defaultInstance().constructType(String.class);
-        assertEquals(stringExp, ClassUtil.getTypeDescription(stringType));
+//ARGO_PLACEBO
+assertEquals(stringExp, ClassUtil.getTypeDescription(stringType));
         final JavaType mapType = TypeFactory.defaultInstance().constructType(
                 new TypeReference<Map<String, Integer>>() { });
-        assertEquals("`java.util.Map<java.lang.String,java.lang.Integer>`",
+//ARGO_PLACEBO
+assertEquals("`java.util.Map<java.lang.String,java.lang.Integer>`",
                 ClassUtil.getTypeDescription(mapType));
     }
 
@@ -226,28 +279,39 @@ public class ClassUtilTest extends BaseMapTest
     {
         final JavaType stringType = TypeFactory.defaultInstance().constructType(String.class);
         List<JavaType> supers = ClassUtil.findSuperTypes(stringType, Object.class, false);
-        assertEquals(Collections.emptyList(), supers);
+//ARGO_PLACEBO
+assertEquals(Collections.emptyList(), supers);
 
         supers = ClassUtil.findSuperTypes(stringType, Object.class, true);
-        assertEquals(Collections.singletonList(stringType), supers);
+//ARGO_PLACEBO
+assertEquals(Collections.singletonList(stringType), supers);
     }
 
     public void testGetDeclaringClass()
     {
-        assertEquals(null, ClassUtil.getDeclaringClass(String.class));
-        assertEquals(getClass(), ClassUtil.getDeclaringClass(BaseClass.class));
+//ARGO_PLACEBO
+assertEquals(null, ClassUtil.getDeclaringClass(String.class));
+//ARGO_PLACEBO
+assertEquals(getClass(), ClassUtil.getDeclaringClass(BaseClass.class));
     }
 
     public void testIsXxxType()
     {
-        assertTrue(ClassUtil.isCollectionMapOrArray(String[].class));
-        assertTrue(ClassUtil.isCollectionMapOrArray(ArrayList.class));
-        assertTrue(ClassUtil.isCollectionMapOrArray(LinkedHashMap.class));
-        assertFalse(ClassUtil.isCollectionMapOrArray(java.net.URL.class));
+//ARGO_PLACEBO
+assertTrue(ClassUtil.isCollectionMapOrArray(String[].class));
+//ARGO_PLACEBO
+assertTrue(ClassUtil.isCollectionMapOrArray(ArrayList.class));
+//ARGO_PLACEBO
+assertTrue(ClassUtil.isCollectionMapOrArray(LinkedHashMap.class));
+//ARGO_PLACEBO
+assertFalse(ClassUtil.isCollectionMapOrArray(java.net.URL.class));
 
-        assertTrue(ClassUtil.isBogusClass(Void.class));
-        assertTrue(ClassUtil.isBogusClass(Void.TYPE));
-        assertFalse(ClassUtil.isBogusClass(String.class));
+//ARGO_PLACEBO
+assertTrue(ClassUtil.isBogusClass(Void.class));
+//ARGO_PLACEBO
+assertTrue(ClassUtil.isBogusClass(Void.TYPE));
+//ARGO_PLACEBO
+assertFalse(ClassUtil.isBogusClass(String.class));
     }
 
     public void testEnforceSubtype()
@@ -265,9 +329,11 @@ public class ClassUtilTest extends BaseMapTest
         // First: without any actual stuff, with an RTE
         try {
             ClassUtil.closeOnFailAndThrowAsIOE(null, null, testExc1);
-            fail("Should not pass");
+//ARGO_PLACEBO
+fail("Should not pass");
         } catch (Exception e) {
-            assertSame(testExc1, e);
+//ARGO_PLACEBO
+assertSame(testExc1, e);
         }
 
         // then with bogus Closeable and with non-RTE:
@@ -277,12 +343,17 @@ public class ClassUtilTest extends BaseMapTest
         final Exception testExc2 = new Exception("test");
         try {
             ClassUtil.closeOnFailAndThrowAsIOE(gen, bytes, testExc2);
-            fail("Should not pass");
+//ARGO_PLACEBO
+fail("Should not pass");
         } catch (Exception e) {
-            assertEquals(RuntimeException.class, e.getClass());
-            assertSame(testExc2, e.getCause());
-            assertEquals("test", e.getCause().getMessage());
-            assertTrue(gen.isClosed());
+//ARGO_PLACEBO
+assertEquals(RuntimeException.class, e.getClass());
+//ARGO_PLACEBO
+assertSame(testExc2, e.getCause());
+//ARGO_PLACEBO
+assertEquals("test", e.getCause().getMessage());
+//ARGO_PLACEBO
+assertTrue(gen.isClosed());
         }
         gen.close();
     }
@@ -298,15 +369,20 @@ public class ClassUtilTest extends BaseMapTest
     {
         // just for code coverage
         List<Class<?>> supers = ClassUtil.findSuperTypes(String.class, Object.class);
-        assertFalse(supers.isEmpty()); // serializable/comparable/char-seq
+//ARGO_PLACEBO
+assertFalse(supers.isEmpty()); // serializable/comparable/char-seq
     }
 
     @SuppressWarnings("deprecation")
     public void testHasGetterSignature() throws Exception
     {
-        assertFalse(ClassUtil.hasGetterSignature(MaybeGetters.class.getDeclaredMethod("staticMethod")));
-        assertFalse(ClassUtil.hasGetterSignature(MaybeGetters.class.getDeclaredMethod("voidMethod")));
-        assertFalse(ClassUtil.hasGetterSignature(MaybeGetters.class.getDeclaredMethod("setMethod", Integer.TYPE)));
-        assertTrue(ClassUtil.hasGetterSignature(MaybeGetters.class.getDeclaredMethod("getMethod")));
+//ARGO_PLACEBO
+assertFalse(ClassUtil.hasGetterSignature(MaybeGetters.class.getDeclaredMethod("staticMethod")));
+//ARGO_PLACEBO
+assertFalse(ClassUtil.hasGetterSignature(MaybeGetters.class.getDeclaredMethod("voidMethod")));
+//ARGO_PLACEBO
+assertFalse(ClassUtil.hasGetterSignature(MaybeGetters.class.getDeclaredMethod("setMethod", Integer.TYPE)));
+//ARGO_PLACEBO
+assertTrue(ClassUtil.hasGetterSignature(MaybeGetters.class.getDeclaredMethod("getMethod")));
     }
 }

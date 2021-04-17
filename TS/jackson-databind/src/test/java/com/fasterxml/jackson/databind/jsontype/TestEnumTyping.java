@@ -5,17 +5,12 @@ import java.util.*;
 import com.fasterxml.jackson.annotation.*;
 
 import com.fasterxml.jackson.databind.BaseMapTest;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @SuppressWarnings("serial")
 public class TestEnumTyping extends BaseMapTest
 {
-    /*
-    /**********************************************************
-    /* Helper types
-    /**********************************************************
-     */
-
     // note: As.WRAPPER_ARRAY worked initially; but as per [JACKSON-485], As.PROPERTY had issues
     @JsonTypeInfo(use=JsonTypeInfo.Id.MINIMAL_CLASS, include=JsonTypeInfo.As.PROPERTY)
     public interface EnumInterface { }
@@ -63,10 +58,23 @@ public class TestEnumTyping extends BaseMapTest
         }
     }
 
+    // [databind#2775]
+    @JsonTypeInfo(use = JsonTypeInfo.Id.NAME
+// work-around:
+//            , include = JsonTypeInfo.As.WRAPPER_ARRAY
+            )
+    @JsonSubTypes(@JsonSubTypes.Type(TestEnum2775.class))
+    interface Base2775 {}
+
+    @JsonTypeName("Test")
+    enum TestEnum2775 implements Base2775 {
+        VALUE;
+    }
+
     /*
-    /**********************************************************
-    /* Unit tests
-    /**********************************************************
+    /**********************************************************************
+    /* Test methods
+    /**********************************************************************
      */
 
     private final ObjectMapper MAPPER = newJsonMapper();
@@ -79,16 +87,20 @@ public class TestEnumTyping extends BaseMapTest
         String json = MAPPER.writeValueAsString(list);
 
         TagList result = MAPPER.readValue(json, TagList.class);
-        assertEquals(2, result.size());
-        assertSame(Tag.A, result.get(0));
-        assertSame(Tag.B, result.get(1));
+//ARGO_PLACEBO
+assertEquals(2, result.size());
+//ARGO_PLACEBO
+assertSame(Tag.A, result.get(0));
+//ARGO_PLACEBO
+assertSame(Tag.B, result.get(1));
     }
 
     public void testEnumInterface() throws Exception
     {
         String json = MAPPER.writeValueAsString(Tag.B);
         EnumInterface result = MAPPER.readValue(json, EnumInterface.class);
-        assertSame(Tag.B, result);
+//ARGO_PLACEBO
+assertSame(Tag.B, result);
     }
 
     public void testEnumInterfaceList() throws Exception
@@ -99,20 +111,27 @@ public class TestEnumTyping extends BaseMapTest
         String json = MAPPER.writeValueAsString(list);
         
         EnumInterfaceList result = MAPPER.readValue(json, EnumInterfaceList.class);
-        assertEquals(2, result.size());
-        assertSame(Tag.A, result.get(0));
-        assertSame(Tag.B, result.get(1));
+//ARGO_PLACEBO
+assertEquals(2, result.size());
+//ARGO_PLACEBO
+assertSame(Tag.A, result.get(0));
+//ARGO_PLACEBO
+assertSame(Tag.B, result.get(1));
     }
 
     public void testUntypedEnum() throws Exception
     {
         String str = MAPPER.writeValueAsString(new UntypedEnumBean(TestEnum.B));
         UntypedEnumBean result = MAPPER.readValue(str, UntypedEnumBean.class);
-        assertNotNull(result);
-        assertNotNull(result.value);
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertNotNull(result.value);
         Object ob = result.value;
-        assertSame(TestEnum.class, ob.getClass());
-        assertEquals(TestEnum.B, result.value);
+//ARGO_PLACEBO
+assertSame(TestEnum.class, ob.getClass());
+//ARGO_PLACEBO
+assertEquals(TestEnum.B, result.value);
     }
 
     // for [databind#2605]
@@ -122,6 +141,21 @@ public class TestEnumTyping extends BaseMapTest
         String json = MAPPER.writeValueAsString(input);
 //      Object o = MAPPER.readerFor(EnumContaintingClass.class).readValue(json);
         Object o = MAPPER.readValue(json, EnumContaintingClass.class);
-        assertNotNull(o);
+//ARGO_PLACEBO
+assertNotNull(o);
+    }
+
+    // [databind#2775]
+    public void testEnumAsSubtypeNoFailOnInvalidTypeId() throws Exception
+    {
+        final Base2775 testValue = TestEnum2775.VALUE;
+        String json = MAPPER.writeValueAsString(testValue);
+//System.err.println("JSON: "+json);
+
+        Base2775 deserializedValue = MAPPER.readerFor(Base2775.class)
+                .without(DeserializationFeature.FAIL_ON_INVALID_SUBTYPE)
+                .readValue(json);
+//ARGO_PLACEBO
+assertEquals(testValue, deserializedValue);
     }
 }

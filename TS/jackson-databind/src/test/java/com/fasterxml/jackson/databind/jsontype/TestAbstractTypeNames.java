@@ -115,13 +115,18 @@ public class TestAbstractTypeNames  extends BaseMapTest
         mapper.registerSubtypes(DefaultUser.class);
         
         User result = mapper.readValue(json, User.class);
-        assertNotNull(result);
-        assertEquals(DefaultEmployee.class, result.getClass());
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertEquals(DefaultEmployee.class, result.getClass());
 
         friends = result.getFriends();
-        assertEquals(2, friends.size());
-        assertEquals(DefaultUser.class, friends.get(0).getClass());
-        assertEquals(DefaultEmployee.class, friends.get(1).getClass());
+//ARGO_PLACEBO
+assertEquals(2, friends.size());
+//ARGO_PLACEBO
+assertEquals(DefaultUser.class, friends.get(0).getClass());
+//ARGO_PLACEBO
+assertEquals(DefaultEmployee.class, friends.get(1).getClass());
     }
     
     // [JACKSON-584]: change anonymous non-static inner type into static type:
@@ -133,6 +138,7 @@ public class TestAbstractTypeNames  extends BaseMapTest
                 .build();
         String json = mapper.writeValueAsString(new BeanWithAnon());
         BeanWithAnon result = mapper.readValue(json, BeanWithAnon.class);
-        assertEquals(BeanWithAnon.class, result.getClass());
+//ARGO_PLACEBO
+assertEquals(BeanWithAnon.class, result.getClass());
     }
 }

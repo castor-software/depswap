@@ -6,18 +6,19 @@ if [ "$#" -lt 1 ]; then
   exit 1
 fi
 
-CSV_OUTPUT="differential_testing_results.csv"
+ROOT_DIR=$(pwd)
+CSV_OUTPUT="$ROOT_DIR/differential_testing_results.csv"
 echo "Implementation,Bridge,Outcome,Failures" > $CSV_OUTPUT
 
 JARS_PATH=$1
 echo "Path to lib dir: $JARS_PATH"
 
-BRIDGES=('json-simple' 'json' 'gson')
+#BRIDGES=('json-simple' 'json' 'gson' 'jackson-databind')
 #BRIDGES=('gson')
-#BRIDGES=('json-simple')
+BRIDGES=('json-simple')
 # 'json'  'jackson-databind' 'gson'
 #IMPLEMENTATIONS=('yasjf4j-argo' 'yasjf4j-cookjson' 'yasjf4j-corn')
-IMPLEMENTATIONS=('yasjf4j-argo' 'yasjf4j-cookjson' 'yasjf4j-corn' 'yasjf4j-fastjson' 'yasjf4j-flexjson' 'yasjf4j-genson' 'yasjf4j-gson' 'yasjf4j-jackson-databind' 'yasjf4j-jjson' 'yasjf4j-johnzon' 'yasjf4j-json' 'yasjf4j-jsonij' 'yasjf4j-json-io' 'yasjf4j-json-lib' 'yasjf4j-jsonp' 'yasjf4j-json-simple' 'yasjf4j-jsonutil' 'yasjf4j-mjson' 'yasjf4j-progbase-json' 'yasjf4j-sojo')
+IMPLEMENTATIONS=('yasjf4j-nothing' 'yasjf4j-argo' 'yasjf4j-cookjson' 'yasjf4j-corn' 'yasjf4j-fastjson' 'yasjf4j-flexjson' 'yasjf4j-genson' 'yasjf4j-gson' 'yasjf4j-jackson-databind' 'yasjf4j-jjson' 'yasjf4j-johnzon' 'yasjf4j-json' 'yasjf4j-jsonij' 'yasjf4j-json-io' 'yasjf4j-json-lib' 'yasjf4j-jsonp' 'yasjf4j-json-simple' 'yasjf4j-jsonutil' 'yasjf4j-mjson' 'yasjf4j-progbase-json' 'yasjf4j-sojo')
 
 
 
@@ -26,7 +27,6 @@ echo "IMPLEMENTATIONS: $IMPLEMENTATIONS"
 echo "BRIDGES: $BRIDGES"
 
 
-ROOT_DIR=$(pwd)
 g="se.kth.castor"
 a="yasjf4j-json"
 v="1.0-SNAPSHOT"

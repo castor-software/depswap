@@ -69,8 +69,10 @@ public class JsonIncludeCustomTest extends BaseMapTest
 
     public void testSimpleCustomFilter() throws Exception
     {
-        assertEquals(aposToQuotes("{'value':'x'}"), MAPPER.writeValueAsString(new FooBean("x")));
-        assertEquals("{}", MAPPER.writeValueAsString(new FooBean("foo")));
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'value':'x'}"), MAPPER.writeValueAsString(new FooBean("x")));
+//ARGO_PLACEBO
+assertEquals("{}", MAPPER.writeValueAsString(new FooBean("foo")));
     }
 
     public void testCustomFilterWithMap() throws Exception
@@ -80,7 +82,8 @@ public class JsonIncludeCustomTest extends BaseMapTest
                 .add("b", "foo")
                 .add("c", "2");
         
-        assertEquals(aposToQuotes("{'stuff':{'a':'1','c':'2'}}"), MAPPER.writeValueAsString(input));
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'stuff':{'a':'1','c':'2'}}"), MAPPER.writeValueAsString(input));
     }
 
     /*
@@ -93,7 +96,8 @@ public class JsonIncludeCustomTest extends BaseMapTest
     {
         try {
             String json = MAPPER.writeValueAsString(new BrokenBean("foo"));
-            fail("Should not pass, produced: "+json);
+//ARGO_PLACEBO
+fail("Should not pass, produced: "+json);
         } catch (InvalidDefinitionException e) {
             verifyException(e, "Problem determining whether filter of type");
             verifyException(e, "filter out `null`");

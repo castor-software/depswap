@@ -75,53 +75,69 @@ public class JsonIncludeArrayTest extends BaseMapTest
 
     public void testByteArray() throws IOException
     {
-        assertEquals("{}", MAPPER.writeValueAsString(new NonEmptyByteArray()));
+//ARGO_PLACEBO
+assertEquals("{}", MAPPER.writeValueAsString(new NonEmptyByteArray()));
     }
 
     public void testShortArray() throws IOException
     {
-        assertEquals("{}", MAPPER.writeValueAsString(new NonEmptyShortArray()));
-        assertEquals("{\"value\":[1]}", MAPPER.writeValueAsString(new NonEmptyShortArray((short) 1)));
+//ARGO_PLACEBO
+assertEquals("{}", MAPPER.writeValueAsString(new NonEmptyShortArray()));
+//ARGO_PLACEBO
+assertEquals("{\"value\":[1]}", MAPPER.writeValueAsString(new NonEmptyShortArray((short) 1)));
     }
 
     public void testCharArray() throws IOException
     {
-        assertEquals("{}", MAPPER.writeValueAsString(new NonEmptyCharArray()));
+//ARGO_PLACEBO
+assertEquals("{}", MAPPER.writeValueAsString(new NonEmptyCharArray()));
         // by default considered to be serialized as String
-        assertEquals("{\"value\":\"ab\"}", MAPPER.writeValueAsString(new NonEmptyCharArray('a', 'b')));
+//ARGO_PLACEBO
+assertEquals("{\"value\":\"ab\"}", MAPPER.writeValueAsString(new NonEmptyCharArray('a', 'b')));
         // but can force as sparse (real) array too
-        assertEquals("{\"value\":[\"a\",\"b\"]}", MAPPER
+//ARGO_PLACEBO
+assertEquals("{\"value\":[\"a\",\"b\"]}", MAPPER
                 .writer().with(SerializationFeature.WRITE_CHAR_ARRAYS_AS_JSON_ARRAYS)
                 .writeValueAsString(new NonEmptyCharArray('a', 'b')));
     }
 
     public void testIntArray() throws IOException
     {
-        assertEquals("{}", MAPPER.writeValueAsString(new NonEmptyIntArray()));
-        assertEquals("{\"value\":[2]}", MAPPER.writeValueAsString(new NonEmptyIntArray(2)));
+//ARGO_PLACEBO
+assertEquals("{}", MAPPER.writeValueAsString(new NonEmptyIntArray()));
+//ARGO_PLACEBO
+assertEquals("{\"value\":[2]}", MAPPER.writeValueAsString(new NonEmptyIntArray(2)));
     }
 
     public void testLongArray() throws IOException
     {
-        assertEquals("{}", MAPPER.writeValueAsString(new NonEmptyLongArray()));
-        assertEquals("{\"value\":[3,4]}", MAPPER.writeValueAsString(new NonEmptyLongArray(3, 4)));
+//ARGO_PLACEBO
+assertEquals("{}", MAPPER.writeValueAsString(new NonEmptyLongArray()));
+//ARGO_PLACEBO
+assertEquals("{\"value\":[3,4]}", MAPPER.writeValueAsString(new NonEmptyLongArray(3, 4)));
     }
 
     public void testBooleanArray() throws IOException
     {
-        assertEquals("{}", MAPPER.writeValueAsString(new NonEmptyBooleanArray()));
-        assertEquals("{\"value\":[true,false]}", MAPPER.writeValueAsString(new NonEmptyBooleanArray(true,false)));
+//ARGO_PLACEBO
+assertEquals("{}", MAPPER.writeValueAsString(new NonEmptyBooleanArray()));
+//ARGO_PLACEBO
+assertEquals("{\"value\":[true,false]}", MAPPER.writeValueAsString(new NonEmptyBooleanArray(true,false)));
     }
 
     public void testDoubleArray() throws IOException
     {
-        assertEquals("{}", MAPPER.writeValueAsString(new NonEmptyDoubleArray()));
-        assertEquals("{\"value\":[0.25,-1.0]}", MAPPER.writeValueAsString(new NonEmptyDoubleArray(0.25,-1.0)));
+//ARGO_PLACEBO
+assertEquals("{}", MAPPER.writeValueAsString(new NonEmptyDoubleArray()));
+//ARGO_PLACEBO
+assertEquals("{\"value\":[0.25,-1.0]}", MAPPER.writeValueAsString(new NonEmptyDoubleArray(0.25,-1.0)));
     }
 
     public void testFloatArray() throws IOException
     {
-        assertEquals("{}", MAPPER.writeValueAsString(new NonEmptyFloatArray()));
-        assertEquals("{\"value\":[0.5]}", MAPPER.writeValueAsString(new NonEmptyFloatArray(0.5f)));
+//ARGO_PLACEBO
+assertEquals("{}", MAPPER.writeValueAsString(new NonEmptyFloatArray()));
+//ARGO_PLACEBO
+assertEquals("{\"value\":[0.5]}", MAPPER.writeValueAsString(new NonEmptyFloatArray(0.5f)));
     }
 }

@@ -39,7 +39,8 @@ public class JsonInclude1327Test
         final String jsonString = om.writeValueAsString(new Issue1327BeanEmpty());
 
         if (jsonString.contains("myList")) {
-            fail("Should not contain `myList`: "+jsonString);
+//ARGO_PLACEBO
+fail("Should not contain `myList`: "+jsonString);
         }
     }
 
@@ -50,7 +51,8 @@ public class JsonInclude1327Test
         final String jsonString = om.writeValueAsString(new Issue1327BeanAlways());
 
         if (!jsonString.contains("myList")) {
-            fail("Should contain `myList` with Include.ALWAYS: "+jsonString);
+//ARGO_PLACEBO
+fail("Should contain `myList` with Include.ALWAYS: "+jsonString);
         }
     }
 }

@@ -42,14 +42,17 @@ public class RecursiveType1658Test extends BaseMapTest
 
         Tree<?> tRead = mapper.readValue(res, Tree.class);
 
-        assertNotNull(tRead);
+//ARGO_PLACEBO
+assertNotNull(tRead);
 
         // 30-Oct-2019, tatu: Let's actually verify that description will be safe to use, too
         JavaType resolved = mapper.getTypeFactory()
                 .constructType(new TypeReference<Tree<String>> () { });
         final String namePath = Tree.class.getName().replace('.', '/');
-        assertEquals("L"+namePath+";", resolved.getErasedSignature());
-        assertEquals("L"+namePath+"<Ljava/lang/String;L"+namePath+";>;",
+//ARGO_PLACEBO
+assertEquals("L"+namePath+";", resolved.getErasedSignature());
+//ARGO_PLACEBO
+assertEquals("L"+namePath+"<Ljava/lang/String;L"+namePath+";>;",
                 resolved.getGenericSignature());
     }
 }

@@ -25,9 +25,11 @@ public class DefaultTypeResolver2472Test extends BaseMapTest
                 .build();
 
         String json = mapper.writeValueAsString(Arrays.asList("foo"));
-        assertNotNull(json);
+//ARGO_PLACEBO
+assertNotNull(json);
 
         Object ob = mapper.readValue(json, Object.class);
-        assertNotNull(ob);
+//ARGO_PLACEBO
+assertNotNull(ob);
     }
 }

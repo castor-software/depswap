@@ -43,14 +43,17 @@ public class DelegatingCreatorAnnotations2016Test extends BaseMapTest
     public void testDelegatingWithAs() throws Exception
     {
         Wrapper2016As actual = MAPPER.readValue("123", Wrapper2016As.class);
-        assertEquals(Date.class, actual.value.getClass());
+//ARGO_PLACEBO
+assertEquals(Date.class, actual.value.getClass());
     }
 
     public void testDelegatingWithContentAs() throws Exception
     {
         Wrapper2016ContentAs actual = MAPPER.readValue("[123]", Wrapper2016ContentAs.class);
         List<Object> l = actual.value;
-        assertEquals(1, l.size());
-        assertEquals(Date.class, l.get(0).getClass());
+//ARGO_PLACEBO
+assertEquals(1, l.size());
+//ARGO_PLACEBO
+assertEquals(Date.class, l.get(0).getClass());
     }
 }

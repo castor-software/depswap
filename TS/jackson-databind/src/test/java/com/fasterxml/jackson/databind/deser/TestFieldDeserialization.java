@@ -96,8 +96,10 @@ public class TestFieldDeserialization
         ObjectMapper m = new ObjectMapper();
         SimpleFieldBean result = m.readValue("{ \"x\" : -13 }",
                                            SimpleFieldBean.class);
-        assertEquals(-13, result.x);
-        assertEquals(0, result.y);
+//ARGO_PLACEBO
+assertEquals(-13, result.x);
+//ARGO_PLACEBO
+assertEquals(0, result.y);
     }
 
     public void testSimpleAnnotation() throws Exception
@@ -106,10 +108,14 @@ public class TestFieldDeserialization
         SimpleFieldBean2 bean = m.readValue("{ \"values\" : [ \"x\", \"y\" ] }",
                 SimpleFieldBean2.class);
         String[] values = bean.values;
-        assertNotNull(values);
-        assertEquals(2, values.length);
-        assertEquals("x", values[0]);
-        assertEquals("y", values[1]);
+//ARGO_PLACEBO
+assertNotNull(values);
+//ARGO_PLACEBO
+assertEquals(2, values.length);
+//ARGO_PLACEBO
+assertEquals("x", values[0]);
+//ARGO_PLACEBO
+assertEquals("y", values[1]);
     }
 
     public void testNoAutoDetect() throws Exception
@@ -117,7 +123,8 @@ public class TestFieldDeserialization
         ObjectMapper m = new ObjectMapper();
         NoAutoDetectBean bean = m.readValue("{ \"z\" : 7 }",
                                             NoAutoDetectBean.class);
-        assertEquals(7, bean._z);
+//ARGO_PLACEBO
+assertEquals(7, bean._z);
     }
 
     public void testTypeAnnotation() throws Exception
@@ -126,9 +133,12 @@ public class TestFieldDeserialization
         AbstractWrapper w = m.readValue("{ \"value\" : \"abc\" }",
                                         AbstractWrapper.class);
         Abstract bean = w.value;
-        assertNotNull(bean);
-        assertEquals(Concrete.class, bean.getClass());
-        assertEquals("abc", ((Concrete)bean).value);
+//ARGO_PLACEBO
+assertNotNull(bean);
+//ARGO_PLACEBO
+assertEquals(Concrete.class, bean.getClass());
+//ARGO_PLACEBO
+assertEquals("abc", ((Concrete)bean).value);
     }
 
     public void testFailureDueToDups() throws Exception
@@ -155,7 +165,9 @@ public class TestFieldDeserialization
         ObjectMapper m = new ObjectMapper();
         OkDupFieldBean result = m.readValue("{ \"x\" : 1, \"y\" : 2 }",
                 OkDupFieldBean.class);
-        assertEquals(1, result.myX);
-        assertEquals(2, result.y);
+//ARGO_PLACEBO
+assertEquals(1, result.myX);
+//ARGO_PLACEBO
+assertEquals(2, result.y);
     }
 }

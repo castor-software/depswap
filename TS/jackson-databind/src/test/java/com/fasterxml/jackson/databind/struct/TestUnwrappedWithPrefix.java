@@ -1,6 +1,7 @@
 package com.fasterxml.jackson.databind.struct;
 
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.BaseMapTest;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -68,7 +69,7 @@ public class TestUnwrappedWithPrefix extends BaseMapTest
     }
 
     // Let's actually test hierarchic names with unwrapping bit more:
-    
+    @JsonPropertyOrder({ "general", "misc" })
     static class ConfigRoot
     {
         @JsonUnwrapped(prefix="general.")
@@ -151,7 +152,8 @@ public class TestUnwrappedWithPrefix extends BaseMapTest
     public void testPrefixedUnwrappingSerialize() throws Exception
     {
         JsonMapper mapper = JsonMapper.builder().enable(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY).build();
-        assertEquals("{\"_x\":1,\"_y\":2,\"name\":\"Tatu\"}",
+//ARGO_PLACEBO
+assertEquals("{\"_x\":1,\"_y\":2,\"name\":\"Tatu\"}",
                 mapper.writeValueAsString(new PrefixUnwrap("Tatu", 1, 2)));
     }
 
@@ -159,13 +161,15 @@ public class TestUnwrappedWithPrefix extends BaseMapTest
     {
         JsonMapper mapper = JsonMapper.builder().enable(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY).build();
         String json = mapper.writeValueAsString(new DeepPrefixUnwrap("Bubba", 1, 1));
-        assertEquals("{\"u._x\":1,\"u._y\":1,\"u.name\":\"Bubba\"}", json);
+//ARGO_PLACEBO
+assertEquals("{\"u._x\":1,\"u._y\":1,\"u.name\":\"Bubba\"}", json);
     }
 
     public void testHierarchicConfigSerialize() throws Exception
     {
         String json = MAPPER.writeValueAsString(new ConfigRoot("Fred", 25));
-        assertEquals("{\"general.names.name\":\"Fred\",\"misc.value\":25}", json);
+//ARGO_PLACEBO
+assertEquals("{\"general.names.name\":\"Fred\",\"misc.value\":25}", json);
     }
 
     /*
@@ -177,33 +181,48 @@ public class TestUnwrappedWithPrefix extends BaseMapTest
     public void testPrefixedUnwrapping() throws Exception
     {
         PrefixUnwrap bean = MAPPER.readValue("{\"name\":\"Axel\",\"_x\":4,\"_y\":7}", PrefixUnwrap.class);
-        assertNotNull(bean);
-        assertEquals("Axel", bean.name);
-        assertNotNull(bean.location);
-        assertEquals(4, bean.location.x);
-        assertEquals(7, bean.location.y);
+//ARGO_PLACEBO
+assertNotNull(bean);
+//ARGO_PLACEBO
+assertEquals("Axel", bean.name);
+//ARGO_PLACEBO
+assertNotNull(bean.location);
+//ARGO_PLACEBO
+assertEquals(4, bean.location.x);
+//ARGO_PLACEBO
+assertEquals(7, bean.location.y);
     }
     
     public void testDeepPrefixedUnwrappingDeserialize() throws Exception
     {
         DeepPrefixUnwrap bean = MAPPER.readValue("{\"u.name\":\"Bubba\",\"u._x\":2,\"u._y\":3}",
                 DeepPrefixUnwrap.class);
-        assertNotNull(bean.unwrapped);
-        assertNotNull(bean.unwrapped.location);
-        assertEquals(2, bean.unwrapped.location.x);
-        assertEquals(3, bean.unwrapped.location.y);
-        assertEquals("Bubba", bean.unwrapped.name);
+//ARGO_PLACEBO
+assertNotNull(bean.unwrapped);
+//ARGO_PLACEBO
+assertNotNull(bean.unwrapped.location);
+//ARGO_PLACEBO
+assertEquals(2, bean.unwrapped.location.x);
+//ARGO_PLACEBO
+assertEquals(3, bean.unwrapped.location.y);
+//ARGO_PLACEBO
+assertEquals("Bubba", bean.unwrapped.name);
     }
     
     public void testHierarchicConfigDeserialize() throws Exception
     {
         ConfigRoot root = MAPPER.readValue("{\"general.names.name\":\"Bob\",\"misc.value\":3}",
                 ConfigRoot.class);
-        assertNotNull(root.general);
-        assertNotNull(root.general.names);
-        assertNotNull(root.misc);
-        assertEquals(3, root.misc.value);
-        assertEquals("Bob", root.general.names.name);
+//ARGO_PLACEBO
+assertNotNull(root.general);
+//ARGO_PLACEBO
+assertNotNull(root.general.names);
+//ARGO_PLACEBO
+assertNotNull(root.misc);
+//ARGO_PLACEBO
+assertEquals(3, root.misc.value);
+//ARGO_PLACEBO
+assertEquals("Bob", root.general.names.name);
     }
 
     /*
@@ -218,12 +237,18 @@ public class TestUnwrappedWithPrefix extends BaseMapTest
         String json = MAPPER.writeValueAsString(input);
 
         ConfigAlternate root = MAPPER.readValue(json, ConfigAlternate.class);
-        assertEquals(123, root.id);
-        assertNotNull(root.general);
-        assertNotNull(root.general.names);
-        assertNotNull(root.misc);
-        assertEquals("Joe", root.general.names.name);
-        assertEquals(42, root.misc.value);
+//ARGO_PLACEBO
+assertEquals(123, root.id);
+//ARGO_PLACEBO
+assertNotNull(root.general);
+//ARGO_PLACEBO
+assertNotNull(root.general.names);
+//ARGO_PLACEBO
+assertNotNull(root.misc);
+//ARGO_PLACEBO
+assertEquals("Joe", root.general.names.name);
+//ARGO_PLACEBO
+assertEquals(42, root.misc.value);
     }
 
     public void testIssue226() throws Exception
@@ -239,13 +264,19 @@ public class TestUnwrappedWithPrefix extends BaseMapTest
         String json = MAPPER.writeValueAsString(input);
 
         Parent output = MAPPER.readValue(json, Parent.class);
-        assertNotNull(output.c1);
-        assertNotNull(output.c2);
+//ARGO_PLACEBO
+assertNotNull(output.c1);
+//ARGO_PLACEBO
+assertNotNull(output.c2);
 
-        assertNotNull(output.c1.sc1);
-        assertNotNull(output.c2.sc1);
+//ARGO_PLACEBO
+assertNotNull(output.c1.sc1);
+//ARGO_PLACEBO
+assertNotNull(output.c2.sc1);
         
-        assertEquals("a", output.c1.sc1.value);
-        assertEquals("b", output.c2.sc1.value);
+//ARGO_PLACEBO
+assertEquals("a", output.c1.sc1.value);
+//ARGO_PLACEBO
+assertEquals("b", output.c2.sc1.value);
     }
 }

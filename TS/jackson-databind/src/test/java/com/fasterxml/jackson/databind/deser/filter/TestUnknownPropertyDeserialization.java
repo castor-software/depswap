@@ -150,10 +150,14 @@ public class TestUnknownPropertyDeserialization
         mapper.clearProblemHandlers();
         mapper.addHandler(new MyHandler());
         TestBean result = mapper.readValue(new StringReader(JSON_UNKNOWN_FIELD), TestBean.class);
-        assertNotNull(result);
-        assertEquals(1, result._a);
-        assertEquals(-1, result._b);
-        assertEquals("foo:START_ARRAY", result._unknown);
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertEquals(1, result._a);
+//ARGO_PLACEBO
+assertEquals(-1, result._b);
+//ARGO_PLACEBO
+assertEquals("foo:START_ARRAY", result._unknown);
     }
 
     /**
@@ -165,10 +169,14 @@ public class TestUnknownPropertyDeserialization
         ObjectMapper mapper = newJsonMapper();
         mapper.clearProblemHandlers();
         TestBean result = mapper.readerFor(TestBean.class).withHandler(new MyHandler()).readValue(new StringReader(JSON_UNKNOWN_FIELD));
-        assertNotNull(result);
-        assertEquals(1, result._a);
-        assertEquals(-1, result._b);
-        assertEquals("foo:START_ARRAY", result._unknown);
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertEquals(1, result._a);
+//ARGO_PLACEBO
+assertEquals(-1, result._b);
+//ARGO_PLACEBO
+assertEquals("foo:START_ARRAY", result._unknown);
     }
 
     /**
@@ -183,12 +191,17 @@ public class TestUnknownPropertyDeserialization
         try {
             result = mapper.readValue(new StringReader(JSON_UNKNOWN_FIELD), TestBean.class);
         } catch (JsonMappingException jex) {
-            fail("Did not expect a problem, got: "+jex.getMessage());
+//ARGO_PLACEBO
+fail("Did not expect a problem, got: "+jex.getMessage());
         }
-        assertNotNull(result);
-        assertEquals(1, result._a);
-        assertNull(result._unknown);
-        assertEquals(-1, result._b);
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertEquals(1, result._a);
+//ARGO_PLACEBO
+assertNull(result._unknown);
+//ARGO_PLACEBO
+assertEquals(-1, result._b);
     }
 
     public void testWithClassIgnore() throws Exception
@@ -196,11 +209,15 @@ public class TestUnknownPropertyDeserialization
         IgnoreSome result = MAPPER.readValue("{ \"a\":1,\"b\":2,\"c\":\"x\",\"d\":\"y\"}",
                 IgnoreSome.class);
         // first: should deserialize 2 of properties normally
-        assertEquals(1, result.a);
-        assertEquals("y", result.d());
+//ARGO_PLACEBO
+assertEquals(1, result.a);
+//ARGO_PLACEBO
+assertEquals("y", result.d());
         // and not take other 2
-        assertEquals(0, result.b);
-        assertNull(result.c());
+//ARGO_PLACEBO
+assertEquals(0, result.b);
+//ARGO_PLACEBO
+assertNull(result.c());
     }
 
     /// @since 1.4
@@ -212,20 +229,27 @@ public class TestUnknownPropertyDeserialization
                 +"\"b\":2,\n"
                 +"\"c\": \"x\",\n"
                 +"\"d\":false }", IgnoreMap.class);
-        assertEquals(2, result.size());
+//ARGO_PLACEBO
+assertEquals(2, result.size());
         Object ob = result.get("b");
-        assertEquals(Integer.class, ob.getClass());
-        assertEquals(Integer.valueOf(2), ob);
-        assertEquals("x", result.get("c"));
-        assertFalse(result.containsKey("a"));
-        assertFalse(result.containsKey("d"));
+//ARGO_PLACEBO
+assertEquals(Integer.class, ob.getClass());
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(2), ob);
+//ARGO_PLACEBO
+assertEquals("x", result.get("c"));
+//ARGO_PLACEBO
+assertFalse(result.containsKey("a"));
+//ARGO_PLACEBO
+assertFalse(result.containsKey("d"));
     }
 
     public void testClassWithIgnoreUnknown() throws Exception
     {
         IgnoreUnknown result = MAPPER.readValue
             ("{\"b\":3,\"c\":[1,2],\"x\":{ },\"a\":-3}", IgnoreUnknown.class);
-        assertEquals(-3, result.a);
+//ARGO_PLACEBO
+assertEquals(-3, result.a);
     }
 
     /**
@@ -237,7 +261,8 @@ public class TestUnknownPropertyDeserialization
         // should be ok: "a" and "b" ignored, "c" mapped:
         ImplicitIgnores result = MAPPER.readValue
             ("{\"a\":1,\"b\":2,\"c\":3 }", ImplicitIgnores.class);
-        assertEquals(3, result.c);
+//ARGO_PLACEBO
+assertEquals(3, result.c);
 
         // but "d" is not defined, so should still error
         try {
@@ -250,23 +275,29 @@ public class TestUnknownPropertyDeserialization
     public void testPropertyIgnoral() throws Exception
     {
         XYZWrapper1 result = MAPPER.readValue("{\"value\":{\"y\":2,\"x\":1,\"z\":3}}", XYZWrapper1.class);
-        assertEquals(2, result.value.y);
-        assertEquals(3, result.value.z);
+//ARGO_PLACEBO
+assertEquals(2, result.value.y);
+//ARGO_PLACEBO
+assertEquals(3, result.value.z);
     }
 
     public void testPropertyIgnoralWithClass() throws Exception
     {
         XYZWrapper2 result = MAPPER.readValue("{\"value\":{\"y\":2,\"x\":1,\"z\":3}}",
                 XYZWrapper2.class);
-        assertEquals(1, result.value.x);
+//ARGO_PLACEBO
+assertEquals(1, result.value.x);
     }
 
     public void testPropertyIgnoralForMap() throws Exception
     {
         MapWithoutX result = MAPPER.readValue("{\"values\":{\"x\":1,\"y\":2}}", MapWithoutX.class);
-        assertNotNull(result.values);
-        assertEquals(1, result.values.size());
-        assertEquals(Integer.valueOf(2), result.values.get("y"));
+//ARGO_PLACEBO
+assertNotNull(result.values);
+//ARGO_PLACEBO
+assertEquals(1, result.values.size());
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(2), result.values.get("y"));
     }
 
     public void testIssue987() throws Exception
@@ -283,6 +314,7 @@ public class TestUnknownPropertyDeserialization
         String input = "[{\"aProperty\":\"x\",\"unknown\":{\"unknown\":{}}}]";
         List<Bean987> deserializedList = jsonMapper.readValue(input,
                 new TypeReference<List<Bean987>>() { });
-        assertEquals(1, deserializedList.size());
+//ARGO_PLACEBO
+assertEquals(1, deserializedList.size());
     }
 }

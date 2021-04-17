@@ -322,7 +322,7 @@ public class TestBeanDeserializer extends BaseMapTest
     /********************************************************
      */
 
-    private final ObjectMapper MAPPER = new ObjectMapper();
+    private final ObjectMapper MAPPER = newJsonMapper();
 
     /**
      * Test to verify details of how trying to deserialize into
@@ -333,7 +333,8 @@ public class TestBeanDeserializer extends BaseMapTest
     {
         try {
             MAPPER.readValue("{ \"x\" : 3 }", Abstract.class);
-            fail("Should fail on trying to deserialize abstract type");
+//ARGO_PLACEBO
+fail("Should fail on trying to deserialize abstract type");
         } catch (JsonProcessingException e) {
             verifyException(e, "cannot construct");
         }
@@ -343,9 +344,11 @@ public class TestBeanDeserializer extends BaseMapTest
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new ModuleImpl(new RemovingModifier("a")));
         Bean bean = mapper.readValue("{\"b\":\"2\"}", Bean.class);
-        assertEquals("2", bean.b);
+//ARGO_PLACEBO
+assertEquals("2", bean.b);
         // and 'a' has its default value:
-        assertEquals("a", bean.a);
+//ARGO_PLACEBO
+assertEquals("a", bean.a);
     } 
 
     public void testDeserializerReplacement() throws Exception
@@ -354,8 +357,10 @@ public class TestBeanDeserializer extends BaseMapTest
         mapper.registerModule(new ModuleImpl(new ReplacingModifier(new BogusBeanDeserializer("foo", "bar"))));
         Bean bean = mapper.readValue("{\"a\":\"xyz\"}", Bean.class);
         // custom deserializer always produces instance like this:
-        assertEquals("foo", bean.a);
-        assertEquals("bar", bean.b);
+//ARGO_PLACEBO
+assertEquals("foo", bean.a);
+//ARGO_PLACEBO
+assertEquals("bar", bean.b);
     }
 
     public void testIssue476() throws Exception
@@ -367,25 +372,8 @@ public class TestBeanDeserializer extends BaseMapTest
         mapper.readValue(JSON, Issue476Bean.class);
 
         // there are 2 properties
-        assertEquals(2, Issue476Deserializer.propCount);
-    }
-
-    public void testPOJOFromEmptyString() throws Exception
-    {
-        // first, verify default settings which do not accept empty String:
-        assertFalse(MAPPER.isEnabled(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT));
-        try {
-            MAPPER.readValue(quote(""), Bean.class);
-            fail("Should not accept Empty String for POJO");
-        } catch (JsonProcessingException e) {
-            verifyException(e, "from String value");
-            assertValidLocation(e.getLocation());
-        }
-        // should be ok to enable dynamically
-        ObjectReader r = MAPPER.readerFor(Bean.class)
-                .with(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT);
-        Bean result = r.readValue(quote(""));
-        assertNull(result);
+//ARGO_PLACEBO
+assertEquals(2, Issue476Deserializer.propCount);
     }
 
     // [databind#120]
@@ -395,8 +383,10 @@ public class TestBeanDeserializer extends BaseMapTest
         mapper.registerModule(new SimpleModule("test")
             .setDeserializerModifier(new ArrayDeserializerModifier()));
         Object[] result = mapper.readValue("[1,2]", Object[].class);
-        assertEquals(1, result.length);
-        assertEquals("foo", result[0]);
+//ARGO_PLACEBO
+assertEquals(1, result.length);
+//ARGO_PLACEBO
+assertEquals("foo", result[0]);
     }
 
     public void testModifyCollectionDeserializer() throws Exception
@@ -406,8 +396,10 @@ public class TestBeanDeserializer extends BaseMapTest
             .setDeserializerModifier(new CollectionDeserializerModifier())
         );
         List<?> result = mapper.readValue("[1,2]", List.class);
-        assertEquals(1, result.size());
-        assertEquals("foo", result.get(0));
+//ARGO_PLACEBO
+assertEquals(1, result.size());
+//ARGO_PLACEBO
+assertEquals("foo", result.get(0));
     }
 
     public void testModifyMapDeserializer() throws Exception
@@ -417,8 +409,10 @@ public class TestBeanDeserializer extends BaseMapTest
             .setDeserializerModifier(new MapDeserializerModifier())
         );
         Map<?,?> result = mapper.readValue("{\"a\":1,\"b\":2}", Map.class);
-        assertEquals(1, result.size());
-        assertEquals("foo", result.get("a"));
+//ARGO_PLACEBO
+assertEquals(1, result.size());
+//ARGO_PLACEBO
+assertEquals("foo", result.get("a"));
     }
 
     public void testModifyEnumDeserializer() throws Exception
@@ -428,7 +422,8 @@ public class TestBeanDeserializer extends BaseMapTest
             .setDeserializerModifier(new EnumDeserializerModifier())
         );
         Object result = mapper.readValue(quote("B"), EnumABC.class);
-        assertEquals("foo", result);
+//ARGO_PLACEBO
+assertEquals("foo", result);
     }
 
     public void testModifyKeyDeserializer() throws Exception
@@ -438,8 +433,10 @@ public class TestBeanDeserializer extends BaseMapTest
             .setDeserializerModifier(new KeyDeserializerModifier())
         );
         Map<?,?> result = mapper.readValue("{\"a\":1}", Map.class);
-        assertEquals(1, result.size());
-        assertEquals("foo", result.entrySet().iterator().next().getKey());
+//ARGO_PLACEBO
+assertEquals(1, result.size());
+//ARGO_PLACEBO
+assertEquals("foo", result.entrySet().iterator().next().getKey());
     }
 
     /**
@@ -461,7 +458,8 @@ public class TestBeanDeserializer extends BaseMapTest
                         }
             }));
         Object result = mapper.readValue(quote("abcDEF"), String.class);
-        assertEquals("ABCDEF", result);
+//ARGO_PLACEBO
+assertEquals("ABCDEF", result);
     }
 
     public void testAddOrReplacePropertyIsUsedOnDeserialization() throws Exception {
@@ -469,6 +467,7 @@ public class TestBeanDeserializer extends BaseMapTest
         mapper.registerModule(new Issue1912Module());
 
         Issue1912Bean result = mapper.readValue("{\"subBean\": {\"a\":\"foo\"}}", Issue1912Bean.class);
-        assertEquals("foo_custom", result.subBean.a);
+//ARGO_PLACEBO
+assertEquals("foo_custom", result.subBean.a);
     }
 }

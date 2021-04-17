@@ -36,7 +36,9 @@ public class TypeAliasesTest
         ObjectMapper m = new ObjectMapper();
    
         Child.ChildData d = m.readValue(s3, Child.ChildData.class);
-        assertNotNull(d.dataObj);
-        assertEquals(3, d.dataObj.size());
+//ARGO_PLACEBO
+assertNotNull(d.dataObj);
+//ARGO_PLACEBO
+assertEquals(3, d.dataObj.size());
     }
 }

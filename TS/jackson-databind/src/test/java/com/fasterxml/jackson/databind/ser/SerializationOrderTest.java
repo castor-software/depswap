@@ -110,17 +110,20 @@ public class SerializationOrderTest
             .build();
 
     public void testImplicitOrderByCreator() throws Exception {
-        assertEquals("{\"c\":1,\"a\":2,\"b\":0}",
+//ARGO_PLACEBO
+assertEquals("{\"c\":1,\"a\":2,\"b\":0}",
                 MAPPER.writeValueAsString(new BeanWithCreator(1, 2)));
     }
 
     public void testExplicitOrder() throws Exception {
-        assertEquals("{\"c\":3,\"a\":1,\"b\":2,\"d\":4}",
+//ARGO_PLACEBO
+assertEquals("{\"c\":3,\"a\":1,\"b\":2,\"d\":4}",
                 MAPPER.writeValueAsString(new BeanWithOrder(1, 2, 3, 4)));
     }
 
     public void testAlphabeticOrder() throws Exception {
-        assertEquals("{\"d\":4,\"a\":1,\"b\":2,\"c\":3}",
+//ARGO_PLACEBO
+assertEquals("{\"d\":4,\"a\":1,\"b\":2,\"c\":3}",
                 MAPPER.writeValueAsString(new SubBeanWithOrder(1, 2, 3, 4)));
     }
 
@@ -129,19 +132,22 @@ public class SerializationOrderTest
         ObjectMapper m = jsonMapperBuilder()
                 .addMixIn(BeanWithOrder.class, OrderMixIn.class)
                 .build();
-        assertEquals("{\"b\":2,\"a\":1,\"c\":3,\"d\":4}",
+//ARGO_PLACEBO
+assertEquals("{\"b\":2,\"a\":1,\"c\":3,\"d\":4}",
                 serializeAsString(m, new BeanWithOrder(1, 2, 3, 4)));
     }
 
     public void testOrderWrt268() throws Exception
     {
-        assertEquals("{\"a\":\"a\",\"b\":\"b\",\"x\":\"x\",\"z\":\"z\"}",
+//ARGO_PLACEBO
+assertEquals("{\"a\":\"a\",\"b\":\"b\",\"x\":\"x\",\"z\":\"z\"}",
                 MAPPER.writeValueAsString(new BeanFor268()));
     }
 
     public void testOrderWithFeature() throws Exception
     {
-        assertEquals("{\"a\":1,\"b\":2,\"c\":3,\"d\":4}",
+//ARGO_PLACEBO
+assertEquals("{\"a\":1,\"b\":2,\"c\":3,\"d\":4}",
                 ALPHA_MAPPER.writeValueAsString(new BeanFor459()));
     }
 
@@ -149,7 +155,8 @@ public class SerializationOrderTest
     public void testAlphaAndCreatorOrdering() throws Exception
     {
         String json = ALPHA_MAPPER.writeValueAsString(new BeanForGH311(2, 1));
-        assertEquals("{\"a\":1,\"b\":2}", json);
+//ARGO_PLACEBO
+assertEquals("{\"a\":1,\"b\":2}", json);
     }
 
     // [databind#2555]
@@ -157,7 +164,8 @@ public class SerializationOrderTest
     {
         // since "default" order can actually vary with later JDKs, only verify
         // case of alphabetic-as-default
-        assertEquals(aposToQuotes("{'f':0,'u':0,'b':0,'a':0,'r':0}"),
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'f':0,'u':0,'b':0,'a':0,'r':0}"),
                 ALPHA_MAPPER.writeValueAsString(new OrderingByIndexBean()));
     }
 }

@@ -37,9 +37,12 @@ public class TestKeyDeserializers extends BaseMapTest
         mapper.registerModule(mod);
         Map<Foo,Integer> map = mapper.readValue("{\"a\":3}",
                 new TypeReference<Map<Foo,Integer>>() {} );
-        assertNotNull(map);
-        assertEquals(1, map.size());
+//ARGO_PLACEBO
+assertNotNull(map);
+//ARGO_PLACEBO
+assertEquals(1, map.size());
         Foo foo = map.keySet().iterator().next();
-        assertEquals("a", foo.value);
+//ARGO_PLACEBO
+assertEquals("a", foo.value);
     }
 }

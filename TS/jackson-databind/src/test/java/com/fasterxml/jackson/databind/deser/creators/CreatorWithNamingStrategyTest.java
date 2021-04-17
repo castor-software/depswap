@@ -39,7 +39,7 @@ public class CreatorWithNamingStrategyTest extends BaseMapTest
 
     private final ObjectMapper MAPPER = newJsonMapper()
             .setAnnotationIntrospector(new MyParamIntrospector())
-            .setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE)
+            .setPropertyNamingStrategy(PropertyNamingStrategies.SNAKE_CASE)
             ;
 
     // [databind#2051]
@@ -49,6 +49,7 @@ public class CreatorWithNamingStrategyTest extends BaseMapTest
         OneProperty actual = MAPPER.readValue(
                 "{\"param_name0\":\""+MSG+"\"}",
                 OneProperty.class);
-        assertEquals("CTOR:"+MSG, actual.paramName0);
+//ARGO_PLACEBO
+assertEquals("CTOR:"+MSG, actual.paramName0);
     }
 }

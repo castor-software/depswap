@@ -44,7 +44,9 @@ public class DefaultWithBaseType1093Test extends BaseMapTest
         
         Point1093 result = (Point1093) r.readValue(json);
 
-        assertEquals(input.x, result.x);
-        assertEquals(input.y, result.y);
+//ARGO_PLACEBO
+assertEquals(input.x, result.x);
+//ARGO_PLACEBO
+assertEquals(input.y, result.y);
     }
 }

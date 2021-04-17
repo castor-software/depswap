@@ -18,6 +18,8 @@ import com.fasterxml.jackson.databind.exc.ValueInstantiationException;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 
+import static com.fasterxml.jackson.databind.MapperFeature.ACCEPT_CASE_INSENSITIVE_ENUMS;
+
 @SuppressWarnings("serial")
 public class EnumDeserializationTest
     extends BaseMapTest
@@ -230,22 +232,28 @@ public class EnumDeserializationTest
         // multiple main-level mappings, need explicit parser:
         JsonParser jp = MAPPER.createParser(JSON);
 
-        assertEquals(TestEnum.OK, MAPPER.readValue(jp, TestEnum.class));
-        assertEquals(TestEnum.RULES, MAPPER.readValue(jp, TestEnum.class));
+//ARGO_PLACEBO
+assertEquals(TestEnum.OK, MAPPER.readValue(jp, TestEnum.class));
+//ARGO_PLACEBO
+assertEquals(TestEnum.RULES, MAPPER.readValue(jp, TestEnum.class));
 
         // should be ok; nulls are typeless; handled by mapper, not by deserializer
-        assertNull(MAPPER.readValue(jp, TestEnum.class));
+//ARGO_PLACEBO
+assertNull(MAPPER.readValue(jp, TestEnum.class));
 
         // and no more content beyond that...
-        assertFalse(jp.hasCurrentToken());
+//ARGO_PLACEBO
+assertFalse(jp.hasCurrentToken());
 
         // Then alternative with index (0 means first entry)
-        assertEquals(TestEnum.JACKSON, MAPPER.readValue(" 0 ", TestEnum.class));
+//ARGO_PLACEBO
+assertEquals(TestEnum.JACKSON, MAPPER.readValue(" 0 ", TestEnum.class));
 
         // Then error case: unrecognized value
         try {
             /*Object result =*/ MAPPER.readValue("\"NO-SUCH-VALUE\"", TestEnum.class);
-            fail("Expected an exception for bogus enum value...");
+//ARGO_PLACEBO
+fail("Expected an exception for bogus enum value...");
         } catch (MismatchedInputException jex) {
             verifyException(jex, "not one of the values accepted for Enum class");
         }
@@ -259,9 +267,11 @@ public class EnumDeserializationTest
     public void testComplexEnum() throws Exception
     {
         String json = MAPPER.writeValueAsString(TimeUnit.SECONDS);
-        assertEquals(quote("SECONDS"), json);
+//ARGO_PLACEBO
+assertEquals(quote("SECONDS"), json);
         TimeUnit result = MAPPER.readValue(json, TimeUnit.class);
-        assertSame(TimeUnit.SECONDS, result);
+//ARGO_PLACEBO
+assertSame(TimeUnit.SECONDS, result);
     }
     
     /**
@@ -273,13 +283,15 @@ public class EnumDeserializationTest
         /* dummy deser always returns value OK, independent of input;
          * only works if annotation is used
          */
-        assertEquals(AnnotatedTestEnum.OK, e);
+//ARGO_PLACEBO
+assertEquals(AnnotatedTestEnum.OK, e);
     }
 
     public void testSubclassedEnums() throws Exception
     {
         EnumWithSubClass value = MAPPER.readValue("\"A\"", EnumWithSubClass.class);
-        assertEquals(EnumWithSubClass.A, value);
+//ARGO_PLACEBO
+assertEquals(EnumWithSubClass.A, value);
     }
 
     public void testToStringEnums() throws Exception
@@ -288,22 +300,26 @@ public class EnumDeserializationTest
         ObjectMapper m = new ObjectMapper();
         m.configure(DeserializationFeature.READ_ENUMS_USING_TO_STRING, true);
         LowerCaseEnum value = m.readValue("\"c\"", LowerCaseEnum.class);
-        assertEquals(LowerCaseEnum.C, value);
+//ARGO_PLACEBO
+assertEquals(LowerCaseEnum.C, value);
     }
 
     public void testNumbersToEnums() throws Exception
     {
         // by default numbers are fine:
-        assertFalse(MAPPER.getDeserializationConfig().isEnabled(DeserializationFeature.FAIL_ON_NUMBERS_FOR_ENUMS));
+//ARGO_PLACEBO
+assertFalse(MAPPER.getDeserializationConfig().isEnabled(DeserializationFeature.FAIL_ON_NUMBERS_FOR_ENUMS));
         TestEnum value = MAPPER.readValue("1", TestEnum.class);
-        assertSame(TestEnum.RULES, value);
+//ARGO_PLACEBO
+assertSame(TestEnum.RULES, value);
 
         // but can also be changed to errors:
         ObjectReader r = MAPPER.readerFor(TestEnum.class)
                 .with(DeserializationFeature.FAIL_ON_NUMBERS_FOR_ENUMS);
         try {
             value = r.readValue("1");
-            fail("Expected an error");
+//ARGO_PLACEBO
+fail("Expected an error");
         } catch (MismatchedInputException e) {
             verifyException(e, "Cannot deserialize");
             verifyException(e, "not allowed to deserialize Enum value out of number: disable");
@@ -312,7 +328,8 @@ public class EnumDeserializationTest
         // and [databind#684]
         try {
             value = r.readValue(quote("1"));
-            fail("Expected an error");
+//ARGO_PLACEBO
+fail("Expected an error");
         } catch (MismatchedInputException e) {
             verifyException(e, "Cannot deserialize");
             // 26-Jan-2017, tatu: as per [databind#1505], should fail bit differently
@@ -325,33 +342,44 @@ public class EnumDeserializationTest
         String json = MAPPER.writer()
                 .with(SerializationFeature.WRITE_ENUMS_USING_INDEX)
                 .writeValueAsString(TestEnum.RULES);
-        assertEquals(String.valueOf(TestEnum.RULES.ordinal()), json);
+//ARGO_PLACEBO
+assertEquals(String.valueOf(TestEnum.RULES.ordinal()), json);
         TestEnum result = MAPPER.readValue(json, TestEnum.class);
-        assertSame(TestEnum.RULES, result);
+//ARGO_PLACEBO
+assertSame(TestEnum.RULES, result);
     }
 
     public void testEnumsWithJsonValue() throws Exception
     {
         // first, enum as is
         EnumWithJsonValue e = MAPPER.readValue(quote("foo"), EnumWithJsonValue.class);
-        assertSame(EnumWithJsonValue.A, e);
+//ARGO_PLACEBO
+assertSame(EnumWithJsonValue.A, e);
         e = MAPPER.readValue(quote("bar"), EnumWithJsonValue.class);
-        assertSame(EnumWithJsonValue.B, e);
+//ARGO_PLACEBO
+assertSame(EnumWithJsonValue.B, e);
 
         // then in EnumSet
         EnumSet<EnumWithJsonValue> set = MAPPER.readValue("[\"bar\"]",
                 new TypeReference<EnumSet<EnumWithJsonValue>>() { });
-        assertNotNull(set);
-        assertEquals(1, set.size());
-        assertTrue(set.contains(EnumWithJsonValue.B));
-        assertFalse(set.contains(EnumWithJsonValue.A));
+//ARGO_PLACEBO
+assertNotNull(set);
+//ARGO_PLACEBO
+assertEquals(1, set.size());
+//ARGO_PLACEBO
+assertTrue(set.contains(EnumWithJsonValue.B));
+//ARGO_PLACEBO
+assertFalse(set.contains(EnumWithJsonValue.A));
 
         // and finally EnumMap
         EnumMap<EnumWithJsonValue,Integer> map = MAPPER.readValue("{\"foo\":13}",
                 new TypeReference<EnumMap<EnumWithJsonValue, Integer>>() { });
-        assertNotNull(map);
-        assertEquals(1, map.size());
-        assertEquals(Integer.valueOf(13), map.get(EnumWithJsonValue.A));
+//ARGO_PLACEBO
+assertNotNull(map);
+//ARGO_PLACEBO
+assertEquals(1, map.size());
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(13), map.get(EnumWithJsonValue.A));
     }
 
     // Ability to ignore unknown Enum values:
@@ -360,8 +388,10 @@ public class EnumDeserializationTest
     {
         // cannot use shared mapper when changing configs...
         ObjectReader reader = MAPPER.reader(DeserializationFeature.READ_UNKNOWN_ENUM_VALUES_AS_NULL);
-        assertNull(reader.forType(TestEnum.class).readValue("\"NO-SUCH-VALUE\""));
-        assertNull(reader.forType(TestEnum.class).readValue(" 4343 "));
+//ARGO_PLACEBO
+assertNull(reader.forType(TestEnum.class).readValue("\"NO-SUCH-VALUE\""));
+//ARGO_PLACEBO
+assertNull(reader.forType(TestEnum.class).readValue(" 4343 "));
     }
 
     // Ability to ignore unknown Enum values:
@@ -371,8 +401,10 @@ public class EnumDeserializationTest
     {
         // cannot use shared mapper when changing configs...
         ObjectReader reader = MAPPER.reader(DeserializationFeature.READ_UNKNOWN_ENUM_VALUES_AS_NULL);
-        assertNull(reader.forType(StrictEnumCreator.class).readValue("\"NO-SUCH-VALUE\""));
-        assertNull(reader.forType(StrictEnumCreator.class).readValue(" 4343 "));
+//ARGO_PLACEBO
+assertNull(reader.forType(StrictEnumCreator.class).readValue("\"NO-SUCH-VALUE\""));
+//ARGO_PLACEBO
+assertNull(reader.forType(StrictEnumCreator.class).readValue(" 4343 "));
     }
 
     public void testAllowUnknownEnumValuesForEnumSets() throws Exception
@@ -380,7 +412,8 @@ public class EnumDeserializationTest
         ObjectReader reader = MAPPER.reader(DeserializationFeature.READ_UNKNOWN_ENUM_VALUES_AS_NULL);
         EnumSet<TestEnum> result = reader.forType(new TypeReference<EnumSet<TestEnum>>() { })
                 .readValue("[\"NO-SUCH-VALUE\"]");
-        assertEquals(0, result.size());
+//ARGO_PLACEBO
+assertEquals(0, result.size());
     }
     
     public void testAllowUnknownEnumValuesAsMapKeysReadAsNull() throws Exception
@@ -388,15 +421,18 @@ public class EnumDeserializationTest
         ObjectReader reader = MAPPER.reader(DeserializationFeature.READ_UNKNOWN_ENUM_VALUES_AS_NULL);
         ClassWithEnumMapKey result = reader.forType(ClassWithEnumMapKey.class)
                 .readValue("{\"map\":{\"NO-SUCH-VALUE\":\"val\"}}");
-        assertTrue(result.map.containsKey(null));
+//ARGO_PLACEBO
+assertTrue(result.map.containsKey(null));
     }
     
     public void testDoNotAllowUnknownEnumValuesAsMapKeysWhenReadAsNullDisabled() throws Exception
     {
-        assertFalse(MAPPER.isEnabled(DeserializationFeature.READ_UNKNOWN_ENUM_VALUES_AS_NULL));
+//ARGO_PLACEBO
+assertFalse(MAPPER.isEnabled(DeserializationFeature.READ_UNKNOWN_ENUM_VALUES_AS_NULL));
          try {
              MAPPER.readValue("{\"map\":{\"NO-SUCH-VALUE\":\"val\"}}", ClassWithEnumMapKey.class);
-             fail("Expected an exception for bogus enum value...");
+//ARGO_PLACEBO
+fail("Expected an exception for bogus enum value...");
          } catch (InvalidFormatException jex) {
              verifyException(jex, "Cannot deserialize Map key of type `com.fasterxml.jackson.databind.deser.jdk.EnumDeserializationTest$TestEnum`");
          }
@@ -408,7 +444,8 @@ public class EnumDeserializationTest
        final ObjectMapper mapper = new ObjectMapper();
        mapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
        TestEnum result = mapper.readValue("\"\"", TestEnum.class);
-       assertNull(result);
+//ARGO_PLACEBO
+assertNull(result);
     }
 
     public void testGenericEnumDeserialization() throws Exception
@@ -418,12 +455,14 @@ public class EnumDeserializationTest
        module.addDeserializer(Enum.class, new LcEnumDeserializer());
        mapper.registerModule(module);
        // not sure this is totally safe but...
-       assertEquals(TestEnum.JACKSON, mapper.readValue(quote("jackson"), TestEnum.class));
+//ARGO_PLACEBO
+assertEquals(TestEnum.JACKSON, mapper.readValue(quote("jackson"), TestEnum.class));
     }
 
     // [databind#381]
     public void testUnwrappedEnum() throws Exception {
-        assertEquals(TestEnum.JACKSON,
+//ARGO_PLACEBO
+assertEquals(TestEnum.JACKSON,
                 MAPPER.readerFor(TestEnum.class)
                     .with(DeserializationFeature.UNWRAP_SINGLE_VALUE_ARRAYS)
                     .readValue("[" + quote("JACKSON") + "]"));
@@ -435,7 +474,8 @@ public class EnumDeserializationTest
         try {
             Object v = mapper.readValue("[" + quote("JACKSON") + "]",
                     TestEnum.class);
-            fail("Exception was not thrown on deserializing a single array element of type enum; instead got: "+v);
+//ARGO_PLACEBO
+fail("Exception was not thrown on deserializing a single array element of type enum; instead got: "+v);
         } catch (MismatchedInputException exp) {
             //exception as thrown correctly
             verifyException(exp, "Cannot deserialize");
@@ -447,11 +487,13 @@ public class EnumDeserializationTest
     {
         // first, regular index ought to work fine
         TestEnum en = MAPPER.readValue("2", TestEnum.class);
-        assertSame(TestEnum.values()[2], en);
+//ARGO_PLACEBO
+assertSame(TestEnum.values()[2], en);
 
         // but also with quoted Strings
         en = MAPPER.readValue(quote("1"), TestEnum.class);
-        assertSame(TestEnum.values()[1], en);
+//ARGO_PLACEBO
+assertSame(TestEnum.values()[1], en);
 
         // [databind#1690]: unless prevented
         try {
@@ -460,7 +502,8 @@ public class EnumDeserializationTest
                     .build()
                     .readerFor(TestEnum.class)
                     .readValue(quote("1"));
-            fail("Should not pass");
+//ARGO_PLACEBO
+fail("Should not pass");
         } catch (MismatchedInputException e) {
             verifyException(e, "Cannot deserialize value of type");
             verifyException(e, "EnumDeserializationTest$TestEnum");
@@ -473,14 +516,19 @@ public class EnumDeserializationTest
         String json = MAPPER.writeValueAsString(new EnumWithPropertyAnno[] {
                 EnumWithPropertyAnno.B, EnumWithPropertyAnno.A
         });
-        assertEquals("[\"b\",\"a\"]", json);
+//ARGO_PLACEBO
+assertEquals("[\"b\",\"a\"]", json);
 
         // and while not really proper place, let's also verify deser while we're at it
         EnumWithPropertyAnno[] result = MAPPER.readValue(json, EnumWithPropertyAnno[].class);
-        assertNotNull(result);
-        assertEquals(2, result.length);
-        assertSame(EnumWithPropertyAnno.B, result[0]);
-        assertSame(EnumWithPropertyAnno.A, result[1]);
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertEquals(2, result.length);
+//ARGO_PLACEBO
+assertSame(EnumWithPropertyAnno.B, result[0]);
+//ARGO_PLACEBO
+assertSame(EnumWithPropertyAnno.A, result[1]);
     }
 
     // [databind#1161], unable to switch READ_ENUMS_USING_TO_STRING
@@ -488,18 +536,21 @@ public class EnumDeserializationTest
     {
         Enum1161 result = MAPPER.readerFor(Enum1161.class)
                 .readValue(quote("A"));
-        assertSame(Enum1161.A, result);
+//ARGO_PLACEBO
+assertSame(Enum1161.A, result);
 
         result = MAPPER.readerFor(Enum1161.class)
                 .with(DeserializationFeature.READ_ENUMS_USING_TO_STRING)
                 .readValue(quote("a"));
-        assertSame(Enum1161.A, result);
+//ARGO_PLACEBO
+assertSame(Enum1161.A, result);
 
         // and once again, going back to defaults
         result = MAPPER.readerFor(Enum1161.class)
                 .without(DeserializationFeature.READ_ENUMS_USING_TO_STRING)
                 .readValue(quote("A"));
-        assertSame(Enum1161.A, result);
+//ARGO_PLACEBO
+assertSame(Enum1161.A, result);
     }
     
     public void testEnumWithDefaultAnnotation() throws Exception {
@@ -507,7 +558,8 @@ public class EnumDeserializationTest
         mapper.enable(DeserializationFeature.READ_UNKNOWN_ENUM_VALUES_USING_DEFAULT_VALUE);
 
         EnumWithDefaultAnno myEnum = mapper.readValue("\"foo\"", EnumWithDefaultAnno.class);
-        assertSame(EnumWithDefaultAnno.OTHER, myEnum);
+//ARGO_PLACEBO
+assertSame(EnumWithDefaultAnno.OTHER, myEnum);
     }
 
     public void testEnumWithDefaultAnnotationUsingIndexInBound1() throws Exception {
@@ -515,7 +567,8 @@ public class EnumDeserializationTest
         mapper.enable(DeserializationFeature.READ_UNKNOWN_ENUM_VALUES_USING_DEFAULT_VALUE);
 
         EnumWithDefaultAnno myEnum = mapper.readValue("1", EnumWithDefaultAnno.class);
-        assertSame(EnumWithDefaultAnno.B, myEnum);
+//ARGO_PLACEBO
+assertSame(EnumWithDefaultAnno.B, myEnum);
     }
 
     public void testEnumWithDefaultAnnotationUsingIndexInBound2() throws Exception {
@@ -523,7 +576,8 @@ public class EnumDeserializationTest
         mapper.enable(DeserializationFeature.READ_UNKNOWN_ENUM_VALUES_USING_DEFAULT_VALUE);
 
         EnumWithDefaultAnno myEnum = mapper.readValue("2", EnumWithDefaultAnno.class);
-        assertSame(EnumWithDefaultAnno.OTHER, myEnum);
+//ARGO_PLACEBO
+assertSame(EnumWithDefaultAnno.OTHER, myEnum);
     }
 
     public void testEnumWithDefaultAnnotationUsingIndexSameAsLength() throws Exception {
@@ -531,7 +585,8 @@ public class EnumDeserializationTest
         mapper.enable(DeserializationFeature.READ_UNKNOWN_ENUM_VALUES_USING_DEFAULT_VALUE);
 
         EnumWithDefaultAnno myEnum = mapper.readValue("3", EnumWithDefaultAnno.class);
-        assertSame(EnumWithDefaultAnno.OTHER, myEnum);
+//ARGO_PLACEBO
+assertSame(EnumWithDefaultAnno.OTHER, myEnum);
     }
 
     public void testEnumWithDefaultAnnotationUsingIndexOutOfBound() throws Exception {
@@ -539,7 +594,8 @@ public class EnumDeserializationTest
         mapper.enable(DeserializationFeature.READ_UNKNOWN_ENUM_VALUES_USING_DEFAULT_VALUE);
 
         EnumWithDefaultAnno myEnum = mapper.readValue("4", EnumWithDefaultAnno.class);
-        assertSame(EnumWithDefaultAnno.OTHER, myEnum);
+//ARGO_PLACEBO
+assertSame(EnumWithDefaultAnno.OTHER, myEnum);
     }
 
     public void testEnumWithDefaultAnnotationWithConstructor() throws Exception {
@@ -547,7 +603,8 @@ public class EnumDeserializationTest
         mapper.enable(DeserializationFeature.READ_UNKNOWN_ENUM_VALUES_USING_DEFAULT_VALUE);
 
         EnumWithDefaultAnnoAndConstructor myEnum = mapper.readValue("\"foo\"", EnumWithDefaultAnnoAndConstructor.class);
-        assertNull("When using a constructor, the default value annotation shouldn't be used.", myEnum);
+//ARGO_PLACEBO
+assertNull("When using a constructor, the default value annotation shouldn't be used.", myEnum);
     }
 
     public void testExceptionFromCustomEnumKeyDeserializer() throws Exception {
@@ -556,9 +613,11 @@ public class EnumDeserializationTest
         try {
             mapper.readValue("{\"TWO\": \"dumpling\"}",
                     new TypeReference<Map<AnEnum, String>>() {});
-            fail("No exception");
+//ARGO_PLACEBO
+fail("No exception");
         } catch (MismatchedInputException e) {
-            assertTrue(e.getMessage().contains("Undefined AnEnum"));
+//ARGO_PLACEBO
+assertTrue(e.getMessage().contains("Undefined AnEnum"));
         }
     }
 
@@ -569,7 +628,8 @@ public class EnumDeserializationTest
         try {
             MAPPER.readerFor(TestEnum2164.class)
                 .readValue(quote("B"));
-            fail("Should not pass");
+//ARGO_PLACEBO
+fail("Should not pass");
         } catch (ValueInstantiationException e) {
             verifyException(e, "2164");
         }
@@ -579,9 +639,11 @@ public class EnumDeserializationTest
             MAPPER.readerFor(TestEnum2164.class)
                 .without(DeserializationFeature.WRAP_EXCEPTIONS)
                 .readValue(quote("B"));
-            fail("Should not pass");
+//ARGO_PLACEBO
+fail("Should not pass");
         } catch (JsonMappingException e) {
-            fail("Wrong exception, should not wrap, got: "+e);
+//ARGO_PLACEBO
+fail("Wrong exception, should not wrap, got: "+e);
         } catch (IllegalArgumentException e) {
             verifyException(e, "2164");
         }
@@ -593,7 +655,31 @@ public class EnumDeserializationTest
         Enum2309 value = MAPPER.readerFor(Enum2309.class)
                 .with(DeserializationFeature.READ_ENUMS_USING_TO_STRING)
                 .readValue(quote("NON_NULL"));
-        assertEquals(Enum2309.NON_NULL, value);
+//ARGO_PLACEBO
+assertEquals(Enum2309.NON_NULL, value);
     }
 
+    // [databind#2873] -- take case-sensitivity into account for Enum-as-Map-keys too
+    public void testEnumValuesCaseSensitivity() throws Exception {
+        try {
+            MAPPER.readValue("{\"map\":{\"JACkson\":\"val\"}}", ClassWithEnumMapKey.class);
+//ARGO_PLACEBO
+fail("Should not pass by default");
+        } catch (InvalidFormatException e) {
+            verifyException(e, "Cannot deserialize Map key of type `com.fasterxml.jackson.databind.deser.jdk.EnumDeserializationTest$TestEnum");
+        }
+    }
+
+    // [databind#2873] -- take case-sensitivity into account for Enum-as-Map-keys too
+    public void testAllowCaseInsensitiveEnumValues() throws Exception {
+        ObjectMapper m = jsonMapperBuilder()
+                .enable(ACCEPT_CASE_INSENSITIVE_ENUMS)
+                .build();
+        ClassWithEnumMapKey result = m.readerFor(ClassWithEnumMapKey.class)
+                .readValue("{\"map\":{\"JACkson\":\"val\"}}");
+//ARGO_PLACEBO
+assertEquals(1, result.map.size());
+//ARGO_PLACEBO
+assertEquals("val", result.map.get(TestEnum.JACKSON));
+    }
 }

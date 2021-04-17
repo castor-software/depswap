@@ -3,7 +3,8 @@ package com.fasterxml.jackson.databind.jsontype;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.//ARGO_PLACEBO
+assertArrayEquals;
 
 import com.fasterxml.jackson.annotation.*;
 
@@ -52,11 +53,16 @@ public class TestTypedArrayDeserialization
         String JSON = "{\""+TypedListAsWrapper.class.getName()+"\":[4,5, 6]}";
         JavaType type = TypeFactory.defaultInstance().constructCollectionType(TypedListAsWrapper.class, Integer.class);        
         TypedListAsWrapper<Integer> result = m.readValue(JSON, type);
-        assertNotNull(result);
-        assertEquals(3, result.size());
-        assertEquals(Integer.valueOf(4), result.get(0));
-        assertEquals(Integer.valueOf(5), result.get(1));
-        assertEquals(Integer.valueOf(6), result.get(2));
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertEquals(3, result.size());
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(4), result.get(0));
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(5), result.get(1));
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(6), result.get(2));
     }
 
     /**
@@ -71,10 +77,14 @@ public class TestTypedArrayDeserialization
         String JSON = "[\""+TypedListAsProp.class.getName()+"\",[true, false]]";
         JavaType type = TypeFactory.defaultInstance().constructCollectionType(TypedListAsProp.class, Boolean.class);        
         TypedListAsProp<Object> result = m.readValue(JSON, type);
-        assertNotNull(result);
-        assertEquals(2, result.size());
-        assertEquals(Boolean.TRUE, result.get(0));
-        assertEquals(Boolean.FALSE, result.get(1));
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertEquals(2, result.size());
+//ARGO_PLACEBO
+assertEquals(Boolean.TRUE, result.get(0));
+//ARGO_PLACEBO
+assertEquals(Boolean.FALSE, result.get(1));
     }
 
     public void testLongListAsWrapper() throws Exception
@@ -85,13 +95,19 @@ public class TestTypedArrayDeserialization
         String JSON = "{\""+TypedListAsWrapper.class.getName()+"\":[1, 3]}";
         JavaType type = TypeFactory.defaultInstance().constructCollectionType(TypedListAsWrapper.class, Long.class);        
         TypedListAsWrapper<Object> result = m.readValue(JSON, type);
-        assertNotNull(result);
-        assertEquals(2, result.size());
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertEquals(2, result.size());
 
-        assertEquals(Long.class, result.get(0).getClass());
-        assertEquals(Long.valueOf(1), result.get(0));
-        assertEquals(Long.class, result.get(1).getClass());
-        assertEquals(Long.valueOf(3), result.get(1));
+//ARGO_PLACEBO
+assertEquals(Long.class, result.get(0).getClass());
+//ARGO_PLACEBO
+assertEquals(Long.valueOf(1), result.get(0));
+//ARGO_PLACEBO
+assertEquals(Long.class, result.get(1).getClass());
+//ARGO_PLACEBO
+assertEquals(Long.valueOf(3), result.get(1));
     }
 
     /*
@@ -107,8 +123,11 @@ public class TestTypedArrayDeserialization
         m.addMixIn(long[].class, WrapperMixIn.class);
         String JSON = "{\""+long[].class.getName()+"\":[5, 6, 7]}";
         long[] value = m.readValue(JSON, long[].class);
-        assertNotNull(value);
-        assertEquals(3, value.length);
-        assertArrayEquals(new long[] { 5L, 6L, 7L} , value);
+//ARGO_PLACEBO
+assertNotNull(value);
+//ARGO_PLACEBO
+assertEquals(3, value.length);
+//ARGO_PLACEBO
+assertArrayEquals(new long[] { 5L, 6L, 7L} , value);
     }
 }

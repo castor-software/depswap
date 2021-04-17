@@ -38,16 +38,20 @@ public class NullConversionsForEnumsTest extends BaseMapTest
     {
         NullValueAsEmpty<EnumSet<ABC>> result = MAPPER.readValue(aposToQuotes("{'value': null }"),
                 new TypeReference<NullValueAsEmpty<EnumSet<ABC>>>() { });
-        assertNotNull(result.value);
-        assertEquals(0, result.value.size());
+//ARGO_PLACEBO
+assertNotNull(result.value);
+//ARGO_PLACEBO
+assertEquals(0, result.value.size());
     }
 
     public void testEnumMapAsEmpty() throws Exception
     {
         NullValueAsEmpty<EnumMap<ABC, String>> result = MAPPER.readValue(aposToQuotes("{'value': null }"),
                 new TypeReference<NullValueAsEmpty<EnumMap<ABC, String>>>() { });
-        assertNotNull(result.value);
-        assertEquals(0, result.value.size());
+//ARGO_PLACEBO
+assertNotNull(result.value);
+//ARGO_PLACEBO
+assertEquals(0, result.value.size());
     }
 
     /*
@@ -62,9 +66,12 @@ public class NullConversionsForEnumsTest extends BaseMapTest
     {
         NullContentAsEmpty<EnumMap<ABC, String>> result = MAPPER.readValue(aposToQuotes("{'values': {'B':null} }"),
                 new TypeReference<NullContentAsEmpty<EnumMap<ABC, String>>>() { });
-        assertNotNull(result.values);
-        assertEquals(1, result.values.size());
-        assertEquals("", result.values.get(ABC.B));
+//ARGO_PLACEBO
+assertNotNull(result.values);
+//ARGO_PLACEBO
+assertEquals(1, result.values.size());
+//ARGO_PLACEBO
+assertEquals("", result.values.get(ABC.B));
     }
 
     /*
@@ -78,15 +85,19 @@ public class NullConversionsForEnumsTest extends BaseMapTest
     {
         NullContentSkip<EnumSet<ABC>> result = MAPPER.readValue(aposToQuotes("{'values': [ null ]}"),
                 new TypeReference<NullContentSkip<EnumSet<ABC>>>() { });
-        assertNotNull(result.values);
-        assertEquals(0, result.values.size());
+//ARGO_PLACEBO
+assertNotNull(result.values);
+//ARGO_PLACEBO
+assertEquals(0, result.values.size());
     }
 
     public void testEnumMapSkipNulls() throws Exception
     {
         NullContentSkip<EnumMap<ABC, String>> result = MAPPER.readValue(aposToQuotes("{'values': {'B':null} }"),
                 new TypeReference<NullContentSkip<EnumMap<ABC, String>>>() { });
-        assertNotNull(result.values);
-        assertEquals(0, result.values.size());
+//ARGO_PLACEBO
+assertNotNull(result.values);
+//ARGO_PLACEBO
+assertEquals(0, result.values.size());
     }
 }

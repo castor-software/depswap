@@ -73,6 +73,7 @@ public class BuilderWithUnwrappedSingleArray2608Test extends BaseMapTest
 //        final String serialized = "{\"value\": {\"subValue\": \"123\"}}";
         final String serialized = "{\"value\": [ {\"subValue\": \"123\"} ]}";
         final ExamplePOJO2608 result = mapper.readValue(serialized, ExamplePOJO2608.class);
-        assertNotNull(result);
+//ARGO_PLACEBO
+assertNotNull(result);
     }
 }

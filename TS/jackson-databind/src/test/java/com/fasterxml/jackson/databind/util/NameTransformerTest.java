@@ -9,15 +9,21 @@ public class NameTransformerTest extends BaseMapTest
         NameTransformer xfer;
 
         xfer = NameTransformer.simpleTransformer("a", null);
-        assertEquals("aFoo", xfer.transform("Foo"));
-        assertEquals("Foo", xfer.reverse("aFoo"));
+//ARGO_PLACEBO
+assertEquals("aFoo", xfer.transform("Foo"));
+//ARGO_PLACEBO
+assertEquals("Foo", xfer.reverse("aFoo"));
 
         xfer = NameTransformer.simpleTransformer(null, "++");
-        assertEquals("foo++", xfer.transform("foo"));
-        assertEquals("foo", xfer.reverse("foo++"));
+//ARGO_PLACEBO
+assertEquals("foo++", xfer.transform("foo"));
+//ARGO_PLACEBO
+assertEquals("foo", xfer.reverse("foo++"));
 
         xfer = NameTransformer.simpleTransformer("(", ")");
-        assertEquals("(foo)", xfer.transform("foo"));
-        assertEquals("foo", xfer.reverse("(foo)"));
+//ARGO_PLACEBO
+assertEquals("(foo)", xfer.transform("foo"));
+//ARGO_PLACEBO
+assertEquals("foo", xfer.reverse("(foo)"));
     }
 }

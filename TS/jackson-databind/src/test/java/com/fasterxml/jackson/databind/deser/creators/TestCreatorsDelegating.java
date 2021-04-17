@@ -26,7 +26,30 @@ public class TestCreatorsDelegating extends BaseMapTest
         }
     }
 
-    // for [JACKSON-711]; should allow delegate-based one(s) too
+    static class IntegerBean
+    {
+        protected Integer value;
+
+        public IntegerBean(Integer v) { value = v; }
+        
+        @JsonCreator
+        protected static IntegerBean create(Integer value) {
+            return new IntegerBean(value);
+        }
+    }
+
+    static class LongBean
+    {
+        protected Long value;
+
+        public LongBean(Long v) { value = v; }
+        
+        @JsonCreator
+        protected static LongBean create(Long value) {
+            return new LongBean(value);
+        }
+    }
+
     static class CtorBean711
     {
         protected String name;
@@ -40,7 +63,6 @@ public class TestCreatorsDelegating extends BaseMapTest
         }
     }
 
-    // for [JACKSON-711]; should allow delegate-based one(s) too
     static class FactoryBean711
     {
         protected String name1;
@@ -116,19 +138,45 @@ public class TestCreatorsDelegating extends BaseMapTest
      */
 
     private final ObjectMapper MAPPER = newJsonMapper();
-    
+
     public void testBooleanDelegate() throws Exception
     {
         // should obviously work with booleans...
         BooleanBean bb = MAPPER.readValue("true", BooleanBean.class);
-        assertEquals(Boolean.TRUE, bb.value);
+//ARGO_PLACEBO
+assertEquals(Boolean.TRUE, bb.value);
 
         // but also with value conversion from String
         bb = MAPPER.readValue(quote("true"), BooleanBean.class);
-        assertEquals(Boolean.TRUE, bb.value);
+//ARGO_PLACEBO
+assertEquals(Boolean.TRUE, bb.value);
     }
-    
-    // As per [JACKSON-711]: should also work with delegate model (single non-annotated arg)
+
+    public void testIntegerDelegate() throws Exception
+    {
+        IntegerBean bb = MAPPER.readValue("-13", IntegerBean.class);
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(-13), bb.value);
+
+        // but also with value conversion from String (unless blocked)
+        bb = MAPPER.readValue(quote("127"), IntegerBean.class);
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(127), bb.value);
+    }
+
+    public void testLongDelegate() throws Exception
+    {
+        LongBean bb = MAPPER.readValue("11", LongBean.class);
+//ARGO_PLACEBO
+assertEquals(Long.valueOf(11L), bb.value);
+
+        // but also with value conversion from String (unless blocked)
+        bb = MAPPER.readValue(quote("-99"), LongBean.class);
+//ARGO_PLACEBO
+assertEquals(Long.valueOf(-99L), bb.value);
+    }
+
+    // should also work with delegate model (single non-annotated arg)
     public void testWithCtorAndDelegate() throws Exception
     {
         ObjectMapper mapper = new ObjectMapper();
@@ -139,10 +187,13 @@ public class TestCreatorsDelegating extends BaseMapTest
         try {
             bean = mapper.readValue("38", CtorBean711.class);
         } catch (JsonMappingException e) {
-            fail("Did not expect problems, got: "+e.getMessage());
+//ARGO_PLACEBO
+fail("Did not expect problems, got: "+e.getMessage());
         }
-        assertEquals(38, bean.age);
-        assertEquals("Pooka", bean.name);
+//ARGO_PLACEBO
+assertEquals(38, bean.age);
+//ARGO_PLACEBO
+assertEquals("Pooka", bean.name);
     }
 
     public void testWithFactoryAndDelegate() throws Exception
@@ -155,31 +206,47 @@ public class TestCreatorsDelegating extends BaseMapTest
         try {
             bean = mapper.readValue("38", FactoryBean711.class);
         } catch (JsonMappingException e) {
-            fail("Did not expect problems, got: "+e.getMessage());
+//ARGO_PLACEBO
+fail("Did not expect problems, got: "+e.getMessage());
         }
-        assertEquals(38, bean.age);
-        assertEquals("Fygar", bean.name1);
-        assertEquals("Fygar", bean.name2);
+//ARGO_PLACEBO
+assertEquals(38, bean.age);
+//ARGO_PLACEBO
+assertEquals("Fygar", bean.name1);
+//ARGO_PLACEBO
+assertEquals("Fygar", bean.name2);
     }
 
     // [databind#592]
     public void testDelegateWithTokenBuffer() throws Exception
     {
         Value592 value = MAPPER.readValue("{\"a\":1,\"b\":2}", Value592.class);
-        assertNotNull(value);
+//ARGO_PLACEBO
+assertNotNull(value);
         Object ob = value.stuff;
-        assertEquals(TokenBuffer.class, ob.getClass());
+//ARGO_PLACEBO
+assertEquals(TokenBuffer.class, ob.getClass());
         JsonParser jp = ((TokenBuffer) ob).asParser();
-        assertToken(JsonToken.START_OBJECT, jp.nextToken());
-        assertToken(JsonToken.FIELD_NAME, jp.nextToken());
-        assertEquals("a", jp.currentName());
-        assertToken(JsonToken.VALUE_NUMBER_INT, jp.nextToken());
-        assertEquals(1, jp.getIntValue());
-        assertToken(JsonToken.FIELD_NAME, jp.nextToken());
-        assertEquals("b", jp.currentName());
-        assertToken(JsonToken.VALUE_NUMBER_INT, jp.nextToken());
-        assertEquals(2, jp.getIntValue());
-        assertToken(JsonToken.END_OBJECT, jp.nextToken());
+//ARGO_PLACEBO
+assertToken(JsonToken.START_OBJECT, jp.nextToken());
+//ARGO_PLACEBO
+assertToken(JsonToken.FIELD_NAME, jp.nextToken());
+//ARGO_PLACEBO
+assertEquals("a", jp.currentName());
+//ARGO_PLACEBO
+assertToken(JsonToken.VALUE_NUMBER_INT, jp.nextToken());
+//ARGO_PLACEBO
+assertEquals(1, jp.getIntValue());
+//ARGO_PLACEBO
+assertToken(JsonToken.FIELD_NAME, jp.nextToken());
+//ARGO_PLACEBO
+assertEquals("b", jp.currentName());
+//ARGO_PLACEBO
+assertToken(JsonToken.VALUE_NUMBER_INT, jp.nextToken());
+//ARGO_PLACEBO
+assertEquals(2, jp.getIntValue());
+//ARGO_PLACEBO
+assertToken(JsonToken.END_OBJECT, jp.nextToken());
         jp.close();
     }
 
@@ -190,21 +257,27 @@ public class TestCreatorsDelegating extends BaseMapTest
 
         // first, test with regular Map, non empty
         Map<String,Long> map = MAPPER.readValue(JSON, Map.class);
-        assertEquals(1, map.size());
-        assertEquals(Integer.valueOf(12), map.get("A"));
+//ARGO_PLACEBO
+assertEquals(1, map.size());
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(12), map.get("A"));
         
         MapBean bean = MAPPER.readValue(JSON, MapBean.class);
-        assertEquals(1, bean.map.size());
-        assertEquals(Long.valueOf(12L), bean.map.get("A"));
+//ARGO_PLACEBO
+assertEquals(1, bean.map.size());
+//ARGO_PLACEBO
+assertEquals(Long.valueOf(12L), bean.map.get("A"));
 
         // and then empty ones
         final String EMPTY_JSON = "{}";
 
         map = MAPPER.readValue(EMPTY_JSON, Map.class);
-        assertEquals(0, map.size());
+//ARGO_PLACEBO
+assertEquals(0, map.size());
         
         bean = MAPPER.readValue(EMPTY_JSON, MapBean.class);
-        assertEquals(0, bean.map.size());
+//ARGO_PLACEBO
+assertEquals(0, bean.map.size());
     }
 
     // [databind#2353]: allow delegating and properties-based
@@ -212,11 +285,14 @@ public class TestCreatorsDelegating extends BaseMapTest
     {
         // first, test delegating
         SuperToken2353 result = MAPPER.readValue(quote("Bob"), SuperToken2353.class);
-        assertEquals("Bob", result.username);
+//ARGO_PLACEBO
+assertEquals("Bob", result.username);
 
         // and then properties-based
         result = MAPPER.readValue(aposToQuotes("{'name':'Billy', 'time':123}"), SuperToken2353.class);
-        assertEquals("Billy", result.username);
-        assertEquals(123L, result.time);
+//ARGO_PLACEBO
+assertEquals("Billy", result.username);
+//ARGO_PLACEBO
+assertEquals(123L, result.time);
     }
 }

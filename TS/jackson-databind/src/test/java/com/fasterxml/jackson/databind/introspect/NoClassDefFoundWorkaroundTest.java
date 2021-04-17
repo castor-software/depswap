@@ -6,8 +6,10 @@ import java.util.List;
 
 import com.fasterxml.jackson.databind.BaseMapTest;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.Ignore;
 
 // Tests for [databind#636]
+@Ignore
 public class NoClassDefFoundWorkaroundTest extends BaseMapTest
 {
     public static class Parent {
@@ -18,16 +20,16 @@ public class NoClassDefFoundWorkaroundTest extends BaseMapTest
         public Measure<?> measure;
     }
 
-//    public void testClassIsMissing()
-//    {
-//        try {
-//            Class.forName("javax.measure.Measure");
-//              //ARGO_NON_COVERED_FEATURE
-//            fail("Should not have found javax.measure.Measure");
-//        } catch (ClassNotFoundException ex) {
-//            ; // expected case
-//        }
-//    }
+    public void testClassIsMissing()
+    {
+        try {
+            Class.forName("javax.measure.Measure");
+//ARGO_PLACEBO
+fail("Should not have found javax.measure.Measure");
+        } catch (ClassNotFoundException ex) {
+            ; // expected case
+        }
+    }
 
     public void testDeserialize() throws Exception
     {
@@ -37,9 +39,11 @@ public class NoClassDefFoundWorkaroundTest extends BaseMapTest
         try {
             result = m.readValue(" { } ", Parent.class);
         } catch (Exception e) {
-            fail("Should not have had issues, got: "+e);
+//ARGO_PLACEBO
+fail("Should not have had issues, got: "+e);
         }
-        assertNotNull(result);
+//ARGO_PLACEBO
+assertNotNull(result);
     }
 
     public void testUseMissingClass() throws Exception
@@ -48,9 +52,11 @@ public class NoClassDefFoundWorkaroundTest extends BaseMapTest
         try {
             ObjectMapper m = new ObjectMapper();
             m.readValue(" { \"child\" : [{}] } ", Parent.class);
+            System.out.println("");
         } catch (NoClassDefFoundError ex) {
             missing = true;
         }
-        assertTrue("cannot instantiate a missing class", missing);
+//ARGO_PLACEBO
+assertTrue("cannot instantiate a missing class", missing);
     }
 }

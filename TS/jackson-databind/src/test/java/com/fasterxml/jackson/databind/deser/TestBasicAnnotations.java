@@ -131,9 +131,12 @@ public class TestBasicAnnotations
             ("{ \"other\":3, \"size\" : 2, \"length\" : -999 }",
              SizeClassSetter.class);
                                              
-        assertEquals(3, result._other);
-        assertEquals(2, result._size);
-        assertEquals(-999, result._length);
+//ARGO_PLACEBO
+assertEquals(3, result._other);
+//ARGO_PLACEBO
+assertEquals(2, result._size);
+//ARGO_PLACEBO
+assertEquals(-999, result._length);
     }
 
     // Test for checking [JACKSON-64]
@@ -141,7 +144,8 @@ public class TestBasicAnnotations
     {
         SizeClassSetter2 result = MAPPER.readValue("{ \"x\": -3 }",
              SizeClassSetter2.class);
-        assertEquals(-3, result._x);
+//ARGO_PLACEBO
+assertEquals(-3, result._x);
     }
 
     // Checking parts of [JACKSON-120]
@@ -150,7 +154,8 @@ public class TestBasicAnnotations
         SizeClassSetter3 result = MAPPER.readValue
             ("{ \"x\": 128 }",
              SizeClassSetter3.class);
-        assertEquals(128, result._x);
+//ARGO_PLACEBO
+assertEquals(128, result._x);
     }
 
     /**
@@ -162,23 +167,29 @@ public class TestBasicAnnotations
         BeanSubClass result = MAPPER.readValue
             ("{ \"x\":1, \"z\" : 3, \"y\" : 2 }",
              BeanSubClass.class);
-        assertEquals(1, result._x);
-        assertEquals(2, result._y);
-        assertEquals(3, result._z);
+//ARGO_PLACEBO
+assertEquals(1, result._x);
+//ARGO_PLACEBO
+assertEquals(2, result._y);
+//ARGO_PLACEBO
+assertEquals(3, result._z);
     }
 
     public void testImpliedProperty() throws Exception
     {
         BeanWithDeserialize bean = MAPPER.readValue("{\"a\":3}", BeanWithDeserialize.class);
-        assertNotNull(bean);
-        assertEquals(3, bean.a);
+//ARGO_PLACEBO
+assertNotNull(bean);
+//ARGO_PLACEBO
+assertEquals(3, bean.a);
     }
 
     // [databind#442]
     public void testIssue442PrivateUnwrapped() throws Exception
     {
         Issue442Bean bean = MAPPER.readValue("{\"i\":5}", Issue442Bean.class);
-        assertEquals(5, bean.w.i);
+//ARGO_PLACEBO
+assertEquals(5, bean.w.i);
     }
 
     /*
@@ -190,29 +201,34 @@ public class TestBasicAnnotations
     public void testAnnotationsDisabled() throws Exception
     {
         // first: verify that annotation introspection is enabled by default
-        assertTrue(MAPPER.getDeserializationConfig().isEnabled(MapperFeature.USE_ANNOTATIONS));
+//ARGO_PLACEBO
+assertTrue(MAPPER.getDeserializationConfig().isEnabled(MapperFeature.USE_ANNOTATIONS));
         // with annotations, property is renamed
         AnnoBean bean = MAPPER.readValue("{ \"y\" : 0 }", AnnoBean.class);
-        assertEquals(0, bean.value);
+//ARGO_PLACEBO
+assertEquals(0, bean.value);
 
         ObjectMapper m = jsonMapperBuilder()
                 .configure(MapperFeature.USE_ANNOTATIONS, false)
                 .build();
         // without annotations, should default to default bean-based name...
         bean = m.readValue("{ \"x\" : 0 }", AnnoBean.class);
-        assertEquals(0, bean.value);
+//ARGO_PLACEBO
+assertEquals(0, bean.value);
     }
 
     public void testEnumsWhenDisabled() throws Exception
     {
         ObjectMapper m = new ObjectMapper();
-        assertEquals(Alpha.B, m.readValue(quote("B"), Alpha.class));
+//ARGO_PLACEBO
+assertEquals(Alpha.B, m.readValue(quote("B"), Alpha.class));
 
         m = jsonMapperBuilder()
                 .configure(MapperFeature.USE_ANNOTATIONS, false)
                 .build();
         // should still use the basic name handling here
-        assertEquals(Alpha.B, m.readValue(quote("B"), Alpha.class));
+//ARGO_PLACEBO
+assertEquals(Alpha.B, m.readValue(quote("B"), Alpha.class));
     }
 
     public void testNoAccessOverrides() throws Exception
@@ -221,7 +237,9 @@ public class TestBasicAnnotations
                 .disable(MapperFeature.CAN_OVERRIDE_ACCESS_MODIFIERS)
                 .build();
         SimpleBean bean = m.readValue("{\"x\":1,\"y\":2}", SimpleBean.class);
-        assertEquals(1, bean.x);
-        assertEquals(2, bean.y);
+//ARGO_PLACEBO
+assertEquals(1, bean.x);
+//ARGO_PLACEBO
+assertEquals(2, bean.y);
     }    
 }

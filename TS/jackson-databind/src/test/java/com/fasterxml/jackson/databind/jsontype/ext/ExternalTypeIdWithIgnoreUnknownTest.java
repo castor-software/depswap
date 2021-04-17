@@ -50,10 +50,13 @@ public class ExternalTypeIdWithIgnoreUnknownTest extends BaseMapTest
 
         List<Wrapper2611> result = MAPPER.readValue(data, new TypeReference<List<Wrapper2611>>() {});
 
-        assertEquals(1, result.size());
+//ARGO_PLACEBO
+assertEquals(1, result.size());
 
         Wrapper2611 item = result.get(0);
-        assertEquals("test", item.getType());
-        assertNotNull(item.getData());
+//ARGO_PLACEBO
+assertEquals("test", item.getType());
+//ARGO_PLACEBO
+assertNotNull(item.getData());
     }
 }

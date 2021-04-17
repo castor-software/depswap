@@ -102,13 +102,15 @@ public class EnumAsMapKeyTest extends BaseMapTest
 
         // By default Enums serialized using `name()`
         String json = MAPPER.writeValueAsString(bean);
-        assertEquals("{\"map\":{\"B\":3}}", json);
+//ARGO_PLACEBO
+assertEquals("{\"map\":{\"B\":3}}", json);
 
         // but can change
         json = MAPPER.writer()
                 .with(SerializationFeature.WRITE_ENUMS_USING_TO_STRING)
                 .writeValueAsString(bean);
-        assertEquals("{\"map\":{\"b\":3}}", json);
+//ARGO_PLACEBO
+assertEquals("{\"map\":{\"b\":3}}", json);
 
         // [databind#1570]
 
@@ -117,18 +119,21 @@ public class EnumAsMapKeyTest extends BaseMapTest
         json = MAPPER.writer()
                 .with(SerializationFeature.WRITE_ENUMS_USING_INDEX)
                 .writeValueAsString(bean);
-//        assertEquals(aposToQuotes("{'map':{'"+TestEnum.B.ordinal()+"':3}}"), json);
-        assertEquals(aposToQuotes("{'map':{'B':3}}"), json);
+//assertEquals(aposToQuotes("{'map':{'"+TestEnum.B.ordinal()+"':3}}"), json);
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'map':{'B':3}}"), json);
     }
 
     public void testCustomEnumMapKeySerializer() throws Exception {
         String json = MAPPER.writeValueAsString(new MyBean661("abc"));
-        assertEquals(aposToQuotes("{'X-FOO':'abc'}"), json);
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'X-FOO':'abc'}"), json);
     }
 
     // [databind#594]
     public void testJsonValueForEnumMapKey() throws Exception {
-        assertEquals(aposToQuotes("{'stuff':{'longValue':'foo'}}"),
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'stuff':{'longValue':'foo'}}"),
                 MAPPER.writeValueAsString(new MyStuff594("foo")));
     }
     
@@ -138,17 +143,20 @@ public class EnumAsMapKeyTest extends BaseMapTest
         final Map<Type, Integer> input = Collections.singletonMap(Type.FIRST, 3);
 
         // by default, write using name()
-        assertEquals(aposToQuotes("{'FIRST':3}"),
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'FIRST':3}"),
                 MAPPER.writeValueAsString(input));
 
         // but change with setting
-        assertEquals(aposToQuotes("{'0':3}"),
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'0':3}"),
                 MAPPER.writer()
                 .with(SerializationFeature.WRITE_ENUM_KEYS_USING_INDEX)
                 .writeValueAsString(input));
 
         // but NOT with value settings
-        assertEquals(aposToQuotes("{'FIRST':3}"),
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'FIRST':3}"),
                 MAPPER.writer()
                     .with(SerializationFeature.WRITE_ENUMS_USING_INDEX)
                     .writeValueAsString(input));
@@ -160,17 +168,20 @@ public class EnumAsMapKeyTest extends BaseMapTest
         final TypeContainer input = new TypeContainer(Type.SECOND, 72);
 
         // by default, write using name()
-        assertEquals(aposToQuotes("{'values':{'SECOND':72}}"),
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'values':{'SECOND':72}}"),
                 MAPPER.writeValueAsString(input));
 
         // but change with setting
-        assertEquals(aposToQuotes("{'values':{'1':72}}"),
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'values':{'1':72}}"),
                 MAPPER.writer()
                 .with(SerializationFeature.WRITE_ENUM_KEYS_USING_INDEX)
                 .writeValueAsString(input));
 
         // but NOT with value settings
-        assertEquals(aposToQuotes("{'values':{'SECOND':72}}"),
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'values':{'SECOND':72}}"),
                 MAPPER.writer()
                     .with(SerializationFeature.WRITE_ENUMS_USING_INDEX)
                     .writeValueAsString(input));

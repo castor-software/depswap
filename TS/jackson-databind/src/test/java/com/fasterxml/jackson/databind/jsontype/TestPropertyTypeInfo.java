@@ -87,9 +87,12 @@ public class TestPropertyTypeInfo extends BaseMapTest
         String json = mapper.writeValueAsString(new FieldWrapperBean(new StringWrapper("foo")));
 //System.out.println("JSON/field+object == "+json);
         FieldWrapperBean bean = mapper.readValue(json, FieldWrapperBean.class);
-        assertNotNull(bean.value);
-        assertEquals(StringWrapper.class, bean.value.getClass());
-        assertEquals(((StringWrapper) bean.value).str, "foo");
+//ARGO_PLACEBO
+assertNotNull(bean.value);
+//ARGO_PLACEBO
+assertEquals(StringWrapper.class, bean.value.getClass());
+//ARGO_PLACEBO
+assertEquals(((StringWrapper) bean.value).str, "foo");
     }
 
     public void testSimpleMethod() throws Exception
@@ -98,9 +101,12 @@ public class TestPropertyTypeInfo extends BaseMapTest
         String json = mapper.writeValueAsString(new FieldWrapperBean(new IntWrapper(37)));
 //System.out.println("JSON/method+object == "+json);
         FieldWrapperBean bean = mapper.readValue(json, FieldWrapperBean.class);
-        assertNotNull(bean.value);
-        assertEquals(IntWrapper.class, bean.value.getClass());
-        assertEquals(((IntWrapper) bean.value).i, 37);
+//ARGO_PLACEBO
+assertNotNull(bean.value);
+//ARGO_PLACEBO
+assertEquals(IntWrapper.class, bean.value.getClass());
+//ARGO_PLACEBO
+assertEquals(((IntWrapper) bean.value).i, 37);
     }
 
     public void testSimpleListField() throws Exception
@@ -111,12 +117,17 @@ public class TestPropertyTypeInfo extends BaseMapTest
         String json = mapper.writeValueAsString(list);
 //System.out.println("JSON/field+list == "+json);
         FieldWrapperBeanList result = mapper.readValue(json, FieldWrapperBeanList.class);
-        assertNotNull(result);
-        assertEquals(1, result.size());
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertEquals(1, result.size());
         FieldWrapperBean bean = list.get(0);
-        assertEquals(OtherBean.class, bean.value.getClass());
-        assertEquals(((OtherBean) bean.value).x, 1);
-        assertEquals(((OtherBean) bean.value).y, 1);
+//ARGO_PLACEBO
+assertEquals(OtherBean.class, bean.value.getClass());
+//ARGO_PLACEBO
+assertEquals(((OtherBean) bean.value).x, 1);
+//ARGO_PLACEBO
+assertEquals(((OtherBean) bean.value).y, 1);
     }
 
     public void testSimpleListMethod() throws Exception
@@ -128,16 +139,23 @@ public class TestPropertyTypeInfo extends BaseMapTest
         list.add(new MethodWrapperBean(new OtherBean()));
         String json = mapper.writeValueAsString(list);
         MethodWrapperBeanList result = mapper.readValue(json, MethodWrapperBeanList.class);
-        assertNotNull(result);
-        assertEquals(3, result.size());
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertEquals(3, result.size());
         MethodWrapperBean bean = result.get(0);
-        assertEquals(BooleanValue.class, bean.value.getClass());
-        assertEquals(((BooleanValue) bean.value).b, Boolean.TRUE);
+//ARGO_PLACEBO
+assertEquals(BooleanValue.class, bean.value.getClass());
+//ARGO_PLACEBO
+assertEquals(((BooleanValue) bean.value).b, Boolean.TRUE);
         bean = result.get(1);
-        assertEquals(StringWrapper.class, bean.value.getClass());
-        assertEquals(((StringWrapper) bean.value).str, "x");
+//ARGO_PLACEBO
+assertEquals(StringWrapper.class, bean.value.getClass());
+//ARGO_PLACEBO
+assertEquals(((StringWrapper) bean.value).str, "x");
         bean = result.get(2);
-        assertEquals(OtherBean.class, bean.value.getClass());
+//ARGO_PLACEBO
+assertEquals(OtherBean.class, bean.value.getClass());
     }
 
     public void testSimpleArrayField() throws Exception
@@ -147,12 +165,16 @@ public class TestPropertyTypeInfo extends BaseMapTest
                 FieldWrapperBean[] { new FieldWrapperBean(new BooleanValue(true)) });
         String json = mapper.writeValueAsString(array);
         FieldWrapperBeanArray result = mapper.readValue(json, FieldWrapperBeanArray.class);
-        assertNotNull(result);
+//ARGO_PLACEBO
+assertNotNull(result);
         FieldWrapperBean[] beans = result.beans;
-        assertEquals(1, beans.length);
+//ARGO_PLACEBO
+assertEquals(1, beans.length);
         FieldWrapperBean bean = beans[0];
-        assertEquals(BooleanValue.class, bean.value.getClass());
-        assertEquals(((BooleanValue) bean.value).b, Boolean.TRUE);
+//ARGO_PLACEBO
+assertEquals(BooleanValue.class, bean.value.getClass());
+//ARGO_PLACEBO
+assertEquals(((BooleanValue) bean.value).b, Boolean.TRUE);
     }
 
     public void testSimpleArrayMethod() throws Exception
@@ -162,12 +184,16 @@ public class TestPropertyTypeInfo extends BaseMapTest
                 MethodWrapperBean[] { new MethodWrapperBean(new StringWrapper("A")) });
         String json = mapper.writeValueAsString(array);
         MethodWrapperBeanArray result = mapper.readValue(json, MethodWrapperBeanArray.class);
-        assertNotNull(result);
+//ARGO_PLACEBO
+assertNotNull(result);
         MethodWrapperBean[] beans = result.beans;
-        assertEquals(1, beans.length);
+//ARGO_PLACEBO
+assertEquals(1, beans.length);
         MethodWrapperBean bean = beans[0];
-        assertEquals(StringWrapper.class, bean.value.getClass());
-        assertEquals(((StringWrapper) bean.value).str, "A");
+//ARGO_PLACEBO
+assertEquals(StringWrapper.class, bean.value.getClass());
+//ARGO_PLACEBO
+assertEquals(((StringWrapper) bean.value).str, "A");
     }
     
     public void testSimpleMapField() throws Exception
@@ -177,13 +203,18 @@ public class TestPropertyTypeInfo extends BaseMapTest
         map.put("foop", new FieldWrapperBean(new IntWrapper(13)));
         String json = mapper.writeValueAsString(map);
         FieldWrapperBeanMap result = mapper.readValue(json, FieldWrapperBeanMap.class);
-        assertNotNull(result);
-        assertEquals(1, result.size());
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertEquals(1, result.size());
         FieldWrapperBean bean = result.get("foop");
-        assertNotNull(bean);
+//ARGO_PLACEBO
+assertNotNull(bean);
         Object ob = bean.value;
-        assertEquals(IntWrapper.class, ob.getClass());
-        assertEquals(((IntWrapper) ob).i, 13);
+//ARGO_PLACEBO
+assertEquals(IntWrapper.class, ob.getClass());
+//ARGO_PLACEBO
+assertEquals(((IntWrapper) ob).i, 13);
     }
 
     public void testSimpleMapMethod() throws Exception
@@ -193,12 +224,17 @@ public class TestPropertyTypeInfo extends BaseMapTest
         map.put("xyz", new MethodWrapperBean(new BooleanValue(true)));
         String json = mapper.writeValueAsString(map);
         MethodWrapperBeanMap result = mapper.readValue(json, MethodWrapperBeanMap.class);
-        assertNotNull(result);
-        assertEquals(1, result.size());
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertEquals(1, result.size());
         MethodWrapperBean bean = result.get("xyz");
-        assertNotNull(bean);
+//ARGO_PLACEBO
+assertNotNull(bean);
         Object ob = bean.value;
-        assertEquals(BooleanValue.class, ob.getClass());
-        assertEquals(((BooleanValue) ob).b, Boolean.TRUE);
+//ARGO_PLACEBO
+assertEquals(BooleanValue.class, ob.getClass());
+//ARGO_PLACEBO
+assertEquals(((BooleanValue) ob).b, Boolean.TRUE);
     }
 }

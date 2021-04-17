@@ -68,9 +68,11 @@ public class BuilderFailTest extends BaseMapTest
         final String json = "{\"x\":1}";
         try {
             MAPPER.readValue(json, ValueClassWrongBuildType.class);
-            fail("Missing expected InvalidDefinitionException exception");
+//ARGO_PLACEBO
+fail("Missing expected InvalidDefinitionException exception");
         } catch (InvalidDefinitionException e) {
-            verifyException(e, "Build method");
+            verifyException(e, "Build method ");
+            verifyException(e, "#build()");
             verifyException(e, "has wrong return type");
         }
     }
@@ -80,7 +82,8 @@ public class BuilderFailTest extends BaseMapTest
         final String json = aposToQuotes("{'x':1,'y':2,'z':3}");
         try {
             MAPPER.readValue(json, ValueClassXY.class);
-            fail("Missing expected UnrecognizedPropertyException exception");
+//ARGO_PLACEBO
+fail("Missing expected UnrecognizedPropertyException exception");
         } catch (UnrecognizedPropertyException e) {
             verifyException(e, "Unrecognized field \"z\"");
         }

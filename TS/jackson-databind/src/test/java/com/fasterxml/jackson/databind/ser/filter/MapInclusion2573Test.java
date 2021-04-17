@@ -46,9 +46,11 @@ public class MapInclusion2573Test extends BaseMapTest
         ObjectMapper mapper = JsonMapper.builder()
                 .defaultPropertyInclusion(BOTH_NON_NULL)
                 .build();
-        assertEquals(aposToQuotes("{'Speed':100}"),
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'Speed':100}"),
                 mapper.writeValueAsString(CAR_PROPERTIES));
-        assertEquals(aposToQuotes("{'model':'F60','properties':{'Speed':100}}"),
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'model':'F60','properties':{'Speed':100}}"),
                 mapper.writeValueAsString(CAR));
     }
 
@@ -61,9 +63,11 @@ public class MapInclusion2573Test extends BaseMapTest
         mapper.configOverride(Map.class)
             .setInclude(JsonInclude.Value.construct(JsonInclude.Include.USE_DEFAULTS,
                     JsonInclude.Include.USE_DEFAULTS));
-        assertEquals(aposToQuotes("{'Speed':100}"),
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'Speed':100}"),
                 mapper.writeValueAsString(CAR_PROPERTIES));
-        assertEquals(aposToQuotes("{'model':'F60','properties':{'Speed':100}}"),
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'model':'F60','properties':{'Speed':100}}"),
                 mapper.writeValueAsString(CAR));
     }
 
@@ -76,9 +80,11 @@ public class MapInclusion2573Test extends BaseMapTest
         mapper.configOverride(Map.class)
             .setInclude(JsonInclude.Value.construct(JsonInclude.Include.ALWAYS,
                     JsonInclude.Include.ALWAYS));
-        assertEquals(aposToQuotes("{'Speed':100,'Weight':null}"),
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'Speed':100,'Weight':null}"),
                 mapper.writeValueAsString(CAR_PROPERTIES));
-        assertEquals(aposToQuotes("{'model':'F60','properties':{'Speed':100,'Weight':null}}"),
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'model':'F60','properties':{'Speed':100,'Weight':null}}"),
                 mapper.writeValueAsString(CAR));
     }
 }

@@ -29,7 +29,8 @@ public class LocalTypeTest extends BaseMapTest
         String json = mapper.writeValueAsString(input);
         
         EntityContainer output = mapper.readValue(json, EntityContainer.class);
-        assertEquals(12, output.getEntity().value);
+//ARGO_PLACEBO
+assertEquals(12, output.getEntity().value);
     }
 }
 

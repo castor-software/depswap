@@ -16,13 +16,17 @@ public class TestJava7Types extends BaseMapTest
         Path input = Paths.get("/tmp", "foo.txt");
 
         String json = mapper.writeValueAsString(input);
-        assertNotNull(json);
+//ARGO_PLACEBO
+assertNotNull(json);
 
         Path p = mapper.readValue(json, Path.class);
-        assertNotNull(p);
+//ARGO_PLACEBO
+assertNotNull(p);
         
-        assertEquals(input.toUri(), p.toUri());
-        assertEquals(input, p);
+//ARGO_PLACEBO
+assertEquals(input.toUri(), p.toUri());
+//ARGO_PLACEBO
+assertEquals(input, p);
     }
 
     // [databind#1688]:
@@ -37,10 +41,13 @@ public class TestJava7Types extends BaseMapTest
         String json = mapper.writeValueAsString(new Object[] { input });
 
         Object[] obs = mapper.readValue(json, Object[].class);
-        assertEquals(1, obs.length);
+//ARGO_PLACEBO
+assertEquals(1, obs.length);
         Object ob = obs[0];
-        assertTrue(ob instanceof Path);
+//ARGO_PLACEBO
+assertTrue(ob instanceof Path);
 
-        assertEquals(input.toString(), ob.toString());
+//ARGO_PLACEBO
+assertEquals(input.toString(), ob.toString());
     }
 }

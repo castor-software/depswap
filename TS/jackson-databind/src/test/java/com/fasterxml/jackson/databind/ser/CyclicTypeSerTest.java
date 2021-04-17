@@ -60,15 +60,21 @@ public class CyclicTypeSerTest
         Bean first = new Bean(last, "first");
         Map<String,Object> map = writeAndMap(MAPPER, first);
 
-        assertEquals(2, map.size());
-        assertEquals("first", map.get("name"));
+//ARGO_PLACEBO
+assertEquals(2, map.size());
+//ARGO_PLACEBO
+assertEquals("first", map.get("name"));
 
         @SuppressWarnings("unchecked")
         Map<String,Object> map2 = (Map<String,Object>) map.get("next");
-        assertNotNull(map2);
-        assertEquals(2, map2.size());
-        assertEquals("last", map2.get("name"));
-        assertNull(map2.get("next"));
+//ARGO_PLACEBO
+assertNotNull(map2);
+//ARGO_PLACEBO
+assertEquals(2, map2.size());
+//ARGO_PLACEBO
+assertEquals("last", map2.get("name"));
+//ARGO_PLACEBO
+assertNull(map2.get("next"));
     }
 
     public void testSimpleDirectSelfReference() throws Exception
@@ -93,11 +99,13 @@ public class CyclicTypeSerTest
                 .without(SerializationFeature.FAIL_ON_SELF_REFERENCES)
                 .with(SerializationFeature.WRITE_SELF_REFERENCES_AS_NULL)
                 ;
-        assertEquals(aposToQuotes("{'id':1,'parent':null}"), w.writeValueAsString(self1));
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'id':1,'parent':null}"), w.writeValueAsString(self1));
 
         // Also consider a variant of cyclic POJO in container
         Selfie2501AsArray self2 = new Selfie2501AsArray(2);
         self2.parent = self2;
-        assertEquals(aposToQuotes("[2,null]"), w.writeValueAsString(self2));
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("[2,null]"), w.writeValueAsString(self2));
     }
 }

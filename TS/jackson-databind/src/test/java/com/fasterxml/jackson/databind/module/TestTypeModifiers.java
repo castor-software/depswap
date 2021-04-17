@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 
 import com.fasterxml.jackson.core.*;
+
 import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.json.JsonMapper;
@@ -221,14 +222,19 @@ public class TestTypeModifiers extends BaseMapTest
     public void testMapLikeTypeConstruction() throws Exception
     {
         JavaType type = MAPPER_WITH_MODIFIER.constructType(MyMapLikeType.class);
-        assertTrue(type.isMapLikeType());
+//ARGO_PLACEBO
+assertTrue(type.isMapLikeType());
         // also, must have resolved type info
         JavaType param = ((MapLikeType) type).getKeyType();
-        assertNotNull(param);
-        assertSame(String.class, param.getRawClass());
+//ARGO_PLACEBO
+assertNotNull(param);
+//ARGO_PLACEBO
+assertSame(String.class, param.getRawClass());
         param = ((MapLikeType) type).getContentType();
-        assertNotNull(param);
-        assertSame(Integer.class, param.getRawClass());
+//ARGO_PLACEBO
+assertNotNull(param);
+//ARGO_PLACEBO
+assertSame(Integer.class, param.getRawClass());
     }
 
     public void testMapLikeTypeViaParametric() throws Exception
@@ -236,14 +242,19 @@ public class TestTypeModifiers extends BaseMapTest
         // [databind#2796]: should refine with another call too
         JavaType type = MAPPER_WITH_MODIFIER.getTypeFactory().constructParametricType(MapMarker.class,
                 new Class<?>[] { String.class, Double.class });
-        assertTrue(type.isMapLikeType());
+//ARGO_PLACEBO
+assertTrue(type.isMapLikeType());
         JavaType param = ((MapLikeType) type).getKeyType();
-        assertNotNull(param);
-        assertSame(String.class, param.getRawClass());
+//ARGO_PLACEBO
+assertNotNull(param);
+//ARGO_PLACEBO
+assertSame(String.class, param.getRawClass());
 
         param = ((MapLikeType) type).getContentType();
-        assertNotNull(param);
-        assertSame(Double.class, param.getRawClass());
+//ARGO_PLACEBO
+assertNotNull(param);
+//ARGO_PLACEBO
+assertSame(Double.class, param.getRawClass());
     }
 
     // [databind#2395] Can trigger problem this way too
@@ -257,16 +268,20 @@ public class TestTypeModifiers extends BaseMapTest
                 context.addTypeModifier(new MyTypeModifier());
             }
         });
-        assertNotNull(mapper.readTree("{}"));
+//ARGO_ORIGINAL
+assertNotNull(mapper.readTree("{}"));
     }
 
     public void testCollectionLikeTypeConstruction() throws Exception
     {
         JavaType type = MAPPER_WITH_MODIFIER.constructType(MyCollectionLikeType.class);
-        assertTrue(type.isCollectionLikeType());
+//ARGO_PLACEBO
+assertTrue(type.isCollectionLikeType());
         JavaType param = ((CollectionLikeType) type).getContentType();
-        assertNotNull(param);
-        assertSame(Integer.class, param.getRawClass());
+//ARGO_PLACEBO
+assertNotNull(param);
+//ARGO_PLACEBO
+assertSame(Integer.class, param.getRawClass());
     }
 
     public void testCollectionLikeSerialization() throws Exception
@@ -274,7 +289,8 @@ public class TestTypeModifiers extends BaseMapTest
         ObjectMapper mapper = new ObjectMapper();
         mapper.setTypeFactory(mapper.getTypeFactory().withModifier(new MyTypeModifier()));
         mapper.registerModule(new ModifierModule());
-        assertEquals("[19]", mapper.writeValueAsString(new MyCollectionLikeType(19)));
+//ARGO_PLACEBO
+assertEquals("[19]", mapper.writeValueAsString(new MyCollectionLikeType(19)));
     }
 
     public void testMapLikeSerialization() throws Exception
@@ -283,7 +299,8 @@ public class TestTypeModifiers extends BaseMapTest
         mapper.setTypeFactory(mapper.getTypeFactory().withModifier(new MyTypeModifier()));
         mapper.registerModule(new ModifierModule());
         // Due to custom serializer, should get:
-        assertEquals("{\"x\":\"xxx:3\"}", mapper.writeValueAsString(new MyMapLikeType("x", 3)));
+//ARGO_PLACEBO
+assertEquals("{\"x\":\"xxx:3\"}", mapper.writeValueAsString(new MyMapLikeType("x", 3)));
     }
 
 
@@ -294,8 +311,10 @@ public class TestTypeModifiers extends BaseMapTest
         mapper.registerModule(new ModifierModule());
         // !!! TBI
         MyMapLikeType result = mapper.readValue("{\"a\":13}", MyMapLikeType.class);
-        assertEquals("a", result.getKey());
-        assertEquals(Integer.valueOf(13), result.getValue());
+//ARGO_PLACEBO
+assertEquals("a", result.getKey());
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(13), result.getValue());
     }
 
     public void testMapLikeDeserialization() throws Exception
@@ -305,6 +324,7 @@ public class TestTypeModifiers extends BaseMapTest
         mapper.registerModule(new ModifierModule());
         // !!! TBI
         MyCollectionLikeType result = mapper.readValue("[-37]", MyCollectionLikeType.class);
-        assertEquals(Integer.valueOf(-37), result.getValue());
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(-37), result.getValue());
     }
 }

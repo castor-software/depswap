@@ -28,67 +28,102 @@ public class TestNullNode extends NodeTestBase
         NullNode n = NullNode.instance;
 
         // basic properties
-        assertFalse(n.isContainerNode());
-        assertFalse(n.isBigDecimal());
-        assertFalse(n.isBigInteger());
-        assertFalse(n.isBinary());
-        assertFalse(n.isBoolean());
-        assertFalse(n.isPojo());
-        assertFalse(n.isMissingNode());
+//ARGO_PLACEBO
+assertFalse(n.isContainerNode());
+//ARGO_PLACEBO
+assertFalse(n.isBigDecimal());
+//ARGO_PLACEBO
+assertFalse(n.isBigInteger());
+//ARGO_PLACEBO
+assertFalse(n.isBinary());
+//ARGO_PLACEBO
+assertFalse(n.isBoolean());
+//ARGO_PLACEBO
+assertFalse(n.isPojo());
+//ARGO_PLACEBO
+assertFalse(n.isMissingNode());
 
         // fallback accessors
-        assertFalse(n.booleanValue());
-        assertNull(n.numberValue());
-        assertEquals(0, n.intValue());
-        assertEquals(0L, n.longValue());
-        assertEquals(BigDecimal.ZERO, n.decimalValue());
-        assertEquals(BigInteger.ZERO, n.bigIntegerValue());
+//ARGO_PLACEBO
+assertFalse(n.booleanValue());
+//ARGO_PLACEBO
+assertNull(n.numberValue());
+//ARGO_PLACEBO
+assertEquals(0, n.intValue());
+//ARGO_PLACEBO
+assertEquals(0L, n.longValue());
+//ARGO_PLACEBO
+assertEquals(BigDecimal.ZERO, n.decimalValue());
+//ARGO_PLACEBO
+assertEquals(BigInteger.ZERO, n.bigIntegerValue());
 
-        assertEquals(0, n.size());
-        assertTrue(n.isEmpty());
-        assertFalse(n.elements().hasNext());
-        assertFalse(n.fieldNames().hasNext());
+//ARGO_PLACEBO
+assertEquals(0, n.size());
+//ARGO_PLACEBO
+assertTrue(n.isEmpty());
+//ARGO_PLACEBO
+assertFalse(n.elements().hasNext());
+//ARGO_PLACEBO
+assertFalse(n.fieldNames().hasNext());
         // path is never null; but does point to missing node
-        assertNotNull(n.path("xyz"));
-        assertTrue(n.path("xyz").isMissingNode());
+//ARGO_PLACEBO
+assertNotNull(n.path("xyz"));
+//ARGO_PLACEBO
+assertTrue(n.path("xyz").isMissingNode());
 
-        assertFalse(n.has("field"));
-        assertFalse(n.has(3));
+//ARGO_PLACEBO
+assertFalse(n.has("field"));
+//ARGO_PLACEBO
+assertFalse(n.has(3));
 
-        assertNodeNumbersForNonNumeric(n);
+//ARGO_PLACEBO
+assertNodeNumbersForNonNumeric(n);
 
         // 2.4
-        assertEquals("foo", n.asText("foo"));
+//ARGO_PLACEBO
+assertEquals("foo", n.asText("foo"));
     }
 
     public void testNullHandling() throws Exception
     {
         // First, a stand-alone null
         JsonNode n = MAPPER.readTree("null");
-        assertNotNull(n);
-        assertTrue(n.isNull());
-        assertFalse(n.isNumber());
-        assertFalse(n.isTextual());
-        assertEquals("null", n.asText());
-        assertEquals(n, NullNode.instance);
+//ARGO_ORIGINAL
+assertNotNull(n);
+//ARGO_ORIGINAL
+assertTrue(n.isNull());
+//ARGO_ORIGINAL
+assertFalse(n.isNumber());
+//ARGO_ORIGINAL
+assertFalse(n.isTextual());
+//ARGO_ORIGINAL
+assertEquals("null", n.asText());
+//ARGO_ORIGINAL
+assertEquals(n, NullNode.instance);
 
         n = objectMapper().readTree("null");
-        assertNotNull(n);
-        assertTrue(n.isNull());
+//ARGO_ORIGINAL
+assertNotNull(n);
+//ARGO_ORIGINAL
+assertTrue(n.isNull());
         
         // Then object property
         ObjectNode root = (ObjectNode) objectReader().readTree("{\"x\":null}");
-        assertEquals(1, root.size());
+//ARGO_ORIGINAL
+assertEquals(1, root.size());
         n = root.get("x");
-        assertNotNull(n);
-        assertTrue(n.isNull());
+//ARGO_ORIGINAL
+assertNotNull(n);
+//ARGO_ORIGINAL
+assertTrue(n.isNull());
     }
 
     public void testNullSerialization() throws Exception
     {
         StringWriter sw = new StringWriter();
         MAPPER.writeValue(sw, NullNode.instance);
-        assertEquals("null", sw.toString());
+//ARGO_PLACEBO
+assertEquals("null", sw.toString());
     }
 
     public void testNullHandlingCovariance() throws Exception
@@ -97,21 +132,28 @@ public class TestNullNode extends NodeTestBase
         CovarianceBean bean = MAPPER.readValue(JSON, CovarianceBean.class);
 
         ObjectNode on = bean._object;
-        assertNull(on);
+//ARGO_PLACEBO
+assertNull(on);
 
         ArrayNode an = bean._array;
-        assertNull(an);
+//ARGO_PLACEBO
+assertNull(an);
     }
 
     @SuppressWarnings("unlikely-arg-type")
     public void testNullEquality() throws Exception
     {
         JsonNode n = MAPPER.nullNode();
-        assertTrue(n.isNull());
-        assertEquals(n, new MyNull());
-        assertEquals(new MyNull(), n);
+//ARGO_PLACEBO
+assertTrue(n.isNull());
+//ARGO_PLACEBO
+assertEquals(n, new MyNull());
+//ARGO_PLACEBO
+assertEquals(new MyNull(), n);
 
-        assertFalse(n.equals(null));
-        assertFalse(n.equals("foo"));
+//ARGO_PLACEBO
+assertFalse(n.equals(null));
+//ARGO_PLACEBO
+assertFalse(n.equals("foo"));
     }
 }

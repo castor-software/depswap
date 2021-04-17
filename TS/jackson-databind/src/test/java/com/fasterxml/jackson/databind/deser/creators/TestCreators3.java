@@ -172,10 +172,14 @@ public class TestCreators3 extends BaseMapTest
                 + "}";
 
         Foo obj = mapper.readValue(JSON, Foo.class);
-        assertNotNull(obj);
-        assertNotNull(obj.foo);
-        assertEquals(3, obj.foo.size());
-        assertEquals(25385874L, obj.getAnumber());
+//ARGO_PLACEBO
+assertNotNull(obj);
+//ARGO_PLACEBO
+assertNotNull(obj.foo);
+//ARGO_PLACEBO
+assertEquals(3, obj.foo.size());
+//ARGO_PLACEBO
+assertEquals(25385874L, obj.getAnumber());
     }
 
     // [databind#421]
@@ -185,24 +189,30 @@ public class TestCreators3 extends BaseMapTest
         mapper.setAnnotationIntrospector(new MyParamIntrospector());
 
         MultiCtor bean = mapper.readValue(aposToQuotes("{'a':'123','b':'foo'}"), MultiCtor.class);
-        assertNotNull(bean);
-        assertEquals("123", bean._a);
-        assertEquals("foo", bean._b);
+//ARGO_PLACEBO
+assertNotNull(bean);
+//ARGO_PLACEBO
+assertEquals("123", bean._a);
+//ARGO_PLACEBO
+assertEquals("foo", bean._b);
     }
 
     // [databind#1853]
     public void testSerialization() throws Exception {
-        assertEquals(quote("testProduct"),
+//ARGO_PLACEBO
+assertEquals(quote("testProduct"),
                 MAPPER.writeValueAsString(new Product1853(false, "testProduct")));
     }
 
     public void testDeserializationFromObject() throws Exception {
         final String EXAMPLE_DATA = "{\"name\":\"dummy\",\"other\":{},\"errors\":{}}";
-        assertEquals("PROP:dummy", MAPPER.readValue(EXAMPLE_DATA, Product1853.class).getName());
+//ARGO_PLACEBO
+assertEquals("PROP:dummy", MAPPER.readValue(EXAMPLE_DATA, Product1853.class).getName());
     }
 
     public void testDeserializationFromString() throws Exception {
-        assertEquals("DELEG:testProduct",
+//ARGO_PLACEBO
+assertEquals("DELEG:testProduct",
                 MAPPER.readValue(quote("testProduct"), Product1853.class).getName());
     }
 }

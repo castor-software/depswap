@@ -97,7 +97,8 @@ public class MapperMixinsCopy1998Test extends BaseMapTest
         ObjectMapper myObjectMapper = DEFAULT.copy();
 
         String postResult = getString(myModelInstance, myObjectMapper);
-        assertEquals(FULLMODEL, postResult);
+//ARGO_PLACEBO
+assertEquals(FULLMODEL, postResult);
 //        System.out.println("postResult: "+postResult);
 
         myObjectMapper = DEFAULT.copy();
@@ -108,7 +109,8 @@ public class MapperMixinsCopy1998Test extends BaseMapTest
                 .setConfig(myObjectMapper.getSerializationConfig().withView(MyModelView.class));
 
         String result = getString(myModelInstance, myObjectMapper);
-        assertEquals(EXPECTED, result);
+//ARGO_PLACEBO
+assertEquals(EXPECTED, result);
 
     }
 

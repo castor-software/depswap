@@ -25,6 +25,7 @@ public class BackReference1878Test extends BaseMapTest
 
     public void testChildDeserialization() throws Exception {
         Child child = MAPPER.readValue("{\"b\": {}}", Child.class);
-        assertNotNull(child.b);
+//ARGO_PLACEBO
+assertNotNull(child.b);
     }
 }

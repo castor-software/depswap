@@ -55,12 +55,18 @@ public class ReferentialWithObjectIdTest extends BaseMapTest
  
         EmployeeList result = MAPPER.readValue(json, EmployeeList.class);
         Employee firstB = result.first.get();
-        assertNotNull(firstB);
-        assertEquals("Alice", firstB.name);
+//ARGO_PLACEBO
+assertNotNull(firstB);
+//ARGO_PLACEBO
+assertEquals("Alice", firstB.name);
         Employee secondB = firstB.next.get();
-        assertNotNull(secondB);
-        assertEquals("Bob", secondB.name);
-        assertNotNull(secondB.next.get());
-        assertSame(firstB, secondB.next.get());
+//ARGO_PLACEBO
+assertNotNull(secondB);
+//ARGO_PLACEBO
+assertEquals("Bob", secondB.name);
+//ARGO_PLACEBO
+assertNotNull(secondB.next.get());
+//ARGO_PLACEBO
+assertSame(firstB, secondB.next.get());
     }
 }

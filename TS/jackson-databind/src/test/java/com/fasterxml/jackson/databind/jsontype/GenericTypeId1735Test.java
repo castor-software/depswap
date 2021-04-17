@@ -44,7 +44,8 @@ public class GenericTypeId1735Test extends BaseMapTest
             MAPPER.readValue(aposToQuotes(
 "{'w':{'type':'"+NEF_CLASS+"'}}"),
                     Wrapper1735.class);
-            fail("Should not pass");
+//ARGO_PLACEBO
+fail("Should not pass");
         } catch (InvalidTypeIdException e) {
             verifyException(e, "could not resolve type id");
             verifyException(e, "not a subtype");
@@ -58,7 +59,8 @@ public class GenericTypeId1735Test extends BaseMapTest
             MAPPER.readValue(aposToQuotes(
 "{'w':{'type':'java.util.HashMap<java.lang.String,java.lang.String>'}}"),
                     Wrapper1735.class);
-            fail("Should not pass");
+//ARGO_PLACEBO
+fail("Should not pass");
         } catch (InvalidTypeIdException e) {
             verifyException(e, "could not resolve type id");
             verifyException(e, "not a subtype");

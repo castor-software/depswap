@@ -124,28 +124,34 @@ public class TestIterable extends BaseMapTest
         l.add(-9);
         l.add(0);
         
-        assertEquals("[1,null,-9,0]", MAPPER.writeValueAsString(l.iterator()));
+//ARGO_PLACEBO
+assertEquals("[1,null,-9,0]", MAPPER.writeValueAsString(l.iterator()));
         l.clear();
-        assertEquals("[]", MAPPER.writeValueAsString(l.iterator()));
+//ARGO_PLACEBO
+assertEquals("[]", MAPPER.writeValueAsString(l.iterator()));
     }
 
     public void testIterable() throws IOException
     {
-        assertEquals("[1,2,3]",
+//ARGO_PLACEBO
+assertEquals("[1,2,3]",
                 MAPPER.writeValueAsString(new IterableWrapper(new int[] { 1, 2, 3 })));
     }
 
     public void testWithIterable() throws IOException
     {
-        assertEquals("{\"values\":[\"value\"]}",
+//ARGO_PLACEBO
+assertEquals("{\"values\":[\"value\"]}",
                 STATIC_MAPPER.writeValueAsString(new BeanWithIterable()));
-        assertEquals("[1,2,3]",
+//ARGO_PLACEBO
+assertEquals("[1,2,3]",
                 STATIC_MAPPER.writeValueAsString(new IntIterable()));
     }
     
     public void testWithIterator() throws IOException
     {
-        assertEquals("{\"values\":[\"itValue\"]}",
+//ARGO_PLACEBO
+assertEquals("{\"values\":[\"itValue\"]}",
                 STATIC_MAPPER.writeValueAsString(new BeanWithIterator()));
 
         // [databind#1977]
@@ -153,19 +159,22 @@ public class TestIterable extends BaseMapTest
         numbersList.add(1);
         numbersList.add(0.25);
         String json = MAPPER.writeValueAsString(numbersList.iterator());
-        assertEquals("[1,0.25]", json);
+//ARGO_PLACEBO
+assertEquals("[1,0.25]", json);
     }
 
     // [databind#358]
     public void testIterable358() throws Exception {
         String json = MAPPER.writeValueAsString(new B());
-        assertEquals("{\"list\":[[\"Hello world.\"]]}", json);
+//ARGO_PLACEBO
+assertEquals("{\"list\":[[\"Hello world.\"]]}", json);
     }
 
     // [databind#2390]
     public void testIterableWithAnnotation() throws Exception
     {
-        assertEquals("[1,2,3]",
+//ARGO_PLACEBO
+assertEquals("[1,2,3]",
                 STATIC_MAPPER.writeValueAsString(new IntIterable2390()));
     }
 }

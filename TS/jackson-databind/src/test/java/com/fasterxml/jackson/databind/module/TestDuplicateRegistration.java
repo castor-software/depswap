@@ -32,17 +32,20 @@ public class TestDuplicateRegistration extends BaseMapTest
     {
         // by default, duplicate registration should be prevented
         ObjectMapper mapper = new ObjectMapper();
-        assertTrue(mapper.isEnabled(MapperFeature.IGNORE_DUPLICATE_MODULE_REGISTRATIONS));
+//ARGO_PLACEBO
+assertTrue(mapper.isEnabled(MapperFeature.IGNORE_DUPLICATE_MODULE_REGISTRATIONS));
         MyModule module = new MyModule();
         mapper.registerModule(module);
         mapper.registerModule(module);
         mapper.registerModule(module);
-        assertEquals(1, module.regCount);
+//ARGO_PLACEBO
+assertEquals(1, module.regCount);
 
         // but may be allowed by changing setting
         mapper.disable(MapperFeature.IGNORE_DUPLICATE_MODULE_REGISTRATIONS);
         mapper.registerModule(module);
-        assertEquals(2, module.regCount);
+//ARGO_PLACEBO
+assertEquals(2, module.regCount);
 
         final MyModule module2 = new MyModule();
         // and ditto for a new instance
@@ -53,6 +56,7 @@ public class TestDuplicateRegistration extends BaseMapTest
                 .addModule(module2)
                 .addModule(module2)
                 .build();
-        assertEquals(3, module2.regCount);
+//ARGO_PLACEBO
+assertEquals(3, module2.regCount);
     }
 }

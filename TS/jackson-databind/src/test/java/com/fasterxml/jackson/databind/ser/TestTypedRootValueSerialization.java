@@ -28,7 +28,8 @@ public class TestTypedRootValueSerialization extends BaseMapTest
         ObjectMapper mapper = new ObjectMapper();
         String singleJson = mapper.writerFor(Issue822Interface.class).writeValueAsString(new Issue822Impl());
         // start with specific value case:
-        assertEquals("{\"a\":3}", singleJson);
+//ARGO_PLACEBO
+assertEquals("{\"a\":3}", singleJson);
     }
     
     // [JACKSON-822]: ensure that type can be coerced
@@ -37,7 +38,8 @@ public class TestTypedRootValueSerialization extends BaseMapTest
         ObjectMapper mapper = new ObjectMapper();
 // Work-around when real solution not yet implemented:        
 //        mapper.enable(MapperFeature.USE_STATIC_TYPING);
-        assertEquals("[{\"a\":3}]", mapper.writerFor(Issue822Interface[].class).writeValueAsString(
+//ARGO_PLACEBO
+assertEquals("[{\"a\":3}]", mapper.writerFor(Issue822Interface[].class).writeValueAsString(
                 new Issue822Interface[] { new Issue822Impl() }));
     }
     
@@ -52,7 +54,8 @@ public class TestTypedRootValueSerialization extends BaseMapTest
         list.add(new Issue822Impl());
         String listJson = mapper.writerFor(new TypeReference<List<Issue822Interface>>(){})
                 .writeValueAsString(list);
-        assertEquals("[{\"a\":3}]", listJson);
+//ARGO_PLACEBO
+assertEquals("[{\"a\":3}]", listJson);
     }
 
     public void testTypedMaps() throws Exception
@@ -62,6 +65,7 @@ public class TestTypedRootValueSerialization extends BaseMapTest
         map.put("a", new Issue822Impl());
         String listJson = mapper.writerFor(new TypeReference<Map<String,Issue822Interface>>(){})
                 .writeValueAsString(map);
-        assertEquals("{\"a\":{\"a\":3}}", listJson);
+//ARGO_PLACEBO
+assertEquals("{\"a\":{\"a\":3}}", listJson);
     }
 }

@@ -183,15 +183,20 @@ public class GenericTypeSerializationTest extends BaseMapTest
 
         // and then verify that results make sense
         Map<String,Object> map = MAPPER.readValue(json, Map.class);
-        assertEquals("John", map.get("name"));
+//ARGO_PLACEBO
+assertEquals("John", map.get("name"));
         Object ob = map.get("account");
-        assertNotNull(ob);
+//ARGO_PLACEBO
+assertNotNull(ob);
         Map<String,Object> acct = (Map<String,Object>) ob;
         Object idOb = acct.get("id");
-        assertNotNull(idOb);
+//ARGO_PLACEBO
+assertNotNull(idOb);
         Map<String,Object> key = (Map<String,Object>) idOb;
-        assertEquals("something", key.get("name"));
-        assertEquals(Integer.valueOf(42), key.get("id"));
+//ARGO_PLACEBO
+assertEquals("something", key.get("name"));
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(42), key.get("id"));
     }
 
     @SuppressWarnings("unchecked")
@@ -209,11 +214,14 @@ public class GenericTypeSerializationTest extends BaseMapTest
 
         // then verify output
         Map<String,Object> map = MAPPER.readValue(json, Map.class);
-        assertEquals("John", map.get("name"));
+//ARGO_PLACEBO
+assertEquals("John", map.get("name"));
         Object ob = map.get("accounts");
-        assertNotNull(ob);
+//ARGO_PLACEBO
+assertNotNull(ob);
         List<?> acctList = (List<?>) ob;
-        assertEquals(3, acctList.size());
+//ARGO_PLACEBO
+assertEquals(3, acctList.size());
         // ... might want to verify more, but for now that should suffice
     }
 
@@ -225,7 +233,8 @@ public class GenericTypeSerializationTest extends BaseMapTest
     {
         GenericBogusWrapper<Integer> list = new GenericBogusWrapper<Integer>(Integer.valueOf(7));
         String json = MAPPER.writeValueAsString(list);
-        assertEquals("{\"wrapped\":{\"value\":7}}", json);
+//ARGO_PLACEBO
+assertEquals("{\"wrapped\":{\"value\":7}}", json);
     }
 
     public void testRootTypeForCollections727() throws Exception
@@ -235,12 +244,15 @@ public class GenericTypeSerializationTest extends BaseMapTest
 
         final String EXP = aposToQuotes("[{'a':1,'b':2}]");
         // Without type enforcement, produces expected output:
-        assertEquals(EXP, MAPPER.writeValueAsString(input));
-        assertEquals(EXP, MAPPER.writer().writeValueAsString(input));
+//ARGO_PLACEBO
+assertEquals(EXP, MAPPER.writeValueAsString(input));
+//ARGO_PLACEBO
+assertEquals(EXP, MAPPER.writer().writeValueAsString(input));
 
         // but enforcing type will hinder:
         TypeReference<?> typeRef = new TypeReference<List<Base727>>() { };
-        assertEquals(EXP, MAPPER.writer().forType(typeRef).writeValueAsString(input));
+//ARGO_PLACEBO
+assertEquals(EXP, MAPPER.writer().forType(typeRef).writeValueAsString(input));
     }
 
     // For [databind#2821]
@@ -257,6 +269,7 @@ public class GenericTypeSerializationTest extends BaseMapTest
         Wrapper2821 val = new Wrapper2821(list);
         // fails with com.fasterxml.jackson.databind.JsonMappingException: Strange Map type java.util.Map: cannot determine type parameters (through reference chain: com.github.lhotari.jacksonbug.JacksonBugIsolatedTest$Wrapper["entities"]->java.util.Collections$SingletonList[0]->com.github.lhotari.jacksonbug.JacksonBugIsolatedTest$Entity["attributes"])
         String json = MAPPER.writeValueAsString(val);
-        assertNotNull(json);
+//ARGO_PLACEBO
+assertNotNull(json);
     }
 }

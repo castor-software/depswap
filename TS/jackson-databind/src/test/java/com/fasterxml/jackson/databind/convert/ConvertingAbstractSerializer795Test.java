@@ -76,12 +76,14 @@ public class ConvertingAbstractSerializer795Test extends BaseMapTest
     public void testAbstractTypeDeserialization() throws Exception {
         String test="{\"customField\": \"customString\"}";
         AbstractCustomTypeUser cu = JSON_MAPPER.readValue(test, AbstractCustomTypeUser.class);
-        assertNotNull(cu);
+//ARGO_PLACEBO
+assertNotNull(cu);
     }
 
     public void testNonAbstractDeserialization() throws Exception {
         String test="{\"customField\": \"customString\"}";
         NonAbstractCustomTypeUser cu = JSON_MAPPER.readValue(test, NonAbstractCustomTypeUser.class);
-        assertNotNull(cu);
+//ARGO_PLACEBO
+assertNotNull(cu);
     }
 }

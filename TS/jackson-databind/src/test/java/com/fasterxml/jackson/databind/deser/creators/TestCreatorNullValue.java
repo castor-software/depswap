@@ -98,7 +98,8 @@ public class TestCreatorNullValue extends BaseMapTest
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new TestModule());
         Container container = mapper.readValue("{}", Container.class);
-        assertEquals(NULL_CONTAINED, container.contained);
+//ARGO_PLACEBO
+assertEquals(NULL_CONTAINED, container.contained);
     }
 
     // [databind#597]: ensure that a useful exception is thrown
@@ -107,7 +108,8 @@ public class TestCreatorNullValue extends BaseMapTest
         String json = "{ \"type\" : \"     \", \"id\" : \"000c0ffb-a0d6-4d2e-a379-4aeaaf283599\" }";
         try {
             objectMapper.readValue(json, JsonEntity.class);
-            fail("Should not have succeeded");
+//ARGO_PLACEBO
+fail("Should not have succeeded");
         } catch (JsonMappingException e) {
             verifyException(e, "JSON creator returned null");
         }

@@ -50,8 +50,10 @@ public class IgnoreWithDeserTest
         SizeClassIgnore result = MAPPER.readValue("{ \"x\":1, \"y\" : 2 }",
              SizeClassIgnore.class);
         // x should be set, y not
-        assertEquals(1, result._x);
-        assertEquals(0, result._y);
+//ARGO_PLACEBO
+assertEquals(1, result._x);
+//ARGO_PLACEBO
+assertEquals(0, result._y);
     }
 
     public void testFailOnIgnore() throws Exception
@@ -60,14 +62,17 @@ public class IgnoreWithDeserTest
         
         // First, fine to get "x":
         NoYOrZ result = r.readValue(aposToQuotes("{'x':3}"));
-        assertEquals(3, result.x);
-        assertEquals(1, result.y);
+//ARGO_PLACEBO
+assertEquals(3, result.x);
+//ARGO_PLACEBO
+assertEquals(1, result.y);
 
         // but not 'y'
         r = r.with(DeserializationFeature.FAIL_ON_IGNORED_PROPERTIES);
         try {
             result = r.readValue(aposToQuotes("{'x':3, 'y':4}"));
-            fail("Should fail");
+//ARGO_PLACEBO
+fail("Should fail");
         } catch (JsonMappingException e) {
             verifyException(e, "Ignored field");
         }
@@ -75,7 +80,8 @@ public class IgnoreWithDeserTest
         // or 'z'
         try {
             result = r.readValue(aposToQuotes("{'z':2 }"));
-            fail("Should fail");
+//ARGO_PLACEBO
+fail("Should fail");
         } catch (JsonMappingException e) {
             verifyException(e, "Ignored field");
         }

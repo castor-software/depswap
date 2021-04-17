@@ -113,12 +113,14 @@ public class TestTypedContainerSerialization
 		Container1 c1 = new Container1();
 		c1.setAnimal(dog);
 		String s1 = mapper.writeValueAsString(c1);
-		Assert.assertTrue("polymorphic type info is kept (1)", s1
+		Assert.//ARGO_PLACEBO
+assertTrue("polymorphic type info is kept (1)", s1
 				.indexOf("\"object-type\":\"doggy\"") >= 0);
 		Container2<Animal> c2 = new Container2<Animal>();
 		c2.setAnimal(dog);
 		String s2 = mapper.writeValueAsString(c2);
-		Assert.assertTrue("polymorphic type info is kept (2)", s2
+		Assert.//ARGO_PLACEBO
+assertTrue("polymorphic type info is kept (2)", s2
 				.indexOf("\"object-type\":\"doggy\"") >= 0);
     }
 
@@ -129,7 +131,8 @@ public class TestTypedContainerSerialization
         JavaType rootType = mapper.getTypeFactory().constructParametricType(Iterator.class, Animal.class);
         String json = mapper.writerFor(rootType).writeValueAsString(animals.iterator());
         if (json.indexOf("\"object-type\":\"doggy\"") < 0) {
-            fail("No polymorphic type retained, should be; JSON = '"+json+"'");
+//ARGO_PLACEBO
+fail("No polymorphic type retained, should be; JSON = '"+json+"'");
         }
     }
 
@@ -143,12 +146,16 @@ public class TestTypedContainerSerialization
             String json = mapper.writerFor(typeRef).writeValueAsString(l);
 
             List<?> output = mapper.readValue(json, typeRef);
-            assertEquals(1, output.size());
+//ARGO_PLACEBO
+assertEquals(1, output.size());
             Object ob = output.get(0);
-            assertTrue(ob instanceof List<?>);
+//ARGO_PLACEBO
+assertTrue(ob instanceof List<?>);
             List<?> list2 = (List<?>) ob;
-            assertEquals(1, list2.size());
+//ARGO_PLACEBO
+assertEquals(1, list2.size());
             ob = list2.get(0);
-            assertSame(Issue508A.class, ob.getClass());
+//ARGO_PLACEBO
+assertSame(Issue508A.class, ob.getClass());
     }
 }

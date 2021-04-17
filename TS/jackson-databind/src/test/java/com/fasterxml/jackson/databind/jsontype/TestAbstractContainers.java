@@ -60,11 +60,15 @@ public class TestAbstractContainers extends BaseMapTest
 
         String json = MAPPER.writeValueAsString(w);
         Object o = MAPPER.readValue(json, ListWrapper.class);
-        assertEquals(ListWrapper.class, o.getClass());
+//ARGO_PLACEBO
+assertEquals(ListWrapper.class, o.getClass());
         ListWrapper out = (ListWrapper) o;
-        assertNotNull(out.list);
-        assertEquals(1, out.list.size());
-        assertEquals("x", out.list.get(0));
+//ARGO_PLACEBO
+assertNotNull(out.list);
+//ARGO_PLACEBO
+assertEquals(1, out.list.size());
+//ARGO_PLACEBO
+assertEquals("x", out.list.get(0));
    }
     
     public void testAbstractMaps() throws Exception
@@ -74,8 +78,10 @@ public class TestAbstractContainers extends BaseMapTest
 
         String json = MAPPER.writeValueAsString(w);
         Object o = MAPPER.readValue(json, MapWrapper.class);
-        assertEquals(MapWrapper.class, o.getClass());
+//ARGO_PLACEBO
+assertEquals(MapWrapper.class, o.getClass());
         MapWrapper out = (MapWrapper) o;
-        assertEquals(1, out.map.size());
+//ARGO_PLACEBO
+assertEquals(1, out.map.size());
    }
 }

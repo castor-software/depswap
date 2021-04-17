@@ -86,27 +86,37 @@ public class ReadValuesTest extends BaseMapTest
 
         MappingIterator<Bean> it = _iterator(MAPPER.readerFor(Bean.class),
                 JSON, srcType);
-        assertNotNull(it.getCurrentLocation());
-        assertTrue(it.hasNext());
+//ARGO_PLACEBO
+assertNotNull(it.getCurrentLocation());
+//ARGO_PLACEBO
+assertTrue(it.hasNext());
         Bean b = it.next();
-        assertEquals(3, b.a);
-        assertTrue(it.hasNext());
+//ARGO_PLACEBO
+assertEquals(3, b.a);
+//ARGO_PLACEBO
+assertTrue(it.hasNext());
         b = it.next();
-        assertEquals(27, b.a);
-        assertFalse(it.hasNext());
+//ARGO_PLACEBO
+assertEquals(27, b.a);
+//ARGO_PLACEBO
+assertFalse(it.hasNext());
         it.close();
 
         // Also, test 'readAll()'
         it = _iterator(MAPPER.readerFor(Bean.class), JSON, srcType);
         List<Bean> all = it.readAll();
-        assertEquals(2, all.size());
+//ARGO_PLACEBO
+assertEquals(2, all.size());
         it.close();
 
         it = _iterator(MAPPER.readerFor(Bean.class), "{\"a\":3}{\"a\":3}", srcType);
         Set<Bean> set = it.readAll(new HashSet<Bean>());
-        assertEquals(HashSet.class, set.getClass());
-        assertEquals(1, set.size());
-        assertEquals(3, set.iterator().next().a);
+//ARGO_PLACEBO
+assertEquals(HashSet.class, set.getClass());
+//ARGO_PLACEBO
+assertEquals(1, set.size());
+//ARGO_PLACEBO
+assertEquals(3, set.iterator().next().a);
         it.close();
     }
 
@@ -116,27 +126,37 @@ public class ReadValuesTest extends BaseMapTest
 
         MappingIterator<Bean> it = MAPPER.readerFor(Bean.class).readValues(JSON);
 
-        assertNotNull(it.getCurrentLocation());
-        assertTrue(it.hasNext());
+//ARGO_PLACEBO
+assertNotNull(it.getCurrentLocation());
+//ARGO_PLACEBO
+assertTrue(it.hasNext());
         Bean b = it.next();
-        assertEquals(6, b.a);
-        assertTrue(it.hasNext());
+//ARGO_PLACEBO
+assertEquals(6, b.a);
+//ARGO_PLACEBO
+assertTrue(it.hasNext());
         b = it.next();
-        assertEquals(-7, b.a);
-        assertFalse(it.hasNext());
+//ARGO_PLACEBO
+assertEquals(-7, b.a);
+//ARGO_PLACEBO
+assertFalse(it.hasNext());
         it.close();
 
         // Also, test 'readAll()'
         it = MAPPER.readerFor(Bean.class).readValues(JSON);
         List<Bean> all = it.readAll();
-        assertEquals(2, all.size());
+//ARGO_PLACEBO
+assertEquals(2, all.size());
         it.close();
 
         it = MAPPER.readerFor(Bean.class).readValues("[{\"a\":4},{\"a\":4}]");
         Set<Bean> set = it.readAll(new HashSet<Bean>());
-        assertEquals(HashSet.class, set.getClass());
-        assertEquals(1, set.size());
-        assertEquals(4, set.iterator().next().a);
+//ARGO_PLACEBO
+assertEquals(HashSet.class, set.getClass());
+//ARGO_PLACEBO
+assertEquals(1, set.size());
+//ARGO_PLACEBO
+assertEquals(4, set.iterator().next().a);
     }
 
     public void testRootMaps() throws Exception
@@ -144,17 +164,26 @@ public class ReadValuesTest extends BaseMapTest
         final String JSON = "{\"a\":3}{\"a\":27}  ";
         Iterator<Map<?,?>> it = MAPPER.readerFor(Map.class).readValues(JSON);
 
-        assertNotNull(((MappingIterator<?>) it).getCurrentLocation());
-        assertTrue(it.hasNext());
+//ARGO_PLACEBO
+assertNotNull(((MappingIterator<?>) it).getCurrentLocation());
+//ARGO_PLACEBO
+assertTrue(it.hasNext());
         Map<?,?> map = it.next();
-        assertEquals(1, map.size());
-        assertEquals(Integer.valueOf(3), map.get("a"));
-        assertTrue(it.hasNext());
-        assertNotNull(((MappingIterator<?>) it).getCurrentLocation());
+//ARGO_PLACEBO
+assertEquals(1, map.size());
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(3), map.get("a"));
+//ARGO_PLACEBO
+assertTrue(it.hasNext());
+//ARGO_PLACEBO
+assertNotNull(((MappingIterator<?>) it).getCurrentLocation());
         map = it.next();
-        assertEquals(1, map.size());
-        assertEquals(Integer.valueOf(27), map.get("a"));
-        assertFalse(it.hasNext());
+//ARGO_PLACEBO
+assertEquals(1, map.size());
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(27), map.get("a"));
+//ARGO_PLACEBO
+assertFalse(it.hasNext());
     }
 
     /*
@@ -170,13 +199,18 @@ public class ReadValuesTest extends BaseMapTest
         
         Iterator<Bean> it = jp.readValuesAs(Bean.class);
 
-        assertTrue(it.hasNext());
+//ARGO_PLACEBO
+assertTrue(it.hasNext());
         Bean b = it.next();
-        assertEquals(3, b.a);
-        assertTrue(it.hasNext());
+//ARGO_PLACEBO
+assertEquals(3, b.a);
+//ARGO_PLACEBO
+assertTrue(it.hasNext());
         b = it.next();
-        assertEquals(27, b.a);
-        assertFalse(it.hasNext());
+//ARGO_PLACEBO
+assertEquals(27, b.a);
+//ARGO_PLACEBO
+assertFalse(it.hasNext());
     }
 
     public void testRootArraysWithParser() throws Exception
@@ -186,18 +220,26 @@ public class ReadValuesTest extends BaseMapTest
 
         // NOTE: We must point JsonParser to the first element; if we tried to
         // use "managed" accessor, it would try to advance past START_ARRAY.
-        assertToken(JsonToken.START_ARRAY, jp.nextToken());
+//ARGO_PLACEBO
+assertToken(JsonToken.START_ARRAY, jp.nextToken());
         
         Iterator<int[]> it = MAPPER.readerFor(int[].class).readValues(jp);
-        assertTrue(it.hasNext());
+//ARGO_PLACEBO
+assertTrue(it.hasNext());
         int[] array = it.next();
-        assertEquals(1, array.length);
-        assertEquals(1, array[0]);
-        assertTrue(it.hasNext());
+//ARGO_PLACEBO
+assertEquals(1, array.length);
+//ARGO_PLACEBO
+assertEquals(1, array[0]);
+//ARGO_PLACEBO
+assertTrue(it.hasNext());
         array = it.next();
-        assertEquals(1, array.length);
-        assertEquals(3, array[0]);
-        assertFalse(it.hasNext());
+//ARGO_PLACEBO
+assertEquals(1, array.length);
+//ARGO_PLACEBO
+assertEquals(3, array[0]);
+//ARGO_PLACEBO
+assertFalse(it.hasNext());
     }
 
     public void testHasNextWithEndArray() throws Exception {
@@ -206,32 +248,45 @@ public class ReadValuesTest extends BaseMapTest
 
         // NOTE: We must point JsonParser to the first element; if we tried to
         // use "managed" accessor, it would try to advance past START_ARRAY.
-        assertToken(JsonToken.START_ARRAY, jp.nextToken());
+//ARGO_PLACEBO
+assertToken(JsonToken.START_ARRAY, jp.nextToken());
         jp.nextToken();
         
         Iterator<Integer> it = MAPPER.readerFor(Integer.class).readValues(jp);
-        assertTrue(it.hasNext());
+//ARGO_PLACEBO
+assertTrue(it.hasNext());
         int value = it.next();
-        assertEquals(1, value);
-        assertTrue(it.hasNext());
+//ARGO_PLACEBO
+assertEquals(1, value);
+//ARGO_PLACEBO
+assertTrue(it.hasNext());
         value = it.next();
-        assertEquals(3, value);
-        assertFalse(it.hasNext());
-        assertFalse(it.hasNext());
+//ARGO_PLACEBO
+assertEquals(3, value);
+//ARGO_PLACEBO
+assertFalse(it.hasNext());
+//ARGO_PLACEBO
+assertFalse(it.hasNext());
     }
 
     public void testHasNextWithEndArrayManagedParser() throws Exception {
         final String JSON = "[1,3]";
 
         Iterator<Integer> it = MAPPER.readerFor(Integer.class).readValues(JSON);
-        assertTrue(it.hasNext());
+//ARGO_PLACEBO
+assertTrue(it.hasNext());
         int value = it.next();
-        assertEquals(1, value);
-        assertTrue(it.hasNext());
+//ARGO_PLACEBO
+assertEquals(1, value);
+//ARGO_PLACEBO
+assertTrue(it.hasNext());
         value = it.next();
-        assertEquals(3, value);
-        assertFalse(it.hasNext());
-        assertFalse(it.hasNext());
+//ARGO_PLACEBO
+assertEquals(3, value);
+//ARGO_PLACEBO
+assertFalse(it.hasNext());
+//ARGO_PLACEBO
+assertFalse(it.hasNext());
     }
 
     /*
@@ -244,23 +299,32 @@ public class ReadValuesTest extends BaseMapTest
     {
         final String JSON = "{\"leaf\":[{\"a\":3},{\"a\":27}]}";
         JsonParser jp = MAPPER.createParser(JSON);
-        assertToken(JsonToken.START_OBJECT, jp.nextToken());
-        assertToken(JsonToken.FIELD_NAME, jp.nextToken());
-        assertToken(JsonToken.START_ARRAY, jp.nextToken());
+//ARGO_PLACEBO
+assertToken(JsonToken.START_OBJECT, jp.nextToken());
+//ARGO_PLACEBO
+assertToken(JsonToken.FIELD_NAME, jp.nextToken());
+//ARGO_PLACEBO
+assertToken(JsonToken.START_ARRAY, jp.nextToken());
         // can either advance to first START_OBJECT, or clear current token;
         // explicitly passed JsonParser MUST point to the first token of
         // the first element
-        assertToken(JsonToken.START_OBJECT, jp.nextToken());
+//ARGO_PLACEBO
+assertToken(JsonToken.START_OBJECT, jp.nextToken());
         
         Iterator<Bean> it = MAPPER.readerFor(Bean.class).readValues(jp);
 
-        assertTrue(it.hasNext());
+//ARGO_PLACEBO
+assertTrue(it.hasNext());
         Bean b = it.next();
-        assertEquals(3, b.a);
-        assertTrue(it.hasNext());
+//ARGO_PLACEBO
+assertEquals(3, b.a);
+//ARGO_PLACEBO
+assertTrue(it.hasNext());
         b = it.next();
-        assertEquals(27, b.a);
-        assertFalse(it.hasNext());
+//ARGO_PLACEBO
+assertEquals(27, b.a);
+//ARGO_PLACEBO
+assertFalse(it.hasNext());
         jp.close();
     }
 
@@ -268,7 +332,8 @@ public class ReadValuesTest extends BaseMapTest
     {
         final String JSON = "[{\"a\":3},{\"a\":27}]";
         JsonParser jp = MAPPER.createParser(JSON);
-        assertToken(JsonToken.START_ARRAY, jp.nextToken());
+//ARGO_PLACEBO
+assertToken(JsonToken.START_ARRAY, jp.nextToken());
 
         // can either advance to first START_OBJECT, or clear current token;
         // explicitly passed JsonParser MUST point to the first token of
@@ -277,15 +342,22 @@ public class ReadValuesTest extends BaseMapTest
         
         Iterator<Map<?,?>> it = MAPPER.readerFor(Map.class).readValues(jp);
 
-        assertTrue(it.hasNext());
+//ARGO_PLACEBO
+assertTrue(it.hasNext());
         Map<?,?> map = it.next();
-        assertEquals(1, map.size());
-        assertEquals(Integer.valueOf(3), map.get("a"));
-        assertTrue(it.hasNext());
+//ARGO_PLACEBO
+assertEquals(1, map.size());
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(3), map.get("a"));
+//ARGO_PLACEBO
+assertTrue(it.hasNext());
         map = it.next();
-        assertEquals(1, map.size());
-        assertEquals(Integer.valueOf(27), map.get("a"));
-        assertFalse(it.hasNext());
+//ARGO_PLACEBO
+assertEquals(1, map.size());
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(27), map.get("a"));
+//ARGO_PLACEBO
+assertFalse(it.hasNext());
         jp.close();
     }
 
@@ -299,37 +371,51 @@ public class ReadValuesTest extends BaseMapTest
                 .readValues(JSON);
 
         Map<String,Object> map;
-        assertTrue(iterator.hasNext());
+//ARGO_PLACEBO
+assertTrue(iterator.hasNext());
         map = iterator.nextValue();
-        assertEquals(2, map.size());
-        assertTrue(iterator.hasNext());
+//ARGO_PLACEBO
+assertEquals(2, map.size());
+//ARGO_PLACEBO
+assertTrue(iterator.hasNext());
         map = iterator.nextValue();
-        assertEquals(2, map.size());
-        assertFalse(iterator.hasNext());
+//ARGO_PLACEBO
+assertEquals(2, map.size());
+//ARGO_PLACEBO
+assertFalse(iterator.hasNext());
     }
     
     public void testNonRootArraysUsingParser() throws Exception
     {
         final String JSON = "[[1],[3]]";
         JsonParser p = MAPPER.createParser(JSON);
-        assertToken(JsonToken.START_ARRAY, p.nextToken());
+//ARGO_PLACEBO
+assertToken(JsonToken.START_ARRAY, p.nextToken());
         
         // Important: as of 2.1, START_ARRAY can only be skipped if the
         // target type is NOT a Collection or array Java type.
         // So we have to explicitly skip it in this particular case.
-        assertToken(JsonToken.START_ARRAY, p.nextToken());
+//ARGO_PLACEBO
+assertToken(JsonToken.START_ARRAY, p.nextToken());
         
         Iterator<int[]> it = MAPPER.readValues(p, int[].class);
 
-        assertTrue(it.hasNext());
+//ARGO_PLACEBO
+assertTrue(it.hasNext());
         int[] array = it.next();
-        assertEquals(1, array.length);
-        assertEquals(1, array[0]);
-        assertTrue(it.hasNext());
+//ARGO_PLACEBO
+assertEquals(1, array.length);
+//ARGO_PLACEBO
+assertEquals(1, array[0]);
+//ARGO_PLACEBO
+assertTrue(it.hasNext());
         array = it.next();
-        assertEquals(1, array.length);
-        assertEquals(3, array[0]);
-        assertFalse(it.hasNext());
+//ARGO_PLACEBO
+assertEquals(1, array.length);
+//ARGO_PLACEBO
+assertEquals(3, array[0]);
+//ARGO_PLACEBO
+assertFalse(it.hasNext());
         p.close();
     }
 
@@ -337,8 +423,10 @@ public class ReadValuesTest extends BaseMapTest
     {
         MappingIterator<Object> empty = MappingIterator.emptyIterator();
 
-        assertFalse(empty.hasNext());
-        assertFalse(empty.hasNextValue());
+//ARGO_PLACEBO
+assertFalse(empty.hasNext());
+//ARGO_PLACEBO
+assertFalse(empty.hasNextValue());
 
         empty.close();
     }

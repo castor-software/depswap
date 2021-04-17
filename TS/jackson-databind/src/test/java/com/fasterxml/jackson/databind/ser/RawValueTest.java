@@ -7,11 +7,13 @@ import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.util.RawValue;
+import org.junit.Ignore;
 
 /**
  * This unit test suite tests functioning of {@link JsonRawValue}
  * annotation with bean serialization.
  */
+@Ignore
 public class RawValueTest
     extends com.fasterxml.jackson.databind.BaseMapTest
 {
@@ -60,7 +62,8 @@ public class RawValueTest
         String value = "abc";
         String result = MAPPER.writeValueAsString(new ClassGetter<String>(value));
         String expected = String.format("{\"nonRaw\":\"%s\",\"raw\":%s,\"value\":%s}", value, value, value);
-        assertEquals(expected, result);
+//ARGO_PLACEBO
+assertEquals(expected, result);
     }
 
     public void testSimpleNonStringGetter() throws Exception
@@ -68,21 +71,25 @@ public class RawValueTest
         int value = 123;
         String result = MAPPER.writeValueAsString(new ClassGetter<Integer>(value));
         String expected = String.format("{\"nonRaw\":%d,\"raw\":%d,\"value\":%d}", value, value, value);
-        assertEquals(expected, result);
+//ARGO_PLACEBO
+assertEquals(expected, result);
     }
 
     public void testNullStringGetter() throws Exception
     {
         String result = MAPPER.writeValueAsString(new ClassGetter<String>(null));
         String expected = "{\"nonRaw\":null,\"raw\":null,\"value\":null}";
-        assertEquals(expected, result);
+//ARGO_PLACEBO
+assertEquals(expected, result);
     }
 
     public void testWithValueToTree() throws Exception
     {
         JsonNode w = MAPPER.valueToTree(new RawWrapped("{ }"));
-        assertNotNull(w);
-        assertEquals("{\"json\":{ }}", MAPPER.writeValueAsString(w));
+//ARGO_PLACEBO
+assertNotNull(w);
+//ARGO_PLACEBO
+assertEquals("{\"json\":{ }}", MAPPER.writeValueAsString(w));
     }
 
     // for [databind#743]
@@ -94,6 +101,7 @@ public class RawValueTest
         object.put("key", myType);
         JsonNode jsonNode = MAPPER.valueToTree(object);
         String json = MAPPER.writeValueAsString(jsonNode);
-        assertEquals("{\"key\":Jackson}", json);
+//ARGO_PLACEBO
+assertEquals("{\"key\":Jackson}", json);
     }
 }

@@ -244,12 +244,17 @@ public class POJOPropertiesCollectorTest
         POJOPropertiesCollector coll = collector(MAPPER,
         		Simple.class, true);
         Map<String, POJOPropertyBuilder> props = coll.getPropertyMap();
-        assertEquals(1, props.size());
+//ARGO_PLACEBO
+assertEquals(1, props.size());
         POJOPropertyBuilder prop = props.get("value");
-        assertNotNull(prop);
-        assertTrue(prop.hasSetter());
-        assertTrue(prop.hasGetter());
-        assertTrue(prop.hasField());
+//ARGO_PLACEBO
+assertNotNull(prop);
+//ARGO_PLACEBO
+assertTrue(prop.hasSetter());
+//ARGO_PLACEBO
+assertTrue(prop.hasGetter());
+//ARGO_PLACEBO
+assertTrue(prop.hasField());
     }
 
     public void testSimpleFieldVisibility()
@@ -258,12 +263,17 @@ public class POJOPropertiesCollectorTest
         POJOPropertiesCollector coll = collector(MAPPER,
         		SimpleFieldDeser.class, false);
         Map<String, POJOPropertyBuilder> props = coll.getPropertyMap();
-        assertEquals(1, props.size());
+//ARGO_PLACEBO
+assertEquals(1, props.size());
         POJOPropertyBuilder prop = props.get("values");
-        assertNotNull(prop);
-        assertFalse(prop.hasSetter());
-        assertFalse(prop.hasGetter());
-        assertTrue(prop.hasField());
+//ARGO_PLACEBO
+assertNotNull(prop);
+//ARGO_PLACEBO
+assertFalse(prop.hasSetter());
+//ARGO_PLACEBO
+assertFalse(prop.hasGetter());
+//ARGO_PLACEBO
+assertTrue(prop.hasField());
     }
 
     public void testSimpleGetterVisibility()
@@ -271,12 +281,17 @@ public class POJOPropertiesCollectorTest
         POJOPropertiesCollector coll = collector(MAPPER,
         		SimpleGetterVisibility.class, true);
         Map<String, POJOPropertyBuilder> props = coll.getPropertyMap();
-        assertEquals(1, props.size());
+//ARGO_PLACEBO
+assertEquals(1, props.size());
         POJOPropertyBuilder prop = props.get("a");
-        assertNotNull(prop);
-        assertFalse(prop.hasSetter());
-        assertTrue(prop.hasGetter());
-        assertFalse(prop.hasField());
+//ARGO_PLACEBO
+assertNotNull(prop);
+//ARGO_PLACEBO
+assertFalse(prop.hasSetter());
+//ARGO_PLACEBO
+assertTrue(prop.hasGetter());
+//ARGO_PLACEBO
+assertFalse(prop.hasField());
     }
     
     // Unit test for verifying that a single @JsonIgnore can remove the
@@ -286,7 +301,8 @@ public class POJOPropertiesCollectorTest
         POJOPropertiesCollector coll = collector(MAPPER,
         		Empty.class, true);
         Map<String, POJOPropertyBuilder> props = coll.getPropertyMap();
-        assertEquals(0, props.size());
+//ARGO_PLACEBO
+assertEquals(0, props.size());
     }
 
     // Unit test for verifying handling of 'partial' @JsonIgnore; that is,
@@ -297,12 +313,17 @@ public class POJOPropertiesCollectorTest
         POJOPropertiesCollector coll = collector(MAPPER,
         		IgnoredSetter.class, true);
         Map<String, POJOPropertyBuilder> props = coll.getPropertyMap();
-        assertEquals(1, props.size());
+//ARGO_PLACEBO
+assertEquals(1, props.size());
         POJOPropertyBuilder prop = props.get("value");
-        assertNotNull(prop);
-        assertFalse(prop.hasSetter());
-        assertTrue(prop.hasGetter());
-        assertTrue(prop.hasField());
+//ARGO_PLACEBO
+assertNotNull(prop);
+//ARGO_PLACEBO
+assertFalse(prop.hasSetter());
+//ARGO_PLACEBO
+assertTrue(prop.hasGetter());
+//ARGO_PLACEBO
+assertTrue(prop.hasField());
     }
 
     public void testSimpleRenamed()
@@ -310,12 +331,17 @@ public class POJOPropertiesCollectorTest
         POJOPropertiesCollector coll = collector(MAPPER,
         		RenamedProperties.class, true);
         Map<String, POJOPropertyBuilder> props = coll.getPropertyMap();
-        assertEquals(1, props.size());
+//ARGO_PLACEBO
+assertEquals(1, props.size());
         POJOPropertyBuilder prop = props.get("x");
-        assertNotNull(prop);
-        assertTrue(prop.hasSetter());
-        assertTrue(prop.hasGetter());
-        assertTrue(prop.hasField());
+//ARGO_PLACEBO
+assertNotNull(prop);
+//ARGO_PLACEBO
+assertTrue(prop.hasSetter());
+//ARGO_PLACEBO
+assertTrue(prop.hasGetter());
+//ARGO_PLACEBO
+assertTrue(prop.hasField());
     }
 
     public void testSimpleRenamed2()
@@ -323,12 +349,17 @@ public class POJOPropertiesCollectorTest
         POJOPropertiesCollector coll = collector(MAPPER,
         		RenamedProperties2.class, true);
         Map<String, POJOPropertyBuilder> props = coll.getPropertyMap();
-        assertEquals(1, props.size());
+//ARGO_PLACEBO
+assertEquals(1, props.size());
         POJOPropertyBuilder prop = props.get("renamed");
-        assertNotNull(prop);
-        assertTrue(prop.hasSetter());
-        assertTrue(prop.hasGetter());
-        assertFalse(prop.hasField());
+//ARGO_PLACEBO
+assertNotNull(prop);
+//ARGO_PLACEBO
+assertTrue(prop.hasSetter());
+//ARGO_PLACEBO
+assertTrue(prop.hasGetter());
+//ARGO_PLACEBO
+assertFalse(prop.hasField());
     }
 
     public void testMergeWithRename()
@@ -336,12 +367,17 @@ public class POJOPropertiesCollectorTest
         POJOPropertiesCollector coll = collector(MAPPER,
         		MergedProperties.class, true);
         Map<String, POJOPropertyBuilder> props = coll.getPropertyMap();
-        assertEquals(1, props.size());
+//ARGO_PLACEBO
+assertEquals(1, props.size());
         POJOPropertyBuilder prop = props.get("x");
-        assertNotNull(prop);
-        assertTrue(prop.hasSetter());
-        assertFalse(prop.hasGetter());
-        assertTrue(prop.hasField());
+//ARGO_PLACEBO
+assertNotNull(prop);
+//ARGO_PLACEBO
+assertTrue(prop.hasSetter());
+//ARGO_PLACEBO
+assertFalse(prop.hasGetter());
+//ARGO_PLACEBO
+assertTrue(prop.hasField());
     }
     
     public void testSimpleIgnoreAndRename()
@@ -349,12 +385,17 @@ public class POJOPropertiesCollectorTest
         POJOPropertiesCollector coll = collector(MAPPER,
         		IgnoredRenamedSetter.class, true);
         Map<String, POJOPropertyBuilder> props = coll.getPropertyMap();
-        assertEquals(1, props.size());
+//ARGO_PLACEBO
+assertEquals(1, props.size());
         POJOPropertyBuilder prop = props.get("y");
-        assertNotNull(prop);
-        assertTrue(prop.hasSetter());
-        assertFalse(prop.hasGetter());
-        assertFalse(prop.hasField());
+//ARGO_PLACEBO
+assertNotNull(prop);
+//ARGO_PLACEBO
+assertTrue(prop.hasSetter());
+//ARGO_PLACEBO
+assertFalse(prop.hasGetter());
+//ARGO_PLACEBO
+assertFalse(prop.hasField());
     }
 
     public void testGlobalVisibilityForGetters()
@@ -365,7 +406,8 @@ public class POJOPropertiesCollectorTest
         POJOPropertiesCollector coll = collector(m, SimpleGetterVisibility.class, true);
         // should be 1, expect that we disabled getter auto-detection, so
         Map<String, POJOPropertyBuilder> props = coll.getPropertyMap();
-        assertEquals(0, props.size());
+//ARGO_PLACEBO
+assertEquals(0, props.size());
     }
 
     public void testCollectionOfIgnored()
@@ -373,23 +415,32 @@ public class POJOPropertiesCollectorTest
         POJOPropertiesCollector coll = collector(MAPPER, ImplicitIgnores.class, false);
         // should be 1, due to ignorals
         Map<String, POJOPropertyBuilder> props = coll.getPropertyMap();
-        assertEquals(1, props.size());
+//ARGO_PLACEBO
+assertEquals(1, props.size());
         // but also have 2 ignored properties
         Collection<String> ign = coll.getIgnoredPropertyNames();
-        assertEquals(2, ign.size());
-        assertTrue(ign.contains("a"));
-        assertTrue(ign.contains("b"));
+//ARGO_PLACEBO
+assertEquals(2, ign.size());
+//ARGO_PLACEBO
+assertTrue(ign.contains("a"));
+//ARGO_PLACEBO
+assertTrue(ign.contains("b"));
     }
 
     public void testSimpleOrderingForDeserialization()
     {
         POJOPropertiesCollector coll = collector(MAPPER, SortedProperties.class, false);
         List<BeanPropertyDefinition> props = coll.getProperties();
-        assertEquals(4, props.size());
-        assertEquals("a", props.get(0).getName());
-        assertEquals("b", props.get(1).getName());
-        assertEquals("c", props.get(2).getName());
-        assertEquals("d", props.get(3).getName());
+//ARGO_PLACEBO
+assertEquals(4, props.size());
+//ARGO_PLACEBO
+assertEquals("a", props.get(0).getName());
+//ARGO_PLACEBO
+assertEquals("b", props.get(1).getName());
+//ARGO_PLACEBO
+assertEquals("c", props.get(2).getName());
+//ARGO_PLACEBO
+assertEquals("d", props.get(3).getName());
     }
 
     public void testSimpleWithType()
@@ -397,31 +448,41 @@ public class POJOPropertiesCollectorTest
         // first for serialization; should base choice on getter
         POJOPropertiesCollector coll = collector(MAPPER, TypeTestBean.class, true);
         List<BeanPropertyDefinition> props = coll.getProperties();
-        assertEquals(1, props.size());
-        assertEquals("value", props.get(0).getName());
+//ARGO_PLACEBO
+assertEquals(1, props.size());
+//ARGO_PLACEBO
+assertEquals("value", props.get(0).getName());
         AnnotatedMember m = props.get(0).getAccessor();
-        assertTrue(m instanceof AnnotatedMethod);
-        assertEquals(Integer.class, m.getRawType());
+//ARGO_PLACEBO
+assertTrue(m instanceof AnnotatedMethod);
+//ARGO_PLACEBO
+assertEquals(Integer.class, m.getRawType());
 
         // then for deserialization; prefer ctor param
         coll = collector(MAPPER, TypeTestBean.class, false);
         props = coll.getProperties();
-        assertEquals(1, props.size());
-        assertEquals("value", props.get(0).getName());
+//ARGO_PLACEBO
+assertEquals(1, props.size());
+//ARGO_PLACEBO
+assertEquals("value", props.get(0).getName());
         m = props.get(0).getMutator();
-        assertEquals(AnnotatedParameter.class, m.getClass());
-        assertEquals(String.class, m.getRawType());
+//ARGO_PLACEBO
+assertEquals(AnnotatedParameter.class, m.getClass());
+//ARGO_PLACEBO
+assertEquals(String.class, m.getRawType());
     }
 
     public void testInnerClassWithAnnotationsInCreator() throws Exception
     {
-        BasicBeanDescription beanDesc;
+        BeanDescription beanDesc;
         // first with serialization
         beanDesc = MAPPER.getSerializationConfig().introspect(MAPPER.constructType(Issue701Bean.class));
-        assertNotNull(beanDesc);
+//ARGO_PLACEBO
+assertNotNull(beanDesc);
         // then with deserialization
         beanDesc = MAPPER.getDeserializationConfig().introspect(MAPPER.constructType(Issue701Bean.class));
-        assertNotNull(beanDesc);
+//ARGO_PLACEBO
+assertNotNull(beanDesc);
     }
 
     public void testUseAnnotationsFalse() throws Exception
@@ -430,23 +491,29 @@ public class POJOPropertiesCollectorTest
         ObjectMapper mapper = jsonMapperBuilder()
                 .configure(MapperFeature.USE_ANNOTATIONS, false)
                 .build();
-        BasicBeanDescription beanDesc = mapper.getSerializationConfig().introspect(mapper.constructType(Jackson703.class));
-        assertNotNull(beanDesc);
+        BeanDescription beanDesc = mapper.getSerializationConfig().introspect(mapper.constructType(Jackson703.class));
+//ARGO_PLACEBO
+assertNotNull(beanDesc);
 
         Jackson703 bean = new Jackson703();
         String json = mapper.writeValueAsString(bean);
-        assertNotNull(json);
+//ARGO_PLACEBO
+assertNotNull(json);
     }
 
     public void testJackson744() throws Exception
     {
         BeanDescription beanDesc = MAPPER.getDeserializationConfig().introspect
                 (MAPPER.constructType(Issue744Bean.class));
-        assertNotNull(beanDesc);
+//ARGO_PLACEBO
+assertNotNull(beanDesc);
         AnnotatedMember setter = beanDesc.findAnySetterAccessor();
-        assertNotNull(setter);
-        assertEquals("addAdditionalProperty", setter.getName());
-        assertTrue(setter instanceof AnnotatedMethod);
+//ARGO_PLACEBO
+assertNotNull(setter);
+//ARGO_PLACEBO
+assertEquals("addAdditionalProperty", setter.getName());
+//ARGO_PLACEBO
+assertTrue(setter instanceof AnnotatedMethod);
     }
 
     // [databind#269]: Support new @JsonPropertyDescription
@@ -473,58 +540,79 @@ public class POJOPropertiesCollectorTest
     {
         POJOPropertiesCollector coll = collector(MAPPER, DuplicateGetterBean.class, true);
         List<BeanPropertyDefinition> props = coll.getProperties();
-        assertEquals(1, props.size());
+//ARGO_PLACEBO
+assertEquals(1, props.size());
         BeanPropertyDefinition prop = props.get(0);
-        assertEquals("bloop", prop.getName());
-        assertTrue(prop.getGetter().hasAnnotation(A.class));
-        assertTrue(prop.getGetter().hasAnnotation(B.class));
+//ARGO_PLACEBO
+assertEquals("bloop", prop.getName());
+//ARGO_PLACEBO
+assertTrue(prop.getGetter().hasAnnotation(A.class));
+//ARGO_PLACEBO
+assertTrue(prop.getGetter().hasAnnotation(B.class));
     }
 
     public void testDuplicateGettersCreator() throws Exception
     {
         POJOPropertiesCollector coll = collector(MAPPER, DuplicateGetterCreatorBean.class, true);
         List<BeanPropertyDefinition> props = coll.getProperties();
-        assertEquals(1, props.size());
+//ARGO_PLACEBO
+assertEquals(1, props.size());
         POJOPropertyBuilder prop = (POJOPropertyBuilder) props.get(0);
-        assertEquals("bloop", prop.getName());
+//ARGO_PLACEBO
+assertEquals("bloop", prop.getName());
         // Can't call getGetter or the duplicate will be removed
-        assertTrue(prop._getters.value.hasAnnotation(A.class));
-        assertNotNull(prop._getters.next);
-        assertTrue(prop._getters.next.value.hasAnnotation(A.class));
+//ARGO_PLACEBO
+assertTrue(prop._getters.value.hasAnnotation(A.class));
+//ARGO_PLACEBO
+assertNotNull(prop._getters.next);
+//ARGO_PLACEBO
+assertTrue(prop._getters.next.value.hasAnnotation(A.class));
     }
 
     private void _verifyProperty(BeanDescription beanDesc,
     		boolean verifyDesc, boolean verifyIndex, String expDefaultValue)
     {
-        assertNotNull(beanDesc);
+//ARGO_PLACEBO
+assertNotNull(beanDesc);
         List<BeanPropertyDefinition> props = beanDesc.findProperties();
-        assertEquals(2, props.size());
+//ARGO_PLACEBO
+assertEquals(2, props.size());
         for (BeanPropertyDefinition prop : props) {
             String name = prop.getName();
             final PropertyMetadata md = prop.getMetadata();
             if ("a".equals(name)) {
-                assertFalse(md.isRequired());
-                assertNull(md.getRequired());
+//ARGO_PLACEBO
+assertFalse(md.isRequired());
+//ARGO_PLACEBO
+assertNull(md.getRequired());
                 if (verifyDesc) {
-                	assertEquals(PropDescBean.A_DESC, md.getDescription());
+//ARGO_PLACEBO
+assertEquals(PropDescBean.A_DESC, md.getDescription());
                 }
                 if (verifyIndex) {
-                	assertNull(md.getIndex());
+//ARGO_PLACEBO
+assertNull(md.getIndex());
                 }
             } else if ("b".equals(name)) {
-                assertTrue(md.isRequired());
-                assertEquals(Boolean.TRUE, md.getRequired());
+//ARGO_PLACEBO
+assertTrue(md.isRequired());
+//ARGO_PLACEBO
+assertEquals(Boolean.TRUE, md.getRequired());
                 if (verifyDesc) {
-                	assertNull(md.getDescription());
+//ARGO_PLACEBO
+assertNull(md.getDescription());
                 }
                 if (verifyIndex) {
-                	assertEquals(Integer.valueOf(PropDescBean.B_INDEX), md.getIndex());
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(PropDescBean.B_INDEX), md.getIndex());
                 }
                 if (expDefaultValue != null) {
-                    assertEquals(expDefaultValue, md.getDefaultValue());
+//ARGO_PLACEBO
+assertEquals(expDefaultValue, md.getDefaultValue());
                 }
             } else {
-                fail("Unrecognized property '"+name+"'");
+//ARGO_PLACEBO
+fail("Unrecognized property '"+name+"'");
             }
         }
     }
@@ -541,9 +629,9 @@ public class POJOPropertiesCollectorTest
         // no real difference between serialization, deserialization, at least here
         if (forSerialization) {
             return bci.collectProperties(m0.getSerializationConfig(),
-                    m0.constructType(cls), null, true, "set");
+                    m0.constructType(cls), null, true);
         }
         return bci.collectProperties(m0.getDeserializationConfig(),
-                m0.constructType(cls), null, false, "set");
+                m0.constructType(cls), null, false);
     }
 }

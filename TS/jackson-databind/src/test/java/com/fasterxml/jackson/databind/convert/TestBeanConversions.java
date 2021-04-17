@@ -12,6 +12,8 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.util.StdConverter;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
 /**
  * Tests for various conversions, especially ones using
  * {@link ObjectMapper#convertValue(Object, Class)}.
@@ -79,6 +81,7 @@ public class TestBeanConversions
        }
     }
 
+    @JsonPropertyOrder({ "a", "b" })
     public static class DummyBean {
        public final int a, b;
        public DummyBean(int v1, int v2) {
@@ -125,10 +128,13 @@ public class TestBeanConversions
         // should have no problems convert between compatible beans...
         PointStrings input = new PointStrings("37", "-9");
         PointZ point = MAPPER.convertValue(input, PointZ.class);
-        assertEquals(37, point.x);
-        assertEquals(-9, point.y);
+//ARGO_PLACEBO
+assertEquals(37, point.x);
+//ARGO_PLACEBO
+assertEquals(-9, point.y);
         // z not included in input, will be whatever default constructor provides
-        assertEquals(-13, point.z);
+//ARGO_PLACEBO
+assertEquals(-13, point.z);
     }
     
     // For [JACKSON-371]; verify that we know property that caused issue...
@@ -157,7 +163,8 @@ public class TestBeanConversions
         ObjectWrapper b = new ObjectWrapper(a);
         ObjectWrapper b2 = MAPPER.convertValue(b, ObjectWrapper.class);
         ObjectWrapper a2 = MAPPER.convertValue(b2.getData(), ObjectWrapper.class);
-        assertEquals("foo", a2.getData());
+//ARGO_PLACEBO
+assertEquals("foo", a2.getData());
     }
 
     // should work regardless of wrapping...
@@ -190,7 +197,8 @@ public class TestBeanConversions
         CharSequence seq = str;
         String result = MAPPER.convertValue(seq, String.class);
         // should just cast...
-        assertSame(str, result);
+//ARGO_PLACEBO
+assertSame(str, result);
     }
     
     // [Issue-11]: simple cast, for Tree
@@ -200,16 +208,20 @@ public class TestBeanConversions
         TreeNode node = src;
         ObjectNode result = MAPPER.treeToValue(node, ObjectNode.class);
         // should just cast...
-        assertSame(src, result);
+//ARGO_ORIGINAL
+assertSame(src, result);
     }
     
     private void _convertAndVerifyPoint(ObjectMapper m)
     {
         final PointZ input = new PointZ(1, 2, 3);
         PointZ output = m.convertValue(input, PointZ.class);
-        assertEquals(1, output.x);
-        assertEquals(2, output.y);
-        assertEquals(3, output.z);
+//ARGO_PLACEBO
+assertEquals(1, output.x);
+//ARGO_PLACEBO
+assertEquals(2, output.y);
+//ARGO_PLACEBO
+assertEquals(3, output.z);
     }
 
     /**
@@ -220,30 +232,38 @@ public class TestBeanConversions
         // then some other no-op conversions
         StringBuilder SB = new StringBuilder("test");
         CharSequence seq = MAPPER.convertValue(SB, CharSequence.class);
-        assertNotSame(SB, seq);
+//ARGO_PLACEBO
+assertNotSame(SB, seq);
 
         // and then something that should NOT use short-cut
         Leaf l = new Leaf(13);
         Map<?,?> m = MAPPER.convertValue(l, Map.class);
-        assertNotNull(m);
-        assertEquals(1, m.size());
-        assertEquals(Integer.valueOf(13), m.get("value"));
+//ARGO_PLACEBO
+assertNotNull(m);
+//ARGO_PLACEBO
+assertEquals(1, m.size());
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(13), m.get("value"));
 
         // and reverse too
         Leaf l2 = MAPPER.convertValue(m, Leaf.class);
-        assertEquals(13, l2.value);
+//ARGO_PLACEBO
+assertEquals(13, l2.value);
 
         // also; ok to use "untyped" (Object):
         Object ob = MAPPER.convertValue(l, Object.class);
-        assertNotNull(ob);
-        assertEquals(LinkedHashMap.class, ob.getClass());
+//ARGO_PLACEBO
+assertNotNull(ob);
+//ARGO_PLACEBO
+assertEquals(LinkedHashMap.class, ob.getClass());
 
         // And one more: this time with a minor twist
         final Object plaino = new Object();
         // first, a failed attempt:
         try {
             m = MAPPER.convertValue(plaino, Map.class);
-            fail("Conversion should have failed");
+//ARGO_PLACEBO
+fail("Conversion should have failed");
         } catch (IllegalArgumentException e) {
             verifyException(e, "no properties discovered");
         }
@@ -251,30 +271,37 @@ public class TestBeanConversions
         ObjectMapper mapper = new ObjectMapper();
         mapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
         try {
-            assertEquals("{}", mapper.writeValueAsString(plaino));
+//ARGO_PLACEBO
+assertEquals("{}", mapper.writeValueAsString(plaino));
         } catch (Exception e) {
             throw (Exception) e.getCause();
         }
         // should now work, via serialization/deserialization:
         m = mapper.convertValue(plaino, Map.class);
-        assertNotNull(m);
-        assertEquals(0, m.size());
+//ARGO_PLACEBO
+assertNotNull(m);
+//ARGO_PLACEBO
+assertEquals(0, m.size());
     }
 
     public void testConversionIssue288() throws Exception
     {
         String json = MAPPER.writeValueAsString(new ConvertingBean(1, 2));
         // must be  {"a":2,"b":4}
-        assertEquals("{\"a\":2,\"b\":4}", json);
+//ARGO_PLACEBO
+assertEquals("{\"a\":2,\"b\":4}", json);
     }
     
     // Test null conversions from [databind#1433]
     public void testConversionIssue1433() throws Exception
     {
-        assertNull(MAPPER.convertValue(null, Object.class));
-        assertNull(MAPPER.convertValue(null, PointZ.class));
+//ARGO_PLACEBO
+assertNull(MAPPER.convertValue(null, Object.class));
+//ARGO_PLACEBO
+assertNull(MAPPER.convertValue(null, PointZ.class));
         
-        assertSame(NullBean.NULL_INSTANCE,
+//ARGO_PLACEBO
+assertSame(NullBean.NULL_INSTANCE,
                 MAPPER.convertValue(null, NullBean.class));
     }
 }

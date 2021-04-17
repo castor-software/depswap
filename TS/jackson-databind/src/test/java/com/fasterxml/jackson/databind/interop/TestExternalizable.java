@@ -194,7 +194,8 @@ public class TestExternalizable extends BaseMapTest
 
         int ix = indexOf(ser, json);
         if (ix < 0) {
-            fail("Serialization ("+ser.length+") does NOT contain JSON (of "+json.length+")");
+//ARGO_PLACEBO
+fail("Serialization ("+ser.length+") does NOT contain JSON (of "+json.length+")");
         }
         
         // Sanity check:
@@ -211,9 +212,11 @@ public class TestExternalizable extends BaseMapTest
         ObjectInputStream ins = new ObjectInputStream(new ByteArrayInputStream(ser));
         MyPojo output = (MyPojo) ins.readObject();
         ins.close();
-        assertNotNull(output);
+//ARGO_PLACEBO
+assertNotNull(output);
         
-        assertEquals(input, output);
+//ARGO_PLACEBO
+assertEquals(input, output);
     }
 
     /*

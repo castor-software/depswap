@@ -98,7 +98,8 @@ public class TestContextualKeyTypes extends BaseMapTest
         input.put("a", Integer.valueOf(3));
         String json = mapper.writerFor(TypeFactory.defaultInstance().constructMapType(HashMap.class, String.class, Object.class))
             .writeValueAsString(input);
-        assertEquals("{\"prefix:a\":3}", json);
+//ARGO_PLACEBO
+assertEquals("{\"prefix:a\":3}", json);
     }
     
     /*
@@ -115,10 +116,14 @@ public class TestContextualKeyTypes extends BaseMapTest
         mapper.registerModule(module);
         MapBean result = mapper.readValue("{\"map\":{\"a\":3}}", MapBean.class);
         Map<String,Integer> map = result.map;
-        assertNotNull(map);
-        assertEquals(1, map.size());
+//ARGO_PLACEBO
+assertNotNull(map);
+//ARGO_PLACEBO
+assertEquals(1, map.size());
         Map.Entry<String,Integer> entry = map.entrySet().iterator().next();
-        assertEquals(Integer.valueOf(3), entry.getValue());
-        assertEquals("map:a", entry.getKey());
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(3), entry.getValue());
+//ARGO_PLACEBO
+assertEquals("map:a", entry.getKey());
     }
 }

@@ -63,21 +63,28 @@ public class RequiredCreatorTest extends BaseMapTest
 
         // First: fine if both params passed
         p = POINT_READER.readValue(aposToQuotes("{'y':2,'x':1}"));
-        assertEquals(1, p.x);
-        assertEquals(2, p.y);
+//ARGO_PLACEBO
+assertEquals(1, p.x);
+//ARGO_PLACEBO
+assertEquals(2, p.y);
         p = POINT_READER.readValue(aposToQuotes("{'x':3,'y':4}"));
-        assertEquals(3, p.x);
-        assertEquals(4, p.y);
+//ARGO_PLACEBO
+assertEquals(3, p.x);
+//ARGO_PLACEBO
+assertEquals(4, p.y);
 
         // also fine if 'y' is MIA
         p = POINT_READER.readValue(aposToQuotes("{'x':3}"));
-        assertEquals(3, p.x);
-        assertEquals(0, p.y);
+//ARGO_PLACEBO
+assertEquals(3, p.x);
+//ARGO_PLACEBO
+assertEquals(0, p.y);
 
         // but not so good if 'x' missing
         try {
             POINT_READER.readValue(aposToQuotes("{'y':3}"));
-            fail("Should not pass");
+//ARGO_PLACEBO
+fail("Should not pass");
         } catch (JsonMappingException e) {
             verifyException(e, "Missing required creator property 'x' (index 0)");
         }
@@ -89,14 +96,17 @@ public class RequiredCreatorTest extends BaseMapTest
 
         // as per above, ok to miss 'y' with default settings:
         p = POINT_READER.readValue(aposToQuotes("{'x':2}"));
-        assertEquals(2, p.x);
-        assertEquals(0, p.y);
+//ARGO_PLACEBO
+assertEquals(2, p.x);
+//ARGO_PLACEBO
+assertEquals(0, p.y);
 
         // but not if global checks desired
         ObjectReader r = POINT_READER.with(DeserializationFeature.FAIL_ON_MISSING_CREATOR_PROPERTIES);
         try {
             r.readValue(aposToQuotes("{'x':6}"));
-            fail("Should not pass");
+//ARGO_PLACEBO
+fail("Should not pass");
         } catch (JsonMappingException e) {
             verifyException(e, "Missing creator property 'y' (index 1)");
         }
@@ -108,7 +118,8 @@ public class RequiredCreatorTest extends BaseMapTest
         final String input = aposToQuotes("{'status':'OK', 'message':'Sent Successfully!'}");
         try {
             /*LoginUserResponse resp =*/ MAPPER.readValue(input, LoginUserResponse.class);
-            fail("Shoud not pass");
+//ARGO_PLACEBO
+fail("Shoud not pass");
         } catch (JsonMappingException e) {
             verifyException(e, "Missing required creator property 'otp'");
         }

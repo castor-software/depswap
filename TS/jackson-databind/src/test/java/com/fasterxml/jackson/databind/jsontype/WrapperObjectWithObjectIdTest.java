@@ -79,8 +79,11 @@ public class WrapperObjectWithObjectIdTest extends BaseMapTest
                 .writeValueAsString(comp);
 
         Company result = mapper.readValue(json, Company.class);
-        assertNotNull(result);
-        assertNotNull(result.computers);
-        assertEquals(3, result.computers.size());
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertNotNull(result.computers);
+//ARGO_PLACEBO
+assertEquals(3, result.computers.size());
     }
 }

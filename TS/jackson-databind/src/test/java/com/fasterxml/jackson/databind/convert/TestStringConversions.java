@@ -34,9 +34,12 @@ public class TestStringConversions
 
     public void testSimple()
     {
-        assertEquals(Boolean.TRUE, MAPPER.convertValue("true", Boolean.class));
-        assertEquals(Integer.valueOf(-3), MAPPER.convertValue("  -3 ", Integer.class));
-        assertEquals(Long.valueOf(77), MAPPER.convertValue("77", Long.class));
+//ARGO_PLACEBO
+assertEquals(Boolean.TRUE, MAPPER.convertValue("true", Boolean.class));
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(-3), MAPPER.convertValue("-3", Integer.class));
+//ARGO_PLACEBO
+assertEquals(Long.valueOf(77), MAPPER.convertValue("77", Long.class));
 
         int[] ints = { 1, 2, 3 };
         List<Integer> Ints = new ArrayList<Integer>();
@@ -44,13 +47,15 @@ public class TestStringConversions
         Ints.add(2);
         Ints.add(3);
         
-        assertArrayEquals(ints, MAPPER.convertValue(Ints, int[].class));
+//ARGO_PLACEBO
+assertArrayEquals(ints, MAPPER.convertValue(Ints, int[].class));
     }
 
     public void testStringsToInts()
     {
         // let's verify our "neat trick" actually works...
-        assertArrayEquals(new int[] { 1, 2, 3, 4, -1, 0 },
+//ARGO_PLACEBO
+assertArrayEquals(new int[] { 1, 2, 3, 4, -1, 0 },
                           MAPPER.convertValue("1  2 3    4  -1 0".split("\\s+"), int[].class));
     }
 
@@ -58,15 +63,19 @@ public class TestStringConversions
     {
         byte[] input = new byte[] { 1, 2, 3, 4, 5, 6, 7 };
         String encoded = MAPPER.convertValue(input, String.class);
-        assertNotNull(encoded);
+//ARGO_PLACEBO
+assertNotNull(encoded);
 
-        assertEquals("AQIDBAUGBw==", encoded);
+//ARGO_PLACEBO
+assertEquals("AQIDBAUGBw==", encoded);
 
         // plus, ensure this is consistent:
-        assertEquals(Base64Variants.MIME.encode(input), encoded);
+//ARGO_PLACEBO
+assertEquals(Base64Variants.MIME.encode(input), encoded);
 
         byte[] result = MAPPER.convertValue(encoded, byte[].class);
-        assertArrayEquals(input, result);
+//ARGO_PLACEBO
+assertArrayEquals(input, result);
     }
     
     public void testBytestoCharArray() throws Exception
@@ -76,18 +85,22 @@ public class TestStringConversions
         char[] expEncoded = MAPPER.convertValue(input, String.class).toCharArray();
         // then compare
         char[] actEncoded = MAPPER.convertValue(input, char[].class);
-        assertArrayEquals(expEncoded, actEncoded);
+//ARGO_PLACEBO
+assertArrayEquals(expEncoded, actEncoded);
     }
 
     public void testLowerCasingSerializer() throws Exception
     {
-        assertEquals("{\"value\":\"abc\"}", MAPPER.writeValueAsString(new StringWrapperWithConvert("ABC")));
+//ARGO_PLACEBO
+assertEquals("{\"value\":\"abc\"}", MAPPER.writeValueAsString(new StringWrapperWithConvert("ABC")));
     }
 
     public void testLowerCasingDeserializer() throws Exception
     {
         StringWrapperWithConvert value = MAPPER.readValue("{\"value\":\"XyZ\"}", StringWrapperWithConvert.class);
-        assertNotNull(value);
-        assertEquals("xyz", value.value);
+//ARGO_PLACEBO
+assertNotNull(value);
+//ARGO_PLACEBO
+assertEquals("xyz", value.value);
     }
 }

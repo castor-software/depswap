@@ -47,18 +47,21 @@ public class SerializationFeaturesTest
         // default should be disabled:
         CloseableBean bean = new CloseableBean();
         m.writeValueAsString(bean);
-        assertFalse(bean.wasClosed);
+//ARGO_PLACEBO
+assertFalse(bean.wasClosed);
 
         // but can enable it:
         m.configure(SerializationFeature.CLOSE_CLOSEABLE, true);
         bean = new CloseableBean();
         m.writeValueAsString(bean);
-        assertTrue(bean.wasClosed);
+//ARGO_PLACEBO
+assertTrue(bean.wasClosed);
 
         // also: let's ensure that ObjectWriter won't interfere with it
         bean = new CloseableBean();
         m.writerFor(CloseableBean.class).writeValueAsString(bean);
-        assertTrue(bean.wasClosed);
+//ARGO_PLACEBO
+assertTrue(bean.wasClosed);
     }
 
     // Test for [JACKSON-289]
@@ -67,23 +70,27 @@ public class SerializationFeaturesTest
         char[] chars = new char[] { 'a','b','c' };
         ObjectMapper m = new ObjectMapper();
         // default: serialize as Strings
-        assertEquals(quote("abc"), m.writeValueAsString(chars));
+//ARGO_PLACEBO
+assertEquals(quote("abc"), m.writeValueAsString(chars));
         
         // new feature: serialize as JSON array:
         m.configure(SerializationFeature.WRITE_CHAR_ARRAYS_AS_JSON_ARRAYS, true);
-        assertEquals("[\"a\",\"b\",\"c\"]", m.writeValueAsString(chars));
+//ARGO_PLACEBO
+assertEquals("[\"a\",\"b\",\"c\"]", m.writeValueAsString(chars));
     }
 
     // Test for [JACKSON-401]
     public void testFlushingAutomatic() throws IOException
     {
         ObjectMapper mapper = new ObjectMapper();
-        assertTrue(mapper.getSerializationConfig().isEnabled(SerializationFeature.FLUSH_AFTER_WRITE_VALUE));
+//ARGO_PLACEBO
+assertTrue(mapper.getSerializationConfig().isEnabled(SerializationFeature.FLUSH_AFTER_WRITE_VALUE));
         // default is to flush after writeValue()
         StringWriter sw = new StringWriter();
         JsonGenerator g = mapper.createGenerator(sw);
         mapper.writeValue(g, Integer.valueOf(13));
-        assertEquals("13", sw.toString());
+//ARGO_PLACEBO
+assertEquals("13", sw.toString());
         g.close();
 
         // ditto with ObjectWriter
@@ -91,7 +98,8 @@ public class SerializationFeaturesTest
         g = mapper.createGenerator(sw);
         ObjectWriter ow = mapper.writer();
         ow.writeValue(g, Integer.valueOf(99));
-        assertEquals("99", sw.toString());
+//ARGO_PLACEBO
+assertEquals("99", sw.toString());
         g.close();
     }
 
@@ -105,20 +113,24 @@ public class SerializationFeaturesTest
 
         mapper.writeValue(g, Integer.valueOf(13));
         // no flushing now:
-        assertEquals("", sw.toString());
+//ARGO_PLACEBO
+assertEquals("", sw.toString());
         // except when actually flushing
         g.flush();
-        assertEquals("13", sw.toString());
+//ARGO_PLACEBO
+assertEquals("13", sw.toString());
         g.close();
         // Also, same should happen with ObjectWriter
         sw = new StringWriter();
         g = mapper.createGenerator(sw);
         ObjectWriter ow = mapper.writer();
         ow.writeValue(g, Integer.valueOf(99));
-        assertEquals("", sw.toString());
+//ARGO_PLACEBO
+assertEquals("", sw.toString());
         // except when actually flushing
         g.flush();
-        assertEquals("99", sw.toString());
+//ARGO_PLACEBO
+assertEquals("99", sw.toString());
         g.close();
     }
 
@@ -129,43 +141,62 @@ public class SerializationFeaturesTest
         // Lists:
         ArrayList<String> strs = new ArrayList<String>();
         strs.add("xyz");
-        assertEquals(quote("xyz"), writer.writeValueAsString(strs));
+//ARGO_PLACEBO
+assertEquals(quote("xyz"), writer.writeValueAsString(strs));
         ArrayList<Integer> ints = new ArrayList<Integer>();
         ints.add(13);
-        assertEquals("13", writer.writeValueAsString(ints));
+//ARGO_PLACEBO
+assertEquals("13", writer.writeValueAsString(ints));
 
         // other Collections, like Sets:
         HashSet<Long> longs = new HashSet<Long>();
         longs.add(42L);
-        assertEquals("42", writer.writeValueAsString(longs));
+//ARGO_PLACEBO
+assertEquals("42", writer.writeValueAsString(longs));
         // [databind#180]
         final String EXP_STRINGS = "{\"values\":\"foo\"}";
-        assertEquals(EXP_STRINGS, writer.writeValueAsString(new StringListBean(Collections.singletonList("foo"))));
+//ARGO_PLACEBO
+assertEquals(EXP_STRINGS, writer.writeValueAsString(new StringListBean(Collections.singletonList("foo"))));
 
         final Set<String> SET = new HashSet<String>();
         SET.add("foo");
-        assertEquals(EXP_STRINGS, writer.writeValueAsString(new StringListBean(SET)));
+//ARGO_PLACEBO
+assertEquals(EXP_STRINGS, writer.writeValueAsString(new StringListBean(SET)));
         
         // arrays:
-        assertEquals("true", writer.writeValueAsString(new boolean[] { true }));
-        assertEquals("[true,false]", writer.writeValueAsString(new boolean[] { true, false }));
-        assertEquals("true", writer.writeValueAsString(new Boolean[] { Boolean.TRUE }));
+//ARGO_PLACEBO
+assertEquals("true", writer.writeValueAsString(new boolean[] { true }));
+//ARGO_PLACEBO
+assertEquals("[true,false]", writer.writeValueAsString(new boolean[] { true, false }));
+//ARGO_PLACEBO
+assertEquals("true", writer.writeValueAsString(new Boolean[] { Boolean.TRUE }));
 
-        assertEquals("3", writer.writeValueAsString(new short[] { 3 }));
-        assertEquals("[3,2]", writer.writeValueAsString(new short[] { 3, 2 }));
+//ARGO_PLACEBO
+assertEquals("3", writer.writeValueAsString(new short[] { 3 }));
+//ARGO_PLACEBO
+assertEquals("[3,2]", writer.writeValueAsString(new short[] { 3, 2 }));
         
-        assertEquals("3", writer.writeValueAsString(new int[] { 3 }));
-        assertEquals("[3,2]", writer.writeValueAsString(new int[] { 3, 2 }));
+//ARGO_PLACEBO
+assertEquals("3", writer.writeValueAsString(new int[] { 3 }));
+//ARGO_PLACEBO
+assertEquals("[3,2]", writer.writeValueAsString(new int[] { 3, 2 }));
 
-        assertEquals("1", writer.writeValueAsString(new long[] { 1L }));
-        assertEquals("[-1,4]", writer.writeValueAsString(new long[] { -1L, 4L }));
+//ARGO_PLACEBO
+assertEquals("1", writer.writeValueAsString(new long[] { 1L }));
+//ARGO_PLACEBO
+assertEquals("[-1,4]", writer.writeValueAsString(new long[] { -1L, 4L }));
 
-        assertEquals("0.5", writer.writeValueAsString(new double[] { 0.5 }));
-        assertEquals("[0.5,2.5]", writer.writeValueAsString(new double[] { 0.5, 2.5 }));
+//ARGO_PLACEBO
+assertEquals("0.5", writer.writeValueAsString(new double[] { 0.5 }));
+//ARGO_PLACEBO
+assertEquals("[0.5,2.5]", writer.writeValueAsString(new double[] { 0.5, 2.5 }));
 
-        assertEquals("0.5", writer.writeValueAsString(new float[] { 0.5f }));
-        assertEquals("[0.5,2.5]", writer.writeValueAsString(new float[] { 0.5f, 2.5f }));
+//ARGO_PLACEBO
+assertEquals("0.5", writer.writeValueAsString(new float[] { 0.5f }));
+//ARGO_PLACEBO
+assertEquals("[0.5,2.5]", writer.writeValueAsString(new float[] { 0.5f, 2.5f }));
         
-        assertEquals(quote("foo"), writer.writeValueAsString(new String[] { "foo" }));
+//ARGO_PLACEBO
+assertEquals(quote("foo"), writer.writeValueAsString(new String[] { "foo" }));
     }
 }

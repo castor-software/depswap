@@ -284,10 +284,10 @@ public class ExternalTypeCustomResolverTest extends BaseMapTest
                 
                 @Override
                 public EncryptedCreditCardDetails build () {
-                    return new EncryptedCreditCardDetails(this.paymentInstrumentID, this.name);
+                    return new EncryptedCreditCardDetails (this.paymentInstrumentID, this.name);
                 }
                 
-                public InstrumentedCreditCardBuilder name(final String name) {
+                public InstrumentedCreditCardBuilder name (final String name) {
                     this.name = name;
                     return this;
                 }
@@ -302,7 +302,7 @@ public class ExternalTypeCustomResolverTest extends BaseMapTest
             protected final String name;
 
             EncryptedCreditCardDetails (final UUID paymentInstrumentID, final String name) {
-                super ();
+                super();
                 this.paymentInstrumentID = paymentInstrumentID;
                 this.name = name;
             }
@@ -373,7 +373,7 @@ public class ExternalTypeCustomResolverTest extends BaseMapTest
             protected final FormOfPayment  formOfPayment;
             protected final PaymentDetails paymentDetails;
 
-            PaymentMean(final FormOfPayment formOfPayment, final PaymentDetails paymentDetails) {
+            PaymentMean (final FormOfPayment formOfPayment, final PaymentDetails paymentDetails) {
                 super ();
                 this.formOfPayment = formOfPayment;
                 this.paymentDetails = paymentDetails;
@@ -413,7 +413,7 @@ public class ExternalTypeCustomResolverTest extends BaseMapTest
     }
 
     private final ObjectMapper MAPPER = jsonMapperBuilder()
-            .propertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE)
+            .propertyNamingStrategy(PropertyNamingStrategies.SNAKE_CASE)
             .build();
 
     // [databind#1288]
@@ -427,7 +427,8 @@ public class ExternalTypeCustomResolverTest extends BaseMapTest
 +"'province':'Ile-de-France','country_code':'FR','description':'John Doe personal credit card'}}"
         );
         ClassesWithoutBuilder.PaymentMean ob1 = MAPPER.readValue(asJson1, ClassesWithoutBuilder.PaymentMean.class);
-        assertNotNull(ob1);
+//ARGO_PLACEBO
+assertNotNull(ob1);
     }
 
     // [databind#1288]
@@ -441,6 +442,7 @@ public class ExternalTypeCustomResolverTest extends BaseMapTest
         );
 
         ClassesWithBuilder.PaymentMean ob2 = MAPPER.readValue(asJson2, ClassesWithBuilder.PaymentMean.class);
-        assertNotNull(ob2);
+//ARGO_PLACEBO
+assertNotNull(ob2);
     }
 }

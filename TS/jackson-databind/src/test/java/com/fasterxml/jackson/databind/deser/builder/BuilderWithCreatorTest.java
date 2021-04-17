@@ -144,9 +144,12 @@ public class BuilderWithCreatorTest extends BaseMapTest
     {
         final String json = aposToQuotes("{'a':1,'c':3,'b':2}");
         PropertyCreatorValue value = MAPPER.readValue(json, PropertyCreatorValue.class);        
-        assertEquals(1, value.a);
-        assertEquals(2, value.b);
-        assertEquals(3, value.c);
+//ARGO_PLACEBO
+assertEquals(1, value.a);
+//ARGO_PLACEBO
+assertEquals(2, value.b);
+//ARGO_PLACEBO
+assertEquals(3, value.c);
     }
 
     public void testWithDelegatingStringCreator() throws Exception
@@ -154,7 +157,8 @@ public class BuilderWithCreatorTest extends BaseMapTest
         final int EXP = 139;
         IntCreatorValue value = MAPPER.readValue(String.valueOf(EXP),
                 IntCreatorValue.class);        
-        assertEquals(EXP, value.value);
+//ARGO_PLACEBO
+assertEquals(EXP, value.value);
     }
 
     public void testWithDelegatingIntCreator() throws Exception
@@ -162,7 +166,8 @@ public class BuilderWithCreatorTest extends BaseMapTest
         final double EXP = -3.75;
         DoubleCreatorValue value = MAPPER.readValue(String.valueOf(EXP),
                 DoubleCreatorValue.class);        
-        assertEquals(EXP, value.value);
+//ARGO_PLACEBO
+assertEquals(EXP, value.value);
     }
 
     public void testWithDelegatingBooleanCreator() throws Exception
@@ -170,7 +175,8 @@ public class BuilderWithCreatorTest extends BaseMapTest
         final boolean EXP = true;
         BooleanCreatorValue value = MAPPER.readValue(String.valueOf(EXP),
                 BooleanCreatorValue.class);        
-        assertEquals(EXP, value.value);
+//ARGO_PLACEBO
+assertEquals(EXP, value.value);
     }
 }
 

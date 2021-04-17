@@ -51,15 +51,21 @@ public class TestContextAttributeWithDeser extends BaseMapTest
     {
         final String INPUT = aposToQuotes("[{'value':'a'},{'value':'b'}]");
         TestPOJO[] pojos = MAPPER.readerFor(TestPOJO[].class).readValue(INPUT);
-        assertEquals(2, pojos.length);
-        assertEquals("a/0", pojos[0].value);
-        assertEquals("b/1", pojos[1].value);
+//ARGO_PLACEBO
+assertEquals(2, pojos.length);
+//ARGO_PLACEBO
+assertEquals("a/0", pojos[0].value);
+//ARGO_PLACEBO
+assertEquals("b/1", pojos[1].value);
 
         // and verify that state does not linger
         TestPOJO[] pojos2 = MAPPER.readerFor(TestPOJO[].class).readValue(INPUT);
-        assertEquals(2, pojos2.length);
-        assertEquals("a/0", pojos2[0].value);
-        assertEquals("b/1", pojos2[1].value);
+//ARGO_PLACEBO
+assertEquals(2, pojos2.length);
+//ARGO_PLACEBO
+assertEquals("a/0", pojos2[0].value);
+//ARGO_PLACEBO
+assertEquals("b/1", pojos2[1].value);
     }
 
     public void testSimpleDefaults() throws Exception
@@ -68,13 +74,15 @@ public class TestContextAttributeWithDeser extends BaseMapTest
         TestPOJO pojo = MAPPER.readerFor(TestPOJO.class)
                 .withAttribute(KEY, Integer.valueOf(3))
                 .readValue(INPUT);
-        assertEquals("x/3", pojo.value);
+//ARGO_PLACEBO
+assertEquals("x/3", pojo.value);
 
         // as above, should not carry on state
         TestPOJO pojo2 = MAPPER.readerFor(TestPOJO.class)
                 .withAttribute(KEY, Integer.valueOf(5))
                 .readValue(INPUT);
-        assertEquals("x/5", pojo2.value);
+//ARGO_PLACEBO
+assertEquals("x/5", pojo2.value);
     }
 
     public void testHierarchic() throws Exception
@@ -82,14 +90,20 @@ public class TestContextAttributeWithDeser extends BaseMapTest
         final String INPUT = aposToQuotes("[{'value':'x'},{'value':'y'}]");
         ObjectReader r = MAPPER.readerFor(TestPOJO[].class).withAttribute(KEY, Integer.valueOf(2));
         TestPOJO[] pojos = r.readValue(INPUT);
-        assertEquals(2, pojos.length);
-        assertEquals("x/2", pojos[0].value);
-        assertEquals("y/3", pojos[1].value);
+//ARGO_PLACEBO
+assertEquals(2, pojos.length);
+//ARGO_PLACEBO
+assertEquals("x/2", pojos[0].value);
+//ARGO_PLACEBO
+assertEquals("y/3", pojos[1].value);
 
         // and once more to verify transiency of per-call state
         TestPOJO[] pojos2 = r.readValue(INPUT);
-        assertEquals(2, pojos2.length);
-        assertEquals("x/2", pojos2[0].value);
-        assertEquals("y/3", pojos2[1].value);
+//ARGO_PLACEBO
+assertEquals(2, pojos2.length);
+//ARGO_PLACEBO
+assertEquals("x/2", pojos2[0].value);
+//ARGO_PLACEBO
+assertEquals("y/3", pojos2[1].value);
     }
 }

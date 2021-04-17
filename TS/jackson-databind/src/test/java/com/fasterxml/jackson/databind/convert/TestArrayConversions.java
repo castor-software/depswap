@@ -12,7 +12,7 @@ public class TestArrayConversions
     extends com.fasterxml.jackson.databind.BaseMapTest
 {
     final static String OVERFLOW_MSG_BYTE = "out of range of Java byte";
-    final static String OVERFLOW_MSG = "overflow";
+    final static String OVERFLOW_MSG_SHORT = "out of range of Java short";
 
     final static String OVERFLOW_MSG_INT = "out of range of int";
     final static String OVERFLOW_MSG_LONG = "out of range of long";
@@ -24,9 +24,12 @@ public class TestArrayConversions
         /* when given null, null should be returned without conversion
          * (Java null has no type)
          */
-        assertNull(MAPPER.convertValue(null, Integer.class));
-        assertNull(MAPPER.convertValue(null, String.class));
-        assertNull(MAPPER.convertValue(null, byte[].class));
+//ARGO_PLACEBO
+assertNull(MAPPER.convertValue(null, Integer.class));
+//ARGO_PLACEBO
+assertNull(MAPPER.convertValue(null, String.class));
+//ARGO_PLACEBO
+assertNull(MAPPER.convertValue(null, byte[].class));
     }
 
     /**
@@ -76,7 +79,8 @@ public class TestArrayConversions
         List<Number> expNums = _numberList(data, data.length);
         // Alas, due to type erasure, need to use TypeRef, not just class
         List<Integer> actNums = MAPPER.convertValue(data, new TypeReference<List<Integer>>() {});
-        assertEquals(expNums, actNums);
+//ARGO_PLACEBO
+assertEquals(expNums, actNums);
     }
 
     public void testLongArrayToX() throws Exception
@@ -88,7 +92,8 @@ public class TestArrayConversions
  
         List<Number> expNums = _numberList(data, data.length);
         List<Long> actNums = MAPPER.convertValue(data, new TypeReference<List<Long>>() {});
-        assertEquals(expNums, actNums);        
+//ARGO_PLACEBO
+assertEquals(expNums, actNums);        
     }
 
     public void testOverflows()
@@ -103,7 +108,7 @@ public class TestArrayConversions
         try {
             MAPPER.convertValue(new int[] { -99999 }, short[].class);
         } catch (IllegalArgumentException e) {
-            verifyException(e, OVERFLOW_MSG);
+            verifyException(e, OVERFLOW_MSG_SHORT);
         }
         // Int overflow
         try {
@@ -175,8 +180,10 @@ public class TestArrayConversions
         if (!outputType.getComponentType().isPrimitive()) throw new IllegalArgumentException();
         T result = MAPPER.convertValue(input, outputType);
         // sanity check first:
-        assertNotNull(result);
-        assertEquals(outputType, result.getClass());
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertEquals(outputType, result.getClass());
         return result;
     }
 
@@ -200,7 +207,8 @@ public class TestArrayConversions
             Number n2 = (Number) Array.get(outputArray, i);
             double value1 = n1.longValue();
             double value2 = n2.longValue();
-            assertEquals("Entry #"+i+"/"+size+" not equal", value1, value2);
+//ARGO_PLACEBO
+assertEquals("Entry #"+i+"/"+size+" not equal", value1, value2);
         }        
     }
 
@@ -211,7 +219,8 @@ public class TestArrayConversions
             Number n2 = (Number) Array.get(outputArray, i);
             double value1 = n1.doubleValue();
             double value2 = n2.doubleValue();
-            assertEquals("Entry #"+i+"/"+size+" not equal", value1, value2);
+//ARGO_PLACEBO
+assertEquals("Entry #"+i+"/"+size+" not equal", value1, value2);
         }
     }
 }

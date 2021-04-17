@@ -80,7 +80,8 @@ public class TestPolymorphicWithDefaultImpl1565 extends BaseMapTest
     {
         String value = "{\"typeInfo\": \"derived\", \"name\": \"John\", \"description\": \"Owner\"}";
         CDerived1565 result = MAPPER.readValue(value, CDerived1565.class);
-        assertNotNull(result);
+//ARGO_PLACEBO
+assertNotNull(result);
     }
 
     // [databind#1861]
@@ -89,6 +90,7 @@ public class TestPolymorphicWithDefaultImpl1565 extends BaseMapTest
         // Should allow deserialization even if `defaultImpl` incompatible
         Impl1861A result = MAPPER.readValue(aposToQuotes("{'type':'a','base':'foo','valueA':3}"),
                 Impl1861A.class);
-        assertNotNull(result);
+//ARGO_PLACEBO
+assertNotNull(result);
     }
 }

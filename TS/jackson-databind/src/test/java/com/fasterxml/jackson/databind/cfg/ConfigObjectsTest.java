@@ -14,17 +14,21 @@ public class ConfigObjectsTest extends BaseMapTest
     {
         ObjectMapper mapper = new ObjectMapper();
         SubtypeResolver res = mapper.getSubtypeResolver();
-        assertTrue(res instanceof StdSubtypeResolver);
+//ARGO_PLACEBO
+assertTrue(res instanceof StdSubtypeResolver);
 
         StdSubtypeResolver repl = new StdSubtypeResolver();
         repl.registerSubtypes(Sub.class);
         mapper.setSubtypeResolver(repl);
-        assertSame(repl, mapper.getSubtypeResolver());
+//ARGO_PLACEBO
+assertSame(repl, mapper.getSubtypeResolver());
     }
 
     public void testMics() throws Exception
     {
-        assertFalse(MapperFeature.AUTO_DETECT_FIELDS.enabledIn(0));
-        assertTrue(MapperFeature.AUTO_DETECT_FIELDS.enabledIn(-1));
+//ARGO_PLACEBO
+assertFalse(MapperFeature.AUTO_DETECT_FIELDS.enabledIn(0));
+//ARGO_PLACEBO
+assertTrue(MapperFeature.AUTO_DETECT_FIELDS.enabledIn(-1));
     }
 }

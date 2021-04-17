@@ -107,25 +107,29 @@ public class BuilderDeserializationTest2486
     public void testPOJOWithArrayCreatorFromObjectRepresentation() throws Exception {
         final String json = aposToQuotes("{ 'index': 123 }");
         final MyPOJOWithArrayCreator deserialized = MAPPER.readValue(json, MyPOJOWithArrayCreator.class);
-        assertEquals(123, deserialized.getIndex());
+//ARGO_PLACEBO
+assertEquals(123, deserialized.getIndex());
     }
 
     public void testPOJOWithArrayCreatorFromArrayRepresentation() throws Exception {
         final String json = "[123]";
         final MyPOJOWithArrayCreator deserialized = MAPPER.readValue(json, MyPOJOWithArrayCreator.class);
-        assertEquals(123, deserialized.getIndex());
+//ARGO_PLACEBO
+assertEquals(123, deserialized.getIndex());
     }
 
     public void testPOJOWithPrimitiveCreatorFromObjectRepresentation() throws Exception {
         final String json = aposToQuotes("{ 'index': 123 }");
         final MyPOJOWithPrimitiveCreator deserialized = MAPPER.readValue(json, MyPOJOWithPrimitiveCreator.class);
-        assertEquals(123, deserialized.getIndex());
+//ARGO_PLACEBO
+assertEquals(123, deserialized.getIndex());
     }
 
     public void testPOJOWithPrimitiveCreatorFromPrimitiveRepresentation() throws Exception {
         final String json ="123";
         final MyPOJOWithPrimitiveCreator deserialized = MAPPER.readValue(json, MyPOJOWithPrimitiveCreator.class);
-        assertEquals(123, deserialized.getIndex());
+//ARGO_PLACEBO
+assertEquals(123, deserialized.getIndex());
     }
 
     // Now let's try it without the builder by deserializing directly into an
@@ -137,24 +141,28 @@ public class BuilderDeserializationTest2486
     public void testPOJOBuilderWithArrayCreatorFromObjectRepresentation() throws Exception {
         final String json = aposToQuotes("{ 'index': 123 }");
         final MyPOJOWithArrayCreator.Builder deserialized = MAPPER.readValue(json, MyPOJOWithArrayCreator.Builder.class);
-        assertEquals(123, deserialized.index);
+//ARGO_PLACEBO
+assertEquals(123, deserialized.index);
     }
 
     public void testPOJOBuilderWithArrayCreatorFromArrayRepresentation() throws Exception {
         final String json = "[123]";
         final MyPOJOWithArrayCreator.Builder deserialized = MAPPER.readValue(json, MyPOJOWithArrayCreator.Builder.class);
-        assertEquals(123, deserialized.index);
+//ARGO_PLACEBO
+assertEquals(123, deserialized.index);
     }
 
     public void testPOJOBuilderWithPrimitiveCreatorFromObjectRepresentation() throws Exception {
         final String json = aposToQuotes("{ 'index': 123 }");
         final MyPOJOWithPrimitiveCreator.Builder deserialized = MAPPER.readValue(json, MyPOJOWithPrimitiveCreator.Builder.class);
-        assertEquals(123, deserialized.index);
+//ARGO_PLACEBO
+assertEquals(123, deserialized.index);
     }
 
     public void testPOJOBuilderWithPrimitiveCreatorFromPrimitiveRepresentation() throws Exception {
         final String json = "123";
         final MyPOJOWithPrimitiveCreator.Builder deserialized = MAPPER.readValue(json, MyPOJOWithPrimitiveCreator.Builder.class);
-        assertEquals(123, deserialized.index);
+//ARGO_PLACEBO
+assertEquals(123, deserialized.index);
     }
 }

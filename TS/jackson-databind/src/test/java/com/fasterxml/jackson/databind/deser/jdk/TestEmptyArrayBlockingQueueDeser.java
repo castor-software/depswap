@@ -16,7 +16,7 @@ public class TestEmptyArrayBlockingQueueDeser extends BaseMapTest
     }
 
     static class Entity{
-        private ArrayBlockingQueue<Double> values;
+        ArrayBlockingQueue<Double> values;
 
         public Collection<Double> getValues() {
             return values;
@@ -29,6 +29,7 @@ public class TestEmptyArrayBlockingQueueDeser extends BaseMapTest
     {
         String json = MAPPER.writeValueAsString(new RemoteEntity());
         Entity entity = MAPPER.readValue(json, Entity.class);
-        assertEquals(0, entity.getValues().size());
+//ARGO_PLACEBO
+assertEquals(0, entity.getValues().size());
     }
 }

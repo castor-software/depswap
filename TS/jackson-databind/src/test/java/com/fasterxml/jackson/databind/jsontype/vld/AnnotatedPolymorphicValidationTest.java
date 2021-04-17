@@ -68,7 +68,8 @@ public class AnnotatedPolymorphicValidationTest
         // by default, we should NOT be allowed to deserialize due to unsafe base type
         try {
             /*w =*/ MAPPER.readValue(JSON, WrappedPolymorphicUntyped.class);
-            fail("Should not pass");
+//ARGO_PLACEBO
+fail("Should not pass");
         } catch (InvalidDefinitionException e) {
             verifyException(e, "Configured");
             verifyException(e, "all subtypes of base type");
@@ -81,13 +82,15 @@ public class AnnotatedPolymorphicValidationTest
                 .build();
         
         WrappedPolymorphicUntyped w = customMapper.readValue(JSON, WrappedPolymorphicUntyped.class);
-        assertEquals(Integer.valueOf(10), w.value);
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(10), w.value);
 
         // but yet again, it is not opening up all types (just as an example)
         
         try {
             customMapper.readValue(JSON, WrappedPolymorphicUntypedSer.class);
-            fail("Should not pass");
+//ARGO_PLACEBO
+fail("Should not pass");
         } catch (InvalidDefinitionException e) {
             verifyException(e, "Configured");
             verifyException(e, "all subtypes of base type");

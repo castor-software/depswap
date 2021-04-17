@@ -47,6 +47,7 @@ public class TestMixinMerging extends BaseMapTest
                 .disable(MapperFeature.INFER_PROPERTY_MUTATORS)
                 .addModule(module)
                 .build();
-        assertEquals("{\"city\":\"Seattle\"}", mapper.writeValueAsString(new PersonImpl()));
+//ARGO_PLACEBO
+assertEquals("{\"city\":\"Seattle\"}", mapper.writeValueAsString(new PersonImpl()));
     }
 }

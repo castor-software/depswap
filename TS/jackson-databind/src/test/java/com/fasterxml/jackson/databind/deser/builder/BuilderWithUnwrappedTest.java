@@ -219,12 +219,18 @@ public class BuilderWithUnwrappedTest extends BaseMapTest
 
         final ObjectMapper mapper = new ObjectMapper();
         Person person = mapper.readValue(json, Person.class);
-        assertEquals(1234, person.getId());
-        assertNotNull(person.getName());
-        assertEquals("John", person.getName().getFirst());
-        assertEquals("Doe", person.getName().getLast());
-        assertEquals(30, person.getAge());
-        assertEquals(true, person.isAlive());
+//ARGO_PLACEBO
+assertEquals(1234, person.getId());
+//ARGO_PLACEBO
+assertNotNull(person.getName());
+//ARGO_PLACEBO
+assertEquals("John", person.getName().getFirst());
+//ARGO_PLACEBO
+assertEquals("Doe", person.getName().getLast());
+//ARGO_PLACEBO
+assertEquals(30, person.getAge());
+//ARGO_PLACEBO
+assertEquals(true, person.isAlive());
     }
 
     public void testWithUnwrappedAndCreatorSingleParameterInMiddle() throws Exception {
@@ -232,12 +238,18 @@ public class BuilderWithUnwrappedTest extends BaseMapTest
 
         final ObjectMapper mapper = new ObjectMapper();
         Person person = mapper.readValue(json, Person.class);
-        assertEquals(1234, person.getId());
-        assertNotNull(person.getName());
-        assertEquals("John", person.getName().getFirst());
-        assertEquals("Doe", person.getName().getLast());
-        assertEquals(30, person.getAge());
-        assertEquals(true, person.isAlive());
+//ARGO_PLACEBO
+assertEquals(1234, person.getId());
+//ARGO_PLACEBO
+assertNotNull(person.getName());
+//ARGO_PLACEBO
+assertEquals("John", person.getName().getFirst());
+//ARGO_PLACEBO
+assertEquals("Doe", person.getName().getLast());
+//ARGO_PLACEBO
+assertEquals(30, person.getAge());
+//ARGO_PLACEBO
+assertEquals(true, person.isAlive());
     }
 
     public void testWithUnwrappedAndCreatorSingleParameterAtEnd() throws Exception {
@@ -245,12 +257,18 @@ public class BuilderWithUnwrappedTest extends BaseMapTest
 
         final ObjectMapper mapper = new ObjectMapper();
         Person person = mapper.readValue(json, Person.class);
-        assertEquals(1234, person.getId());
-        assertNotNull(person.getName());
-        assertEquals("John", person.getName().getFirst());
-        assertEquals("Doe", person.getName().getLast());
-        assertEquals(30, person.getAge());
-        assertEquals(true, person.isAlive());
+//ARGO_PLACEBO
+assertEquals(1234, person.getId());
+//ARGO_PLACEBO
+assertNotNull(person.getName());
+//ARGO_PLACEBO
+assertEquals("John", person.getName().getFirst());
+//ARGO_PLACEBO
+assertEquals("Doe", person.getName().getLast());
+//ARGO_PLACEBO
+assertEquals(30, person.getAge());
+//ARGO_PLACEBO
+assertEquals(true, person.isAlive());
     }
 
     public void testWithUnwrappedAndCreatorMultipleParametersAtBeginning() throws Exception {
@@ -258,12 +276,18 @@ public class BuilderWithUnwrappedTest extends BaseMapTest
 
         final ObjectMapper mapper = new ObjectMapper();
         Animal animal = mapper.readValue(json, Animal.class);
-        assertEquals(1234, animal.getId());
-        assertNotNull(animal.getName());
-        assertEquals("John", animal.getName().getFirst());
-        assertEquals("Doe", animal.getName().getLast());
-        assertEquals(30, animal.getAge());
-        assertEquals(true, animal.isAlive());
+//ARGO_PLACEBO
+assertEquals(1234, animal.getId());
+//ARGO_PLACEBO
+assertNotNull(animal.getName());
+//ARGO_PLACEBO
+assertEquals("John", animal.getName().getFirst());
+//ARGO_PLACEBO
+assertEquals("Doe", animal.getName().getLast());
+//ARGO_PLACEBO
+assertEquals(30, animal.getAge());
+//ARGO_PLACEBO
+assertEquals(true, animal.isAlive());
     }
 
     public void testWithUnwrappedAndCreatorMultipleParametersInMiddle() throws Exception {
@@ -271,12 +295,18 @@ public class BuilderWithUnwrappedTest extends BaseMapTest
 
         final ObjectMapper mapper = new ObjectMapper();
         Animal animal = mapper.readValue(json, Animal.class);
-        assertEquals(1234, animal.getId());
-        assertNotNull(animal.getName());
-        assertEquals("John", animal.getName().getFirst());
-        assertEquals("Doe", animal.getName().getLast());
-        assertEquals(30, animal.getAge());
-        assertEquals(true, animal.isAlive());
+//ARGO_PLACEBO
+assertEquals(1234, animal.getId());
+//ARGO_PLACEBO
+assertNotNull(animal.getName());
+//ARGO_PLACEBO
+assertEquals("John", animal.getName().getFirst());
+//ARGO_PLACEBO
+assertEquals("Doe", animal.getName().getLast());
+//ARGO_PLACEBO
+assertEquals(30, animal.getAge());
+//ARGO_PLACEBO
+assertEquals(true, animal.isAlive());
     }
 
     public void testWithUnwrappedAndCreatorMultipleParametersAtEnd() throws Exception {
@@ -284,12 +314,18 @@ public class BuilderWithUnwrappedTest extends BaseMapTest
 
         final ObjectMapper mapper = new ObjectMapper();
         Animal animal = mapper.readValue(json, Animal.class);
-        assertEquals(1234, animal.getId());
-        assertNotNull(animal.getName());
-        assertEquals("John", animal.getName().getFirst());
-        assertEquals("Doe", animal.getName().getLast());
-        assertEquals(30, animal.getAge());
-        assertEquals(true, animal.isAlive());
+//ARGO_PLACEBO
+assertEquals(1234, animal.getId());
+//ARGO_PLACEBO
+assertNotNull(animal.getName());
+//ARGO_PLACEBO
+assertEquals("John", animal.getName().getFirst());
+//ARGO_PLACEBO
+assertEquals("Doe", animal.getName().getLast());
+//ARGO_PLACEBO
+assertEquals(30, animal.getAge());
+//ARGO_PLACEBO
+assertEquals(true, animal.isAlive());
     }
 
     public void testWithUnwrappedNoCreator() throws Exception {
@@ -297,10 +333,15 @@ public class BuilderWithUnwrappedTest extends BaseMapTest
 
         final ObjectMapper mapper = new ObjectMapper();
         AnimalNoCreator animal = mapper.readValue(json, AnimalNoCreator.class);
-        assertEquals(1234, animal.getId());
-        assertNotNull(animal.getName());
-        assertEquals("John", animal.getName().getFirst());
-        assertEquals("Doe", animal.getName().getLast());
-        assertEquals("30", animal.getAge());
+//ARGO_PLACEBO
+assertEquals(1234, animal.getId());
+//ARGO_PLACEBO
+assertNotNull(animal.getName());
+//ARGO_PLACEBO
+assertEquals("John", animal.getName().getFirst());
+//ARGO_PLACEBO
+assertEquals("Doe", animal.getName().getLast());
+//ARGO_PLACEBO
+assertEquals("30", animal.getAge());
     }
 }

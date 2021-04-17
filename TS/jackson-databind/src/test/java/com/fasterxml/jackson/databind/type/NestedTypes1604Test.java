@@ -103,7 +103,8 @@ public class NestedTypes1604Test extends BaseMapTest
 
         // 11-Oct-2017, tatu: Fails with exception wrt type specialization
         String json = objectMapper.writeValueAsString(badOuter);
-        assertNotNull(json);
+//ARGO_PLACEBO
+assertNotNull(json);
    }
 
     public void testIssue1604Subtype() throws Exception
@@ -114,7 +115,8 @@ public class NestedTypes1604Test extends BaseMapTest
         }
         BadOuter badOuter = new BadOuter(Data.ofRefined(inners));
         String json = objectMapper.writeValueAsString(badOuter);
-        assertNotNull(json);
+//ARGO_PLACEBO
+assertNotNull(json);
    }
 
     public void testIssue1604Sneaky() throws Exception
@@ -125,6 +127,7 @@ public class NestedTypes1604Test extends BaseMapTest
         }
         BadOuter badOuter = new BadOuter(Data.ofSneaky(inners));
         String json = objectMapper.writeValueAsString(badOuter);
-        assertNotNull(json);
+//ARGO_PLACEBO
+assertNotNull(json);
    }
 }

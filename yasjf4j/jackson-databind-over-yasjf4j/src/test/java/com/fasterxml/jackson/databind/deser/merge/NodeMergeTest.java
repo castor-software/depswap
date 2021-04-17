@@ -71,6 +71,7 @@ public class NodeMergeTest extends BaseMapTest
                 MAPPER.readerForUpdating(base)
                 .readValue(aposToQuotes(
                         "{'props':{'value':true, 'extra':25.5, 'array' : [ 3 ]}}")));
+        System.out.println("base: " + base.toPrettyString());
         assertEquals(2, base.size());
         ObjectNode resultProps = (ObjectNode) base.get("props");
         assertEquals(4, resultProps.size());

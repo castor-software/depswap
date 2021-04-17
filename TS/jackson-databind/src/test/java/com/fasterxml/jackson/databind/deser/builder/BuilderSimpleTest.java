@@ -84,7 +84,7 @@ public class BuilderSimpleTest extends BaseMapTest
     }
 
     // // Then Builder that is itself immutable
-    
+
     @JsonDeserialize(builder=BuildImmutable.class)
     static class ValueImmutable
     {
@@ -307,12 +307,16 @@ public class BuilderSimpleTest extends BaseMapTest
     {
         String json = aposToQuotes("{'x':1,'y':2}");
         Object o = MAPPER.readValue(json, ValueClassXY.class);
-        assertNotNull(o);
-        assertSame(ValueClassXY.class, o.getClass());
+//ARGO_PLACEBO
+assertNotNull(o);
+//ARGO_PLACEBO
+assertSame(ValueClassXY.class, o.getClass());
         ValueClassXY value = (ValueClassXY) o;
         // note: ctor adds one to both values
-        assertEquals(value._x, 2);
-        assertEquals(value._y, 3);
+//ARGO_PLACEBO
+assertEquals(value._x, 2);
+//ARGO_PLACEBO
+assertEquals(value._y, 3);
     }
 
     // related to [databind#1214]
@@ -324,9 +328,11 @@ public class BuilderSimpleTest extends BaseMapTest
 
         try {
             o = MAPPER.readValue(json, ValueClassXY.class);
-            fail("Should not pass");
+//ARGO_PLACEBO
+fail("Should not pass");
         } catch (UnrecognizedPropertyException e) {
-            assertEquals("z", e.getPropertyName());
+//ARGO_PLACEBO
+assertEquals("z", e.getPropertyName());
             verifyException(e, "Unrecognized field \"z\"");
         }
 
@@ -335,29 +341,41 @@ public class BuilderSimpleTest extends BaseMapTest
         ignorantMapper.configOverride(SimpleBuilderXY.class)
                 .setIgnorals(JsonIgnoreProperties.Value.forIgnoreUnknown(true));
         o = ignorantMapper.readValue(json, ValueClassXY.class);
-        assertNotNull(o);
-        assertSame(ValueClassXY.class, o.getClass());
+//ARGO_PLACEBO
+assertNotNull(o);
+//ARGO_PLACEBO
+assertSame(ValueClassXY.class, o.getClass());
         ValueClassXY value = (ValueClassXY) o;
         // note: ctor adds one to both values
-        assertEquals(value._x, 2);
-        assertEquals(value._y, 3);
+//ARGO_PLACEBO
+assertEquals(value._x, 2);
+//ARGO_PLACEBO
+assertEquals(value._y, 3);
     }
     
     public void testMultiAccess() throws Exception
     {
         String json = aposToQuotes("{'c':3,'a':2,'b':-9}");
         ValueClassABC value = MAPPER.readValue(json, ValueClassABC.class);
-        assertNotNull(value);
-        assertEquals(2, value.a);
-        assertEquals(-9, value.b);
-        assertEquals(3, value.c);
+//ARGO_PLACEBO
+assertNotNull(value);
+//ARGO_PLACEBO
+assertEquals(2, value.a);
+//ARGO_PLACEBO
+assertEquals(-9, value.b);
+//ARGO_PLACEBO
+assertEquals(3, value.c);
 
         // also, since we can ignore some properties:
         value = MAPPER.readValue(aposToQuotes("{'c':3,'d':5,'b':-9}"), ValueClassABC.class);
-        assertNotNull(value);
-        assertEquals(0, value.a);
-        assertEquals(-9, value.b);
-        assertEquals(3, value.c);
+//ARGO_PLACEBO
+assertNotNull(value);
+//ARGO_PLACEBO
+assertEquals(0, value.a);
+//ARGO_PLACEBO
+assertEquals(-9, value.b);
+//ARGO_PLACEBO
+assertEquals(3, value.c);
     }
 
     // test for Immutable builder, to ensure return value is used
@@ -365,7 +383,8 @@ public class BuilderSimpleTest extends BaseMapTest
     {
         final String json = "{\"value\":13}";
         ValueImmutable value = MAPPER.readValue(json, ValueImmutable.class);        
-        assertEquals(13, value.value);
+//ARGO_PLACEBO
+assertEquals(13, value.value);
     }
 
     // test with custom 'with-prefix'
@@ -373,7 +392,8 @@ public class BuilderSimpleTest extends BaseMapTest
     {
         final String json = "{\"value\":1}";
         ValueFoo value = MAPPER.readValue(json, ValueFoo.class);        
-        assertEquals(1, value.value);
+//ARGO_PLACEBO
+assertEquals(1, value.value);
     }
 
     // for [databind#761]
@@ -382,37 +402,49 @@ public class BuilderSimpleTest extends BaseMapTest
     {
         final String json = "{\"x\":1}";
         ValueInterface value = MAPPER.readValue(json, ValueInterface.class);
-        assertEquals(2, value.getX());
+//ARGO_PLACEBO
+assertEquals(2, value.getX());
     }
 
     public void testBuilderMethodReturnMoreSpecific() throws Exception
     {
         final String json = "{\"x\":1}";
         ValueInterface2 value = MAPPER.readValue(json, ValueInterface2.class);
-        assertEquals(2, value.getX());
+//ARGO_PLACEBO
+assertEquals(2, value.getX());
     }
 
     public void testSelfBuilder777() throws Exception
     {
         SelfBuilder777 result = MAPPER.readValue(aposToQuotes("{'x':3}'"),
                 SelfBuilder777.class);
-        assertNotNull(result);
-        assertEquals(3, result.x);
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertEquals(3, result.x);
     }
 
     public void testWithAnySetter822() throws Exception
     {
         final String json = "{\"extra\":3,\"foobar\":[ ],\"x\":1,\"name\":\"bob\"}";
         ValueClass822 value = MAPPER.readValue(json, ValueClass822.class);
-        assertEquals(1, value.x);
-        assertNotNull(value.stuff);
-        assertEquals(3, value.stuff.size());
-        assertEquals(Integer.valueOf(3), value.stuff.get("extra"));
-        assertEquals("bob", value.stuff.get("name"));
+//ARGO_PLACEBO
+assertEquals(1, value.x);
+//ARGO_PLACEBO
+assertNotNull(value.stuff);
+//ARGO_PLACEBO
+assertEquals(3, value.stuff.size());
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(3), value.stuff.get("extra"));
+//ARGO_PLACEBO
+assertEquals("bob", value.stuff.get("name"));
         Object ob = value.stuff.get("foobar");
-        assertNotNull(ob);
-        assertTrue(ob instanceof List);
-        assertTrue(((List<?>) ob).isEmpty());
+//ARGO_PLACEBO
+assertNotNull(ob);
+//ARGO_PLACEBO
+assertTrue(ob instanceof List);
+//ARGO_PLACEBO
+assertTrue(((List<?>) ob).isEmpty());
     }
 
     public void testPOJOConfigResolution1557() throws Exception
@@ -420,7 +452,8 @@ public class BuilderSimpleTest extends BaseMapTest
         final String json = "{\"value\":1}";
         MAPPER.registerModule(new NopModule1557());
         ValueFoo value = MAPPER.readValue(json, ValueFoo.class);
-        assertEquals(1, value.value);
+//ARGO_PLACEBO
+assertEquals(1, value.value);
     }
 
     // related to [databind#2354] (ensure private inner builder classes are ok)
@@ -428,6 +461,7 @@ public class BuilderSimpleTest extends BaseMapTest
     {
         String json = aposToQuotes("{'value':13}");
         Value2354 result = MAPPER.readValue(json, Value2354.class);
-        assertEquals(13, result.value());
+//ARGO_PLACEBO
+assertEquals(13, result.value());
     }
 }

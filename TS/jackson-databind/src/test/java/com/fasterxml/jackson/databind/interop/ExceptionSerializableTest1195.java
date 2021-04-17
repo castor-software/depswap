@@ -25,16 +25,20 @@ public class ExceptionSerializableTest1195 extends BaseMapTest
     {
         try {
             MAPPER.readValue("{\"x\": \"B\"}", ClassToRead.class);
-            fail("Should not have passed");
+//ARGO_PLACEBO
+fail("Should not have passed");
         } catch (JsonMappingException e) {
-            verifyException(e, "not a valid Integer");
+            //ARGO_ERROR_HANDLING
+            //verifyException(e, "not a valid Integer");
             _testSerializability(e);
         }
         try {
             MAPPER.readValue("{\"classToRead\": {\"x\": \"B\"}}", ContainerClassToRead.class);
-            fail("Should not have passed");
+//ARGO_PLACEBO
+fail("Should not have passed");
         } catch (JsonMappingException e) {
-            verifyException(e, "not a valid Integer");
+            //ARGO_ERROR_HANDLING
+            //verifyException(e, "not a valid Integer");
             _testSerializability(e);
         }
     }
@@ -44,9 +48,12 @@ public class ExceptionSerializableTest1195 extends BaseMapTest
         try {
             MAPPER.readValue("{\"classesToRead\": [{\"x\": 1}, {\"x\": \"B\"}]}",
                     ContainerClassesToRead.class);
-            fail("Should not have passed");
+
+//ARGO_PLACEBO
+fail("Should not have passed");
         } catch (JsonMappingException e) {
-            verifyException(e, "not a valid Integer");
+            //ARGO_ERROR_HANDLING
+            //verifyException(e, "not a valid Integer");
             _testSerializability(e);
         }
     }
@@ -65,7 +72,8 @@ public class ExceptionSerializableTest1195 extends BaseMapTest
             stream.writeObject(e);
             stream.close();
         } catch (Exception e2) {
-            fail("Failed to JDK serialize "+e.getClass().getName()+": "+e2);
+//ARGO_PLACEBO
+fail("Failed to JDK serialize "+e.getClass().getName()+": "+e2);
         }
         // and then back...
         byte[] b = bytes.toByteArray();
@@ -74,9 +82,11 @@ public class ExceptionSerializableTest1195 extends BaseMapTest
         try {
             result = objIn.readObject();
         } catch (Exception e2) {
-            fail("Failed to JDK deserialize "+e.getClass().getName()+": "+e2);
+//ARGO_PLACEBO
+fail("Failed to JDK deserialize "+e.getClass().getName()+": "+e2);
         }
         objIn.close();
-        assertNotNull(result);
+//ARGO_PLACEBO
+assertNotNull(result);
     }
 }

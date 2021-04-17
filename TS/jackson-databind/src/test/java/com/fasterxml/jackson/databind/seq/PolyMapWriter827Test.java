@@ -48,6 +48,7 @@ public class PolyMapWriter827Test extends BaseMapTest
 
         final ObjectWriter writer = mapper.writerFor(new TypeReference<Map<CustomKey,String>>() { });
         String json = writer.writeValueAsString(map);
-        Assert.assertEquals("[\"java.util.HashMap\",{\"foo,1\":\"bar\"}]", json);
+        Assert.//ARGO_PLACEBO
+assertEquals("[\"java.util.HashMap\",{\"foo,1\":\"bar\"}]", json);
     }
 }

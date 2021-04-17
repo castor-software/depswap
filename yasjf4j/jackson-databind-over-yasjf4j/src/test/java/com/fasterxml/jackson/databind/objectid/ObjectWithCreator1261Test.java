@@ -5,6 +5,8 @@ import java.util.*;
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.*;
 
+import static com.fasterxml.jackson.databind.JSONTestUtils.assertEquivalent;
+
 public class ObjectWithCreator1261Test
     extends BaseMapTest
 {
@@ -79,10 +81,12 @@ public class ObjectWithCreator1261Test
          String reserializedAnswerString = mapper
                .writeValueAsString(deserializedAnswer);
          JsonNode newTree = mapper.readTree(reserializedAnswerString);
-         if (!tree.equals(newTree)) {
-                  fail("Original and recovered Json are different. Recovered = \n"
-                        + reserializedAnswerString + "\n");
-         }
+        //ARGO_EQUIVALENT
+        assertEquivalent(tree, newTree);
+//         if (!tree.equals(newTree)) {
+//                  fail("Original and recovered Json are different. Recovered = \n"
+//                        + reserializedAnswerString + "\n");
+//         }
    }
 
    private Answer createInitialAnswer() {

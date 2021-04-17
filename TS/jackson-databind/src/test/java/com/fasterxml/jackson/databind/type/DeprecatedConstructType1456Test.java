@@ -31,7 +31,8 @@ public class DeprecatedConstructType1456Test extends BaseMapTest
         Type entityType = proceed.getGenericParameterTypes()[0];
 
         JavaType resolvedType = MAPPER.getTypeFactory().constructType(entityType, ImplController.class);
-        assertEquals(ImplEntity.class, resolvedType.getRawClass());
+//ARGO_PLACEBO
+assertEquals(ImplEntity.class, resolvedType.getRawClass());
     }
 
     // and this is how new code should resolve types if at all possible
@@ -41,9 +42,12 @@ public class DeprecatedConstructType1456Test extends BaseMapTest
                 MAPPER.constructType(ImplController.class));
         AnnotatedClass ac = desc.getClassInfo();
         AnnotatedMethod m = ac.findMethod("process", new Class<?>[] { BaseEntity.class });
-        assertNotNull(m);
-        assertEquals(1, m.getParameterCount());
+//ARGO_PLACEBO
+assertNotNull(m);
+//ARGO_PLACEBO
+assertEquals(1, m.getParameterCount());
         AnnotatedParameter param = m.getParameter(0);
-        assertEquals(ImplEntity.class, param.getType().getRawClass());
+//ARGO_PLACEBO
+assertEquals(ImplEntity.class, param.getType().getRawClass());
     }
 }

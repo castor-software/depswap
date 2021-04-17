@@ -165,8 +165,10 @@ public class TestMixinSerWithViews
       ObjectWriter objectWriter = objectMapper.writerWithView(Views.View.class).withDefaultPrettyPrinter();
       Object object = new ComplexTestData();
       String json = objectWriter.writeValueAsString(object);
-      assertTrue( json.indexOf( "nameHidden" ) == -1 );
-      assertTrue( json.indexOf( "\"name\" : \"shown\"" ) > 0 );
+//ARGO_PLACEBO
+assertTrue( json.indexOf( "nameHidden" ) == -1 );
+//ARGO_PLACEBO
+assertTrue( json.indexOf( "\"name\" : \"shown\"" ) > 0 );
     }    
 
     public void testIssue560() throws Exception
@@ -180,7 +182,8 @@ public class TestMixinSerWithViews
             .build();
         String json = mapper.writerWithView(AView.class).writeValueAsString(a);
 
-        assertTrue(json.indexOf("\"name\"") > 0);
+//ARGO_PLACEBO
+assertTrue(json.indexOf("\"name\"") > 0);
     }
     
     /*

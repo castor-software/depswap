@@ -64,8 +64,10 @@ public class TestMapFiltering extends BaseMapTest
             String name = writer.getName();
 
             // sanity checks
-            assertNotNull(writer.getType());
-            assertEquals(name, writer.getFullName().getSimpleName());
+//ARGO_PLACEBO
+assertNotNull(writer.getType());
+//ARGO_PLACEBO
+assertEquals(name, writer.getFullName().getSimpleName());
 
             if (!"a".equals(name)) {
                 return;
@@ -168,7 +170,8 @@ public class TestMapFiltering extends BaseMapTest
         FilterProvider prov = new SimpleFilterProvider().addFilter("filterX",
                 SimpleBeanPropertyFilter.filterOutAllExcept("b"));
         String json = MAPPER.writer(prov).writeValueAsString(new MapBean());
-        assertEquals(aposToQuotes("{'values':{'b':5}}"), json);
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'values':{'b':5}}"), json);
     }
 
     public void testMapFilteringViaClass() throws Exception
@@ -179,7 +182,8 @@ public class TestMapFiltering extends BaseMapTest
         FilterProvider prov = new SimpleFilterProvider().addFilter("filterForMaps",
                 SimpleBeanPropertyFilter.filterOutAllExcept("b"));
         String json = MAPPER.writer(prov).writeValueAsString(bean);
-        assertEquals(aposToQuotes("{'b':3}"), json);
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'b':3}"), json);
     }
 
     // [databind#527]
@@ -189,7 +193,8 @@ public class TestMapFiltering extends BaseMapTest
             .add("a", "foo")
             .add("b", null)
             .add("c", "bar"));
-        assertEquals(aposToQuotes("{'stuff':{'a':'foo','c':'bar'}}"), json);
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'stuff':{'a':'foo','c':'bar'}}"), json);
     }
     
     // [databind#522]
@@ -199,11 +204,13 @@ public class TestMapFiltering extends BaseMapTest
                 new TestMapFilter());
         String json = MAPPER.writer(prov).writeValueAsString(new MapBean());
         // a=1 should become a=2
-        assertEquals(aposToQuotes("{'values':{'a':2}}"), json);
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'values':{'a':2}}"), json);
 
         // and then one without annotation as contrast
         json = MAPPER.writer(prov).writeValueAsString(new MapBeanNoOffset());
-        assertEquals(aposToQuotes("{'values':{'a':1}}"), json);
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'values':{'a':1}}"), json);
     }
 
     // [databind#527]
@@ -213,7 +220,8 @@ public class TestMapFiltering extends BaseMapTest
             .add("a", "foo")
             .add("b", null)
             .add("c", "bar"));
-        assertEquals(aposToQuotes("{'a':'foo','c':'bar'}"), json);
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'a':'foo','c':'bar'}"), json);
     }
 
     // [databind#527]
@@ -223,7 +231,8 @@ public class TestMapFiltering extends BaseMapTest
             .add("a", "foo")
             .add("b", "bar")
             .add("c", ""));
-        assertEquals(aposToQuotes("{'a':'foo','b':'bar'}"), json);
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'a':'foo','b':'bar'}"), json);
     }
 
     // Test to ensure absent content of AtomicReference handled properly
@@ -233,7 +242,8 @@ public class TestMapFiltering extends BaseMapTest
         String json = MAPPER.writeValueAsString(new NoAbsentStringMap()
             .add("a", "foo")
             .add("b", null));
-        assertEquals(aposToQuotes("{'a':'foo'}"), json);
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'a':'foo'}"), json);
     }
 
     @SuppressWarnings("deprecation")
@@ -243,12 +253,14 @@ public class TestMapFiltering extends BaseMapTest
         Map<String,String> map = new HashMap<String,String>();
         map.put("a", null);
         // by default, should output null-valued entries:
-        assertEquals("{\"a\":null}", m.writeValueAsString(map));
+//ARGO_PLACEBO
+assertEquals("{\"a\":null}", m.writeValueAsString(map));
         // but not if explicitly asked not to (note: config value is dynamic here)
 
         m = new ObjectMapper();        
         m.disable(SerializationFeature.WRITE_NULL_MAP_VALUES);
-        assertEquals("{}", m.writeValueAsString(map));
+//ARGO_PLACEBO
+assertEquals("{}", m.writeValueAsString(map));
     }
 
     // [databind#527]
@@ -259,13 +271,15 @@ public class TestMapFiltering extends BaseMapTest
         // First, non empty:
         json = MAPPER.writeValueAsString(new Wrapper497(new StringMap497()
             .add("a", "123")));
-        assertEquals(aposToQuotes("{'values':{'a':'123'}}"), json);
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'values':{'a':'123'}}"), json);
 
         // then empty
         json = MAPPER.writeValueAsString(new Wrapper497(new StringMap497()
             .add("a", "")
             .add("b", null)));
-        assertEquals(aposToQuotes("{}"), json);
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{}"), json);
     }
 
     public void testMapViaGlobalNonEmpty() throws Exception
@@ -274,7 +288,8 @@ public class TestMapFiltering extends BaseMapTest
         ObjectMapper mapper = new ObjectMapper();
         mapper.setDefaultPropertyInclusion(JsonInclude.Value.empty()
                 .withContentInclusion(JsonInclude.Include.NON_EMPTY));
-        assertEquals(aposToQuotes("{'a':'b'}"), mapper.writeValueAsString(
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'a':'b'}"), mapper.writeValueAsString(
                 new StringMap497()
                     .add("x", "")
                     .add("a", "b")
@@ -288,7 +303,8 @@ public class TestMapFiltering extends BaseMapTest
         mapper.configOverride(Map.class)
             .setInclude(JsonInclude.Value.empty()
                 .withContentInclusion(JsonInclude.Include.NON_EMPTY));
-        assertEquals(aposToQuotes("{'a':'b'}"), mapper.writeValueAsString(
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'a':'b'}"), mapper.writeValueAsString(
                 new StringMap497()
                     .add("foo", "")
                     .add("a", "b")

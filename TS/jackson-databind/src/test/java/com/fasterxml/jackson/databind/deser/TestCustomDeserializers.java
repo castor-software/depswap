@@ -325,39 +325,57 @@ public class TestCustomDeserializers
         String json = "{\"beans\":[{\"c\":{\"a\":10,\"b\":20},\"d\":\"hello, tatu\"}]}";
         TestBeans beans = MAPPER.readValue(json, TestBeans.class);
 
-        assertNotNull(beans);
+//ARGO_PLACEBO
+assertNotNull(beans);
         List<TestBean> results = beans.beans;
-        assertNotNull(results);
-        assertEquals(1, results.size());
+//ARGO_PLACEBO
+assertNotNull(results);
+//ARGO_PLACEBO
+assertEquals(1, results.size());
         TestBean bean = results.get(0);
-        assertEquals("hello, tatu", bean.d);
+//ARGO_PLACEBO
+assertEquals("hello, tatu", bean.d);
         CustomBean c = bean.c;
-        assertNotNull(c);
-        assertEquals(10, c.a);
-        assertEquals(20, c.b);
+//ARGO_PLACEBO
+assertNotNull(c);
+//ARGO_PLACEBO
+assertEquals(10, c.a);
+//ARGO_PLACEBO
+assertEquals(20, c.b);
 
         json = "{\"beans\":[{\"c\":{\"b\":3,\"a\":-4},\"d\":\"\"},"
             +"{\"d\":\"abc\", \"c\":{\"b\":15}}]}";
         beans = MAPPER.readValue(json, TestBeans.class);
 
-        assertNotNull(beans);
+//ARGO_PLACEBO
+assertNotNull(beans);
         results = beans.beans;
-        assertNotNull(results);
-        assertEquals(2, results.size());
+//ARGO_PLACEBO
+assertNotNull(results);
+//ARGO_PLACEBO
+assertEquals(2, results.size());
 
         bean = results.get(0);
-        assertEquals("", bean.d);
+//ARGO_PLACEBO
+assertEquals("", bean.d);
         c = bean.c;
-        assertNotNull(c);
-        assertEquals(-4, c.a);
-        assertEquals(3, c.b);
+//ARGO_PLACEBO
+assertNotNull(c);
+//ARGO_PLACEBO
+assertEquals(-4, c.a);
+//ARGO_PLACEBO
+assertEquals(3, c.b);
 
         bean = results.get(1);
-        assertEquals("abc", bean.d);
+//ARGO_PLACEBO
+assertEquals("abc", bean.d);
         c = bean.c;
-        assertNotNull(c);
-        assertEquals(0, c.a);
-        assertEquals(15, c.b);
+//ARGO_PLACEBO
+assertNotNull(c);
+//ARGO_PLACEBO
+assertEquals(0, c.a);
+//ARGO_PLACEBO
+assertEquals(15, c.b);
     }
 
     // [Issue#87]: delegating deserializer
@@ -380,8 +398,10 @@ public class TestCustomDeserializers
 
         mapper.registerModule(module);
         Immutable imm = mapper.readValue("{\"x\":3,\"y\":7}", Immutable.class);
-        assertEquals(3, imm.x);
-        assertEquals(7, imm.y);
+//ARGO_ORIGINAL
+assertEquals(3, imm.x);
+//ARGO_ORIGINAL
+assertEquals(7, imm.y);
     }
 
     // [databind#623]
@@ -400,8 +420,10 @@ public class TestCustomDeserializers
         });
         mapper.registerModule(module);
         Immutable imm = mapper.readValue("{\"x\":-10,\"y\":3}", Immutable.class);
-        assertEquals(-10, imm.x);
-        assertEquals(3, imm.y);
+//ARGO_ORIGINAL
+assertEquals(-10, imm.x);
+//ARGO_ORIGINAL
+assertEquals(3, imm.y);
     }
     
     public void testIssue882() throws Exception
@@ -409,9 +431,12 @@ public class TestCustomDeserializers
         Model original = new Model(Collections.singletonMap(new CustomKey(123), "test"));
         String json = MAPPER.writeValueAsString(original);
         Model deserialized = MAPPER.readValue(json, Model.class);
-        assertNotNull(deserialized);
-        assertNotNull(deserialized.map);
-        assertEquals(1, deserialized.map.size());
+//ARGO_PLACEBO
+assertNotNull(deserialized);
+//ARGO_PLACEBO
+assertNotNull(deserialized.map);
+//ARGO_PLACEBO
+assertEquals(1, deserialized.map.size());
     }
 
     // [#337]: convenience methods for custom deserializers to use
@@ -425,13 +450,17 @@ public class TestCustomDeserializers
 
         // First, without property; doubles up value:
         Bean375Outer outer = mapper.readValue("13", Bean375Outer.class);
-        assertEquals(26, outer.inner.x);
+//ARGO_PLACEBO
+assertEquals(26, outer.inner.x);
 
         // then with property; should find annotation, turn negative
         Bean375Wrapper w = mapper.readValue("{\"value\":13}", Bean375Wrapper.class);
-        assertNotNull(w.value);
-        assertNotNull(w.value.inner);
-        assertEquals(-13, w.value.inner.x);
+//ARGO_PLACEBO
+assertNotNull(w.value);
+//ARGO_PLACEBO
+assertNotNull(w.value.inner);
+//ARGO_PLACEBO
+assertEquals(-13, w.value.inner.x);
     }
 
     // [#631]: "current value" access
@@ -439,8 +468,10 @@ public class TestCustomDeserializers
     {
         Issue631Bean bean = MAPPER.readValue(aposToQuotes("{'prop':'stuff'}"),
                 Issue631Bean.class);
-        assertNotNull(bean);
-        assertEquals("prop/Issue631Bean", bean.prop);
+//ARGO_PLACEBO
+assertNotNull(bean);
+//ARGO_PLACEBO
+assertEquals("prop/Issue631Bean", bean.prop);
     }
 
     public void testCustomStringDeser() throws Exception
@@ -448,10 +479,13 @@ public class TestCustomDeserializers
         ObjectMapper mapper = new ObjectMapper().registerModule(
                 new SimpleModule().addDeserializer(String.class, new UCStringDeserializer())
                 );
-        assertEquals("FOO", mapper.readValue(quote("foo"), String.class));
+//ARGO_PLACEBO
+assertEquals("FOO", mapper.readValue(quote("foo"), String.class));
         StringWrapper sw = mapper.readValue("{\"str\":\"foo\"}", StringWrapper.class);
-        assertNotNull(sw);
-        assertEquals("FOO", sw.str);
+//ARGO_PLACEBO
+assertNotNull(sw);
+//ARGO_PLACEBO
+assertEquals("FOO", sw.str);
     }
 
     public void testDelegatingDeserializer() throws Exception
@@ -459,7 +493,8 @@ public class TestCustomDeserializers
         ObjectMapper mapper = new ObjectMapper().registerModule(
                 new DelegatingModuleImpl());
         String str = mapper.readValue(quote("foo"), String.class);
-        assertEquals("MY:foo", str);
+//ARGO_PLACEBO
+assertEquals("MY:foo", str);
     }
 
     // [databind#2392]
@@ -480,7 +515,8 @@ public class TestCustomDeserializers
                         .addDeserializer(String.class, new DummyDeserializer<String>("dummy", String.class))
                         ).build();
         String str = mapper.readValue(quote("foo"), String.class);
-        assertEquals("FOOBAR", str);
+//ARGO_PLACEBO
+assertEquals("FOOBAR", str);
     }
 
     // [databind#2452]
@@ -493,9 +529,12 @@ public class TestCustomDeserializers
                 .build();
         ObjectWrapper w = mapper.readValue(aposToQuotes("[ 1, { 'a' : 3}, 123 ] "),
                 ObjectWrapper.class);
-        assertEquals(ArrayNode.class, w.getObject().getClass());
+//ARGO_ORIGINAL
+assertEquals(ArrayNode.class, w.getObject().getClass());
         JsonNode n = (JsonNode) w.getObject();
-        assertEquals(3, n.size());
-        assertEquals(123, n.get(2).intValue());
+//ARGO_ORIGINAL
+assertEquals(3, n.size());
+//ARGO_ORIGINAL
+assertEquals(123, n.get(2).intValue());
     }
 }

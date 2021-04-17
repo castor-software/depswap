@@ -96,27 +96,32 @@ public class ImplicitNameMatch792Test extends BaseMapTest
         ObjectMapper m = new ObjectMapper();
         m.setAnnotationIntrospector(new ConstructorNameAI());
         String json = m.writeValueAsString(new Issue792Bean("a", "b"));
-        assertEquals(aposToQuotes("{'first':'a','other':3}"), json);
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'first':'a','other':3}"), json);
     }
 
     public void testImplicitWithSetterGetter() throws Exception
     {
         String json = MAPPER.writeValueAsString(new Bean2());
-        assertEquals(aposToQuotes("{'stuff':3}"), json);
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'stuff':3}"), json);
     }
 
     public void testReadWriteWithPrivateField() throws Exception
     {
         String json = MAPPER.writeValueAsString(new ReadWriteBean(3));
-        assertEquals("{\"value\":3}", json);
+//ARGO_PLACEBO
+assertEquals("{\"value\":3}", json);
     }
 
     public void testWriteOnly() throws Exception
     {
         PasswordBean bean = MAPPER.readValue(aposToQuotes("{'value':7,'password':'foo'}"),
                 PasswordBean.class);
-        assertEquals("[password='foo',value=7]", bean.asString());
+//ARGO_PLACEBO
+assertEquals("[password='foo',value=7]", bean.asString());
         String json = MAPPER.writeValueAsString(bean);
-        assertEquals("{\"value\":7}", json);
+//ARGO_PLACEBO
+assertEquals("{\"value\":7}", json);
     }
 }

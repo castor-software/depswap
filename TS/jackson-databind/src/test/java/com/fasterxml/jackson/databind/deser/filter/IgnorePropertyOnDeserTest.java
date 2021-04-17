@@ -10,6 +10,33 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class IgnorePropertyOnDeserTest extends BaseMapTest
 {
+    // [databind#426]
+    @JsonIgnoreProperties({ "userId" })
+    static class User {
+        public String firstName;
+        Integer userId; 
+
+        public Integer getUserId() {
+            return userId;
+        }
+
+        public void setUserId(CharSequence id) {
+            userId = Integer.valueOf(id.toString());
+        }
+
+        public void setUserId(Integer v) {
+            this.userId = v;
+        }
+
+        public void setUserId(User u) {
+            // bogus
+        }
+
+        public void setUserId(boolean b) {
+            // bogus
+        }
+    }
+
     // [databind#1217]
     static class IgnoreObject {
         public int x = 1;
@@ -62,26 +89,47 @@ public class IgnorePropertyOnDeserTest extends BaseMapTest
 
     private final ObjectMapper MAPPER = newJsonMapper();
 
+    // [databind#426]
+    public void testIssue426() throws Exception
+    {
+        final String JSON = aposToQuotes("{'userId': 9, 'firstName': 'Mike' }");
+        User result = MAPPER.readerFor(User.class).readValue(JSON);
+//ARGO_PLACEBO
+assertNotNull(result);
+//ARGO_PLACEBO
+assertEquals("Mike", result.firstName);
+//ARGO_PLACEBO
+assertNull(result.userId);
+    }
+
     // [databind#1217]
     public void testIgnoreOnProperty1217() throws Exception
     {
         TestIgnoreObject result = MAPPER.readValue(
                 aposToQuotes("{'obj':{'x': 10, 'y': 20}, 'obj2':{'x': 10, 'y': 20}}"),
                 TestIgnoreObject.class);
-        assertEquals(20, result.obj.y);
-        assertEquals(10, result.obj2.x);
+//ARGO_PLACEBO
+assertEquals(20, result.obj.y);
+//ARGO_PLACEBO
+assertEquals(10, result.obj2.x);
 
-        assertEquals(1, result.obj.x);
-        assertEquals(2, result.obj2.y);
+//ARGO_PLACEBO
+assertEquals(1, result.obj.x);
+//ARGO_PLACEBO
+assertEquals(2, result.obj2.y);
 
         TestIgnoreObject result1 = MAPPER.readValue(
                   aposToQuotes("{'obj':{'x': 20, 'y': 30}, 'obj2':{'x': 20, 'y': 40}}"),
                   TestIgnoreObject.class);
-        assertEquals(1, result1.obj.x);
-        assertEquals(30, result1.obj.y);
+//ARGO_PLACEBO
+assertEquals(1, result1.obj.x);
+//ARGO_PLACEBO
+assertEquals(30, result1.obj.y);
        
-        assertEquals(20, result1.obj2.x);
-        assertEquals(2, result1.obj2.y);
+//ARGO_PLACEBO
+assertEquals(20, result1.obj2.x);
+//ARGO_PLACEBO
+assertEquals(2, result1.obj2.y);
     }
 
     public void testIgnoreViaConfigOverride1217() throws Exception
@@ -91,8 +139,10 @@ public class IgnorePropertyOnDeserTest extends BaseMapTest
             .setIgnorals(JsonIgnoreProperties.Value.forIgnoredProperties("y"));
         Point p = mapper.readValue(aposToQuotes("{'x':1,'y':2}"), Point.class);
         // bind 'x', but ignore 'y'
-        assertEquals(1, p.x);
-        assertEquals(0, p.y);
+//ARGO_PLACEBO
+assertEquals(1, p.x);
+//ARGO_PLACEBO
+assertEquals(0, p.y);
     }
 
     // [databind#1595]
@@ -103,9 +153,11 @@ public class IgnorePropertyOnDeserTest extends BaseMapTest
         config.setId(123);
         config.setName("jack");
         String json = mapper.writeValueAsString(config);
-        assertEquals(aposToQuotes("{'id':123}"), json);
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'id':123}"), json);
         Simple1595 des = mapper.readValue(aposToQuotes("{'id':123,'name':'jack'}"), Simple1595.class);
-        assertEquals("jack", des.getName());
+//ARGO_PLACEBO
+assertEquals("jack", des.getName());
     }
 
     // [databind#2627]
@@ -114,9 +166,12 @@ public class IgnorePropertyOnDeserTest extends BaseMapTest
         ObjectMapper objectMapper = new ObjectMapper();
         String json = "{\"value\": {\"name\": \"my_name\", \"extra\": \"val\"}, \"type\":\"Json\"}";
         MyPojoValue value = objectMapper.readValue(json, MyPojoValue.class);
-        assertNotNull(value);
-        assertNotNull(value.getValue());
-        assertEquals("my_name", value.getValue().name);
+//ARGO_PLACEBO
+assertNotNull(value);
+//ARGO_PLACEBO
+assertNotNull(value.getValue());
+//ARGO_PLACEBO
+assertEquals("my_name", value.getValue().name);
     }
 }
 

@@ -100,12 +100,14 @@ public class TestVirtualProperties extends BaseMapTest
         String json = WRITER.withAttribute("id", "abc123")
                 .withAttribute("internal", stuff)
                 .writeValueAsString(new SimpleBean());
-        assertEquals(aposToQuotes("{'value':13,'id':'abc123','extra':{'x':3,'y':'B'}}"), json);
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'value':13,'id':'abc123','extra':{'x':3,'y':'B'}}"), json);
 
         json = WRITER.withAttribute("id", "abc123")
                 .withAttribute("internal", stuff)
                 .writeValueAsString(new SimpleBeanPrepend());
-        assertEquals(aposToQuotes("{'id':'abc123','extra':{'x':3,'y':'B'},'value':13}"), json);
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'id':'abc123','extra':{'x':3,'y':'B'},'value':13}"), json);
     }
 
     public void testAttributePropInclusion() throws Exception
@@ -113,22 +115,26 @@ public class TestVirtualProperties extends BaseMapTest
         // first, with desc
         String json = WRITER.withAttribute("desc", "nice")
                 .writeValueAsString(new OptionalsBean());
-        assertEquals(aposToQuotes("{'value':28,'desc':'nice'}"), json);
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'value':28,'desc':'nice'}"), json);
 
         // then with null (not defined)
         json = WRITER.writeValueAsString(new OptionalsBean());
-        assertEquals(aposToQuotes("{'value':28}"), json);
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'value':28}"), json);
 
         // and finally "empty"
         json = WRITER.withAttribute("desc", "")
                 .writeValueAsString(new OptionalsBean());
-        assertEquals(aposToQuotes("{'value':28}"), json);
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'value':28}"), json);
     }
 
     public void testCustomProperties() throws Exception
     {
         String json = WRITER.withAttribute("desc", "nice")
                 .writeValueAsString(new CustomVBean());
-        assertEquals(aposToQuotes("{'id':'abc123','extra':[42],'value':72}"), json);
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'id':'abc123','extra':[42],'value':72}"), json);
     }
 }

@@ -26,7 +26,9 @@ public class MapDeser2757Test extends BaseMapTest
         input.put("a", "b");
         final String json = mapper.writeValueAsString(input);
         MyMap x = mapper.readValue(json, MyMap.class);
-        assertEquals(1, x.size());
-        assertEquals("b", input.get("a"));
+//ARGO_PLACEBO
+assertEquals(1, x.size());
+//ARGO_PLACEBO
+assertEquals("b", input.get("a"));
     }
 }

@@ -94,13 +94,18 @@ public class IgnorePropsForSerTest
     {
         IgnoreSome value = new IgnoreSome();
         Map<String,Object> result = writeAndMap(MAPPER, value);
-        assertEquals(2, result.size());
+//ARGO_PLACEBO
+assertEquals(2, result.size());
         // verify that specified fields are ignored
-        assertFalse(result.containsKey("b"));
-        assertFalse(result.containsKey("c"));
+//ARGO_PLACEBO
+assertFalse(result.containsKey("b"));
+//ARGO_PLACEBO
+assertFalse(result.containsKey("c"));
         // and that others are not
-        assertEquals(Integer.valueOf(value.a), result.get("a"));
-        assertEquals(value.getD(), result.get("d"));
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(value.a), result.get("a"));
+//ARGO_PLACEBO
+assertEquals(value.getD(), result.get("d"));
     }
 
     public void testExplicitIgnoralWithMap() throws Exception
@@ -110,34 +115,41 @@ public class IgnorePropsForSerTest
         value.put("a", "b");
         value.put("@class", MyMap.class.getName());
         Map<String,Object> result = writeAndMap(MAPPER, value);
-        assertEquals(1, result.size());
+//ARGO_PLACEBO
+assertEquals(1, result.size());
         // verify that specified field is ignored
-        assertFalse(result.containsKey("@class"));
+//ARGO_PLACEBO
+assertFalse(result.containsKey("@class"));
         // and that others are not
-        assertEquals(value.get("a"), result.get("a"));
+//ARGO_PLACEBO
+assertEquals(value.get("a"), result.get("a"));
     }
 
     public void testIgnoreViaOnlyProps() throws Exception
     {
-        assertEquals("{\"value\":{\"x\":1}}",
+//ARGO_PLACEBO
+assertEquals("{\"value\":{\"x\":1}}",
                 MAPPER.writeValueAsString(new WrapperWithPropIgnore()));
     }
 
     // Also: should be fine even if nominal type is `java.lang.Object`
     public void testIgnoreViaPropForUntyped() throws Exception
     {
-        assertEquals("{\"value\":{\"z\":3}}",
+//ARGO_PLACEBO
+assertEquals("{\"value\":{\"z\":3}}",
                 MAPPER.writeValueAsString(new WrapperWithPropIgnoreUntyped()));
     }
     
     public void testIgnoreWithMapProperty() throws Exception
     {
-        assertEquals("{\"value\":{\"b\":2}}", MAPPER.writeValueAsString(new MapWrapper()));
+//ARGO_PLACEBO
+assertEquals("{\"value\":{\"b\":2}}", MAPPER.writeValueAsString(new MapWrapper()));
     }
     
     public void testIgnoreViaPropsAndClass() throws Exception
     {
-        assertEquals("{\"value\":{\"y\":2}}",
+//ARGO_PLACEBO
+assertEquals("{\"value\":{\"y\":2}}",
                 MAPPER.writeValueAsString(new WrapperWithPropIgnore2()));
     }
 
@@ -146,7 +158,8 @@ public class IgnorePropsForSerTest
         ObjectMapper mapper = new ObjectMapper();
         mapper.configOverride(Point.class)
             .setIgnorals(JsonIgnoreProperties.Value.forIgnoredProperties("x"));
-        assertEquals("{\"y\":3}", mapper.writeValueAsString(new Point(2, 3)));
+//ARGO_PLACEBO
+assertEquals("{\"y\":3}", mapper.writeValueAsString(new Point(2, 3)));
     }
 
     // for [databind#1060]
@@ -154,11 +167,13 @@ public class IgnorePropsForSerTest
     public void testIgnoreForListValues() throws Exception
     {
         // should apply to elements
-        assertEquals(aposToQuotes("{'coordinates':[{'y':2}]}"),
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'coordinates':[{'y':2}]}"),
                 MAPPER.writeValueAsString(new IgnoreForListValuesXY()));
 
         // and combine values too
-        assertEquals(aposToQuotes("{'coordinates':[{'z':3}]}"),
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'coordinates':[{'z':3}]}"),
                 MAPPER.writeValueAsString(new IgnoreForListValuesXYZ()));
     }
 }

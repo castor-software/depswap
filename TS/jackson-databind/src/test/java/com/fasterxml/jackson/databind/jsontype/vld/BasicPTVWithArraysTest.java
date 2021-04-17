@@ -60,7 +60,8 @@ public class BasicPTVWithArraysTest extends BaseMapTest
         // First test blocked case:
         try {
             mapper.readValue(json, ObjectWrapper.class);
-            fail("Should not pass");
+//ARGO_PLACEBO
+fail("Should not pass");
         } catch (InvalidTypeIdException e) {
             verifyException(e, "Could not resolve type id '[Lcom.fasterxml.jackson.");
             verifyException(e, "as a subtype of");
@@ -76,18 +77,24 @@ public class BasicPTVWithArraysTest extends BaseMapTest
                 .build();        
 
         ObjectWrapper w = mapper.readValue(json, ObjectWrapper.class);
-        assertNotNull(w);
-        assertNotNull(w.value);
-        assertEquals(Base2534[].class, w.value.getClass());
+//ARGO_PLACEBO
+assertNotNull(w);
+//ARGO_PLACEBO
+assertNotNull(w.value);
+//ARGO_PLACEBO
+assertEquals(Base2534[].class, w.value.getClass());
         Base2534[] arrayOut = (Base2534[]) w.value;
-        assertEquals(1, arrayOut.length);
-        assertEquals(42, arrayOut[0].x);
+//ARGO_PLACEBO
+assertEquals(1, arrayOut.length);
+//ARGO_PLACEBO
+assertEquals(42, arrayOut[0].x);
 
         // but ensure array-acceptance does NOT allow non-validated element types!
         final String badJson = mapper.writeValueAsString(new ObjectWrapper(new Base2534[] { new Bad2534(13) }));
         try {
             mapper.readValue(badJson, ObjectWrapper.class);
-            fail("Should not pass");
+//ARGO_PLACEBO
+fail("Should not pass");
         } catch (InvalidTypeIdException e) {
             verifyException(e, "Could not resolve type id 'com.fasterxml.jackson.");
             verifyException(e, "$Bad2534");

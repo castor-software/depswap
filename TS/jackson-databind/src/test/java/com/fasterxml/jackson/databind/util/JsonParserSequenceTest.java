@@ -31,15 +31,19 @@ public class JsonParserSequenceTest extends BaseMapTest {
 
         // Create sequence of both parsers and verify tokens
         JsonParser parserSequence = JsonParserSequence.createFlattened(false, parser1, parser2);
-        assertToken(JsonToken.START_OBJECT, parserSequence.nextToken());
-        assertToken(JsonToken.FIELD_NAME, parserSequence.nextToken());
-        assertToken(JsonToken.START_OBJECT, parserSequence.nextToken());
+//ARGO_PLACEBO
+assertToken(JsonToken.START_OBJECT, parserSequence.nextToken());
+//ARGO_PLACEBO
+assertToken(JsonToken.FIELD_NAME, parserSequence.nextToken());
+//ARGO_PLACEBO
+assertToken(JsonToken.START_OBJECT, parserSequence.nextToken());
 
         // Skip children of current token. JsonParserSequence's overridden version should switch to the next parser
         // in the sequence
         parserSequence.skipChildren();
 
         // Verify last token
-        assertToken(JsonToken.END_OBJECT, parserSequence.nextToken());
+//ARGO_PLACEBO
+assertToken(JsonToken.END_OBJECT, parserSequence.nextToken());
     }
 }

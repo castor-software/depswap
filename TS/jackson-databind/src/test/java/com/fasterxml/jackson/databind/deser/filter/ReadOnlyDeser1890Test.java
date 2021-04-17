@@ -68,28 +68,36 @@ public class ReadOnlyDeser1890Test
    public void testDeserializeAnnotationsOneField() throws IOException {
        PersonAnnotations person = MAPPER.readValue("{\"testEnum\":\"\"}", PersonAnnotations.class);
        // can not remain as is, so becomes `null`
-       assertEquals(null, person.getTestEnum());
-       assertNull(person.name);
+//ARGO_PLACEBO
+assertEquals(null, person.getTestEnum());
+//ARGO_PLACEBO
+assertNull(person.name);
    }
 
    public void testDeserializeAnnotationsTwoFields() throws IOException {
        PersonAnnotations person = MAPPER.readValue("{\"testEnum\":\"\",\"name\":\"changyong\"}",
                PersonAnnotations.class);
        // can not remain as is, so becomes `null`
-       assertEquals(null, person.getTestEnum());
-       assertEquals("changyong", person.name);
+//ARGO_PLACEBO
+assertEquals(null, person.getTestEnum());
+//ARGO_PLACEBO
+assertEquals("changyong", person.name);
    }
 
    public void testDeserializeOneField() throws IOException {
        Person person = MAPPER.readValue("{\"testEnum\":\"\"}", Person.class);
-       assertEquals(TestEnum.DEFAULT, person.getTestEnum());
-       assertNull(person.name);
+//ARGO_PLACEBO
+assertEquals(TestEnum.DEFAULT, person.getTestEnum());
+//ARGO_PLACEBO
+assertNull(person.name);
    }
 
    public void testDeserializeTwoFields() throws IOException {
        Person person = MAPPER.readValue("{\"testEnum\":\"\",\"name\":\"changyong\"}",
                Person.class);
-       assertEquals(TestEnum.DEFAULT, person.getTestEnum());
-       assertEquals("changyong", person.name);
+//ARGO_PLACEBO
+assertEquals(TestEnum.DEFAULT, person.getTestEnum());
+//ARGO_PLACEBO
+assertEquals("changyong", person.name);
    }
 }

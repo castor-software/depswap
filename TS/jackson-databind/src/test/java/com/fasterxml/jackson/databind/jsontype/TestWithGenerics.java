@@ -126,7 +126,7 @@ public class TestWithGenerics extends BaseMapTest
               otherAnimal = a2;
          }
     }
-    
+
     /*
     /**********************************************************
     /* Unit tests
@@ -140,7 +140,8 @@ public class TestWithGenerics extends BaseMapTest
         Dog dog = new Dog("Fluffy", 3);
         String json = MAPPER.writeValueAsString(new ContainerWithGetter<Animal>(dog));
         if (json.indexOf("\"object-type\":\"doggy\"") < 0) {
-            fail("polymorphic type not kept, result == "+json+"; should contain 'object-type':'...'");
+//ARGO_PLACEBO
+fail("polymorphic type not kept, result == "+json+"; should contain 'object-type':'...'");
         }
     }
 
@@ -149,7 +150,8 @@ public class TestWithGenerics extends BaseMapTest
         Dog dog = new Dog("Fluffy", 3);
         String json = MAPPER.writeValueAsString(new ContainerWithField<Animal>(dog));
         if (json.indexOf("\"object-type\":\"doggy\"") < 0) {
-            fail("polymorphic type not kept, result == "+json+"; should contain 'object-type':'...'");
+//ARGO_PLACEBO
+fail("polymorphic type not kept, result == "+json+"; should contain 'object-type':'...'");
         }
     }
     
@@ -160,7 +162,8 @@ public class TestWithGenerics extends BaseMapTest
         String json = MAPPER.writerFor(MAPPER.getTypeFactory().constructParametricType(ContainerWithGetter.class,
                 Animal.class)).writeValueAsString(c2);
         if (json.indexOf("\"object-type\":\"doggy\"") < 0) {
-            fail("polymorphic type not kept, result == "+json+"; should contain 'object-type':'...'");
+//ARGO_PLACEBO
+fail("polymorphic type not kept, result == "+json+"; should contain 'object-type':'...'");
         }
     }
     
@@ -195,9 +198,12 @@ public class TestWithGenerics extends BaseMapTest
         String json = om.writeValueAsString( mc );
         
         MyClass mc2 = om.readValue(json, MyClass.class );
-        assertNotNull(mc2);
-        assertNotNull(mc2.params);
-        assertEquals(4, mc2.params.size());
+//ARGO_PLACEBO
+assertNotNull(mc2);
+//ARGO_PLACEBO
+assertNotNull(mc2.params);
+//ARGO_PLACEBO
+assertEquals(4, mc2.params.size());
     }
 
     public void testJackson430() throws Exception
@@ -212,9 +218,12 @@ public class TestWithGenerics extends BaseMapTest
 //        System.out.println( str );
         
         MyClass mc2 = om.readValue( str, MyClass.class );
-        assertNotNull(mc2);
-        assertNotNull(mc2.params);
-        assertEquals(1, mc2.params.size());
+//ARGO_PLACEBO
+assertNotNull(mc2);
+//ARGO_PLACEBO
+assertNotNull(mc2.params);
+//ARGO_PLACEBO
+assertEquals(1, mc2.params.size());
     }
 
     // [Issue#543]
@@ -223,6 +232,7 @@ public class TestWithGenerics extends BaseMapTest
         WrappedContainerWithField wrappedContainerWithField = new WrappedContainerWithField();
         wrappedContainerWithField.animalContainer = new ContainerWithTwoAnimals<Dog,Dog>(new Dog("d1",1), new Dog("d2",2));
         String json = MAPPER.writeValueAsString(wrappedContainerWithField);
-        assertNotNull(json);
+//ARGO_PLACEBO
+assertNotNull(json);
     }
 }

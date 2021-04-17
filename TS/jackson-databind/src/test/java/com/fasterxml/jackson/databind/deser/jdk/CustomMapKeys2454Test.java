@@ -41,7 +41,8 @@ public class CustomMapKeys2454Test extends BaseMapTest
 
     public void testCustomSerializer() throws Exception
     {
-        assertEquals(aposToQuotes("{'id=a':'b'}"),
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'id=a':'b'}"),
                 MAPPER.writeValueAsString(Collections.singletonMap(new Key2454("a", true), "b")));
     }
 
@@ -49,8 +50,10 @@ public class CustomMapKeys2454Test extends BaseMapTest
     {
         Map<Key2454, String> result = MAPPER.readValue(aposToQuotes("{'a':'b'}"),
                 new TypeReference<Map<Key2454, String>>() { });
-        assertEquals(1, result.size());
+//ARGO_PLACEBO
+assertEquals(1, result.size());
         Key2454 key = result.keySet().iterator().next();
-        assertEquals("a", key.id);
+//ARGO_PLACEBO
+assertEquals("a", key.id);
     }
 }

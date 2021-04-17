@@ -229,20 +229,25 @@ public class JsonValueTest
     
     public void testSimpleMethodJsonValue() throws Exception
     {
-        assertEquals("\"abc\"", MAPPER.writeValueAsString(new ValueClass<String>("abc")));
-        assertEquals("null", MAPPER.writeValueAsString(new ValueClass<String>(null)));
+//ARGO_PLACEBO
+assertEquals("\"abc\"", MAPPER.writeValueAsString(new ValueClass<String>("abc")));
+//ARGO_PLACEBO
+assertEquals("null", MAPPER.writeValueAsString(new ValueClass<String>(null)));
     }
 
     public void testSimpleFieldJsonValue() throws Exception
     {
-        assertEquals("\"abc\"", MAPPER.writeValueAsString(new FieldValueClass<String>("abc")));
-        assertEquals("null", MAPPER.writeValueAsString(new FieldValueClass<String>(null)));
+//ARGO_PLACEBO
+assertEquals("\"abc\"", MAPPER.writeValueAsString(new FieldValueClass<String>("abc")));
+//ARGO_PLACEBO
+assertEquals("null", MAPPER.writeValueAsString(new FieldValueClass<String>(null)));
     }
 
     public void testJsonValueWithUseSerializer() throws Exception
     {
         String result = serializeAsString(MAPPER, new ToStringValueClass<Integer>(Integer.valueOf(123)));
-        assertEquals("\"123\"", result);
+//ARGO_PLACEBO
+assertEquals("\"123\"", result);
     }
 
     /**
@@ -251,41 +256,49 @@ public class JsonValueTest
     public void testMixedJsonValue() throws Exception
     {
         String result = serializeAsString(MAPPER, new ToStringValueClass2("xyz"));
-        assertEquals("\"xyz\"", result);
+//ARGO_PLACEBO
+assertEquals("\"xyz\"", result);
     }
 
     public void testDisabling() throws Exception
     {
-        assertEquals(aposToQuotes("{'x':1,'y':2}"),
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'x':1,'y':2}"),
                 MAPPER.writeValueAsString(new DisabledJsonValue()));
     }
 
     public void testValueWithStaticType() throws Exception
     {
         // Ok; first, with dynamic type:
-        assertEquals("{\"a\":\"a\",\"b\":\"b\"}", MAPPER.writeValueAsString(new ValueWrapper()));
+//ARGO_PLACEBO
+assertEquals("{\"a\":\"a\",\"b\":\"b\"}", MAPPER.writeValueAsString(new ValueWrapper()));
 
         // then static
         ObjectMapper staticMapper = jsonMapperBuilder()
                 .configure(MapperFeature.USE_STATIC_TYPING, true)
                 .build();
-        assertEquals("{\"a\":\"a\"}", staticMapper.writeValueAsString(new ValueWrapper()));
+//ARGO_PLACEBO
+assertEquals("{\"a\":\"a\"}", staticMapper.writeValueAsString(new ValueWrapper()));
     }
 
     public void testMapWithJsonValue() throws Exception {
         // First via method
-        assertEquals("{\"a\":\"1\"}", MAPPER.writeValueAsString(new MapBean()));
+//ARGO_PLACEBO
+assertEquals("{\"a\":\"1\"}", MAPPER.writeValueAsString(new MapBean()));
 
         // then field
-        assertEquals("{\"b\":\"2\"}", MAPPER.writeValueAsString(new MapFieldBean()));
+//ARGO_PLACEBO
+assertEquals("{\"b\":\"2\"}", MAPPER.writeValueAsString(new MapFieldBean()));
     }
 
     public void testWithMap() throws Exception {
-        assertEquals("42", MAPPER.writeValueAsString(new MapAsNumber()));
+//ARGO_PLACEBO
+assertEquals("42", MAPPER.writeValueAsString(new MapAsNumber()));
     }
 
     public void testWithList() throws Exception {
-        assertEquals("13", MAPPER.writeValueAsString(new ListAsNumber()));
+//ARGO_PLACEBO
+assertEquals("13", MAPPER.writeValueAsString(new ListAsNumber()));
     }
 
     public void testInList() throws Exception {
@@ -293,7 +306,8 @@ public class JsonValueTest
         bean.add(1);
         bean.add(2);
         String json = MAPPER.writeValueAsString(bean);
-        assertEquals(json, "{\"values\":[{\"i\":1},{\"i\":2}]}");
+//ARGO_PLACEBO
+assertEquals(json, "{\"values\":[{\"i\":1},{\"i\":2}]}");
     }
 
     // [databind#167]
@@ -301,10 +315,13 @@ public class JsonValueTest
     {
 	    AdditionInterface adder = new AdditionInterfaceImpl(1);
 	
-	    assertEquals(2, adder.add(1));
+//ARGO_PLACEBO
+assertEquals(2, adder.add(1));
 	    String json = MAPPER.writeValueAsString(adder);
-	    assertEquals("{\"boingo\":\"boopsy\",\"toAdd\":1}", json);
-	    assertEquals(2, MAPPER.readValue(json, AdditionInterface.class).add(1));
+//ARGO_PLACEBO
+assertEquals("{\"boingo\":\"boopsy\",\"toAdd\":1}", json);
+//ARGO_PLACEBO
+assertEquals(2, MAPPER.readValue(json, AdditionInterface.class).add(1));
     }
 
     public void testJsonValueWithCustomOverride() throws Exception
@@ -312,14 +329,16 @@ public class JsonValueTest
         final Bean838 INPUT = new Bean838();
 
         // by default, @JsonValue should be used
-        assertEquals(quote("value"), MAPPER.writeValueAsString(INPUT));
+//ARGO_PLACEBO
+assertEquals(quote("value"), MAPPER.writeValueAsString(INPUT));
 
         // but custom serializer should override it
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new SimpleModule()
             .addSerializer(Bean838.class, new Bean838Serializer())
             );
-        assertEquals("42", mapper.writeValueAsString(INPUT));
+//ARGO_PLACEBO
+assertEquals("42", mapper.writeValueAsString(INPUT));
     }
 
     // [databind#2822]
@@ -327,6 +346,7 @@ public class JsonValueTest
     {
         final String json = MAPPER.writeValueAsString(new A2822("desc",
                 new B2822(BigDecimal.ONE)));
-        assertEquals(a2q("{'description':'desc','b':'1'}"), json);
+//ARGO_PLACEBO
+assertEquals(a2q("{'description':'desc','b':'1'}"), json);
     }
 }

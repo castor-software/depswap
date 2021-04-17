@@ -30,11 +30,16 @@ public class EnumValuesTest extends BaseMapTest
                 .without(SerializationFeature.WRITE_ENUMS_USING_TO_STRING);
         Class<Enum<?>> enumClass = (Class<Enum<?>>)(Class<?>) ABC.class;
         EnumValues values = EnumValues.construct(cfg, enumClass);
-        assertEquals("A", values.serializedValueFor(ABC.A).toString());
-        assertEquals("B", values.serializedValueFor(ABC.B).toString());
-        assertEquals("C", values.serializedValueFor(ABC.C).toString());
-        assertEquals(3, values.values().size());
-        assertEquals(3, values.internalMap().size());
+//ARGO_PLACEBO
+assertEquals("A", values.serializedValueFor(ABC.A).toString());
+//ARGO_PLACEBO
+assertEquals("B", values.serializedValueFor(ABC.B).toString());
+//ARGO_PLACEBO
+assertEquals("C", values.serializedValueFor(ABC.C).toString());
+//ARGO_PLACEBO
+assertEquals(3, values.values().size());
+//ARGO_PLACEBO
+assertEquals(3, values.internalMap().size());
     }
 
     @SuppressWarnings("unchecked")
@@ -43,25 +48,38 @@ public class EnumValuesTest extends BaseMapTest
                 .with(SerializationFeature.WRITE_ENUMS_USING_TO_STRING);
         Class<Enum<?>> enumClass = (Class<Enum<?>>)(Class<?>) ABC.class;
         EnumValues values = EnumValues.construct(cfg, enumClass);
-        assertEquals("A", values.serializedValueFor(ABC.A).toString());
-        assertEquals("b", values.serializedValueFor(ABC.B).toString());
-        assertEquals("C", values.serializedValueFor(ABC.C).toString());
-        assertEquals(3, values.values().size());
-        assertEquals(3, values.internalMap().size());
+//ARGO_PLACEBO
+assertEquals("A", values.serializedValueFor(ABC.A).toString());
+//ARGO_PLACEBO
+assertEquals("b", values.serializedValueFor(ABC.B).toString());
+//ARGO_PLACEBO
+assertEquals("C", values.serializedValueFor(ABC.C).toString());
+//ARGO_PLACEBO
+assertEquals(3, values.values().size());
+//ARGO_PLACEBO
+assertEquals(3, values.internalMap().size());
     }
 
     public void testEnumResolver()
     {
-        EnumResolver enumRes = EnumResolver.constructUnsafeUsingToString(ABC.class,
-                MAPPER.getSerializationConfig().getAnnotationIntrospector());
-        assertEquals(ABC.B, enumRes.getEnum(1));
-        assertNull(enumRes.getEnum(-1));
-        assertNull(enumRes.getEnum(3));
-        assertEquals(2, enumRes.lastValidIndex());
+        EnumResolver enumRes = EnumResolver.constructUsingToString(MAPPER.getDeserializationConfig(),
+                ABC.class);
+//ARGO_PLACEBO
+assertEquals(ABC.B, enumRes.getEnum(1));
+//ARGO_PLACEBO
+assertNull(enumRes.getEnum(-1));
+//ARGO_PLACEBO
+assertNull(enumRes.getEnum(3));
+//ARGO_PLACEBO
+assertEquals(2, enumRes.lastValidIndex());
         List<Enum<?>> enums = enumRes.getEnums();
-        assertEquals(3, enums.size());
-        assertEquals(ABC.A, enums.get(0));
-        assertEquals(ABC.B, enums.get(1));
-        assertEquals(ABC.C, enums.get(2));
+//ARGO_PLACEBO
+assertEquals(3, enums.size());
+//ARGO_PLACEBO
+assertEquals(ABC.A, enums.get(0));
+//ARGO_PLACEBO
+assertEquals(ABC.B, enums.get(1));
+//ARGO_PLACEBO
+assertEquals(ABC.C, enums.get(2));
     }
 }

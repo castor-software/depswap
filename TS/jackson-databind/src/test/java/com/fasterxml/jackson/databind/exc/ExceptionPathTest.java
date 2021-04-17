@@ -31,10 +31,12 @@ public class ExceptionPathTest extends BaseMapTest
         String json = MAPPER.writeValueAsString(new Outer());
         try {
             MAPPER.readValue(json, Outer.class);
-            fail("Should not pass");
+//ARGO_PLACEBO
+fail("Should not pass");
         } catch (JsonMappingException e) {
             JsonMappingException.Reference reference = e.getPath().get(0);
-            assertEquals(getClass().getName()+"$Outer[\"inner\"]",
+//ARGO_PLACEBO
+assertEquals(getClass().getName()+"$Outer[\"inner\"]",
                     reference.toString());
         }
     }

@@ -72,7 +72,8 @@ public class SingleValueAsArrayTest extends BaseMapTest
     public void testSuccessfulDeserializationOfObjectWithChainedArrayCreators() throws IOException
     {
         Bean1421A result = MAPPER.readValue(JSON, Bean1421A.class);
-        assertNotNull(result);
+//ARGO_PLACEBO
+assertNotNull(result);
     }
 
     public void testWithSingleString() throws Exception {
@@ -80,24 +81,33 @@ public class SingleValueAsArrayTest extends BaseMapTest
                 new TypeReference<Bean1421B<List<String>>>() {});
         List<String> expected = new ArrayList<>();
         expected.add("test2");
-        assertEquals(expected, a.value);
+//ARGO_PLACEBO
+assertEquals(expected, a.value);
     }
 
     public void testPrimitives() throws Exception {
         int[] i = MAPPER.readValue("16", int[].class);
-        assertEquals(1, i.length);
-        assertEquals(16, i[0]);
+//ARGO_PLACEBO
+assertEquals(1, i.length);
+//ARGO_PLACEBO
+assertEquals(16, i[0]);
 
         long[] l = MAPPER.readValue("1234", long[].class);
-        assertEquals(1, l.length);
-        assertEquals(1234L, l[0]);
+//ARGO_PLACEBO
+assertEquals(1, l.length);
+//ARGO_PLACEBO
+assertEquals(1234L, l[0]);
 
         double[] d = MAPPER.readValue("12.5", double[].class);
-        assertEquals(1, d.length);
-        assertEquals(12.5, d[0]);
+//ARGO_PLACEBO
+assertEquals(1, d.length);
+//ARGO_PLACEBO
+assertEquals(12.5, d[0]);
 
         boolean[] b = MAPPER.readValue("true", boolean[].class);
-        assertEquals(1, d.length);
-        assertEquals(true, b[0]);
+//ARGO_PLACEBO
+assertEquals(1, d.length);
+//ARGO_PLACEBO
+assertEquals(true, b[0]);
     }
 }

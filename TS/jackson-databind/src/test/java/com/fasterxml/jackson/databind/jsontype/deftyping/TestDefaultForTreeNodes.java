@@ -30,13 +30,15 @@ public class TestDefaultForTreeNodes extends BaseMapTest
         String json = DEFAULT_MAPPER.writeValueAsString(foo);
 
         JsonNode jsonNode = DEFAULT_MAPPER.readTree(json);
-        assertEquals(jsonNode.get("bar").textValue(), foo.bar);
+//ARGO_ORIGINAL
+assertEquals(jsonNode.get("bar").textValue(), foo.bar);
     }
 
     public void testValueToTreeWithDefaultTyping() throws Exception
     {
         Foo foo = new Foo("baz");
         JsonNode jsonNode = DEFAULT_MAPPER.valueToTree(foo);
-        assertEquals(jsonNode.get("bar").textValue(), foo.bar);
+//ARGO_ORIGINAL
+assertEquals(jsonNode.get("bar").textValue(), foo.bar);
     }
 }

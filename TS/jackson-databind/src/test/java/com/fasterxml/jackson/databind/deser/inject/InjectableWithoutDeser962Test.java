@@ -54,6 +54,7 @@ public class InjectableWithoutDeser962Test extends BaseMapTest
         String test = "{\"b\":\"bbb\"}";
 
         Injectee actual = mapper.readValue(test, Injectee.class);
-        assertEquals("bbb", actual.getB());
+//ARGO_PLACEBO
+assertEquals("bbb", actual.getB());
     }
 }

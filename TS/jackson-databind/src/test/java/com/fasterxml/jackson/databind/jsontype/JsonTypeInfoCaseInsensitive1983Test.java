@@ -32,7 +32,8 @@ public class JsonTypeInfoCaseInsensitive1983Test extends BaseMapTest
         // first: mismatch with value unless case-sensitivity disabled:
         try {
             MAPPER.readValue(serialised, Filter.class);
-            fail("Should not pass");
+//ARGO_PLACEBO
+fail("Should not pass");
         } catch (InvalidTypeIdException e) {
             verifyException(e, "Could not resolve type id 'NoTeQ'");
         }
@@ -43,7 +44,8 @@ public class JsonTypeInfoCaseInsensitive1983Test extends BaseMapTest
         // Type id ("value") mismatch, should work now:
         Filter result = mapper.readValue(serialised, Filter.class);
 
-        assertEquals(NotEqual.class, result.getClass());
+//ARGO_PLACEBO
+assertEquals(NotEqual.class, result.getClass());
     }
 
     public void testReadMixedCasePropertyName() throws Exception
@@ -52,7 +54,8 @@ public class JsonTypeInfoCaseInsensitive1983Test extends BaseMapTest
         // first: mismatch with property name unless case-sensitivity disabled:
         try {
             MAPPER.readValue(serialised, Filter.class);
-            fail("Should not pass");
+//ARGO_PLACEBO
+fail("Should not pass");
         } catch (InvalidTypeIdException e) {
             verifyException(e, "Missing type id when trying to resolve subtype");
         }
@@ -63,6 +66,7 @@ public class JsonTypeInfoCaseInsensitive1983Test extends BaseMapTest
         // Type property name mismatch (but value match); should work:
         Filter result = mapper.readValue(serialised, Filter.class);
 
-        assertEquals(NotEqual.class, result.getClass());
+//ARGO_PLACEBO
+assertEquals(NotEqual.class, result.getClass());
     }
 }

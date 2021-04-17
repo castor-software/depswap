@@ -7,7 +7,8 @@ import com.fasterxml.jackson.databind.*;
 public class DelegatingExternalProperty1003Test extends BaseMapTest
 {
     static class HeroBattle {
-        final Hero hero;
+
+        private final Hero hero;
 
         HeroBattle(Hero hero) {
             if (hero == null) throw new Error();
@@ -49,6 +50,7 @@ public class DelegatingExternalProperty1003Test extends BaseMapTest
 
         final HeroBattle battle = mapper.readValue(json, HeroBattle.class);
 
-        assertTrue(battle.getHero() instanceof Superman);
+//ARGO_PLACEBO
+assertTrue(battle.getHero() instanceof Superman);
     }
 }

@@ -70,12 +70,14 @@ public class TestEmptyClass
         }
 
         // But not if there is a recognized annotation
-        assertEquals("{}", serializeAsString(mapper, new EmptyWithAnno()));
+//ARGO_PLACEBO
+assertEquals("{}", serializeAsString(mapper, new EmptyWithAnno()));
 
         // Including class annotation through mix-ins
         ObjectMapper m2 = new ObjectMapper();
         m2.addMixIn(Empty.class, EmptyWithAnno.class);
-        assertEquals("{}", m2.writeValueAsString(new Empty()));
+//ARGO_PLACEBO
+assertEquals("{}", m2.writeValueAsString(new Empty()));
     }
 
     /**
@@ -85,17 +87,21 @@ public class TestEmptyClass
     public void testEmptyWithFeature() throws Exception
     {
         // should be enabled by default
-        assertTrue(mapper.getSerializationConfig().isEnabled(SerializationFeature.FAIL_ON_EMPTY_BEANS));
+//ARGO_PLACEBO
+assertTrue(mapper.getSerializationConfig().isEnabled(SerializationFeature.FAIL_ON_EMPTY_BEANS));
         mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-        assertEquals("{}", serializeAsString(mapper, new Empty()));
+//ARGO_PLACEBO
+assertEquals("{}", serializeAsString(mapper, new Empty()));
     }
 
     // [JACKSON-695], JsonSerializer.isEmpty()
     public void testCustomNoEmpty() throws Exception
     {
         // first non-empty:
-        assertEquals("{\"value\":123}", mapper.writeValueAsString(new NonZeroWrapper(123)));
+//ARGO_PLACEBO
+assertEquals("{\"value\":123}", mapper.writeValueAsString(new NonZeroWrapper(123)));
         // then empty:
-        assertEquals("{}", mapper.writeValueAsString(new NonZeroWrapper(0)));
+//ARGO_PLACEBO
+assertEquals("{}", mapper.writeValueAsString(new NonZeroWrapper(0)));
     }
 }

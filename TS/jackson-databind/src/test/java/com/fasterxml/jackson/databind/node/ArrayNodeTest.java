@@ -9,6 +9,10 @@ import com.fasterxml.jackson.core.*;
 import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.exc.MismatchedInputException;
 
+import static com.fasterxml.jackson.databind.JSONTestUtils.//ARGO_ORIGINAL
+assertEquivalent;
+import static com.fasterxml.jackson.databind.JSONTestUtils.//ARGO_ORIGINAL
+assertNonEquivalent;
 import static java.util.Arrays.asList;
 
 /**
@@ -20,76 +24,124 @@ public class ArrayNodeTest
     public void testDirectCreation() throws IOException
     {
         ArrayNode n = new ArrayNode(JsonNodeFactory.instance);
-        assertStandardEquals(n);
-        assertFalse(n.elements().hasNext());
-        assertFalse(n.fieldNames().hasNext());
-        assertTrue(n.isEmpty());
+//ARGO_ORIGINAL
+assertStandardEquals(n);
+//ARGO_ORIGINAL
+assertFalse(n.elements().hasNext());
+//ARGO_ORIGINAL
+assertFalse(n.fieldNames().hasNext());
+//ARGO_ORIGINAL
+assertTrue(n.isEmpty());
         TextNode text = TextNode.valueOf("x");
         n.add(text);
-        assertEquals(1, n.size());
-        assertFalse(n.isEmpty());
-        assertFalse(0 == n.hashCode());
-        assertTrue(n.elements().hasNext());
+//ARGO_ORIGINAL
+assertEquals(1, n.size());
+//ARGO_ORIGINAL
+assertFalse(n.isEmpty());
+//ARGO_ORIGINAL
+assertFalse(0 == n.hashCode());
+//ARGO_ORIGINAL
+assertTrue(n.elements().hasNext());
         // no field names for arrays
-        assertFalse(n.fieldNames().hasNext());
-        assertNull(n.get("x")); // not used with arrays
-        assertTrue(n.path("x").isMissingNode());
-        assertSame(text, n.get(0));
+//ARGO_ORIGINAL
+assertFalse(n.fieldNames().hasNext());
+//ARGO_ORIGINAL
+assertNull(n.get("x")); // not used with arrays
+//ARGO_ORIGINAL
+assertTrue(n.path("x").isMissingNode());
+//ARGO_EQUIVALENT
+        assertEquivalent(text, n.get(0));
+//ARGO_ORIGINAL
+assertEquals(text.asText(), n.get(0).asText());
 
         // single element, so:
-        assertFalse(n.has("field"));
-        assertFalse(n.hasNonNull("field"));
-        assertTrue(n.has(0));
-        assertTrue(n.hasNonNull(0));
-        assertFalse(n.has(1));
-        assertFalse(n.hasNonNull(1));
+//ARGO_ORIGINAL
+assertFalse(n.has("field"));
+//ARGO_ORIGINAL
+assertFalse(n.hasNonNull("field"));
+//ARGO_ORIGINAL
+assertTrue(n.has(0));
+//ARGO_ORIGINAL
+assertTrue(n.hasNonNull(0));
+//ARGO_ORIGINAL
+assertFalse(n.has(1));
+//ARGO_ORIGINAL
+assertFalse(n.hasNonNull(1));
         
         // add null node too
         n.add((JsonNode) null);
-        assertEquals(2, n.size());
-        assertTrue(n.get(1).isNull());
-        assertTrue(n.has(1));
-        assertFalse(n.hasNonNull(1));
+//ARGO_ORIGINAL
+assertEquals(2, n.size());
+//ARGO_ORIGINAL
+assertTrue(n.get(1).isNull());
+//ARGO_ORIGINAL
+assertTrue(n.has(1));
+//ARGO_ORIGINAL
+assertFalse(n.hasNonNull(1));
         // change to text
         n.set(1, text);
-        assertSame(text, n.get(1));
+//ARGO_EQUIVALENT
+        assertEquivalent(text, n.get(1));
+//ARGO_ORIGINAL
+assertEquals(text.asText(), n.get(1).asText());
         n.set(0, null);
-        assertTrue(n.get(0).isNull());
+//ARGO_ORIGINAL
+assertTrue(n.get(0).isNull());
 
         // and finally, clear it all
         ArrayNode n2 = new ArrayNode(JsonNodeFactory.instance);
         n2.add("foobar");
-        assertFalse(n.equals(n2));
+//ARGO_ORIGINAL
+assertFalse(n.equals(n2));
         n.addAll(n2);
-        assertEquals(3, n.size());
+//ARGO_ORIGINAL
+assertEquals(3, n.size());
 
-        assertFalse(n.get(0).isTextual());
-        assertNotNull(n.remove(0));
-        assertEquals(2, n.size());
-        assertTrue(n.get(0).isTextual());
-        assertNull(n.remove(-1));
-        assertNull(n.remove(100));
-        assertEquals(2, n.size());
+//ARGO_ORIGINAL
+assertFalse(n.get(0).isTextual());
+//ARGO_ORIGINAL
+assertNotNull(n.remove(0));
+//ARGO_ORIGINAL
+assertEquals(2, n.size());
+//ARGO_ORIGINAL
+assertTrue(n.get(0).isTextual());
+//ARGO_ORIGINAL
+assertNull(n.remove(-1));
+//ARGO_ORIGINAL
+assertNull(n.remove(100));
+//ARGO_ORIGINAL
+assertEquals(2, n.size());
 
         ArrayList<JsonNode> nodes = new ArrayList<JsonNode>();
         nodes.add(text);
         n.addAll(nodes);
-        assertEquals(3, n.size());
-        assertNull(n.get(10000));
-        assertNull(n.remove(-4));
+//ARGO_ORIGINAL
+assertEquals(3, n.size());
+//ARGO_ORIGINAL
+assertNull(n.get(10000));
+//ARGO_ORIGINAL
+assertNull(n.remove(-4));
 
         TextNode text2 = TextNode.valueOf("b");
         n.insert(0, text2);
-        assertEquals(4, n.size());
-        assertSame(text2, n.get(0));
+//ARGO_ORIGINAL
+assertEquals(4, n.size());
+//ARGO_EQUIVALENT
+        assertEquivalent(text2, n.get(0));
+//ARGO_ORIGINAL
+assertEquals(text2.asText(), n.get(0).asText());
 
-        assertNotNull(n.addArray());
-        assertEquals(5, n.size());
+//ARGO_ORIGINAL
+assertNotNull(n.addArray());
+//ARGO_ORIGINAL
+assertEquals(5, n.size());
         n.addPOJO("foo");
-        assertEquals(6, n.size());
+//ARGO_ORIGINAL
+assertEquals(6, n.size());
 
         n.removeAll();
-        assertEquals(0, n.size());
+//ARGO_ORIGINAL
+assertEquals(0, n.size());
     }
 
     public void testDirectCreation2() throws IOException
@@ -99,27 +151,37 @@ public class ArrayNodeTest
         list.add(f.booleanNode(true));
         list.add(f.textNode("foo"));
         ArrayNode n = new ArrayNode(f, list);
-        assertEquals(2, n.size());
-        assertTrue(n.get(0).isBoolean());
-        assertTrue(n.get(1).isTextual());
+//ARGO_ORIGINAL
+assertEquals(2, n.size());
+//ARGO_ORIGINAL
+assertTrue(n.get(0).isBoolean());
+//ARGO_ORIGINAL
+assertTrue(n.get(1).isTextual());
 
         // also, should fail with invalid set attempt
         try {
             n.set(2, f.nullNode());
-            fail("Should not pass");
+//ARGO_ORIGINAL
+fail("Should not pass");
         } catch (IndexOutOfBoundsException e) {
             verifyException(e, "illegal index");
         }
         n.insert(1, (String) null);
-        assertEquals(3, n.size());
-        assertTrue(n.get(0).isBoolean());
-        assertTrue(n.get(1).isNull());
-        assertTrue(n.get(2).isTextual());
+//ARGO_ORIGINAL
+assertEquals(3, n.size());
+//ARGO_ORIGINAL
+assertTrue(n.get(0).isBoolean());
+//ARGO_ORIGINAL
+assertTrue(n.get(1).isNull());
+//ARGO_ORIGINAL
+assertTrue(n.get(2).isTextual());
 
         n.removeAll();
         n.insert(0, (JsonNode) null);
-        assertEquals(1, n.size());
-        assertTrue(n.get(0).isNull());
+//ARGO_ORIGINAL
+assertEquals(1, n.size());
+//ARGO_ORIGINAL
+assertTrue(n.get(0).isNull());
     }
 
     public void testArrayViaMapper() throws Exception
@@ -127,20 +189,27 @@ public class ArrayNodeTest
         final String JSON = "[[[-0.027512,51.503221],[-0.008497,51.503221],[-0.008497,51.509744],[-0.027512,51.509744]]]";
 
         JsonNode n = objectMapper().readTree(JSON);
-        assertNotNull(n);
-        assertTrue(n.isArray());
+//ARGO_ORIGINAL
+assertNotNull(n);
+//ARGO_ORIGINAL
+assertTrue(n.isArray());
         ArrayNode an = (ArrayNode) n;
-        assertEquals(1, an.size());
+//ARGO_ORIGINAL
+assertEquals(1, an.size());
         ArrayNode an2 = (ArrayNode) n.get(0);
-        assertTrue(an2.isArray());
-        assertEquals(4, an2.size());
+//ARGO_ORIGINAL
+assertTrue(an2.isArray());
+//ARGO_ORIGINAL
+assertEquals(4, an2.size());
     }
 
     public void testAdds()
     {
         ArrayNode n = new ArrayNode(JsonNodeFactory.instance);
-        assertNotNull(n.addArray());
-        assertNotNull(n.addObject());
+//ARGO_ORIGINAL
+assertNotNull(n.addArray());
+//ARGO_ORIGINAL
+assertNotNull(n.addObject());
         n.addPOJO("foobar");
         n.add(1);
         n.add(1L);
@@ -148,17 +217,23 @@ public class ArrayNodeTest
         n.add(0.5f);
         n.add(new BigDecimal("0.2"));
         n.add(BigInteger.TEN);
-        assertEquals(9, n.size());
-        assertFalse(n.isEmpty());
+//ARGO_ORIGINAL
+assertEquals(9, n.size());
+//ARGO_ORIGINAL
+assertFalse(n.isEmpty());
 
-        assertNotNull(n.insertArray(0));
-        assertNotNull(n.insertObject(0));
+//ARGO_ORIGINAL
+assertNotNull(n.insertArray(0));
+//ARGO_ORIGINAL
+assertNotNull(n.insertObject(0));
         n.insertPOJO(2, "xxx");
-        assertEquals(12, n.size());
+//ARGO_ORIGINAL
+assertEquals(12, n.size());
 
         n.insert(0, BigInteger.ONE);
         n.insert(0, new BigDecimal("0.1"));
-        assertEquals(14, n.size());
+//ARGO_ORIGINAL
+assertEquals(14, n.size());
     }
 
     public void testNullAdds()
@@ -177,10 +252,12 @@ public class ArrayNodeTest
         array.add((Long) null);
         array.add((String) null);
 
-        assertEquals(10, array.size());
+//ARGO_ORIGINAL
+assertEquals(10, array.size());
         
         for (JsonNode node : array) {
-            assertTrue(node.isNull());
+//ARGO_ORIGINAL
+assertTrue(node.isNull());
         }
     }
 
@@ -192,13 +269,16 @@ public class ArrayNodeTest
         // test
         array.addAll(asList(null, JsonNodeFactory.instance.objectNode()));
 
-        // assertions
-        assertEquals(2, array.size());
+        //assertions
+//ARGO_ORIGINAL
+assertEquals(2, array.size());
 
         for (JsonNode node : array) {
-            assertNotNull(node);
+//ARGO_ORIGINAL
+assertNotNull(node);
         }
-        assertEquals(NullNode.getInstance(), array.get(0));
+//ARGO_ORIGINAL
+assertEquals(NullNode.getInstance(), array.get(0));
     }
 
     public void testNullInserts()
@@ -219,10 +299,12 @@ public class ArrayNodeTest
         array.insert(array.size(), (Long) null);
         array.insert(1, (String) null);
 
-        assertEquals(10, array.size());
+//ARGO_ORIGINAL
+assertEquals(10, array.size());
         
         for (JsonNode node : array) {
-            assertTrue(node.isNull());
+//ARGO_ORIGINAL
+assertTrue(node.isNull());
         }
     }
     
@@ -232,12 +314,16 @@ public class ArrayNodeTest
         ArrayNode a2 = JsonNodeFactory.instance.arrayNode();
         // used to throw NPE before fix:
         a1.addAll(a2);
-        assertEquals(0, a1.size());
-        assertEquals(0, a2.size());
+//ARGO_ORIGINAL
+assertEquals(0, a1.size());
+//ARGO_ORIGINAL
+assertEquals(0, a2.size());
 
         a2.addAll(a1);
-        assertEquals(0, a1.size());
-        assertEquals(0, a2.size());
+//ARGO_ORIGINAL
+assertEquals(0, a1.size());
+//ARGO_ORIGINAL
+assertEquals(0, a2.size());
     }
 
     public void testNullChecking2()
@@ -255,27 +341,40 @@ public class ArrayNodeTest
         n.add(123);
         TreeTraversingParser p = new TreeTraversingParser(n, null);
         p.setCodec(null);
-        assertNull(p.getCodec());
-        assertNotNull(p.getParsingContext());
-        assertTrue(p.getParsingContext().inRoot());
-        assertNotNull(p.getTokenLocation());
-        assertNotNull(p.getCurrentLocation());
-        assertNull(p.getEmbeddedObject());
-        assertNull(p.currentNode());
+//ARGO_ORIGINAL
+assertNull(p.getCodec());
+//ARGO_ORIGINAL
+assertNotNull(p.getParsingContext());
+//ARGO_ORIGINAL
+assertTrue(p.getParsingContext().inRoot());
+//ARGO_ORIGINAL
+assertNotNull(p.getTokenLocation());
+//ARGO_ORIGINAL
+assertNotNull(p.getCurrentLocation());
+//ARGO_ORIGINAL
+assertNull(p.getEmbeddedObject());
+//ARGO_ORIGINAL
+assertNull(p.currentNode());
 
         //assertNull(p.getNumberType());
 
-        assertToken(JsonToken.START_ARRAY, p.nextToken());
-        assertNotNull(p.getParsingContext());
-        assertTrue(p.getParsingContext().inArray());
+//ARGO_ORIGINAL
+assertToken(JsonToken.START_ARRAY, p.nextToken());
+//ARGO_ORIGINAL
+assertNotNull(p.getParsingContext());
+//ARGO_ORIGINAL
+assertTrue(p.getParsingContext().inArray());
         p.skipChildren();
-        assertToken(JsonToken.END_ARRAY, p.currentToken());
+//ARGO_ORIGINAL
+assertToken(JsonToken.END_ARRAY, p.currentToken());
         p.close();
 
         p = new TreeTraversingParser(n, null);
         p.nextToken();
-        assertToken(JsonToken.VALUE_NUMBER_INT, p.nextToken());
-        assertEquals(JsonParser.NumberType.INT, p.getNumberType());
+//ARGO_ORIGINAL
+assertToken(JsonToken.VALUE_NUMBER_INT, p.nextToken());
+//ARGO_ORIGINAL
+assertEquals(JsonParser.NumberType.INT, p.getNumberType());
         p.close();
     }
 
@@ -284,69 +383,93 @@ public class ArrayNodeTest
         ArrayNode n1 = new ArrayNode(null);
         ArrayNode n2 = new ArrayNode(null);
 
-        assertTrue(n1.equals(n2));
-        assertTrue(n2.equals(n1));
+        //ARGO_EQUIVALENT
+assertEquivalent(n1,n2);
 
         n1.add(TextNode.valueOf("Test"));
 
-        assertFalse(n1.equals(n2));
-        assertFalse(n2.equals(n1));
+        //ARGO_EQUIVALENT
+assertNonEquivalent(n1, n2);
 
         n2.add(TextNode.valueOf("Test"));
 
-        assertTrue(n1.equals(n2));
-        assertTrue(n2.equals(n1));
+        //ARGO_EQUIVALENT
+assertEquivalent(n1,n2);
     }
 
     public void testSimpleArray() throws Exception
     {
         ArrayNode result = objectMapper().createArrayNode();
 
-        assertTrue(result.isArray());
-        assertType(result, ArrayNode.class);
+//ARGO_ORIGINAL
+assertTrue(result.isArray());
+//ARGO_ORIGINAL
+assertType(result, ArrayNode.class);
 
-        assertFalse(result.isObject());
-        assertFalse(result.isNumber());
-        assertFalse(result.isNull());
-        assertFalse(result.isTextual());
+//ARGO_ORIGINAL
+assertFalse(result.isObject());
+//ARGO_ORIGINAL
+assertFalse(result.isNumber());
+//ARGO_ORIGINAL
+assertFalse(result.isNull());
+//ARGO_ORIGINAL
+assertFalse(result.isTextual());
 
         // and let's add stuff...
         result.add(false);
         result.insertNull(0);
 
         // should be equal to itself no matter what
-        assertEquals(result, result);
-        assertFalse(result.equals(null)); // but not to null
+//ARGO_ORIGINAL
+assertEquals(result, result);
+//ARGO_ORIGINAL
+assertFalse(result.equals(null)); // but not to null
 
         // plus see that we can access stuff
-        assertEquals(NullNode.instance, result.path(0));
-        assertEquals(NullNode.instance, result.get(0));
-        assertEquals(BooleanNode.FALSE, result.path(1));
-        assertEquals(BooleanNode.FALSE, result.get(1));
-        assertEquals(2, result.size());
+//ARGO_ORIGINAL
+assertEquals(NullNode.instance, result.path(0));
+//ARGO_ORIGINAL
+assertEquals(NullNode.instance, result.get(0));
+//ARGO_ORIGINAL
+assertEquals(BooleanNode.FALSE, result.path(1));
+//ARGO_ORIGINAL
+assertEquals(BooleanNode.FALSE, result.get(1));
+//ARGO_ORIGINAL
+assertEquals(2, result.size());
 
-        assertNull(result.get(-1));
-        assertNull(result.get(2));
+//ARGO_ORIGINAL
+assertNull(result.get(-1));
+//ARGO_ORIGINAL
+assertNull(result.get(2));
         JsonNode missing = result.path(2);
-        assertTrue(missing.isMissingNode());
-        assertTrue(result.path(-100).isMissingNode());
+//ARGO_ORIGINAL
+assertTrue(missing.isMissingNode());
+//ARGO_ORIGINAL
+assertTrue(result.path(-100).isMissingNode());
 
         // then construct and compare
         ArrayNode array2 = objectMapper().createArrayNode();
         array2.addNull();
         array2.add(false);
-        assertEquals(result, array2);
+        //ARGO_EQUIVALENT
+assertEquivalent(result, array2);
 
         // plus remove entries
         JsonNode rm1 = array2.remove(0);
-        assertEquals(NullNode.instance, rm1);
-        assertEquals(1, array2.size());
-        assertEquals(BooleanNode.FALSE, array2.get(0));
-        assertFalse(result.equals(array2));
+//ARGO_ORIGINAL
+assertEquals(NullNode.instance, rm1);
+//ARGO_ORIGINAL
+assertEquals(1, array2.size());
+//ARGO_ORIGINAL
+assertEquals(BooleanNode.FALSE, array2.get(0));
+//ARGO_ORIGINAL
+assertFalse(result.equals(array2));
 
         JsonNode rm2 = array2.remove(0);
-        assertEquals(BooleanNode.FALSE, rm2);
-        assertEquals(0, array2.size());
+//ARGO_ORIGINAL
+assertEquals(BooleanNode.FALSE, rm2);
+//ARGO_ORIGINAL
+assertEquals(0, array2.size());
     }
 
     public void testSimpleMismatch() throws Exception
@@ -354,9 +477,10 @@ public class ArrayNodeTest
         ObjectMapper mapper = objectMapper();
         try {
             mapper.readValue(" 123 ", ArrayNode.class);
-            fail("Should not pass");
+//ARGO_PLACEBO
+fail("Should not pass");
         } catch (MismatchedInputException e) {
-            verifyException(e, "out of VALUE_NUMBER_INT token");
+            verifyException(e, "from Integer value (token `JsonToken.VALUE_NUMBER_INT`)");
         }
     }
 }

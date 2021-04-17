@@ -47,10 +47,12 @@ public class TestExceptionHandlingWithDefaultDeserialization extends BaseMapTest
         // when
         try {
             mapper.readValue(input, Foo.class);
-            fail("Upsss! Exception has not been thrown.");
+//ARGO_PLACEBO
+fail("Upsss! Exception has not been thrown.");
         } catch (JsonMappingException ex) {
             // then
-            assertEquals(THIS+"$Foo[\"bar\"]->"+THIS+"$Bar[\"baz\"]",
+//ARGO_PLACEBO
+assertEquals(THIS+"$Foo[\"bar\"]->"+THIS+"$Bar[\"baz\"]",
                     ex.getPathReference());
         }
     }

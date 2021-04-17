@@ -9,6 +9,8 @@ import com.fasterxml.jackson.core.*;
 import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.exc.MismatchedInputException;
 
+import static com.fasterxml.jackson.databind.JSONTestUtils.assertEquivalent;
+import static com.fasterxml.jackson.databind.JSONTestUtils.assertNonEquivalent;
 import static java.util.Arrays.asList;
 
 /**
@@ -287,18 +289,24 @@ public class ArrayNodeTest
         ArrayNode n1 = new ArrayNode(null);
         ArrayNode n2 = new ArrayNode(null);
 
-        assertTrue(n1.equals(n2));
-        assertTrue(n2.equals(n1));
+        //ARGO_EQUIVALENT
+        assertEquivalent(n1,n2);
+        //assertTrue(n1.equals(n2));
+        //assertTrue(n2.equals(n1));
 
         n1.add(TextNode.valueOf("Test"));
 
-        assertFalse(n1.equals(n2));
-        assertFalse(n2.equals(n1));
+        //ARGO_EQUIVALENT
+        assertNonEquivalent(n1, n2);
+        //assertFalse(n1.equals(n2));
+        //assertFalse(n2.equals(n1));
 
         n2.add(TextNode.valueOf("Test"));
 
-        assertTrue(n1.equals(n2));
-        assertTrue(n2.equals(n1));
+        //ARGO_EQUIVALENT
+        assertEquivalent(n1,n2);
+        //assertTrue(n1.equals(n2));
+        //assertTrue(n2.equals(n1));
     }
 
     public void testSimpleArray() throws Exception
@@ -338,7 +346,8 @@ public class ArrayNodeTest
         ArrayNode array2 = objectMapper().createArrayNode();
         array2.addNull();
         array2.add(false);
-        assertEquals(result, array2);
+        //ARGO_EQUIVALENT
+        assertEquivalent(result, array2);
 
         // plus remove entries
         JsonNode rm1 = array2.remove(0);

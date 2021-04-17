@@ -39,6 +39,7 @@ public class TestJsonSerialize3 extends BaseMapTest
         MyObject object = new MyObject();
         object.list = Arrays.asList("foo");
         String json = m.writeValueAsString(object);
-        assertEquals("{\"list\":[\"bar\"]}", json);
+//ARGO_PLACEBO
+assertEquals("{\"list\":[\"bar\"]}", json);
     }
 }

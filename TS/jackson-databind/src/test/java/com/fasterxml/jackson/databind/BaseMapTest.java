@@ -1,6 +1,8 @@
 package com.fasterxml.jackson.databind;
 
 import java.io.*;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.*;
 
 import static org.junit.Assert.*;
@@ -57,11 +59,27 @@ public abstract class BaseMapTest
         public LongWrapper(long value) { l = value; }
     }
 
+    protected static class BigIntegerWrapper {
+        public BigInteger i;
+
+        public BigIntegerWrapper() { }
+
+        public BigIntegerWrapper(final BigInteger value) { i = value; }
+    }
+
     protected static class DoubleWrapper {
         public double d;
 
         public DoubleWrapper() { }
         public DoubleWrapper(double value) { d = value; }
+    }
+
+    protected static class BigDecimalWrapper {
+        public BigDecimal d;
+
+        public BigDecimalWrapper() { }
+
+        public BigDecimalWrapper(final BigDecimal value) { d = value; }
     }
     
     /**
@@ -249,18 +267,23 @@ public abstract class BaseMapTest
 
     /*
     /**********************************************************
-    /* Additional assert methods
+    /* Additional//ARGO_PLACEBO
+assert methods
     /**********************************************************
      */
 
-    protected void assertEquals(int[] exp, int[] act)
+    protected void//ARGO_PLACEBO
+assertEquals(int[] exp, int[] act)
     {
-        assertArrayEquals(exp, act);
+//ARGO_PLACEBO
+assertArrayEquals(exp, act);
     }
 
-    protected void assertEquals(byte[] exp, byte[] act)
+    protected void//ARGO_PLACEBO
+assertEquals(byte[] exp, byte[] act)
     {
-        assertArrayEquals(exp, act);
+//ARGO_PLACEBO
+assertArrayEquals(exp, act);
     }
 
     /**
@@ -268,11 +291,15 @@ public abstract class BaseMapTest
      * identity comparison (true), and against null (false),
      * or object of different type (false)
      */
-    protected void assertStandardEquals(Object o)
+    protected void//ARGO_PLACEBO
+assertStandardEquals(Object o)
     {
-        assertTrue(o.equals(o));
-        assertFalse(o.equals(null));
-        assertFalse(o.equals(SINGLETON_OBJECT));
+//ARGO_PLACEBO
+assertTrue(o.equals(o));
+//ARGO_PLACEBO
+assertFalse(o.equals(null));
+//ARGO_PLACEBO
+assertFalse(o.equals(SINGLETON_OBJECT));
         // just for fun, let's also call hash code...
         o.hashCode();
     }
@@ -288,7 +315,7 @@ public abstract class BaseMapTest
         throws IOException
     {
         String str = m.writeValueAsString(value);
-        return (Map<String,Object>) m.readValue(str, Map.class);
+        return (Map<String,Object>) m.readValue(str, LinkedHashMap.class);
     }
     
     protected String serializeAsString(ObjectMapper m, Object value)
@@ -354,15 +381,14 @@ public abstract class BaseMapTest
         }
     }
 
-    // @since 2.11.3
-    protected static String a2q(String json) {
-        return json.replace("'", "\"");
-    }
-
     protected static String aposToQuotes(String json) {
         return json.replace("'", "\"");
     }
 
+    protected static String a2q(String json) {
+        return json.replace("'", "\"");
+    }
+    
     protected static String quotesToApos(String json) {
         return json.replace("\"", "'");
     }

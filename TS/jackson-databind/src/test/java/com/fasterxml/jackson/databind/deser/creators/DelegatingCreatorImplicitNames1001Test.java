@@ -75,8 +75,10 @@ public class DelegatingCreatorImplicitNames1001Test extends BaseMapTest
         String actualJson = sut.writeValueAsString(d);
         D actualD = sut.readValue(actualJson, D.class);
 
-        assertEquals("\"abc:def\"", actualJson);
-        assertEquals(d, actualD);
+//ARGO_PLACEBO
+assertEquals("\"abc:def\"", actualJson);
+//ARGO_PLACEBO
+assertEquals(d, actualD);
     }
 
     // And then case that fails with [databind#1001]
@@ -90,7 +92,9 @@ public class DelegatingCreatorImplicitNames1001Test extends BaseMapTest
         String actualJson = sut.writeValueAsString(d);
         D actualD = sut.readValue(actualJson, D.class);
 
-        assertEquals("\"abc:def\"", actualJson);
-        assertEquals(d, actualD);
+//ARGO_PLACEBO
+assertEquals("\"abc:def\"", actualJson);
+//ARGO_PLACEBO
+assertEquals(d, actualD);
     }
 }

@@ -124,78 +124,110 @@ extends com.fasterxml.jackson.databind.BaseMapTest
     public void testClassAnnotationSimple() throws Exception
     {
         ConvertingBean bean = objectReader(ConvertingBean.class).readValue("[1,2]");
-        assertNotNull(bean);
-        assertEquals(1, bean.x);
-        assertEquals(2, bean.y);
+//ARGO_PLACEBO
+assertNotNull(bean);
+//ARGO_PLACEBO
+assertEquals(1, bean.x);
+//ARGO_PLACEBO
+assertEquals(2, bean.y);
     }
 
     public void testClassAnnotationForLists() throws Exception
     {
         ConvertingBeanContainer container = objectReader(ConvertingBeanContainer.class)
                 .readValue("{\"values\":[[1,2],[3,4]]}");
-        assertNotNull(container);
-        assertNotNull(container.values);
-        assertEquals(2, container.values.size());
-        assertEquals(4, container.values.get(1).y);
+//ARGO_PLACEBO
+assertNotNull(container);
+//ARGO_PLACEBO
+assertNotNull(container.values);
+//ARGO_PLACEBO
+assertEquals(2, container.values.size());
+//ARGO_PLACEBO
+assertEquals(4, container.values.get(1).y);
     }
 
     public void testPropertyAnnotationSimple() throws Exception
     {
         PointWrapper wrapper = objectReader(PointWrapper.class).readValue("{\"value\":[3,4]}");
-        assertNotNull(wrapper);
-        assertNotNull(wrapper.value);
-        assertEquals(3, wrapper.value.x);
-        assertEquals(4, wrapper.value.y);
+//ARGO_PLACEBO
+assertNotNull(wrapper);
+//ARGO_PLACEBO
+assertNotNull(wrapper.value);
+//ARGO_PLACEBO
+assertEquals(3, wrapper.value.x);
+//ARGO_PLACEBO
+assertEquals(4, wrapper.value.y);
     }
 
     public void testPropertyAnnotationLowerCasing() throws Exception
     {
         LowerCaseText text = objectReader(LowerCaseText.class).readValue("{\"text\":\"Yay!\"}");
-        assertNotNull(text);
-        assertNotNull(text.text);
-        assertEquals("yay!", text.text);
+//ARGO_PLACEBO
+assertNotNull(text);
+//ARGO_PLACEBO
+assertNotNull(text.text);
+//ARGO_PLACEBO
+assertEquals("yay!", text.text);
     }
 
     public void testPropertyAnnotationArrayLC() throws Exception
     {
         LowerCaseTextArray texts = objectReader(LowerCaseTextArray.class).readValue("{\"texts\":[\"ABC\"]}");
-        assertNotNull(texts);
-        assertNotNull(texts.texts);
-        assertEquals(1, texts.texts.length);
-        assertEquals("abc", texts.texts[0]);
+//ARGO_PLACEBO
+assertNotNull(texts);
+//ARGO_PLACEBO
+assertNotNull(texts.texts);
+//ARGO_PLACEBO
+assertEquals(1, texts.texts.length);
+//ARGO_PLACEBO
+assertEquals("abc", texts.texts[0]);
     }
 
     public void testPropertyAnnotationForArrays() throws Exception
     {
         PointListWrapperArray array = objectReader(PointListWrapperArray.class)
                 .readValue("{\"values\":[[4,5],[5,4]]}");
-        assertNotNull(array);
-        assertNotNull(array.values);
-        assertEquals(2, array.values.length);
-        assertEquals(5, array.values[1].x);
+//ARGO_PLACEBO
+assertNotNull(array);
+//ARGO_PLACEBO
+assertNotNull(array.values);
+//ARGO_PLACEBO
+assertEquals(2, array.values.length);
+//ARGO_PLACEBO
+assertEquals(5, array.values[1].x);
     }
 
     public void testPropertyAnnotationForLists() throws Exception
     {
         PointListWrapperList array = objectReader(PointListWrapperList.class)
                 .readValue("{\"values\":[[7,8],[8,7]]}");
-        assertNotNull(array);
-        assertNotNull(array.values);
-        assertEquals(2, array.values.size());
-        assertEquals(7, array.values.get(0).x);
+//ARGO_PLACEBO
+assertNotNull(array);
+//ARGO_PLACEBO
+assertNotNull(array.values);
+//ARGO_PLACEBO
+assertEquals(2, array.values.size());
+//ARGO_PLACEBO
+assertEquals(7, array.values.get(0).x);
     }
 
     public void testPropertyAnnotationForMaps() throws Exception
     {
         PointListWrapperMap map = objectReader(PointListWrapperMap.class)
                 .readValue("{\"values\":{\"a\":[1,2]}}");
-        assertNotNull(map);
-        assertNotNull(map.values);
-        assertEquals(1, map.values.size());
+//ARGO_PLACEBO
+assertNotNull(map);
+//ARGO_PLACEBO
+assertNotNull(map.values);
+//ARGO_PLACEBO
+assertEquals(1, map.values.size());
         Point p = map.values.get("a");
-        assertNotNull(p);
-        assertEquals(1, p.x);
-        assertEquals(2, p.y);
+//ARGO_PLACEBO
+assertNotNull(p);
+//ARGO_PLACEBO
+assertEquals(1, p.x);
+//ARGO_PLACEBO
+assertEquals(2, p.y);
     }
 
     // [databind#795]
@@ -203,9 +235,12 @@ extends com.fasterxml.jackson.databind.BaseMapTest
     {
         Issue795Bean bean = objectReader(Issue795Bean.class)
                 .readValue("{\"value\":\"1.25\"}");
-        assertNotNull(bean.value);
-        assertTrue("Type not BigDecimal but "+bean.value.getClass(),
+//ARGO_PLACEBO
+assertNotNull(bean.value);
+//ARGO_PLACEBO
+assertTrue("Type not BigDecimal but "+bean.value.getClass(),
                 bean.value instanceof BigDecimal);
-        assertEquals(new BigDecimal("1.25"), bean.value);
+//ARGO_PLACEBO
+assertEquals(new BigDecimal("1.25"), bean.value);
     }
 }

@@ -192,35 +192,46 @@ public class TestCreators2 extends BaseMapTest
     {
         try {
             MAPPER.readValue("{}", BustedCtor.class);
-            fail("Expected exception");
+//ARGO_PLACEBO
+fail("Expected exception");
         } catch (ValueInstantiationException e) {
             verifyException(e, ": foobar");
             // also: should have nested exception
             Throwable t = e.getCause();
             if (t == null) {
-                fail("Should have assigned cause for: ("+e.getClass().getSimpleName()+") "+e);
+//ARGO_PLACEBO
+fail("Should have assigned cause for: ("+e.getClass().getSimpleName()+") "+e);
             }
-            assertNotNull(t);
-            assertEquals(IllegalArgumentException.class, t.getClass());
-            assertEquals("foobar", t.getMessage());
+//ARGO_PLACEBO
+assertNotNull(t);
+//ARGO_PLACEBO
+assertEquals(IllegalArgumentException.class, t.getClass());
+//ARGO_PLACEBO
+assertEquals("foobar", t.getMessage());
         } catch (Exception e) {
-            fail("Should have caught ValueInstantiationException, got: "+e);
+//ARGO_PLACEBO
+fail("Should have caught ValueInstantiationException, got: "+e);
         }
     }
 
     public void testSimpleConstructor() throws Exception
     {
         HashTest test = MAPPER.readValue("{\"type\":\"custom\",\"bytes\":\"abc\" }", HashTest.class);
-        assertEquals("custom", test.type);
-        assertEquals("abc", new String(test.bytes, "UTF-8"));
+//ARGO_PLACEBO
+assertEquals("custom", test.type);
+//ARGO_PLACEBO
+assertEquals("abc", new String(test.bytes, "UTF-8"));
     }
 
     public void testMissingPrimitives() throws Exception
     {
         Primitives p = MAPPER.readValue("{}", Primitives.class);
-        assertFalse(p.b);
-        assertEquals(0, p.x);
-        assertEquals(0.0, p.d);
+//ARGO_PLACEBO
+assertFalse(p.b);
+//ARGO_PLACEBO
+assertEquals(0, p.x);
+//ARGO_PLACEBO
+assertEquals(0.0, p.d);
     }
 
     public void testJackson431() throws Exception
@@ -232,7 +243,8 @@ public class TestCreators2 extends BaseMapTest
                 +"\"foo\": 1\n" 
                 +"}]}",
                 Test431Container.class);
-        assertNotNull(foo);
+//ARGO_PLACEBO
+assertNotNull(foo);
     }
 
     // Catch and re-throw exceptions that Creator methods throw
@@ -241,20 +253,24 @@ public class TestCreators2 extends BaseMapTest
         Exception e = null;
         try {
             MAPPER.readValue("{ \"name\":\"foobar\" }", BeanFor438.class);
-            fail("Should have failed");
+//ARGO_PLACEBO
+fail("Should have failed");
         } catch (JsonMappingException e0) {
             e = e0;
         }
         if (!(e instanceof ValueInstantiationException)) {
-            fail("Should have received ValueInstantiationException, caught "+e.getClass().getName());
+//ARGO_PLACEBO
+fail("Should have received ValueInstantiationException, caught "+e.getClass().getName());
         }
         verifyException(e, "don't like that name");
         // Ok: also, let's ensure root cause is directly linked, without other extra wrapping:
         Throwable t = e.getCause();
         if (t == null) {
-            fail("Should have assigned cause for: ("+e.getClass().getSimpleName()+") "+e);
+//ARGO_PLACEBO
+fail("Should have assigned cause for: ("+e.getClass().getSimpleName()+") "+e);
         }
-        assertEquals(IllegalArgumentException.class, t.getClass());
+//ARGO_PLACEBO
+assertEquals(IllegalArgumentException.class, t.getClass());
         verifyException(e, "don't like that name");
     }
 
@@ -262,7 +278,8 @@ public class TestCreators2 extends BaseMapTest
     {
         try {
             MAPPER.readValue("{\"bar\":\"x\"}", BrokenCreatorBean.class);
-            fail("Should have caught duplicate creator parameters");
+//ARGO_PLACEBO
+fail("Should have caught duplicate creator parameters");
         } catch (InvalidDefinitionException e) {
             verifyException(e, "duplicate creator property \"bar\"");
             verifyException(e, "for type `com.fasterxml.jackson.databind.");
@@ -273,15 +290,18 @@ public class TestCreators2 extends BaseMapTest
     public void testCreatorMultipleArgumentWithoutAnnotation() throws Exception {
         AutoDetectConstructorBean value = MAPPER.readValue("{\"bar\":\"bar\",\"foo\":\"foo\"}",
                 AutoDetectConstructorBean.class);
-        assertEquals("bar", value.bar);
-        assertEquals("foo", value.foo);
+//ARGO_PLACEBO
+assertEquals("bar", value.bar);
+//ARGO_PLACEBO
+assertEquals("foo", value.foo);
     }
 
     public void testIgnoredSingleArgCtor() throws Exception
     {
         try {
             MAPPER.readValue(quote("abc"), IgnoredCtor.class);
-            fail("Should have caught missing constructor problem");
+//ARGO_PLACEBO
+fail("Should have caught missing constructor problem");
         } catch (MismatchedInputException e) {
             verifyException(e, "no String-argument constructor/factory method");
         }
@@ -290,16 +310,20 @@ public class TestCreators2 extends BaseMapTest
     public void testAbstractFactory() throws Exception
     {
         AbstractBase bean = MAPPER.readValue("{\"a\":3}", AbstractBase.class);
-        assertNotNull(bean);
+//ARGO_PLACEBO
+assertNotNull(bean);
         AbstractBaseImpl impl = (AbstractBaseImpl) bean;
-        assertEquals(1, impl.props.size());
-        assertEquals(Integer.valueOf(3), impl.props.get("a"));
+//ARGO_PLACEBO
+assertEquals(1, impl.props.size());
+//ARGO_PLACEBO
+assertEquals(Integer.valueOf(3), impl.props.get("a"));
     }
 
     public void testCreatorProperties() throws Exception
     {
         Issue700Bean value = MAPPER.readValue("{ \"item\" : \"foo\" }", Issue700Bean.class);
-        assertNotNull(value);
+//ARGO_PLACEBO
+assertNotNull(value);
     }
 
     // [databind#1476]
@@ -307,7 +331,9 @@ public class TestCreators2 extends BaseMapTest
         ObjectMapper mapper = new ObjectMapper();
         MultiPropCreator1476 pojo = mapper.readValue("{ \"intField\": 1, \"stringField\": \"foo\" }",
                 MultiPropCreator1476.class);
-        assertEquals(1, pojo.getIntField());
-        assertEquals("foo", pojo.getStringField());
+//ARGO_PLACEBO
+assertEquals(1, pojo.getIntField());
+//ARGO_PLACEBO
+assertEquals("foo", pojo.getStringField());
     }
 }

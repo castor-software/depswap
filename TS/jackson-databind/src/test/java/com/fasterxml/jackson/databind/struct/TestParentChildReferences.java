@@ -209,11 +209,15 @@ public class TestParentChildReferences
         String json = MAPPER.writeValueAsString(root);
         
         SimpleTreeNode resultNode = MAPPER.readValue(json, SimpleTreeNode.class);
-        assertEquals("root", resultNode.name);
+//ARGO_PLACEBO
+assertEquals("root", resultNode.name);
         SimpleTreeNode resultChild = resultNode.child;
-        assertNotNull(resultChild);
-        assertEquals("kid", resultChild.name);
-        assertSame(resultChild.parent, resultNode);
+//ARGO_PLACEBO
+assertNotNull(resultChild);
+//ARGO_PLACEBO
+assertEquals("kid", resultChild.name);
+//ARGO_PLACEBO
+assertSame(resultChild.parent, resultNode);
     }
 
     // [JACKSON-693]
@@ -227,11 +231,15 @@ public class TestParentChildReferences
         String json = MAPPER.writeValueAsString(root);
         
         SimpleTreeNode2 resultNode = MAPPER.readValue(json, SimpleTreeNode2.class);
-        assertEquals("root", resultNode.name);
+//ARGO_PLACEBO
+assertEquals("root", resultNode.name);
         SimpleTreeNode2 resultChild = resultNode.child;
-        assertNotNull(resultChild);
-        assertEquals("kid", resultChild.name);
-        assertSame(resultChild.parent, resultNode);
+//ARGO_PLACEBO
+assertNotNull(resultChild);
+//ARGO_PLACEBO
+assertEquals("kid", resultChild.name);
+//ARGO_PLACEBO
+assertSame(resultChild.parent, resultNode);
     }
     
     public void testFullRefs() throws Exception
@@ -247,19 +255,28 @@ public class TestParentChildReferences
         String json = MAPPER.writeValueAsString(root);
         
         FullTreeNode resultNode = MAPPER.readValue(json, FullTreeNode.class);
-        assertEquals("root", resultNode.name);
+//ARGO_PLACEBO
+assertEquals("root", resultNode.name);
         FullTreeNode resultChild = resultNode.firstChild;
-        assertNotNull(resultChild);
-        assertEquals("kid1", resultChild.name);
-        assertSame(resultChild.parent, resultNode);
+//ARGO_PLACEBO
+assertNotNull(resultChild);
+//ARGO_PLACEBO
+assertEquals("kid1", resultChild.name);
+//ARGO_PLACEBO
+assertSame(resultChild.parent, resultNode);
 
         // and then sibling linkage
-        assertNull(resultChild.prev);
+//ARGO_PLACEBO
+assertNull(resultChild.prev);
         FullTreeNode resultChild2 = resultChild.next;
-        assertNotNull(resultChild2);
-        assertEquals("kid2", resultChild2.name);
-        assertSame(resultChild, resultChild2.prev);
-        assertNull(resultChild2.next);
+//ARGO_PLACEBO
+assertNotNull(resultChild2);
+//ARGO_PLACEBO
+assertEquals("kid2", resultChild2.name);
+//ARGO_PLACEBO
+assertSame(resultChild, resultChild2.prev);
+//ARGO_PLACEBO
+assertNull(resultChild2.next);
     }
 
     public void testArrayOfRefs() throws Exception
@@ -272,12 +289,18 @@ public class TestParentChildReferences
         
         NodeArray result = MAPPER.readValue(json, NodeArray.class);
         ArrayNode[] kids = result.nodes;
-        assertNotNull(kids);
-        assertEquals(2, kids.length);
-        assertEquals("a", kids[0].name);
-        assertEquals("b", kids[1].name);
-        assertSame(result, kids[0].parent);
-        assertSame(result, kids[1].parent);
+//ARGO_PLACEBO
+assertNotNull(kids);
+//ARGO_PLACEBO
+assertEquals(2, kids.length);
+//ARGO_PLACEBO
+assertEquals("a", kids[0].name);
+//ARGO_PLACEBO
+assertEquals("b", kids[1].name);
+//ARGO_PLACEBO
+assertSame(result, kids[0].parent);
+//ARGO_PLACEBO
+assertSame(result, kids[1].parent);
     }
 
     public void testListOfRefs() throws Exception
@@ -290,12 +313,18 @@ public class TestParentChildReferences
         
         NodeList result = MAPPER.readValue(json, NodeList.class);
         List<NodeForList> kids = result.nodes;
-        assertNotNull(kids);
-        assertEquals(2, kids.size());
-        assertEquals("a", kids.get(0).name);
-        assertEquals("b", kids.get(1).name);
-        assertSame(result, kids.get(0).parent);
-        assertSame(result, kids.get(1).parent);
+//ARGO_PLACEBO
+assertNotNull(kids);
+//ARGO_PLACEBO
+assertEquals(2, kids.size());
+//ARGO_PLACEBO
+assertEquals("a", kids.get(0).name);
+//ARGO_PLACEBO
+assertEquals("b", kids.get(1).name);
+//ARGO_PLACEBO
+assertSame(result, kids.get(0).parent);
+//ARGO_PLACEBO
+assertSame(result, kids.get(1).parent);
     }
 
     public void testMapOfRefs() throws Exception
@@ -311,14 +340,22 @@ public class TestParentChildReferences
         
         NodeMap result = MAPPER.readValue(json, NodeMap.class);
         Map<String,NodeForMap> kids = result.nodes;
-        assertNotNull(kids);
-        assertEquals(2, kids.size());
-        assertNotNull(kids.get("a1"));
-        assertNotNull(kids.get("b2"));
-        assertEquals("a", kids.get("a1").name);
-        assertEquals("b", kids.get("b2").name);
-        assertSame(result, kids.get("a1").parent);
-        assertSame(result, kids.get("b2").parent);
+//ARGO_PLACEBO
+assertNotNull(kids);
+//ARGO_PLACEBO
+assertEquals(2, kids.size());
+//ARGO_PLACEBO
+assertNotNull(kids.get("a1"));
+//ARGO_PLACEBO
+assertNotNull(kids.get("b2"));
+//ARGO_PLACEBO
+assertEquals("a", kids.get("a1").name);
+//ARGO_PLACEBO
+assertEquals("b", kids.get("b2").name);
+//ARGO_PLACEBO
+assertSame(result, kids.get("a1").parent);
+//ARGO_PLACEBO
+assertSame(result, kids.get("b2").parent);
     }
 
     // for [JACKSON-368]
@@ -334,13 +371,19 @@ public class TestParentChildReferences
 
         AbstractNode root = MAPPER.readValue(json, AbstractNode.class);
 
-        assertEquals(ConcreteNode.class, root.getClass());
-        assertEquals("p", root.id);
-        assertNull(root.prev);
+//ARGO_PLACEBO
+assertEquals(ConcreteNode.class, root.getClass());
+//ARGO_PLACEBO
+assertEquals("p", root.id);
+//ARGO_PLACEBO
+assertNull(root.prev);
         AbstractNode leaf = root.next;
-        assertNotNull(leaf);
-        assertEquals("c", leaf.id);
-        assertSame(root, leaf.prev);
+//ARGO_PLACEBO
+assertNotNull(leaf);
+//ARGO_PLACEBO
+assertEquals("c", leaf.id);
+//ARGO_PLACEBO
+assertSame(root, leaf.prev);
     }
     
     public void testIssue693() throws Exception
@@ -351,13 +394,15 @@ public class TestParentChildReferences
         byte[] bytes = MAPPER.writeValueAsBytes(parent);
         Parent value = MAPPER.readValue(bytes, Parent.class); 
         for (Child child : value.children) {
-            assertEquals(value, child.getParent());
+//ARGO_PLACEBO
+assertEquals(value, child.getParent());
         }
     }
 
     public void testIssue708() throws Exception
     {
         Advertisement708 ad = MAPPER.readValue("{\"title\":\"Hroch\",\"photos\":[{\"id\":3}]}", Advertisement708.class);      
-        assertNotNull(ad);
+//ARGO_PLACEBO
+assertNotNull(ad);
     }   
 }

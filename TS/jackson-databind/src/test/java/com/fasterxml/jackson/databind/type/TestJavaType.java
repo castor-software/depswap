@@ -65,45 +65,65 @@ public class TestJavaType
     {
         TypeFactory tf = TypeFactory.defaultInstance();
         Method m = Issue728.class.getMethod("method", CharSequence.class);
-        assertNotNull(m);
+//ARGO_PLACEBO
+assertNotNull(m);
 
         // Start with return type
         // first type-erased
         JavaType t = tf.constructType(m.getReturnType());
-        assertEquals(CharSequence.class, t.getRawClass());
+//ARGO_PLACEBO
+assertEquals(CharSequence.class, t.getRawClass());
         // then generic
         t = tf.constructType(m.getGenericReturnType());
-        assertEquals(CharSequence.class, t.getRawClass());
+//ARGO_PLACEBO
+assertEquals(CharSequence.class, t.getRawClass());
 
         // then parameter type
         t = tf.constructType(m.getParameterTypes()[0]);
-        assertEquals(CharSequence.class, t.getRawClass());
+//ARGO_PLACEBO
+assertEquals(CharSequence.class, t.getRawClass());
         t = tf.constructType(m.getGenericParameterTypes()[0]);
-        assertEquals(CharSequence.class, t.getRawClass());
+//ARGO_PLACEBO
+assertEquals(CharSequence.class, t.getRawClass());
     }
 
     public void testSimpleClass()
     {
         TypeFactory tf = TypeFactory.defaultInstance();
         JavaType baseType = tf.constructType(BaseType.class);
-        assertSame(BaseType.class, baseType.getRawClass());
-        assertTrue(baseType.hasRawClass(BaseType.class));
-        assertFalse(baseType.isTypeOrSubTypeOf(SubType.class));
+//ARGO_PLACEBO
+assertSame(BaseType.class, baseType.getRawClass());
+//ARGO_PLACEBO
+assertTrue(baseType.hasRawClass(BaseType.class));
+//ARGO_PLACEBO
+assertFalse(baseType.isTypeOrSubTypeOf(SubType.class));
 
-        assertFalse(baseType.isArrayType());
-        assertFalse(baseType.isContainerType());
-        assertFalse(baseType.isEnumType());
-        assertFalse(baseType.isInterface());
-        assertFalse(baseType.isPrimitive());
-        assertFalse(baseType.isReferenceType());
-        assertFalse(baseType.hasContentType());
+//ARGO_PLACEBO
+assertFalse(baseType.isArrayType());
+//ARGO_PLACEBO
+assertFalse(baseType.isContainerType());
+//ARGO_PLACEBO
+assertFalse(baseType.isEnumType());
+//ARGO_PLACEBO
+assertFalse(baseType.isInterface());
+//ARGO_PLACEBO
+assertFalse(baseType.isPrimitive());
+//ARGO_PLACEBO
+assertFalse(baseType.isReferenceType());
+//ARGO_PLACEBO
+assertFalse(baseType.hasContentType());
 
-        assertNull(baseType.getContentType());
-        assertNull(baseType.getKeyType());
-        assertNull(baseType.getValueHandler());
+//ARGO_PLACEBO
+assertNull(baseType.getContentType());
+//ARGO_PLACEBO
+assertNull(baseType.getKeyType());
+//ARGO_PLACEBO
+assertNull(baseType.getValueHandler());
 
-        assertEquals("Lcom/fasterxml/jackson/databind/type/TestJavaType$BaseType;", baseType.getGenericSignature());
-        assertEquals("Lcom/fasterxml/jackson/databind/type/TestJavaType$BaseType;", baseType.getErasedSignature());
+//ARGO_PLACEBO
+assertEquals("Lcom/fasterxml/jackson/databind/type/TestJavaType$BaseType;", baseType.getGenericSignature());
+//ARGO_PLACEBO
+assertEquals("Lcom/fasterxml/jackson/databind/type/TestJavaType$BaseType;", baseType.getErasedSignature());
     }
 
     @SuppressWarnings("deprecation")
@@ -111,59 +131,90 @@ public class TestJavaType
     {
         TypeFactory tf = TypeFactory.defaultInstance();
         JavaType baseType = tf.constructType(BaseType.class);
-        assertTrue(baseType.hasRawClass(BaseType.class));
-        assertNull(baseType.getParameterSource());
-        assertNull(baseType.getContentTypeHandler());
-        assertNull(baseType.getContentValueHandler());
-        assertFalse(baseType.hasValueHandler());
-        assertFalse(baseType.hasHandlers());
+//ARGO_PLACEBO
+assertTrue(baseType.hasRawClass(BaseType.class));
+//ARGO_PLACEBO
+assertNull(baseType.getParameterSource());
+//ARGO_PLACEBO
+assertNull(baseType.getContentTypeHandler());
+//ARGO_PLACEBO
+assertNull(baseType.getContentValueHandler());
+//ARGO_PLACEBO
+assertFalse(baseType.hasValueHandler());
+//ARGO_PLACEBO
+assertFalse(baseType.hasHandlers());
 
-        assertSame(baseType, baseType.forcedNarrowBy(BaseType.class));
+//ARGO_PLACEBO
+assertSame(baseType, baseType.forcedNarrowBy(BaseType.class));
         JavaType sub = baseType.forcedNarrowBy(SubType.class);
-        assertTrue(sub.hasRawClass(SubType.class));
+//ARGO_PLACEBO
+assertTrue(sub.hasRawClass(SubType.class));
     }
     
     public void testArrayType()
     {
         TypeFactory tf = TypeFactory.defaultInstance();
         JavaType arrayT = ArrayType.construct(tf.constructType(String.class), null);
-        assertNotNull(arrayT);
-        assertTrue(arrayT.isContainerType());
-        assertFalse(arrayT.isReferenceType());
-        assertTrue(arrayT.hasContentType());
+//ARGO_PLACEBO
+assertNotNull(arrayT);
+//ARGO_PLACEBO
+assertTrue(arrayT.isContainerType());
+//ARGO_PLACEBO
+assertFalse(arrayT.isReferenceType());
+//ARGO_PLACEBO
+assertTrue(arrayT.hasContentType());
 
-        assertNotNull(arrayT.toString());
-        assertNotNull(arrayT.getContentType());
-        assertNull(arrayT.getKeyType());
+//ARGO_PLACEBO
+assertNotNull(arrayT.toString());
+//ARGO_PLACEBO
+assertNotNull(arrayT.getContentType());
+//ARGO_PLACEBO
+assertNull(arrayT.getKeyType());
 
-        assertTrue(arrayT.equals(arrayT));
-        assertFalse(arrayT.equals(null));
+//ARGO_PLACEBO
+assertTrue(arrayT.equals(arrayT));
+//ARGO_PLACEBO
+assertFalse(arrayT.equals(null));
         final Object bogus = "xyz";
-        assertFalse(arrayT.equals(bogus));
+//ARGO_PLACEBO
+assertFalse(arrayT.equals(bogus));
 
-        assertTrue(arrayT.equals(ArrayType.construct(tf.constructType(String.class), null)));
-        assertFalse(arrayT.equals(ArrayType.construct(tf.constructType(Integer.class), null)));
+//ARGO_PLACEBO
+assertTrue(arrayT.equals(ArrayType.construct(tf.constructType(String.class), null)));
+//ARGO_PLACEBO
+assertFalse(arrayT.equals(ArrayType.construct(tf.constructType(Integer.class), null)));
     }
 
     public void testMapType()
     {
         TypeFactory tf = TypeFactory.defaultInstance();
         JavaType mapT = tf.constructType(HashMap.class);
-        assertTrue(mapT.isContainerType());
-        assertFalse(mapT.isReferenceType());
-        assertTrue(mapT.hasContentType());
+//ARGO_PLACEBO
+assertTrue(mapT.isContainerType());
+//ARGO_PLACEBO
+assertFalse(mapT.isReferenceType());
+//ARGO_PLACEBO
+assertTrue(mapT.hasContentType());
 
-        assertNotNull(mapT.toString());
-        assertNotNull(mapT.getContentType());
-        assertNotNull(mapT.getKeyType());
+//ARGO_PLACEBO
+assertNotNull(mapT.toString());
+//ARGO_PLACEBO
+assertNotNull(mapT.getContentType());
+//ARGO_PLACEBO
+assertNotNull(mapT.getKeyType());
 
-        assertEquals("Ljava/util/HashMap<Ljava/lang/Object;Ljava/lang/Object;>;", mapT.getGenericSignature());
-        assertEquals("Ljava/util/HashMap;", mapT.getErasedSignature());
+//ARGO_PLACEBO
+assertEquals("Ljava/util/HashMap<Ljava/lang/Object;Ljava/lang/Object;>;", mapT.getGenericSignature());
+//ARGO_PLACEBO
+assertEquals("Ljava/util/HashMap;", mapT.getErasedSignature());
         
-        assertTrue(mapT.equals(mapT));
-        assertFalse(mapT.equals(null));
+//ARGO_PLACEBO
+assertTrue(mapT.equals(mapT));
+//ARGO_PLACEBO
+assertFalse(mapT.equals(null));
         Object bogus = "xyz";
-        assertFalse(mapT.equals(bogus));
+//ARGO_PLACEBO
+assertFalse(mapT.equals(bogus));
     }
 
     public void testEnumType()
@@ -171,44 +222,67 @@ public class TestJavaType
         TypeFactory tf = TypeFactory.defaultInstance();
         JavaType enumT = tf.constructType(MyEnum.class);
         // JDK actually works fine with "basic" Enum types...
-        assertTrue(enumT.getRawClass().isEnum());
-        assertTrue(enumT.isEnumType());
-        assertTrue(enumT.isEnumImplType());
+//ARGO_PLACEBO
+assertTrue(enumT.getRawClass().isEnum());
+//ARGO_PLACEBO
+assertTrue(enumT.isEnumType());
+//ARGO_PLACEBO
+assertTrue(enumT.isEnumImplType());
 
-        assertFalse(enumT.hasHandlers());
-        assertTrue(enumT.isTypeOrSubTypeOf(MyEnum.class));
-        assertTrue(enumT.isTypeOrSubTypeOf(Object.class));
-        assertNull(enumT.containedType(3));
-        assertTrue(enumT.containedTypeOrUnknown(3).isJavaLangObject());
+//ARGO_PLACEBO
+assertFalse(enumT.hasHandlers());
+//ARGO_PLACEBO
+assertTrue(enumT.isTypeOrSubTypeOf(MyEnum.class));
+//ARGO_PLACEBO
+assertTrue(enumT.isTypeOrSubTypeOf(Object.class));
+//ARGO_PLACEBO
+assertNull(enumT.containedType(3));
+//ARGO_PLACEBO
+assertTrue(enumT.containedTypeOrUnknown(3).isJavaLangObject());
 
-        assertEquals("Lcom/fasterxml/jackson/databind/type/TestJavaType$MyEnum;", enumT.getGenericSignature());
-        assertEquals("Lcom/fasterxml/jackson/databind/type/TestJavaType$MyEnum;", enumT.getErasedSignature());
+//ARGO_PLACEBO
+assertEquals("Lcom/fasterxml/jackson/databind/type/TestJavaType$MyEnum;", enumT.getGenericSignature());
+//ARGO_PLACEBO
+assertEquals("Lcom/fasterxml/jackson/databind/type/TestJavaType$MyEnum;", enumT.getErasedSignature());
 
-        assertTrue(tf.constructType(MyEnum2.class).isEnumType());
-        assertTrue(tf.constructType(MyEnum.A.getClass()).isEnumType());
-        assertTrue(tf.constructType(MyEnum2.A.getClass()).isEnumType());
+//ARGO_PLACEBO
+assertTrue(tf.constructType(MyEnum2.class).isEnumType());
+//ARGO_PLACEBO
+assertTrue(tf.constructType(MyEnum.A.getClass()).isEnumType());
+//ARGO_PLACEBO
+assertTrue(tf.constructType(MyEnum2.A.getClass()).isEnumType());
 
         // [databind#2480]
-        assertFalse(tf.constructType(Enum.class).isEnumImplType());
+//ARGO_PLACEBO
+assertFalse(tf.constructType(Enum.class).isEnumImplType());
         JavaType enumSubT = tf.constructType(MyEnumSub.B.getClass());
-        assertTrue(enumSubT.isEnumType());
-        assertTrue(enumSubT.isEnumImplType());
+//ARGO_PLACEBO
+assertTrue(enumSubT.isEnumType());
+//ARGO_PLACEBO
+assertTrue(enumSubT.isEnumImplType());
 
         // and this is kind of odd twist by JDK: one might except this to return true,
         // but no, sub-classes (when Enum values have overrides, and require sub-class)
         // are NOT considered enums for whatever reason
-        assertFalse(enumSubT.getRawClass().isEnum());
+//ARGO_PLACEBO
+assertFalse(enumSubT.getRawClass().isEnum());
     }
 
     public void testClassKey()
     {
         ClassKey key = new ClassKey(String.class);
-        assertEquals(0, key.compareTo(key));
-        assertTrue(key.equals(key));
-        assertFalse(key.equals(null));
-        assertFalse(key.equals("foo"));
-        assertFalse(key.equals(new ClassKey(Integer.class)));
-        assertEquals(String.class.getName(), key.toString());
+//ARGO_PLACEBO
+assertEquals(0, key.compareTo(key));
+//ARGO_PLACEBO
+assertTrue(key.equals(key));
+//ARGO_PLACEBO
+assertFalse(key.equals(null));
+//ARGO_PLACEBO
+assertFalse(key.equals("foo"));
+//ARGO_PLACEBO
+assertFalse(key.equals(new ClassKey(Integer.class)));
+//ARGO_PLACEBO
+assertEquals(String.class.getName(), key.toString());
     }
 
     // [databind#116]
@@ -218,7 +292,8 @@ public class TestJavaType
         JavaType t1 = tf.constructType(getClass());
         // should just get it back as-is:
         JavaType t2 = tf.constructType(t1);
-        assertSame(t1, t2);
+//ARGO_PLACEBO
+assertSame(t1, t2);
     }
 
     // [databind#1194]
@@ -230,31 +305,41 @@ public class TestJavaType
 
         m = Generic1194.class.getMethod("getList");
         t  = tf.constructType(m.getGenericReturnType());
-        assertEquals("Ljava/util/List<Ljava/lang/String;>;", t.getGenericSignature());
-        assertEquals("Ljava/util/List;", t.getErasedSignature());
+//ARGO_PLACEBO
+assertEquals("Ljava/util/List<Ljava/lang/String;>;", t.getGenericSignature());
+//ARGO_PLACEBO
+assertEquals("Ljava/util/List;", t.getErasedSignature());
         
         m = Generic1194.class.getMethod("getMap");
         t  = tf.constructType(m.getGenericReturnType());
-        assertEquals("Ljava/util/Map<Ljava/lang/String;Ljava/lang/String;>;",
+//ARGO_PLACEBO
+assertEquals("Ljava/util/Map<Ljava/lang/String;Ljava/lang/String;>;",
                 t.getGenericSignature());
 
         m = Generic1194.class.getMethod("getGeneric");
         t  = tf.constructType(m.getGenericReturnType());
-        assertEquals("Ljava/util/concurrent/atomic/AtomicReference<Ljava/lang/String;>;", t.getGenericSignature());
+//ARGO_PLACEBO
+assertEquals("Ljava/util/concurrent/atomic/AtomicReference<Ljava/lang/String;>;", t.getGenericSignature());
     }
 
     public void testAnchorTypeForRefTypes() throws Exception
     {
         TypeFactory tf = TypeFactory.defaultInstance();
         JavaType t  = tf.constructType(AtomicStringReference.class);
-        assertTrue(t.isReferenceType());
-        assertTrue(t.hasContentType());
+//ARGO_PLACEBO
+assertTrue(t.isReferenceType());
+//ARGO_PLACEBO
+assertTrue(t.hasContentType());
         JavaType ct = t.getContentType();
-        assertEquals(String.class, ct.getRawClass());
-        assertSame(ct, t.containedType(0));
+//ARGO_PLACEBO
+assertEquals(String.class, ct.getRawClass());
+//ARGO_PLACEBO
+assertSame(ct, t.containedType(0));
         ReferenceType rt = (ReferenceType) t;
-        assertFalse(rt.isAnchorType());
-        assertEquals(AtomicReference.class, rt.getAnchorType().getRawClass());
+//ARGO_PLACEBO
+assertFalse(rt.isAnchorType());
+//ARGO_PLACEBO
+assertEquals(AtomicReference.class, rt.getAnchorType().getRawClass());
     }
 
     // for [databind#1290]
@@ -262,11 +347,14 @@ public class TestJavaType
     {
         TypeFactory tf = TypeFactory.defaultInstance();
         JavaType base = tf.constructType(Object.class);
-        assertTrue(base.isJavaLangObject());
+//ARGO_PLACEBO
+assertTrue(base.isJavaLangObject());
 
         JavaType sub = tf.constructSpecializedType(base, AtomicReference.class);
-        assertEquals(AtomicReference.class, sub.getRawClass());
-        assertTrue(sub.isReferenceType());
+//ARGO_PLACEBO
+assertEquals(AtomicReference.class, sub.getRawClass());
+//ARGO_PLACEBO
+assertTrue(sub.isReferenceType());
     }
 
     // for [databind#2091]
@@ -276,11 +364,23 @@ public class TestJavaType
         // do AtomicReference<Long>
         final JavaType refdType = tf.constructType(Long.class);
         JavaType t  = tf.constructReferenceType(AtomicReference.class, refdType);
-        assertTrue(t.isReferenceType());
-        assertTrue(t.hasContentType());
-        assertEquals(Long.class, t.getContentType().getRawClass());
+//ARGO_PLACEBO
+assertTrue(t.isReferenceType());
+//ARGO_PLACEBO
+assertTrue(t.hasContentType());
+//ARGO_PLACEBO
+assertEquals(Long.class, t.getContentType().getRawClass());
 
-        // 26-Mar-2020, tatu: [databind#2019] suggest this should be 1...
-//        assertEquals(1, t.containedTypeCount());
+        // 26-Mar-2020, tatu: [databind#2019] made this work
+//ARGO_PLACEBO
+assertEquals(1, t.containedTypeCount());
+        TypeBindings bindings = t.getBindings();
+//ARGO_PLACEBO
+assertEquals(1, bindings.size());
+//ARGO_PLACEBO
+assertEquals(refdType, bindings.getBoundType(0));
+        // Should we even verify this or not?
+//ARGO_PLACEBO
+assertEquals("V", bindings.getBoundName(0));
     }
 }

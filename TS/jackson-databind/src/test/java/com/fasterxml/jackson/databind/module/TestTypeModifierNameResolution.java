@@ -54,6 +54,7 @@ public class TestTypeModifierNameResolution extends BaseMapTest
 		obj.setData("something");
 
 		String s = mapper.writer().writeValueAsString(obj);
-		assertTrue(s.startsWith("{\"TestTypeModifierNameResolution$MyType\":"));
+//ARGO_PLACEBO
+assertTrue(s.startsWith("{\"TestTypeModifierNameResolution$MyType\":"));
 	}
 }

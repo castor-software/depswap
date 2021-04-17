@@ -124,7 +124,8 @@ public class TestJsonSerialize2
     {
         SimpleValueList list = new SimpleValueList();
         list.add(new ActualValue("foo"));
-        assertEquals("[{\"value\":\"foo\"}]", MAPPER.writeValueAsString(list));
+//ARGO_PLACEBO
+assertEquals("[{\"value\":\"foo\"}]", MAPPER.writeValueAsString(list));
     }
 
     // test value annotation applied to Map value class
@@ -132,7 +133,8 @@ public class TestJsonSerialize2
     {
         SimpleValueMap map = new SimpleValueMap();
         map.put(new SimpleKey("x"), new ActualValue("y"));
-        assertEquals("{\"toString:x\":{\"value\":\"y\"}}", MAPPER.writeValueAsString(map));
+//ARGO_PLACEBO
+assertEquals("{\"toString:x\":{\"value\":\"y\"}}", MAPPER.writeValueAsString(map));
     }
 
     // test Serialization annotation with List
@@ -141,39 +143,45 @@ public class TestJsonSerialize2
         ObjectMapper m = new ObjectMapper();
         SimpleValueListWithSerializer list = new SimpleValueListWithSerializer();
         list.add(new ActualValue("foo"));
-        assertEquals("[\"value foo\"]", m.writeValueAsString(list));
+//ARGO_PLACEBO
+assertEquals("[\"value foo\"]", m.writeValueAsString(list));
     }
 
     public void testSerializedAsListWithPropertyAnnotations() throws IOException
     {
         ListWrapperSimple input = new ListWrapperSimple("bar");
-        assertEquals("{\"values\":[{\"value\":\"bar\"}]}", MAPPER.writeValueAsString(input));
+//ARGO_PLACEBO
+assertEquals("{\"values\":[{\"value\":\"bar\"}]}", MAPPER.writeValueAsString(input));
     }
     
     public void testSerializedAsMapWithClassSerializer() throws IOException
     {
         SimpleValueMapWithSerializer map = new SimpleValueMapWithSerializer();
         map.put(new SimpleKey("abc"), new ActualValue("123"));
-        assertEquals("{\"key abc\":\"value 123\"}", MAPPER.writeValueAsString(map));
+//ARGO_PLACEBO
+assertEquals("{\"key abc\":\"value 123\"}", MAPPER.writeValueAsString(map));
     }
 
     public void testSerializedAsMapWithPropertyAnnotations() throws IOException
     {
         MapWrapperSimple input = new MapWrapperSimple("a", "b");
-        assertEquals("{\"values\":{\"toString:a\":{\"value\":\"b\"}}}",
+//ARGO_PLACEBO
+assertEquals("{\"values\":{\"toString:a\":{\"value\":\"b\"}}}",
                 MAPPER.writeValueAsString(input));
     }
     
     public void testSerializedAsListWithPropertyAnnotations2() throws IOException
     {
         ListWrapperWithSerializer input = new ListWrapperWithSerializer("abc");
-        assertEquals("{\"values\":[\"value abc\"]}", MAPPER.writeValueAsString(input));
+//ARGO_PLACEBO
+assertEquals("{\"values\":[\"value abc\"]}", MAPPER.writeValueAsString(input));
     }
 
     public void testSerializedAsMapWithPropertyAnnotations2() throws IOException
     {
         MapWrapperWithSerializer input = new MapWrapperWithSerializer("foo", "b");
-        assertEquals("{\"values\":{\"key foo\":\"value b\"}}", MAPPER.writeValueAsString(input));
+//ARGO_PLACEBO
+assertEquals("{\"values\":{\"key foo\":\"value b\"}}", MAPPER.writeValueAsString(input));
     }
 
     public void testEmptyInclusionContainers() throws IOException
@@ -182,24 +190,34 @@ public class TestJsonSerialize2
         ObjectMapper inclMapper = new ObjectMapper().setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
 
         ListWrapper<String> list = new ListWrapper<String>();
-        assertEquals("{\"list\":[]}", defMapper.writeValueAsString(list));
-        assertEquals("{}", inclMapper.writeValueAsString(list));
-        assertEquals("{}", inclMapper.writeValueAsString(new ListWrapper<String>()));
+//ARGO_PLACEBO
+assertEquals("{\"list\":[]}", defMapper.writeValueAsString(list));
+//ARGO_PLACEBO
+assertEquals("{}", inclMapper.writeValueAsString(list));
+//ARGO_PLACEBO
+assertEquals("{}", inclMapper.writeValueAsString(new ListWrapper<String>()));
 
         MapWrapper<String,Integer> map = new MapWrapper<String,Integer>(new HashMap<String,Integer>());
-        assertEquals("{\"map\":{}}", defMapper.writeValueAsString(map));
-        assertEquals("{}", inclMapper.writeValueAsString(map));
-        assertEquals("{}", inclMapper.writeValueAsString(new MapWrapper<String,Integer>(null)));
+//ARGO_PLACEBO
+assertEquals("{\"map\":{}}", defMapper.writeValueAsString(map));
+//ARGO_PLACEBO
+assertEquals("{}", inclMapper.writeValueAsString(map));
+//ARGO_PLACEBO
+assertEquals("{}", inclMapper.writeValueAsString(new MapWrapper<String,Integer>(null)));
 
         ArrayWrapper<Integer> array = new ArrayWrapper<Integer>(new Integer[0]);
-        assertEquals("{\"array\":[]}", defMapper.writeValueAsString(array));
-        assertEquals("{}", inclMapper.writeValueAsString(array));
-        assertEquals("{}", inclMapper.writeValueAsString(new ArrayWrapper<Integer>(null)));
+//ARGO_PLACEBO
+assertEquals("{\"array\":[]}", defMapper.writeValueAsString(array));
+//ARGO_PLACEBO
+assertEquals("{}", inclMapper.writeValueAsString(array));
+//ARGO_PLACEBO
+assertEquals("{}", inclMapper.writeValueAsString(new ArrayWrapper<Integer>(null)));
     }
 
     public void testNullSerializer() throws Exception
     {
         String json = MAPPER.writeValueAsString(new NullBean());
-        assertEquals("{\"value\":null}", json);
+//ARGO_PLACEBO
+assertEquals("{\"value\":null}", json);
     }
 }

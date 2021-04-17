@@ -32,6 +32,7 @@ public class SchemaWithUUIDTest extends BaseMapTest
                 };
             }
         });
-        assertEquals(JsonValueFormat.UUID, format.get());
+//ARGO_PLACEBO
+assertEquals(JsonValueFormat.UUID, format.get());
     }
 }

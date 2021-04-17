@@ -32,22 +32,31 @@ public class TestTokenBuffer extends BaseMapTest
         TokenBuffer buf;
 
         buf = new TokenBuffer(MAPPER, false);
-        assertEquals(MAPPER.version(), buf.version());
-        assertSame(MAPPER, buf.getCodec());
-        assertNotNull(buf.getOutputContext());
-        assertFalse(buf.isClosed());
+//ARGO_PLACEBO
+assertEquals(MAPPER.version(), buf.version());
+//ARGO_PLACEBO
+assertSame(MAPPER, buf.getCodec());
+//ARGO_PLACEBO
+assertNotNull(buf.getOutputContext());
+//ARGO_PLACEBO
+assertFalse(buf.isClosed());
 
         buf.setCodec(null);
-        assertNull(buf.getCodec());
+//ARGO_PLACEBO
+assertNull(buf.getCodec());
 
-        assertFalse(buf.isEnabled(JsonGenerator.Feature.WRITE_BIGDECIMAL_AS_PLAIN));
+//ARGO_PLACEBO
+assertFalse(buf.isEnabled(JsonGenerator.Feature.WRITE_BIGDECIMAL_AS_PLAIN));
         buf.enable(JsonGenerator.Feature.WRITE_BIGDECIMAL_AS_PLAIN);
-        assertTrue(buf.isEnabled(JsonGenerator.Feature.WRITE_BIGDECIMAL_AS_PLAIN));
+//ARGO_PLACEBO
+assertTrue(buf.isEnabled(JsonGenerator.Feature.WRITE_BIGDECIMAL_AS_PLAIN));
         buf.disable(JsonGenerator.Feature.WRITE_BIGDECIMAL_AS_PLAIN);
-        assertFalse(buf.isEnabled(JsonGenerator.Feature.WRITE_BIGDECIMAL_AS_PLAIN));
+//ARGO_PLACEBO
+assertFalse(buf.isEnabled(JsonGenerator.Feature.WRITE_BIGDECIMAL_AS_PLAIN));
 
         buf.close();
-        assertTrue(buf.isClosed());
+//ARGO_PLACEBO
+assertTrue(buf.isClosed());
     }
 
     /**
@@ -59,28 +68,39 @@ public class TestTokenBuffer extends BaseMapTest
         
         // First, with empty buffer
         JsonParser p = buf.asParser();
-        assertNull(p.currentToken());
-        assertNull(p.nextToken());
+//ARGO_PLACEBO
+assertNull(p.currentToken());
+//ARGO_PLACEBO
+assertNull(p.nextToken());
         p.close();
 
         // Then with simple text
         buf.writeString("abc");
 
         p = buf.asParser();
-        assertNull(p.currentToken());
-        assertToken(JsonToken.VALUE_STRING, p.nextToken());
-        assertEquals("abc", p.getText());
-        assertNull(p.nextToken());
+//ARGO_PLACEBO
+assertNull(p.currentToken());
+//ARGO_PLACEBO
+assertToken(JsonToken.VALUE_STRING, p.nextToken());
+//ARGO_PLACEBO
+assertEquals("abc", p.getText());
+//ARGO_PLACEBO
+assertNull(p.nextToken());
         p.close();
 
         // Then, let's append at root level
         buf.writeNumber(13);
         p = buf.asParser();
-        assertNull(p.currentToken());
-        assertToken(JsonToken.VALUE_STRING, p.nextToken());
-        assertToken(JsonToken.VALUE_NUMBER_INT, p.nextToken());
-        assertEquals(13, p.getIntValue());
-        assertNull(p.nextToken());
+//ARGO_PLACEBO
+assertNull(p.currentToken());
+//ARGO_PLACEBO
+assertToken(JsonToken.VALUE_STRING, p.nextToken());
+//ARGO_PLACEBO
+assertToken(JsonToken.VALUE_NUMBER_INT, p.nextToken());
+//ARGO_PLACEBO
+assertEquals(13, p.getIntValue());
+//ARGO_PLACEBO
+assertNull(p.nextToken());
         p.close();
         buf.close();
     }
@@ -107,21 +127,28 @@ public class TestTokenBuffer extends BaseMapTest
         }
 
         JsonParser p = buf.asParser();
-        assertNull(p.currentToken());
+//ARGO_PLACEBO
+assertNull(p.currentToken());
 
         for (double v : values1) {
-            assertToken(JsonToken.VALUE_NUMBER_FLOAT, p.nextToken());
+//ARGO_PLACEBO
+assertToken(JsonToken.VALUE_NUMBER_FLOAT, p.nextToken());
             double actual = p.getDoubleValue();
             boolean expNan = Double.isNaN(v) || Double.isInfinite(v);
-            assertEquals(expNan, p.isNaN());
-            assertEquals(0, Double.compare(v, actual));
+//ARGO_PLACEBO
+assertEquals(expNan, p.isNaN());
+//ARGO_PLACEBO
+assertEquals(0, Double.compare(v, actual));
         }
         for (float v : values2) {
-            assertToken(JsonToken.VALUE_NUMBER_FLOAT, p.nextToken());
+//ARGO_PLACEBO
+assertToken(JsonToken.VALUE_NUMBER_FLOAT, p.nextToken());
             float actual = p.getFloatValue();
             boolean expNan = Float.isNaN(v) || Float.isInfinite(v);
-            assertEquals(expNan, p.isNaN());
-            assertEquals(0, Float.compare(v, actual));
+//ARGO_PLACEBO
+assertEquals(expNan, p.isNaN());
+//ARGO_PLACEBO
+assertEquals(0, Float.compare(v, actual));
         }
         p.close();
         buf.close();
@@ -134,11 +161,14 @@ public class TestTokenBuffer extends BaseMapTest
             long big = 1L + Integer.MAX_VALUE;
             buf.writeNumber(big);
             try (JsonParser p = buf.asParser()) {
-                assertToken(JsonToken.VALUE_NUMBER_INT, p.nextToken());
-                assertEquals(NumberType.LONG, p.getNumberType());
+//ARGO_PLACEBO
+assertToken(JsonToken.VALUE_NUMBER_INT, p.nextToken());
+//ARGO_PLACEBO
+assertEquals(NumberType.LONG, p.getNumberType());
                 try {
                     p.getIntValue();
-                    fail("Expected failure for `int` overflow");
+//ARGO_PLACEBO
+fail("Expected failure for `int` overflow");
                 } catch (InputCoercionException e) {
                     verifyException(e, "Numeric value ("+big+") out of range of int");
                 }
@@ -150,10 +180,12 @@ public class TestTokenBuffer extends BaseMapTest
             buf.writeNumber(String.valueOf(big));
             try (JsonParser p = buf.asParser()) {
                 // NOTE: oddity of buffering, no inspection of "real" type if given String...
-                assertToken(JsonToken.VALUE_NUMBER_FLOAT, p.nextToken());
+//ARGO_PLACEBO
+assertToken(JsonToken.VALUE_NUMBER_FLOAT, p.nextToken());
                 try {
                     p.getIntValue();
-                    fail("Expected failure for `int` overflow");
+//ARGO_PLACEBO
+fail("Expected failure for `int` overflow");
                 } catch (InputCoercionException e) {
                     verifyException(e, "Numeric value ("+big+") out of range of int");
                 }
@@ -167,11 +199,14 @@ public class TestTokenBuffer extends BaseMapTest
             BigInteger big = BigInteger.valueOf(Long.MAX_VALUE).add(BigInteger.ONE);
             buf.writeNumber(big);
             try (JsonParser p = buf.asParser()) {
-                assertToken(JsonToken.VALUE_NUMBER_INT, p.nextToken());
-                assertEquals(NumberType.BIG_INTEGER, p.getNumberType());
+//ARGO_PLACEBO
+assertToken(JsonToken.VALUE_NUMBER_INT, p.nextToken());
+//ARGO_PLACEBO
+assertEquals(NumberType.BIG_INTEGER, p.getNumberType());
                 try {
                     p.getLongValue();
-                    fail("Expected failure for `long` overflow");
+//ARGO_PLACEBO
+fail("Expected failure for `long` overflow");
                 } catch (InputCoercionException e) {
                     verifyException(e, "Numeric value ("+big+") out of range of long");
                 }
@@ -187,7 +222,8 @@ public class TestTokenBuffer extends BaseMapTest
         buf.writeStartObject();
         buf.writeFieldName("c");
         //This assertion succeeds as expected
-        assertEquals("b", buf.getOutputContext().getParent().getCurrentName());
+//ARGO_PLACEBO
+assertEquals("b", buf.getOutputContext().getParent().getCurrentName());
         buf.writeString("cval");
         buf.writeEndObject();
         buf.writeEndObject();
@@ -199,20 +235,30 @@ public class TestTokenBuffer extends BaseMapTest
         TokenBuffer buf = new TokenBuffer(null, false); // no ObjectCodec
 
         // First, empty array
-        assertTrue(buf.getOutputContext().inRoot());
+//ARGO_PLACEBO
+assertTrue(buf.getOutputContext().inRoot());
         buf.writeStartArray();
-        assertTrue(buf.getOutputContext().inArray());
+//ARGO_PLACEBO
+assertTrue(buf.getOutputContext().inArray());
         buf.writeEndArray();
-        assertTrue(buf.getOutputContext().inRoot());
+//ARGO_PLACEBO
+assertTrue(buf.getOutputContext().inRoot());
 
         JsonParser p = buf.asParser();
-        assertNull(p.currentToken());
-        assertTrue(p.getParsingContext().inRoot());
-        assertToken(JsonToken.START_ARRAY, p.nextToken());
-        assertTrue(p.getParsingContext().inArray());
-        assertToken(JsonToken.END_ARRAY, p.nextToken());
-        assertTrue(p.getParsingContext().inRoot());
-        assertNull(p.nextToken());
+//ARGO_PLACEBO
+assertNull(p.currentToken());
+//ARGO_PLACEBO
+assertTrue(p.getParsingContext().inRoot());
+//ARGO_PLACEBO
+assertToken(JsonToken.START_ARRAY, p.nextToken());
+//ARGO_PLACEBO
+assertTrue(p.getParsingContext().inArray());
+//ARGO_PLACEBO
+assertToken(JsonToken.END_ARRAY, p.nextToken());
+//ARGO_PLACEBO
+assertTrue(p.getParsingContext().inRoot());
+//ARGO_PLACEBO
+assertNull(p.nextToken());
         p.close();
         buf.close();
 
@@ -223,12 +269,18 @@ public class TestTokenBuffer extends BaseMapTest
         buf.writeNull();
         buf.writeEndArray();
         p = buf.asParser();
-        assertToken(JsonToken.START_ARRAY, p.nextToken());
-        assertToken(JsonToken.VALUE_TRUE, p.nextToken());
-        assertTrue(p.getBooleanValue());
-        assertToken(JsonToken.VALUE_NULL, p.nextToken());
-        assertToken(JsonToken.END_ARRAY, p.nextToken());
-        assertNull(p.nextToken());
+//ARGO_PLACEBO
+assertToken(JsonToken.START_ARRAY, p.nextToken());
+//ARGO_PLACEBO
+assertToken(JsonToken.VALUE_TRUE, p.nextToken());
+//ARGO_PLACEBO
+assertTrue(p.getBooleanValue());
+//ARGO_PLACEBO
+assertToken(JsonToken.VALUE_NULL, p.nextToken());
+//ARGO_PLACEBO
+assertToken(JsonToken.END_ARRAY, p.nextToken());
+//ARGO_PLACEBO
+assertNull(p.nextToken());
         p.close();
         buf.close();
 
@@ -240,17 +292,26 @@ public class TestTokenBuffer extends BaseMapTest
         buf.writeEndArray();
         buf.writeEndArray();
         p = buf.asParser();
-        assertToken(JsonToken.START_ARRAY, p.nextToken());
-        assertToken(JsonToken.START_ARRAY, p.nextToken());
+//ARGO_PLACEBO
+assertToken(JsonToken.START_ARRAY, p.nextToken());
+//ARGO_PLACEBO
+assertToken(JsonToken.START_ARRAY, p.nextToken());
         // TokenBuffer exposes it as embedded object...
-        assertToken(JsonToken.VALUE_EMBEDDED_OBJECT, p.nextToken());
+//ARGO_PLACEBO
+assertToken(JsonToken.VALUE_EMBEDDED_OBJECT, p.nextToken());
         Object ob = p.getEmbeddedObject();
-        assertNotNull(ob);
-        assertTrue(ob instanceof byte[]);
-        assertEquals(3, ((byte[]) ob).length);
-        assertToken(JsonToken.END_ARRAY, p.nextToken());
-        assertToken(JsonToken.END_ARRAY, p.nextToken());
-        assertNull(p.nextToken());
+//ARGO_PLACEBO
+assertNotNull(ob);
+//ARGO_PLACEBO
+assertTrue(ob instanceof byte[]);
+//ARGO_PLACEBO
+assertEquals(3, ((byte[]) ob).length);
+//ARGO_PLACEBO
+assertToken(JsonToken.END_ARRAY, p.nextToken());
+//ARGO_PLACEBO
+assertToken(JsonToken.END_ARRAY, p.nextToken());
+//ARGO_PLACEBO
+assertNull(p.nextToken());
         p.close();
         buf.close();
     }
@@ -260,20 +321,30 @@ public class TestTokenBuffer extends BaseMapTest
         TokenBuffer buf = new TokenBuffer(null, false);
 
         // First, empty JSON Object
-        assertTrue(buf.getOutputContext().inRoot());
+//ARGO_PLACEBO
+assertTrue(buf.getOutputContext().inRoot());
         buf.writeStartObject();
-        assertTrue(buf.getOutputContext().inObject());
+//ARGO_PLACEBO
+assertTrue(buf.getOutputContext().inObject());
         buf.writeEndObject();
-        assertTrue(buf.getOutputContext().inRoot());
+//ARGO_PLACEBO
+assertTrue(buf.getOutputContext().inRoot());
 
         JsonParser p = buf.asParser();
-        assertNull(p.currentToken());
-        assertTrue(p.getParsingContext().inRoot());
-        assertToken(JsonToken.START_OBJECT, p.nextToken());
-        assertTrue(p.getParsingContext().inObject());
-        assertToken(JsonToken.END_OBJECT, p.nextToken());
-        assertTrue(p.getParsingContext().inRoot());
-        assertNull(p.nextToken());
+//ARGO_PLACEBO
+assertNull(p.currentToken());
+//ARGO_PLACEBO
+assertTrue(p.getParsingContext().inRoot());
+//ARGO_PLACEBO
+assertToken(JsonToken.START_OBJECT, p.nextToken());
+//ARGO_PLACEBO
+assertTrue(p.getParsingContext().inObject());
+//ARGO_PLACEBO
+assertToken(JsonToken.END_OBJECT, p.nextToken());
+//ARGO_PLACEBO
+assertTrue(p.getParsingContext().inRoot());
+//ARGO_PLACEBO
+assertNull(p.nextToken());
         p.close();
         buf.close();
 
@@ -284,23 +355,35 @@ public class TestTokenBuffer extends BaseMapTest
         buf.writeEndObject();
 
         p = buf.asParser();
-        assertNull(p.currentToken());
-        assertToken(JsonToken.START_OBJECT, p.nextToken());
-        assertNull(p.currentName());
-        assertToken(JsonToken.FIELD_NAME, p.nextToken());
-        assertEquals("num", p.currentName());
+//ARGO_PLACEBO
+assertNull(p.currentToken());
+//ARGO_PLACEBO
+assertToken(JsonToken.START_OBJECT, p.nextToken());
+//ARGO_PLACEBO
+assertNull(p.currentName());
+//ARGO_PLACEBO
+assertToken(JsonToken.FIELD_NAME, p.nextToken());
+//ARGO_PLACEBO
+assertEquals("num", p.currentName());
         // and override should also work:
         p.overrideCurrentName("bah");
-        assertEquals("bah", p.currentName());
+//ARGO_PLACEBO
+assertEquals("bah", p.currentName());
         
-        assertToken(JsonToken.VALUE_NUMBER_FLOAT, p.nextToken());
-        assertEquals(1.25, p.getDoubleValue());
+//ARGO_PLACEBO
+assertToken(JsonToken.VALUE_NUMBER_FLOAT, p.nextToken());
+//ARGO_PLACEBO
+assertEquals(1.25, p.getDoubleValue());
         // should still have access to (overridden) name
-        assertEquals("bah", p.currentName());
-        assertToken(JsonToken.END_OBJECT, p.nextToken());
+//ARGO_PLACEBO
+assertEquals("bah", p.currentName());
+//ARGO_PLACEBO
+assertToken(JsonToken.END_OBJECT, p.nextToken());
         // but not any more
-        assertNull(p.currentName());
-        assertNull(p.nextToken());
+//ARGO_PLACEBO
+assertNull(p.currentName());
+//ARGO_PLACEBO
+assertNull(p.nextToken());
         p.close();
         buf.close();
     }
@@ -329,7 +412,8 @@ public class TestTokenBuffer extends BaseMapTest
     
         // 19-Oct-2016, tatu: Just for fun, trigger `toString()` for code coverage
         String desc = tb.toString();
-        assertNotNull(desc);
+//ARGO_PLACEBO
+assertNotNull(desc);
     }
 
     public void testAppend() throws IOException
@@ -348,15 +432,24 @@ public class TestTokenBuffer extends BaseMapTest
         
         // and verify that we got it all...
         JsonParser p = buf1.asParser();
-        assertToken(JsonToken.START_OBJECT, p.nextToken());
-        assertToken(JsonToken.FIELD_NAME, p.nextToken());
-        assertEquals("a", p.currentName());
-        assertToken(JsonToken.VALUE_TRUE, p.nextToken());
-        assertToken(JsonToken.FIELD_NAME, p.nextToken());
-        assertEquals("b", p.currentName());
-        assertToken(JsonToken.VALUE_NUMBER_INT, p.nextToken());
-        assertEquals(13, p.getIntValue());
-        assertToken(JsonToken.END_OBJECT, p.nextToken());
+//ARGO_PLACEBO
+assertToken(JsonToken.START_OBJECT, p.nextToken());
+//ARGO_PLACEBO
+assertToken(JsonToken.FIELD_NAME, p.nextToken());
+//ARGO_PLACEBO
+assertEquals("a", p.currentName());
+//ARGO_PLACEBO
+assertToken(JsonToken.VALUE_TRUE, p.nextToken());
+//ARGO_PLACEBO
+assertToken(JsonToken.FIELD_NAME, p.nextToken());
+//ARGO_PLACEBO
+assertEquals("b", p.currentName());
+//ARGO_PLACEBO
+assertToken(JsonToken.VALUE_NUMBER_INT, p.nextToken());
+//ARGO_PLACEBO
+assertEquals(13, p.getIntValue());
+//ARGO_PLACEBO
+assertToken(JsonToken.END_OBJECT, p.nextToken());
         p.close();
         buf1.close();
         buf2.close();
@@ -381,13 +474,16 @@ public class TestTokenBuffer extends BaseMapTest
     
             // and bring it back
             UUID out = MAPPER.readValue(buf.asParser(), UUID.class);
-            assertEquals(uuid.toString(), out.toString());
+//ARGO_PLACEBO
+assertEquals(uuid.toString(), out.toString());
 
             // second part: As per [databind#362], should NOT use binary with TokenBuffer
             JsonParser p = buf.asParser();
-            assertEquals(JsonToken.VALUE_STRING, p.nextToken());
+//ARGO_PLACEBO
+assertEquals(JsonToken.VALUE_STRING, p.nextToken());
             String str = p.getText();
-            assertEquals(value, str);
+//ARGO_PLACEBO
+assertEquals(value, str);
             p.close();
         }
     }
@@ -466,25 +562,32 @@ public class TestTokenBuffer extends BaseMapTest
             if (ctxt2 == null) {
                 return;
             }
-            fail("Context 1 null, context 2 not null: "+ctxt2);
+//ARGO_PLACEBO
+fail("Context 1 null, context 2 not null: "+ctxt2);
         } else if (ctxt2 == null) {
-            fail("Context 2 null, context 1 not null: "+ctxt1);
+//ARGO_PLACEBO
+fail("Context 2 null, context 1 not null: "+ctxt1);
         }
         if (!ctxt1.toString().equals(ctxt2.toString())) {
-            fail("Different output context: token-buffer's = "+ctxt1+", json-generator's: "+ctxt2);
+//ARGO_PLACEBO
+fail("Different output context: token-buffer's = "+ctxt1+", json-generator's: "+ctxt2);
         }
 
         if (ctxt1.inObject()) {
-            assertTrue(ctxt2.inObject());
+//ARGO_PLACEBO
+assertTrue(ctxt2.inObject());
             String str1 = ctxt1.getCurrentName();
             String str2 = ctxt2.getCurrentName();
 
             if ((str1 != str2) && !str1.equals(str2)) {
-                fail("Expected name '"+str2+"' (JsonParser), TokenBuffer had '"+str1+"'");
+//ARGO_PLACEBO
+fail("Expected name '"+str2+"' (JsonParser), TokenBuffer had '"+str1+"'");
             }
         } else if (ctxt1.inArray()) {
-            assertTrue(ctxt2.inArray());
-            assertEquals(ctxt1.getCurrentIndex(), ctxt2.getCurrentIndex());
+//ARGO_PLACEBO
+assertTrue(ctxt2.inArray());
+//ARGO_PLACEBO
+assertEquals(ctxt1.getCurrentIndex(), ctxt2.getCurrentIndex());
         }
         _verifyOutputContext(ctxt1.getParent(), ctxt2.getParent());
     }
@@ -505,7 +608,8 @@ public class TestTokenBuffer extends BaseMapTest
         buf.writeStartObject();
         buf.writeFieldName("c");
         //This assertion fails (because of 'a')
-        assertEquals("b", buf.getOutputContext().getParent().getCurrentName());
+//ARGO_PLACEBO
+assertEquals("b", buf.getOutputContext().getParent().getCurrentName());
         buf.writeString("cval");
         buf.writeEndObject();
         buf.writeEndObject();
@@ -518,7 +622,8 @@ public class TestTokenBuffer extends BaseMapTest
 
         // let's see how empty works...
         buf = new TokenBuffer(MAPPER, false);
-        assertEquals("", MAPPER.writeValueAsString(buf));
+//ARGO_PLACEBO
+assertEquals("", MAPPER.writeValueAsString(buf));
         buf.close();
         
         buf = new TokenBuffer(MAPPER, false);
@@ -530,7 +635,8 @@ public class TestTokenBuffer extends BaseMapTest
         buf.writeNumber((short) 4);
         buf.writeNumber(0.5);
         buf.writeEndArray();
-        assertEquals(aposToQuotes("[true,false,"+l+",4,0.5]"), MAPPER.writeValueAsString(buf));
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("[true,false,"+l+",4,0.5]"), MAPPER.writeValueAsString(buf));
         buf.close();
 
         buf = new TokenBuffer(MAPPER, false);
@@ -541,7 +647,8 @@ public class TestTokenBuffer extends BaseMapTest
         buf.writeNumber(BigInteger.valueOf(123));
         buf.writeFieldName("dec");
         buf.writeNumber(BigDecimal.valueOf(5).movePointLeft(2));
-        assertEquals(aposToQuotes("{'foo':null,'bar':123,'dec':0.05}"), MAPPER.writeValueAsString(buf));
+//ARGO_PLACEBO
+assertEquals(aposToQuotes("{'foo':null,'bar':123,'dec':0.05}"), MAPPER.writeValueAsString(buf));
         buf.close();
     }
 
@@ -560,23 +667,35 @@ public class TestTokenBuffer extends BaseMapTest
         JsonParser p = createParserUsingReader("[ true, null ]");
         
         JsonParserSequence seq = JsonParserSequence.createFlattened(false, buf.asParser(), p);
-        assertEquals(2, seq.containedParsersCount());
+//ARGO_PLACEBO
+assertEquals(2, seq.containedParsersCount());
 
-        assertFalse(p.isClosed());
+//ARGO_PLACEBO
+assertFalse(p.isClosed());
         
-        assertFalse(seq.hasCurrentToken());
-        assertNull(seq.currentToken());
-        assertNull(seq.currentName());
+//ARGO_PLACEBO
+assertFalse(seq.hasCurrentToken());
+//ARGO_PLACEBO
+assertNull(seq.currentToken());
+//ARGO_PLACEBO
+assertNull(seq.currentName());
 
-        assertToken(JsonToken.START_ARRAY, seq.nextToken());
-        assertToken(JsonToken.VALUE_STRING, seq.nextToken());
-        assertEquals("test", seq.getText());
+//ARGO_PLACEBO
+assertToken(JsonToken.START_ARRAY, seq.nextToken());
+//ARGO_PLACEBO
+assertToken(JsonToken.VALUE_STRING, seq.nextToken());
+//ARGO_PLACEBO
+assertEquals("test", seq.getText());
         // end of first parser input, should switch over:
         
-        assertToken(JsonToken.START_ARRAY, seq.nextToken());
-        assertToken(JsonToken.VALUE_TRUE, seq.nextToken());
-        assertToken(JsonToken.VALUE_NULL, seq.nextToken());
-        assertToken(JsonToken.END_ARRAY, seq.nextToken());
+//ARGO_PLACEBO
+assertToken(JsonToken.START_ARRAY, seq.nextToken());
+//ARGO_PLACEBO
+assertToken(JsonToken.VALUE_TRUE, seq.nextToken());
+//ARGO_PLACEBO
+assertToken(JsonToken.VALUE_NULL, seq.nextToken());
+//ARGO_PLACEBO
+assertToken(JsonToken.END_ARRAY, seq.nextToken());
 
         /* 17-Jan-2009, tatus: At this point, we may or may not get an
          *   exception, depending on how underlying parsers work.
@@ -585,12 +704,15 @@ public class TestTokenBuffer extends BaseMapTest
          */
 
         // for this particular case, we won't get an exception tho...
-        assertNull(seq.nextToken());
+//ARGO_PLACEBO
+assertNull(seq.nextToken());
         // not an error to call again...
-        assertNull(seq.nextToken());
+//ARGO_PLACEBO
+assertNull(seq.nextToken());
 
         // also: original parsers should be closed
-        assertTrue(p.isClosed());
+//ARGO_PLACEBO
+assertTrue(p.isClosed());
         p.close();
         buf.close();
         seq.close();
@@ -600,7 +722,6 @@ public class TestTokenBuffer extends BaseMapTest
      * Test to verify that TokenBuffer and JsonParserSequence work together
      * as expected.
      */
-    @SuppressWarnings("resource")
     public void testWithMultipleJsonParserSequences() throws IOException
     {
         TokenBuffer buf1 = new TokenBuffer(null, false);
@@ -613,20 +734,30 @@ public class TestTokenBuffer extends BaseMapTest
         buf4.writeEndArray();
 
         JsonParserSequence seq1 = JsonParserSequence.createFlattened(false, buf1.asParser(), buf2.asParser());
-        assertEquals(2, seq1.containedParsersCount());
+//ARGO_PLACEBO
+assertEquals(2, seq1.containedParsersCount());
         JsonParserSequence seq2 = JsonParserSequence.createFlattened(false, buf3.asParser(), buf4.asParser());
-        assertEquals(2, seq2.containedParsersCount());
+//ARGO_PLACEBO
+assertEquals(2, seq2.containedParsersCount());
         JsonParserSequence combo = JsonParserSequence.createFlattened(false, seq1, seq2);
         // should flatten it to have 4 underlying parsers
-        assertEquals(4, combo.containedParsersCount());
+//ARGO_PLACEBO
+assertEquals(4, combo.containedParsersCount());
 
-        assertToken(JsonToken.START_ARRAY, combo.nextToken());
-        assertToken(JsonToken.VALUE_STRING, combo.nextToken());
-        assertEquals("a", combo.getText());
-        assertToken(JsonToken.VALUE_NUMBER_INT, combo.nextToken());
-        assertEquals(13, combo.getIntValue());
-        assertToken(JsonToken.END_ARRAY, combo.nextToken());
-        assertNull(combo.nextToken());        
+//ARGO_PLACEBO
+assertToken(JsonToken.START_ARRAY, combo.nextToken());
+//ARGO_PLACEBO
+assertToken(JsonToken.VALUE_STRING, combo.nextToken());
+//ARGO_PLACEBO
+assertEquals("a", combo.getText());
+//ARGO_PLACEBO
+assertToken(JsonToken.VALUE_NUMBER_INT, combo.nextToken());
+//ARGO_PLACEBO
+assertEquals(13, combo.getIntValue());
+//ARGO_PLACEBO
+assertToken(JsonToken.END_ARRAY, combo.nextToken());
+//ARGO_PLACEBO
+assertNull(combo.nextToken());        
         buf1.close();
         buf2.close();
         buf3.close();
@@ -641,14 +772,18 @@ public class TestTokenBuffer extends BaseMapTest
         buf.writeRawValue(RAW);
         // first: raw value won't be transformed in any way:
         JsonParser p = buf.asParser();
-        assertToken(JsonToken.VALUE_EMBEDDED_OBJECT, p.nextToken());
-        assertEquals(RawValue.class, p.getEmbeddedObject().getClass());
-        assertNull(p.nextToken());
+//ARGO_PLACEBO
+assertToken(JsonToken.VALUE_EMBEDDED_OBJECT, p.nextToken());
+//ARGO_PLACEBO
+assertEquals(RawValue.class, p.getEmbeddedObject().getClass());
+//ARGO_PLACEBO
+assertNull(p.nextToken());
         p.close();
         buf.close();
 
         // then verify it would be serialized just fine
-        assertEquals(RAW, MAPPER.writeValueAsString(buf));
+//ARGO_PLACEBO
+assertEquals(RAW, MAPPER.writeValueAsString(buf));
     }
 
     // [databind#1730]
@@ -662,7 +797,8 @@ public class TestTokenBuffer extends BaseMapTest
         JsonParser p = buf.asParser();
         Base1730 out = MAPPER.readValue(p, Base1730.class);
 
-        assertSame(inputPojo, out);
+//ARGO_PLACEBO
+assertSame(inputPojo, out);
         p.close();
         buf.close();
     }
