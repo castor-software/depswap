@@ -1137,7 +1137,7 @@ public class JSONArrayTest {
         Map<?,?> val2Key2Map = (Map<?,?>) val2Map.get("key2");
         assertTrue("val2 map key 2 should not be null", val2Key2Map != null);
         assertTrue("val2 map key 2 should have an entry", val2Key2Map.containsKey("key2"));
-        assertTrue("val2 map key 2 value should be null", val2Key2Map.get("key2").toString().equals("null"));
+        assertTrue("val2 map key 2 value should be null", val2Key2Map.get("key2") == null);
 
         List<?> val2Key4List = (List<?>) val2Map.get("key4");
         assertTrue("val2 map key 4 should not be null", val2Key4List != null);
@@ -1156,7 +1156,7 @@ public class JSONArrayTest {
         List<?> val3Val2List = (List<?>)val3List.get(1);
         assertTrue("val3 list val 2 should not be null", val3Val2List != null);
         assertTrue("val3 list val 2 should have 1 element", val3Val2List.size() == 1);
-        assertTrue("val3 list val 2 list element 1 should be null", val3Val2List.get(0).toString().equals("null"));
+        assertTrue("val3 list val 2 list element 1 should be null", val3Val2List.get(0) == null);
 
         // assert that toList() is a deep copy
         jsonArray.getJSONObject(1).put("key1", "still val1");

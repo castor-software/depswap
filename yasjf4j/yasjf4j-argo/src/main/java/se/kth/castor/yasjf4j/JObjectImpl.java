@@ -143,8 +143,8 @@ public class JObjectImpl extends LinkedHashMap<String, Object> implements JObjec
 	public static Object unshield(Object o) {
 
 		if(o instanceof JNull) {
-			return null;
-			//return JsonNodeBuilders.aNullBuilder().build();
+			//return null;
+			return JsonNodeBuilders.aNullBuilder().build();
 		} else if(o instanceof JsonNode) {
 			JsonNode n = (JsonNode) o;
 //			if(n.isNullNode()) {

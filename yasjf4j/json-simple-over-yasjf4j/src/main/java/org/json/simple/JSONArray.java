@@ -20,7 +20,7 @@ import static org.json.simple.JSONValue.autoBox;
 import static org.json.simple.JSONValue.recA;
 import static org.json.simple.JSONValue.recO;
 
-public class JSONArray implements List<Object>, JSONAware, JSONStreamAware {
+public class JSONArray implements List, JSONAware, JSONStreamAware {
 	JArray json;
 
 	public JSONArray(List in) {

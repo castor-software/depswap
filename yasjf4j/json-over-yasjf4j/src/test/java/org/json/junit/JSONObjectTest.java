@@ -2984,7 +2984,7 @@ public class JSONObjectTest {
         Map<?,?> key2Val2Map = (Map<?,?>)key2Map.get("key2");
         assertTrue("key2 map key 2 should not be null", key2Val2Map != null);
         assertTrue("key2 map key 2 should have an entry", key2Val2Map.containsKey("key2"));
-        assertTrue("key2 map key 2 value should be null", key2Val2Map.get("key2").toString() == "null");
+        assertTrue("key2 map key 2 value should be null", key2Val2Map.get("key2") == null);
 
         List<?> key3List = (List<?>)map.get("key3");
         assertTrue("key3 should not be null", key3List != null);
@@ -2999,7 +2999,7 @@ public class JSONObjectTest {
         List<?> key3Val2List = (List<?>)key3List.get(1);
         assertTrue("key3 list val 2 should not be null", key3Val2List != null);
         assertTrue("key3 list val 2 should have 1 element", key3Val2List.size() == 1);
-        assertTrue("key3 list val 2 list element 1 should be null", key3Val2List.get(0).toString() == "null");
+        assertTrue("key3 list val 2 list element 1 should be null", key3Val2List.get(0) == null);
 
         // Assert that toMap() is a deep copy
         jsonObject.getJSONArray("key3").getJSONArray(0).put(0, "still value 1");

@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -25,7 +26,7 @@ import static org.json.simple.JSONValue.autoBox;
 import static org.json.simple.JSONValue.recA;
 import static org.json.simple.JSONValue.recO;
 
-public class JSONObject implements Map<Object,Object>, JSONAware, JSONStreamAware {
+public class JSONObject implements Map, JSONAware, JSONStreamAware {
 	JObject json;
 
 	public JSONObject(Map in) {
@@ -77,6 +78,35 @@ public class JSONObject implements Map<Object,Object>, JSONAware, JSONStreamAwar
 
 	public static String toJSONString(Map map) {
 		return new JSONObject(map).toJSONString();
+	}
+
+	public static void writeJSONString(Map map, Writer out) throws IOException {
+		if(map == null){
+			out.write("null");
+			return;
+		}
+
+		boolean first = true;
+		Iterator iter=map.entrySet().iterator();
+
+		out.write('{');
+		while(iter.hasNext()){
+			if(first)
+				first = false;
+			else
+				out.write(',');
+			Map.Entry entry=(Map.Entry)iter.next();
+			out.write('\"');
+			out.write(escape(String.valueOf(entry.getKey())));
+			out.write('\"');
+			out.write(':');
+			JSONValue.writeJSONString(entry.getValue(), out);
+		}
+		out.write('}');
+	}
+
+	public static String escape(String s){
+		return JSONValue.escape(s);
 	}
 
 	@Override
@@ -158,7 +188,7 @@ public class JSONObject implements Map<Object,Object>, JSONAware, JSONStreamAwar
 	}
 
 	@Override
-	public Set<Object> keySet() {
+	public Set<String> keySet() {
 		return new HashSet<>(json.YASJF4J_getKeys());
 	}
 
@@ -176,8 +206,8 @@ public class JSONObject implements Map<Object,Object>, JSONAware, JSONStreamAwar
 	}
 
 	@Override
-	public Set<Entry<Object, Object>> entrySet() {
-		HashSet<Entry<Object, Object>> res = new HashSet<>();
+	public Set<Entry<String, Object>> entrySet() {
+		HashSet<Entry<String, Object>> res = new HashSet<>();
 		for(String key: json.YASJF4J_getKeys()) {
 			try {
 				res.add(new HashMap.SimpleEntry<>(key, JSONValue.shield(json.YASJF4J_get(key))));
@@ -209,7 +239,7 @@ public class JSONObject implements Map<Object,Object>, JSONAware, JSONStreamAwar
 		if(!(o instanceof JSONObject)) return false;
 		JSONObject other = ((JSONObject) o);
 		if(other.size() != size()) return false;
-		for (Entry<Object, Object> e0: entrySet()) {
+		for (Entry<String, Object> e0: entrySet()) {
 			if(!other.containsKey(e0.getKey())) {
 				return false;
 			} else {

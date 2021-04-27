@@ -464,6 +464,15 @@ public class JSONObject {
     }
 
     //optBoolean(Ljava/lang/String;)Z
+    public boolean optBoolean(String key, boolean defaultValue) {
+        try {
+            return getBoolean(key);
+        } catch (Exception e) {
+        }
+        return defaultValue;
+    }
+
+    //optBoolean(Ljava/lang/String;)Z
     public boolean optBoolean(String key) {
         try {
             return getBoolean(key);
@@ -503,7 +512,21 @@ public class JSONObject {
     }
 
     //isNull(Ljava/lang/String;)Z
+    public boolean isNull(String key) {
+        return JSONObject.NULL.equals(this.opt(key));
+    }
+
     //toString(I)Ljava/lang/String;
+    public String toString(int ignored) {
+        String str;
+        try {
+            str = json.YASJF4J_toString();
+        } catch (Exception e) {
+            throw new JSONException();
+        }
+        if(str == null) throw new JSONException();
+        return str;
+    }
 
     //toString()Ljava/lang/String;
     @Override
@@ -543,10 +566,27 @@ public class JSONObject {
 
 
     //put(Ljava/lang/String;I)Lorg/json/JSONObject;
-    //put(Ljava/lang/String;Ljava/lang/Object;)Lorg/json/JSONObject;
+    public JSONObject put(String key, int value) {
+        return put(key, Integer.valueOf(value));
+    }
     //put(Ljava/lang/String;Z)Lorg/json/JSONObject;
+    public JSONObject put(String key, boolean value) {
+        return put(key, Boolean.valueOf(value));
+    }
     //put(Ljava/lang/String;J)Lorg/json/JSONObject;
+    public JSONObject put(String key, long value) {
+        return put(key, Long.valueOf(value));
+    }
     //put(Ljava/lang/String;Ljava/util/Collection;)Lorg/json/JSONObject;
+    public JSONObject put(String key, Collection value) {
+        if (value != null) {
+            return put(key, new JSONArray(value));
+        } else {
+            return put(key, null);
+        }
+    }
+
+    //put(Ljava/lang/String;Ljava/lang/Object;)Lorg/json/JSONObject;
     public JSONObject put(String key, Object value) {
         if (key == null) {
             throw new NullPointerException("Null key.");
@@ -554,7 +594,7 @@ public class JSONObject {
         if (value != null) {
             //testValidity(value);
             try {
-                json.YASJF4J_put(key.toString(), JSONObject.unshield(value));
+                json.YASJF4J_put(key, JSONObject.unshield(value));
             } catch (JException e) {
                 throw new JSONException();
             }
@@ -763,7 +803,7 @@ public class JSONObject {
             try {
             Object v = json.YASJF4J_get(key);
             Object value;
-            if (v == null || NULL.equals(v)) {
+            if (v == null || NULL.equals(v) || v instanceof JNull) {
                 value = null;
             } else if (v instanceof JSONObject) {
                 value = ((JSONObject) v).toMap();

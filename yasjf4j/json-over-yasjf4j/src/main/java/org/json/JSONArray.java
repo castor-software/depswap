@@ -27,6 +27,7 @@ package org.json;
 import se.kth.castor.yasjf4j.JArray;
 import se.kth.castor.yasjf4j.JException;
 import se.kth.castor.yasjf4j.JFactory;
+import se.kth.castor.yasjf4j.JNull;
 import se.kth.castor.yasjf4j.JObject;
 
 import java.io.IOException;
@@ -412,6 +413,14 @@ public class JSONArray implements Iterable<Object> {
         }
         return false;
     }
+    public boolean optBoolean(int key, boolean defaultValue) {
+        try {
+            return getBoolean(key);
+        } catch (Exception e) {
+        }
+        return defaultValue;
+    }
+
     //optJSONObject(Ljava/lang/String;)Lorg/json/JSONObject
     public JSONObject optJSONObject(int key) {
         try {
@@ -665,7 +674,7 @@ public class JSONArray implements Iterable<Object> {
 		for (int i = 0; i < json.YASJF4J_size(); i++) {
 			try {
 			Object element = json.YASJF4J_get(i);
-			if (element == null || JSONObject.NULL.equals(element)) {
+			if (element == null || JSONObject.NULL.equals(element) || element instanceof JNull) {
 				results.add(null);
 			} else if (element instanceof JArray) {
 				results.add((new JSONArray((JArray) element)).toList());
