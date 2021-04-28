@@ -362,7 +362,7 @@ public class JSONObject {
                 return ((Number)object).floatValue();
             }
             try {
-                return Float.parseFloat(object.toString());
+                return Double.parseDouble(object.toString());
             } catch (Exception e) {
                 throw new JSONException();
             }

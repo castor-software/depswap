@@ -273,6 +273,22 @@ public class JSONArray implements Iterable<Object> {
         throw new JSONException();
     }
 
+	public Number getNumber(int key) throws JSONException {
+		try {
+			Object object = json.YASJF4J_get(key);
+			if(object instanceof Number) {
+				return ((Number)object).floatValue();
+			}
+			try {
+				return Double.parseDouble(object.toString());
+			} catch (Exception e) {
+				throw new JSONException();
+			}
+		} catch (JException e) {
+		}
+		throw new JSONException();
+	}
+
     //getInt(Ljava/lang/String;)I
     public int getInt(int key) throws JSONException {
         try {
@@ -451,6 +467,50 @@ public class JSONArray implements Iterable<Object> {
     public long optLong(int key) {
         return optLong(key, 0);
     }
+
+    public float optFloat(int key, float defaultValue) {
+        try {
+            return getFloat(key);
+        } catch (Exception e) {
+        }
+        return defaultValue;
+    }
+    public float optFloat(int key) {
+        return optFloat(key, 0f);
+    }
+
+    public double optDouble(int key, double defaultValue) {
+        try {
+            return getDouble(key);
+        } catch (Exception e) {
+        }
+        return defaultValue;
+    }
+    public double optDouble(int key) {
+        return optDouble(key, 0d);
+    }
+
+	public BigDecimal optBigDecimal(int key, BigDecimal defaultValue) {
+		try {
+			return getBigDecimal(key);
+		} catch (Exception e) {
+		}
+		return defaultValue;
+	}
+	public BigDecimal optBigDecimal(int key) {
+		return optBigDecimal(key, new BigDecimal(0d));
+	}
+
+	public BigInteger optBigInteger(int key, BigInteger defaultValue) {
+		try {
+			return getBigInteger(key);
+		} catch (Exception e) {
+		}
+		return defaultValue;
+	}
+	public BigInteger optBigInteger(int key) {
+		return optBigInteger(key, BigInteger.valueOf(0));
+	}
 
     //toString()Ljava/lang/String;
     @Override
@@ -693,4 +753,41 @@ public class JSONArray implements Iterable<Object> {
 	public void clear() {
     	json = JFactory.createJArray();
 	}
+
+
+
+    public <E extends Enum<E>> E getEnum(Class<E> clazz, int index) throws JSONException {
+        E val = optEnum(clazz, index);
+        if(val==null) {
+            // JSONException should really take a throwable argument.
+            // If it did, I would re-implement this with the Enum.valueOf
+            // method and place any thrown exception in the JSONException
+            throw new JSONException();
+        }
+        return val;
+    }
+
+    public <E extends Enum<E>> E optEnum(Class<E> clazz, int index) {
+        return this.optEnum(clazz, index, null);
+    }
+
+    public <E extends Enum<E>> E optEnum(Class<E> clazz, int index, E defaultValue) {
+        try {
+            Object val = this.opt(index);
+            if (JSONObject.NULL.equals(val)) {
+                return defaultValue;
+            }
+            if (clazz.isAssignableFrom(val.getClass())) {
+                // we just checked it!
+                @SuppressWarnings("unchecked")
+                E myE = (E) val;
+                return myE;
+            }
+            return Enum.valueOf(clazz, val.toString());
+        } catch (IllegalArgumentException e) {
+            return defaultValue;
+        } catch (NullPointerException e) {
+            return defaultValue;
+        }
+    }
 }
