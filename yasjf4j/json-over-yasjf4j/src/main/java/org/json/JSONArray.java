@@ -512,6 +512,10 @@ public class JSONArray implements Iterable<Object> {
 		return optBigInteger(key, BigInteger.valueOf(0));
 	}
 
+	public String toString(int i) {
+		return toString();
+	}
+
     //toString()Ljava/lang/String;
     @Override
     public String toString() {

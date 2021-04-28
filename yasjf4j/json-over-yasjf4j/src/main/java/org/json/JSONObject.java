@@ -208,6 +208,11 @@ public class JSONObject {
         }
     }
 
+    public JSONObject(Object bean) {
+        this();
+        this.populateMap(bean);
+    }
+
     public static Object wrap(Object object) {
         try {
             if (object == null) {
@@ -1061,5 +1066,178 @@ public class JSONObject {
             return null;
         }
         return jo.keySet().toArray(new String[jo.length()]);
+    }
+
+
+    private void populateMap(Object bean) {
+        Class<?> klass = bean.getClass();
+
+        // If klass is a System class then set includeSuperClass to false.
+
+        boolean includeSuperClass = klass.getClassLoader() != null;
+
+        Method[] methods = includeSuperClass ? klass.getMethods() : klass.getDeclaredMethods();
+        for (final Method method : methods) {
+            final int modifiers = method.getModifiers();
+            if (Modifier.isPublic(modifiers)
+                    && !Modifier.isStatic(modifiers)
+                    && method.getParameterTypes().length == 0
+                    && !method.isBridge()
+                    && method.getReturnType() != Void.TYPE
+                    && isValidMethodName(method.getName())) {
+                final String key = getKeyNameFromMethod(method);
+                if (key != null && !key.isEmpty()) {
+                    try {
+                        final Object result = method.invoke(bean);
+                        if (result != null) {
+                            json.YASJF4J_put(key, wrap(result));
+                            // we don't use the result anywhere outside of wrap
+                            // if it's a resource we should be sure to close it
+                            // after calling toString
+                            if (result instanceof Closeable) {
+                                try {
+                                    ((Closeable) result).close();
+                                } catch (IOException ignore) {
+                                }
+                            }
+                        }
+                    } catch (IllegalAccessException ignore) {
+                    } catch (IllegalArgumentException ignore) {
+                    } catch (InvocationTargetException ignore) {
+                    } catch (JException ignore) {
+                    }
+                }
+            }
+        }
+    }
+
+    private static boolean isValidMethodName(String name) {
+        return !"getClass".equals(name) && !"getDeclaringClass".equals(name);
+    }
+
+    private static String getKeyNameFromMethod(Method method) {
+        final int ignoreDepth = getAnnotationDepth(method, JSONPropertyIgnore.class);
+        if (ignoreDepth > 0) {
+            final int forcedNameDepth = getAnnotationDepth(method, JSONPropertyName.class);
+            if (forcedNameDepth < 0 || ignoreDepth <= forcedNameDepth) {
+                // the hierarchy asked to ignore, and the nearest name override
+                // was higher or non-existent
+                return null;
+            }
+        }
+        JSONPropertyName annotation = getAnnotation(method, JSONPropertyName.class);
+        if (annotation != null && annotation.value() != null && !annotation.value().isEmpty()) {
+            return annotation.value();
+        }
+        String key;
+        final String name = method.getName();
+        if (name.startsWith("get") && name.length() > 3) {
+            key = name.substring(3);
+        } else if (name.startsWith("is") && name.length() > 2) {
+            key = name.substring(2);
+        } else {
+            return null;
+        }
+        // if the first letter in the key is not uppercase, then skip.
+        // This is to maintain backwards compatibility before PR406
+        // (https://github.com/stleary/JSON-java/pull/406/)
+        if (key.length() == 0 || Character.isLowerCase(key.charAt(0))) {
+            return null;
+        }
+        if (key.length() == 1) {
+            key = key.toLowerCase(Locale.ROOT);
+        } else if (!Character.isUpperCase(key.charAt(1))) {
+            key = key.substring(0, 1).toLowerCase(Locale.ROOT) + key.substring(1);
+        }
+        return key;
+    }
+
+
+    private static <A extends Annotation> A getAnnotation(final Method m, final Class<A> annotationClass) {
+        // if we have invalid data the result is null
+        if (m == null || annotationClass == null) {
+            return null;
+        }
+
+        if (m.isAnnotationPresent(annotationClass)) {
+            return m.getAnnotation(annotationClass);
+        }
+
+        // if we've already reached the Object class, return null;
+        Class<?> c = m.getDeclaringClass();
+        if (c.getSuperclass() == null) {
+            return null;
+        }
+
+        // check directly implemented interfaces for the method being checked
+        for (Class<?> i : c.getInterfaces()) {
+            try {
+                Method im = i.getMethod(m.getName(), m.getParameterTypes());
+                return getAnnotation(im, annotationClass);
+            } catch (final SecurityException ex) {
+                continue;
+            } catch (final NoSuchMethodException ex) {
+                continue;
+            }
+        }
+
+        try {
+            return getAnnotation(
+                    c.getSuperclass().getMethod(m.getName(), m.getParameterTypes()),
+                    annotationClass);
+        } catch (final SecurityException ex) {
+            return null;
+        } catch (final NoSuchMethodException ex) {
+            return null;
+        }
+    }
+
+
+    private static int getAnnotationDepth(final Method m, final Class<? extends Annotation> annotationClass) {
+        // if we have invalid data the result is -1
+        if (m == null || annotationClass == null) {
+            return -1;
+        }
+
+        if (m.isAnnotationPresent(annotationClass)) {
+            return 1;
+        }
+
+        // if we've already reached the Object class, return -1;
+        Class<?> c = m.getDeclaringClass();
+        if (c.getSuperclass() == null) {
+            return -1;
+        }
+
+        // check directly implemented interfaces for the method being checked
+        for (Class<?> i : c.getInterfaces()) {
+            try {
+                Method im = i.getMethod(m.getName(), m.getParameterTypes());
+                int d = getAnnotationDepth(im, annotationClass);
+                if (d > 0) {
+                    // since the annotation was on the interface, add 1
+                    return d + 1;
+                }
+            } catch (final SecurityException ex) {
+                continue;
+            } catch (final NoSuchMethodException ex) {
+                continue;
+            }
+        }
+
+        try {
+            int d = getAnnotationDepth(
+                    c.getSuperclass().getMethod(m.getName(), m.getParameterTypes()),
+                    annotationClass);
+            if (d > 0) {
+                // since the annotation was on the superclass, add 1
+                return d + 1;
+            }
+            return -1;
+        } catch (final SecurityException ex) {
+            return -1;
+        } catch (final NoSuchMethodException ex) {
+            return -1;
+        }
     }
 }
