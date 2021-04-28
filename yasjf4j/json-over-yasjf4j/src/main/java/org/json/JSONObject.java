@@ -309,8 +309,49 @@ public class JSONObject {
         throw new JSONException();
     }
 
+
     //getFloat(Ljava/lang/String;)F
     public float getFloat(String key) throws JSONException {
+        if (key == null) {
+            throw new JSONException("Null key.");
+        }
+        if(!json.YASJF4J_getKeys().contains(key)) throw new JSONException();
+        try {
+            Object object = json.YASJF4J_get(key);
+            if(object instanceof Number) {
+                return ((Number)object).floatValue();
+            }
+            try {
+                return Float.parseFloat(object.toString());
+            } catch (Exception e) {
+                throw new JSONException();
+            }
+        } catch (Exception e) {
+        }
+        throw new JSONException();
+    }
+
+    public BigDecimal getBigDecimal(String key) throws JSONException {
+        if (key == null) {
+            throw new JSONException("Null key.");
+        }
+        if(!json.YASJF4J_getKeys().contains(key)) throw new JSONException();
+        try {
+            Object object = json.YASJF4J_get(key);
+            if(object instanceof Number) {
+                return new BigDecimal(((Number)object).doubleValue());
+            }
+            try {
+                return new BigDecimal(object.toString());
+            } catch (Exception e) {
+                throw new JSONException();
+            }
+        } catch (Exception e) {
+        }
+        throw new JSONException();
+    }
+
+    public Number getNumber(String key) throws JSONException {
         if (key == null) {
             throw new JSONException("Null key.");
         }
@@ -463,6 +504,26 @@ public class JSONObject {
         return defaultValue;
     }
 
+    public BigDecimal optBigDecimal(String key) {
+        return optBigDecimal(key, new BigDecimal(0d));
+    }
+
+    public double optDouble(String key, double defaultValue) {
+        try {
+            return getDouble(key);
+        } catch (Exception e) {
+        }
+        return defaultValue;
+    }
+
+    public double optDouble(String key) {
+        try {
+            return getDouble(key);
+        } catch (Exception e) {
+        }
+        return 0d;
+    }
+
     //optBoolean(Ljava/lang/String;)Z
     public boolean optBoolean(String key, boolean defaultValue) {
         try {
@@ -509,6 +570,44 @@ public class JSONObject {
     //optLong(Ljava/lang/String;J)J
     public long optLong(String key) {
         return optLong(key, 0);
+    }
+
+
+
+
+    public <E extends Enum<E>> E optEnum(Class<E> clazz, String key, E defaultValue) {
+        try {
+            Object val = this.opt(key);
+            if (NULL.equals(val)) {
+                return defaultValue;
+            }
+            if (clazz.isAssignableFrom(val.getClass())) {
+                // we just checked it!
+                @SuppressWarnings("unchecked")
+                E myE = (E) val;
+                return myE;
+            }
+            return Enum.valueOf(clazz, val.toString());
+        } catch (IllegalArgumentException e) {
+            return defaultValue;
+        } catch (NullPointerException e) {
+            return defaultValue;
+        }
+    }
+
+    public <E extends Enum<E>> E optEnum(Class<E> clazz, String key) {
+        return this.optEnum(clazz, key, null);
+    }
+
+    public <E extends Enum<E>> E getEnum(Class<E> clazz, String key) throws JSONException {
+        E val = optEnum(clazz, key);
+        if(val==null) {
+            // JSONException should really take a throwable argument.
+            // If it did, I would re-implement this with the Enum.valueOf
+            // method and place any thrown exception in the JSONException
+            throw new JSONException();
+        }
+        return val;
     }
 
     //isNull(Ljava/lang/String;)Z
@@ -603,6 +702,13 @@ public class JSONObject {
                 json.YASJF4J_remove(key);
             } catch (JException e) {
             }
+        }
+        return this;
+    }
+
+    public JSONObject putOpt(String key, Object value) throws JSONException {
+        if (key != null && value != null) {
+            return this.put(key, value);
         }
         return this;
     }
@@ -834,8 +940,16 @@ public class JSONObject {
         }
     }
 
+    public Object optQuery(String jsonPointer) {
+        return query(new JSONPointer(jsonPointer));
+    }
+
     public Object query(String jsonPointer) {
         return query(new JSONPointer(jsonPointer));
+    }
+
+    public Object optQuery(JSONPointer jsonPointer) {
+        return jsonPointer.queryFrom(this);
     }
 
     public Object query(JSONPointer jsonPointer) {
@@ -853,5 +967,99 @@ public class JSONObject {
             throw new JSONException();
         }
         return this;
+    }
+
+    public BigDecimal optBigDecimal(String key, BigDecimal defaultValue) {
+        Object val = this.opt(key);
+        return objectToBigDecimal(val, defaultValue);
+    }
+
+    /**
+     * @param val value to convert
+     * @param defaultValue default value to return is the conversion doesn't work or is null.
+     * @return BigDecimal conversion of the original value, or the defaultValue if unable
+     *          to convert.
+     */
+    static BigDecimal objectToBigDecimal(Object val, BigDecimal defaultValue) {
+        if (NULL.equals(val)) {
+            return defaultValue;
+        }
+        if (val instanceof BigDecimal){
+            return (BigDecimal) val;
+        }
+        if (val instanceof BigInteger){
+            return new BigDecimal((BigInteger) val);
+        }
+        if (val instanceof Double || val instanceof Float){
+            if (!numberIsFinite((Number)val)) {
+                return defaultValue;
+            }
+            return new BigDecimal(((Number) val).doubleValue());
+        }
+        if (val instanceof Long || val instanceof Integer
+                || val instanceof Short || val instanceof Byte){
+            return new BigDecimal(((Number) val).longValue());
+        }
+        // don't check if it's a string in case of unchecked Number subclasses
+        try {
+            return new BigDecimal(val.toString());
+        } catch (Exception e) {
+            return defaultValue;
+        }
+    }
+
+    public BigInteger optBigInteger(String key, BigInteger defaultValue) {
+        Object val = this.opt(key);
+        return objectToBigInteger(val, defaultValue);
+    }
+
+    /**
+     * @param val value to convert
+     * @param defaultValue default value to return is the conversion doesn't work or is null.
+     * @return BigInteger conversion of the original value, or the defaultValue if unable
+     *          to convert.
+     */
+    static BigInteger objectToBigInteger(Object val, BigInteger defaultValue) {
+        if (NULL.equals(val)) {
+            return defaultValue;
+        }
+        if (val instanceof BigInteger){
+            return (BigInteger) val;
+        }
+        if (val instanceof BigDecimal){
+            return ((BigDecimal) val).toBigInteger();
+        }
+        if (val instanceof Double || val instanceof Float){
+            if (!numberIsFinite((Number)val)) {
+                return defaultValue;
+            }
+            return new BigDecimal(((Number) val).doubleValue()).toBigInteger();
+        }
+        if (val instanceof Long || val instanceof Integer
+                || val instanceof Short || val instanceof Byte){
+            return BigInteger.valueOf(((Number) val).longValue());
+        }
+        // don't check if it's a string in case of unchecked Number subclasses
+        try {
+            // the other opt functions handle implicit conversions, i.e.
+            // jo.put("double",1.1d);
+            // jo.optInt("double"); -- will return 1, not an error
+            // this conversion to BigDecimal then to BigInteger is to maintain
+            // that type cast support that may truncate the decimal.
+            final String valStr = val.toString();
+            if(isDecimalNotation(valStr)) {
+                return new BigDecimal(valStr).toBigInteger();
+            }
+            return new BigInteger(valStr);
+        } catch (Exception e) {
+            return defaultValue;
+        }
+    }
+
+    public static String[] getNames(JSONObject jo) {
+        if (jo.isEmpty()) {
+            return null;
+        }
+        return jo.keySet().toArray(new String[jo.length()]);
     }
 }
