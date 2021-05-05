@@ -26,7 +26,7 @@ import static org.json.simple.JSONValue.autoBox;
 import static org.json.simple.JSONValue.recA;
 import static org.json.simple.JSONValue.recO;
 
-public class JSONObject implements Map, JSONAware, JSONStreamAware {
+public class JSONObject extends HashMap implements Map, JSONAware, JSONStreamAware {
 	JObject json;
 
 	public JSONObject(Map in) {

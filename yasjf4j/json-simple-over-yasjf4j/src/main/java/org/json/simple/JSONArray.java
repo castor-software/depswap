@@ -9,6 +9,7 @@ import se.kth.castor.yasjf4j.JNull;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -20,7 +21,7 @@ import static org.json.simple.JSONValue.autoBox;
 import static org.json.simple.JSONValue.recA;
 import static org.json.simple.JSONValue.recO;
 
-public class JSONArray implements List, JSONAware, JSONStreamAware {
+public class JSONArray extends ArrayList implements List, JSONAware, JSONStreamAware {
 	JArray json;
 
 	public JSONArray(List in) {
