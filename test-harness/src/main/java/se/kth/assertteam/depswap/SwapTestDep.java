@@ -12,6 +12,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.List;
 
 public class SwapTestDep {
 
@@ -78,11 +79,18 @@ public class SwapTestDep {
 				throw new TransformationFailedException("Dependency " + inGroupId + ":" + inArtifactId + ":" + (inVersion == null ? "*" : inVersion) + " not found in targeted pom.");
 			}
 
+			List<Dependency> deps = model.getDependencies();
+			deps.remove(target);
+
 			target.setGroupId(outGroupId);
 			target.setArtifactId(outArtifactId);
 			target.setVersion(outVersion);
 			//target.setSystemPath(pathToJars + "/" + outArtifactId + "-" + outVersion + "-jar-with-dependencies.jar");
 			target.setScope("test");
+
+			deps.add(0,target);
+
+			model.setDependencies(deps);
 
 
 			MavenXpp3Writer writer = new MavenXpp3Writer();

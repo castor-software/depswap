@@ -150,6 +150,20 @@ public class Project {
 				throw new TransformationFailedException("Dependency " + inGroupId + ":" + inArtifactId + ":" + (inVersion == null ? "*" : inVersion) + " not found in targeted pom.");
 			}
 
+
+			List<Dependency> deps = model.getDependencies();
+			deps.remove(target);
+
+			//if jackson remove other jackson deps
+			if(inGroupId.equals("com.fasterxml.jackson.core")) {
+				List<Dependency> toRemove = new ArrayList<>();
+				for (Dependency d : deps) {
+					if (d.getGroupId().equals("com.fasterxml.jackson.core")) toRemove.add(d);
+				}
+				deps.removeAll(toRemove);
+			}
+
+
 			//Bridge
 			Dependency bridge = new Dependency();
 			bridge.setGroupId(yasjfG);
@@ -158,7 +172,8 @@ public class Project {
 			String bridgeName = inArtifactId + "-over-yasjf4j";
 			bridge.setArtifactId(bridgeName);
 			bridge.setSystemPath(pathToJars + "/" + bridgeName + "-" + yasjfV + "-jar-with-dependencies.jar");
-			model.addDependency(bridge);
+
+			//model.addDependency(bridge);
 
 			//Facade
 			Dependency facade = new Dependency();
@@ -167,7 +182,8 @@ public class Project {
 			facade.setScope("system");
 			facade.setArtifactId(yasjfFacadeA);
 			facade.setSystemPath(pathToJars + "/" + yasjfFacadeA + "-" + yasjfV + "-jar-with-dependencies.jar");
-			model.addDependency(facade);
+
+			//model.addDependency(facade);
 
 			//Implem
 			target.setGroupId(outGroupId);
@@ -175,6 +191,13 @@ public class Project {
 			target.setVersion(outVersion);
 			target.setSystemPath(pathToJars + "/" + outArtifactId + "-" + outVersion + "-jar-with-dependencies.jar");
 			target.setScope("system");
+
+
+			deps.add(0,bridge);
+			deps.add(0,facade);
+			deps.add(0,target);
+
+			model.setDependencies(deps);
 
 
 			MavenXpp3Writer writer = new MavenXpp3Writer();
