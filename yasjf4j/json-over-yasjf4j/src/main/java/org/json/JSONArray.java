@@ -794,4 +794,22 @@ public class JSONArray implements Iterable<Object> {
             return defaultValue;
         }
     }
+
+
+
+
+    @Override
+    public boolean equals(Object object) {
+        if(object == null) return false;
+        if(!(object instanceof JSONArray)) return false;
+        JSONArray other = (JSONArray) object;
+        if(other.length() != length()) return false;
+        for(int i = 0; i < length(); i++) {
+            Object val = get(i);
+            if(!val.equals(other.get(i))) return false;
+        }
+
+
+        return true;
+    }
 }

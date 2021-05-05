@@ -1240,4 +1240,20 @@ public class JSONObject {
             return -1;
         }
     }
+
+
+    @Override
+    public boolean equals(Object object) {
+        if(object == null) return false;
+        if(!(object instanceof JSONObject)) return false;
+        JSONObject other = (JSONObject) object;
+        if(other.keySet().size() != keySet().size()) return false;
+        for(String key: keySet()) {
+            Object val = get(key);
+            if(!val.equals(other.get(key))) return false;
+        }
+
+
+        return true;
+    }
 }
