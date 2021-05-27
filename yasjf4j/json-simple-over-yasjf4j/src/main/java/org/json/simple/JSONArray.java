@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -155,20 +156,6 @@ public class JSONArray extends ArrayList implements List, JSONAware, JSONStreamA
 				}
 			}
 		};
-	}
-
-	@Override
-	public Object[] toArray() {
-		Object[] res = new Object[json.YASJF4J_size()];
-		for(int i = 0; i < json.YASJF4J_size(); i++) {
-			try {
-				res[i] = JSONValue.shield(json.YASJF4J_get(i));
-			} catch (JException e) {
-				e.printStackTrace();
-			}
-		}
-
-		return res;
 	}
 
 	@Override
@@ -377,12 +364,38 @@ public class JSONArray extends ArrayList implements List, JSONAware, JSONStreamA
 
 	@Override
 	public boolean retainAll(Collection c) {
-		throw new UnsupportedOperationException();
+		boolean hasChanged = false;
+		for(int i = 0; i < json.YASJF4J_size(); ) {
+			try {
+				if(!c.contains(json.YASJF4J_get(i))) {
+					json.YASJF4J_remove(i);
+					hasChanged = true;
+				} else {
+					i++;
+				}
+			} catch (JException e) {
+			}
+		}
+		//throw new UnsupportedOperationException();
+		return hasChanged;
 	}
 
 	@Override
 	public boolean removeAll(Collection c) {
-		throw new UnsupportedOperationException();
+		boolean hasChanged = false;
+		for(int i = 0; i < json.YASJF4J_size(); ) {
+			try {
+				if(c.contains(json.YASJF4J_get(i))) {
+					json.YASJF4J_remove(i);
+					hasChanged = true;
+				} else {
+					i++;
+				}
+			} catch (JException e) {
+			}
+		}
+		//throw new UnsupportedOperationException();
+		return hasChanged;
 	}
 
 	@Override
@@ -395,7 +408,19 @@ public class JSONArray extends ArrayList implements List, JSONAware, JSONStreamA
 
 	@Override
 	public Object[] toArray(Object[] a) {
-		throw new UnsupportedOperationException();
+		//throw new UnsupportedOperationException();
+		if (a.length < json.YASJF4J_size()) {
+			a = new Object[json.YASJF4J_size()];
+		}
+		for(int i = 0; i < json.YASJF4J_size(); i++) {
+			try {
+				a[i] = json.YASJF4J_get(i);
+			} catch (JException e) {
+			}
+		}
+		if (a.length > json.YASJF4J_size())
+			a[json.YASJF4J_size()] = null;
+		return a;
 	}
 
 	@Override

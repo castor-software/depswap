@@ -181,9 +181,16 @@ public class JSONValue {
 		return null;
 	}
 
-	public static Object parse(Reader in) throws IOException, ParseException {
+	public static Object parse(Reader in) {
 		JSONParser parser=new JSONParser();
-		return parser.parse(in);
+		try {
+			return parser.parse(in);
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	public static Object parseWithException(Reader in) throws IOException, ParseException {
