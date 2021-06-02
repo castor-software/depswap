@@ -161,6 +161,22 @@ public class Project {
 					if (d.getGroupId().equals("com.fasterxml.jackson.core")) toRemove.add(d);
 				}
 				deps.removeAll(toRemove);
+			} else if (inGroupId.equals("com.googlecode.json-simple")) {
+				boolean hasJunit = false;
+				for(Dependency dependency :model.getDependencies()) {
+					String a = dependency.getArtifactId();
+					if( a.equals("junit")) {
+						hasJunit = true;
+						break;
+					}
+				}
+				Dependency junit = new Dependency();
+				junit.setGroupId("junit");
+				junit.setArtifactId("junit");
+				junit.setVersion("4.10");
+				junit.setScope("test");
+
+				deps.add(junit);
 			}
 
 
