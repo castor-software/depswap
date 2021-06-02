@@ -161,6 +161,7 @@ public class Project {
 					if (d.getGroupId().equals("com.fasterxml.jackson.core")) toRemove.add(d);
 				}
 				deps.removeAll(toRemove);
+			//if json-simple add dependance to junit if it does not already exists
 			} else if (inGroupId.equals("com.googlecode.json-simple")) {
 				boolean hasJunit = false;
 				for(Dependency dependency :model.getDependencies()) {
@@ -170,13 +171,15 @@ public class Project {
 						break;
 					}
 				}
-				Dependency junit = new Dependency();
-				junit.setGroupId("junit");
-				junit.setArtifactId("junit");
-				junit.setVersion("4.12");
-				junit.setScope("test");
+				if(!hasJunit) {
+					Dependency junit = new Dependency();
+					junit.setGroupId("junit");
+					junit.setArtifactId("junit");
+					junit.setVersion("4.12");
+					junit.setScope("test");
 
-				deps.add(junit);
+					deps.add(junit);
+				}
 			}
 
 
