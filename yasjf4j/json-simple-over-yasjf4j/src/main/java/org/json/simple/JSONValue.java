@@ -109,6 +109,9 @@ public class JSONValue {
 		if((value instanceof JSONAware))
 			return ((JSONAware)value).toJSONString();
 
+		if((value instanceof JSONAwareContainer))
+			return ((JSONAwareContainer)value).get().toJSONString();
+
 		if(value instanceof Map) {
 			return new JSONObject((Map) value).toString();
 			//return JSONObject.toJSONString((Map) value);;
@@ -212,6 +215,7 @@ public class JSONValue {
 		if (o instanceof JObject) return new JSONObject((JObject) o);
 		else if (o instanceof JArray) return new JSONArray((JArray) o);
 		else if (o instanceof JNull) return null;
+		//else if (o instanceof JSONAwareContainer) return ((JSONAwareContainer) o).get();
 		else return o;
 	}
 
@@ -219,6 +223,14 @@ public class JSONValue {
 		if (o instanceof JSONObject) return ((JSONObject) o).json;
 		else if (o instanceof JSONArray) return ((JSONArray) o).json;
 		else if (o == null) return JNull.getInstance();
+		//else if (o instanceof JSONAware) return JSONAwareContainer.create((JSONAware) o);
+		else if (o instanceof JSONAware) {
+			try {
+				return JFactory.parse(((JSONAware) o).toJSONString());
+			} catch (JException e) {
+			}
+			return o;
+		}
 		else return o;
 	}
 
@@ -238,7 +250,7 @@ public class JSONValue {
 				} else if(v.getClass().isArray()) {
 					o.YASJF4J_put(e.getKey().toString(),recA(autoBox(v)));
 				} else {
-					o.YASJF4J_put(e.getKey().toString(), v);
+					o.YASJF4J_put(e.getKey().toString(), unshield(v));
 				}
 			} catch (JException e1) {
 				e1.printStackTrace();
@@ -260,7 +272,7 @@ public class JSONValue {
 				} else if(e.getClass().isArray()) {
 					a.YASJF4J_add(recA(autoBox(e)));
 				} else {
-					a.YASJF4J_add(e);
+					a.YASJF4J_add(unshield(e));
 				}
 			} catch (JException e1) {
 				e1.printStackTrace();

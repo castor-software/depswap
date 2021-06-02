@@ -40,7 +40,7 @@ public class JSONArray extends ArrayList implements List, JSONAware, JSONStreamA
 				} else if(o instanceof Character) {
 					json.YASJF4J_add(o.toString());
 				} else {
-					json.YASJF4J_add(o);
+					json.YASJF4J_add(JSONValue.unshield(o));
 				}
 			} catch (JException e) {
 				e.printStackTrace();
@@ -63,7 +63,7 @@ public class JSONArray extends ArrayList implements List, JSONAware, JSONStreamA
 				} else if(o instanceof Character) {
 					json.YASJF4J_add(o.toString());
 				} else {
-					json.YASJF4J_add(o);
+					json.YASJF4J_add(JSONValue.unshield(o));
 				}
 			} catch (JException e) {
 				e.printStackTrace();
@@ -95,7 +95,7 @@ public class JSONArray extends ArrayList implements List, JSONAware, JSONStreamA
 
 	public boolean containsNull() throws JException {
 		for(int i =0; i < json.YASJF4J_size(); i++) {
-			if(json.YASJF4J_get(i) == null) return true;
+			if(JSONValue.shield(json.YASJF4J_get(i)) == null) return true;
 		}
 		return false;
 	}
@@ -127,7 +127,7 @@ public class JSONArray extends ArrayList implements List, JSONAware, JSONStreamA
 	public boolean contains(Object o) {
 		for(int i = 0; i < json.YASJF4J_size(); i++) {
 			try {
-				if(json.YASJF4J_get(i).equals(o))
+				if(JSONValue.shield(json.YASJF4J_get(i)).equals(o))
 					return true;
 			} catch (JException e) {
 				e.printStackTrace();
@@ -162,7 +162,7 @@ public class JSONArray extends ArrayList implements List, JSONAware, JSONStreamA
 	public boolean add(Object o) {
 		try {
 			if(o == null) json.YASJF4J_add(JNull.getInstance());
-			else json.YASJF4J_add(o);
+			else json.YASJF4J_add(JSONValue.unshield(o));
 		} catch (JException e) {
 			e.printStackTrace();
 		}
@@ -173,7 +173,7 @@ public class JSONArray extends ArrayList implements List, JSONAware, JSONStreamA
 	public boolean remove(Object o) {
 		for(int i = 0; i < json.YASJF4J_size(); i++) {
 			try {
-				if(json.YASJF4J_get(i).equals(o)) {
+				if(JSONValue.shield(json.YASJF4J_get(i)).equals(o)) {
 					json.YASJF4J_remove(i);
 					return true;
 				}
@@ -189,7 +189,7 @@ public class JSONArray extends ArrayList implements List, JSONAware, JSONStreamA
 		for(Object o: c) {
 			try {
 				if(o == null) json.YASJF4J_add(JNull.getInstance());
-				else json.YASJF4J_add(o);
+				else json.YASJF4J_add(JSONValue.unshield(o));
 			} catch (JException e) {
 				e.printStackTrace();
 			}
@@ -211,14 +211,14 @@ public class JSONArray extends ArrayList implements List, JSONAware, JSONStreamA
 	public Object set(int index, Object element) {
 		Object val = null;
 		try {
-			val = json.YASJF4J_get(index);
+			val = JSONValue.shield(json.YASJF4J_get(index));
 		} catch (JException e) {
 			e.printStackTrace();
 		}
 
 		try {
 			if(element == null) json.YASJF4J_set(index, JNull.getInstance());
-			else json.YASJF4J_set(index, element);
+			else json.YASJF4J_set(index, JSONValue.unshield(element));
 		} catch (JException e) {
 			e.printStackTrace();
 		}
@@ -234,7 +234,7 @@ public class JSONArray extends ArrayList implements List, JSONAware, JSONStreamA
 	public Object remove(int index) {
 		Object val = null;
 		try {
-			val = json.YASJF4J_get(index);
+			val = JSONValue.shield(json.YASJF4J_get(index));
 		} catch (JException e) {
 			e.printStackTrace();
 		}
@@ -251,7 +251,7 @@ public class JSONArray extends ArrayList implements List, JSONAware, JSONStreamA
 		if(o == null) o = JNull.getInstance();
 		for(int i = 0; i < json.YASJF4J_size(); i++) {
 			try {
-				if(json.YASJF4J_get(i).equals(o)) {
+				if(JSONValue.shield(json.YASJF4J_get(i)).equals(o)) {
 					return i;
 				}
 			} catch (JException e) {
@@ -267,7 +267,7 @@ public class JSONArray extends ArrayList implements List, JSONAware, JSONStreamA
 		int index = -1;
 		for(int i = 0; i < json.YASJF4J_size(); i++) {
 			try {
-				if(json.YASJF4J_get(i).equals(o)) {
+				if(JSONValue.shield(json.YASJF4J_get(i)).equals(o)) {
 					index =  i;
 				}
 			} catch (JException e) {
@@ -295,7 +295,7 @@ public class JSONArray extends ArrayList implements List, JSONAware, JSONStreamA
 			@Override
 			public Object next() {
 				try {
-					return json.YASJF4J_get(index++);
+					return JSONValue.shield(json.YASJF4J_get(index++));
 				} catch (JException e) {
 					return null;
 				}
@@ -309,7 +309,7 @@ public class JSONArray extends ArrayList implements List, JSONAware, JSONStreamA
 			@Override
 			public Object previous() {
 				try {
-					return json.YASJF4J_get(index--);
+					return JSONValue.shield(json.YASJF4J_get(index--));
 				} catch (JException e) {
 					return null;
 				}
@@ -339,7 +339,7 @@ public class JSONArray extends ArrayList implements List, JSONAware, JSONStreamA
 				try {
 
 					if(o == null) json.YASJF4J_set(index, JNull.getInstance());
-					else json.YASJF4J_set(index, o);
+					else json.YASJF4J_set(index, JSONValue.unshield(o));
 				} catch (JException e) {
 					e.printStackTrace();
 				}
@@ -349,7 +349,7 @@ public class JSONArray extends ArrayList implements List, JSONAware, JSONStreamA
 			public void add(Object o) {
 				try {
 					if(o == null) json.YASJF4J_add(JNull.getInstance());
-					else json.YASJF4J_add(o);
+					else json.YASJF4J_add(JSONValue.unshield(o));
 				} catch (JException e) {
 					e.printStackTrace();
 				}
@@ -414,7 +414,7 @@ public class JSONArray extends ArrayList implements List, JSONAware, JSONStreamA
 		}
 		for(int i = 0; i < json.YASJF4J_size(); i++) {
 			try {
-				a[i] = json.YASJF4J_get(i);
+				a[i] = JSONValue.shield(json.YASJF4J_get(i));
 			} catch (JException e) {
 			}
 		}
