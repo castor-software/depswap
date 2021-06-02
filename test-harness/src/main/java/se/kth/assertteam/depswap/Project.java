@@ -173,7 +173,7 @@ public class Project {
 				Dependency junit = new Dependency();
 				junit.setGroupId("junit");
 				junit.setArtifactId("junit");
-				junit.setVersion("4.10");
+				junit.setVersion("4.12");
 				junit.setScope("test");
 
 				deps.add(junit);
